@@ -15,7 +15,7 @@
 <h2>入力と出力</h2>
 <ul>
 <li>引数: <code>const char *name</code>, <code>struct stat *buf</code></li>
-<li>戻り値: <a class="wiki-source-link" href="../../source/src/include/port.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/port.h.html&quot;}, '*');"><code>int</code></a></li>
+<li>戻り値: <a class="wiki-source-link" href="../../source/src/include/port.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__port_h__int.html&quot;}, '*');"><code>int</code></a></li>
 </ul>
 <h2>前提条件と不変条件</h2>
 <p>まだ解析していません。</p>
@@ -34,13 +34,13 @@
 <h2>関連データ構造</h2>
 <p><code>stat</code></p>
 <h2>ソース抜粋</h2>
-<p>~~~c <a class="wiki-source-link" href="../../source/src/include/port.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/port.h.html&quot;}, '*');">int</a> _pglstat64(const char *name, struct stat *buf) { /*</p>
+<p>~~~c <a class="wiki-source-link" href="../../source/src/include/port.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__port_h__int.html&quot;}, '*');">int</a> _pglstat64(const char *name, struct stat *buf) { /*</p>
 <ul>
 <li>Our <a class="wiki-source-link" href="../../source/src/include/port.h.html#L366" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/port.h.html&quot;}, '*');">open</a> wrapper will report STATUS_DELETE_PENDING as ENOENT.  We</li>
 <li>request FILE_FLAG_BACKUP_SEMANTICS so that we can <a class="wiki-source-link" href="../../source/src/include/port.h.html#L366" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/port.h.html&quot;}, '*');">open</a> directories too,</li>
 <li>for limited purposes.  We use the private handle-based version, so we</li>
 <li>don&#x27;t risk running out of fds.</li>
-<p>*/ HANDLE		hFile; <a class="wiki-source-link" href="../../source/src/include/port.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/port.h.html&quot;}, '*');">int</a>			ret;</p>
+<p>*/ HANDLE		hFile; <a class="wiki-source-link" href="../../source/src/include/port.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__port_h__int.html&quot;}, '*');">int</a>			ret;</p>
 </ul>
 <p>hFile = <a class="wiki-source-link" href="../../source/src/port/open.c.html#L64" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__port__open_c__pgwin32_open_handle.html&quot;}, '*');">pgwin32_open_handle</a>(name, O_RDONLY, <a class="wiki-source-link" href="../../source/src/tools/pg_bsd_indent/indent_globs.h.html#L46" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/tools/pg_bsd_indent/indent_globs.h.html&quot;}, '*');">true</a>); if (hFile == INVALID_HANDLE_VALUE) { if (errno == ENOENT) { /*</p>
 <ul>
@@ -55,7 +55,7 @@
 <ul>
 <li>Junction points appear as directories to <a class="wiki-source-link" href="../../source/src/port/win32stat.c.html#L67" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__port__win32stat_c__fileinfo_to_stat.html&quot;}, '*');">fileinfo_to_stat</a>(), so we&#x27;ll</li>
 <li>need to do a <a class="wiki-source-link" href="../../source/src/backend/utils/adt/varbit.c.html#L390" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__utils__adt__varbit_c__bit.html&quot;}, '*');">bit</a> more work to distinguish them.</li>
-<p>*/ if ((ret == 0 &amp;&amp; S_ISDIR(buf-&gt;st_mode)) || hFile == INVALID_HANDLE_VALUE) { char		next[<a class="wiki-source-link" href="../../source/src/include/pg_config_manual.h.html#L105" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/pg_config_manual.h.html&quot;}, '*');">MAXPGPATH</a>]; <a class="wiki-source-link" href="../../source/src/include/port/win32_port.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/port/win32_port.h.html&quot;}, '*');">ssize_t</a>		size;</p>
+<p>*/ if ((ret == 0 &amp;&amp; S_ISDIR(buf-&gt;st_mode)) || hFile == INVALID_HANDLE_VALUE) { char		next[<a class="wiki-source-link" href="../../source/src/include/pg_config_manual.h.html#L105" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/pg_config_manual.h.html&quot;}, '*');">MAXPGPATH</a>]; <a class="wiki-source-link" href="../../source/src/include/port/win32_port.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__port__win32_port_h__ssize_t.html&quot;}, '*');">ssize_t</a>		size;</p>
 </ul>
 <p>/*</p>
 <ul>

@@ -15,12 +15,12 @@
 <ul>
 <li><code>typedef unsigned int Oid</code>: データベースオブジェクト識別子を表す基本型。</li>
 <li><a class="wiki-source-link" href="../../../source/src/include/postgres_ext.h.html#L35" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/postgres_ext.h.html&quot;}, '*');"><code>InvalidOid</code></a>: 無効なOidを表す定数（C++とCで切り替え）。</li>
-<li><a class="wiki-source-link" href="../../../source/src/include/postgres_ext.h.html#L40" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/postgres_ext.h.html&quot;}, '*');"><code>OID_MAX</code></a>: Oidが取り得る最大値 (<a class="wiki-source-link" href="../../../source/src/include/postgres_ext.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/postgres_ext.h.html&quot;}, '*');"><code>UINT_MAX</code></a>)。</li>
-<li><code>atooid(x)</code>: 文字列を <code>Oid</code> に変換するマクロ (<a class="wiki-source-link" href="../../../source/src/include/postgres_ext.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/postgres_ext.h.html&quot;}, '*');"><code>strtoul</code></a> を使用)。</li>
+<li><a class="wiki-source-link" href="../../../source/src/include/postgres_ext.h.html#L40" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/postgres_ext.h.html&quot;}, '*');"><code>OID_MAX</code></a>: Oidが取り得る最大値 (<a class="wiki-source-link" href="../../../source/src/include/postgres_ext.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__postgres_ext_h__UINT_MAX.html&quot;}, '*');"><code>UINT_MAX</code></a>)。</li>
+<li><code>atooid(x)</code>: 文字列を <code>Oid</code> に変換するマクロ (<a class="wiki-source-link" href="../../../source/src/include/postgres_ext.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__postgres_ext_h__strtoul.html&quot;}, '*');"><code>strtoul</code></a> を使用)。</li>
 </ul>
 <h3>互換性型</h3>
 <ul>
-<li><code>typedef int64_t pg_int64</code>: <a class="wiki-source-link" href="../../../source/src/include/postgres_ext.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/postgres_ext.h.html&quot;}, '*');"><code>int64_t</code></a> の非推奨（deprecated）別名。</li>
+<li><code>typedef int64_t pg_int64</code>: <a class="wiki-source-link" href="../../../source/src/include/postgres_ext.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__postgres_ext_h__int64_t.html&quot;}, '*');"><code>int64_t</code></a> の非推奨（deprecated）別名。</li>
 </ul>
 <h3>エラー診断フィールド識別子 (PG_DIAG_*)</h3>
 <p>libpq等のエラーフィールド取得関数（<code>PQresultErrorField</code>など）で使用される識別子群です。</p>
@@ -34,7 +34,7 @@
 <p>本ファイルはプリプロセッサマクロと <code>typedef</code> のみを定義しており、実行コードや制御フロー、複雑なデータフローは持ちません。データ構造としては、<code>Oid</code> によるオブジェクト参照の流れや、エラー診断文字コードを用いたエラー情報のやり取りの基盤を提供します。</p>
 <h2>直接依存</h2>
 <ul>
-<li><code>&lt;stdint.h&gt;</code>: 固定長整数型（<a class="wiki-source-link" href="../../../source/src/include/postgres_ext.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/postgres_ext.h.html&quot;}, '*');"><code>int64_t</code></a> など）の提供。</li>
+<li><code>&lt;stdint.h&gt;</code>: 固定長整数型（<a class="wiki-source-link" href="../../../source/src/include/postgres_ext.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__postgres_ext_h__int64_t.html&quot;}, '*');"><code>int64_t</code></a> など）の提供。</li>
 </ul>
 <h2>関連コード</h2>
 <ul>

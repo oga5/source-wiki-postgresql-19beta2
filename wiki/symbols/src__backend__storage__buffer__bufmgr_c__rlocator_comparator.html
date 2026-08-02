@@ -15,7 +15,7 @@
 <h2>入力と出力</h2>
 <ul>
 <li>引数: <code>const void *p1</code>, <code>const void *p2</code></li>
-<li>戻り値: <a class="wiki-source-link" href="../../source/src/include/port.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/port.h.html&quot;}, '*');"><code>int</code></a></li>
+<li>戻り値: <a class="wiki-source-link" href="../../source/src/include/port.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__port_h__int.html&quot;}, '*');"><code>int</code></a></li>
 </ul>
 <h2>前提条件と不変条件</h2>
 <p>まだ解析していません。</p>
@@ -34,7 +34,7 @@
 <h2>関連データ構造</h2>
 <p><code>RelFileLocator</code></p>
 <h2>ソース抜粋</h2>
-<p>~~~c static <a class="wiki-source-link" href="../../source/src/include/port.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/port.h.html&quot;}, '*');">int</a> <a class="wiki-source-link" href="../../source/src/backend/storage/buffer/bufmgr.c.html#L7539" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__storage__buffer__bufmgr_c__rlocator_comparator.html&quot;}, '*');">rlocator_comparator</a>(const void *p1, const void *p2) { RelFileLocator n1 = *(const RelFileLocator *) p1; RelFileLocator n2 = *(const RelFileLocator *) p2;</p>
+<p>~~~c static <a class="wiki-source-link" href="../../source/src/include/port.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__port_h__int.html&quot;}, '*');">int</a> <a class="wiki-source-link" href="../../source/src/backend/storage/buffer/bufmgr.c.html#L7539" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__storage__buffer__bufmgr_c__rlocator_comparator.html&quot;}, '*');">rlocator_comparator</a>(const void *p1, const void *p2) { RelFileLocator n1 = *(const RelFileLocator *) p1; RelFileLocator n2 = *(const RelFileLocator *) p2;</p>
 <p>if (n1.relNumber &lt; n2.relNumber) return -1; else if (n1.relNumber &gt; n2.relNumber) return 1;</p>
 <p>if (n1.dbOid &lt; n2.dbOid) return -1; else if (n1.dbOid &gt; n2.dbOid) return 1;</p>
 <p>if (n1.spcOid &lt; n2.spcOid) return -1; else if (n1.spcOid &gt; n2.spcOid) return 1; else return 0; } ~~~</p>

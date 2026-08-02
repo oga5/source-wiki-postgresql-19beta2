@@ -43,7 +43,7 @@
 <p>*/ if (*num == &#x27;\0&#x27;) <a class="wiki-source-link" href="../../source/src/include/utils/elog.h.html#L294" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/utils/elog.h.html&quot;}, '*');">ereturn</a>(escontext, 0, (errcode(ERRCODE_INVALID_TEXT_REPRESENTATION), errmsg(&quot;invalid input syntax for type %s: \&quot;%s\&quot;&quot;, type_name, orig_string)));</p>
 </ul>
 <p>errno = 0; val = strtod(num, &amp;endptr);</p>
-<p>/* did we not see anything that looks like a double? */ if (endptr == num || errno != 0) { <a class="wiki-source-link" href="../../source/src/include/port.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/port.h.html&quot;}, '*');">int</a>			save_errno = errno;</p>
+<p>/* did we not see anything that looks like a double? */ if (endptr == num || errno != 0) { <a class="wiki-source-link" href="../../source/src/include/port.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__port_h__int.html&quot;}, '*');">int</a>			save_errno = errno;</p>
 <p>/*</p>
 <ul>
 <li>C99 requires that strtod() <a class="wiki-source-link" href="../../source/src/include/port/win32_port.h.html#L498" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/port/win32_port.h.html&quot;}, '*');">accept</a> NaN, [+-]Infinity, and [+-]Inf,</li>

@@ -29,15 +29,15 @@
 <p><code>Datum</code>, <a class="wiki-source-link" href="../../source/src/include/access/gist.h.html#L143" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__access__gist_h__GIST_SPLITVEC.html&quot;}, '*');"><code>GIST_SPLITVEC</code></a></p>
 <h2>ソース抜粋</h2>
 <p>~~~c typedef struct <a class="wiki-source-link" href="../../source/src/include/access/gist_private.h.html#L235" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__access__gist_private_h__GistSplitVector.html&quot;}, '*');">GistSplitVector</a> { <a class="wiki-source-link" href="../../source/src/include/access/gist.h.html#L143" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__access__gist_h__GIST_SPLITVEC.html&quot;}, '*');">GIST_SPLITVEC</a> splitVector;	/* passed to/from <a class="wiki-source-link" href="../../source/src/test/regress/pg_regress.c.html#L121" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/test/regress/pg_regress.c.html&quot;}, '*');">user</a> PickSplit method */</p>
-<p>Datum		spl_lattr[<a class="wiki-source-link" href="../../source/src/include/pg_config_manual.h.html#L79" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/pg_config_manual.h.html&quot;}, '*');">INDEX_MAX_KEYS</a>];	/* Union of subkeys in</p>
+<p>Datum		spl_lattr[INDEX_MAX_KEYS];	/* Union of subkeys in</p>
 <ul>
 <li>splitVector.spl_left */</li>
-<p>bool		spl_lisnull[<a class="wiki-source-link" href="../../source/src/include/pg_config_manual.h.html#L79" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/pg_config_manual.h.html&quot;}, '*');">INDEX_MAX_KEYS</a>];</p>
+<p>bool		spl_lisnull[INDEX_MAX_KEYS];</p>
 </ul>
-<p>Datum		spl_rattr[<a class="wiki-source-link" href="../../source/src/include/pg_config_manual.h.html#L79" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/pg_config_manual.h.html&quot;}, '*');">INDEX_MAX_KEYS</a>];	/* Union of subkeys in</p>
+<p>Datum		spl_rattr[INDEX_MAX_KEYS];	/* Union of subkeys in</p>
 <ul>
 <li>splitVector.spl_right */</li>
-<p>bool		spl_risnull[<a class="wiki-source-link" href="../../source/src/include/pg_config_manual.h.html#L79" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/pg_config_manual.h.html&quot;}, '*');">INDEX_MAX_KEYS</a>];</p>
+<p>bool		spl_risnull[INDEX_MAX_KEYS];</p>
 </ul>
 <p>bool	   *spl_dontcare;	/* flags tuples which could go to either side</p>
 <ul>

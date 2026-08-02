@@ -40,7 +40,7 @@
 <ul>
 <li>Column list case: project selected column values into sequential</li>
 <li>positions matching the custom TupleDesc, then form a new tuple.</li>
-<p>*/ HeapTuple	tup; <a class="wiki-source-link" href="../../source/src/include/port.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/port.h.html&quot;}, '*');">int</a>			i = 0;</p>
+<p>*/ HeapTuple	tup; <a class="wiki-source-link" href="../../source/src/include/port.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__port_h__int.html&quot;}, '*');">int</a>			i = 0;</p>
 </ul>
 <p><a class="wiki-source-link" href="../../source/src/include/nodes/pg_list.h.html#L502" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/nodes/pg_list.h.html&quot;}, '*');">foreach_int</a>(attnum, cstate-&gt;attnumlist) { cstate-&gt;json_projvalues[i] = slot-&gt;tts_values[attnum - 1]; cstate-&gt;json_projnulls[i] = slot-&gt;tts_isnull[attnum - 1]; i++; }</p>
 <p>tup = <a class="wiki-source-link" href="../../source/src/backend/access/common/heaptuple.c.html#L1024" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__access__common__heaptuple_c__heap_form_tuple.html&quot;}, '*');">heap_form_tuple</a>(cstate-&gt;tupDesc, cstate-&gt;json_projvalues, cstate-&gt;json_projnulls);</p>

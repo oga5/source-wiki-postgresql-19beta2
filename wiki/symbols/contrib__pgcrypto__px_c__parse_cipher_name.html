@@ -15,7 +15,7 @@
 <h2>入力と出力</h2>
 <ul>
 <li>引数: <code>char *full</code>, <code>char **cipher</code>, <code>char **pad</code></li>
-<li>戻り値: <a class="wiki-source-link" href="../../source/src/include/port.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/port.h.html&quot;}, '*');"><code>int</code></a></li>
+<li>戻り値: <a class="wiki-source-link" href="../../source/src/include/port.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__port_h__int.html&quot;}, '*');"><code>int</code></a></li>
 </ul>
 <h2>前提条件と不変条件</h2>
 <p>まだ解析していません。</p>
@@ -34,7 +34,7 @@
 <h2>関連データ構造</h2>
 <p>なし</p>
 <h2>ソース抜粋</h2>
-<p>~~~c static <a class="wiki-source-link" href="../../source/src/include/port.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/port.h.html&quot;}, '*');">int</a> <a class="wiki-source-link" href="../../source/contrib/pgcrypto/px.c.html#L243" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/contrib__pgcrypto__px_c__parse_cipher_name.html&quot;}, '*');">parse_cipher_name</a>(char *full, char **cipher, char **pad) { char	   *p, *p2, *q;</p>
+<p>~~~c static <a class="wiki-source-link" href="../../source/src/include/port.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__port_h__int.html&quot;}, '*');">int</a> <a class="wiki-source-link" href="../../source/contrib/pgcrypto/px.c.html#L243" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/contrib__pgcrypto__px_c__parse_cipher_name.html&quot;}, '*');">parse_cipher_name</a>(char *full, char **cipher, char **pad) { char	   *p, *p2, *q;</p>
 <p>*cipher = full; *pad = NULL;</p>
 <p>p = strchr(full, &#x27;/&#x27;); if (p != NULL) *p++ = 0; while (p != NULL) { if ((q = strchr(p, &#x27;/&#x27;)) != NULL) *q++ = 0;</p>
 <p>if (!*p) { p = q; continue; } p2 = strchr(p, &#x27;:&#x27;); if (p2 != NULL) { *p2++ = 0; if (strcmp(p, &quot;pad&quot;) == 0) *pad = p2; else return <a class="wiki-source-link" href="../../source/contrib/pgcrypto/px.h.html#L51" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/contrib/pgcrypto/px.h.html&quot;}, '*');">PXE_BAD_OPTION</a>; } else return <a class="wiki-source-link" href="../../source/contrib/pgcrypto/px.h.html#L52" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/contrib/pgcrypto/px.h.html&quot;}, '*');">PXE_BAD_FORMAT</a>;</p>

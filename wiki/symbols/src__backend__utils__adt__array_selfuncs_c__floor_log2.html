@@ -15,7 +15,7 @@
 <h2>入力と出力</h2>
 <ul>
 <li>引数: <code>uint32 n</code></li>
-<li>戻り値: <a class="wiki-source-link" href="../../source/src/include/port.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/port.h.html&quot;}, '*');"><code>int</code></a></li>
+<li>戻り値: <a class="wiki-source-link" href="../../source/src/include/port.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__port_h__int.html&quot;}, '*');"><code>int</code></a></li>
 </ul>
 <h2>前提条件と不変条件</h2>
 <p>まだ解析していません。</p>
@@ -34,7 +34,7 @@
 <h2>関連データ構造</h2>
 <p><code>uint32</code></p>
 <h2>ソース抜粋</h2>
-<p>~~~c static <a class="wiki-source-link" href="../../source/src/include/port.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/port.h.html&quot;}, '*');">int</a> <a class="wiki-source-link" href="../../source/src/backend/utils/adt/array_selfuncs.c.html#L1097" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__utils__adt__array_selfuncs_c__floor_log2.html&quot;}, '*');">floor_log2</a>(uint32 n) { <a class="wiki-source-link" href="../../source/src/include/port.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/port.h.html&quot;}, '*');">int</a>			logval = 0;</p>
+<p>~~~c static <a class="wiki-source-link" href="../../source/src/include/port.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__port_h__int.html&quot;}, '*');">int</a> <a class="wiki-source-link" href="../../source/src/backend/utils/adt/array_selfuncs.c.html#L1097" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__utils__adt__array_selfuncs_c__floor_log2.html&quot;}, '*');">floor_log2</a>(uint32 n) { <a class="wiki-source-link" href="../../source/src/include/port.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__port_h__int.html&quot;}, '*');">int</a>			logval = 0;</p>
 <p>if (n == 0) return -1; if (n &gt;= (1 &lt;&lt; 16)) { n &gt;&gt;= 16; logval += 16; } if (n &gt;= (1 &lt;&lt; 8)) { n &gt;&gt;= 8; logval += 8; } if (n &gt;= (1 &lt;&lt; 4)) { n &gt;&gt;= 4; logval += 4; } if (n &gt;= (1 &lt;&lt; 2)) { n &gt;&gt;= 2; logval += 2; } if (n &gt;= (1 &lt;&lt; 1)) { logval += 1; } return logval; } ~~~</p>
 <h2>失敗モードと境界条件</h2>
 <p>まだ解析していません。</p>

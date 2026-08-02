@@ -15,7 +15,7 @@
 <h2>入力と出力</h2>
 <ul>
 <li>引数: <code>TParser *prs</code></li>
-<li>戻り値: <a class="wiki-source-link" href="../../source/src/include/port.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/port.h.html&quot;}, '*');"><code>int</code></a></li>
+<li>戻り値: <a class="wiki-source-link" href="../../source/src/include/port.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__port_h__int.html&quot;}, '*');"><code>int</code></a></li>
 </ul>
 <h2>前提条件と不変条件</h2>
 <p>まだ解析していません。</p>
@@ -34,7 +34,7 @@
 <h2>関連データ構造</h2>
 <p><code>state</code>, <a class="wiki-source-link" href="../../source/src/backend/tsearch/wparser_def.c.html#L204" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__tsearch__wparser_def_c__TParser.html&quot;}, '*');"><code>TParser</code></a></p>
 <h2>ソース抜粋</h2>
-<p>~~~c static <a class="wiki-source-link" href="../../source/src/include/port.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/port.h.html&quot;}, '*');">int</a> <a class="wiki-source-link" href="../../source/src/backend/tsearch/wparser_def.c.html#L462" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__tsearch__wparser_def_c__p_isurlchar.html&quot;}, '*');">p_isurlchar</a>(<a class="wiki-source-link" href="../../source/src/backend/tsearch/wparser_def.c.html#L204" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__tsearch__wparser_def_c__TParser.html&quot;}, '*');">TParser</a> *prs) { char		ch;</p>
+<p>~~~c static <a class="wiki-source-link" href="../../source/src/include/port.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__port_h__int.html&quot;}, '*');">int</a> <a class="wiki-source-link" href="../../source/src/backend/tsearch/wparser_def.c.html#L462" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__tsearch__wparser_def_c__p_isurlchar.html&quot;}, '*');">p_isurlchar</a>(<a class="wiki-source-link" href="../../source/src/backend/tsearch/wparser_def.c.html#L204" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__tsearch__wparser_def_c__TParser.html&quot;}, '*');">TParser</a> *prs) { char		ch;</p>
 <p>/* no non-ASCII need apply */ if (prs-&gt;state-&gt;charlen != 1) return 0; ch = *(prs-&gt;str + prs-&gt;state-&gt;posbyte); /* no spaces or control characters */ if (ch &lt;= 0x20 || ch &gt;= 0x7F) return 0; /* reject characters disallowed by RFC 3986 */ switch (ch) { case &#x27;&quot;&#x27;: case &#x27;&lt;&#x27;: case &#x27;&gt;&#x27;: case &#x27;\\&#x27;: case &#x27;^&#x27;: case &#x27;`&#x27;: case &#x27;{&#x27;: case &#x27;|&#x27;: case &#x27;}&#x27;: return 0; } return 1; } ~~~</p>
 <h2>失敗モードと境界条件</h2>
 <p>まだ解析していません。</p>

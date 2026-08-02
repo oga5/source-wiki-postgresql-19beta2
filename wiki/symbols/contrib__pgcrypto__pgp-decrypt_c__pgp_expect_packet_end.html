@@ -15,7 +15,7 @@
 <h2>入力と出力</h2>
 <ul>
 <li>引数: <code>PullFilter *pkt</code></li>
-<li>戻り値: <a class="wiki-source-link" href="../../source/src/include/port.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/port.h.html&quot;}, '*');"><code>int</code></a></li>
+<li>戻り値: <a class="wiki-source-link" href="../../source/src/include/port.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__port_h__int.html&quot;}, '*');"><code>int</code></a></li>
 </ul>
 <h2>前提条件と不変条件</h2>
 <p>まだ解析していません。</p>
@@ -34,7 +34,7 @@
 <h2>関連データ構造</h2>
 <p><code>PullFilter</code>, <code>uint8</code></p>
 <h2>ソース抜粋</h2>
-<p>~~~c <a class="wiki-source-link" href="../../source/src/include/port.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/port.h.html&quot;}, '*');">int</a> <a class="wiki-source-link" href="../../source/contrib/pgcrypto/pgp-decrypt.c.html#L1077" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/contrib__pgcrypto__pgp-decrypt_c__pgp_expect_packet_end.html&quot;}, '*');">pgp_expect_packet_end</a>(PullFilter *pkt) { <a class="wiki-source-link" href="../../source/src/include/port.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/port.h.html&quot;}, '*');">int</a>			res; uint8	   *tmp;</p>
+<p>~~~c <a class="wiki-source-link" href="../../source/src/include/port.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__port_h__int.html&quot;}, '*');">int</a> <a class="wiki-source-link" href="../../source/contrib/pgcrypto/pgp-decrypt.c.html#L1077" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/contrib__pgcrypto__pgp-decrypt_c__pgp_expect_packet_end.html&quot;}, '*');">pgp_expect_packet_end</a>(PullFilter *pkt) { <a class="wiki-source-link" href="../../source/src/include/port.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__port_h__int.html&quot;}, '*');">int</a>			res; uint8	   *tmp;</p>
 <p>res = <a class="wiki-source-link" href="../../source/contrib/pgcrypto/mbuf.c.html#L245" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/contrib__pgcrypto__mbuf_c__pullf_read.html&quot;}, '*');">pullf_read</a>(pkt, 32 * 1024, &amp;tmp); if (res &gt; 0) { px_debug(&quot;<a class="wiki-source-link" href="../../source/contrib/pgcrypto/pgp-decrypt.c.html#L1077" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/contrib__pgcrypto__pgp-decrypt_c__pgp_expect_packet_end.html&quot;}, '*');">pgp_expect_packet_end</a>: got data&quot;); return <a class="wiki-source-link" href="../../source/contrib/pgcrypto/px.h.html#L67" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/contrib/pgcrypto/px.h.html&quot;}, '*');">PXE_PGP_CORRUPT_DATA</a>; } return res; } ~~~</p>
 <h2>失敗モードと境界条件</h2>
 <p>まだ解析していません。</p>

@@ -47,7 +47,7 @@
 <li>In the &#x27;xip&#x27; array we store transactions that have to be treated as</li>
 <li>committed. Since we will only ever look at tuples from transactions</li>
 <li>that have modified the catalog it&#x27;s more efficient to store those few</li>
-<li>that exist between xmin and xmax (frequently there are <a class="wiki-source-link" href="../../source/src/backend/optimizer/util/predtest.c.html#L1672" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/optimizer/util/predtest.c.html&quot;}, '*');">none</a>).</li>
+<li>that exist between xmin and xmax (frequently there are <a class="wiki-source-link" href="../../source/src/backend/optimizer/util/predtest.c.html#L1672" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/backend/optimizer/util/predtest.c.html&quot;}, '*');">none</a>).</li>
 <p>*</p>
 <li>Snapshots that are used in transactions that have modified the catalog</li>
 <li>also use the &#x27;subxip&#x27; array to store their toplevel xid and all the</li>
@@ -55,7 +55,7 @@
 <li>visible that are not in xip but still need to be visible. Subxip only</li>
 <li>gets filled <a class="wiki-source-link" href="../../source/src/interfaces/ecpg/preproc/type.h.html#L89" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__interfaces__ecpg__preproc__type_h__when.html&quot;}, '*');">when</a> the transaction <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> copied into the context of a</li>
 <li>catalog modifying transaction since we otherwise share a snapshot</li>
-<li>between transactions. As <a class="wiki-source-link" href="../../source/src/include/port/win32_port.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/port/win32_port.h.html&quot;}, '*');">long</a> as a txn hasn&#x27;t modified the catalog it</li>
+<li>between transactions. As <a class="wiki-source-link" href="../../source/src/include/port/win32_port.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__port__win32_port_h__long.html&quot;}, '*');">long</a> as a txn hasn&#x27;t modified the catalog it</li>
 <li>doesn&#x27;t need to treat any uncommitted rows as visible, so there <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> no</li>
 <li>need for those xids.</li>
 <p>*</p>

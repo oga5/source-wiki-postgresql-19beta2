@@ -15,7 +15,7 @@
 <h2>入力と出力</h2>
 <ul>
 <li>引数: <code>pg_cryptohash_ctx *ctx</code></li>
-<li>戻り値: <a class="wiki-source-link" href="../../source/src/include/port.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/port.h.html&quot;}, '*');"><code>int</code></a></li>
+<li>戻り値: <a class="wiki-source-link" href="../../source/src/include/port.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__port_h__int.html&quot;}, '*');"><code>int</code></a></li>
 </ul>
 <h2>前提条件と不変条件</h2>
 <p>まだ解析していません。</p>
@@ -34,7 +34,7 @@
 <h2>関連データ構造</h2>
 <p><code>pg_cryptohash_ctx</code></p>
 <h2>ソース抜粋</h2>
-<p>~~~c <a class="wiki-source-link" href="../../source/src/include/port.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/port.h.html&quot;}, '*');">int</a> pg_cryptohash_init(pg_cryptohash_ctx *ctx) { <a class="wiki-source-link" href="../../source/src/include/port.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/port.h.html&quot;}, '*');">int</a>			status = 0;</p>
+<p>~~~c <a class="wiki-source-link" href="../../source/src/include/port.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__port_h__int.html&quot;}, '*');">int</a> pg_cryptohash_init(pg_cryptohash_ctx *ctx) { <a class="wiki-source-link" href="../../source/src/include/port.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__port_h__int.html&quot;}, '*');">int</a>			status = 0;</p>
 <p>if (ctx == NULL) return -1;</p>
 <p>switch (ctx-&gt;type) { case PG_MD5: status = EVP_DigestInit_ex(ctx-&gt;evpctx, EVP_md5(), NULL); break; case PG_SHA1: status = EVP_DigestInit_ex(ctx-&gt;evpctx, EVP_sha1(), NULL); break; case PG_SHA224: status = EVP_DigestInit_ex(ctx-&gt;evpctx, EVP_sha224(), NULL); break; case PG_SHA256: status = EVP_DigestInit_ex(ctx-&gt;evpctx, EVP_sha256(), NULL); break; case PG_SHA384: status = EVP_DigestInit_ex(ctx-&gt;evpctx, EVP_sha384(), NULL); break; case PG_SHA512: status = EVP_DigestInit_ex(ctx-&gt;evpctx, EVP_sha512(), NULL); break; }</p>
 <p>/* OpenSSL internals return 1 on success, 0 on failure */ if (status &lt;= 0) { ctx-&gt;errreason = SSLerrmessage(ERR_get_error()); ctx-&gt;error = PG_CRYPTOHASH_ERROR_OPENSSL;</p>

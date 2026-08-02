@@ -34,7 +34,7 @@
 <h2>関連データ構造</h2>
 <p>なし</p>
 <h2>ソース抜粋</h2>
-<p>~~~c void pg_usleep(<a class="wiki-source-link" href="../../source/src/include/port/win32_port.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/port/win32_port.h.html&quot;}, '*');">long</a> microsec) { if (microsec &gt; 0) { #ifndef <a class="wiki-source-link" href="../../source/src/include/port/win32.h.html#L9" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/port/win32.h.html&quot;}, '*');">WIN32</a> struct timespec delay;</p>
+<p>~~~c void pg_usleep(<a class="wiki-source-link" href="../../source/src/include/port/win32_port.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__port__win32_port_h__long.html&quot;}, '*');">long</a> microsec) { if (microsec &gt; 0) { #ifndef <a class="wiki-source-link" href="../../source/src/include/port/win32.h.html#L9" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/port/win32.h.html&quot;}, '*');">WIN32</a> struct timespec delay;</p>
 <p>delay.tv_sec = microsec / 1000000L; delay.tv_nsec = (microsec % 1000000L) * 1000; (void) nanosleep(&amp;delay, NULL); #else SleepEx((microsec &lt; 500 ? 1 : (microsec + 500) / 1000), FALSE); #endif } } ~~~</p>
 <h2>失敗モードと境界条件</h2>
 <p>まだ解析していません。</p>

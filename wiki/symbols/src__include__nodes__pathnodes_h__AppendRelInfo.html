@@ -60,7 +60,7 @@
 <li>Vars are special-cased, and <a class="wiki-source-link" href="../../source/src/include/port.h.html#L388" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/port.h.html&quot;}, '*');">system</a> columns (attno &lt; 0) need no special</li>
 <li>translation since their attnos are the same for all tables.</li>
 <p>*</p>
-<li>Caution: the Vars have varlevelsup = 0.  Be careful to adjust as needed</li>
+<li>Caution: the Vars have <a class="wiki-source-link" href="../../source/src/backend/optimizer/util/tlist.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/backend/optimizer/util/tlist.c.html&quot;}, '*');">varlevelsup</a> = 0.  Be careful to adjust as needed</li>
 <li><a class="wiki-source-link" href="../../source/src/interfaces/ecpg/preproc/type.h.html#L89" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__interfaces__ecpg__preproc__type_h__when.html&quot;}, '*');">when</a> copying into a subquery.</li>
 <p>*/ List	   *translated_vars;	/* Expressions in the child&#x27;s Vars */</p>
 </ul>
@@ -70,7 +70,7 @@
 <li>child&#x27;s column numbers to parent&#x27;s.  The entry at [ccolno - 1] <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> the</li>
 <li>1-based parent column number for child column ccolno, or zero if that</li>
 <li>child column <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> dropped or doesn&#x27;t exist in the parent.</li>
-<p>*/ <a class="wiki-source-link" href="../../source/src/include/port.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/port.h.html&quot;}, '*');">int</a>			num_child_cols; /* length of array */ AttrNumber *parent_colnos <a class="wiki-source-link" href="../../source/src/include/nodes/nodes.h.html#L124" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/nodes/nodes.h.html&quot;}, '*');">pg_node_attr</a>(array_size(num_child_cols));</p>
+<p>*/ <a class="wiki-source-link" href="../../source/src/include/port.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__port_h__int.html&quot;}, '*');">int</a>			num_child_cols; /* length of array */ AttrNumber *parent_colnos <a class="wiki-source-link" href="../../source/src/include/nodes/nodes.h.html#L124" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/nodes/nodes.h.html&quot;}, '*');">pg_node_attr</a>(array_size(num_child_cols));</p>
 </ul>
 <p>/*</p>
 <ul>

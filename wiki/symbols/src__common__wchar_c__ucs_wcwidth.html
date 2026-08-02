@@ -15,7 +15,7 @@
 <h2>入力と出力</h2>
 <ul>
 <li>引数: <code>pg_wchar ucs</code></li>
-<li>戻り値: <a class="wiki-source-link" href="../../source/src/include/port.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/port.h.html&quot;}, '*');"><code>int</code></a></li>
+<li>戻り値: <a class="wiki-source-link" href="../../source/src/include/port.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__port_h__int.html&quot;}, '*');"><code>int</code></a></li>
 </ul>
 <h2>前提条件と不変条件</h2>
 <p>まだ解析していません。</p>
@@ -34,7 +34,7 @@
 <h2>関連データ構造</h2>
 <p><a class="wiki-source-link" href="../../source/src/common/wchar.c.html#L591" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__common__wchar_c__mbinterval.html&quot;}, '*');"><code>mbinterval</code></a>, <code>pg_wchar</code></p>
 <h2>ソース抜粋</h2>
-<p>~~~c static <a class="wiki-source-link" href="../../source/src/include/port.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/port.h.html&quot;}, '*');">int</a> <a class="wiki-source-link" href="../../source/src/common/wchar.c.html#L646" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__common__wchar_c__ucs_wcwidth.html&quot;}, '*');">ucs_wcwidth</a>(pg_wchar ucs) { #include &quot;common/unicode_nonspacing_table.h&quot; #include &quot;common/unicode_east_asian_fw_table.h&quot;</p>
+<p>~~~c static <a class="wiki-source-link" href="../../source/src/include/port.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__port_h__int.html&quot;}, '*');">int</a> <a class="wiki-source-link" href="../../source/src/common/wchar.c.html#L646" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__common__wchar_c__ucs_wcwidth.html&quot;}, '*');">ucs_wcwidth</a>(pg_wchar ucs) { #include &quot;common/unicode_nonspacing_table.h&quot; #include &quot;common/unicode_east_asian_fw_table.h&quot;</p>
 <p>/* <a class="wiki-source-link" href="../../source/src/interfaces/ecpg/test/expected/preproc-autoprep.c.html#L26" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__interfaces__ecpg__test__expected__preproc-autoprep_c__test.html&quot;}, '*');">test</a> for 8-bit control characters */ if (ucs == 0) return 0;</p>
 <p>if (ucs &lt; 0x20 || (ucs &gt;= 0x7f &amp;&amp; ucs &lt; 0xa0) || ucs &gt; 0x0010ffff) return -1;</p>
 <p>/*</p>
