@@ -34,7 +34,7 @@
 <h2>関連データ構造</h2>
 <p>なし</p>
 <h2>ソース抜粋</h2>
-<p>~~~c static void <a class="wiki-source-link" href="../../source/src/backend/tcop/postgres.c.html#L216" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__tcop__postgres_c__valgrind_report_error_query.html&quot;}, '*');">valgrind_report_error_query</a>(const char *query) { unsigned int valgrind_error_count = VALGRIND_COUNT_ERRORS;</p>
+<p>~~~c static void <a class="wiki-source-link" href="../../source/src/backend/tcop/postgres.c.html#L216" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__tcop__postgres_c__valgrind_report_error_query.html&quot;}, '*');">valgrind_report_error_query</a>(const char *query) { unsigned <a class="wiki-source-link" href="../../source/src/include/port.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/port.h.html&quot;}, '*');">int</a> valgrind_error_count = VALGRIND_COUNT_ERRORS;</p>
 <p>if (<a class="wiki-source-link" href="../../source/src/include/c.h.html#L442" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/c.h.html&quot;}, '*');">unlikely</a>(valgrind_error_count != old_valgrind_error_count) &amp;&amp; query != NULL) VALGRIND_PRINTF(&quot;Valgrind detected %u error(s) during execution of \&quot;%s\&quot;\n&quot;, valgrind_error_count - old_valgrind_error_count, query); } ~~~</p>
 <h2>失敗モードと境界条件</h2>
 <p>まだ解析していません。</p>

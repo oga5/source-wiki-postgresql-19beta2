@@ -34,7 +34,7 @@
 <h2>関連データ構造</h2>
 <p><code>BF_word</code></p>
 <h2>ソース抜粋</h2>
-<p>~~~c static void <a class="wiki-source-link" href="../../source/contrib/pgcrypto/crypt-blowfish.c.html#L440" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/contrib__pgcrypto__crypt-blowfish_c__BF_swap.html&quot;}, '*');">BF_swap</a>(BF_word *x, int count) { /* Swap on little-endian hardware, else do nothing */ #ifndef WORDS_BIGENDIAN BF_word		tmp;</p>
+<p>~~~c static void <a class="wiki-source-link" href="../../source/contrib/pgcrypto/crypt-blowfish.c.html#L440" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/contrib__pgcrypto__crypt-blowfish_c__BF_swap.html&quot;}, '*');">BF_swap</a>(BF_word *x, <a class="wiki-source-link" href="../../source/src/include/port.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/port.h.html&quot;}, '*');">int</a> count) { /* Swap on little-endian hardware, else do nothing */ #ifndef WORDS_BIGENDIAN BF_word		tmp;</p>
 <p>do { tmp = *x; tmp = (tmp &lt;&lt; 16) | (tmp &gt;&gt; 16); *x++ = ((tmp &amp; 0x00FF00FF) &lt;&lt; 8) | ((tmp &gt;&gt; 8) &amp; 0x00FF00FF); } while (--count); #endif } ~~~</p>
 <h2>失敗モードと境界条件</h2>
 <p>まだ解析していません。</p>

@@ -34,11 +34,11 @@
 <h2>関連データ構造</h2>
 <p><code>FmgrInfo</code>, <code>Oid</code></p>
 <h2>ソース抜粋</h2>
-<p>~~~c Oid <a class="wiki-source-link" href="../../source/src/backend/utils/fmgr/fmgr.c.html#L1875" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__utils__fmgr__fmgr_c__get_fn_expr_argtype.html&quot;}, '*');">get_fn_expr_argtype</a>(FmgrInfo *flinfo, int argnum) { /*</p>
+<p>~~~c Oid <a class="wiki-source-link" href="../../source/src/backend/utils/fmgr/fmgr.c.html#L1875" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__utils__fmgr__fmgr_c__get_fn_expr_argtype.html&quot;}, '*');">get_fn_expr_argtype</a>(FmgrInfo *flinfo, <a class="wiki-source-link" href="../../source/src/include/port.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/port.h.html&quot;}, '*');">int</a> argnum) { /*</p>
 <ul>
 <li>can&#x27;t return anything useful if we have no FmgrInfo or if its fn_expr</li>
 <li>node has not been <a class="wiki-source-link" href="../../source/src/port/win32ntdll.c.html#L36" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/port/win32ntdll.c.html&quot;}, '*');">initialized</a></li>
-<p>*/ if (!flinfo || !flinfo-&gt;fn_expr) return <a class="wiki-source-link" href="../../source/src/include/postgres_ext.h.html#L35" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/postgres_ext.h.html&quot;}, '*');">InvalidOid</a>;</p>
+<p>*/ if (!flinfo || !flinfo-&gt;fn_expr) return <a class="wiki-source-link" href="../../source/src/include/postgres_ext.h.html#L35" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/postgres_ext.h.html&quot;}, '*');">InvalidOid</a>;</p>
 </ul>
 <p>return <a class="wiki-source-link" href="../../source/src/backend/utils/fmgr/fmgr.c.html#L1894" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__utils__fmgr__fmgr_c__get_call_expr_argtype.html&quot;}, '*');">get_call_expr_argtype</a>(flinfo-&gt;fn_expr, argnum); } ~~~</p>
 <h2>失敗モードと境界条件</h2>

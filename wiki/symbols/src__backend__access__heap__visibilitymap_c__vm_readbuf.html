@@ -38,7 +38,7 @@
 <p>/*</p>
 <ul>
 <li>Caution: re-using this smgr pointer could fail if the relcache entry</li>
-<li>gets closed.  It&#x27;s safe as long as we only do smgr-level operations</li>
+<li>gets closed.  It&#x27;s safe as <a class="wiki-source-link" href="../../source/src/include/port/win32_port.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/port/win32_port.h.html&quot;}, '*');">long</a> as we only do smgr-level operations</li>
 <li>between here and the last use of the pointer.</li>
 <p>*/ reln = <a class="wiki-source-link" href="../../source/src/include/utils/rel.h.html#L577" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__utils__rel_h__RelationGetSmgr.html&quot;}, '*');">RelationGetSmgr</a>(rel);</p>
 </ul>
@@ -72,7 +72,7 @@
 <li>but other page header fields are still zeroes).  This <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> harmless for</li>
 <li>callers that will take a buffer lock themselves, but some callers</li>
 <li>inspect the page without any lock at all.  The latter <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> OK only so</li>
-<li>long as it doesn&#x27;t depend on the page header having correct contents.</li>
+<li><a class="wiki-source-link" href="../../source/src/include/port/win32_port.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/port/win32_port.h.html&quot;}, '*');">long</a> as it doesn&#x27;t depend on the page header having correct contents.</li>
 <li>Current usage <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> safe because <a class="wiki-source-link" href="../../source/src/include/storage/bufpage.h.html#L282" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__storage__bufpage_h__PageGetContents.html&quot;}, '*');">PageGetContents</a>() does not require that.</li>
 <p>*/ ~~~</p>
 </ul>

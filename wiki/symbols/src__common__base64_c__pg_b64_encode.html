@@ -15,7 +15,7 @@
 <h2>入力と出力</h2>
 <ul>
 <li>引数: <code>const uint8 *src</code>, <code>int len</code>, <code>char *dst</code>, <code>int dstlen</code></li>
-<li>戻り値: <code>int</code></li>
+<li>戻り値: <a class="wiki-source-link" href="../../source/src/include/port.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/port.h.html&quot;}, '*');"><code>int</code></a></li>
 </ul>
 <h2>前提条件と不変条件</h2>
 <p>まだ解析していません。</p>
@@ -34,7 +34,7 @@
 <h2>関連データ構造</h2>
 <p><code>string</code>, <code>uint32</code>, <code>uint8</code></p>
 <h2>ソース抜粋</h2>
-<p>~~~c int <a class="wiki-source-link" href="../../source/src/common/base64.c.html#L48" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__common__base64_c__pg_b64_encode.html&quot;}, '*');">pg_b64_encode</a>(const uint8 *src, int len, char *dst, int dstlen) { char	   *p; const uint8 *s, *end = src + len; int			pos = 2; uint32		buf = 0;</p>
+<p>~~~c <a class="wiki-source-link" href="../../source/src/include/port.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/port.h.html&quot;}, '*');">int</a> <a class="wiki-source-link" href="../../source/src/common/base64.c.html#L48" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__common__base64_c__pg_b64_encode.html&quot;}, '*');">pg_b64_encode</a>(const uint8 *src, <a class="wiki-source-link" href="../../source/src/include/port.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/port.h.html&quot;}, '*');">int</a> len, char *dst, <a class="wiki-source-link" href="../../source/src/include/port.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/port.h.html&quot;}, '*');">int</a> dstlen) { char	   *p; const uint8 *s, *end = src + len; <a class="wiki-source-link" href="../../source/src/include/port.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/port.h.html&quot;}, '*');">int</a>			pos = 2; uint32		buf = 0;</p>
 <p>s = src; p = dst;</p>
 <p>while (s &lt; end) { buf |= *s &lt;&lt; (pos &lt;&lt; 3); pos--; s++;</p>
 <p>/* <a class="wiki-source-link" href="../../source/src/interfaces/libpq/win32.h.html#L14" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq/win32.h.html&quot;}, '*');">write</a> it out */ if (pos &lt; 0) { /*</p>

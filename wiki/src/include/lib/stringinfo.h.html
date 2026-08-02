@@ -1,0 +1,60 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>src/include/lib/stringinfo.h.md</title><link rel="stylesheet" href="../../../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../../../source/src/include/lib/stringinfo.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/lib/stringinfo.h.html&quot;}, '*');">src/include/lib/stringinfo.h</a></h1>
+<h2>概要</h2>
+<p><a class="wiki-source-link" href="../../../../source/src/include/lib/stringinfo.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/lib/stringinfo.h.html&quot;}, '*');"><code>src/include/lib/stringinfo.h</code></a> は、PostgreSQL における可変長文字列バッファ型である <code>StringInfo</code> のデータ構造と操作関数を定義するヘッダーファイルです。C 言語の終端文字付き文字列（null-terminated <a class="wiki-source-link" href="../../../../source/src/include/c.h.html#L796" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/c.h.html&quot;}, '*');">text</a>）および任意のバイナリデータを効率よく安全に扱うためのインターフェースを提供します。最大長は現在 1GB に制限されています。</p>
+<h2>モジュール内での役割</h2>
+<p><code>src/include/lib</code> モジュール内に位置し、PostgreSQL のバックエンドおよびフロントエンドコード全般で利用される基本的なユーティリティライブラリの一つです。実体や実装コードはペアとなる <a class="wiki-source-link" href="../../../../source/src/common/stringinfo.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/common/stringinfo.c.html&quot;}, '*');"><code>src/common/stringinfo.c</code></a> に記述されており、メモリ割り当てには主に <code>palloc()</code> / <code>pfree()</code> が使用されます。</p>
+<h2>責務</h2>
+<ul>
+<li>可変長文字列を表現するデータ構造 <a class="wiki-source-link" href="../../../../source/src/include/lib/stringinfo.h.html#L46" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__lib__stringinfo_h__StringInfoData.html&quot;}, '*');"><code>StringInfoData</code></a> および <code>StringInfo</code> 型の定義。</li>
+<li>動的バッファの初期化、サイズ拡張、および破棄を行う関数の宣言。</li>
+<li>フォーマット付き文字列、プレーン文字列、単一文字、およびバイナリデータをバッファへ追加する API の提供。</li>
+<li>既存のメモリ領域をラップしてコピーを避ける、読み取り専用または文字列からの初期化インライン関数の提供。</li>
+</ul>
+<h2>重要なシンボル</h2>
+<ul>
+<li><code>struct StringInfoData</code>: 文字列のデータポインタ、現在の長さ、最大バッファサイズ、カーソル位置を保持する構造体。</li>
+<li><code>typedef StringInfo</code>: <code>StringInfoData *</code> 型のエイリアス。</li>
+<li><code>macro: STRINGINFO_DEFAULT_SIZE</code>: デフォルトの初期バッファサイズ（1024バイト）。</li>
+<li><code>function: initReadOnlyStringInfo</code>: 既存のバッファをコピーせずに読み取り専用の <code>StringInfo</code> として初期化するインライン関数。</li>
+<li><code>function: initStringInfoFromString</code>: 既存の palloc 済みバッファから <code>StringInfo</code> を初期化するインライン関数。</li>
+<li><code>macro: appendStringInfoCharMacro</code>: バッファの容量に余裕がある場合に高速に1文字を追加するマクロ。</li>
+</ul>
+<h2>制御フローとデータフロー</h2>
+<ul>
+<li>**初期化フェーズ**: <code>makeStringInfo()</code> や <code>initStringInfo()</code> などの関数により <a class="wiki-source-link" href="../../../../source/src/include/lib/stringinfo.h.html#L46" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__lib__stringinfo_h__StringInfoData.html&quot;}, '*');"><code>StringInfoData</code></a> が生成され、<code>palloc()</code> を介して初期サイズ分のメモリバッファが割り当てられます。</li>
+<li>**データ追加フェーズ**: <code>appendStringInfo()</code> や <code>appendBinaryStringInfo()</code> などの関数を通じてデータがバッファに書き込まれます。容量が不足する場合は、内部で <code>enlargeStringInfo()</code> が呼び出され、バッファサイズが再割り当て（拡張）されます。</li>
+<li>**破棄フェーズ**: 利用完了後は <code>destroyStringInfo()</code> によってバッファおよび構造体メモリが解放されます。</li>
+</ul>
+<h2>直接依存</h2>
+<p>このファイル自体には他のヘッダーファイルへの <code>#include</code> は記述されていません（純粋な型定義と関数宣言のみを含みます）。</p>
+<h2>関連コード</h2>
+<ul>
+<li><a class="wiki-source-link" href="../../../../source/src/common/stringinfo.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/common/stringinfo.c.html&quot;}, '*');"><code>src/common/stringinfo.c</code></a>: ヘッダーで宣言されている関数の実体および内部ヘルパー関数を実装するペアファイル。</li>
+</ul>
+<h2>読者向けメモ</h2>
+<ul>
+<li>読み取り専用として初期化された <a class="wiki-source-link" href="../../../../source/src/include/lib/stringinfo.h.html#L46" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__lib__stringinfo_h__StringInfoData.html&quot;}, '*');"><code>StringInfoData</code></a>（<code>maxlen == 0</code>）は、内容の変更や <code>resetStringInfo()</code> の呼び出しができません。</li>
+<li><a class="wiki-source-link" href="../../../../source/src/include/lib/stringinfo.h.html#L231" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/lib/stringinfo.h.html&quot;}, '*');"><code>appendStringInfoCharMacro</code></a> などのマクロを使用する際は、引数が複数回評価される副作用に注意してください。</li>
+</ul>
+<h2>シンボルページ</h2>
+<ul>
+<li><a href="../../../symbols/src__include__lib__stringinfo_h__StringInfoData.html" target="wiki-view"><code>StringInfoData</code></a></li>
+<li><a href="../../../symbols/src__include__lib__stringinfo_h__StringInfo.html" target="wiki-view"><code>StringInfo</code></a></li>
+<li><a href="../../../symbols/src__include__lib__stringinfo_h__initReadOnlyStringInfo.html" target="wiki-view"><code>initReadOnlyStringInfo</code></a></li>
+<li><a href="../../../symbols/src__include__lib__stringinfo_h__initStringInfoFromString.html" target="wiki-view"><code>initStringInfoFromString</code></a></li>
+</ul><script>
+(function() {
+  function notifyParent() {
+    if (parent === window) return;
+    parent.postMessage({type: "frame-location", frame: window.name || "", href: window.location.href}, "*");
+  }
+  document.addEventListener("click", function(event) {
+    const link = event.target.closest("a[data-panel]");
+    if (!link || parent === window) return;
+    parent.postMessage({type: "source-link", panel: link.dataset.panel}, "*");
+  });
+  window.addEventListener("load", notifyParent);
+  window.addEventListener("hashchange", notifyParent);
+})();
+</script></body></html>

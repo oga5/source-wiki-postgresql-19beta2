@@ -15,7 +15,7 @@
 <h2>入力と出力</h2>
 <ul>
 <li>引数: <code>PushFilter *mp</code></li>
-<li>戻り値: <code>int</code></li>
+<li>戻り値: <a class="wiki-source-link" href="../../source/src/include/port.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/port.h.html&quot;}, '*');"><code>int</code></a></li>
 </ul>
 <h2>前提条件と不変条件</h2>
 <p>まだ解析していません。</p>
@@ -34,7 +34,7 @@
 <h2>関連データ構造</h2>
 <p><code>PushFilter</code></p>
 <h2>ソース抜粋</h2>
-<p>~~~c int <a class="wiki-source-link" href="../../source/contrib/pgcrypto/mbuf.c.html#L498" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/contrib__pgcrypto__mbuf_c__pushf_flush.html&quot;}, '*');">pushf_flush</a>(PushFilter *mp) { int			res;</p>
+<p>~~~c <a class="wiki-source-link" href="../../source/src/include/port.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/port.h.html&quot;}, '*');">int</a> <a class="wiki-source-link" href="../../source/contrib/pgcrypto/mbuf.c.html#L498" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/contrib__pgcrypto__mbuf_c__pushf_flush.html&quot;}, '*');">pushf_flush</a>(PushFilter *mp) { <a class="wiki-source-link" href="../../source/src/include/port.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/port.h.html&quot;}, '*');">int</a>			res;</p>
 <p>while (mp) { if (mp-&gt;<a class="wiki-source-link" href="../../source/src/backend/utils/misc/guc_tables.c.html#L643" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/utils/misc/guc_tables.c.html&quot;}, '*');">block_size</a> &gt; 0) { res = <a class="wiki-source-link" href="../../source/contrib/pgcrypto/mbuf.c.html#L423" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/contrib__pgcrypto__mbuf_c__wrap_process.html&quot;}, '*');">wrap_process</a>(mp, mp-&gt;buf, mp-&gt;pos); if (res &lt; 0) return res; }</p>
 <p>if (mp-&gt;op-&gt;flush) { res = mp-&gt;op-&gt;flush(mp-&gt;next, mp-&gt;priv); if (res &lt; 0) return res; }</p>
 <p>mp = mp-&gt;next; } return 0; } ~~~</p>

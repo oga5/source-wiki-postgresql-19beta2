@@ -15,7 +15,7 @@
 <h2>入力と出力</h2>
 <ul>
 <li>引数: <code>const char *prosrc</code>, <code>const char *queryText</code>, <code>int cursorpos</code></li>
-<li>戻り値: <code>int</code></li>
+<li>戻り値: <a class="wiki-source-link" href="../../source/src/include/port.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/port.h.html&quot;}, '*');"><code>int</code></a></li>
 </ul>
 <h2>前提条件と不変条件</h2>
 <p>まだ解析していません。</p>
@@ -34,13 +34,13 @@
 <h2>関連データ構造</h2>
 <p>なし</p>
 <h2>ソース抜粋</h2>
-<p>~~~c static int <a class="wiki-source-link" href="../../source/src/backend/catalog/pg_proc.c.html#L1114" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__catalog__pg_proc_c__match_prosrc_to_query.html&quot;}, '*');">match_prosrc_to_query</a>(const char *prosrc, const char *queryText, int cursorpos) { /*</p>
+<p>~~~c static <a class="wiki-source-link" href="../../source/src/include/port.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/port.h.html&quot;}, '*');">int</a> <a class="wiki-source-link" href="../../source/src/backend/catalog/pg_proc.c.html#L1114" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__catalog__pg_proc_c__match_prosrc_to_query.html&quot;}, '*');">match_prosrc_to_query</a>(const char *prosrc, const char *queryText, <a class="wiki-source-link" href="../../source/src/include/port.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/port.h.html&quot;}, '*');">int</a> cursorpos) { /*</p>
 <ul>
 <li>Rather than fully parsing the original command, we just scan the</li>
 <li>command looking for $prosrc$ or &#x27;prosrc&#x27;.  This could be fooled (though</li>
 <li>not in any very probable scenarios), so fail if we <a class="wiki-source-link" href="../../source/src/backend/regex/regexec.c.html#L420" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__regex__regexec_c__find.html&quot;}, '*');">find</a> more than one</li>
 <li>match.</li>
-<p>*/ int			prosrclen = strlen(prosrc); int			querylen = strlen(queryText); int			matchpos = 0; int			curpos; int			newcursorpos;</p>
+<p>*/ <a class="wiki-source-link" href="../../source/src/include/port.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/port.h.html&quot;}, '*');">int</a>			prosrclen = strlen(prosrc); <a class="wiki-source-link" href="../../source/src/include/port.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/port.h.html&quot;}, '*');">int</a>			querylen = strlen(queryText); <a class="wiki-source-link" href="../../source/src/include/port.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/port.h.html&quot;}, '*');">int</a>			matchpos = 0; <a class="wiki-source-link" href="../../source/src/include/port.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/port.h.html&quot;}, '*');">int</a>			curpos; <a class="wiki-source-link" href="../../source/src/include/port.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/port.h.html&quot;}, '*');">int</a>			newcursorpos;</p>
 </ul>
 <p>for (curpos = 0; curpos &lt; querylen - prosrclen; curpos++) { if (queryText[curpos] == &#x27;$&#x27; &amp;&amp; strncmp(prosrc, &amp;queryText[curpos + 1], prosrclen) == 0 &amp;&amp; queryText[curpos + 1 + prosrclen] == &#x27;$&#x27;) { /*</p>
 <ul>

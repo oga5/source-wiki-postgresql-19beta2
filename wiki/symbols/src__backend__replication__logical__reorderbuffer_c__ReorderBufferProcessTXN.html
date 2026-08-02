@@ -49,14 +49,14 @@
 <li>started, so start an explicit subtransaction there.</li>
 <p>*/ using_subtxn = <a class="wiki-source-link" href="../../source/src/backend/access/transam/xact.c.html#L5042" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__access__transam__xact_c__IsTransactionOrTransactionBlock.html&quot;}, '*');">IsTransactionOrTransactionBlock</a>();</p>
 </ul>
-<p><a class="wiki-source-link" href="../../source/src/include/utils/elog.h.html#L388" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/utils/elog.h.html&quot;}, '*');">PG_TRY</a>(); { ReorderBufferChange *change; int			changes_count = 0;	/* used to accumulate the number of</p>
+<p><a class="wiki-source-link" href="../../source/src/include/utils/elog.h.html#L388" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/utils/elog.h.html&quot;}, '*');">PG_TRY</a>(); { ReorderBufferChange *change; <a class="wiki-source-link" href="../../source/src/include/port.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/port.h.html&quot;}, '*');">int</a>			changes_count = 0;	/* used to accumulate the number of</p>
 <ul>
 <li>changes */</li>
 </ul>
 <p>if (using_subtxn) <a class="wiki-source-link" href="../../source/src/backend/access/transam/xact.c.html#L4747" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__access__transam__xact_c__BeginInternalSubTransaction.html&quot;}, '*');">BeginInternalSubTransaction</a>(streaming ? &quot;stream&quot; : &quot;replay&quot;); else <a class="wiki-source-link" href="../../source/src/backend/access/transam/xact.c.html#L3111" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__access__transam__xact_c__StartTransactionCommand.html&quot;}, '*');">StartTransactionCommand</a>();</p>
 <p>/*</p>
 <ul>
-<li>We only need to <a class="wiki-source-link" href="../../source/src/include/port/win32_port.h.html#L502" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/port/win32_port.h.html&quot;}, '*');">send</a> begin/begin-prepare for non-streamed</li>
+<li>We only need to <a class="wiki-source-link" href="../../source/src/include/port/win32_port.h.html#L502" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/port/win32_port.h.html&quot;}, '*');">send</a> begin/begin-prepare for non-streamed</li>
 <li>transactions.</li>
 <p>*/ if (!streaming) { if (<a class="wiki-source-link" href="../../source/src/include/replication/reorderbuffer.h.html#L240" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/replication/reorderbuffer.h.html&quot;}, '*');">rbtxn_is_prepared</a>(txn)) rb-&gt;begin_prepare(rb, txn); else rb-&gt;begin(rb, txn); }</p>
 </ul>

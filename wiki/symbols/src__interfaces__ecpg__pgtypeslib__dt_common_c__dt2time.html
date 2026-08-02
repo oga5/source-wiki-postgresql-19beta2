@@ -34,7 +34,7 @@
 <h2>関連データ構造</h2>
 <p><code>fsec_t</code>, <code>int64</code></p>
 <h2>ソース抜粋</h2>
-<p>~~~c void dt2time(double jd, int *hour, int *min, int *sec, fsec_t *fsec) { int64		time;</p>
+<p>~~~c void dt2time(double jd, <a class="wiki-source-link" href="../../source/src/include/port.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/port.h.html&quot;}, '*');">int</a> *hour, <a class="wiki-source-link" href="../../source/src/include/port.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/port.h.html&quot;}, '*');">int</a> *min, <a class="wiki-source-link" href="../../source/src/include/port.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/port.h.html&quot;}, '*');">int</a> *sec, fsec_t *fsec) { int64		time;</p>
 <p>time = jd; *hour = time / USECS_PER_HOUR; time -= (*hour) * USECS_PER_HOUR; *min = time / USECS_PER_MINUTE; time -= (*min) * USECS_PER_MINUTE; *sec = time / USECS_PER_SEC; *fsec = time - (*sec * USECS_PER_SEC); }								/* dt2time() */ ~~~</p>
 <h2>失敗モードと境界条件</h2>
 <p>まだ解析していません。</p>

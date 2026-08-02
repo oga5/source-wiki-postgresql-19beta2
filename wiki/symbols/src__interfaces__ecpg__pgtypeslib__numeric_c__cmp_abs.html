@@ -15,7 +15,7 @@
 <h2>入力と出力</h2>
 <ul>
 <li>引数: <code>numeric *var1</code>, <code>numeric *var2</code></li>
-<li>戻り値: <code>int</code></li>
+<li>戻り値: <a class="wiki-source-link" href="../../source/src/include/port.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/port.h.html&quot;}, '*');"><code>int</code></a></li>
 </ul>
 <h2>前提条件と不変条件</h2>
 <p>まだ解析していません。</p>
@@ -34,7 +34,7 @@
 <h2>関連データ構造</h2>
 <p><code>numeric</code>, <code>stat</code></p>
 <h2>ソース抜粋</h2>
-<p>~~~c static int cmp_abs(numeric *var1, numeric *var2) { int			i1 = 0; int			i2 = 0; int			w1 = var1-&gt;weight; int			w2 = var2-&gt;weight; int			stat;</p>
+<p>~~~c static <a class="wiki-source-link" href="../../source/src/include/port.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/port.h.html&quot;}, '*');">int</a> cmp_abs(numeric *var1, numeric *var2) { <a class="wiki-source-link" href="../../source/src/include/port.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/port.h.html&quot;}, '*');">int</a>			i1 = 0; <a class="wiki-source-link" href="../../source/src/include/port.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/port.h.html&quot;}, '*');">int</a>			i2 = 0; <a class="wiki-source-link" href="../../source/src/include/port.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/port.h.html&quot;}, '*');">int</a>			w1 = var1-&gt;weight; <a class="wiki-source-link" href="../../source/src/include/port.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/port.h.html&quot;}, '*');">int</a>			w2 = var2-&gt;weight; <a class="wiki-source-link" href="../../source/src/include/port.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/port.h.html&quot;}, '*');">int</a>			stat;</p>
 <p>while (w1 &gt; w2 &amp;&amp; i1 &lt; var1-&gt;ndigits) { if (var1-&gt;digits[i1++] != 0) return 1; w1--; } while (w2 &gt; w1 &amp;&amp; i2 &lt; var2-&gt;ndigits) { if (var2-&gt;digits[i2++] != 0) return -1; w2--; }</p>
 <p>if (w1 == w2) { while (i1 &lt; var1-&gt;ndigits &amp;&amp; i2 &lt; var2-&gt;ndigits) { stat = var1-&gt;digits[i1++] - var2-&gt;digits[i2++]; if (stat) { if (stat &gt; 0) return 1; return -1; } } }</p>
 <p>while (i1 &lt; var1-&gt;ndigits) { if (var1-&gt;digits[i1++] != 0) return 1; } while (i2 &lt; var2-&gt;ndigits) { if (var2-&gt;digits[i2++] != 0) return -1; }</p>

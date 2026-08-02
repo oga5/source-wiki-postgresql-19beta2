@@ -15,7 +15,7 @@
 <h2>入力と出力</h2>
 <ul>
 <li>引数: <code>char **user_name_p</code></li>
-<li>戻り値: <code>int</code></li>
+<li>戻り値: <a class="wiki-source-link" href="../../source/src/include/port.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/port.h.html&quot;}, '*');"><code>int</code></a></li>
 </ul>
 <h2>前提条件と不変条件</h2>
 <p>まだ解析していません。</p>
@@ -34,7 +34,7 @@
 <h2>関連データ構造</h2>
 <p>なし</p>
 <h2>ソース抜粋</h2>
-<p>~~~c int <a class="wiki-source-link" href="../../source/src/bin/pg_upgrade/util.c.html#L322" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__bin__pg_upgrade__util_c__get_user_info.html&quot;}, '*');">get_user_info</a>(char **user_name_p) { int			user_id; const char *user_name; char	   *errstr;</p>
+<p>~~~c <a class="wiki-source-link" href="../../source/src/include/port.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/port.h.html&quot;}, '*');">int</a> <a class="wiki-source-link" href="../../source/src/bin/pg_upgrade/util.c.html#L322" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__bin__pg_upgrade__util_c__get_user_info.html&quot;}, '*');">get_user_info</a>(char **user_name_p) { <a class="wiki-source-link" href="../../source/src/include/port.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/port.h.html&quot;}, '*');">int</a>			user_id; const char *user_name; char	   *errstr;</p>
 <p>#ifndef <a class="wiki-source-link" href="../../source/src/include/port/win32.h.html#L9" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/port/win32.h.html&quot;}, '*');">WIN32</a> user_id = geteuid(); #else user_id = 1; #endif</p>
 <p>user_name = <a class="wiki-source-link" href="../../source/src/common/username.c.html#L30" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__common__username_c__get_user_name.html&quot;}, '*');">get_user_name</a>(&amp;errstr); if (!user_name) pg_fatal(&quot;%s&quot;, errstr);</p>
 <p>/* make a copy */ *user_name_p = <a class="wiki-source-link" href="../../source/src/common/fe_memutils.c.html#L90" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__common__fe_memutils_c__pg_strdup.html&quot;}, '*');">pg_strdup</a>(user_name);</p>

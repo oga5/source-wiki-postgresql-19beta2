@@ -15,7 +15,7 @@
 <h2>入力と出力</h2>
 <ul>
 <li>引数: <code>PGP_Context *ctx</code>, <code>int algo</code></li>
-<li>戻り値: <code>int</code></li>
+<li>戻り値: <a class="wiki-source-link" href="../../source/src/include/port.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/port.h.html&quot;}, '*');"><code>int</code></a></li>
 </ul>
 <h2>前提条件と不変条件</h2>
 <p>まだ解析していません。</p>
@@ -34,7 +34,7 @@
 <h2>関連データ構造</h2>
 <p><a class="wiki-source-link" href="../../source/contrib/pgcrypto/pgp.h.html#L119" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/contrib__pgcrypto__pgp_h__PGP_Context.html&quot;}, '*');"><code>PGP_Context</code></a></p>
 <h2>ソース抜粋</h2>
-<p>~~~c int <a class="wiki-source-link" href="../../source/contrib/pgcrypto/pgp.c.html#L273" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/contrib__pgcrypto__pgp_c__pgp_set_compress_algo.html&quot;}, '*');">pgp_set_compress_algo</a>(<a class="wiki-source-link" href="../../source/contrib/pgcrypto/pgp.h.html#L119" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/contrib__pgcrypto__pgp_h__PGP_Context.html&quot;}, '*');">PGP_Context</a> *ctx, int algo) { switch (algo) { case PGP_COMPR_NONE: case PGP_COMPR_ZIP: case PGP_COMPR_ZLIB: case PGP_COMPR_BZIP2: ctx-&gt;compress_algo = algo; return 0; } return <a class="wiki-source-link" href="../../source/contrib/pgcrypto/px.h.html#L59" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/contrib/pgcrypto/px.h.html&quot;}, '*');">PXE_ARGUMENT_ERROR</a>; } ~~~</p>
+<p>~~~c <a class="wiki-source-link" href="../../source/src/include/port.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/port.h.html&quot;}, '*');">int</a> <a class="wiki-source-link" href="../../source/contrib/pgcrypto/pgp.c.html#L273" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/contrib__pgcrypto__pgp_c__pgp_set_compress_algo.html&quot;}, '*');">pgp_set_compress_algo</a>(<a class="wiki-source-link" href="../../source/contrib/pgcrypto/pgp.h.html#L119" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/contrib__pgcrypto__pgp_h__PGP_Context.html&quot;}, '*');">PGP_Context</a> *ctx, <a class="wiki-source-link" href="../../source/src/include/port.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/port.h.html&quot;}, '*');">int</a> algo) { switch (algo) { case PGP_COMPR_NONE: case PGP_COMPR_ZIP: case PGP_COMPR_ZLIB: case PGP_COMPR_BZIP2: ctx-&gt;compress_algo = algo; return 0; } return <a class="wiki-source-link" href="../../source/contrib/pgcrypto/px.h.html#L59" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/contrib/pgcrypto/px.h.html&quot;}, '*');">PXE_ARGUMENT_ERROR</a>; } ~~~</p>
 <h2>失敗モードと境界条件</h2>
 <p>まだ解析していません。</p>
 <h2>保守担当者向けメモ</h2>

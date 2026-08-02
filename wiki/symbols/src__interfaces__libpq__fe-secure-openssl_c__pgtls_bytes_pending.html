@@ -15,7 +15,7 @@
 <h2>入力と出力</h2>
 <ul>
 <li>引数: <code>PGconn *conn</code></li>
-<li>戻り値: <code>ssize_t</code></li>
+<li>戻り値: <a class="wiki-source-link" href="../../source/src/include/port/win32_port.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/port/win32_port.h.html&quot;}, '*');"><code>ssize_t</code></a></li>
 </ul>
 <h2>前提条件と不変条件</h2>
 <p>まだ解析していません。</p>
@@ -34,11 +34,11 @@
 <h2>関連データ構造</h2>
 <p><code>PGconn</code></p>
 <h2>ソース抜粋</h2>
-<p>~~~c ssize_t <a class="wiki-source-link" href="../../source/src/interfaces/libpq/fe-secure-openssl.c.html#L234" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__interfaces__libpq__fe-secure-openssl_c__pgtls_bytes_pending.html&quot;}, '*');">pgtls_bytes_pending</a>(PGconn *<a class="wiki-source-link" href="../../source/src/bin/pg_basebackup/streamutil.c.html#L52" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/bin/pg_basebackup/streamutil.c.html&quot;}, '*');">conn</a>) { int			pending;</p>
+<p>~~~c <a class="wiki-source-link" href="../../source/src/include/port/win32_port.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/port/win32_port.h.html&quot;}, '*');">ssize_t</a> <a class="wiki-source-link" href="../../source/src/interfaces/libpq/fe-secure-openssl.c.html#L234" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__interfaces__libpq__fe-secure-openssl_c__pgtls_bytes_pending.html&quot;}, '*');">pgtls_bytes_pending</a>(PGconn *<a class="wiki-source-link" href="../../source/src/bin/pg_basebackup/streamutil.c.html#L52" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/bin/pg_basebackup/streamutil.c.html&quot;}, '*');">conn</a>) { <a class="wiki-source-link" href="../../source/src/include/port.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/port.h.html&quot;}, '*');">int</a>			pending;</p>
 <p>/*</p>
 <ul>
 <li>OpenSSL readahead <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> documented to break SSL_pending().  Plus, we can&#x27;t</li>
-<li>afford to have OpenSSL take bytes off the <a class="wiki-source-link" href="../../source/src/include/port/win32_port.h.html#L495" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/port/win32_port.h.html&quot;}, '*');">socket</a> without processing</li>
+<li>afford to have OpenSSL take bytes off the <a class="wiki-source-link" href="../../source/src/include/port/win32_port.h.html#L495" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/port/win32_port.h.html&quot;}, '*');">socket</a> without processing</li>
 <li>them; that breaks the postconditions for pqsecure_drain_pending().</li>
 <p>*/ <a class="wiki-source-link" href="../../source/src/include/c.h.html#L950" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/c.h.html&quot;}, '*');">Assert</a>(!SSL_get_read_ahead(<a class="wiki-source-link" href="../../source/src/bin/pg_basebackup/streamutil.c.html#L52" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/bin/pg_basebackup/streamutil.c.html&quot;}, '*');">conn</a>-&gt;ssl));</p>
 </ul>
@@ -51,7 +51,7 @@
 <li>and <a class="wiki-source-link" href="../../source/src/bin/pg_basebackup/streamutil.c.html#L52" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/bin/pg_basebackup/streamutil.c.html&quot;}, '*');">conn</a>-&gt;inBuffer can&#x27;t currently go past INT_MAX in size anyway.</li>
 <p>*/ <a class="wiki-source-link" href="../../source/src/interfaces/libpq/fe-misc.c.html#L1547" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__interfaces__libpq__fe-misc_c__libpq_append_conn_error.html&quot;}, '*');">libpq_append_conn_error</a>(<a class="wiki-source-link" href="../../source/src/bin/pg_basebackup/streamutil.c.html#L52" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/bin/pg_basebackup/streamutil.c.html&quot;}, '*');">conn</a>, &quot;OpenSSL reports INT_MAX bytes pending&quot;); return -1; }</p>
 </ul>
-<p>return (ssize_t) pending; } ~~~</p>
+<p>return (<a class="wiki-source-link" href="../../source/src/include/port/win32_port.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/port/win32_port.h.html&quot;}, '*');">ssize_t</a>) pending; } ~~~</p>
 <h2>失敗モードと境界条件</h2>
 <p>まだ解析していません。</p>
 <h2>保守担当者向けメモ</h2>

@@ -14,7 +14,7 @@
 </ul>
 <h2>入力と出力</h2>
 <ul>
-<li>戻り値: <code>int</code></li>
+<li>戻り値: <a class="wiki-source-link" href="../../source/src/include/port.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/port.h.html&quot;}, '*');"><code>int</code></a></li>
 </ul>
 <h2>前提条件と不変条件</h2>
 <p>まだ解析していません。</p>
@@ -33,7 +33,7 @@
 <h2>関連データ構造</h2>
 <p>なし</p>
 <h2>ソース抜粋</h2>
-<p>~~~c int <a class="wiki-source-link" href="../../source/src/common/exec.c.html#L479" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__common__exec_c__pg_disable_aslr.html&quot;}, '*');">pg_disable_aslr</a>(void) { #if defined(HAVE_SYS_PERSONALITY_H) return personality(ADDR_NO_RANDOMIZE); #elif defined(HAVE_SYS_PROCCTL_H) &amp;&amp; defined(PROC_ASLR_FORCE_DISABLE) int			data = PROC_ASLR_FORCE_DISABLE;</p>
+<p>~~~c <a class="wiki-source-link" href="../../source/src/include/port.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/port.h.html&quot;}, '*');">int</a> <a class="wiki-source-link" href="../../source/src/common/exec.c.html#L479" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__common__exec_c__pg_disable_aslr.html&quot;}, '*');">pg_disable_aslr</a>(void) { #if defined(HAVE_SYS_PERSONALITY_H) return personality(ADDR_NO_RANDOMIZE); #elif defined(HAVE_SYS_PROCCTL_H) &amp;&amp; defined(PROC_ASLR_FORCE_DISABLE) <a class="wiki-source-link" href="../../source/src/include/port.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/port.h.html&quot;}, '*');">int</a>			data = PROC_ASLR_FORCE_DISABLE;</p>
 <p>return procctl(P_PID, 0, PROC_ASLR_CTL, &amp;data); #else errno = ENOSYS; return -1; #endif } ~~~</p>
 <h2>失敗モードと境界条件</h2>
 <p>まだ解析していません。</p>

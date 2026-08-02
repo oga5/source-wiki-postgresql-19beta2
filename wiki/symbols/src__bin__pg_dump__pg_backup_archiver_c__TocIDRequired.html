@@ -15,7 +15,7 @@
 <h2>入力と出力</h2>
 <ul>
 <li>引数: <code>ArchiveHandle *AH</code>, <code>DumpId id</code></li>
-<li>戻り値: <code>int</code></li>
+<li>戻り値: <a class="wiki-source-link" href="../../source/src/include/port.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/port.h.html&quot;}, '*');"><code>int</code></a></li>
 </ul>
 <h2>前提条件と不変条件</h2>
 <p>まだ解析していません。</p>
@@ -34,7 +34,7 @@
 <h2>関連データ構造</h2>
 <p><code>ArchiveHandle</code>, <a class="wiki-source-link" href="../../source/src/bin/pg_dump/pg_backup.h.html#L285" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__bin__pg_dump__pg_backup_h__DumpId.html&quot;}, '*');"><code>DumpId</code></a>, <code>TocEntry</code></p>
 <h2>ソース抜粋</h2>
-<p>~~~c int <a class="wiki-source-link" href="../../source/src/bin/pg_dump/pg_backup_archiver.c.html#L2042" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__bin__pg_dump__pg_backup_archiver_c__TocIDRequired.html&quot;}, '*');">TocIDRequired</a>(ArchiveHandle *AH, <a class="wiki-source-link" href="../../source/src/bin/pg_dump/pg_backup.h.html#L285" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__bin__pg_dump__pg_backup_h__DumpId.html&quot;}, '*');">DumpId</a> id) { TocEntry   *te = <a class="wiki-source-link" href="../../source/src/bin/pg_dump/pg_backup_archiver.c.html#L2029" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__bin__pg_dump__pg_backup_archiver_c__getTocEntryByDumpId.html&quot;}, '*');">getTocEntryByDumpId</a>(AH, id);</p>
+<p>~~~c <a class="wiki-source-link" href="../../source/src/include/port.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/port.h.html&quot;}, '*');">int</a> <a class="wiki-source-link" href="../../source/src/bin/pg_dump/pg_backup_archiver.c.html#L2042" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__bin__pg_dump__pg_backup_archiver_c__TocIDRequired.html&quot;}, '*');">TocIDRequired</a>(ArchiveHandle *AH, <a class="wiki-source-link" href="../../source/src/bin/pg_dump/pg_backup.h.html#L285" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__bin__pg_dump__pg_backup_h__DumpId.html&quot;}, '*');">DumpId</a> id) { TocEntry   *te = <a class="wiki-source-link" href="../../source/src/bin/pg_dump/pg_backup_archiver.c.html#L2029" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__bin__pg_dump__pg_backup_archiver_c__getTocEntryByDumpId.html&quot;}, '*');">getTocEntryByDumpId</a>(AH, id);</p>
 <p>if (!te) return 0;</p>
 <p>return te-&gt;reqs; } ~~~</p>
 <h2>失敗モードと境界条件</h2>

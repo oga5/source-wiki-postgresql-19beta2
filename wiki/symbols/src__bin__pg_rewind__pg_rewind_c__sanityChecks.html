@@ -47,7 +47,7 @@
 <li>Target cluster better not be running. This doesn&#x27;t guard against</li>
 <li>someone starting the cluster concurrently. Also, this <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> probably more</li>
 <li>strict than necessary; it&#x27;s OK if the target node was not shut down</li>
-<li>cleanly, as long as it isn&#x27;t running at the moment.</li>
+<li>cleanly, as <a class="wiki-source-link" href="../../source/src/include/port/win32_port.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/port/win32_port.h.html&quot;}, '*');">long</a> as it isn&#x27;t running at the moment.</li>
 <p>*/ if (ControlFile_target.state != DB_SHUTDOWNED &amp;&amp; ControlFile_target.state != DB_SHUTDOWNED_IN_RECOVERY) pg_fatal(&quot;target server must be shut down cleanly&quot;);</p>
 </ul>
 <p>/*</p>

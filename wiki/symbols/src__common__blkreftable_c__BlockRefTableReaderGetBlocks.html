@@ -34,7 +34,7 @@
 <h2>関連データ構造</h2>
 <p><code>BlockNumber</code>, <code>BlockRefTableReader</code>, <code>uint16</code>, <code>uint32</code></p>
 <h2>ソース抜粋</h2>
-<p>~~~c unsigned <a class="wiki-source-link" href="../../source/src/common/blkreftable.c.html#L702" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__common__blkreftable_c__BlockRefTableReaderGetBlocks.html&quot;}, '*');">BlockRefTableReaderGetBlocks</a>(BlockRefTableReader *reader, BlockNumber *blocks, int nblocks) { unsigned	blocks_found = 0;</p>
+<p>~~~c unsigned <a class="wiki-source-link" href="../../source/src/common/blkreftable.c.html#L702" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__common__blkreftable_c__BlockRefTableReaderGetBlocks.html&quot;}, '*');">BlockRefTableReaderGetBlocks</a>(BlockRefTableReader *reader, BlockNumber *blocks, <a class="wiki-source-link" href="../../source/src/include/port.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/port.h.html&quot;}, '*');">int</a> nblocks) { unsigned	blocks_found = 0;</p>
 <p>/* Must provide space for at least one block number to be returned. */ <a class="wiki-source-link" href="../../source/src/include/c.h.html#L950" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/c.h.html&quot;}, '*');">Assert</a>(nblocks &gt; 0);</p>
 <p>/* Loop collecting blocks to return to caller. */ for (;;) { uint16		next_chunk_size;</p>
 <p>/*</p>

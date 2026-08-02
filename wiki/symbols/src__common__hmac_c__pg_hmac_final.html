@@ -15,7 +15,7 @@
 <h2>入力と出力</h2>
 <ul>
 <li>引数: <code>pg_hmac_ctx *ctx</code>, <code>uint8 *dest</code>, <code>size_t len</code></li>
-<li>戻り値: <code>int</code></li>
+<li>戻り値: <a class="wiki-source-link" href="../../source/src/include/port.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/port.h.html&quot;}, '*');"><code>int</code></a></li>
 </ul>
 <h2>前提条件と不変条件</h2>
 <p>まだ解析していません。</p>
@@ -34,7 +34,7 @@
 <h2>関連データ構造</h2>
 <p><code>pg_hmac_ctx</code>, <code>uint8</code></p>
 <h2>ソース抜粋</h2>
-<p>~~~c int pg_hmac_final(pg_hmac_ctx *ctx, uint8 *dest, size_t len) { uint8	   *h;</p>
+<p>~~~c <a class="wiki-source-link" href="../../source/src/include/port.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/port.h.html&quot;}, '*');">int</a> pg_hmac_final(pg_hmac_ctx *ctx, uint8 *dest, size_t len) { uint8	   *h;</p>
 <p>if (ctx == NULL) return -1;</p>
 <p>h = ALLOC(ctx-&gt;digest_size); if (h == NULL) { ctx-&gt;error = PG_HMAC_ERROR_OOM; return -1; } memset(h, 0, ctx-&gt;digest_size);</p>
 <p>if (pg_cryptohash_final(ctx-&gt;<a class="wiki-source-link" href="../../source/src/backend/regex/rege_dfa.c.html#L723" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__regex__rege_dfa_c__hash.html&quot;}, '*');">hash</a>, h, ctx-&gt;digest_size) &lt; 0) { ctx-&gt;error = PG_HMAC_ERROR_INTERNAL; ctx-&gt;errreason = pg_cryptohash_error(ctx-&gt;<a class="wiki-source-link" href="../../source/src/backend/regex/rege_dfa.c.html#L723" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__regex__rege_dfa_c__hash.html&quot;}, '*');">hash</a>); FREE(h); return -1; }</p>

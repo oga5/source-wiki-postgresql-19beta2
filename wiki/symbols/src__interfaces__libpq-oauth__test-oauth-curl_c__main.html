@@ -15,7 +15,7 @@
 <h2>入力と出力</h2>
 <ul>
 <li>引数: <code>int argc</code>, <code>char *argv[]</code></li>
-<li>戻り値: <code>int</code></li>
+<li>戻り値: <a class="wiki-source-link" href="../../source/src/include/port.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/port.h.html&quot;}, '*');"><code>int</code></a></li>
 </ul>
 <h2>前提条件と不変条件</h2>
 <p>まだ解析していません。</p>
@@ -34,14 +34,14 @@
 <h2>関連データ構造</h2>
 <p>なし</p>
 <h2>ソース抜粋</h2>
-<p>~~~c int main(int argc, char *argv[]) { const char *timeout;</p>
-<p>/* Grab the default timeout. */ timeout = getenv(&quot;PG_TEST_TIMEOUT_DEFAULT&quot;); if (timeout) { int			timeout_s = atoi(timeout);</p>
+<p>~~~c <a class="wiki-source-link" href="../../source/src/include/port.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/port.h.html&quot;}, '*');">int</a> main(<a class="wiki-source-link" href="../../source/src/include/port.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/port.h.html&quot;}, '*');">int</a> argc, char *argv[]) { const char *timeout;</p>
+<p>/* Grab the default timeout. */ timeout = getenv(&quot;PG_TEST_TIMEOUT_DEFAULT&quot;); if (timeout) { <a class="wiki-source-link" href="../../source/src/include/port.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/port.h.html&quot;}, '*');">int</a>			timeout_s = atoi(timeout);</p>
 <p>if (timeout_s &gt; 0) timeout_us = timeout_s * 1000 * 1000; }</p>
 <p>/*</p>
 <ul>
 <li>Set up line buffering for our <a class="wiki-source-link" href="../../source/src/bin/pg_test_timing/pg_test_timing.c.html#L357" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__bin__pg_test_timing__pg_test_timing_c__output.html&quot;}, '*');">output</a>, to let stderr interleave in the</li>
 <li>log files.</li>
-<p>*/ setvbuf(stdout, NULL, <a class="wiki-source-link" href="../../source/src/include/port.h.html#L410" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/port.h.html&quot;}, '*');">PG_IOLBF</a>, 0);</p>
+<p>*/ setvbuf(stdout, NULL, <a class="wiki-source-link" href="../../source/src/include/port.h.html#L410" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/port.h.html&quot;}, '*');">PG_IOLBF</a>, 0);</p>
 </ul>
 <p><a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L214" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__interfaces__libpq-oauth__test-oauth-curl_c__test_set_timer.html&quot;}, '*');">test_set_timer</a>(); <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L264" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__interfaces__libpq-oauth__test-oauth-curl_c__test_register_socket.html&quot;}, '*');">test_register_socket</a>();</p>
 <p>printf(&quot;1..%d\n&quot;, num_tests); return 0; } ~~~</p>

@@ -14,7 +14,7 @@
 </ul>
 <h2>入力と出力</h2>
 <ul>
-<li>戻り値: <code>int</code></li>
+<li>戻り値: <a class="wiki-source-link" href="../../source/src/include/port.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/port.h.html&quot;}, '*');"><code>int</code></a></li>
 </ul>
 <h2>前提条件と不変条件</h2>
 <p>まだ解析していません。</p>
@@ -33,7 +33,7 @@
 <h2>関連データ構造</h2>
 <p>なし</p>
 <h2>ソース抜粋</h2>
-<p>~~~c static int <a class="wiki-source-link" href="../../source/src/backend/access/transam/xlog.c.html#L5023" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__access__transam__xlog_c__XLOGChooseNumBuffers.html&quot;}, '*');">XLOGChooseNumBuffers</a>(void) { int			xbuffers;</p>
+<p>~~~c static <a class="wiki-source-link" href="../../source/src/include/port.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/port.h.html&quot;}, '*');">int</a> <a class="wiki-source-link" href="../../source/src/backend/access/transam/xlog.c.html#L5023" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__access__transam__xlog_c__XLOGChooseNumBuffers.html&quot;}, '*');">XLOGChooseNumBuffers</a>(void) { <a class="wiki-source-link" href="../../source/src/include/port.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/port.h.html&quot;}, '*');">int</a>			xbuffers;</p>
 <p>xbuffers = <a class="wiki-source-link" href="../../source/src/backend/utils/init/globals.c.html#L144" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/utils/init/globals.c.html&quot;}, '*');">NBuffers</a> / 32; if (xbuffers &gt; (<a class="wiki-source-link" href="../../source/src/backend/access/transam/xlog.c.html#L150" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/access/transam/xlog.c.html&quot;}, '*');">wal_segment_size</a> / XLOG_BLCKSZ)) xbuffers = (<a class="wiki-source-link" href="../../source/src/backend/access/transam/xlog.c.html#L150" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/access/transam/xlog.c.html&quot;}, '*');">wal_segment_size</a> / XLOG_BLCKSZ); if (xbuffers &lt; 8) xbuffers = 8; return xbuffers; } ~~~</p>
 <h2>失敗モードと境界条件</h2>
 <p>まだ解析していません。</p>

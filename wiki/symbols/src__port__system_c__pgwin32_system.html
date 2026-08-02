@@ -15,7 +15,7 @@
 <h2>入力と出力</h2>
 <ul>
 <li>引数: <code>const char *command</code></li>
-<li>戻り値: <code>int</code></li>
+<li>戻り値: <a class="wiki-source-link" href="../../source/src/include/port.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/port.h.html&quot;}, '*');"><code>int</code></a></li>
 </ul>
 <h2>前提条件と不変条件</h2>
 <p>まだ解析していません。</p>
@@ -29,19 +29,19 @@
 <li>呼び出し元: なし</li>
 <li>呼び出し先: なし</li>
 <li>呼び出し元サイト: なし</li>
-<li>呼び出しサイト: <code>strlen</code> at <code>src/port/system.c:55:19</code> (unresolved), <a class="wiki-source-link" href="../../source/src/include/snowball/snowball_runtime.h.html#L50" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/snowball/snowball_runtime.h.html&quot;}, '*');"><code>malloc</code></a> at <code>src/port/system.c:64:8</code> (unresolved), <code>memcpy</code> at <code>src/port/system.c:71:2</code> (unresolved), <a class="wiki-source-link" href="../../source/src/include/port.h.html#L388" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/port.h.html&quot;}, '*');"><code>system</code></a> at <code>src/port/system.c:75:8</code> (unresolved), <a class="wiki-source-link" href="../../source/src/include/snowball/snowball_runtime.h.html#L65" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/snowball/snowball_runtime.h.html&quot;}, '*');"><code>free</code></a> at <code>src/port/system.c:78:2</code> (unresolved)</li>
+<li>呼び出しサイト: <code>strlen</code> at <code>src/port/system.c:55:19</code> (unresolved), <a class="wiki-source-link" href="../../source/src/include/snowball/snowball_runtime.h.html#L50" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/snowball/snowball_runtime.h.html&quot;}, '*');"><code>malloc</code></a> at <code>src/port/system.c:64:8</code> (unresolved), <code>memcpy</code> at <code>src/port/system.c:71:2</code> (unresolved), <a class="wiki-source-link" href="../../source/src/include/port.h.html#L388" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/port.h.html&quot;}, '*');"><code>system</code></a> at <code>src/port/system.c:75:8</code> (unresolved), <a class="wiki-source-link" href="../../source/src/include/snowball/snowball_runtime.h.html#L65" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/snowball/snowball_runtime.h.html&quot;}, '*');"><code>free</code></a> at <code>src/port/system.c:78:2</code> (unresolved)</li>
 </ul>
 <h2>関連データ構造</h2>
 <p><code>string</code></p>
 <h2>ソース抜粋</h2>
-<p>~~~c int <a class="wiki-source-link" href="../../source/src/port/system.c.html#L52" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__port__system_c__pgwin32_system.html&quot;}, '*');">pgwin32_system</a>(const char *command) { size_t		cmdlen = strlen(command); char	   *buf; int			save_errno; int			res;</p>
+<p>~~~c <a class="wiki-source-link" href="../../source/src/include/port.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/port.h.html&quot;}, '*');">int</a> <a class="wiki-source-link" href="../../source/src/port/system.c.html#L52" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__port__system_c__pgwin32_system.html&quot;}, '*');">pgwin32_system</a>(const char *command) { size_t		cmdlen = strlen(command); char	   *buf; <a class="wiki-source-link" href="../../source/src/include/port.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/port.h.html&quot;}, '*');">int</a>			save_errno; <a class="wiki-source-link" href="../../source/src/include/port.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/port.h.html&quot;}, '*');">int</a>			res;</p>
 <p>/*</p>
 <ul>
 <li>Create a <a class="wiki-source-link" href="../../source/src/include/snowball/snowball_runtime.h.html#L50" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/snowball/snowball_runtime.h.html&quot;}, '*');">malloc</a>&#x27;d copy of the command string, enclosed with an extra</li>
 <li>pair of quotes</li>
 <p>*/ buf = <a class="wiki-source-link" href="../../source/src/include/snowball/snowball_runtime.h.html#L50" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/snowball/snowball_runtime.h.html&quot;}, '*');">malloc</a>(cmdlen + 2 + 1); if (buf == NULL) { errno = ENOMEM; return -1; } buf[0] = &#x27;&quot;&#x27;; memcpy(&amp;buf[1], command, cmdlen); buf[cmdlen + 1] = &#x27;&quot;&#x27;; buf[cmdlen + 2] = &#x27;\0&#x27;;</p>
 </ul>
-<p>res = <a class="wiki-source-link" href="../../source/src/include/port.h.html#L388" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/port.h.html&quot;}, '*');">system</a>(buf);</p>
+<p>res = <a class="wiki-source-link" href="../../source/src/include/port.h.html#L388" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/port.h.html&quot;}, '*');">system</a>(buf);</p>
 <p>save_errno = errno; <a class="wiki-source-link" href="../../source/src/include/snowball/snowball_runtime.h.html#L65" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/snowball/snowball_runtime.h.html&quot;}, '*');">free</a>(buf); errno = save_errno;</p>
 <p>return res; } ~~~</p>
 <h2>失敗モードと境界条件</h2>

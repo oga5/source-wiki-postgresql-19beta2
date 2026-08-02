@@ -15,7 +15,7 @@
 <h2>入力と出力</h2>
 <ul>
 <li>引数: <code>pg_cryptohash_ctx *ctx</code>, <code>const uint8 *data</code>, <code>size_t len</code></li>
-<li>戻り値: <code>int</code></li>
+<li>戻り値: <a class="wiki-source-link" href="../../source/src/include/port.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/port.h.html&quot;}, '*');"><code>int</code></a></li>
 </ul>
 <h2>前提条件と不変条件</h2>
 <p>まだ解析していません。</p>
@@ -34,7 +34,7 @@
 <h2>関連データ構造</h2>
 <p><code>pg_cryptohash_ctx</code>, <code>uint8</code></p>
 <h2>ソース抜粋</h2>
-<p>~~~c int pg_cryptohash_update(pg_cryptohash_ctx *ctx, const uint8 *data, size_t len) { if (ctx == NULL) return -1;</p>
+<p>~~~c <a class="wiki-source-link" href="../../source/src/include/port.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/port.h.html&quot;}, '*');">int</a> pg_cryptohash_update(pg_cryptohash_ctx *ctx, const uint8 *data, size_t len) { if (ctx == NULL) return -1;</p>
 <p>switch (ctx-&gt;type) { case PG_MD5: <a class="wiki-source-link" href="../../source/src/common/md5.c.html#L399" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__common__md5_c__pg_md5_update.html&quot;}, '*');">pg_md5_update</a>(&amp;ctx-&gt;data.md5, data, len); break; case PG_SHA1: <a class="wiki-source-link" href="../../source/src/common/sha1.c.html#L331" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__common__sha1_c__pg_sha1_update.html&quot;}, '*');">pg_sha1_update</a>(&amp;ctx-&gt;data.sha1, data, len); break; case PG_SHA224: <a class="wiki-source-link" href="../../source/src/common/sha2.c.html#L988" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__common__sha2_c__pg_sha224_update.html&quot;}, '*');">pg_sha224_update</a>(&amp;ctx-&gt;data.sha224, data, len); break; case PG_SHA256: <a class="wiki-source-link" href="../../source/src/common/sha2.c.html#L476" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__common__sha2_c__pg_sha256_update.html&quot;}, '*');">pg_sha256_update</a>(&amp;ctx-&gt;data.sha256, data, len); break; case PG_SHA384: <a class="wiki-source-link" href="../../source/src/common/sha2.c.html#L944" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__common__sha2_c__pg_sha384_update.html&quot;}, '*');">pg_sha384_update</a>(&amp;ctx-&gt;data.sha384, data, len); break; case PG_SHA512: <a class="wiki-source-link" href="../../source/src/common/sha2.c.html#L802" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__common__sha2_c__pg_sha512_update.html&quot;}, '*');">pg_sha512_update</a>(&amp;ctx-&gt;data.sha512, data, len); break; }</p>
 <p>return 0; } ~~~</p>
 <h2>失敗モードと境界条件</h2>

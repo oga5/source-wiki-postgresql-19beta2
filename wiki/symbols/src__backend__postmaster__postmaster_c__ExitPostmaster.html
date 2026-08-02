@@ -34,7 +34,7 @@
 <h2>関連データ構造</h2>
 <p><code>variable</code></p>
 <h2>ソース抜粋</h2>
-<p>~~~c static void <a class="wiki-source-link" href="../../source/src/backend/postmaster/postmaster.c.html#L3692" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__postmaster__postmaster_c__ExitPostmaster.html&quot;}, '*');">ExitPostmaster</a>(int status) { #ifdef HAVE_PTHREAD_IS_THREADED_NP</p>
+<p>~~~c static void <a class="wiki-source-link" href="../../source/src/backend/postmaster/postmaster.c.html#L3692" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__postmaster__postmaster_c__ExitPostmaster.html&quot;}, '*');">ExitPostmaster</a>(<a class="wiki-source-link" href="../../source/src/include/port.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/port.h.html&quot;}, '*');">int</a> status) { #ifdef HAVE_PTHREAD_IS_THREADED_NP</p>
 <p>/*</p>
 <ul>
 <li>There <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> no known cause for a postmaster to become multithreaded after</li>
@@ -44,7 +44,7 @@
 <li>would usually not look much different from a clean shutdown.</li>
 <p>*/ if (pthread_is_threaded_np() != 0) <a class="wiki-source-link" href="../../source/src/include/utils/elog.h.html#L166" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/utils/elog.h.html&quot;}, '*');">ereport</a>(<a class="wiki-source-link" href="../../source/src/include/utils/elog.h.html#L33" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/utils/elog.h.html&quot;}, '*');">LOG</a>, (errcode(ERRCODE_OBJECT_NOT_IN_PREREQUISITE_STATE), errmsg(&quot;postmaster became multithreaded&quot;), <a class="wiki-source-link" href="../../source/src/backend/utils/error/elog.c.html#L1508" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__utils__error__elog_c__errhint.html&quot;}, '*');">errhint</a>(&quot;Set the LC_ALL environment variable to a valid locale.&quot;))); #endif</p>
 </ul>
-<p>/* should cleanup shared memory and <a class="wiki-source-link" href="../../source/src/include/port/win32_port.h.html#L490" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/port/win32_port.h.html&quot;}, '*');">kill</a> all backends */</p>
+<p>/* should cleanup shared memory and <a class="wiki-source-link" href="../../source/src/include/port/win32_port.h.html#L490" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/port/win32_port.h.html&quot;}, '*');">kill</a> all backends */</p>
 <p>/*</p>
 <ul>
 <li>Not sure of the semantics here.  When the Postmaster dies, should the</li>

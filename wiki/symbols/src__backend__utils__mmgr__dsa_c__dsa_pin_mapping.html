@@ -34,7 +34,7 @@
 <h2>関連データ構造</h2>
 <p><code>dsa_area</code></p>
 <h2>ソース抜粋</h2>
-<p>~~~c void <a class="wiki-source-link" href="../../source/src/backend/utils/mmgr/dsa.c.html#L649" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__utils__mmgr__dsa_c__dsa_pin_mapping.html&quot;}, '*');">dsa_pin_mapping</a>(dsa_area *area) { int			i;</p>
+<p>~~~c void <a class="wiki-source-link" href="../../source/src/backend/utils/mmgr/dsa.c.html#L649" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__utils__mmgr__dsa_c__dsa_pin_mapping.html&quot;}, '*');">dsa_pin_mapping</a>(dsa_area *area) { <a class="wiki-source-link" href="../../source/src/include/port.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/port.h.html&quot;}, '*');">int</a>			i;</p>
 <p>if (area-&gt;resowner != NULL) { area-&gt;resowner = NULL;</p>
 <p>for (i = 0; i &lt;= area-&gt;high_segment_index; ++i) if (area-&gt;segment_maps[i].segment != NULL) <a class="wiki-source-link" href="../../source/src/backend/storage/ipc/dsm.c.html#L922" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__storage__ipc__dsm_c__dsm_pin_mapping.html&quot;}, '*');">dsm_pin_mapping</a>(area-&gt;segment_maps[i].segment); } } ~~~</p>
 <h2>失敗モードと境界条件</h2>

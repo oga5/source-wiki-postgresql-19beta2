@@ -15,7 +15,7 @@
 <h2>入力と出力</h2>
 <ul>
 <li>引数: <code>PGconn *conn</code>, <code>char *buffer</code>, <code>int length</code></li>
-<li>戻り値: <code>int</code></li>
+<li>戻り値: <a class="wiki-source-link" href="../../source/src/include/port.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/port.h.html&quot;}, '*');"><code>int</code></a></li>
 </ul>
 <h2>前提条件と不変条件</h2>
 <p>まだ解析していません。</p>
@@ -34,7 +34,7 @@
 <h2>関連データ構造</h2>
 <p><code>PGconn</code></p>
 <h2>ソース抜粋</h2>
-<p>~~~c int <a class="wiki-source-link" href="../../source/src/interfaces/libpq/fe-exec.c.html#L2870" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__interfaces__libpq__fe-exec_c__PQgetline.html&quot;}, '*');">PQgetline</a>(PGconn *<a class="wiki-source-link" href="../../source/src/bin/pg_basebackup/streamutil.c.html#L52" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/bin/pg_basebackup/streamutil.c.html&quot;}, '*');">conn</a>, char *buffer, int length) { if (!buffer || length &lt;= 0) return EOF; *buffer = &#x27;\0&#x27;; /* length must be at least 3 to hold the \. terminator! */ if (length &lt; 3) return EOF;</p>
+<p>~~~c <a class="wiki-source-link" href="../../source/src/include/port.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/port.h.html&quot;}, '*');">int</a> <a class="wiki-source-link" href="../../source/src/interfaces/libpq/fe-exec.c.html#L2870" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__interfaces__libpq__fe-exec_c__PQgetline.html&quot;}, '*');">PQgetline</a>(PGconn *<a class="wiki-source-link" href="../../source/src/bin/pg_basebackup/streamutil.c.html#L52" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/bin/pg_basebackup/streamutil.c.html&quot;}, '*');">conn</a>, char *buffer, <a class="wiki-source-link" href="../../source/src/include/port.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/port.h.html&quot;}, '*');">int</a> length) { if (!buffer || length &lt;= 0) return EOF; *buffer = &#x27;\0&#x27;; /* length must be at least 3 to hold the \. terminator! */ if (length &lt; 3) return EOF;</p>
 <p>if (!<a class="wiki-source-link" href="../../source/src/bin/pg_basebackup/streamutil.c.html#L52" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/bin/pg_basebackup/streamutil.c.html&quot;}, '*');">conn</a>) return EOF;</p>
 <p>return <a class="wiki-source-link" href="../../source/src/interfaces/libpq/fe-protocol3.c.html#L2008" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__interfaces__libpq__fe-protocol3_c__pqGetline3.html&quot;}, '*');">pqGetline3</a>(<a class="wiki-source-link" href="../../source/src/bin/pg_basebackup/streamutil.c.html#L52" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/bin/pg_basebackup/streamutil.c.html&quot;}, '*');">conn</a>, buffer, length); } ~~~</p>
 <h2>失敗モードと境界条件</h2>

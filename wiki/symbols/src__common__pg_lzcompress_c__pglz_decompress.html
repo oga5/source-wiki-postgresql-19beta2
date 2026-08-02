@@ -40,7 +40,7 @@
 <ul>
 <li>Read one control byte and process the next 8 <a class="wiki-source-link" href="../../source/src/test/modules/test_tidstore/test_tidstore.c.html#L48" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/test/modules/test_tidstore/test_tidstore.c.html&quot;}, '*');">items</a> (or as many as</li>
 <li>remain in the compressed input).</li>
-<p>*/ unsigned char ctrl = *sp++; int			ctrlc;</p>
+<p>*/ unsigned char ctrl = *sp++; <a class="wiki-source-link" href="../../source/src/include/port.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/port.h.html&quot;}, '*');">int</a>			ctrlc;</p>
 </ul>
 <p>for (ctrlc = 0; ctrlc &lt; 8 &amp;&amp; sp &lt; srcend &amp;&amp; dp &lt; destend; ctrlc++) { if (ctrl &amp; 1) { /*</p>
 <ul>

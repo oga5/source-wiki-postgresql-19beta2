@@ -15,7 +15,7 @@
 <h2>入力と出力</h2>
 <ul>
 <li>引数: <code>const void *lhs</code>, <code>const void *rhs</code></li>
-<li>戻り値: <code>int</code></li>
+<li>戻り値: <a class="wiki-source-link" href="../../source/src/include/port.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/port.h.html&quot;}, '*');"><code>int</code></a></li>
 </ul>
 <h2>前提条件と不変条件</h2>
 <p>まだ解析していません。</p>
@@ -34,7 +34,7 @@
 <h2>関連データ構造</h2>
 <p><a class="wiki-source-link" href="../../source/contrib/pg_stat_statements/pg_stat_statements.c.html#L233" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/contrib__pg_stat_statements__pg_stat_statements_c__pgssEntry.html&quot;}, '*');"><code>pgssEntry</code></a></p>
 <h2>ソース抜粋</h2>
-<p>~~~c static int <a class="wiki-source-link" href="../../source/contrib/pg_stat_statements/pg_stat_statements.c.html#L2120" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/contrib__pg_stat_statements__pg_stat_statements_c__entry_cmp.html&quot;}, '*');">entry_cmp</a>(const void *lhs, const void *rhs) { double		l_usage = (*(<a class="wiki-source-link" href="../../source/contrib/pg_stat_statements/pg_stat_statements.c.html#L233" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/contrib__pg_stat_statements__pg_stat_statements_c__pgssEntry.html&quot;}, '*');">pgssEntry</a> *const *) lhs)-&gt;counters.usage; double		r_usage = (*(<a class="wiki-source-link" href="../../source/contrib/pg_stat_statements/pg_stat_statements.c.html#L233" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/contrib__pg_stat_statements__pg_stat_statements_c__pgssEntry.html&quot;}, '*');">pgssEntry</a> *const *) rhs)-&gt;counters.usage;</p>
+<p>~~~c static <a class="wiki-source-link" href="../../source/src/include/port.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/port.h.html&quot;}, '*');">int</a> <a class="wiki-source-link" href="../../source/contrib/pg_stat_statements/pg_stat_statements.c.html#L2120" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/contrib__pg_stat_statements__pg_stat_statements_c__entry_cmp.html&quot;}, '*');">entry_cmp</a>(const void *lhs, const void *rhs) { double		l_usage = (*(<a class="wiki-source-link" href="../../source/contrib/pg_stat_statements/pg_stat_statements.c.html#L233" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/contrib__pg_stat_statements__pg_stat_statements_c__pgssEntry.html&quot;}, '*');">pgssEntry</a> *const *) lhs)-&gt;counters.usage; double		r_usage = (*(<a class="wiki-source-link" href="../../source/contrib/pg_stat_statements/pg_stat_statements.c.html#L233" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/contrib__pg_stat_statements__pg_stat_statements_c__pgssEntry.html&quot;}, '*');">pgssEntry</a> *const *) rhs)-&gt;counters.usage;</p>
 <p>if (l_usage &lt; r_usage) return -1; else if (l_usage &gt; r_usage) return +1; else return 0; } ~~~</p>
 <h2>失敗モードと境界条件</h2>
 <p>まだ解析していません。</p>

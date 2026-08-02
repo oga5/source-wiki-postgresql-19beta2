@@ -34,7 +34,7 @@
 <h2>関連データ構造</h2>
 <p><code>BF_word</code></p>
 <h2>ソース抜粋</h2>
-<p>~~~c static void BF_encode(char *dst, const BF_word *src, int size) { const unsigned char *sptr = (const unsigned char *) src; const unsigned char *end = sptr + size; unsigned char *dptr = (unsigned char *) dst; unsigned int c1, c2;</p>
+<p>~~~c static void BF_encode(char *dst, const BF_word *src, <a class="wiki-source-link" href="../../source/src/include/port.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/port.h.html&quot;}, '*');">int</a> size) { const unsigned char *sptr = (const unsigned char *) src; const unsigned char *end = sptr + size; unsigned char *dptr = (unsigned char *) dst; unsigned <a class="wiki-source-link" href="../../source/src/include/port.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/port.h.html&quot;}, '*');">int</a> c1, c2;</p>
 <p>do { c1 = *sptr++; *dptr++ = BF_itoa64[c1 &gt;&gt; 2]; c1 = (c1 &amp; 0x03) &lt;&lt; 4; if (sptr &gt;= end) { *dptr++ = BF_itoa64[c1]; break; }</p>
 <p>c2 = *sptr++; c1 |= c2 &gt;&gt; 4; *dptr++ = BF_itoa64[c1]; c1 = (c2 &amp; 0x0f) &lt;&lt; 2; if (sptr &gt;= end) { *dptr++ = BF_itoa64[c1]; break; }</p>
 <p>c2 = *sptr++; c1 |= c2 &gt;&gt; 6; *dptr++ = BF_itoa64[c1]; *dptr++ = BF_itoa64[c2 &amp; 0x3f]; } while (sptr &lt; end); } ~~~</p>

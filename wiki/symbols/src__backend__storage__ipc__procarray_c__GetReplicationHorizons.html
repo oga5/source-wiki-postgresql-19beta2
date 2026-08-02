@@ -39,7 +39,7 @@
 <p>/*</p>
 <ul>
 <li>Don&#x27;t want to use shared_oldest_nonremovable here, as that contains the</li>
-<li>effect of replication slot&#x27;s catalog_xmin. We want to <a class="wiki-source-link" href="../../source/src/include/port/win32_port.h.html#L502" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/port/win32_port.h.html&quot;}, '*');">send</a> a separate</li>
+<li>effect of replication slot&#x27;s catalog_xmin. We want to <a class="wiki-source-link" href="../../source/src/include/port/win32_port.h.html#L502" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/port/win32_port.h.html&quot;}, '*');">send</a> a separate</li>
 <li>feedback for the catalog horizon, so the primary can remove data <a class="wiki-source-link" href="../../source/src/port/pg_localeconv_r.c.html#L63" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/port/pg_localeconv_r.c.html&quot;}, '*');">table</a></li>
 <li>contents more aggressively.</li>
 <p>*/ *xmin = horizons.shared_oldest_nonremovable_raw; *catalog_xmin = horizons.slot_catalog_xmin; } ~~~</p>

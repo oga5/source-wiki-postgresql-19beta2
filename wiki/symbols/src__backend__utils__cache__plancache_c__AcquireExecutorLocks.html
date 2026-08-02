@@ -51,7 +51,7 @@
 <p>/*</p>
 <ul>
 <li>Acquire the appropriate type of lock on each relation OID. Note</li>
-<li>that we don&#x27;t actually try to <a class="wiki-source-link" href="../../source/src/include/port.h.html#L366" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/port.h.html&quot;}, '*');">open</a> the rel, and hence will not</li>
+<li>that we don&#x27;t actually try to <a class="wiki-source-link" href="../../source/src/include/port.h.html#L366" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/port.h.html&quot;}, '*');">open</a> the rel, and hence will not</li>
 <li>fail if it&#x27;s been dropped entirely --- we&#x27;ll just transiently</li>
 <li>acquire a non-conflicting lock.</li>
 <p>*/ if (acquire) <a class="wiki-source-link" href="../../source/src/backend/storage/lmgr/lmgr.c.html#L106" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__storage__lmgr__lmgr_c__LockRelationOid.html&quot;}, '*');">LockRelationOid</a>(rte-&gt;relid, rte-&gt;rellockmode); else <a class="wiki-source-link" href="../../source/src/backend/storage/lmgr/lmgr.c.html#L228" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__storage__lmgr__lmgr_c__UnlockRelationOid.html&quot;}, '*');">UnlockRelationOid</a>(rte-&gt;relid, rte-&gt;rellockmode); } } } ~~~</p>

@@ -34,8 +34,8 @@
 <h2>関連データ構造</h2>
 <p><code>PyObject</code></p>
 <h2>ソース抜粋</h2>
-<p>~~~c static PyObject * <a class="wiki-source-link" href="../../source/src/pl/plpython/plpy_planobject.c.html#L116" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__pl__plpython__plpy_planobject_c__PLy_plan_cursor.html&quot;}, '*');">PLy_plan_cursor</a>(PyObject *self, PyObject *args) { PyObject   *planargs = NULL;</p>
-<p>if (!PyArg_ParseTuple(args, &quot;|O&quot;, &amp;planargs)) return NULL;</p>
+<p>~~~c static PyObject * <a class="wiki-source-link" href="../../source/src/pl/plpython/plpy_planobject.c.html#L116" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__pl__plpython__plpy_planobject_c__PLy_plan_cursor.html&quot;}, '*');">PLy_plan_cursor</a>(PyObject *self, PyObject *<a class="wiki-source-link" href="../../source/src/include/fmgr.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/fmgr.h.html&quot;}, '*');">args</a>) { PyObject   *planargs = NULL;</p>
+<p>if (!PyArg_ParseTuple(<a class="wiki-source-link" href="../../source/src/include/fmgr.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/fmgr.h.html&quot;}, '*');">args</a>, &quot;|O&quot;, &amp;planargs)) return NULL;</p>
 <p>return <a class="wiki-source-link" href="../../source/src/pl/plpython/plpy_cursorobject.c.html#L163" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__pl__plpython__plpy_cursorobject_c__PLy_cursor_plan.html&quot;}, '*');">PLy_cursor_plan</a>(self, planargs); } ~~~</p>
 <h2>失敗モードと境界条件</h2>
 <p>まだ解析していません。</p>

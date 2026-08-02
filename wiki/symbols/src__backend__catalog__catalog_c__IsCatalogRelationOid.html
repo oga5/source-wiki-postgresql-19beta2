@@ -36,12 +36,12 @@
 <h2>ソース抜粋</h2>
 <p>~~~c bool <a class="wiki-source-link" href="../../source/src/backend/catalog/catalog.c.html#L120" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__catalog__catalog_c__IsCatalogRelationOid.html&quot;}, '*');">IsCatalogRelationOid</a>(Oid relid) { /*</p>
 <ul>
-<li>We consider a relation to be a <a class="wiki-source-link" href="../../source/src/include/port.h.html#L388" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/port.h.html&quot;}, '*');">system</a> catalog if it has a pinned OID.</li>
+<li>We consider a relation to be a <a class="wiki-source-link" href="../../source/src/include/port.h.html#L388" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/port.h.html&quot;}, '*');">system</a> catalog if it has a pinned OID.</li>
 <li>This includes all the defined catalogs, their indexes, and their TOAST</li>
 <li>tables and indexes.</li>
 <p>*</p>
 <li>This rule excludes the relations in information_schema, which are not</li>
-<li>integral to the <a class="wiki-source-link" href="../../source/src/include/port.h.html#L388" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/port.h.html&quot;}, '*');">system</a> and can be treated the same as <a class="wiki-source-link" href="../../source/src/test/regress/pg_regress.c.html#L121" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/test/regress/pg_regress.c.html&quot;}, '*');">user</a> relations.</li>
+<li>integral to the <a class="wiki-source-link" href="../../source/src/include/port.h.html#L388" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/port.h.html&quot;}, '*');">system</a> and can be treated the same as <a class="wiki-source-link" href="../../source/src/test/regress/pg_regress.c.html#L121" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/test/regress/pg_regress.c.html&quot;}, '*');">user</a> relations.</li>
 <li>(Since it&#x27;s valid to drop and recreate information_schema, any rule</li>
 <li>that did not act this way would be wrong.)</li>
 <p>*</p>

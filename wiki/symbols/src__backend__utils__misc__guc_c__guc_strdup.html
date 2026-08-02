@@ -34,7 +34,7 @@
 <h2>関連データ構造</h2>
 <p>なし</p>
 <h2>ソース抜粋</h2>
-<p>~~~c char * <a class="wiki-source-link" href="../../source/src/backend/utils/misc/guc.c.html#L675" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__utils__misc__guc_c__guc_strdup.html&quot;}, '*');">guc_strdup</a>(int elevel, const char *src) { char	   *data; size_t		len = strlen(src) + 1;</p>
+<p>~~~c char * <a class="wiki-source-link" href="../../source/src/backend/utils/misc/guc.c.html#L675" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__utils__misc__guc_c__guc_strdup.html&quot;}, '*');">guc_strdup</a>(<a class="wiki-source-link" href="../../source/src/include/port.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/port.h.html&quot;}, '*');">int</a> elevel, const char *src) { char	   *data; size_t		len = strlen(src) + 1;</p>
 <p>data = <a class="wiki-source-link" href="../../source/src/backend/utils/misc/guc.c.html#L636" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__utils__misc__guc_c__guc_malloc.html&quot;}, '*');">guc_malloc</a>(elevel, len); if (<a class="wiki-source-link" href="../../source/src/include/c.h.html#L441" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/c.h.html&quot;}, '*');">likely</a>(data != NULL)) memcpy(data, src, len); return data; } ~~~</p>
 <h2>失敗モードと境界条件</h2>
 <p>まだ解析していません。</p>

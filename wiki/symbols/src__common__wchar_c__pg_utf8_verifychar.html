@@ -15,7 +15,7 @@
 <h2>入力と出力</h2>
 <ul>
 <li>引数: <code>const unsigned char *s</code>, <code>int len</code></li>
-<li>戻り値: <code>int</code></li>
+<li>戻り値: <a class="wiki-source-link" href="../../source/src/include/port.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/port.h.html&quot;}, '*');"><code>int</code></a></li>
 </ul>
 <h2>前提条件と不変条件</h2>
 <p>まだ解析していません。</p>
@@ -34,7 +34,7 @@
 <h2>関連データ構造</h2>
 <p>なし</p>
 <h2>ソース抜粋</h2>
-<p>~~~c static int <a class="wiki-source-link" href="../../source/src/common/wchar.c.html#L1501" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__common__wchar_c__pg_utf8_verifychar.html&quot;}, '*');">pg_utf8_verifychar</a>(const unsigned char *s, int len) { int			l;</p>
+<p>~~~c static <a class="wiki-source-link" href="../../source/src/include/port.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/port.h.html&quot;}, '*');">int</a> <a class="wiki-source-link" href="../../source/src/common/wchar.c.html#L1501" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__common__wchar_c__pg_utf8_verifychar.html&quot;}, '*');">pg_utf8_verifychar</a>(const unsigned char *s, <a class="wiki-source-link" href="../../source/src/include/port.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/port.h.html&quot;}, '*');">int</a> len) { <a class="wiki-source-link" href="../../source/src/include/port.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/port.h.html&quot;}, '*');">int</a>			l;</p>
 <p>if ((*s &amp; 0x80) == 0) { if (*s == &#x27;\0&#x27;) return -1; return 1; } else if ((*s &amp; 0xe0) == 0xc0) l = 2; else if ((*s &amp; 0xf0) == 0xe0) l = 3; else if ((*s &amp; 0xf8) == 0xf0) l = 4; else l = 1;</p>
 <p>if (l &gt; len) return -1;</p>
 <p>if (!<a class="wiki-source-link" href="../../source/src/common/wchar.c.html#L1789" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__common__wchar_c__pg_utf8_islegal.html&quot;}, '*');">pg_utf8_islegal</a>(s, l)) return -1;</p>

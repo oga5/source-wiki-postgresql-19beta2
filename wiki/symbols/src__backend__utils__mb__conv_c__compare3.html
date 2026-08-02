@@ -15,7 +15,7 @@
 <h2>入力と出力</h2>
 <ul>
 <li>引数: <code>const void *p1</code>, <code>const void *p2</code></li>
-<li>戻り値: <code>int</code></li>
+<li>戻り値: <a class="wiki-source-link" href="../../source/src/include/port.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/port.h.html&quot;}, '*');"><code>int</code></a></li>
 </ul>
 <h2>前提条件と不変条件</h2>
 <p>まだ解析していません。</p>
@@ -34,7 +34,7 @@
 <h2>関連データ構造</h2>
 <p><a class="wiki-source-link" href="../../source/src/include/mb/pg_wchar.h.html#L330" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__mb__pg_wchar_h__pg_utf_to_local_combined.html&quot;}, '*');"><code>pg_utf_to_local_combined</code></a>, <code>uint32</code></p>
 <h2>ソース抜粋</h2>
-<p>~~~c static int <a class="wiki-source-link" href="../../source/src/backend/utils/mb/conv.c.html#L81" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__utils__mb__conv_c__compare3.html&quot;}, '*');">compare3</a>(const void *p1, const void *p2) { uint32		s1, s2, d1, d2;</p>
+<p>~~~c static <a class="wiki-source-link" href="../../source/src/include/port.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/port.h.html&quot;}, '*');">int</a> <a class="wiki-source-link" href="../../source/src/backend/utils/mb/conv.c.html#L81" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__utils__mb__conv_c__compare3.html&quot;}, '*');">compare3</a>(const void *p1, const void *p2) { uint32		s1, s2, d1, d2;</p>
 <p>s1 = *(const uint32 *) p1; s2 = *((const uint32 *) p1 + 1); d1 = ((const <a class="wiki-source-link" href="../../source/src/include/mb/pg_wchar.h.html#L330" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__mb__pg_wchar_h__pg_utf_to_local_combined.html&quot;}, '*');">pg_utf_to_local_combined</a> *) p2)-&gt;utf1; d2 = ((const <a class="wiki-source-link" href="../../source/src/include/mb/pg_wchar.h.html#L330" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__mb__pg_wchar_h__pg_utf_to_local_combined.html&quot;}, '*');">pg_utf_to_local_combined</a> *) p2)-&gt;utf2; return (s1 &gt; d1 || (s1 == d1 &amp;&amp; s2 &gt; d2)) ? 1 : ((s1 == d1 &amp;&amp; s2 == d2) ? 0 : -1); } ~~~</p>
 <h2>失敗モードと境界条件</h2>
 <p>まだ解析していません。</p>

@@ -30,7 +30,7 @@
 <h2>ソース抜粋</h2>
 <p>~~~c typedef struct <a class="wiki-source-link" href="../../source/src/include/catalog/pg_control.h.html#L112" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__catalog__pg_control_h__ControlFileData.html&quot;}, '*');">ControlFileData</a> { /*</p>
 <ul>
-<li><a class="wiki-source-link" href="../../source/src/include/nodes/plannodes.h.html#L1328" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__nodes__plannodes_h__Unique.html&quot;}, '*');">Unique</a> <a class="wiki-source-link" href="../../source/src/include/port.h.html#L388" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/port.h.html&quot;}, '*');">system</a> identifier --- to ensure we match up xlog files with the</li>
+<li><a class="wiki-source-link" href="../../source/src/include/nodes/plannodes.h.html#L1328" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__nodes__plannodes_h__Unique.html&quot;}, '*');">Unique</a> <a class="wiki-source-link" href="../../source/src/include/port.h.html#L388" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/port.h.html&quot;}, '*');">system</a> identifier --- to ensure we match up xlog files with the</li>
 <li>installation that produced them.</li>
 <p>*/ uint64		system_identifier;</p>
 </ul>
@@ -42,7 +42,7 @@
 <li>rather than immediately at the front.)</li>
 <p>*</p>
 <li>pg_control_version identifies the <a class="wiki-source-link" href="../../source/src/bin/pg_basebackup/pg_basebackup.c.html#L134" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/bin/pg_basebackup/pg_basebackup.c.html&quot;}, '*');">format</a> of pg_control itself.</li>
-<li>catalog_version_no identifies the <a class="wiki-source-link" href="../../source/src/bin/pg_basebackup/pg_basebackup.c.html#L134" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/bin/pg_basebackup/pg_basebackup.c.html&quot;}, '*');">format</a> of the <a class="wiki-source-link" href="../../source/src/include/port.h.html#L388" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/port.h.html&quot;}, '*');">system</a> catalogs.</li>
+<li>catalog_version_no identifies the <a class="wiki-source-link" href="../../source/src/bin/pg_basebackup/pg_basebackup.c.html#L134" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/bin/pg_basebackup/pg_basebackup.c.html&quot;}, '*');">format</a> of the <a class="wiki-source-link" href="../../source/src/include/port.h.html#L388" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/port.h.html&quot;}, '*');">system</a> catalogs.</li>
 <p>*</p>
 <li>There are additional version identifiers in individual files; for</li>
 <li>example, WAL logs contain per-page magic numbers that can serve as</li>
@@ -51,7 +51,7 @@
 </ul>
 <p>/*</p>
 <ul>
-<li>System status data</li>
+<li><a class="wiki-source-link" href="../../source/src/include/port/win32_port.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/port/win32_port.h.html&quot;}, '*');">System</a> status data</li>
 <p>*/ <a class="wiki-source-link" href="../../source/src/include/catalog/pg_control.h.html#L97" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__catalog__pg_control_h__DBState.html&quot;}, '*');">DBState</a>		state;			/* see enum above */ <a class="wiki-source-link" href="../../source/src/include/pgtime.h.html#L23" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__pgtime_h__pg_time_t.html&quot;}, '*');">pg_time_t</a>	time;			/* time stamp of last pg_control update */ XLogRecPtr	checkPoint;		/* last check point record ptr */</p>
 </ul>
 <p><a class="wiki-source-link" href="../../source/src/include/catalog/pg_control.h.html#L35" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__catalog__pg_control_h__CheckPoint.html&quot;}, '*');">CheckPoint</a>	checkPointCopy; /* copy of last check point record */</p>

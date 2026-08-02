@@ -15,7 +15,7 @@
 <h2>入力と出力</h2>
 <ul>
 <li>引数: <code>Path *path1</code>, <code>Path *path2</code>, <code>CostSelector criterion</code></li>
-<li>戻り値: <code>int</code></li>
+<li>戻り値: <a class="wiki-source-link" href="../../source/src/include/port.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/port.h.html&quot;}, '*');"><code>int</code></a></li>
 </ul>
 <h2>前提条件と不変条件</h2>
 <p>まだ解析していません。</p>
@@ -34,7 +34,7 @@
 <h2>関連データ構造</h2>
 <p><a class="wiki-source-link" href="../../source/src/include/nodes/pathnodes.h.html#L109" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/nodes/pathnodes.h.html&quot;}, '*');"><code>CostSelector</code></a>, <code>Path</code></p>
 <h2>ソース抜粋</h2>
-<p>~~~c int <a class="wiki-source-link" href="../../source/src/backend/optimizer/util/pathnode.c.html#L67" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__pathnode_c__compare_path_costs.html&quot;}, '*');">compare_path_costs</a>(Path *path1, Path *path2, <a class="wiki-source-link" href="../../source/src/include/nodes/pathnodes.h.html#L109" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/nodes/pathnodes.h.html&quot;}, '*');">CostSelector</a> criterion) { /* Number of disabled nodes, if different, trumps all else. */ if (<a class="wiki-source-link" href="../../source/src/include/c.h.html#L442" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/c.h.html&quot;}, '*');">unlikely</a>(path1-&gt;disabled_nodes != path2-&gt;disabled_nodes)) { if (path1-&gt;disabled_nodes &lt; path2-&gt;disabled_nodes) return -1; else return +1; }</p>
+<p>~~~c <a class="wiki-source-link" href="../../source/src/include/port.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/port.h.html&quot;}, '*');">int</a> <a class="wiki-source-link" href="../../source/src/backend/optimizer/util/pathnode.c.html#L67" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__pathnode_c__compare_path_costs.html&quot;}, '*');">compare_path_costs</a>(Path *path1, Path *path2, <a class="wiki-source-link" href="../../source/src/include/nodes/pathnodes.h.html#L109" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/nodes/pathnodes.h.html&quot;}, '*');">CostSelector</a> criterion) { /* Number of disabled nodes, if different, trumps all else. */ if (<a class="wiki-source-link" href="../../source/src/include/c.h.html#L442" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/c.h.html&quot;}, '*');">unlikely</a>(path1-&gt;disabled_nodes != path2-&gt;disabled_nodes)) { if (path1-&gt;disabled_nodes &lt; path2-&gt;disabled_nodes) return -1; else return +1; }</p>
 <p>if (criterion == STARTUP_COST) { if (path1-&gt;startup_cost &lt; path2-&gt;startup_cost) return -1; if (path1-&gt;startup_cost &gt; path2-&gt;startup_cost) return +1;</p>
 <p>/*</p>
 <ul>

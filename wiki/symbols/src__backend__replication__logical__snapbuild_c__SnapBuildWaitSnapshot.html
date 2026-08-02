@@ -34,7 +34,7 @@
 <h2>関連データ構造</h2>
 <p><code>TransactionId</code>, <code>xl_running_xacts</code></p>
 <h2>ソース抜粋</h2>
-<p>~~~c static void <a class="wiki-source-link" href="../../source/src/backend/replication/logical/snapbuild.c.html#L1438" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__replication__logical__snapbuild_c__SnapBuildWaitSnapshot.html&quot;}, '*');">SnapBuildWaitSnapshot</a>(xl_running_xacts *running, TransactionId cutoff) { int			off;</p>
+<p>~~~c static void <a class="wiki-source-link" href="../../source/src/backend/replication/logical/snapbuild.c.html#L1438" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__replication__logical__snapbuild_c__SnapBuildWaitSnapshot.html&quot;}, '*');">SnapBuildWaitSnapshot</a>(xl_running_xacts *running, TransactionId cutoff) { <a class="wiki-source-link" href="../../source/src/include/port.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/port.h.html&quot;}, '*');">int</a>			off;</p>
 <p>for (off = 0; off &lt; running-&gt;xcnt; off++) { TransactionId xid = running-&gt;xids[off];</p>
 <p>/*</p>
 <ul>

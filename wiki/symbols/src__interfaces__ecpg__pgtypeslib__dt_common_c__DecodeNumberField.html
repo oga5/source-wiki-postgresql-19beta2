@@ -15,7 +15,7 @@
 <h2>入力と出力</h2>
 <ul>
 <li>引数: <code>int len</code>, <code>char *str</code>, <code>int fmask</code>, <code>int *tmask</code>, <code>struct tm *tm</code>, <code>fsec_t *fsec</code>, <code>bool *is2digits</code></li>
-<li>戻り値: <code>int</code></li>
+<li>戻り値: <a class="wiki-source-link" href="../../source/src/include/port.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/port.h.html&quot;}, '*');"><code>int</code></a></li>
 </ul>
 <h2>前提条件と不変条件</h2>
 <p>まだ解析していません。</p>
@@ -34,12 +34,12 @@
 <h2>関連データ構造</h2>
 <p><a class="wiki-source-link" href="../../source/src/interfaces/ecpg/include/pgtypes_date.h.html#L9" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__interfaces__ecpg__include__pgtypes_date_h__date.html&quot;}, '*');"><code>date</code></a>, <code>decimal</code>, <code>fsec_t</code>, <code>string</code></p>
 <h2>ソース抜粋</h2>
-<p>~~~c static int DecodeNumberField(int len, char *str, int fmask, int *tmask, struct <a class="wiki-source-link" href="../../source/src/timezone/localtime.c.html#L104" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/timezone/localtime.c.html&quot;}, '*');">tm</a> *<a class="wiki-source-link" href="../../source/src/timezone/localtime.c.html#L104" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/timezone/localtime.c.html&quot;}, '*');">tm</a>, fsec_t *fsec, bool *is2digits) { char	   *cp;</p>
+<p>~~~c static <a class="wiki-source-link" href="../../source/src/include/port.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/port.h.html&quot;}, '*');">int</a> DecodeNumberField(<a class="wiki-source-link" href="../../source/src/include/port.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/port.h.html&quot;}, '*');">int</a> len, char *str, <a class="wiki-source-link" href="../../source/src/include/port.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/port.h.html&quot;}, '*');">int</a> fmask, <a class="wiki-source-link" href="../../source/src/include/port.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/port.h.html&quot;}, '*');">int</a> *tmask, struct <a class="wiki-source-link" href="../../source/src/timezone/localtime.c.html#L104" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/timezone/localtime.c.html&quot;}, '*');">tm</a> *<a class="wiki-source-link" href="../../source/src/timezone/localtime.c.html#L104" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/timezone/localtime.c.html&quot;}, '*');">tm</a>, fsec_t *fsec, bool *is2digits) { char	   *cp;</p>
 <p>/*</p>
 <ul>
 <li>Have a decimal point? Then this <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> a <a class="wiki-source-link" href="../../source/src/interfaces/ecpg/include/pgtypes_date.h.html#L9" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__interfaces__ecpg__include__pgtypes_date_h__date.html&quot;}, '*');">date</a> or something with a seconds</li>
 <li>field...</li>
-<p>*/ if ((cp = strchr(str, &#x27;.&#x27;)) != NULL) { char		fstr[7]; int			i;</p>
+<p>*/ if ((cp = strchr(str, &#x27;.&#x27;)) != NULL) { char		fstr[7]; <a class="wiki-source-link" href="../../source/src/include/port.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/port.h.html&quot;}, '*');">int</a>			i;</p>
 </ul>
 <p>cp++;</p>
 <p>/*</p>

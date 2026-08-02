@@ -15,7 +15,7 @@
 <h2>入力と出力</h2>
 <ul>
 <li>引数: <code>const pg_uuid_t *arg1</code>, <code>const pg_uuid_t *arg2</code></li>
-<li>戻り値: <code>int</code></li>
+<li>戻り値: <a class="wiki-source-link" href="../../source/src/include/port.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/port.h.html&quot;}, '*');"><code>int</code></a></li>
 </ul>
 <h2>前提条件と不変条件</h2>
 <p>まだ解析していません。</p>
@@ -34,7 +34,7 @@
 <h2>関連データ構造</h2>
 <p><a class="wiki-source-link" href="../../source/src/include/utils/uuid.h.html#L20" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__utils__uuid_h__pg_uuid_t.html&quot;}, '*');"><code>pg_uuid_t</code></a></p>
 <h2>ソース抜粋</h2>
-<p>~~~c static int uuid_internal_cmp(const <a class="wiki-source-link" href="../../source/src/include/utils/uuid.h.html#L20" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__utils__uuid_h__pg_uuid_t.html&quot;}, '*');">pg_uuid_t</a> *arg1, const <a class="wiki-source-link" href="../../source/src/include/utils/uuid.h.html#L20" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__utils__uuid_h__pg_uuid_t.html&quot;}, '*');">pg_uuid_t</a> *arg2) { return memcmp(arg1-&gt;data, arg2-&gt;data, <a class="wiki-source-link" href="../../source/src/include/utils/uuid.h.html#L18" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/utils/uuid.h.html&quot;}, '*');">UUID_LEN</a>); } ~~~</p>
+<p>~~~c static <a class="wiki-source-link" href="../../source/src/include/port.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/port.h.html&quot;}, '*');">int</a> uuid_internal_cmp(const <a class="wiki-source-link" href="../../source/src/include/utils/uuid.h.html#L20" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__utils__uuid_h__pg_uuid_t.html&quot;}, '*');">pg_uuid_t</a> *arg1, const <a class="wiki-source-link" href="../../source/src/include/utils/uuid.h.html#L20" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__utils__uuid_h__pg_uuid_t.html&quot;}, '*');">pg_uuid_t</a> *arg2) { return memcmp(arg1-&gt;data, arg2-&gt;data, <a class="wiki-source-link" href="../../source/src/include/utils/uuid.h.html#L18" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/utils/uuid.h.html&quot;}, '*');">UUID_LEN</a>); } ~~~</p>
 <h2>失敗モードと境界条件</h2>
 <p>まだ解析していません。</p>
 <h2>保守担当者向けメモ</h2>

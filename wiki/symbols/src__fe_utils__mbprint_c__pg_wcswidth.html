@@ -15,7 +15,7 @@
 <h2>入力と出力</h2>
 <ul>
 <li>引数: <code>const char *pwcs</code>, <code>size_t len</code>, <code>int encoding</code></li>
-<li>戻り値: <code>int</code></li>
+<li>戻り値: <a class="wiki-source-link" href="../../source/src/include/port.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/port.h.html&quot;}, '*');"><code>int</code></a></li>
 </ul>
 <h2>前提条件と不変条件</h2>
 <p>まだ解析していません。</p>
@@ -34,8 +34,8 @@
 <h2>関連データ構造</h2>
 <p><code>string</code></p>
 <h2>ソース抜粋</h2>
-<p>~~~c int <a class="wiki-source-link" href="../../source/src/fe_utils/mbprint.c.html#L176" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__fe_utils__mbprint_c__pg_wcswidth.html&quot;}, '*');">pg_wcswidth</a>(const char *pwcs, size_t len, int encoding) { int			width = 0;</p>
-<p>while (len &gt; 0) { int			chlen, chwidth;</p>
+<p>~~~c <a class="wiki-source-link" href="../../source/src/include/port.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/port.h.html&quot;}, '*');">int</a> <a class="wiki-source-link" href="../../source/src/fe_utils/mbprint.c.html#L176" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__fe_utils__mbprint_c__pg_wcswidth.html&quot;}, '*');">pg_wcswidth</a>(const char *pwcs, size_t len, <a class="wiki-source-link" href="../../source/src/include/port.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/port.h.html&quot;}, '*');">int</a> encoding) { <a class="wiki-source-link" href="../../source/src/include/port.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/port.h.html&quot;}, '*');">int</a>			width = 0;</p>
+<p>while (len &gt; 0) { <a class="wiki-source-link" href="../../source/src/include/port.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/port.h.html&quot;}, '*');">int</a>			chlen, chwidth;</p>
 <p>chlen = <a class="wiki-source-link" href="../../source/src/interfaces/libpq/fe-misc.c.html#L1398" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__interfaces__libpq__fe-misc_c__PQmblen.html&quot;}, '*');">PQmblen</a>(pwcs, encoding); if (len &lt; (size_t) chlen) break;				/* Invalid string */</p>
 <p>chwidth = <a class="wiki-source-link" href="../../source/src/interfaces/libpq/fe-misc.c.html#L1419" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__interfaces__libpq__fe-misc_c__PQdsplen.html&quot;}, '*');">PQdsplen</a>(pwcs, encoding); if (chwidth &gt; 0) width += chwidth;</p>
 <p>pwcs += chlen; len -= chlen; } return width; } ~~~</p>

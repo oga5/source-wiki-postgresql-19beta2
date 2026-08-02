@@ -34,7 +34,7 @@
 <h2>関連データ構造</h2>
 <p>なし</p>
 <h2>ソース抜粋</h2>
-<p>~~~c static double <a class="wiki-source-link" href="../../source/src/backend/statistics/mcv.c.html#L145" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__statistics__mcv_c__get_mincount_for_mcv_list.html&quot;}, '*');">get_mincount_for_mcv_list</a>(int samplerows, double totalrows) { double		n = samplerows; double		N = totalrows; double		numer, denom;</p>
+<p>~~~c static double <a class="wiki-source-link" href="../../source/src/backend/statistics/mcv.c.html#L145" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__statistics__mcv_c__get_mincount_for_mcv_list.html&quot;}, '*');">get_mincount_for_mcv_list</a>(<a class="wiki-source-link" href="../../source/src/include/port.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/port.h.html&quot;}, '*');">int</a> samplerows, double totalrows) { double		n = samplerows; double		N = totalrows; double		numer, denom;</p>
 <p>numer = n * (N - n); denom = N - n + 0.04 * n * (N - 1);</p>
 <p>/* Guard against division by zero (possible if n = N = 1) */ if (denom == 0.0) return 0.0;</p>
 <p>return numer / denom; } ~~~</p>

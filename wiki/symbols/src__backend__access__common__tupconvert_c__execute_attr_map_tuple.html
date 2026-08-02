@@ -34,7 +34,7 @@
 <h2>関連データ構造</h2>
 <p><code>AttrMap</code>, <code>Datum</code>, <code>HeapTuple</code>, <code>TupleConversionMap</code></p>
 <h2>ソース抜粋</h2>
-<p>~~~c HeapTuple <a class="wiki-source-link" href="../../source/src/backend/access/common/tupconvert.c.html#L154" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__access__common__tupconvert_c__execute_attr_map_tuple.html&quot;}, '*');">execute_attr_map_tuple</a>(HeapTuple tuple, TupleConversionMap *map) { AttrMap    *attrMap = map-&gt;attrMap; Datum	   *invalues = map-&gt;invalues; bool	   *inisnull = map-&gt;inisnull; Datum	   *outvalues = map-&gt;outvalues; bool	   *outisnull = map-&gt;outisnull; int			i;</p>
+<p>~~~c HeapTuple <a class="wiki-source-link" href="../../source/src/backend/access/common/tupconvert.c.html#L154" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__access__common__tupconvert_c__execute_attr_map_tuple.html&quot;}, '*');">execute_attr_map_tuple</a>(HeapTuple tuple, TupleConversionMap *map) { AttrMap    *attrMap = map-&gt;attrMap; Datum	   *invalues = map-&gt;invalues; bool	   *inisnull = map-&gt;inisnull; Datum	   *outvalues = map-&gt;outvalues; bool	   *outisnull = map-&gt;outisnull; <a class="wiki-source-link" href="../../source/src/include/port.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/port.h.html&quot;}, '*');">int</a>			i;</p>
 <p>/*</p>
 <ul>
 <li>Extract all the values of the old tuple, offsetting the arrays so that</li>
@@ -45,7 +45,7 @@
 <p>/*</p>
 <ul>
 <li>Transpose into proper fields of the new tuple.</li>
-<p>*/ <a class="wiki-source-link" href="../../source/src/include/c.h.html#L950" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/c.h.html&quot;}, '*');">Assert</a>(attrMap-&gt;maplen == map-&gt;outdesc-&gt;natts); for (i = 0; i &lt; attrMap-&gt;maplen; i++) { int			j = attrMap-&gt;attnums[i];</p>
+<p>*/ <a class="wiki-source-link" href="../../source/src/include/c.h.html#L950" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/c.h.html&quot;}, '*');">Assert</a>(attrMap-&gt;maplen == map-&gt;outdesc-&gt;natts); for (i = 0; i &lt; attrMap-&gt;maplen; i++) { <a class="wiki-source-link" href="../../source/src/include/port.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/port.h.html&quot;}, '*');">int</a>			j = attrMap-&gt;attnums[i];</p>
 </ul>
 <p>outvalues[i] = invalues[j]; outisnull[i] = inisnull[j]; }</p>
 <p>/*</p>

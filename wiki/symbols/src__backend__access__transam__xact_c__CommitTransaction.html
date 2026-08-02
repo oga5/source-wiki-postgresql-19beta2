@@ -47,7 +47,7 @@
 <li>Do pre-commit processing that involves calling user-defined code, such</li>
 <li>as triggers.  <a class="wiki-source-link" href="../../source/src/include/miscadmin.h.html#L322" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/miscadmin.h.html&quot;}, '*');">SECURITY_RESTRICTED_OPERATION</a> contexts must not queue an</li>
 <li>action that would run here, because that would bypass the sandbox.</li>
-<li>Since closing cursors could queue trigger actions, triggers could <a class="wiki-source-link" href="../../source/src/include/port.h.html#L366" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/port.h.html&quot;}, '*');">open</a></li>
+<li>Since closing cursors could queue trigger actions, triggers could <a class="wiki-source-link" href="../../source/src/include/port.h.html#L366" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/port.h.html&quot;}, '*');">open</a></li>
 <li>cursors, etc, we have to keep looping until there&#x27;s nothing left to do.</li>
 <p>*/ for (;;) { /*</p>
 <li>Fire all currently pending deferred triggers.</li>
@@ -55,7 +55,7 @@
 </ul>
 <p>/*</p>
 <ul>
-<li>Close <a class="wiki-source-link" href="../../source/src/include/port.h.html#L366" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/port.h.html&quot;}, '*');">open</a> portals (converting holdable ones into static portals).</li>
+<li>Close <a class="wiki-source-link" href="../../source/src/include/port.h.html#L366" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/port.h.html&quot;}, '*');">open</a> portals (converting holdable ones into static portals).</li>
 <li>If there weren&#x27;t any, we are done ... otherwise loop back to check</li>
 <li>if they queued deferred triggers.  Lather, rinse, repeat.</li>
 <p>*/ if (!<a class="wiki-source-link" href="../../source/src/backend/utils/mmgr/portalmem.c.html#L677" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__utils__mmgr__portalmem_c__PreCommit_Portals.html&quot;}, '*');">PreCommit_Portals</a>(<a class="wiki-source-link" href="../../source/src/tools/pg_bsd_indent/indent_globs.h.html#L43" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/tools/pg_bsd_indent/indent_globs.h.html&quot;}, '*');">false</a>)) break; }</p>

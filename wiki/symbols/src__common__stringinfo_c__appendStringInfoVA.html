@@ -15,7 +15,7 @@
 <h2>入力と出力</h2>
 <ul>
 <li>引数: <code>StringInfo str</code>, <code>const char *fmt</code>, <code>va_list args</code></li>
-<li>戻り値: <code>int</code></li>
+<li>戻り値: <a class="wiki-source-link" href="../../source/src/include/port.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/port.h.html&quot;}, '*');"><code>int</code></a></li>
 </ul>
 <h2>前提条件と不変条件</h2>
 <p>まだ解析していません。</p>
@@ -34,7 +34,7 @@
 <h2>関連データ構造</h2>
 <p><a class="wiki-source-link" href="../../source/src/bin/psql/command.c.html#L5090" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__bin__psql__command_c__fmt.html&quot;}, '*');"><code>fmt</code></a>, <code>StringInfo</code></p>
 <h2>ソース抜粋</h2>
-<p>~~~c int <a class="wiki-source-link" href="../../source/src/common/stringinfo.c.html#L186" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__common__stringinfo_c__appendStringInfoVA.html&quot;}, '*');">appendStringInfoVA</a>(StringInfo str, const char *<a class="wiki-source-link" href="../../source/src/bin/psql/command.c.html#L5090" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__bin__psql__command_c__fmt.html&quot;}, '*');">fmt</a>, va_list args) { int			avail; size_t		nprinted;</p>
+<p>~~~c <a class="wiki-source-link" href="../../source/src/include/port.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/port.h.html&quot;}, '*');">int</a> <a class="wiki-source-link" href="../../source/src/common/stringinfo.c.html#L186" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__common__stringinfo_c__appendStringInfoVA.html&quot;}, '*');">appendStringInfoVA</a>(StringInfo str, const char *<a class="wiki-source-link" href="../../source/src/bin/psql/command.c.html#L5090" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__bin__psql__command_c__fmt.html&quot;}, '*');">fmt</a>, va_list <a class="wiki-source-link" href="../../source/src/include/fmgr.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/fmgr.h.html&quot;}, '*');">args</a>) { <a class="wiki-source-link" href="../../source/src/include/port.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/port.h.html&quot;}, '*');">int</a>			avail; size_t		nprinted;</p>
 <p><a class="wiki-source-link" href="../../source/src/include/c.h.html#L950" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/c.h.html&quot;}, '*');">Assert</a>(str != NULL);</p>
 <p>/*</p>
 <ul>
@@ -43,15 +43,15 @@
 <li>enlarge, since we&#x27;re skipping the formatting work.</li>
 <p>*/ avail = str-&gt;maxlen - str-&gt;len; if (avail &lt; 16) return 32;</p>
 </ul>
-<p>nprinted = <a class="wiki-source-link" href="../../source/src/common/psprintf.c.html#L102" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__common__psprintf_c__pvsnprintf.html&quot;}, '*');">pvsnprintf</a>(str-&gt;data + str-&gt;len, (size_t) avail, <a class="wiki-source-link" href="../../source/src/bin/psql/command.c.html#L5090" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__bin__psql__command_c__fmt.html&quot;}, '*');">fmt</a>, args);</p>
-<p>if (nprinted &lt; (size_t) avail) { /* Success.  Note nprinted does not include trailing null. */ str-&gt;len += (int) nprinted; return 0; }</p>
+<p>nprinted = <a class="wiki-source-link" href="../../source/src/common/psprintf.c.html#L102" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__common__psprintf_c__pvsnprintf.html&quot;}, '*');">pvsnprintf</a>(str-&gt;data + str-&gt;len, (size_t) avail, <a class="wiki-source-link" href="../../source/src/bin/psql/command.c.html#L5090" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__bin__psql__command_c__fmt.html&quot;}, '*');">fmt</a>, <a class="wiki-source-link" href="../../source/src/include/fmgr.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/fmgr.h.html&quot;}, '*');">args</a>);</p>
+<p>if (nprinted &lt; (size_t) avail) { /* Success.  Note nprinted does not include trailing null. */ str-&gt;len += (<a class="wiki-source-link" href="../../source/src/include/port.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/port.h.html&quot;}, '*');">int</a>) nprinted; return 0; }</p>
 <p>/* Restore the trailing null so that str <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> unmodified. */ str-&gt;data[str-&gt;len] = &#x27;\0&#x27;;</p>
 <p>/*</p>
 <ul>
 <li>Return <a class="wiki-source-link" href="../../source/src/common/psprintf.c.html#L102" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__common__psprintf_c__pvsnprintf.html&quot;}, '*');">pvsnprintf</a>&#x27;s estimate of the space needed.  (Although this <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a></li>
-<li>given as a size_t, we know it will fit in int because it&#x27;s not more</li>
+<li>given as a size_t, we know it will fit in <a class="wiki-source-link" href="../../source/src/include/port.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/port.h.html&quot;}, '*');">int</a> because it&#x27;s not more</li>
 <li>than MaxAllocSize.)</li>
-<p>*/ return (int) nprinted; } ~~~</p>
+<p>*/ return (<a class="wiki-source-link" href="../../source/src/include/port.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/port.h.html&quot;}, '*');">int</a>) nprinted; } ~~~</p>
 </ul>
 <h2>失敗モードと境界条件</h2>
 <p>まだ解析していません。</p>

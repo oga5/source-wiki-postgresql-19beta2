@@ -34,7 +34,7 @@
 <h2>関連データ構造</h2>
 <p><code>List</code>, <code>Oid</code>, <code>Query</code>, <code>QueryEnvironment</code>, <code>RawStmt</code></p>
 <h2>ソース抜粋</h2>
-<p>~~~c List * <a class="wiki-source-link" href="../../source/src/backend/tcop/postgres.c.html#L681" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__tcop__postgres_c__pg_analyze_and_rewrite_fixedparams.html&quot;}, '*');">pg_analyze_and_rewrite_fixedparams</a>(RawStmt *parsetree, const char *query_string, const Oid *paramTypes, int numParams, QueryEnvironment *queryEnv) { Query	   *query; List	   *querytree_list;</p>
+<p>~~~c List * <a class="wiki-source-link" href="../../source/src/backend/tcop/postgres.c.html#L681" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__tcop__postgres_c__pg_analyze_and_rewrite_fixedparams.html&quot;}, '*');">pg_analyze_and_rewrite_fixedparams</a>(RawStmt *parsetree, const char *query_string, const Oid *paramTypes, <a class="wiki-source-link" href="../../source/src/include/port.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/port.h.html&quot;}, '*');">int</a> numParams, QueryEnvironment *queryEnv) { Query	   *query; List	   *querytree_list;</p>
 <p>TRACE_POSTGRESQL_QUERY_REWRITE_START(query_string);</p>
 <p>/*</p>
 <ul>

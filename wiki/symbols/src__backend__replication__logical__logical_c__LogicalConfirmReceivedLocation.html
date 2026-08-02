@@ -46,7 +46,7 @@
 <p>*</p>
 <li>This can happen <a class="wiki-source-link" href="../../source/src/interfaces/ecpg/preproc/type.h.html#L89" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__interfaces__ecpg__preproc__type_h__when.html&quot;}, '*');">when</a> a client acknowledges an LSN it doesn&#x27;t have</li>
 <li>to do anything for, and thus didn&#x27;t store persistently. After a</li>
-<li>restart, the client can <a class="wiki-source-link" href="../../source/src/include/port/win32_port.h.html#L502" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/port/win32_port.h.html&quot;}, '*');">send</a> the prior LSN that it stored</li>
+<li>restart, the client can <a class="wiki-source-link" href="../../source/src/include/port/win32_port.h.html#L502" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/port/win32_port.h.html&quot;}, '*');">send</a> the prior LSN that it stored</li>
 <li>persistently as an acknowledgement, but we need to ignore such an</li>
 <li>LSN. See similar case handling in CreateDecodingContext.</li>
 <p>*/ if (lsn &gt; MyReplicationSlot-&gt;data.confirmed_flush) MyReplicationSlot-&gt;data.confirmed_flush = lsn;</p>

@@ -35,7 +35,7 @@
 <p>/* GRANT / REVOKE */ struct { InternalGrant *istmt; }			grant;</p>
 <p>/* ALTER OPERATOR FAMILY */ struct { ObjectAddress address; List	   *operators; List	   *procedures; }			opfam;</p>
 <p>/* CREATE OPERATOR CLASS */ struct { ObjectAddress address; List	   *operators; List	   *procedures; }			createopc;</p>
-<p>/* ALTER TEXT SEARCH CONFIGURATION ADD/ALTER/DROP MAPPING */ struct { ObjectAddress address; Oid		   *dictIds; int			ndicts; }			atscfg;</p>
+<p>/* ALTER TEXT SEARCH CONFIGURATION ADD/ALTER/DROP MAPPING */ struct { ObjectAddress address; Oid		   *dictIds; <a class="wiki-source-link" href="../../source/src/include/port.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/port.h.html&quot;}, '*');">int</a>			ndicts; }			atscfg;</p>
 <p>/* ALTER DEFAULT PRIVILEGES */ struct { ObjectType	objtype; }			defprivs; }			d; ~~~</p>
 <h2>失敗モードと境界条件</h2>
 <p>まだ解析していません。</p>

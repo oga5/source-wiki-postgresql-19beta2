@@ -47,7 +47,7 @@
 <li>kernel by trying to create a ring with userspace-provided memory. This</li>
 <li>also has a secondary benefit: We can determine precisely how much</li>
 <li>memory we need for each io_uring instance.</li>
-<p>*/ #if defined(HAVE_IO_URING_QUEUE_INIT_MEM) &amp;&amp; defined(IORING_SETUP_NO_MMAP) { struct io_uring test_ring; size_t		ring_size; void	   *ring_ptr; struct io_uring_params p = {0}; int			ret;</p>
+<p>*/ #if defined(HAVE_IO_URING_QUEUE_INIT_MEM) &amp;&amp; defined(IORING_SETUP_NO_MMAP) { struct io_uring test_ring; size_t		ring_size; void	   *ring_ptr; struct io_uring_params p = {0}; <a class="wiki-source-link" href="../../source/src/include/port.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/port.h.html&quot;}, '*');">int</a>			ret;</p>
 </ul>
 <p>/*</p>
 <ul>
@@ -61,7 +61,7 @@
 </ul>
 <p>/*</p>
 <ul>
-<li>Hard to believe a <a class="wiki-source-link" href="../../source/src/include/port.h.html#L388" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/port.h.html&quot;}, '*');">system</a> exists where 1MB would not be a multiple</li>
+<li>Hard to believe a <a class="wiki-source-link" href="../../source/src/include/port.h.html#L388" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/port.h.html&quot;}, '*');">system</a> exists where 1MB would not be a multiple</li>
 <li>of the page size. But it&#x27;s cheap to ensure...</li>
 <p>*/ ring_size -= ring_size % sysconf(_SC_PAGESIZE);</p>
 </ul>

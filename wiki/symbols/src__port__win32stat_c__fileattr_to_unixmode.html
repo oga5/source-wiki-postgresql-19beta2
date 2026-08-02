@@ -34,7 +34,7 @@
 <h2>関連データ構造</h2>
 <p>なし</p>
 <h2>ソース抜粋</h2>
-<p>~~~c static unsigned short <a class="wiki-source-link" href="../../source/src/port/win32stat.c.html#L47" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__port__win32stat_c__fileattr_to_unixmode.html&quot;}, '*');">fileattr_to_unixmode</a>(int attr) { unsigned short uxmode = 0;</p>
+<p>~~~c static unsigned short <a class="wiki-source-link" href="../../source/src/port/win32stat.c.html#L47" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__port__win32stat_c__fileattr_to_unixmode.html&quot;}, '*');">fileattr_to_unixmode</a>(<a class="wiki-source-link" href="../../source/src/include/port.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/port.h.html&quot;}, '*');">int</a> attr) { unsigned short uxmode = 0;</p>
 <p>uxmode |= (unsigned short) ((attr &amp; FILE_ATTRIBUTE_DIRECTORY) ? (_S_IFDIR) : (_S_IFREG));</p>
 <p>uxmode |= (unsigned short) ((attr &amp; FILE_ATTRIBUTE_READONLY) ? (_S_IREAD) : (_S_IREAD | _S_IWRITE));</p>
 <p>/* there <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> no need to simulate _S_IEXEC using CMD&#x27;s PATHEXT extensions */ uxmode |= _S_IEXEC;</p>

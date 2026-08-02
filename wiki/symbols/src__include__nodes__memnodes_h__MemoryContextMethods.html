@@ -34,7 +34,7 @@
 <li>memory into the given &#x27;context&#x27;.  The function must handle flags</li>
 <li>MCXT_ALLOC_HUGE and MCXT_ALLOC_NO_OOM.  MCXT_ALLOC_ZERO <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> handled by</li>
 <li>the calling function.</li>
-<p>*/ void	   *(*alloc) (MemoryContext context, Size size, int flags);</p>
+<p>*/ void	   *(*alloc) (MemoryContext context, Size size, <a class="wiki-source-link" href="../../source/src/include/port.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/port.h.html&quot;}, '*');">int</a> flags);</p>
 </ul>
 <p>/* call this free_p in case someone #define&#x27;s <a class="wiki-source-link" href="../../source/src/include/snowball/snowball_runtime.h.html#L65" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/snowball/snowball_runtime.h.html&quot;}, '*');">free</a>() */ void		(*free_p) (void *pointer);</p>
 <p>/*</p>
@@ -42,7 +42,7 @@
 <li>Function to handle a size change request for an existing allocation.</li>
 <li>The implementation must handle flags MCXT_ALLOC_HUGE and</li>
 <li>MCXT_ALLOC_NO_OOM.  MCXT_ALLOC_ZERO <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> handled by the calling function.</li>
-<p>*/ void	   *(*<a class="wiki-source-link" href="../../source/src/include/snowball/snowball_runtime.h.html#L60" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/snowball/snowball_runtime.h.html&quot;}, '*');">realloc</a>) (void *pointer, Size size, int flags);</p>
+<p>*/ void	   *(*<a class="wiki-source-link" href="../../source/src/include/snowball/snowball_runtime.h.html#L60" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/snowball/snowball_runtime.h.html&quot;}, '*');">realloc</a>) (void *pointer, Size size, <a class="wiki-source-link" href="../../source/src/include/port.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/port.h.html&quot;}, '*');">int</a> flags);</p>
 </ul>
 <p>/*</p>
 <ul>

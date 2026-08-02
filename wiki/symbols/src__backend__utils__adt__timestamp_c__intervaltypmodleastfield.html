@@ -15,7 +15,7 @@
 <h2>入力と出力</h2>
 <ul>
 <li>引数: <code>int32 typmod</code></li>
-<li>戻り値: <code>int</code></li>
+<li>戻り値: <a class="wiki-source-link" href="../../source/src/include/port.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/port.h.html&quot;}, '*');"><code>int</code></a></li>
 </ul>
 <h2>前提条件と不変条件</h2>
 <p>まだ解析していません。</p>
@@ -34,7 +34,7 @@
 <h2>関連データ構造</h2>
 <p><code>int32</code></p>
 <h2>ソース抜粋</h2>
-<p>~~~c static int <a class="wiki-source-link" href="../../source/src/backend/utils/adt/timestamp.c.html#L1212" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__utils__adt__timestamp_c__intervaltypmodleastfield.html&quot;}, '*');">intervaltypmodleastfield</a>(int32 typmod) { if (typmod &lt; 0) return 0;				/* SECOND */</p>
+<p>~~~c static <a class="wiki-source-link" href="../../source/src/include/port.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/port.h.html&quot;}, '*');">int</a> <a class="wiki-source-link" href="../../source/src/backend/utils/adt/timestamp.c.html#L1212" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__utils__adt__timestamp_c__intervaltypmodleastfield.html&quot;}, '*');">intervaltypmodleastfield</a>(int32 typmod) { if (typmod &lt; 0) return 0;				/* SECOND */</p>
 <p>switch (<a class="wiki-source-link" href="../../source/src/include/utils/timestamp.h.html#L82" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/utils/timestamp.h.html&quot;}, '*');">INTERVAL_RANGE</a>(typmod)) { case INTERVAL_MASK(YEAR): return 5;			/* YEAR */ case INTERVAL_MASK(MONTH): return 4;			/* MONTH */ case INTERVAL_MASK(DAY): return 3;			/* DAY */ case INTERVAL_MASK(HOUR): return 2;			/* HOUR */ case INTERVAL_MASK(MINUTE): return 1;			/* MINUTE */ case INTERVAL_MASK(SECOND): return 0;			/* SECOND */ case INTERVAL_MASK(YEAR) | INTERVAL_MASK(MONTH): return 4;			/* MONTH */ case INTERVAL_MASK(DAY) | INTERVAL_MASK(HOUR): return 2;			/* HOUR */ case INTERVAL_MASK(DAY) | INTERVAL_MASK(HOUR) | INTERVAL_MASK(MINUTE): return 1;			/* MINUTE */ case INTERVAL_MASK(DAY) | INTERVAL_MASK(HOUR) | INTERVAL_MASK(MINUTE) | INTERVAL_MASK(SECOND): return 0;			/* SECOND */ case INTERVAL_MASK(HOUR) | INTERVAL_MASK(MINUTE): return 1;			/* MINUTE */ case INTERVAL_MASK(HOUR) | INTERVAL_MASK(MINUTE) | INTERVAL_MASK(SECOND): return 0;			/* SECOND */ case INTERVAL_MASK(MINUTE) | INTERVAL_MASK(SECOND): return 0;			/* SECOND */ case INTERVAL_FULL_RANGE: return 0;			/* SECOND */ default: <a class="wiki-source-link" href="../../source/src/include/utils/elog.h.html#L242" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/utils/elog.h.html&quot;}, '*');">elog</a>(ERROR, &quot;invalid INTERVAL typmod: 0x%x&quot;, typmod); break; } return 0;					/* can&#x27;t get here, but keep compiler quiet */ } ~~~</p>
 <h2>失敗モードと境界条件</h2>
 <p>まだ解析していません。</p>

@@ -34,14 +34,14 @@
 <h2>関連データ構造</h2>
 <p><code>List</code>, <a class="wiki-source-link" href="../../source/src/include/nodes/pg_list.h.html#L45" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__nodes__pg_list_h__ListCell.html&quot;}, '*');"><code>ListCell</code></a>, <code>NodeTag</code></p>
 <h2>ソース抜粋</h2>
-<p>~~~c static List * <a class="wiki-source-link" href="../../source/src/backend/nodes/list.c.html#L90" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__nodes__list_c__new_list.html&quot;}, '*');">new_list</a>(NodeTag type, int min_size) { List	   *newlist; int			max_size;</p>
+<p>~~~c static List * <a class="wiki-source-link" href="../../source/src/backend/nodes/list.c.html#L90" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__nodes__list_c__new_list.html&quot;}, '*');">new_list</a>(NodeTag type, <a class="wiki-source-link" href="../../source/src/include/port.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/port.h.html&quot;}, '*');">int</a> min_size) { List	   *newlist; <a class="wiki-source-link" href="../../source/src/include/port.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/port.h.html&quot;}, '*');">int</a>			max_size;</p>
 <p><a class="wiki-source-link" href="../../source/src/include/c.h.html#L950" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/c.h.html&quot;}, '*');">Assert</a>(min_size &gt; 0);</p>
 <p>/*</p>
 <ul>
 <li>We allocate all the requested cells, and possibly some more, as part of</li>
 <li>the same palloc request as the List header.  This <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> a big win for the</li>
 <li>typical case of short fixed-length lists.  It can lose if we allocate a</li>
-<li>moderately long list and then it gets extended; we&#x27;ll be wasting more</li>
+<li>moderately <a class="wiki-source-link" href="../../source/src/include/port/win32_port.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/port/win32_port.h.html&quot;}, '*');">long</a> list and then it gets extended; we&#x27;ll be wasting more</li>
 <li>initial_elements[] space than if we&#x27;d made the header small.  However,</li>
 <li>rounding up the request as we do in the normal code path provides some</li>
 <li>defense against small extensions.</li>
@@ -53,7 +53,7 @@
 <li>Normally, we set up a list with some extra cells, to allow it to grow</li>
 <li>without a repalloc.  Prefer cell counts chosen to make the total</li>
 <li>allocation a power-of-2, since palloc would round it up to that anyway.</li>
-<li>(That stops being <a class="wiki-source-link" href="../../source/src/tools/pg_bsd_indent/indent_globs.h.html#L46" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/tools/pg_bsd_indent/indent_globs.h.html&quot;}, '*');">true</a> for very large allocations, but very long lists</li>
+<li>(That stops being <a class="wiki-source-link" href="../../source/src/tools/pg_bsd_indent/indent_globs.h.html#L46" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/tools/pg_bsd_indent/indent_globs.h.html&quot;}, '*');">true</a> for very large allocations, but very <a class="wiki-source-link" href="../../source/src/include/port/win32_port.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/port/win32_port.h.html&quot;}, '*');">long</a> lists</li>
 <li>are infrequent, so it doesn&#x27;t seem worth special logic for such cases.)</li>
 <p>*</p>
 <li>The minimum allocation <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> 8 <a class="wiki-source-link" href="../../source/src/include/nodes/pg_list.h.html#L45" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__nodes__pg_list_h__ListCell.html&quot;}, '*');">ListCell</a> units, providing either 4 or 5</li>

@@ -34,7 +34,7 @@
 <h2>関連データ構造</h2>
 <p><code>PlannerInfo</code>, <code>RangeTblEntry</code>, <code>RelOptInfo</code></p>
 <h2>ソース抜粋</h2>
-<p>~~~c void <a class="wiki-source-link" href="../../source/src/backend/optimizer/plan/initsplan.c.html#L215" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__plan__initsplan_c__add_other_rels_to_query.html&quot;}, '*');">add_other_rels_to_query</a>(PlannerInfo *root) { int			rti;</p>
+<p>~~~c void <a class="wiki-source-link" href="../../source/src/backend/optimizer/plan/initsplan.c.html#L215" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__plan__initsplan_c__add_other_rels_to_query.html&quot;}, '*');">add_other_rels_to_query</a>(PlannerInfo *root) { <a class="wiki-source-link" href="../../source/src/include/port.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/port.h.html&quot;}, '*');">int</a>			rti;</p>
 <p>for (rti = 1; rti &lt; root-&gt;simple_rel_array_size; rti++) { RelOptInfo *rel = root-&gt;simple_rel_array[rti]; RangeTblEntry *rte = root-&gt;simple_rte_array[rti];</p>
 <p>/* there may be empty slots corresponding to non-baserel RTEs */ if (rel == NULL) continue;</p>
 <p>/* Ignore any &quot;otherrels&quot; that were already added. */ if (rel-&gt;reloptkind != RELOPT_BASEREL) continue;</p>

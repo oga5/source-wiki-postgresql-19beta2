@@ -48,7 +48,7 @@
 <p>*</p>
 <li>To avoid that, iterate through the IOV and zero out the &quot;failed&quot;</li>
 <li>portion of the IO.</li>
-<p>*/ for (int i = 0; i &lt; ioh-&gt;op_data.read.iov_length; i++) { if (processed + iov[i].iov_len &lt;= new_result) processed += iov[i].iov_len; else if (processed &lt;= new_result) { uint32		ok_part = new_result - processed;</p>
+<p>*/ for (<a class="wiki-source-link" href="../../source/src/include/port.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/port.h.html&quot;}, '*');">int</a> i = 0; i &lt; ioh-&gt;op_data.read.iov_length; i++) { if (processed + iov[i].iov_len &lt;= new_result) processed += iov[i].iov_len; else if (processed &lt;= new_result) { uint32		ok_part = new_result - processed;</p>
 </ul>
 <p>memset((char *) iov[i].iov_base + ok_part, 0, iov[i].iov_len - ok_part); processed += iov[i].iov_len; } else { memset((char *) iov[i].iov_base, 0, iov[i].iov_len); } }</p>
 <p>ioh-&gt;<a class="wiki-source-link" href="../../source/src/include/storage/checksum_block_internal.h.html#L18" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/storage/checksum_block_internal.h.html&quot;}, '*');">result</a> = new_result; } } ~~~</p>

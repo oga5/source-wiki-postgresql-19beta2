@@ -44,12 +44,12 @@
 <li>the begin address.</li>
 <p>*/ #ifdef __x86_64__ while (p + 8 &lt;= pend) { crc = (uint32) _mm_crc32_u64(crc, *((const uint64 *) p)); p += 8; }</p>
 </ul>
-<p>/* Process remaining full four bytes if any */ if (p + 4 &lt;= pend) { crc = _mm_crc32_u32(crc, *((const unsigned int *) p)); p += 4; } #else</p>
+<p>/* Process remaining full four bytes if any */ if (p + 4 &lt;= pend) { crc = _mm_crc32_u32(crc, *((const unsigned <a class="wiki-source-link" href="../../source/src/include/port.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/port.h.html&quot;}, '*');">int</a> *) p)); p += 4; } #else</p>
 <p>/*</p>
 <ul>
 <li>Process four bytes at a time. (The eight byte instruction <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> not</li>
 <li>available on the 32-bit x86 architecture).</li>
-<p>*/ while (p + 4 &lt;= pend) { crc = _mm_crc32_u32(crc, *((const unsigned int *) p)); p += 4; } #endif							/* __x86_64__ */</p>
+<p>*/ while (p + 4 &lt;= pend) { crc = _mm_crc32_u32(crc, *((const unsigned <a class="wiki-source-link" href="../../source/src/include/port.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/port.h.html&quot;}, '*');">int</a> *) p)); p += 4; } #endif							/* __x86_64__ */</p>
 </ul>
 <p>/* Process any remaining bytes one at a time. */ while (p &lt; pend) { crc = _mm_crc32_u8(crc, *p); p++; }</p>
 <p>return crc; } ~~~</p>

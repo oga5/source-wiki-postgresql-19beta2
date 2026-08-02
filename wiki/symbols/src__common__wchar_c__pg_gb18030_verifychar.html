@@ -15,7 +15,7 @@
 <h2>入力と出力</h2>
 <ul>
 <li>引数: <code>const unsigned char *s</code>, <code>int len</code></li>
-<li>戻り値: <code>int</code></li>
+<li>戻り値: <a class="wiki-source-link" href="../../source/src/include/port.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/port.h.html&quot;}, '*');"><code>int</code></a></li>
 </ul>
 <h2>前提条件と不変条件</h2>
 <p>まだ解析していません。</p>
@@ -34,7 +34,7 @@
 <h2>関連データ構造</h2>
 <p>なし</p>
 <h2>ソース抜粋</h2>
-<p>~~~c static int <a class="wiki-source-link" href="../../source/src/common/wchar.c.html#L1441" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__common__wchar_c__pg_gb18030_verifychar.html&quot;}, '*');">pg_gb18030_verifychar</a>(const unsigned char *s, int len) { int			l;</p>
+<p>~~~c static <a class="wiki-source-link" href="../../source/src/include/port.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/port.h.html&quot;}, '*');">int</a> <a class="wiki-source-link" href="../../source/src/common/wchar.c.html#L1441" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__common__wchar_c__pg_gb18030_verifychar.html&quot;}, '*');">pg_gb18030_verifychar</a>(const unsigned char *s, <a class="wiki-source-link" href="../../source/src/include/port.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/port.h.html&quot;}, '*');">int</a> len) { <a class="wiki-source-link" href="../../source/src/include/port.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/port.h.html&quot;}, '*');">int</a>			l;</p>
 <p>if (!<a class="wiki-source-link" href="../../source/src/include/c.h.html#L1254" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/c.h.html&quot;}, '*');">IS_HIGHBIT_SET</a>(*s)) l = 1;					/* ASCII */ else if (len &gt;= 4 &amp;&amp; *(s + 1) &gt;= 0x30 &amp;&amp; *(s + 1) &lt;= 0x39) { /* Should be 4-byte, <a class="wiki-source-link" href="../../source/src/backend/libpq/auth-oauth.c.html#L671" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__libpq__auth-oauth_c__validate.html&quot;}, '*');">validate</a> remaining bytes */ if (*s &gt;= 0x81 &amp;&amp; *s &lt;= 0xfe &amp;&amp; *(s + 2) &gt;= 0x81 &amp;&amp; *(s + 2) &lt;= 0xfe &amp;&amp; *(s + 3) &gt;= 0x30 &amp;&amp; *(s + 3) &lt;= 0x39) l = 4; else l = -1; } else if (len &gt;= 2 &amp;&amp; *s &gt;= 0x81 &amp;&amp; *s &lt;= 0xfe) { /* Should be 2-byte, <a class="wiki-source-link" href="../../source/src/backend/libpq/auth-oauth.c.html#L671" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__libpq__auth-oauth_c__validate.html&quot;}, '*');">validate</a> */ if ((*(s + 1) &gt;= 0x40 &amp;&amp; *(s + 1) &lt;= 0x7e) || (*(s + 1) &gt;= 0x80 &amp;&amp; *(s + 1) &lt;= 0xfe)) l = 2; else l = -1; } else l = -1; return l; } ~~~</p>
 <h2>失敗モードと境界条件</h2>
 <p>まだ解析していません。</p>

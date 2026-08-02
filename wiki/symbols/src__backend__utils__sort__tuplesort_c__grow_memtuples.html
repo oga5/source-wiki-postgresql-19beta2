@@ -34,7 +34,7 @@
 <h2>関連データ構造</h2>
 <p><code>c</code>, <a class="wiki-source-link" href="../../source/src/include/c.h.html#L721" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/c.h.html&quot;}, '*');"><code>float8</code></a>, <code>int64</code>, <code>Size</code>, <a class="wiki-source-link" href="../../source/src/include/utils/tuplesort.h.html#L114" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__utils__tuplesort_h__SortTuple.html&quot;}, '*');"><code>SortTuple</code></a>, <code>state</code>, <code>Tuplesortstate</code></p>
 <h2>ソース抜粋</h2>
-<p>~~~c static bool grow_memtuples(Tuplesortstate *state) { int			newmemtupsize; int			memtupsize = state-&gt;memtupsize; int64		memNowUsed = state-&gt;allowedMem - state-&gt;availMem;</p>
+<p>~~~c static bool grow_memtuples(Tuplesortstate *state) { <a class="wiki-source-link" href="../../source/src/include/port.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/port.h.html&quot;}, '*');">int</a>			newmemtupsize; <a class="wiki-source-link" href="../../source/src/include/port.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/port.h.html&quot;}, '*');">int</a>			memtupsize = state-&gt;memtupsize; int64		memNowUsed = state-&gt;allowedMem - state-&gt;availMem;</p>
 <p>/* Forget it if we&#x27;ve already maxed out memtuples, per <a class="wiki-source-link" href="../../source/src/tools/pg_bsd_indent/indent_codes.h.html#L49" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/tools/pg_bsd_indent/indent_codes.h.html&quot;}, '*');">comment</a> above */ if (!state-&gt;growmemtuples) return <a class="wiki-source-link" href="../../source/src/tools/pg_bsd_indent/indent_globs.h.html#L43" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/tools/pg_bsd_indent/indent_globs.h.html&quot;}, '*');">false</a>;</p>
 <p>/* Select new <a class="wiki-source-link" href="../../source/src/interfaces/ecpg/compatlib/informix.c.html#L687" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/ecpg/compatlib/informix.c.html&quot;}, '*');">value</a> of memtupsize */ if (memNowUsed &lt;= state-&gt;availMem) { /*</p>
 <ul>
@@ -67,7 +67,7 @@
 <li>really bad from happening.</li>
 <p>*/ double		grow_ratio;</p>
 </ul>
-<p>grow_ratio = (double) state-&gt;allowedMem / (double) memNowUsed; if (memtupsize * grow_ratio &lt; INT_MAX) newmemtupsize = (int) (memtupsize * grow_ratio); else ~~~</p>
+<p>grow_ratio = (double) state-&gt;allowedMem / (double) memNowUsed; if (memtupsize * grow_ratio &lt; INT_MAX) newmemtupsize = (<a class="wiki-source-link" href="../../source/src/include/port.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/port.h.html&quot;}, '*');">int</a>) (memtupsize * grow_ratio); else ~~~</p>
 <h2>失敗モードと境界条件</h2>
 <p>まだ解析していません。</p>
 <h2>保守担当者向けメモ</h2>

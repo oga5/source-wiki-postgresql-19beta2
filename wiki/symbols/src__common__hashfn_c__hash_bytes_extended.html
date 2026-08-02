@@ -34,7 +34,7 @@
 <h2>関連データ構造</h2>
 <p><code>c</code>, <code>state</code>, <code>uint32</code>, <code>uint64</code></p>
 <h2>ソース抜粋</h2>
-<p>~~~c uint64 <a class="wiki-source-link" href="../../source/src/common/hashfn.c.html#L371" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__common__hashfn_c__hash_bytes_extended.html&quot;}, '*');">hash_bytes_extended</a>(const unsigned char *k, int keylen, uint64 seed) { uint32		a, b, c, len;</p>
+<p>~~~c uint64 <a class="wiki-source-link" href="../../source/src/common/hashfn.c.html#L371" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__common__hashfn_c__hash_bytes_extended.html&quot;}, '*');">hash_bytes_extended</a>(const unsigned char *k, <a class="wiki-source-link" href="../../source/src/include/port.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/port.h.html&quot;}, '*');">int</a> keylen, uint64 seed) { uint32		a, b, c, len;</p>
 <p>/* Set up the internal state */ len = keylen; a = b = c = 0x9e3779b9 + len + 3923095;</p>
 <p>/* If the seed <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> non-zero, use it to perturb the internal state. */ if (seed != 0) { /*</p>
 <ul>

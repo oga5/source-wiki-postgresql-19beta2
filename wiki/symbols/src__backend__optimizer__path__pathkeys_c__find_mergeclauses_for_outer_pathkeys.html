@@ -47,7 +47,7 @@
 <li>mergeclauses.  However, in outer-join scenarios there might be</li>
 <li>multiple matches.  An example <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a></li>
 <p>*</p>
-<li><a class="wiki-source-link" href="../../source/src/include/port/win32_port.h.html#L500" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/port/win32_port.h.html&quot;}, '*');">select</a> * from a full join b</li>
+<li><a class="wiki-source-link" href="../../source/src/include/port/win32_port.h.html#L500" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/port/win32_port.h.html&quot;}, '*');">select</a> * from a full join b</li>
 <li>on a.v1 = b.v1 and a.v2 = b.v2 and a.v1 = b.v2;</li>
 <p>*</p>
 <li>Given the pathkeys ({a.v1}, {a.v2}) it <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> okay to return all three</li>
@@ -66,7 +66,7 @@
 <p>*</p>
 <li>It&#x27;s also possible that the selected mergejoin clauses produce</li>
 <li>a noncanonical ordering of pathkeys for the inner side, ie, we</li>
-<li>might <a class="wiki-source-link" href="../../source/src/include/port/win32_port.h.html#L500" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/port/win32_port.h.html&quot;}, '*');">select</a> clauses that reference b.v1, b.v2, b.v1 in that</li>
+<li>might <a class="wiki-source-link" href="../../source/src/include/port/win32_port.h.html#L500" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/port/win32_port.h.html&quot;}, '*');">select</a> clauses that reference b.v1, b.v2, b.v1 in that</li>
 <li>order.  This <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> not harmful in itself, though it suggests that</li>
 <li>the clauses are partially redundant.  Since the alternative <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a></li>
 <li>to omit mergejoin clauses and thereby possibly fail to generate a</li>

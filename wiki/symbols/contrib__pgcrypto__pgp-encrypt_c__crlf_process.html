@@ -15,7 +15,7 @@
 <h2>入力と出力</h2>
 <ul>
 <li>引数: <code>PushFilter *dst</code>, <code>void *priv</code>, <code>const uint8 *data</code>, <code>int len</code></li>
-<li>戻り値: <code>int</code></li>
+<li>戻り値: <a class="wiki-source-link" href="../../source/src/include/port.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/port.h.html&quot;}, '*');"><code>int</code></a></li>
 </ul>
 <h2>前提条件と不変条件</h2>
 <p>まだ解析していません。</p>
@@ -34,7 +34,7 @@
 <h2>関連データ構造</h2>
 <p><code>PushFilter</code>, <code>uint8</code></p>
 <h2>ソース抜粋</h2>
-<p>~~~c static int <a class="wiki-source-link" href="../../source/contrib/pgcrypto/pgp-encrypt.c.html#L326" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/contrib__pgcrypto__pgp-encrypt_c__crlf_process.html&quot;}, '*');">crlf_process</a>(PushFilter *dst, void *priv, const uint8 *data, int len) { const uint8 *data_end = data + len; const uint8 *p2, *p1 = data; int			line_len; static const uint8 crlf[] = {&#x27;\r&#x27;, &#x27;\n&#x27;}; int			res = 0;</p>
+<p>~~~c static <a class="wiki-source-link" href="../../source/src/include/port.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/port.h.html&quot;}, '*');">int</a> <a class="wiki-source-link" href="../../source/contrib/pgcrypto/pgp-encrypt.c.html#L326" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/contrib__pgcrypto__pgp-encrypt_c__crlf_process.html&quot;}, '*');">crlf_process</a>(PushFilter *dst, void *priv, const uint8 *data, <a class="wiki-source-link" href="../../source/src/include/port.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/port.h.html&quot;}, '*');">int</a> len) { const uint8 *data_end = data + len; const uint8 *p2, *p1 = data; <a class="wiki-source-link" href="../../source/src/include/port.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/port.h.html&quot;}, '*');">int</a>			line_len; static const uint8 crlf[] = {&#x27;\r&#x27;, &#x27;\n&#x27;}; <a class="wiki-source-link" href="../../source/src/include/port.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/port.h.html&quot;}, '*');">int</a>			res = 0;</p>
 <p>while (p1 &lt; data_end) { p2 = memchr(p1, &#x27;\n&#x27;, data_end - p1); if (p2 == NULL) p2 = data_end;</p>
 <p>line_len = p2 - p1;</p>
 <p>/* <a class="wiki-source-link" href="../../source/src/interfaces/libpq/win32.h.html#L14" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq/win32.h.html&quot;}, '*');">write</a> data */ res = 0; if (line_len &gt; 0) { res = <a class="wiki-source-link" href="../../source/contrib/pgcrypto/mbuf.c.html#L438" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/contrib__pgcrypto__mbuf_c__pushf_write.html&quot;}, '*');">pushf_write</a>(dst, p1, line_len); if (res &lt; 0) break; p1 += line_len; }</p>

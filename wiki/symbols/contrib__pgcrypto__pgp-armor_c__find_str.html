@@ -34,7 +34,7 @@
 <h2>関連データ構造</h2>
 <p><code>uint8</code></p>
 <h2>ソース抜粋</h2>
-<p>~~~c static const uint8 * <a class="wiki-source-link" href="../../source/contrib/pgcrypto/pgp-armor.c.html#L242" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/contrib__pgcrypto__pgp-armor_c__find_str.html&quot;}, '*');">find_str</a>(const uint8 *data, const uint8 *data_end, const char *str, int strlen) { const uint8 *p = data;</p>
+<p>~~~c static const uint8 * <a class="wiki-source-link" href="../../source/contrib/pgcrypto/pgp-armor.c.html#L242" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/contrib__pgcrypto__pgp-armor_c__find_str.html&quot;}, '*');">find_str</a>(const uint8 *data, const uint8 *data_end, const char *str, <a class="wiki-source-link" href="../../source/src/include/port.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/port.h.html&quot;}, '*');">int</a> strlen) { const uint8 *p = data;</p>
 <p>if (!strlen) return NULL; if (data_end - data &lt; strlen) return NULL; while (p &lt; data_end) { p = memchr(p, str[0], data_end - p); if (p == NULL) return NULL; if (p + strlen &gt; data_end) return NULL; if (memcmp(p, str, strlen) == 0) return p; p++; } return NULL; } ~~~</p>
 <h2>失敗モードと境界条件</h2>
 <p>まだ解析していません。</p>

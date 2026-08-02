@@ -15,7 +15,7 @@
 <h2>入力と出力</h2>
 <ul>
 <li>引数: <code>CompressFileHandle *CFH</code></li>
-<li>戻り値: <code>int</code></li>
+<li>戻り値: <a class="wiki-source-link" href="../../source/src/include/port.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/port.h.html&quot;}, '*');"><code>int</code></a></li>
 </ul>
 <h2>前提条件と不変条件</h2>
 <p>まだ解析していません。</p>
@@ -34,7 +34,7 @@
 <h2>関連データ構造</h2>
 <p><a class="wiki-source-link" href="../../source/src/bin/pg_dump/compress_io.h.html#L98" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__bin__pg_dump__compress_io_h__CompressFileHandle.html&quot;}, '*');"><code>CompressFileHandle</code></a></p>
 <h2>ソース抜粋</h2>
-<p>~~~c static int <a class="wiki-source-link" href="../../source/src/bin/pg_dump/compress_gzip.c.html#L312" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__bin__pg_dump__compress_gzip_c__Gzip_getc.html&quot;}, '*');">Gzip_getc</a>(<a class="wiki-source-link" href="../../source/src/bin/pg_dump/compress_io.h.html#L98" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__bin__pg_dump__compress_io_h__CompressFileHandle.html&quot;}, '*');">CompressFileHandle</a> *CFH) { gzFile		gzfp = (gzFile) CFH-&gt;private_data; int			ret;</p>
+<p>~~~c static <a class="wiki-source-link" href="../../source/src/include/port.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/port.h.html&quot;}, '*');">int</a> <a class="wiki-source-link" href="../../source/src/bin/pg_dump/compress_gzip.c.html#L312" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__bin__pg_dump__compress_gzip_c__Gzip_getc.html&quot;}, '*');">Gzip_getc</a>(<a class="wiki-source-link" href="../../source/src/bin/pg_dump/compress_io.h.html#L98" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__bin__pg_dump__compress_io_h__CompressFileHandle.html&quot;}, '*');">CompressFileHandle</a> *CFH) { gzFile		gzfp = (gzFile) CFH-&gt;private_data; <a class="wiki-source-link" href="../../source/src/include/port.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/port.h.html&quot;}, '*');">int</a>			ret;</p>
 <p>errno = 0; ret = gzgetc(gzfp); if (ret == EOF) { if (!gzeof(gzfp)) pg_fatal(&quot;could not <a class="wiki-source-link" href="../../source/src/interfaces/libpq/win32.h.html#L13" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq/win32.h.html&quot;}, '*');">read</a> from input file: %m&quot;); else pg_fatal(&quot;could not <a class="wiki-source-link" href="../../source/src/interfaces/libpq/win32.h.html#L13" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq/win32.h.html&quot;}, '*');">read</a> from input file: end of file&quot;); }</p>
 <p>return ret; } ~~~</p>
 <h2>失敗モードと境界条件</h2>

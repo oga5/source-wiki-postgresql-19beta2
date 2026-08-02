@@ -51,7 +51,7 @@
 <li>signaling the startup process in favor of using its procLatch, which</li>
 <li>comports better with possible generic signal handlers using that latch.</li>
 <li>But we should not do that because the startup process doesn&#x27;t assume</li>
-<li>that it&#x27;s waken up by walreceiver process or <a class="wiki-source-link" href="../../source/src/include/port/win32_port.h.html#L158" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/port/win32_port.h.html&quot;}, '*');">SIGHUP</a> signal handler</li>
+<li>that it&#x27;s waken up by walreceiver process or <a class="wiki-source-link" href="../../source/src/include/port/win32_port.h.html#L158" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/port/win32_port.h.html&quot;}, '*');">SIGHUP</a> signal handler</li>
 <li>while it&#x27;s waiting for recovery conflict. The separate latches,</li>
 <li>recoveryWakeupLatch and procLatch, should be used for inter-process</li>
 <li>communication for WAL replay and recovery conflict, respectively.</li>

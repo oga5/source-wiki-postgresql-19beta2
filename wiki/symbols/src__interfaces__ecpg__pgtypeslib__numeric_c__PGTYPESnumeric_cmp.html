@@ -15,7 +15,7 @@
 <h2>入力と出力</h2>
 <ul>
 <li>引数: <code>numeric *var1</code>, <code>numeric *var2</code></li>
-<li>戻り値: <code>int</code></li>
+<li>戻り値: <a class="wiki-source-link" href="../../source/src/include/port.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/port.h.html&quot;}, '*');"><code>int</code></a></li>
 </ul>
 <h2>前提条件と不変条件</h2>
 <p>まだ解析していません。</p>
@@ -34,7 +34,7 @@
 <h2>関連データ構造</h2>
 <p><code>numeric</code></p>
 <h2>ソース抜粋</h2>
-<p>~~~c int <a class="wiki-source-link" href="../../source/src/interfaces/ecpg/pgtypeslib/numeric.c.html#L1280" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__interfaces__ecpg__pgtypeslib__numeric_c__PGTYPESnumeric_cmp.html&quot;}, '*');">PGTYPESnumeric_cmp</a>(numeric *var1, numeric *var2) { /* use cmp_abs function to calculate the <a class="wiki-source-link" href="../../source/src/include/storage/checksum_block_internal.h.html#L18" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/storage/checksum_block_internal.h.html&quot;}, '*');">result</a> */</p>
+<p>~~~c <a class="wiki-source-link" href="../../source/src/include/port.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/port.h.html&quot;}, '*');">int</a> <a class="wiki-source-link" href="../../source/src/interfaces/ecpg/pgtypeslib/numeric.c.html#L1280" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__interfaces__ecpg__pgtypeslib__numeric_c__PGTYPESnumeric_cmp.html&quot;}, '*');">PGTYPESnumeric_cmp</a>(numeric *var1, numeric *var2) { /* use cmp_abs function to calculate the <a class="wiki-source-link" href="../../source/src/include/storage/checksum_block_internal.h.html#L18" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/storage/checksum_block_internal.h.html&quot;}, '*');">result</a> */</p>
 <p>/* both are positive: normal comparison with cmp_abs */ if (var1-&gt;sign == NUMERIC_POS &amp;&amp; var2-&gt;sign == NUMERIC_POS) return cmp_abs(var1, var2);</p>
 <p>/* both are negative: return the inverse of the normal comparison */ if (var1-&gt;sign == NUMERIC_NEG &amp;&amp; var2-&gt;sign == NUMERIC_NEG) { /*</p>
 <ul>
