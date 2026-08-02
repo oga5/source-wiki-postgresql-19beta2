@@ -1,0 +1,72 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>symbols/src__backend__access__transam__multixact_c__MultiXactShmemRequest.md</title><link rel="stylesheet" href="../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../source/src/backend/access/transam/multixact.c.html#L1765" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__access__transam__multixact_c__MultiXactShmemRequest.html&quot;}, '*');">MultiXactShmemRequest</a></h1>
+<h2>定義</h2>
+<ul>
+<li>種別: <code>function</code></li>
+<li>定義箇所: <code>src/backend/access/transam/multixact.c:1765</code></li>
+<li>所属モジュール: <a class="wiki-entity-link" href="../modules/src__backend__access__transam.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/modules/src__backend__access__transam.html&quot;, &quot;source&quot;: &quot;source/src/backend/access/transam/clog.c.html&quot;}, '*');"><code>module:src/backend/access/transam</code></a></li>
+</ul>
+<h2>目的</h2>
+<p>静的シンボル索引から生成された初期シンボルページです。</p>
+<h2>シグネチャまたは形状</h2>
+<ul>
+<li>シグネチャ: <code>static void MultiXactShmemRequest(void *arg)</code></li>
+</ul>
+<h2>入力と出力</h2>
+<ul>
+<li>引数: <code>void *arg</code></li>
+<li>戻り値: <code>void</code></li>
+</ul>
+<h2>前提条件と不変条件</h2>
+<p>まだ解析していません。</p>
+<h2>アルゴリズムまたは振る舞い</h2>
+<ul>
+<li>複雑度: <code>medium</code> (score 9)</li>
+</ul>
+<p>まだ解析していません。</p>
+<h2>呼び出し元と呼び出し先</h2>
+<ul>
+<li>呼び出し元: なし</li>
+<li>呼び出し先: なし</li>
+<li>呼び出し元サイト: なし</li>
+<li>呼び出しサイト: <code>add_size</code> at <code>src/backend/access/transam/multixact.c:1776:9</code> (unresolved, confidence=low), <code>mul_size</code> at <code>src/backend/access/transam/multixact.c:1777:6</code> (unresolved, confidence=low), <code>add_size</code> at <code>src/backend/access/transam/multixact.c:1778:9</code> (unresolved, confidence=low), <code>mul_size</code> at <code>src/backend/access/transam/multixact.c:1779:6</code> (unresolved, confidence=low)</li>
+</ul>
+<h2>関連データ構造</h2>
+<p><a class="wiki-source-link" href="../../source/src/include/c.h.html#L753" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/c.h.html&quot;}, '*');"><code>MultiXactId</code></a>, <a class="wiki-source-link" href="../../source/src/backend/access/transam/multixact.c.html#L135" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__access__transam__multixact_c__MultiXactStateData.html&quot;}, '*');"><code>MultiXactStateData</code></a>, <code>Size</code></p>
+<h2>ソース抜粋</h2>
+<p>~~~c static void <a class="wiki-source-link" href="../../source/src/backend/access/transam/multixact.c.html#L1765" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__access__transam__multixact_c__MultiXactShmemRequest.html&quot;}, '*');">MultiXactShmemRequest</a>(void *arg) { Size		size;</p>
+<p>/*</p>
+<ul>
+<li>Calculate the size of the MultiXactState struct, and the two</li>
+<li>per-backend <a class="wiki-source-link" href="../../source/src/include/c.h.html#L753" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/c.h.html&quot;}, '*');">MultiXactId</a> arrays.  They are carved out of the same</li>
+<li>allocation.</li>
+<p>*/ size = offsetof(<a class="wiki-source-link" href="../../source/src/backend/access/transam/multixact.c.html#L135" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__access__transam__multixact_c__MultiXactStateData.html&quot;}, '*');">MultiXactStateData</a>, perBackendXactIds); size = add_size(size, mul_size(sizeof(<a class="wiki-source-link" href="../../source/src/include/c.h.html#L753" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/c.h.html&quot;}, '*');">MultiXactId</a>), <a class="wiki-source-link" href="../../source/src/backend/access/transam/multixact.c.html#L221" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/access/transam/multixact.c.html&quot;}, '*');">NumMemberSlots</a>)); size = add_size(size, mul_size(sizeof(<a class="wiki-source-link" href="../../source/src/include/c.h.html#L753" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/c.h.html&quot;}, '*');">MultiXactId</a>), <a class="wiki-source-link" href="../../source/src/backend/access/transam/multixact.c.html#L222" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/access/transam/multixact.c.html&quot;}, '*');">NumVisibleSlots</a>)); <a class="wiki-source-link" href="../../source/src/include/storage/shmem.h.html#L176" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/storage/shmem.h.html&quot;}, '*');">ShmemRequestStruct</a>(.name = &quot;Shared MultiXact State&quot;, .size = size, .ptr = (void **) &amp;MultiXactState, );</p>
+</ul>
+<p><a class="wiki-source-link" href="../../source/src/include/access/slru.h.html#L218" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/access/slru.h.html&quot;}, '*');">SimpleLruRequest</a>(.desc = &amp;<a class="wiki-source-link" href="../../source/src/backend/access/transam/multixact.c.html#L122" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/access/transam/multixact.c.html&quot;}, '*');">MultiXactOffsetSlruDesc</a>, .name = &quot;multixact_offset&quot;, .Dir = &quot;pg_multixact/offsets&quot;, .long_segment_names = <a class="wiki-source-link" href="../../source/src/tools/pg_bsd_indent/indent_globs.h.html#L43" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/tools/pg_bsd_indent/indent_globs.h.html&quot;}, '*');">false</a>,</p>
+<p>.nslots = <a class="wiki-source-link" href="../../source/src/backend/utils/init/globals.c.html#L166" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/utils/init/globals.c.html&quot;}, '*');">multixact_offset_buffers</a>,</p>
+<p>.sync_handler = SYNC_HANDLER_MULTIXACT_OFFSET, .PagePrecedes = <a class="wiki-source-link" href="../../source/src/backend/access/transam/multixact.c.html#L2810" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__access__transam__multixact_c__MultiXactOffsetPagePrecedes.html&quot;}, '*');">MultiXactOffsetPagePrecedes</a>, .errdetail_for_io_error = <a class="wiki-source-link" href="../../source/src/backend/access/transam/multixact.c.html#L2837" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__access__transam__multixact_c__MultiXactOffsetIoErrorDetail.html&quot;}, '*');">MultiXactOffsetIoErrorDetail</a>,</p>
+<p>.buffer_tranche_id = LWTRANCHE_MULTIXACTOFFSET_BUFFER, .bank_tranche_id = LWTRANCHE_MULTIXACTOFFSET_SLRU, );</p>
+<p><a class="wiki-source-link" href="../../source/src/include/access/slru.h.html#L218" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/access/slru.h.html&quot;}, '*');">SimpleLruRequest</a>(.desc = &amp;<a class="wiki-source-link" href="../../source/src/backend/access/transam/multixact.c.html#L123" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/access/transam/multixact.c.html&quot;}, '*');">MultiXactMemberSlruDesc</a>, .name = &quot;multixact_member&quot;, .Dir = &quot;pg_multixact/members&quot;, .long_segment_names = <a class="wiki-source-link" href="../../source/src/tools/pg_bsd_indent/indent_globs.h.html#L46" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/tools/pg_bsd_indent/indent_globs.h.html&quot;}, '*');">true</a>,</p>
+<p>.nslots = <a class="wiki-source-link" href="../../source/src/backend/utils/init/globals.c.html#L165" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/utils/init/globals.c.html&quot;}, '*');">multixact_member_buffers</a>,</p>
+<p>.sync_handler = SYNC_HANDLER_MULTIXACT_MEMBER, .PagePrecedes = <a class="wiki-source-link" href="../../source/src/backend/access/transam/multixact.c.html#L2831" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__access__transam__multixact_c__MultiXactMemberPagePrecedes.html&quot;}, '*');">MultiXactMemberPagePrecedes</a>, .errdetail_for_io_error = <a class="wiki-source-link" href="../../source/src/backend/access/transam/multixact.c.html#L2845" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__access__transam__multixact_c__MultiXactMemberIoErrorDetail.html&quot;}, '*');">MultiXactMemberIoErrorDetail</a>,</p>
+<p>.buffer_tranche_id = LWTRANCHE_MULTIXACTMEMBER_BUFFER, .bank_tranche_id = LWTRANCHE_MULTIXACTMEMBER_SLRU, ); } ~~~</p>
+<h2>失敗モードと境界条件</h2>
+<p>まだ解析していません。</p>
+<h2>保守担当者向けメモ</h2>
+<ul>
+<li>後続フェーズで、ソース本文の文脈と caller/callee 情報を使ってこのページを強化する。</li>
+</ul><script>
+(function() {
+  function notifyParent() {
+    if (parent === window) return;
+    parent.postMessage({type: "frame-location", frame: window.name || "", href: window.location.href}, "*");
+  }
+  document.addEventListener("click", function(event) {
+    const link = event.target.closest("a[data-panel]");
+    if (!link || parent === window) return;
+    parent.postMessage({type: "source-link", panel: link.dataset.panel}, "*");
+  });
+  window.addEventListener("load", notifyParent);
+  window.addEventListener("hashchange", notifyParent);
+})();
+</script></body></html>

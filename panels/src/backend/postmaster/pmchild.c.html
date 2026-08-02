@@ -1,0 +1,16 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>Related: src/backend/postmaster/pmchild.c</title><link rel="stylesheet" href="../../../../styles.css"></head><body><h1>Related pages</h1><p>src/backend/postmaster/pmchild.c</p><ul><li><a href="../../../../wiki/symbols/src__backend__postmaster__pmchild_c__PMChildPool.html" target="wiki-view">struct: PMChildPool</a></li><li><a href="../../../../wiki/symbols/src__backend__postmaster__pmchild_c__MaxLivePostmasterChildren.html" target="wiki-view">function: MaxLivePostmasterChildren</a></li><li><a href="../../../../wiki/symbols/src__backend__postmaster__pmchild_c__InitPostmasterChildSlots.html" target="wiki-view">function: InitPostmasterChildSlots</a></li><li><a href="../../../../wiki/symbols/src__backend__postmaster__pmchild_c__AssignPostmasterChildSlot.html" target="wiki-view">function: AssignPostmasterChildSlot</a></li><li><a href="../../../../wiki/symbols/src__backend__postmaster__pmchild_c__AllocDeadEndChild.html" target="wiki-view">function: AllocDeadEndChild</a></li><li><a href="../../../../wiki/symbols/src__backend__postmaster__pmchild_c__ReleasePostmasterChildSlot.html" target="wiki-view">function: ReleasePostmasterChildSlot</a></li><li><a href="../../../../wiki/symbols/src__backend__postmaster__pmchild_c__FindPostmasterChildByPid.html" target="wiki-view">function: FindPostmasterChildByPid</a></li><li><a href="../../../../source/src/include/postgres.h.html" target="source-view">Include: postgres.h</a></li><li><a href="../../../../source/src/include/miscadmin.h.html" target="source-view">Include: miscadmin.h</a></li><li><a href="../../../../source/src/include/postmaster/autovacuum.h.html" target="source-view">Include: postmaster/autovacuum.h</a></li><li><a href="../../../../source/src/include/postmaster/postmaster.h.html" target="source-view">Include: postmaster/postmaster.h</a></li><li><a href="../../../../source/src/include/replication/walsender.h.html" target="source-view">Include: replication/walsender.h</a></li><li><a href="../../../../source/src/include/storage/pmsignal.h.html" target="source-view">Include: storage/pmsignal.h</a></li><li><a href="../../../../source/src/include/storage/proc.h.html" target="source-view">Include: storage/proc.h</a></li></ul><script>
+(function() {
+  function notifyParent() {
+    if (parent === window) return;
+    parent.postMessage({type: "frame-location", frame: window.name || "", href: window.location.href}, "*");
+  }
+  document.addEventListener("click", function(event) {
+    const link = event.target.closest("a[data-panel]");
+    if (!link || parent === window) return;
+    parent.postMessage({type: "source-link", panel: link.dataset.panel}, "*");
+  });
+  window.addEventListener("load", notifyParent);
+  window.addEventListener("hashchange", notifyParent);
+})();
+</script></body></html>

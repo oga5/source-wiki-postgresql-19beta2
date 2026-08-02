@@ -1,0 +1,64 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>symbols/src__interfaces__libpq__fe-print_c__PQprintTuples.md</title><link rel="stylesheet" href="../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../source/src/interfaces/libpq/fe-print.c.html#L701" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__interfaces__libpq__fe-print_c__PQprintTuples.html&quot;}, '*');">PQprintTuples</a></h1>
+<h2>定義</h2>
+<ul>
+<li>種別: <code>function</code></li>
+<li>定義箇所: <code>src/interfaces/libpq/fe-print.c:701</code></li>
+<li>所属モジュール: <a class="wiki-entity-link" href="../modules/src__interfaces__libpq.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/modules/src__interfaces__libpq.html&quot;, &quot;source&quot;: &quot;source/src/interfaces/libpq/fe-auth-oauth.c.html&quot;}, '*');"><code>module:src/interfaces/libpq</code></a></li>
+</ul>
+<h2>目的</h2>
+<p>静的シンボル索引から生成された初期シンボルページです。</p>
+<h2>シグネチャまたは形状</h2>
+<ul>
+<li>シグネチャ: <code>void PQprintTuples(const PGresult *res, FILE *fout, /* output stream */ int PrintAttNames, /* print attribute names or not */ int TerseOutput, /* delimiter bars or not? */ int colWidth /* width of column, if 0, use variable width */ )</code></li>
+</ul>
+<h2>入力と出力</h2>
+<ul>
+<li>引数: <code>const PGresult *res</code>, <code>FILE *fout</code>, <code>int PrintAttNames</code>, <code>int TerseOutput</code>, <code>int colWidth</code></li>
+<li>戻り値: <code>void</code></li>
+</ul>
+<h2>前提条件と不変条件</h2>
+<p>まだ解析していません。</p>
+<h2>アルゴリズムまたは振る舞い</h2>
+<ul>
+<li>複雑度: <code>high</code> (score 28)</li>
+</ul>
+<p>まだ解析していません。</p>
+<h2>呼び出し元と呼び出し先</h2>
+<ul>
+<li>呼び出し元: なし</li>
+<li>呼び出し先: <code>PQfname</code>, <code>PQgetvalue</code>, <code>PQnfields</code>, <code>PQntuples</code></li>
+<li>呼び出し元サイト: なし</li>
+<li>呼び出しサイト: <code>PQnfields</code> at <code>src/interfaces/libpq/fe-print.c:716:12</code> (direct, confidence=high, resolved=<a class="wiki-entity-link" href="src__interfaces__libpq__fe-exec_c__PQnfields.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__interfaces__libpq__fe-exec_c__PQnfields.html&quot;, &quot;source&quot;: &quot;source/src/interfaces/libpq/fe-exec.c.html#L3519&quot;}, '*');"><code>symbol:src/interfaces/libpq/fe-exec.c#PQnfields</code></a>), <code>PQntuples</code> at <code>src/interfaces/libpq/fe-print.c:717:10</code> (direct, confidence=high, resolved=<a class="wiki-entity-link" href="src__interfaces__libpq__fe-exec_c__PQntuples.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__interfaces__libpq__fe-exec_c__PQntuples.html&quot;, &quot;source&quot;: &quot;source/src/interfaces/libpq/fe-exec.c.html#L3511&quot;}, '*');"><code>symbol:src/interfaces/libpq/fe-exec.c#PQntuples</code></a>), <code>sprintf</code> at <code>src/interfaces/libpq/fe-print.c:720:3</code> (unresolved), <code>sprintf</code> at <code>src/interfaces/libpq/fe-print.c:722:3</code> (unresolved), <a class="wiki-source-link" href="../../source/src/include/snowball/snowball_runtime.h.html#L50" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/snowball/snowball_runtime.h.html&quot;}, '*');"><code>malloc</code></a> at <code>src/interfaces/libpq/fe-print.c:732:23</code> (unresolved), <code>fprintf</code> at <code>src/interfaces/libpq/fe-print.c:735:5</code> (unresolved), <code>libpq_gettext</code> at <code>src/interfaces/libpq/fe-print.c:735:21</code> (unresolved, confidence=low), <code>fprintf</code> at <code>src/interfaces/libpq/fe-print.c:741:4</code> (unresolved), <code>fprintf</code> at <code>src/interfaces/libpq/fe-print.c:748:5</code> (unresolved), <code>PQfname</code> at <code>src/interfaces/libpq/fe-print.c:750:7</code> (direct, confidence=high, resolved=<a class="wiki-entity-link" href="src__interfaces__libpq__fe-exec_c__PQfname.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__interfaces__libpq__fe-exec_c__PQfname.html&quot;, &quot;source&quot;: &quot;source/src/interfaces/libpq/fe-exec.c.html#L3597&quot;}, '*');"><code>symbol:src/interfaces/libpq/fe-exec.c#PQfname</code></a>), <code>fprintf</code> at <code>src/interfaces/libpq/fe-print.c:757:5</code> (unresolved), <code>fprintf</code> at <code>src/interfaces/libpq/fe-print.c:759:5</code> (unresolved), <code>PQgetvalue</code> at <code>src/interfaces/libpq/fe-print.c:766:24</code> (direct, confidence=high, resolved=<a class="wiki-entity-link" href="src__interfaces__libpq__fe-exec_c__PQgetvalue.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__interfaces__libpq__fe-exec_c__PQgetvalue.html&quot;, &quot;source&quot;: &quot;source/src/interfaces/libpq/fe-exec.c.html#L3906&quot;}, '*');"><code>symbol:src/interfaces/libpq/fe-exec.c#PQgetvalue</code></a>), <code>fprintf</code> at <code>src/interfaces/libpq/fe-print.c:768:5</code> (unresolved), <code>fprintf</code> at <code>src/interfaces/libpq/fe-print.c:773:5</code> (unresolved), <code>fprintf</code> at <code>src/interfaces/libpq/fe-print.c:775:5</code> (unresolved), <a class="wiki-source-link" href="../../source/src/include/snowball/snowball_runtime.h.html#L65" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/snowball/snowball_runtime.h.html&quot;}, '*');"><code>free</code></a> at <code>src/interfaces/libpq/fe-print.c:779:2</code> (unresolved)</li>
+</ul>
+<h2>関連データ構造</h2>
+<p><code>PGresult</code>, <code>variable</code></p>
+<h2>ソース抜粋</h2>
+<p>~~~c void <a class="wiki-source-link" href="../../source/src/interfaces/libpq/fe-print.c.html#L701" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__interfaces__libpq__fe-print_c__PQprintTuples.html&quot;}, '*');">PQprintTuples</a>(const PGresult *res, FILE *fout,		/* <a class="wiki-source-link" href="../../source/src/bin/pg_test_timing/pg_test_timing.c.html#L357" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__bin__pg_test_timing__pg_test_timing_c__output.html&quot;}, '*');">output</a> stream */ int PrintAttNames,	/* print attribute names or not */ int TerseOutput,	/* delimiter bars or not? */ int colWidth		/* width of column, if 0, use variable width */ ) { int			nFields; int			nTups; int			i, j; char		formatString[80]; char	   *tborder = NULL;</p>
+<p>nFields = PQnfields(res); nTups = PQntuples(res);</p>
+<p>if (colWidth &gt; 0) sprintf(formatString, &quot;%%s %%-%ds&quot;, colWidth); else sprintf(formatString, &quot;%%s %%s&quot;);</p>
+<p>if (nFields &gt; 0) {							/* only print rows with at least 1 field.  */</p>
+<p>if (!TerseOutput) { int			width;</p>
+<p>width = nFields * 14; tborder = (char *) <a class="wiki-source-link" href="../../source/src/include/snowball/snowball_runtime.h.html#L50" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/snowball/snowball_runtime.h.html&quot;}, '*');">malloc</a>(width + 1); if (!tborder) { fprintf(stderr, libpq_gettext(&quot;out of memory\n&quot;)); return; } for (i = 0; i &lt; width; i++) tborder[i] = &#x27;-&#x27;; tborder[width] = &#x27;\0&#x27;; fprintf(fout, &quot;%s\n&quot;, tborder); }</p>
+<p>for (i = 0; i &lt; nFields; i++) { if (PrintAttNames) { fprintf(fout, formatString, TerseOutput ? &quot;&quot; : &quot;|&quot;, PQfname(res, i)); } }</p>
+<p>if (PrintAttNames) { if (TerseOutput) fprintf(fout, &quot;\n&quot;); else fprintf(fout, &quot;|\n%s\n&quot;, tborder); } ~~~</p>
+<h2>失敗モードと境界条件</h2>
+<p>まだ解析していません。</p>
+<h2>保守担当者向けメモ</h2>
+<ul>
+<li>後続フェーズで、ソース本文の文脈と caller/callee 情報を使ってこのページを強化する。</li>
+</ul><script>
+(function() {
+  function notifyParent() {
+    if (parent === window) return;
+    parent.postMessage({type: "frame-location", frame: window.name || "", href: window.location.href}, "*");
+  }
+  document.addEventListener("click", function(event) {
+    const link = event.target.closest("a[data-panel]");
+    if (!link || parent === window) return;
+    parent.postMessage({type: "source-link", panel: link.dataset.panel}, "*");
+  });
+  window.addEventListener("load", notifyParent);
+  window.addEventListener("hashchange", notifyParent);
+})();
+</script></body></html>

@@ -1,0 +1,57 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>symbols/src__backend__commands__event_trigger_c__stringify_grant_objtype.md</title><link rel="stylesheet" href="../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../source/src/backend/commands/event_trigger.c.html#L2260" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__commands__event_trigger_c__stringify_grant_objtype.html&quot;}, '*');">stringify_grant_objtype</a></h1>
+<h2>定義</h2>
+<ul>
+<li>種別: <code>function</code></li>
+<li>定義箇所: <code>src/backend/commands/event_trigger.c:2260</code></li>
+<li>所属モジュール: <a class="wiki-entity-link" href="../modules/src__backend__commands.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/modules/src__backend__commands.html&quot;, &quot;source&quot;: &quot;source/src/backend/commands/aggregatecmds.c.html&quot;}, '*');"><code>module:src/backend/commands</code></a></li>
+</ul>
+<h2>目的</h2>
+<p>静的シンボル索引から生成された初期シンボルページです。</p>
+<h2>シグネチャまたは形状</h2>
+<ul>
+<li>シグネチャ: <code>static const char * stringify_grant_objtype(ObjectType objtype)</code></li>
+</ul>
+<h2>入力と出力</h2>
+<ul>
+<li>引数: <code>ObjectType objtype</code></li>
+<li>戻り値: <code>const char *</code></li>
+</ul>
+<h2>前提条件と不変条件</h2>
+<p>まだ解析していません。</p>
+<h2>アルゴリズムまたは振る舞い</h2>
+<ul>
+<li>複雑度: <code>high</code> (score 16)</li>
+</ul>
+<p>まだ解析していません。</p>
+<h2>呼び出し元と呼び出し先</h2>
+<ul>
+<li>呼び出し元: <a class="wiki-source-link" href="../../source/src/backend/commands/event_trigger.c.html#L2064" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__commands__event_trigger_c__pg_event_trigger_ddl_commands.html&quot;}, '*');"><code>pg_event_trigger_ddl_commands</code></a></li>
+<li>呼び出し先: なし</li>
+<li>呼び出し元サイト: <a class="wiki-source-link" href="../../source/src/backend/commands/event_trigger.c.html#L2064" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__commands__event_trigger_c__pg_event_trigger_ddl_commands.html&quot;}, '*');"><code>pg_event_trigger_ddl_commands</code></a> at <code>src/backend/commands/event_trigger.c:2237:39</code> (direct, confidence=high, resolved=<a class="wiki-entity-link" href="src__backend__commands__event_trigger_c__stringify_grant_objtype.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__commands__event_trigger_c__stringify_grant_objtype.html&quot;, &quot;source&quot;: &quot;source/src/backend/commands/event_trigger.c.html#L2260&quot;}, '*');"><code>symbol:src/backend/commands/event_trigger.c#stringify_grant_objtype</code></a>)</li>
+<li>呼び出しサイト: <a class="wiki-source-link" href="../../source/src/include/utils/elog.h.html#L242" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/utils/elog.h.html&quot;}, '*');"><code>elog</code></a> at <code>src/backend/commands/event_trigger.c:2335:4</code> (unresolved)</li>
+</ul>
+<h2>関連データ構造</h2>
+<p><code>ObjectType</code></p>
+<h2>ソース抜粋</h2>
+<p>~~~c static const char * <a class="wiki-source-link" href="../../source/src/backend/commands/event_trigger.c.html#L2260" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__commands__event_trigger_c__stringify_grant_objtype.html&quot;}, '*');">stringify_grant_objtype</a>(ObjectType objtype) { switch (objtype) { case OBJECT_COLUMN: return &quot;COLUMN&quot;; case OBJECT_TABLE: return &quot;TABLE&quot;; case OBJECT_SEQUENCE: return &quot;SEQUENCE&quot;; case OBJECT_DATABASE: return &quot;DATABASE&quot;; case OBJECT_DOMAIN: return &quot;DOMAIN&quot;; case OBJECT_FDW: return &quot;FOREIGN DATA WRAPPER&quot;; case OBJECT_FOREIGN_SERVER: return &quot;FOREIGN SERVER&quot;; case OBJECT_FUNCTION: return &quot;FUNCTION&quot;; case OBJECT_LANGUAGE: return &quot;LANGUAGE&quot;; case OBJECT_LARGEOBJECT: return &quot;LARGE OBJECT&quot;; case OBJECT_SCHEMA: return &quot;SCHEMA&quot;; case OBJECT_PARAMETER_ACL: return &quot;PARAMETER&quot;; case OBJECT_PROCEDURE: return &quot;PROCEDURE&quot;; case OBJECT_ROUTINE: return &quot;ROUTINE&quot;; case OBJECT_TABLESPACE: return &quot;TABLESPACE&quot;; case OBJECT_TYPE: return &quot;TYPE&quot;; /* these currently aren&#x27;t used */ case OBJECT_ACCESS_METHOD: case OBJECT_AGGREGATE: case OBJECT_AMOP: case OBJECT_AMPROC: case OBJECT_ATTRIBUTE: case OBJECT_CAST: case OBJECT_COLLATION: case OBJECT_CONVERSION: case OBJECT_DEFAULT: case OBJECT_DEFACL: case OBJECT_DOMCONSTRAINT: case OBJECT_EVENT_TRIGGER: case OBJECT_EXTENSION: case OBJECT_FOREIGN_TABLE: case OBJECT_INDEX: case OBJECT_MATVIEW: case OBJECT_OPCLASS: case OBJECT_OPERATOR: case OBJECT_OPFAMILY: case OBJECT_POLICY: case OBJECT_PROPGRAPH: case OBJECT_PUBLICATION: ~~~</p>
+<h2>失敗モードと境界条件</h2>
+<p>まだ解析していません。</p>
+<h2>保守担当者向けメモ</h2>
+<ul>
+<li>後続フェーズで、ソース本文の文脈と caller/callee 情報を使ってこのページを強化する。</li>
+</ul><script>
+(function() {
+  function notifyParent() {
+    if (parent === window) return;
+    parent.postMessage({type: "frame-location", frame: window.name || "", href: window.location.href}, "*");
+  }
+  document.addEventListener("click", function(event) {
+    const link = event.target.closest("a[data-panel]");
+    if (!link || parent === window) return;
+    parent.postMessage({type: "source-link", panel: link.dataset.panel}, "*");
+  });
+  window.addEventListener("load", notifyParent);
+  window.addEventListener("hashchange", notifyParent);
+})();
+</script></body></html>

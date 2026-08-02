@@ -1,0 +1,16 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>get_hex</title><link rel="stylesheet" href="../styles.css"></head><body><h1>Multiple definitions: <code>get_hex</code></h1><ul><li><a href="../source/src/backend/utils/adt/encode.c.html#L250" target="source-view">src/backend/utils/adt/encode.c:250 (function)</a></li><li><a href="../source/src/interfaces/ecpg/ecpglib/data.c.html#L128" target="source-view">src/interfaces/ecpg/ecpglib/data.c:128 (function)</a></li><li><a href="../source/src/interfaces/libpq/fe-exec.c.html#L4443" target="source-view">src/interfaces/libpq/fe-exec.c:4443 (function)</a></li></ul><script>
+(function() {
+  function notifyParent() {
+    if (parent === window) return;
+    parent.postMessage({type: "frame-location", frame: window.name || "", href: window.location.href}, "*");
+  }
+  document.addEventListener("click", function(event) {
+    const link = event.target.closest("a[data-panel]");
+    if (!link || parent === window) return;
+    parent.postMessage({type: "source-link", panel: link.dataset.panel}, "*");
+  });
+  window.addEventListener("load", notifyParent);
+  window.addEventListener("hashchange", notifyParent);
+})();
+</script></body></html>

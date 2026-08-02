@@ -1,0 +1,72 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>symbols/src__backend__access__brin__brin_xlog_c__brin_mask.md</title><link rel="stylesheet" href="../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../source/src/backend/access/brin/brin_xlog.c.html#L341" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__access__brin__brin_xlog_c__brin_mask.html&quot;}, '*');">brin_mask</a></h1>
+<h2>定義</h2>
+<ul>
+<li>種別: <code>function</code></li>
+<li>定義箇所: <code>src/backend/access/brin/brin_xlog.c:341</code></li>
+<li>所属モジュール: <a class="wiki-entity-link" href="../modules/src__backend__access__brin.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/modules/src__backend__access__brin.html&quot;, &quot;source&quot;: &quot;source/src/backend/access/brin/brin.c.html&quot;}, '*');"><code>module:src/backend/access/brin</code></a></li>
+</ul>
+<h2>目的</h2>
+<p>静的シンボル索引から生成された初期シンボルページです。</p>
+<h2>シグネチャまたは形状</h2>
+<ul>
+<li>シグネチャ: <code>void brin_mask(char *pagedata, BlockNumber blkno)</code></li>
+</ul>
+<h2>入力と出力</h2>
+<ul>
+<li>引数: <code>char *pagedata</code>, <code>BlockNumber blkno</code></li>
+<li>戻り値: <code>void</code></li>
+</ul>
+<h2>前提条件と不変条件</h2>
+<p>まだ解析していません。</p>
+<h2>アルゴリズムまたは振る舞い</h2>
+<ul>
+<li>複雑度: <code>medium</code> (score 5)</li>
+</ul>
+<p>まだ解析していません。</p>
+<h2>呼び出し元と呼び出し先</h2>
+<ul>
+<li>呼び出し元: なし</li>
+<li>呼び出し先: <a class="wiki-source-link" href="../../source/src/backend/access/common/bufmask.c.html#L45" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__access__common__bufmask_c__mask_page_hint_bits.html&quot;}, '*');"><code>mask_page_hint_bits</code></a>, <a class="wiki-source-link" href="../../source/src/backend/access/common/bufmask.c.html#L30" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__access__common__bufmask_c__mask_page_lsn_and_checksum.html&quot;}, '*');"><code>mask_page_lsn_and_checksum</code></a>, <a class="wiki-source-link" href="../../source/src/backend/access/common/bufmask.c.html#L69" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__access__common__bufmask_c__mask_unused_space.html&quot;}, '*');"><code>mask_unused_space</code></a></li>
+<li>呼び出し元サイト: なし</li>
+<li>呼び出しサイト: <a class="wiki-source-link" href="../../source/src/backend/access/common/bufmask.c.html#L30" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__access__common__bufmask_c__mask_page_lsn_and_checksum.html&quot;}, '*');"><code>mask_page_lsn_and_checksum</code></a> at <code>src/backend/access/brin/brin_xlog.c:347:2</code> (direct, confidence=high, resolved=<a class="wiki-entity-link" href="src__backend__access__common__bufmask_c__mask_page_lsn_and_checksum.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__access__common__bufmask_c__mask_page_lsn_and_checksum.html&quot;, &quot;source&quot;: &quot;source/src/backend/access/common/bufmask.c.html#L30&quot;}, '*');"><code>symbol:src/backend/access/common/bufmask.c#mask_page_lsn_and_checksum</code></a>), <a class="wiki-source-link" href="../../source/src/backend/access/common/bufmask.c.html#L45" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__access__common__bufmask_c__mask_page_hint_bits.html&quot;}, '*');"><code>mask_page_hint_bits</code></a> at <code>src/backend/access/brin/brin_xlog.c:349:2</code> (direct, confidence=high, resolved=<a class="wiki-entity-link" href="src__backend__access__common__bufmask_c__mask_page_hint_bits.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__access__common__bufmask_c__mask_page_hint_bits.html&quot;, &quot;source&quot;: &quot;source/src/backend/access/common/bufmask.c.html#L45&quot;}, '*');"><code>symbol:src/backend/access/common/bufmask.c#mask_page_hint_bits</code></a>), <a class="wiki-source-link" href="../../source/src/include/access/brin_page.h.html#L57" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/access/brin_page.h.html&quot;}, '*');"><code>BRIN_IS_REGULAR_PAGE</code></a> at <code>src/backend/access/brin/brin_xlog.c:356:6</code> (macro), <a class="wiki-source-link" href="../../source/src/include/access/brin_page.h.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/access/brin_page.h.html&quot;}, '*');"><code>BRIN_IS_META_PAGE</code></a> at <code>src/backend/access/brin/brin_xlog.c:357:4</code> (macro), <a class="wiki-source-link" href="../../source/src/backend/access/common/bufmask.c.html#L69" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__access__common__bufmask_c__mask_unused_space.html&quot;}, '*');"><code>mask_unused_space</code></a> at <code>src/backend/access/brin/brin_xlog.c:359:3</code> (direct, confidence=high, resolved=<a class="wiki-entity-link" href="src__backend__access__common__bufmask_c__mask_unused_space.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__access__common__bufmask_c__mask_unused_space.html&quot;, &quot;source&quot;: &quot;source/src/backend/access/common/bufmask.c.html#L69&quot;}, '*');"><code>symbol:src/backend/access/common/bufmask.c#mask_unused_space</code></a>), <a class="wiki-source-link" href="../../source/src/include/access/brin_page.h.html#L46" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/access/brin_page.h.html&quot;}, '*');"><code>BrinPageFlags</code></a> at <code>src/backend/access/brin/brin_xlog.c:366:2</code> (macro)</li>
+</ul>
+<h2>関連データ構造</h2>
+<p><code>BlockNumber</code>, <a class="wiki-source-link" href="../../source/src/include/storage/bufpage.h.html#L81" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__storage__bufpage_h__Page.html&quot;}, '*');"><code>Page</code></a>, <a class="wiki-source-link" href="../../source/src/include/storage/bufpage.h.html#L199" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__storage__bufpage_h__PageHeader.html&quot;}, '*');"><code>PageHeader</code></a></p>
+<h2>ソース抜粋</h2>
+<p>~~~c void <a class="wiki-source-link" href="../../source/src/backend/access/brin/brin_xlog.c.html#L341" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__access__brin__brin_xlog_c__brin_mask.html&quot;}, '*');">brin_mask</a>(char *pagedata, BlockNumber blkno) { <a class="wiki-source-link" href="../../source/src/include/storage/bufpage.h.html#L81" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__storage__bufpage_h__Page.html&quot;}, '*');">Page</a>		page = (<a class="wiki-source-link" href="../../source/src/include/storage/bufpage.h.html#L81" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__storage__bufpage_h__Page.html&quot;}, '*');">Page</a>) pagedata; <a class="wiki-source-link" href="../../source/src/include/storage/bufpage.h.html#L199" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__storage__bufpage_h__PageHeader.html&quot;}, '*');">PageHeader</a>	pagehdr = (<a class="wiki-source-link" href="../../source/src/include/storage/bufpage.h.html#L199" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__storage__bufpage_h__PageHeader.html&quot;}, '*');">PageHeader</a>) page;</p>
+<p><a class="wiki-source-link" href="../../source/src/backend/access/common/bufmask.c.html#L30" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__access__common__bufmask_c__mask_page_lsn_and_checksum.html&quot;}, '*');">mask_page_lsn_and_checksum</a>(page);</p>
+<p><a class="wiki-source-link" href="../../source/src/backend/access/common/bufmask.c.html#L45" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__access__common__bufmask_c__mask_page_hint_bits.html&quot;}, '*');">mask_page_hint_bits</a>(page);</p>
+<p>/*</p>
+<ul>
+<li>Regular brin pages contain unused space which needs to be masked.</li>
+<li>Similarly for meta pages, but mask it only if pd_lower appears to have</li>
+<li>been set correctly.</li>
+<p>*/ if (<a class="wiki-source-link" href="../../source/src/include/access/brin_page.h.html#L57" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/access/brin_page.h.html&quot;}, '*');">BRIN_IS_REGULAR_PAGE</a>(page) || (<a class="wiki-source-link" href="../../source/src/include/access/brin_page.h.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/access/brin_page.h.html&quot;}, '*');">BRIN_IS_META_PAGE</a>(page) &amp;&amp; pagehdr-&gt;pd_lower &gt; <a class="wiki-source-link" href="../../source/src/include/storage/bufpage.h.html#L242" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/storage/bufpage.h.html&quot;}, '*');">SizeOfPageHeaderData</a>)) { <a class="wiki-source-link" href="../../source/src/backend/access/common/bufmask.c.html#L69" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__access__common__bufmask_c__mask_unused_space.html&quot;}, '*');">mask_unused_space</a>(page); }</p>
+</ul>
+<p>/*</p>
+<ul>
+<li><a class="wiki-source-link" href="../../source/src/include/access/brin_page.h.html#L60" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/access/brin_page.h.html&quot;}, '*');">BRIN_EVACUATE_PAGE</a> <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> not WAL-logged, since it&#x27;s of no use in recovery.</li>
+<li>Mask it.  See <a class="wiki-source-link" href="../../source/src/backend/access/brin/brin_pageops.c.html#L521" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__access__brin__brin_pageops_c__brin_start_evacuating_page.html&quot;}, '*');">brin_start_evacuating_page</a>() for details.</li>
+<p>*/ <a class="wiki-source-link" href="../../source/src/include/access/brin_page.h.html#L46" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/access/brin_page.h.html&quot;}, '*');">BrinPageFlags</a>(page) &amp;= ~<a class="wiki-source-link" href="../../source/src/include/access/brin_page.h.html#L60" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/access/brin_page.h.html&quot;}, '*');">BRIN_EVACUATE_PAGE</a>; } ~~~</p>
+</ul>
+<h2>失敗モードと境界条件</h2>
+<p>まだ解析していません。</p>
+<h2>保守担当者向けメモ</h2>
+<ul>
+<li>後続フェーズで、ソース本文の文脈と caller/callee 情報を使ってこのページを強化する。</li>
+</ul><script>
+(function() {
+  function notifyParent() {
+    if (parent === window) return;
+    parent.postMessage({type: "frame-location", frame: window.name || "", href: window.location.href}, "*");
+  }
+  document.addEventListener("click", function(event) {
+    const link = event.target.closest("a[data-panel]");
+    if (!link || parent === window) return;
+    parent.postMessage({type: "source-link", panel: link.dataset.panel}, "*");
+  });
+  window.addEventListener("load", notifyParent);
+  window.addEventListener("hashchange", notifyParent);
+})();
+</script></body></html>

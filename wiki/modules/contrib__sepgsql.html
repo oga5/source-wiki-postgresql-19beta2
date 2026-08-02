@@ -1,0 +1,70 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>modules/contrib__sepgsql.md</title><link rel="stylesheet" href="../../styles.css"></head><body><h1>contrib/sepgsql</h1>
+<h2>システム内での役割</h2>
+<p><code>contrib/sepgsql</code> には 10 個の索引済みソースファイルがあります。この初期モジュールページはディレクトリ境界に基づいています。</p>
+<h2>責務</h2>
+<ul>
+<li>このディレクトリに属するソースファイルを集約する。</li>
+<li>より深い LLM 合成の前段として、モジュール単位の入口を提供する。</li>
+</ul>
+<h2>このモジュールのファイル</h2>
+<ul>
+<li><a class="wiki-source-link" href="../../source/contrib/sepgsql/database.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/contrib/sepgsql/database.c.html&quot;}, '*');"><code>contrib/sepgsql/database.c</code></a></li>
+<li><a class="wiki-source-link" href="../../source/contrib/sepgsql/dml.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/contrib/sepgsql/dml.c.html&quot;}, '*');"><code>contrib/sepgsql/dml.c</code></a></li>
+<li><a class="wiki-source-link" href="../../source/contrib/sepgsql/hooks.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/contrib/sepgsql/hooks.c.html&quot;}, '*');"><code>contrib/sepgsql/hooks.c</code></a></li>
+<li><a class="wiki-source-link" href="../../source/contrib/sepgsql/label.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/contrib/sepgsql/label.c.html&quot;}, '*');"><code>contrib/sepgsql/label.c</code></a></li>
+<li><a class="wiki-source-link" href="../../source/contrib/sepgsql/proc.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/contrib/sepgsql/proc.c.html&quot;}, '*');"><code>contrib/sepgsql/proc.c</code></a></li>
+<li><a class="wiki-source-link" href="../../source/contrib/sepgsql/relation.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/contrib/sepgsql/relation.c.html&quot;}, '*');"><code>contrib/sepgsql/relation.c</code></a></li>
+<li><a class="wiki-source-link" href="../../source/contrib/sepgsql/schema.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/contrib/sepgsql/schema.c.html&quot;}, '*');"><code>contrib/sepgsql/schema.c</code></a></li>
+<li><a class="wiki-source-link" href="../../source/contrib/sepgsql/selinux.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/contrib/sepgsql/selinux.c.html&quot;}, '*');"><code>contrib/sepgsql/selinux.c</code></a></li>
+<li><a class="wiki-source-link" href="../../source/contrib/sepgsql/sepgsql.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/contrib/sepgsql/sepgsql.h.html&quot;}, '*');"><code>contrib/sepgsql/sepgsql.h</code></a></li>
+<li><a class="wiki-source-link" href="../../source/contrib/sepgsql/uavc.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/contrib/sepgsql/uavc.c.html&quot;}, '*');"><code>contrib/sepgsql/uavc.c</code></a></li>
+</ul>
+<h2>主要なデータ構造</h2>
+<ul>
+<li><a class="wiki-source-link" href="../../source/contrib/sepgsql/hooks.c.html#L47" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/contrib__sepgsql__hooks_c__sepgsql_context_info_t.html&quot;}, '*');"><code>sepgsql_context_info_t</code></a></li>
+<li><a class="wiki-source-link" href="../../source/contrib/sepgsql/label.c.html#L65" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/contrib__sepgsql__label_c__pending_label.html&quot;}, '*');"><code>pending_label</code></a></li>
+<li><code>Datum</code></li>
+<li><code>uint16</code></li>
+<li><code>uint32</code></li>
+<li><a class="wiki-source-link" href="../../source/contrib/sepgsql/uavc.c.html#L30" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/contrib__sepgsql__uavc_c__avc_cache.html&quot;}, '*');"><code>avc_cache</code></a></li>
+</ul>
+<h2>主なフロー</h2>
+<p>初期モジュールページでは、まだエンドツーエンドのフローを推論しません。</p>
+<h2>外部依存</h2>
+<ul>
+<li><a class="wiki-source-link" href="../../source/src/include/postgres.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/postgres.h.html&quot;}, '*');"><code>postgres.h</code></a></li>
+<li><a class="wiki-source-link" href="../../source/contrib/sepgsql/sepgsql.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/contrib/sepgsql/sepgsql.h.html&quot;}, '*');"><code>sepgsql.h</code></a></li>
+<li><code>commands/seclabel.h</code></li>
+<li><code>catalog/dependency.h</code></li>
+<li><code>access/htup_details.h</code></li>
+<li><code>access/genam.h</code></li>
+<li><code>access/sysattr.h</code></li>
+<li><code>access/table.h</code></li>
+<li><code>utils/builtins.h</code></li>
+<li><code>utils/fmgroids.h</code></li>
+</ul>
+<h2>内部構成</h2>
+<ul>
+<li>子モジュール数: 0</li>
+</ul>
+<h2>推奨読書順</h2>
+<p>1. <a class="wiki-source-link" href="../../source/contrib/sepgsql/sepgsql.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/contrib/sepgsql/sepgsql.h.html&quot;}, '*');"><code>contrib/sepgsql/sepgsql.h</code></a> 2. <a class="wiki-source-link" href="../../source/contrib/sepgsql/label.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/contrib/sepgsql/label.c.html&quot;}, '*');"><code>contrib/sepgsql/label.c</code></a> 3. <a class="wiki-source-link" href="../../source/contrib/sepgsql/uavc.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/contrib/sepgsql/uavc.c.html&quot;}, '*');"><code>contrib/sepgsql/uavc.c</code></a> 4. <a class="wiki-source-link" href="../../source/contrib/sepgsql/hooks.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/contrib/sepgsql/hooks.c.html&quot;}, '*');"><code>contrib/sepgsql/hooks.c</code></a> 5. <a class="wiki-source-link" href="../../source/contrib/sepgsql/relation.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/contrib/sepgsql/relation.c.html&quot;}, '*');"><code>contrib/sepgsql/relation.c</code></a> 6. <a class="wiki-source-link" href="../../source/contrib/sepgsql/selinux.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/contrib/sepgsql/selinux.c.html&quot;}, '*');"><code>contrib/sepgsql/selinux.c</code></a> 7. <a class="wiki-source-link" href="../../source/contrib/sepgsql/schema.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/contrib/sepgsql/schema.c.html&quot;}, '*');"><code>contrib/sepgsql/schema.c</code></a> 8. <a class="wiki-source-link" href="../../source/contrib/sepgsql/proc.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/contrib/sepgsql/proc.c.html&quot;}, '*');"><code>contrib/sepgsql/proc.c</code></a> 9. <a class="wiki-source-link" href="../../source/contrib/sepgsql/database.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/contrib/sepgsql/database.c.html&quot;}, '*');"><code>contrib/sepgsql/database.c</code></a> 10. <a class="wiki-source-link" href="../../source/contrib/sepgsql/dml.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/contrib/sepgsql/dml.c.html&quot;}, '*');"><code>contrib/sepgsql/dml.c</code></a></p>
+<h2>未解決の問い</h2>
+<ul>
+<li>LLM ベースのモジュール合成を追加した後で、責務とフローを精緻化する。</li>
+</ul><script>
+(function() {
+  function notifyParent() {
+    if (parent === window) return;
+    parent.postMessage({type: "frame-location", frame: window.name || "", href: window.location.href}, "*");
+  }
+  document.addEventListener("click", function(event) {
+    const link = event.target.closest("a[data-panel]");
+    if (!link || parent === window) return;
+    parent.postMessage({type: "source-link", panel: link.dataset.panel}, "*");
+  });
+  window.addEventListener("load", notifyParent);
+  window.addEventListener("hashchange", notifyParent);
+})();
+</script></body></html>

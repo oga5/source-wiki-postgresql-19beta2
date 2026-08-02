@@ -1,0 +1,75 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>symbols/src__backend__commands__trigger_c__afterTriggerCheckState.md</title><link rel="stylesheet" href="../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../source/src/backend/commands/trigger.c.html#L4029" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__commands__trigger_c__afterTriggerCheckState.html&quot;}, '*');">afterTriggerCheckState</a></h1>
+<h2>定義</h2>
+<ul>
+<li>種別: <code>function</code></li>
+<li>定義箇所: <code>src/backend/commands/trigger.c:4029</code></li>
+<li>所属モジュール: <a class="wiki-entity-link" href="../modules/src__backend__commands.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/modules/src__backend__commands.html&quot;, &quot;source&quot;: &quot;source/src/backend/commands/aggregatecmds.c.html&quot;}, '*');"><code>module:src/backend/commands</code></a></li>
+</ul>
+<h2>目的</h2>
+<p>静的シンボル索引から生成された初期シンボルページです。</p>
+<h2>シグネチャまたは形状</h2>
+<ul>
+<li>シグネチャ: <code>static bool afterTriggerCheckState(AfterTriggerShared evtshared)</code></li>
+</ul>
+<h2>入力と出力</h2>
+<ul>
+<li>引数: <code>AfterTriggerShared evtshared</code></li>
+<li>戻り値: <code>bool</code></li>
+</ul>
+<h2>前提条件と不変条件</h2>
+<p>まだ解析していません。</p>
+<h2>アルゴリズムまたは振る舞い</h2>
+<ul>
+<li>複雑度: <code>high</code> (score 15)</li>
+</ul>
+<p>まだ解析していません。</p>
+<h2>呼び出し元と呼び出し先</h2>
+<ul>
+<li>呼び出し元: <a class="wiki-source-link" href="../../source/src/backend/commands/trigger.c.html#L4635" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__commands__trigger_c__afterTriggerMarkEvents.html&quot;}, '*');"><code>afterTriggerMarkEvents</code></a></li>
+<li>呼び出し先: なし</li>
+<li>呼び出し元サイト: <a class="wiki-source-link" href="../../source/src/backend/commands/trigger.c.html#L4635" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__commands__trigger_c__afterTriggerMarkEvents.html&quot;}, '*');"><code>afterTriggerMarkEvents</code></a> at <code>src/backend/commands/trigger.c:4657:26</code> (direct, confidence=high, resolved=<a class="wiki-entity-link" href="src__backend__commands__trigger_c__afterTriggerCheckState.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__commands__trigger_c__afterTriggerCheckState.html&quot;, &quot;source&quot;: &quot;source/src/backend/commands/trigger.c.html#L4029&quot;}, '*');"><code>symbol:src/backend/commands/trigger.c#afterTriggerCheckState</code></a>)</li>
+<li>呼び出しサイト: なし</li>
+</ul>
+<h2>関連データ構造</h2>
+<p><a class="wiki-source-link" href="../../source/src/backend/commands/trigger.c.html#L3693" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__commands__trigger_c__AfterTriggerShared.html&quot;}, '*');"><code>AfterTriggerShared</code></a>, <a class="wiki-source-link" href="../../source/src/interfaces/ecpg/test/expected/preproc-init.c.html#L82" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__interfaces__ecpg__test__expected__preproc-init_c__e.html&quot;}, '*');"><code>e</code></a>, <code>Oid</code>, <a class="wiki-source-link" href="../../source/src/backend/commands/trigger.c.html#L3636" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/commands/trigger.c.html&quot;}, '*');"><code>SetConstraintState</code></a>, <code>state</code></p>
+<h2>ソース抜粋</h2>
+<p>~~~c static bool <a class="wiki-source-link" href="../../source/src/backend/commands/trigger.c.html#L4029" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__commands__trigger_c__afterTriggerCheckState.html&quot;}, '*');">afterTriggerCheckState</a>(<a class="wiki-source-link" href="../../source/src/backend/commands/trigger.c.html#L3693" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__commands__trigger_c__AfterTriggerShared.html&quot;}, '*');">AfterTriggerShared</a> evtshared) { Oid			tgoid = evtshared-&gt;ats_tgoid; <a class="wiki-source-link" href="../../source/src/backend/commands/trigger.c.html#L3636" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/commands/trigger.c.html&quot;}, '*');">SetConstraintState</a> state = afterTriggers.state; int			i;</p>
+<p>/*</p>
+<ul>
+<li>For not-deferrable triggers (i.e. normal AFTER ROW triggers and</li>
+<li>constraints declared NOT DEFERRABLE), the state <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> always <a class="wiki-source-link" href="../../source/src/tools/pg_bsd_indent/indent_globs.h.html#L43" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/tools/pg_bsd_indent/indent_globs.h.html&quot;}, '*');">false</a>.</li>
+<p>*/ if ((evtshared-&gt;ats_event &amp; <a class="wiki-source-link" href="../../source/src/include/commands/trigger.h.html#L109" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/commands/trigger.h.html&quot;}, '*');">AFTER_TRIGGER_DEFERRABLE</a>) == 0) return <a class="wiki-source-link" href="../../source/src/tools/pg_bsd_indent/indent_globs.h.html#L43" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/tools/pg_bsd_indent/indent_globs.h.html&quot;}, '*');">false</a>;</p>
+</ul>
+<p>/*</p>
+<ul>
+<li>If constraint state exists, <a class="wiki-source-link" href="../../source/src/backend/regex/regc_lex.c.html#L43" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/regex/regc_lex.c.html&quot;}, '*');">SET</a> CONSTRAINTS might have been executed</li>
+<li>either for this trigger or for all triggers.</li>
+<p>*/ if (state != NULL) { /* Check for <a class="wiki-source-link" href="../../source/src/backend/regex/regc_lex.c.html#L43" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/regex/regc_lex.c.html&quot;}, '*');">SET</a> CONSTRAINTS for this specific trigger. */ for (i = 0; i &lt; state-&gt;numstates; i++) { if (state-&gt;trigstates[i].sct_tgoid == tgoid) return state-&gt;trigstates[i].sct_tgisdeferred; }</p>
+</ul>
+<p>/* Check for <a class="wiki-source-link" href="../../source/src/backend/regex/regc_lex.c.html#L43" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/regex/regc_lex.c.html&quot;}, '*');">SET</a> CONSTRAINTS ALL. */ if (state-&gt;all_isset) return state-&gt;all_isdeferred; }</p>
+<p>/*</p>
+<ul>
+<li>Otherwise return the default state for the trigger.</li>
+<p>*/ return ((evtshared-&gt;ats_event &amp; <a class="wiki-source-link" href="../../source/src/include/commands/trigger.h.html#L110" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/commands/trigger.h.html&quot;}, '*');">AFTER_TRIGGER_INITDEFERRED</a>) != 0); } ~~~</p>
+</ul>
+<h2>失敗モードと境界条件</h2>
+<p>まだ解析していません。</p>
+<h2>保守担当者向けメモ</h2>
+<ul>
+<li>後続フェーズで、ソース本文の文脈と caller/callee 情報を使ってこのページを強化する。</li>
+</ul><script>
+(function() {
+  function notifyParent() {
+    if (parent === window) return;
+    parent.postMessage({type: "frame-location", frame: window.name || "", href: window.location.href}, "*");
+  }
+  document.addEventListener("click", function(event) {
+    const link = event.target.closest("a[data-panel]");
+    if (!link || parent === window) return;
+    parent.postMessage({type: "source-link", panel: link.dataset.panel}, "*");
+  });
+  window.addEventListener("load", notifyParent);
+  window.addEventListener("hashchange", notifyParent);
+})();
+</script></body></html>

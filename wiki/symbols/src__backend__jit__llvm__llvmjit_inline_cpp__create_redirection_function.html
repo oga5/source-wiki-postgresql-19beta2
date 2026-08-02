@@ -1,0 +1,61 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>symbols/src__backend__jit__llvm__llvmjit_inline_cpp__create_redirection_function.md</title><link rel="stylesheet" href="../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../source/src/backend/jit/llvm/llvmjit_inline.cpp.html#L849" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__jit__llvm__llvmjit_inline_cpp__create_redirection_function.html&quot;}, '*');">create_redirection_function</a></h1>
+<h2>定義</h2>
+<ul>
+<li>種別: <code>function</code></li>
+<li>定義箇所: <code>src/backend/jit/llvm/llvmjit_inline.cpp:849</code></li>
+<li>所属モジュール: <a class="wiki-entity-link" href="../modules/src__backend__jit__llvm.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/modules/src__backend__jit__llvm.html&quot;, &quot;source&quot;: &quot;source/src/backend/jit/llvm/SectionMemoryManager.cpp.html&quot;}, '*');"><code>module:src/backend/jit/llvm</code></a></li>
+</ul>
+<h2>目的</h2>
+<p>静的シンボル索引から生成された初期シンボルページです。</p>
+<h2>シグネチャまたは形状</h2>
+<ul>
+<li>シグネチャ: <code>static llvm::Function* create_redirection_function(std::unique_ptr&lt;llvm::Module&gt; &amp;importMod, llvm::Function *F, llvm::StringRef Name)</code></li>
+</ul>
+<h2>入力と出力</h2>
+<ul>
+<li>引数: <code>std::unique_ptr&lt;llvm::Module&gt; &amp;importMod</code>, <code>llvm::Function *F</code>, <code>llvm::StringRef Name</code></li>
+<li>戻り値: <code>llvm::Function *</code></li>
+</ul>
+<h2>前提条件と不変条件</h2>
+<p>まだ解析していません。</p>
+<h2>アルゴリズムまたは振る舞い</h2>
+<ul>
+<li>複雑度: <code>medium</code> (score 10)</li>
+</ul>
+<p>まだ解析していません。</p>
+<h2>呼び出し元と呼び出し先</h2>
+<ul>
+<li>呼び出し元: <a class="wiki-source-link" href="../../source/src/backend/jit/llvm/llvmjit_inline.cpp.html#L380" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__jit__llvm__llvmjit_inline_cpp__llvm_execute_inline_plan.html&quot;}, '*');"><code>llvm_execute_inline_plan</code></a></li>
+<li>呼び出し先: なし</li>
+<li>呼び出し元サイト: <a class="wiki-source-link" href="../../source/src/backend/jit/llvm/llvmjit_inline.cpp.html#L380" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__jit__llvm__llvmjit_inline_cpp__llvm_execute_inline_plan.html&quot;}, '*');"><code>llvm_execute_inline_plan</code></a> at <code>src/backend/jit/llvm/llvmjit_inline.cpp:440:11</code> (direct, confidence=high, resolved=<a class="wiki-entity-link" href="src__backend__jit__llvm__llvmjit_inline_cpp__create_redirection_function.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__jit__llvm__llvmjit_inline_cpp__create_redirection_function.html&quot;, &quot;source&quot;: &quot;source/src/backend/jit/llvm/llvmjit_inline.cpp.html#L849&quot;}, '*');"><code>symbol:src/backend/jit/llvm/llvmjit_inline.cpp#create_redirection_function</code></a>)</li>
+<li>呼び出しサイト: <code>F-&gt;getContext</code> at <code>src/backend/jit/llvm/llvmjit_inline.cpp:856:31</code> (indirect), <code>llvm::Function::Create</code> at <code>src/backend/jit/llvm/llvmjit_inline.cpp:862:7</code> (indirect), <code>F-&gt;getFunctionType</code> at <code>src/backend/jit/llvm/llvmjit_inline.cpp:862:30</code> (indirect), <code>importMod.get</code> at <code>src/backend/jit/llvm/llvmjit_inline.cpp:864:15</code> (indirect), <code>llvm::BasicBlock::Create</code> at <code>src/backend/jit/llvm/llvmjit_inline.cpp:865:7</code> (indirect), <code>Builder.SetInsertPoint</code> at <code>src/backend/jit/llvm/llvmjit_inline.cpp:867:2</code> (indirect), <code>Builder.CreateCall</code> at <code>src/backend/jit/llvm/llvmjit_inline.cpp:868:12</code> (indirect), <code>AF-&gt;arg_begin</code> at <code>src/backend/jit/llvm/llvmjit_inline.cpp:868:36</code> (indirect), <code>fwdcall-&gt;addFnAttr</code> at <code>src/backend/jit/llvm/llvmjit_inline.cpp:869:2</code> (indirect), <code>Builder.CreateRet</code> at <code>src/backend/jit/llvm/llvmjit_inline.cpp:870:2</code> (indirect)</li>
+</ul>
+<h2>関連データ構造</h2>
+<p><a class="wiki-source-link" href="../../source/src/backend/jit/llvm/llvmjit_inline.cpp.html#L420" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__jit__llvm__llvmjit_inline_cpp__LinkageTypes.html&quot;}, '*');"><code>LinkageTypes</code></a>, <a class="wiki-source-link" href="../../source/src/include/c.h.html#L840" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/c.h.html&quot;}, '*');"><code>Name</code></a></p>
+<h2>ソース抜粋</h2>
+<p>~~~c static llvm::Function* <a class="wiki-source-link" href="../../source/src/backend/jit/llvm/llvmjit_inline.cpp.html#L849" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__jit__llvm__llvmjit_inline_cpp__create_redirection_function.html&quot;}, '*');">create_redirection_function</a>(std::unique_ptr&lt;llvm::Module&gt; &amp;importMod, llvm::Function *<a class="wiki-source-link" href="../../source/src/common/md5.c.html#L60" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/common/md5.c.html&quot;}, '*');">F</a>, llvm::StringRef <a class="wiki-source-link" href="../../source/src/include/c.h.html#L840" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/c.h.html&quot;}, '*');">Name</a>) { typedef llvm::GlobalValue::<a class="wiki-source-link" href="../../source/src/backend/jit/llvm/llvmjit_inline.cpp.html#L420" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__jit__llvm__llvmjit_inline_cpp__LinkageTypes.html&quot;}, '*');">LinkageTypes</a> <a class="wiki-source-link" href="../../source/src/backend/jit/llvm/llvmjit_inline.cpp.html#L420" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__jit__llvm__llvmjit_inline_cpp__LinkageTypes.html&quot;}, '*');">LinkageTypes</a>;</p>
+<p>llvm::LLVMContext &amp;Context = <a class="wiki-source-link" href="../../source/src/common/md5.c.html#L60" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/common/md5.c.html&quot;}, '*');">F</a>-&gt;getContext(); llvm::IRBuilder&lt;&gt; Builder(Context); llvm::Function *AF; llvm::BasicBlock *BB; llvm::CallInst *fwdcall;</p>
+<p>AF = llvm::Function::Create(<a class="wiki-source-link" href="../../source/src/common/md5.c.html#L60" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/common/md5.c.html&quot;}, '*');">F</a>-&gt;getFunctionType(), <a class="wiki-source-link" href="../../source/src/backend/jit/llvm/llvmjit_inline.cpp.html#L420" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__jit__llvm__llvmjit_inline_cpp__LinkageTypes.html&quot;}, '*');">LinkageTypes</a>::AvailableExternallyLinkage, <a class="wiki-source-link" href="../../source/src/include/c.h.html#L840" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/c.h.html&quot;}, '*');">Name</a>, importMod.get()); BB = llvm::BasicBlock::Create(Context, &quot;entry&quot;, AF);</p>
+<p>Builder.SetInsertPoint(BB); fwdcall = Builder.CreateCall(<a class="wiki-source-link" href="../../source/src/common/md5.c.html#L60" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/common/md5.c.html&quot;}, '*');">F</a>, &amp;*AF-&gt;arg_begin()); fwdcall-&gt;addFnAttr(llvm::Attribute::AlwaysInline); Builder.CreateRet(fwdcall);</p>
+<p>return AF; } ~~~</p>
+<h2>失敗モードと境界条件</h2>
+<p>まだ解析していません。</p>
+<h2>保守担当者向けメモ</h2>
+<ul>
+<li>後続フェーズで、ソース本文の文脈と caller/callee 情報を使ってこのページを強化する。</li>
+</ul><script>
+(function() {
+  function notifyParent() {
+    if (parent === window) return;
+    parent.postMessage({type: "frame-location", frame: window.name || "", href: window.location.href}, "*");
+  }
+  document.addEventListener("click", function(event) {
+    const link = event.target.closest("a[data-panel]");
+    if (!link || parent === window) return;
+    parent.postMessage({type: "source-link", panel: link.dataset.panel}, "*");
+  });
+  window.addEventListener("load", notifyParent);
+  window.addEventListener("hashchange", notifyParent);
+})();
+</script></body></html>

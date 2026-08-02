@@ -1,0 +1,67 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>symbols/src__port__win32stat_c___pgfstat64.md</title><link rel="stylesheet" href="../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../source/src/port/win32stat.c.html#L254" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__port__win32stat_c___pgfstat64.html&quot;}, '*');">_pgfstat64</a></h1>
+<h2>定義</h2>
+<ul>
+<li>種別: <code>function</code></li>
+<li>定義箇所: <code>src/port/win32stat.c:254</code></li>
+<li>所属モジュール: <a class="wiki-entity-link" href="../modules/src__port.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/modules/src__port.html&quot;, &quot;source&quot;: &quot;source/src/port/bsearch_arg.c.html&quot;}, '*');"><code>module:src/port</code></a></li>
+</ul>
+<h2>目的</h2>
+<p>静的シンボル索引から生成された初期シンボルページです。</p>
+<h2>シグネチャまたは形状</h2>
+<ul>
+<li>シグネチャ: <code>int _pgfstat64(int fileno, struct stat *buf)</code></li>
+</ul>
+<h2>入力と出力</h2>
+<ul>
+<li>引数: <code>int fileno</code>, <code>struct stat *buf</code></li>
+<li>戻り値: <code>int</code></li>
+</ul>
+<h2>前提条件と不変条件</h2>
+<p>まだ解析していません。</p>
+<h2>アルゴリズムまたは振る舞い</h2>
+<ul>
+<li>複雑度: <code>high</code> (score 21)</li>
+</ul>
+<p>まだ解析していません。</p>
+<h2>呼び出し元と呼び出し先</h2>
+<ul>
+<li>呼び出し元: なし</li>
+<li>呼び出し先: <a class="wiki-source-link" href="../../source/src/port/win32stat.c.html#L67" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__port__win32stat_c__fileinfo_to_stat.html&quot;}, '*');"><code>fileinfo_to_stat</code></a>, <a class="wiki-source-link" href="../../source/src/port/win32common.c.html#L30" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__port__win32common_c__pgwin32_get_file_type.html&quot;}, '*');"><code>pgwin32_get_file_type</code></a></li>
+<li>呼び出し元サイト: なし</li>
+<li>呼び出しサイト: <code>_get_osfhandle</code> at <code>src/port/win32stat.c:257:27</code> (unresolved), <a class="wiki-source-link" href="../../source/src/port/win32common.c.html#L30" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__port__win32common_c__pgwin32_get_file_type.html&quot;}, '*');"><code>pgwin32_get_file_type</code></a> at <code>src/port/win32stat.c:267:13</code> (direct, confidence=high, resolved=<a class="wiki-entity-link" href="src__port__win32common_c__pgwin32_get_file_type.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__port__win32common_c__pgwin32_get_file_type.html&quot;, &quot;source&quot;: &quot;source/src/port/win32common.c.html#L30&quot;}, '*');"><code>symbol:src/port/win32common.c#pgwin32_get_file_type</code></a>), <a class="wiki-source-link" href="../../source/src/port/win32stat.c.html#L67" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__port__win32stat_c__fileinfo_to_stat.html&quot;}, '*');"><code>fileinfo_to_stat</code></a> at <code>src/port/win32stat.c:275:11</code> (direct, confidence=high, resolved=<a class="wiki-entity-link" href="src__port__win32stat_c__fileinfo_to_stat.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__port__win32stat_c__fileinfo_to_stat.html&quot;, &quot;source&quot;: &quot;source/src/port/win32stat.c.html#L67&quot;}, '*');"><code>symbol:src/port/win32stat.c#fileinfo_to_stat</code></a>), <code>memset</code> at <code>src/port/win32stat.c:296:2</code> (unresolved)</li>
+</ul>
+<h2>関連データ構造</h2>
+<p><a class="wiki-source-link" href="../../source/src/port/win32error.c.html#L20" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__port__win32error_c__DWORD.html&quot;}, '*');"><code>DWORD</code></a>, <code>stat</code></p>
+<h2>ソース抜粋</h2>
+<p>~~~c int <a class="wiki-source-link" href="../../source/src/port/win32stat.c.html#L254" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__port__win32stat_c___pgfstat64.html&quot;}, '*');">_pgfstat64</a>(int fileno, struct stat *buf) { HANDLE		hFile = (HANDLE) _get_osfhandle(fileno); <a class="wiki-source-link" href="../../source/src/port/win32error.c.html#L20" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__port__win32error_c__DWORD.html&quot;}, '*');">DWORD</a>		fileType = FILE_TYPE_UNKNOWN; unsigned short st_mode;</p>
+<p>if (buf == NULL) { errno = EINVAL; return -1; }</p>
+<p>fileType = <a class="wiki-source-link" href="../../source/src/port/win32common.c.html#L30" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__port__win32common_c__pgwin32_get_file_type.html&quot;}, '*');">pgwin32_get_file_type</a>(hFile); if (errno != 0) return -1;</p>
+<p>switch (fileType) { /* The specified file <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> a disk file */ case FILE_TYPE_DISK: return <a class="wiki-source-link" href="../../source/src/port/win32stat.c.html#L67" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__port__win32stat_c__fileinfo_to_stat.html&quot;}, '*');">fileinfo_to_stat</a>(hFile, buf);</p>
+<p>/*</p>
+<ul>
+<li>The specified file <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> a <a class="wiki-source-link" href="../../source/src/include/port/win32_port.h.html#L495" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/port/win32_port.h.html&quot;}, '*');">socket</a>, a named pipe, or an anonymous</li>
+<li>pipe.</li>
+<p>*/ case FILE_TYPE_PIPE: st_mode = _S_IFIFO; break; /* The specified file <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> a character file */ case FILE_TYPE_CHAR: st_mode = _S_IFCHR; break; /* Unused <a class="wiki-source-link" href="../../source/src/test/locale/test-ctype.c.html#L32" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__test__locale__test-ctype_c__flag.html&quot;}, '*');">flag</a> and unknown file type */ case FILE_TYPE_REMOTE: case FILE_TYPE_UNKNOWN: default: errno = EINVAL; return -1; }</p>
+</ul>
+<p>memset(buf, 0, sizeof(*buf)); buf-&gt;st_mode = st_mode; buf-&gt;st_dev = fileno; buf-&gt;st_rdev = fileno; buf-&gt;st_nlink = 1; return 0; } ~~~</p>
+<h2>失敗モードと境界条件</h2>
+<p>まだ解析していません。</p>
+<h2>保守担当者向けメモ</h2>
+<ul>
+<li>後続フェーズで、ソース本文の文脈と caller/callee 情報を使ってこのページを強化する。</li>
+</ul><script>
+(function() {
+  function notifyParent() {
+    if (parent === window) return;
+    parent.postMessage({type: "frame-location", frame: window.name || "", href: window.location.href}, "*");
+  }
+  document.addEventListener("click", function(event) {
+    const link = event.target.closest("a[data-panel]");
+    if (!link || parent === window) return;
+    parent.postMessage({type: "source-link", panel: link.dataset.panel}, "*");
+  });
+  window.addEventListener("load", notifyParent);
+  window.addEventListener("hashchange", notifyParent);
+})();
+</script></body></html>

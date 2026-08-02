@@ -1,0 +1,86 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>symbols/src__backend__optimizer__plan__initsplan_c__find_lateral_references.md</title><link rel="stylesheet" href="../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../source/src/backend/optimizer/plan/initsplan.c.html#L1095" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__plan__initsplan_c__find_lateral_references.html&quot;}, '*');">find_lateral_references</a></h1>
+<h2>定義</h2>
+<ul>
+<li>種別: <code>function</code></li>
+<li>定義箇所: <code>src/backend/optimizer/plan/initsplan.c:1095</code></li>
+<li>所属モジュール: <a class="wiki-entity-link" href="../modules/src__backend__optimizer__plan.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/modules/src__backend__optimizer__plan.html&quot;, &quot;source&quot;: &quot;source/src/backend/optimizer/plan/analyzejoins.c.html&quot;}, '*');"><code>module:src/backend/optimizer/plan</code></a></li>
+</ul>
+<h2>目的</h2>
+<p>静的シンボル索引から生成された初期シンボルページです。</p>
+<h2>シグネチャまたは形状</h2>
+<ul>
+<li>シグネチャ: <code>void find_lateral_references(PlannerInfo *root)</code></li>
+</ul>
+<h2>入力と出力</h2>
+<ul>
+<li>引数: <code>PlannerInfo *root</code></li>
+<li>戻り値: <code>void</code></li>
+</ul>
+<h2>前提条件と不変条件</h2>
+<p>まだ解析していません。</p>
+<h2>アルゴリズムまたは振る舞い</h2>
+<ul>
+<li>複雑度: <code>high</code> (score 12)</li>
+</ul>
+<p>まだ解析していません。</p>
+<h2>呼び出し元と呼び出し先</h2>
+<ul>
+<li>呼び出し元: <a class="wiki-source-link" href="../../source/src/backend/optimizer/plan/planmain.c.html#L53" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__plan__planmain_c__query_planner.html&quot;}, '*');"><code>query_planner</code></a></li>
+<li>呼び出し先: <a class="wiki-source-link" href="../../source/src/backend/optimizer/plan/initsplan.c.html#L1143" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__plan__initsplan_c__extract_lateral_references.html&quot;}, '*');"><code>extract_lateral_references</code></a></li>
+<li>呼び出し元サイト: <a class="wiki-source-link" href="../../source/src/backend/optimizer/plan/planmain.c.html#L53" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__plan__planmain_c__query_planner.html&quot;}, '*');"><code>query_planner</code></a> at <code>src/backend/optimizer/plan/planmain.c:192:2</code> (direct, confidence=high, resolved=<a class="wiki-entity-link" href="src__backend__optimizer__plan__initsplan_c__find_lateral_references.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__plan__initsplan_c__find_lateral_references.html&quot;, &quot;source&quot;: &quot;source/src/backend/optimizer/plan/initsplan.c.html#L1095&quot;}, '*');"><code>symbol:src/backend/optimizer/plan/initsplan.c#find_lateral_references</code></a>)</li>
+<li>呼び出しサイト: <a class="wiki-source-link" href="../../source/src/include/c.h.html#L950" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/c.h.html&quot;}, '*');"><code>Assert</code></a> at <code>src/backend/optimizer/plan/initsplan.c:1115:3</code> (unresolved), <a class="wiki-source-link" href="../../source/src/backend/optimizer/plan/initsplan.c.html#L1143" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__plan__initsplan_c__extract_lateral_references.html&quot;}, '*');"><code>extract_lateral_references</code></a> at <code>src/backend/optimizer/plan/initsplan.c:1139:3</code> (direct, confidence=high, resolved=<a class="wiki-entity-link" href="src__backend__optimizer__plan__initsplan_c__extract_lateral_references.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__plan__initsplan_c__extract_lateral_references.html&quot;, &quot;source&quot;: &quot;source/src/backend/optimizer/plan/initsplan.c.html#L1143&quot;}, '*');"><code>symbol:src/backend/optimizer/plan/initsplan.c#extract_lateral_references</code></a>)</li>
+</ul>
+<h2>関連データ構造</h2>
+<p><code>Index</code>, <code>PlannerInfo</code>, <code>RelOptInfo</code></p>
+<h2>ソース抜粋</h2>
+<p>~~~c void <a class="wiki-source-link" href="../../source/src/backend/optimizer/plan/initsplan.c.html#L1095" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__plan__initsplan_c__find_lateral_references.html&quot;}, '*');">find_lateral_references</a>(PlannerInfo *root) { Index		rti;</p>
+<p>/* We need do nothing if the query contains no LATERAL RTEs */ if (!root-&gt;hasLateralRTEs) return;</p>
+<p>/*</p>
+<ul>
+<li>Examine all baserels (the rel array has been set up by <a class="wiki-source-link" href="../../source/src/backend/utils/adt/timestamp.c.html#L1612" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__utils__adt__timestamp_c__now.html&quot;}, '*');">now</a>).</li>
+<p>*/ for (rti = 1; rti &lt; root-&gt;simple_rel_array_size; rti++) { RelOptInfo *brel = root-&gt;simple_rel_array[rti];</p>
+</ul>
+<p>/* there may be empty slots corresponding to non-baserel RTEs */ if (brel == NULL) continue;</p>
+<p><a class="wiki-source-link" href="../../source/src/include/c.h.html#L950" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/c.h.html&quot;}, '*');">Assert</a>(brel-&gt;relid == rti); /* sanity check on array */</p>
+<p>/*</p>
+<ul>
+<li>This <a class="wiki-source-link" href="../../source/src/backend/utils/adt/varbit.c.html#L390" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__utils__adt__varbit_c__bit.html&quot;}, '*');">bit</a> <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> less obvious than it might look.  We ignore appendrel</li>
+<li>otherrels and consider only their parent baserels.  In a case where</li>
+<li>a LATERAL-containing UNION ALL subquery was pulled up, it <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> the</li>
+<li>otherrel that <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> actually going to be in the plan.  However, we</li>
+<li>want to mark all its lateral references as needed by the parent,</li>
+<li>because it <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> the parent&#x27;s relid that will be used for join</li>
+<li>planning purposes.  And the parent&#x27;s RTE will contain all the</li>
+<li>lateral references we need to know, since the pulled-up member <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a></li>
+<li>nothing but a copy of parts of the original RTE&#x27;s subquery.  We</li>
+<li>could visit the parent&#x27;s children instead and transform their</li>
+<li>references back to the parent&#x27;s relid, but it would be much more</li>
+<li>complicated for no real gain.  (Important here <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> that the child</li>
+<li>members have not yet received any processing beyond being pulled</li>
+<li>up.)  Similarly, in appendrels created by inheritance expansion,</li>
+<li>it&#x27;s sufficient to look at the parent relation.</li>
+<p>*/</p>
+</ul>
+<p>/* ignore RTEs that are &quot;other rels&quot; */ if (brel-&gt;reloptkind != RELOPT_BASEREL) continue;</p>
+<p><a class="wiki-source-link" href="../../source/src/backend/optimizer/plan/initsplan.c.html#L1143" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__plan__initsplan_c__extract_lateral_references.html&quot;}, '*');">extract_lateral_references</a>(root, brel, rti); } } ~~~</p>
+<h2>失敗モードと境界条件</h2>
+<p>まだ解析していません。</p>
+<h2>保守担当者向けメモ</h2>
+<ul>
+<li>後続フェーズで、ソース本文の文脈と caller/callee 情報を使ってこのページを強化する。</li>
+</ul><script>
+(function() {
+  function notifyParent() {
+    if (parent === window) return;
+    parent.postMessage({type: "frame-location", frame: window.name || "", href: window.location.href}, "*");
+  }
+  document.addEventListener("click", function(event) {
+    const link = event.target.closest("a[data-panel]");
+    if (!link || parent === window) return;
+    parent.postMessage({type: "source-link", panel: link.dataset.panel}, "*");
+  });
+  window.addEventListener("load", notifyParent);
+  window.addEventListener("hashchange", notifyParent);
+})();
+</script></body></html>

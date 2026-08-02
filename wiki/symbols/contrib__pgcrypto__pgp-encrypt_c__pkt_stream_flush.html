@@ -1,0 +1,58 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>symbols/contrib__pgcrypto__pgp-encrypt_c__pkt_stream_flush.md</title><link rel="stylesheet" href="../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../source/contrib/pgcrypto/pgp-encrypt.c.html#L277" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/contrib__pgcrypto__pgp-encrypt_c__pkt_stream_flush.html&quot;}, '*');">pkt_stream_flush</a></h1>
+<h2>定義</h2>
+<ul>
+<li>種別: <code>function</code></li>
+<li>定義箇所: <code>contrib/pgcrypto/pgp-encrypt.c:277</code></li>
+<li>所属モジュール: <a class="wiki-entity-link" href="../modules/contrib__pgcrypto.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/modules/contrib__pgcrypto.html&quot;, &quot;source&quot;: &quot;source/contrib/pgcrypto/crypt-blowfish.c.html&quot;}, '*');"><code>module:contrib/pgcrypto</code></a></li>
+</ul>
+<h2>目的</h2>
+<p>静的シンボル索引から生成された初期シンボルページです。</p>
+<h2>シグネチャまたは形状</h2>
+<ul>
+<li>シグネチャ: <code>static int pkt_stream_flush(PushFilter *next, void *priv)</code></li>
+</ul>
+<h2>入力と出力</h2>
+<ul>
+<li>引数: <code>PushFilter *next</code>, <code>void *priv</code></li>
+<li>戻り値: <code>int</code></li>
+</ul>
+<h2>前提条件と不変条件</h2>
+<p>まだ解析していません。</p>
+<h2>アルゴリズムまたは振る舞い</h2>
+<ul>
+<li>複雑度: <code>medium</code> (score 8)</li>
+</ul>
+<p>まだ解析していません。</p>
+<h2>呼び出し元と呼び出し先</h2>
+<ul>
+<li>呼び出し元: なし</li>
+<li>呼び出し先: <a class="wiki-source-link" href="../../source/contrib/pgcrypto/mbuf.c.html#L438" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/contrib__pgcrypto__mbuf_c__pushf_write.html&quot;}, '*');"><code>pushf_write</code></a>, <a class="wiki-source-link" href="../../source/contrib/pgcrypto/pgp-encrypt.c.html#L44" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/contrib__pgcrypto__pgp-encrypt_c__render_newlen.html&quot;}, '*');"><code>render_newlen</code></a></li>
+<li>呼び出し元サイト: なし</li>
+<li>呼び出しサイト: <a class="wiki-source-link" href="../../source/contrib/pgcrypto/pgp-encrypt.c.html#L44" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/contrib__pgcrypto__pgp-encrypt_c__render_newlen.html&quot;}, '*');"><code>render_newlen</code></a> at <code>contrib/pgcrypto/pgp-encrypt.c:288:7</code> (direct, confidence=high, resolved=<a class="wiki-entity-link" href="contrib__pgcrypto__pgp-encrypt_c__render_newlen.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/contrib__pgcrypto__pgp-encrypt_c__render_newlen.html&quot;, &quot;source&quot;: &quot;source/contrib/pgcrypto/pgp-encrypt.c.html#L44&quot;}, '*');"><code>symbol:contrib/pgcrypto/pgp-encrypt.c#render_newlen</code></a>), <a class="wiki-source-link" href="../../source/contrib/pgcrypto/mbuf.c.html#L438" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/contrib__pgcrypto__mbuf_c__pushf_write.html&quot;}, '*');"><code>pushf_write</code></a> at <code>contrib/pgcrypto/pgp-encrypt.c:289:9</code> (direct, confidence=high, resolved=<a class="wiki-entity-link" href="contrib__pgcrypto__mbuf_c__pushf_write.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/contrib__pgcrypto__mbuf_c__pushf_write.html&quot;, &quot;source&quot;: &quot;source/contrib/pgcrypto/mbuf.c.html#L438&quot;}, '*');"><code>symbol:contrib/pgcrypto/mbuf.c#pushf_write</code></a>)</li>
+</ul>
+<h2>関連データ構造</h2>
+<p><a class="wiki-source-link" href="../../source/contrib/pgcrypto/pgp-encrypt.c.html#L232" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/contrib__pgcrypto__pgp-encrypt_c__PktStreamStat.html&quot;}, '*');"><code>PktStreamStat</code></a>, <code>PushFilter</code>, <code>uint8</code></p>
+<h2>ソース抜粋</h2>
+<p>~~~c static int <a class="wiki-source-link" href="../../source/contrib/pgcrypto/pgp-encrypt.c.html#L277" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/contrib__pgcrypto__pgp-encrypt_c__pkt_stream_flush.html&quot;}, '*');">pkt_stream_flush</a>(PushFilter *next, void *priv) { int			res; uint8		hdr[8]; uint8	   *h = hdr; struct <a class="wiki-source-link" href="../../source/contrib/pgcrypto/pgp-encrypt.c.html#L232" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/contrib__pgcrypto__pgp-encrypt_c__PktStreamStat.html&quot;}, '*');">PktStreamStat</a> *st = priv;</p>
+<p>/* stream MUST end with normal packet. */ if (!st-&gt;final_done) { h = <a class="wiki-source-link" href="../../source/contrib/pgcrypto/pgp-encrypt.c.html#L44" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/contrib__pgcrypto__pgp-encrypt_c__render_newlen.html&quot;}, '*');">render_newlen</a>(h, 0); res = <a class="wiki-source-link" href="../../source/contrib/pgcrypto/mbuf.c.html#L438" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/contrib__pgcrypto__mbuf_c__pushf_write.html&quot;}, '*');">pushf_write</a>(next, hdr, h - hdr); if (res &lt; 0) return res; st-&gt;final_done = 1; } return 0; } ~~~</p>
+<h2>失敗モードと境界条件</h2>
+<p>まだ解析していません。</p>
+<h2>保守担当者向けメモ</h2>
+<ul>
+<li>後続フェーズで、ソース本文の文脈と caller/callee 情報を使ってこのページを強化する。</li>
+</ul><script>
+(function() {
+  function notifyParent() {
+    if (parent === window) return;
+    parent.postMessage({type: "frame-location", frame: window.name || "", href: window.location.href}, "*");
+  }
+  document.addEventListener("click", function(event) {
+    const link = event.target.closest("a[data-panel]");
+    if (!link || parent === window) return;
+    parent.postMessage({type: "source-link", panel: link.dataset.panel}, "*");
+  });
+  window.addEventListener("load", notifyParent);
+  window.addEventListener("hashchange", notifyParent);
+})();
+</script></body></html>

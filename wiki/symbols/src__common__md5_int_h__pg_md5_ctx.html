@@ -1,0 +1,54 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>symbols/src__common__md5_int_h__pg_md5_ctx.md</title><link rel="stylesheet" href="../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../source/src/common/md5_int.h.html#L54" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__common__md5_int_h__pg_md5_ctx.html&quot;}, '*');">pg_md5_ctx</a></h1>
+<h2>定義</h2>
+<ul>
+<li>種別: <code>struct</code></li>
+<li>定義箇所: <code>src/common/md5_int.h:54</code></li>
+<li>所属モジュール: <a class="wiki-entity-link" href="../modules/src__common.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/modules/src__common.html&quot;, &quot;source&quot;: &quot;source/src/common/archive.c.html&quot;}, '*');"><code>module:src/common</code></a></li>
+</ul>
+<h2>目的</h2>
+<p>静的シンボル索引から生成された初期シンボルページです。</p>
+<h2>シグネチャまたは形状</h2>
+<ul>
+<li>シグネチャ: <code>typedef struct</code></li>
+</ul>
+<h2>入力と出力</h2>
+<p>まだ解析していません。</p>
+<h2>前提条件と不変条件</h2>
+<p>まだ解析していません。</p>
+<h2>アルゴリズムまたは振る舞い</h2>
+<p>まだ解析していません。</p>
+<h2>呼び出し元と呼び出し先</h2>
+<ul>
+<li>呼び出し元: なし</li>
+<li>呼び出し先: なし</li>
+<li>呼び出し元サイト: なし</li>
+<li>呼び出しサイト: なし</li>
+</ul>
+<h2>関連データ構造</h2>
+<p><code>uint32</code>, <code>uint64</code>, <code>uint8</code></p>
+<h2>ソース抜粋</h2>
+<p>~~~c typedef struct { union { uint32		md5_state32[4]; uint8		md5_state8[16]; }			md5_st;</p>
+<p>#define <a class="wiki-source-link" href="../../source/src/common/md5_int.h.html#L62" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/common/md5_int.h.html&quot;}, '*');">md5_sta</a>     md5_st.md5_state32[0] #define <a class="wiki-source-link" href="../../source/src/common/md5_int.h.html#L63" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/common/md5_int.h.html&quot;}, '*');">md5_stb</a>     md5_st.md5_state32[1] #define <a class="wiki-source-link" href="../../source/src/common/md5_int.h.html#L64" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/common/md5_int.h.html&quot;}, '*');">md5_stc</a>     md5_st.md5_state32[2] #define <a class="wiki-source-link" href="../../source/src/common/md5_int.h.html#L65" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/common/md5_int.h.html&quot;}, '*');">md5_std</a>     md5_st.md5_state32[3] #define <a class="wiki-source-link" href="../../source/src/common/md5_int.h.html#L66" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/common/md5_int.h.html&quot;}, '*');">md5_st8</a>     md5_st.md5_state8</p>
+<p>union { uint64		md5_count64; uint8		md5_count8[8]; }			md5_count; #define <a class="wiki-source-link" href="../../source/src/common/md5_int.h.html#L73" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/common/md5_int.h.html&quot;}, '*');">md5_n</a>   md5_count.md5_count64 #define <a class="wiki-source-link" href="../../source/src/common/md5_int.h.html#L74" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/common/md5_int.h.html&quot;}, '*');">md5_n8</a>  md5_count.md5_count8</p>
+<p>unsigned int md5_i; uint8		md5_buf[<a class="wiki-source-link" href="../../source/src/common/md5_int.h.html#L51" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/common/md5_int.h.html&quot;}, '*');">MD5_BUFLEN</a>]; } <a class="wiki-source-link" href="../../source/src/common/md5_int.h.html#L54" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__common__md5_int_h__pg_md5_ctx.html&quot;}, '*');">pg_md5_ctx</a>; ~~~</p>
+<h2>失敗モードと境界条件</h2>
+<p>まだ解析していません。</p>
+<h2>保守担当者向けメモ</h2>
+<ul>
+<li>後続フェーズで、ソース本文の文脈と caller/callee 情報を使ってこのページを強化する。</li>
+</ul><script>
+(function() {
+  function notifyParent() {
+    if (parent === window) return;
+    parent.postMessage({type: "frame-location", frame: window.name || "", href: window.location.href}, "*");
+  }
+  document.addEventListener("click", function(event) {
+    const link = event.target.closest("a[data-panel]");
+    if (!link || parent === window) return;
+    parent.postMessage({type: "source-link", panel: link.dataset.panel}, "*");
+  });
+  window.addEventListener("load", notifyParent);
+  window.addEventListener("hashchange", notifyParent);
+})();
+</script></body></html>

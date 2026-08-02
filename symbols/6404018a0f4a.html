@@ -1,0 +1,16 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>WIDTH_THRESHOLD</title><link rel="stylesheet" href="../styles.css"></head><body><h1>Multiple definitions: <code>WIDTH_THRESHOLD</code></h1><ul><li><a href="../source/src/backend/commands/analyze.c.html#L1903" target="source-view">src/backend/commands/analyze.c:1903 (macro)</a></li><li><a href="../source/src/backend/statistics/extended_stats.c.html#L59" target="source-view">src/backend/statistics/extended_stats.c:59 (macro)</a></li></ul><script>
+(function() {
+  function notifyParent() {
+    if (parent === window) return;
+    parent.postMessage({type: "frame-location", frame: window.name || "", href: window.location.href}, "*");
+  }
+  document.addEventListener("click", function(event) {
+    const link = event.target.closest("a[data-panel]");
+    if (!link || parent === window) return;
+    parent.postMessage({type: "source-link", panel: link.dataset.panel}, "*");
+  });
+  window.addEventListener("load", notifyParent);
+  window.addEventListener("hashchange", notifyParent);
+})();
+</script></body></html>

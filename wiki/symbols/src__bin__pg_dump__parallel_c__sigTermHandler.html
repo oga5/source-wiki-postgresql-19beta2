@@ -1,0 +1,91 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>symbols/src__bin__pg_dump__parallel_c__sigTermHandler.md</title><link rel="stylesheet" href="../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../source/src/bin/pg_dump/parallel.c.html#L546" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__bin__pg_dump__parallel_c__sigTermHandler.html&quot;}, '*');">sigTermHandler</a></h1>
+<h2>定義</h2>
+<ul>
+<li>種別: <code>function</code></li>
+<li>定義箇所: <code>src/bin/pg_dump/parallel.c:546</code></li>
+<li>所属モジュール: <a class="wiki-entity-link" href="../modules/src__bin__pg_dump.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/modules/src__bin__pg_dump.html&quot;, &quot;source&quot;: &quot;source/src/bin/pg_dump/common.c.html&quot;}, '*');"><code>module:src/bin/pg_dump</code></a></li>
+</ul>
+<h2>目的</h2>
+<p>静的シンボル索引から生成された初期シンボルページです。</p>
+<h2>シグネチャまたは形状</h2>
+<ul>
+<li>シグネチャ: <code>static void sigTermHandler(SIGNAL_ARGS)</code></li>
+</ul>
+<h2>入力と出力</h2>
+<ul>
+<li>引数: <code>SIGNAL_ARGS</code></li>
+<li>戻り値: <code>void</code></li>
+</ul>
+<h2>前提条件と不変条件</h2>
+<p>まだ解析していません。</p>
+<h2>アルゴリズムまたは振る舞い</h2>
+<ul>
+<li>複雑度: <code>high</code> (score 17)</li>
+</ul>
+<p>まだ解析していません。</p>
+<h2>呼び出し元と呼び出し先</h2>
+<ul>
+<li>呼び出し元: なし</li>
+<li>呼び出し先: <a class="wiki-source-link" href="../../source/src/interfaces/libpq/fe-cancel.c.html#L547" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__interfaces__libpq__fe-cancel_c__PQcancel.html&quot;}, '*');"><code>PQcancel</code></a></li>
+<li>呼び出し元サイト: なし</li>
+<li>呼び出しサイト: <code>pqsignal</code> at <code>src/bin/pg_dump/parallel.c:557:2</code> (unresolved, confidence=low), <code>pqsignal</code> at <code>src/bin/pg_dump/parallel.c:558:2</code> (unresolved, confidence=low), <code>pqsignal</code> at <code>src/bin/pg_dump/parallel.c:559:2</code> (unresolved, confidence=low), <a class="wiki-source-link" href="../../source/src/include/port/win32_port.h.html#L490" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/port/win32_port.h.html&quot;}, '*');"><code>kill</code></a> at <code>src/bin/pg_dump/parallel.c:574:5</code> (unresolved), <a class="wiki-source-link" href="../../source/src/interfaces/libpq/fe-cancel.c.html#L547" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__interfaces__libpq__fe-cancel_c__PQcancel.html&quot;}, '*');"><code>PQcancel</code></a> at <code>src/bin/pg_dump/parallel.c:583:10</code> (direct, confidence=high, resolved=<a class="wiki-entity-link" href="src__interfaces__libpq__fe-cancel_c__PQcancel.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__interfaces__libpq__fe-cancel_c__PQcancel.html&quot;, &quot;source&quot;: &quot;source/src/interfaces/libpq/fe-cancel.c.html#L547&quot;}, '*');"><code>symbol:src/interfaces/libpq/fe-cancel.c#PQcancel</code></a>), <code>write_stderr</code> at <code>src/bin/pg_dump/parallel.c:593:4</code> (macro), <code>write_stderr</code> at <code>src/bin/pg_dump/parallel.c:594:4</code> (macro), <code>write_stderr</code> at <code>src/bin/pg_dump/parallel.c:596:3</code> (macro), <code>_exit</code> at <code>src/bin/pg_dump/parallel.c:603:2</code> (unresolved)</li>
+</ul>
+<h2>関連データ構造</h2>
+<p><a class="wiki-source-link" href="../../source/src/interfaces/ecpg/ecpglib/ecpglib_extern.h.html#L101" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__interfaces__ecpg__ecpglib__ecpglib_extern_h__connection.html&quot;}, '*');"><code>connection</code></a>, <a class="wiki-source-link" href="../../source/src/include/port/win32_port.h.html#L240" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__port__win32_port_h__pid_t.html&quot;}, '*');"><code>pid_t</code></a>, <code>SIGNAL_ARGS</code></p>
+<h2>ソース抜粋</h2>
+<p>~~~c static void <a class="wiki-source-link" href="../../source/src/bin/pg_dump/parallel.c.html#L546" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__bin__pg_dump__parallel_c__sigTermHandler.html&quot;}, '*');">sigTermHandler</a>(SIGNAL_ARGS) { int			i; char		errbuf[1];</p>
+<p>/*</p>
+<ul>
+<li>Some platforms allow delivery of new signals to interrupt an active</li>
+<li>signal handler.  That could muck up our attempt to <a class="wiki-source-link" href="../../source/src/include/port/win32_port.h.html#L502" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/port/win32_port.h.html&quot;}, '*');">send</a> <a class="wiki-source-link" href="../../source/src/interfaces/libpq/fe-cancel.c.html#L547" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__interfaces__libpq__fe-cancel_c__PQcancel.html&quot;}, '*');">PQcancel</a>, so</li>
+<li>disable the signals that <a class="wiki-source-link" href="../../source/src/bin/pg_dump/parallel.c.html#L609" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__bin__pg_dump__parallel_c__set_cancel_handler.html&quot;}, '*');">set_cancel_handler</a> enabled.</li>
+<p>*/ pqsignal(SIGINT, <a class="wiki-source-link" href="../../source/src/include/port.h.html#L552" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/port.h.html&quot;}, '*');">PG_SIG_IGN</a>); pqsignal(SIGTERM, <a class="wiki-source-link" href="../../source/src/include/port.h.html#L552" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/port.h.html&quot;}, '*');">PG_SIG_IGN</a>); pqsignal(<a class="wiki-source-link" href="../../source/src/include/port/win32_port.h.html#L159" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/port/win32_port.h.html&quot;}, '*');">SIGQUIT</a>, <a class="wiki-source-link" href="../../source/src/include/port.h.html#L552" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/port.h.html&quot;}, '*');">PG_SIG_IGN</a>);</p>
+</ul>
+<p>/*</p>
+<ul>
+<li>If we&#x27;re in the leader, forward signal to all workers.  (It seems best</li>
+<li>to do this <a class="wiki-source-link" href="../../source/src/backend/regex/regc_locale.c.html#L487" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__regex__regc_locale_c__before.html&quot;}, '*');">before</a> <a class="wiki-source-link" href="../../source/src/interfaces/libpq/fe-cancel.c.html#L547" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__interfaces__libpq__fe-cancel_c__PQcancel.html&quot;}, '*');">PQcancel</a>; killing the leader transaction will <a class="wiki-source-link" href="../../source/src/include/storage/checksum_block_internal.h.html#L18" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/storage/checksum_block_internal.h.html&quot;}, '*');">result</a></li>
+<li>in invalid-snapshot <a class="wiki-source-link" href="../../source/src/timezone/zic.c.html#L183" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/timezone/zic.c.html&quot;}, '*');">errors</a> from active workers, which maybe we can</li>
+<li>quiet by killing workers first.)  Ignore any <a class="wiki-source-link" href="../../source/src/timezone/zic.c.html#L183" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/timezone/zic.c.html&quot;}, '*');">errors</a>.</li>
+<p>*/ if (signal_info.pstate != NULL) { for (i = 0; i &lt; signal_info.pstate-&gt;numWorkers; i++) { <a class="wiki-source-link" href="../../source/src/include/port/win32_port.h.html#L240" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__port__win32_port_h__pid_t.html&quot;}, '*');">pid_t</a>		pid = signal_info.pstate-&gt;parallelSlot[i].pid;</p>
+</ul>
+<p>if (pid != 0) <a class="wiki-source-link" href="../../source/src/include/port/win32_port.h.html#L490" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/port/win32_port.h.html&quot;}, '*');">kill</a>(pid, SIGTERM); } }</p>
+<p>/*</p>
+<ul>
+<li>Send QueryCancel if we have a <a class="wiki-source-link" href="../../source/src/interfaces/ecpg/ecpglib/ecpglib_extern.h.html#L101" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__interfaces__ecpg__ecpglib__ecpglib_extern_h__connection.html&quot;}, '*');">connection</a> to <a class="wiki-source-link" href="../../source/src/include/port/win32_port.h.html#L502" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/port/win32_port.h.html&quot;}, '*');">send</a> to.  Ignore <a class="wiki-source-link" href="../../source/src/timezone/zic.c.html#L183" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/timezone/zic.c.html&quot;}, '*');">errors</a>,</li>
+<li>there&#x27;s not much we can do about them anyway.</li>
+<p>*/ if (signal_info.myAH != NULL &amp;&amp; signal_info.myAH-&gt;connCancel != NULL) (void) <a class="wiki-source-link" href="../../source/src/interfaces/libpq/fe-cancel.c.html#L547" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__interfaces__libpq__fe-cancel_c__PQcancel.html&quot;}, '*');">PQcancel</a>(signal_info.myAH-&gt;connCancel, errbuf, sizeof(errbuf));</p>
+</ul>
+<p>/*</p>
+<ul>
+<li>Report we&#x27;re quitting, using nothing more complicated than <a class="wiki-source-link" href="../../source/src/interfaces/libpq/win32.h.html#L14" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq/win32.h.html&quot;}, '*');">write</a>(2).</li>
+<li>When in parallel <a class="wiki-source-link" href="../../source/src/backend/postmaster/datachecksum_state.c.html#L380" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/postmaster/datachecksum_state.c.html&quot;}, '*');">operation</a>, only the leader process should do this.</li>
+<p>*/ if (!signal_info.am_worker) { if (progname) { write_stderr(progname); write_stderr(&quot;: &quot;); } write_stderr(&quot;terminated by <a class="wiki-source-link" href="../../source/src/test/regress/pg_regress.c.html#L121" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/test/regress/pg_regress.c.html&quot;}, '*');">user</a>\n&quot;); }</p>
+</ul>
+<p>/*</p>
+<ul>
+<li>And die, using _exit() not exit() because the latter will invoke atexit</li>
+<li>handlers that can fail if we interrupted related code.</li>
+<p>*/ _exit(1); } ~~~</p>
+</ul>
+<h2>失敗モードと境界条件</h2>
+<p>まだ解析していません。</p>
+<h2>保守担当者向けメモ</h2>
+<ul>
+<li>後続フェーズで、ソース本文の文脈と caller/callee 情報を使ってこのページを強化する。</li>
+</ul><script>
+(function() {
+  function notifyParent() {
+    if (parent === window) return;
+    parent.postMessage({type: "frame-location", frame: window.name || "", href: window.location.href}, "*");
+  }
+  document.addEventListener("click", function(event) {
+    const link = event.target.closest("a[data-panel]");
+    if (!link || parent === window) return;
+    parent.postMessage({type: "source-link", panel: link.dataset.panel}, "*");
+  });
+  window.addEventListener("load", notifyParent);
+  window.addEventListener("hashchange", notifyParent);
+})();
+</script></body></html>

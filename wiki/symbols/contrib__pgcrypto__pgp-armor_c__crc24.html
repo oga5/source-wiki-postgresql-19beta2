@@ -1,0 +1,58 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>symbols/contrib__pgcrypto__pgp-armor_c__crc24.md</title><link rel="stylesheet" href="../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../source/contrib/pgcrypto/pgp-armor.c.html#L187" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/contrib__pgcrypto__pgp-armor_c__crc24.html&quot;}, '*');">crc24</a></h1>
+<h2>定義</h2>
+<ul>
+<li>種別: <code>function</code></li>
+<li>定義箇所: <code>contrib/pgcrypto/pgp-armor.c:187</code></li>
+<li>所属モジュール: <a class="wiki-entity-link" href="../modules/contrib__pgcrypto.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/modules/contrib__pgcrypto.html&quot;, &quot;source&quot;: &quot;source/contrib/pgcrypto/crypt-blowfish.c.html&quot;}, '*');"><code>module:contrib/pgcrypto</code></a></li>
+</ul>
+<h2>目的</h2>
+<p>静的シンボル索引から生成された初期シンボルページです。</p>
+<h2>シグネチャまたは形状</h2>
+<ul>
+<li>シグネチャ: <code>static long crc24(const uint8 *data, unsigned len)</code></li>
+</ul>
+<h2>入力と出力</h2>
+<ul>
+<li>引数: <code>const uint8 *data</code>, <code>unsigned len</code></li>
+<li>戻り値: <code>long</code></li>
+</ul>
+<h2>前提条件と不変条件</h2>
+<p>まだ解析していません。</p>
+<h2>アルゴリズムまたは振る舞い</h2>
+<ul>
+<li>複雑度: <code>medium</code> (score 8)</li>
+</ul>
+<p>まだ解析していません。</p>
+<h2>呼び出し元と呼び出し先</h2>
+<ul>
+<li>呼び出し元: <a class="wiki-source-link" href="../../source/contrib/pgcrypto/pgp-armor.c.html#L313" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/contrib__pgcrypto__pgp-armor_c__pgp_armor_decode.html&quot;}, '*');"><code>pgp_armor_decode</code></a>, <a class="wiki-source-link" href="../../source/contrib/pgcrypto/pgp-armor.c.html#L206" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/contrib__pgcrypto__pgp-armor_c__pgp_armor_encode.html&quot;}, '*');"><code>pgp_armor_encode</code></a></li>
+<li>呼び出し先: なし</li>
+<li>呼び出し元サイト: <a class="wiki-source-link" href="../../source/contrib/pgcrypto/pgp-armor.c.html#L206" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/contrib__pgcrypto__pgp-armor_c__pgp_armor_encode.html&quot;}, '*');"><code>pgp_armor_encode</code></a> at <code>contrib/pgcrypto/pgp-armor.c:213:17</code> (direct, confidence=high, resolved=<a class="wiki-entity-link" href="contrib__pgcrypto__pgp-armor_c__crc24.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/contrib__pgcrypto__pgp-armor_c__crc24.html&quot;, &quot;source&quot;: &quot;source/contrib/pgcrypto/pgp-armor.c.html#L187&quot;}, '*');"><code>symbol:contrib/pgcrypto/pgp-armor.c#crc24</code></a>), <a class="wiki-source-link" href="../../source/contrib/pgcrypto/pgp-armor.c.html#L313" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/contrib__pgcrypto__pgp-armor_c__pgp_armor_decode.html&quot;}, '*');"><code>pgp_armor_decode</code></a> at <code>contrib/pgcrypto/pgp-armor.c:373:7</code> (direct, confidence=high, resolved=<a class="wiki-entity-link" href="contrib__pgcrypto__pgp-armor_c__crc24.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/contrib__pgcrypto__pgp-armor_c__crc24.html&quot;, &quot;source&quot;: &quot;source/contrib/pgcrypto/pgp-armor.c.html#L187&quot;}, '*');"><code>symbol:contrib/pgcrypto/pgp-armor.c#crc24</code></a>)</li>
+<li>呼び出しサイト: なし</li>
+</ul>
+<h2>関連データ構造</h2>
+<p><code>uint8</code></p>
+<h2>ソース抜粋</h2>
+<p>~~~c static long <a class="wiki-source-link" href="../../source/contrib/pgcrypto/pgp-armor.c.html#L187" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/contrib__pgcrypto__pgp-armor_c__crc24.html&quot;}, '*');">crc24</a>(const uint8 *data, unsigned len) { unsigned	crc = <a class="wiki-source-link" href="../../source/contrib/pgcrypto/pgp-armor.c.html#L185" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/contrib/pgcrypto/pgp-armor.c.html&quot;}, '*');">CRC24_INIT</a>; int			i;</p>
+<p>while (len--) { crc ^= (*data++) &lt;&lt; 16; for (i = 0; i &lt; 8; i++) { crc &lt;&lt;= 1; if (crc &amp; 0x1000000) crc ^= <a class="wiki-source-link" href="../../source/contrib/pgcrypto/pgp-armor.c.html#L186" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/contrib/pgcrypto/pgp-armor.c.html&quot;}, '*');">CRC24_POLY</a>; } } return crc &amp; 0xffffffL; } ~~~</p>
+<h2>失敗モードと境界条件</h2>
+<p>まだ解析していません。</p>
+<h2>保守担当者向けメモ</h2>
+<ul>
+<li>後続フェーズで、ソース本文の文脈と caller/callee 情報を使ってこのページを強化する。</li>
+</ul><script>
+(function() {
+  function notifyParent() {
+    if (parent === window) return;
+    parent.postMessage({type: "frame-location", frame: window.name || "", href: window.location.href}, "*");
+  }
+  document.addEventListener("click", function(event) {
+    const link = event.target.closest("a[data-panel]");
+    if (!link || parent === window) return;
+    parent.postMessage({type: "source-link", panel: link.dataset.panel}, "*");
+  });
+  window.addEventListener("load", notifyParent);
+  window.addEventListener("hashchange", notifyParent);
+})();
+</script></body></html>

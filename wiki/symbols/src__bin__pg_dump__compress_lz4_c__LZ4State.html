@@ -1,0 +1,78 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>symbols/src__bin__pg_dump__compress_lz4_c__LZ4State.md</title><link rel="stylesheet" href="../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../source/src/bin/pg_dump/compress_lz4.c.html#L39" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__bin__pg_dump__compress_lz4_c__LZ4State.html&quot;}, '*');">LZ4State</a></h1>
+<h2>定義</h2>
+<ul>
+<li>種別: <code>struct</code></li>
+<li>定義箇所: <code>src/bin/pg_dump/compress_lz4.c:39</code></li>
+<li>所属モジュール: <a class="wiki-entity-link" href="../modules/src__bin__pg_dump.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/modules/src__bin__pg_dump.html&quot;, &quot;source&quot;: &quot;source/src/bin/pg_dump/common.c.html&quot;}, '*');"><code>module:src/bin/pg_dump</code></a></li>
+</ul>
+<h2>目的</h2>
+<p>静的シンボル索引から生成された初期シンボルページです。</p>
+<h2>シグネチャまたは形状</h2>
+<ul>
+<li>シグネチャ: <code>typedef struct LZ4State</code></li>
+</ul>
+<h2>入力と出力</h2>
+<p>まだ解析していません。</p>
+<h2>前提条件と不変条件</h2>
+<p>まだ解析していません。</p>
+<h2>アルゴリズムまたは振る舞い</h2>
+<p>まだ解析していません。</p>
+<h2>呼び出し元と呼び出し先</h2>
+<ul>
+<li>呼び出し元: なし</li>
+<li>呼び出し先: なし</li>
+<li>呼び出し元サイト: なし</li>
+<li>呼び出しサイト: なし</li>
+</ul>
+<h2>関連データ構造</h2>
+<p>なし</p>
+<h2>ソース抜粋</h2>
+<p>~~~c typedef struct <a class="wiki-source-link" href="../../source/src/bin/pg_dump/compress_lz4.c.html#L39" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__bin__pg_dump__compress_lz4_c__LZ4State.html&quot;}, '*');">LZ4State</a> { /*</p>
+<ul>
+<li>Used by the Stream API to keep track of the file stream.</li>
+<p>*/ FILE	   *fp;</p>
+</ul>
+<p>LZ4F_preferences_t prefs;</p>
+<p>LZ4F_compressionContext_t ctx; LZ4F_decompressionContext_t dtx;</p>
+<p>/*</p>
+<ul>
+<li>Used by the Stream API&#x27;s lazy initialization.</li>
+<p>*/ bool		inited;</p>
+</ul>
+<p>/*</p>
+<ul>
+<li>Used by the Stream API to distinguish between compression and</li>
+<li>decompression operations.</li>
+<p>*/ bool		compressing;</p>
+</ul>
+<p>/*</p>
+<ul>
+<li>I/O buffer area.</li>
+<p>*/ char	   *buffer;			/* buffer for compressed data */ size_t		buflen;			/* allocated size of buffer */ size_t		bufdata;		/* amount of valid data currently in buffer */ /* These fields are used only while decompressing: */ size_t		bufnext;		/* next buffer position to decompress */ char	   *outbuf;			/* buffer for decompressed data */ size_t		outbuflen;		/* allocated size of outbuf */ size_t		outbufdata;		/* amount of valid data currently in outbuf */ size_t		outbufnext;		/* next outbuf position to return */</p>
+</ul>
+<p>/*</p>
+<ul>
+<li>Used by both APIs to keep track of error codes.</li>
+<p>*/ size_t		errcode; } <a class="wiki-source-link" href="../../source/src/bin/pg_dump/compress_lz4.c.html#L39" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__bin__pg_dump__compress_lz4_c__LZ4State.html&quot;}, '*');">LZ4State</a>; ~~~</p>
+</ul>
+<h2>失敗モードと境界条件</h2>
+<p>まだ解析していません。</p>
+<h2>保守担当者向けメモ</h2>
+<ul>
+<li>後続フェーズで、ソース本文の文脈と caller/callee 情報を使ってこのページを強化する。</li>
+</ul><script>
+(function() {
+  function notifyParent() {
+    if (parent === window) return;
+    parent.postMessage({type: "frame-location", frame: window.name || "", href: window.location.href}, "*");
+  }
+  document.addEventListener("click", function(event) {
+    const link = event.target.closest("a[data-panel]");
+    if (!link || parent === window) return;
+    parent.postMessage({type: "source-link", panel: link.dataset.panel}, "*");
+  });
+  window.addEventListener("load", notifyParent);
+  window.addEventListener("hashchange", notifyParent);
+})();
+</script></body></html>

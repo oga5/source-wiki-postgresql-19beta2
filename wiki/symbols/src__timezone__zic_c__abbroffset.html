@@ -1,0 +1,60 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>symbols/src__timezone__zic_c__abbroffset.md</title><link rel="stylesheet" href="../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../source/src/timezone/zic.c.html#L2588" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__timezone__zic_c__abbroffset.html&quot;}, '*');">abbroffset</a></h1>
+<h2>定義</h2>
+<ul>
+<li>種別: <code>function</code></li>
+<li>定義箇所: <code>src/timezone/zic.c:2588</code></li>
+<li>所属モジュール: <a class="wiki-entity-link" href="../modules/src__timezone.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/modules/src__timezone.html&quot;, &quot;source&quot;: &quot;source/src/timezone/localtime.c.html&quot;}, '*');"><code>module:src/timezone</code></a></li>
+</ul>
+<h2>目的</h2>
+<p>静的シンボル索引から生成された初期シンボルページです。</p>
+<h2>シグネチャまたは形状</h2>
+<ul>
+<li>シグネチャ: <code>static char const * abbroffset(char *buf, zic_t offset)</code></li>
+</ul>
+<h2>入力と出力</h2>
+<ul>
+<li>引数: <code>char *buf</code>, <code>zic_t offset</code></li>
+<li>戻り値: <code>char const *</code></li>
+</ul>
+<h2>前提条件と不変条件</h2>
+<p>まだ解析していません。</p>
+<h2>アルゴリズムまたは振る舞い</h2>
+<ul>
+<li>複雑度: <code>high</code> (score 17)</li>
+</ul>
+<p>まだ解析していません。</p>
+<h2>呼び出し元と呼び出し先</h2>
+<ul>
+<li>呼び出し元: <a class="wiki-source-link" href="../../source/src/timezone/zic.c.html#L2632" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__timezone__zic_c__doabbr.html&quot;}, '*');"><code>doabbr</code></a></li>
+<li>呼び出し先: <code>error</code></li>
+<li>呼び出し元サイト: <a class="wiki-source-link" href="../../source/src/timezone/zic.c.html#L2632" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__timezone__zic_c__doabbr.html&quot;}, '*');"><code>doabbr</code></a> at <code>src/timezone/zic.c:2647:14</code> (direct, confidence=high, resolved=<a class="wiki-entity-link" href="src__timezone__zic_c__abbroffset.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__timezone__zic_c__abbroffset.html&quot;, &quot;source&quot;: &quot;source/src/timezone/zic.c.html#L2588&quot;}, '*');"><code>symbol:src/timezone/zic.c#abbroffset</code></a>)</li>
+<li>呼び出しサイト: <code>error</code> at <code>src/timezone/zic.c:2607:3</code> (direct, confidence=high, resolved=<a class="wiki-entity-link" href="src__timezone__zic_c__error.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__timezone__zic_c__error.html&quot;, &quot;source&quot;: &quot;source/src/timezone/zic.c.html#L521&quot;}, '*');"><code>symbol:src/timezone/zic.c#error</code></a>), <code>_</code> at <code>src/timezone/zic.c:2607:9</code> (unresolved)</li>
+</ul>
+<h2>関連データ構造</h2>
+<p><a class="wiki-source-link" href="../../source/src/timezone/zic.c.html#L25" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__timezone__zic_c__zic_t.html&quot;}, '*');"><code>zic_t</code></a></p>
+<h2>ソース抜粋</h2>
+<p>~~~c static char const * <a class="wiki-source-link" href="../../source/src/timezone/zic.c.html#L2588" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__timezone__zic_c__abbroffset.html&quot;}, '*');">abbroffset</a>(char *buf, <a class="wiki-source-link" href="../../source/src/timezone/zic.c.html#L25" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__timezone__zic_c__zic_t.html&quot;}, '*');">zic_t</a> offset) { char		sign = &#x27;+&#x27;; int			seconds, minutes;</p>
+<p>if (offset &lt; 0) { offset = -offset; sign = &#x27;-&#x27;; }</p>
+<p>seconds = offset % <a class="wiki-source-link" href="../../source/src/timezone/private.h.html#L93" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/timezone/private.h.html&quot;}, '*');">SECSPERMIN</a>; offset /= <a class="wiki-source-link" href="../../source/src/timezone/private.h.html#L93" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/timezone/private.h.html&quot;}, '*');">SECSPERMIN</a>; minutes = offset % <a class="wiki-source-link" href="../../source/src/timezone/private.h.html#L94" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/timezone/private.h.html&quot;}, '*');">MINSPERHOUR</a>; offset /= <a class="wiki-source-link" href="../../source/src/timezone/private.h.html#L94" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/timezone/private.h.html&quot;}, '*');">MINSPERHOUR</a>; if (100 &lt;= offset) { error(_(&quot;%%z UT offset magnitude exceeds 99:59:59&quot;)); return &quot;%z&quot;; } else { char	   *p = buf;</p>
+<p>*p++ = sign; *p++ = &#x27;0&#x27; + offset / 10; *p++ = &#x27;0&#x27; + offset % 10; if (minutes | seconds) { *p++ = &#x27;0&#x27; + minutes / 10; *p++ = &#x27;0&#x27; + minutes % 10; if (seconds) { *p++ = &#x27;0&#x27; + seconds / 10; *p++ = &#x27;0&#x27; + seconds % 10; } } *p = &#x27;\0&#x27;; return buf; } } ~~~</p>
+<h2>失敗モードと境界条件</h2>
+<p>まだ解析していません。</p>
+<h2>保守担当者向けメモ</h2>
+<ul>
+<li>後続フェーズで、ソース本文の文脈と caller/callee 情報を使ってこのページを強化する。</li>
+</ul><script>
+(function() {
+  function notifyParent() {
+    if (parent === window) return;
+    parent.postMessage({type: "frame-location", frame: window.name || "", href: window.location.href}, "*");
+  }
+  document.addEventListener("click", function(event) {
+    const link = event.target.closest("a[data-panel]");
+    if (!link || parent === window) return;
+    parent.postMessage({type: "source-link", panel: link.dataset.panel}, "*");
+  });
+  window.addEventListener("load", notifyParent);
+  window.addEventListener("hashchange", notifyParent);
+})();
+</script></body></html>

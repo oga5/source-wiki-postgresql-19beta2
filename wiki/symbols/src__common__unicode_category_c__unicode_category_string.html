@@ -1,0 +1,57 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>symbols/src__common__unicode_category_c__unicode_category_string.md</title><link rel="stylesheet" href="../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../source/src/common/unicode_category.c.html#L331" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__common__unicode_category_c__unicode_category_string.html&quot;}, '*');">unicode_category_string</a></h1>
+<h2>定義</h2>
+<ul>
+<li>種別: <code>function</code></li>
+<li>定義箇所: <code>src/common/unicode_category.c:331</code></li>
+<li>所属モジュール: <a class="wiki-entity-link" href="../modules/src__common.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/modules/src__common.html&quot;, &quot;source&quot;: &quot;source/src/common/archive.c.html&quot;}, '*');"><code>module:src/common</code></a></li>
+</ul>
+<h2>目的</h2>
+<p>静的シンボル索引から生成された初期シンボルページです。</p>
+<h2>シグネチャまたは形状</h2>
+<ul>
+<li>シグネチャ: <code>const char * unicode_category_string(pg_unicode_category category)</code></li>
+</ul>
+<h2>入力と出力</h2>
+<ul>
+<li>引数: <code>pg_unicode_category category</code></li>
+<li>戻り値: <code>const char *</code></li>
+</ul>
+<h2>前提条件と不変条件</h2>
+<p>まだ解析していません。</p>
+<h2>アルゴリズムまたは振る舞い</h2>
+<ul>
+<li>複雑度: <code>high</code> (score 16)</li>
+</ul>
+<p>まだ解析していません。</p>
+<h2>呼び出し元と呼び出し先</h2>
+<ul>
+<li>呼び出し元: <a class="wiki-source-link" href="../../source/src/common/unicode/category_test.c.html#L56" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__common__unicode__category_test_c__icu_test.html&quot;}, '*');"><code>icu_test</code></a></li>
+<li>呼び出し先: なし</li>
+<li>呼び出し元サイト: <a class="wiki-source-link" href="../../source/src/common/unicode/category_test.c.html#L56" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__common__unicode__category_test_c__icu_test.html&quot;}, '*');"><code>icu_test</code></a> at <code>src/common/unicode/category_test.c:156:8</code> (direct, confidence=high, resolved=<a class="wiki-entity-link" href="src__common__unicode_category_c__unicode_category_string.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__common__unicode_category_c__unicode_category_string.html&quot;, &quot;source&quot;: &quot;source/src/common/unicode_category.c.html#L331&quot;}, '*');"><code>symbol:src/common/unicode_category.c#unicode_category_string</code></a>), <a class="wiki-source-link" href="../../source/src/common/unicode/category_test.c.html#L56" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__common__unicode__category_test_c__icu_test.html&quot;}, '*');"><code>icu_test</code></a> at <code>src/common/unicode/category_test.c:159:8</code> (direct, confidence=high, resolved=<a class="wiki-entity-link" href="src__common__unicode_category_c__unicode_category_string.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__common__unicode_category_c__unicode_category_string.html&quot;, &quot;source&quot;: &quot;source/src/common/unicode_category.c.html#L331&quot;}, '*');"><code>symbol:src/common/unicode_category.c#unicode_category_string</code></a>)</li>
+<li>呼び出しサイト: <a class="wiki-source-link" href="../../source/src/include/c.h.html#L950" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/c.h.html&quot;}, '*');"><code>Assert</code></a> at <code>src/common/unicode_category.c:398:2</code> (unresolved)</li>
+</ul>
+<h2>関連データ構造</h2>
+<p><a class="wiki-source-link" href="../../source/src/include/common/unicode_category.h.html#L28" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__common__unicode_category_h__pg_unicode_category.html&quot;}, '*');"><code>pg_unicode_category</code></a></p>
+<h2>ソース抜粋</h2>
+<p>~~~c const char * <a class="wiki-source-link" href="../../source/src/common/unicode_category.c.html#L331" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__common__unicode_category_c__unicode_category_string.html&quot;}, '*');">unicode_category_string</a>(<a class="wiki-source-link" href="../../source/src/include/common/unicode_category.h.html#L28" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__common__unicode_category_h__pg_unicode_category.html&quot;}, '*');">pg_unicode_category</a> category) { switch (category) { case PG_U_UNASSIGNED: return &quot;Unassigned&quot;; case PG_U_UPPERCASE_LETTER: return &quot;Uppercase_Letter&quot;; case PG_U_LOWERCASE_LETTER: return &quot;Lowercase_Letter&quot;; case PG_U_TITLECASE_LETTER: return &quot;Titlecase_Letter&quot;; case PG_U_MODIFIER_LETTER: return &quot;Modifier_Letter&quot;; case PG_U_OTHER_LETTER: return &quot;Other_Letter&quot;; case PG_U_NONSPACING_MARK: return &quot;Nonspacing_Mark&quot;; case PG_U_ENCLOSING_MARK: return &quot;Enclosing_Mark&quot;; case PG_U_SPACING_MARK: return &quot;Spacing_Mark&quot;; case PG_U_DECIMAL_NUMBER: return &quot;Decimal_Number&quot;; case PG_U_LETTER_NUMBER: return &quot;Letter_Number&quot;; case PG_U_OTHER_NUMBER: return &quot;Other_Number&quot;; case PG_U_SPACE_SEPARATOR: return &quot;Space_Separator&quot;; case PG_U_LINE_SEPARATOR: return &quot;Line_Separator&quot;; case PG_U_PARAGRAPH_SEPARATOR: return &quot;Paragraph_Separator&quot;; case PG_U_CONTROL: return &quot;Control&quot;; case PG_U_FORMAT: return &quot;Format&quot;; case PG_U_PRIVATE_USE: return &quot;Private_Use&quot;; case PG_U_SURROGATE: return &quot;Surrogate&quot;; case PG_U_DASH_PUNCTUATION: return &quot;Dash_Punctuation&quot;; case PG_U_OPEN_PUNCTUATION: return &quot;Open_Punctuation&quot;; case PG_U_CLOSE_PUNCTUATION: return &quot;Close_Punctuation&quot;; case PG_U_CONNECTOR_PUNCTUATION: return &quot;Connector_Punctuation&quot;; case PG_U_OTHER_PUNCTUATION: return &quot;Other_Punctuation&quot;; case PG_U_MATH_SYMBOL: return &quot;Math_Symbol&quot;; case PG_U_CURRENCY_SYMBOL: return &quot;Currency_Symbol&quot;; case PG_U_MODIFIER_SYMBOL: return &quot;Modifier_Symbol&quot;; case PG_U_OTHER_SYMBOL: ~~~</p>
+<h2>失敗モードと境界条件</h2>
+<p>まだ解析していません。</p>
+<h2>保守担当者向けメモ</h2>
+<ul>
+<li>後続フェーズで、ソース本文の文脈と caller/callee 情報を使ってこのページを強化する。</li>
+</ul><script>
+(function() {
+  function notifyParent() {
+    if (parent === window) return;
+    parent.postMessage({type: "frame-location", frame: window.name || "", href: window.location.href}, "*");
+  }
+  document.addEventListener("click", function(event) {
+    const link = event.target.closest("a[data-panel]");
+    if (!link || parent === window) return;
+    parent.postMessage({type: "source-link", panel: link.dataset.panel}, "*");
+  });
+  window.addEventListener("load", notifyParent);
+  window.addEventListener("hashchange", notifyParent);
+})();
+</script></body></html>

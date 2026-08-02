@@ -1,0 +1,56 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>modules/contrib__hstore_plpython.md</title><link rel="stylesheet" href="../../styles.css"></head><body><h1>contrib/hstore_plpython</h1>
+<h2>システム内での役割</h2>
+<p><code>contrib/hstore_plpython</code> には 1 個の索引済みソースファイルがあります。この初期モジュールページはディレクトリ境界に基づいています。</p>
+<h2>責務</h2>
+<ul>
+<li>このディレクトリに属するソースファイルを集約する。</li>
+<li>より深い LLM 合成の前段として、モジュール単位の入口を提供する。</li>
+</ul>
+<h2>このモジュールのファイル</h2>
+<ul>
+<li><a class="wiki-source-link" href="../../source/contrib/hstore_plpython/hstore_plpython.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/contrib/hstore_plpython/hstore_plpython.c.html&quot;}, '*');"><code>contrib/hstore_plpython/hstore_plpython.c</code></a></li>
+</ul>
+<h2>主要なデータ構造</h2>
+<ul>
+<li><code>PyObject</code></li>
+<li><code>Py_ssize_t</code></li>
+<li><code>Datum</code></li>
+<li><code>int32</code></li>
+<li><code>hstoreCheckKeyLen_t</code></li>
+<li><code>hstoreCheckValLen_t</code></li>
+</ul>
+<h2>主なフロー</h2>
+<p>初期モジュールページでは、まだエンドツーエンドのフローを推論しません。</p>
+<h2>外部依存</h2>
+<ul>
+<li><a class="wiki-source-link" href="../../source/src/include/postgres.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/postgres.h.html&quot;}, '*');"><code>postgres.h</code></a></li>
+<li><a class="wiki-source-link" href="../../source/src/include/fmgr.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/fmgr.h.html&quot;}, '*');"><code>fmgr.h</code></a></li>
+<li><code>hstore/hstore.h</code></li>
+<li><a class="wiki-source-link" href="../../source/src/pl/plpython/plpy_typeio.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/pl/plpython/plpy_typeio.h.html&quot;}, '*');"><code>plpy_typeio.h</code></a></li>
+<li><a class="wiki-source-link" href="../../source/src/pl/plpython/plpy_util.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/pl/plpython/plpy_util.h.html&quot;}, '*');"><code>plpy_util.h</code></a></li>
+</ul>
+<h2>内部構成</h2>
+<ul>
+<li>子モジュール数: 0</li>
+</ul>
+<h2>推奨読書順</h2>
+<p>1. <a class="wiki-source-link" href="../../source/contrib/hstore_plpython/hstore_plpython.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/contrib/hstore_plpython/hstore_plpython.c.html&quot;}, '*');"><code>contrib/hstore_plpython/hstore_plpython.c</code></a></p>
+<h2>未解決の問い</h2>
+<ul>
+<li>LLM ベースのモジュール合成を追加した後で、責務とフローを精緻化する。</li>
+</ul><script>
+(function() {
+  function notifyParent() {
+    if (parent === window) return;
+    parent.postMessage({type: "frame-location", frame: window.name || "", href: window.location.href}, "*");
+  }
+  document.addEventListener("click", function(event) {
+    const link = event.target.closest("a[data-panel]");
+    if (!link || parent === window) return;
+    parent.postMessage({type: "source-link", panel: link.dataset.panel}, "*");
+  });
+  window.addEventListener("load", notifyParent);
+  window.addEventListener("hashchange", notifyParent);
+})();
+</script></body></html>

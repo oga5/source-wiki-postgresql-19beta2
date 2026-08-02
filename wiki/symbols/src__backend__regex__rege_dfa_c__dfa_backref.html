@@ -1,0 +1,73 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>symbols/src__backend__regex__rege_dfa_c__dfa_backref.md</title><link rel="stylesheet" href="../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../source/src/backend/regex/rege_dfa.c.html#L505" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__regex__rege_dfa_c__dfa_backref.html&quot;}, '*');">dfa_backref</a></h1>
+<h2>定義</h2>
+<ul>
+<li>種別: <code>function</code></li>
+<li>定義箇所: <code>src/backend/regex/rege_dfa.c:505</code></li>
+<li>所属モジュール: <a class="wiki-entity-link" href="../modules/src__backend__regex.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/modules/src__backend__regex.html&quot;, &quot;source&quot;: &quot;source/src/backend/regex/regc_color.c.html&quot;}, '*');"><code>module:src/backend/regex</code></a></li>
+</ul>
+<h2>目的</h2>
+<p>静的シンボル索引から生成された初期シンボルページです。</p>
+<h2>シグネチャまたは形状</h2>
+<ul>
+<li>シグネチャ: <code>static chr * dfa_backref(struct vars *v, struct dfa *d, chr *start, /* where the match should start */ chr *min, /* match must end at or after here */ chr *max, /* match must end at or before here */ bool shortest)</code></li>
+</ul>
+<h2>入力と出力</h2>
+<ul>
+<li>引数: <code>struct vars *v</code>, <code>struct dfa *d</code>, <code>chr *start</code>, <code>chr *min</code>, <code>chr *max</code>, <code>bool shortest</code></li>
+<li>戻り値: <code>chr *</code></li>
+</ul>
+<h2>前提条件と不変条件</h2>
+<p>まだ解析していません。</p>
+<h2>アルゴリズムまたは振る舞い</h2>
+<ul>
+<li>複雑度: <code>high</code> (score 27)</li>
+</ul>
+<p>まだ解析していません。</p>
+<h2>呼び出し元と呼び出し先</h2>
+<ul>
+<li>呼び出し元: <a class="wiki-source-link" href="../../source/src/backend/regex/rege_dfa.c.html#L41" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__regex__rege_dfa_c__longest.html&quot;}, '*');"><code>longest</code></a>, <a class="wiki-source-link" href="../../source/src/backend/regex/rege_dfa.c.html#L203" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__regex__rege_dfa_c__shortest.html&quot;}, '*');"><code>shortest</code></a></li>
+<li>呼び出し先: なし</li>
+<li>呼び出し元サイト: <a class="wiki-source-link" href="../../source/src/backend/regex/rege_dfa.c.html#L41" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__regex__rege_dfa_c__longest.html&quot;}, '*');"><code>longest</code></a> at <code>src/backend/regex/rege_dfa.c:67:9</code> (direct, confidence=high, resolved=<a class="wiki-entity-link" href="src__backend__regex__rege_dfa_c__dfa_backref.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__regex__rege_dfa_c__dfa_backref.html&quot;, &quot;source&quot;: &quot;source/src/backend/regex/rege_dfa.c.html#L505&quot;}, '*');"><code>symbol:src/backend/regex/rege_dfa.c#dfa_backref</code></a>), <a class="wiki-source-link" href="../../source/src/backend/regex/rege_dfa.c.html#L203" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__regex__rege_dfa_c__shortest.html&quot;}, '*');"><code>shortest</code></a> at <code>src/backend/regex/rege_dfa.c:232:9</code> (direct, confidence=high, resolved=<a class="wiki-entity-link" href="src__backend__regex__rege_dfa_c__dfa_backref.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__regex__rege_dfa_c__dfa_backref.html&quot;, &quot;source&quot;: &quot;source/src/backend/regex/rege_dfa.c.html#L505&quot;}, '*');"><code>symbol:src/backend/regex/rege_dfa.c#dfa_backref</code></a>)</li>
+<li>呼び出しサイト: <code>(*v-&gt;g-&gt;compare)</code> at <code>src/backend/regex/rege_dfa.c:568:7</code> (indirect)</li>
+</ul>
+<h2>関連データ構造</h2>
+<p><code>chr</code>, <a class="wiki-source-link" href="../../source/src/backend/regex/regexec.c.html#L63" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__regex__regexec_c__dfa.html&quot;}, '*');"><code>dfa</code></a>, <code>string</code>, <code>vars</code></p>
+<h2>ソース抜粋</h2>
+<p>~~~c static chr * <a class="wiki-source-link" href="../../source/src/backend/regex/rege_dfa.c.html#L505" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__regex__rege_dfa_c__dfa_backref.html&quot;}, '*');">dfa_backref</a>(struct vars *v, struct <a class="wiki-source-link" href="../../source/src/backend/regex/regexec.c.html#L63" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__regex__regexec_c__dfa.html&quot;}, '*');">dfa</a> *d, chr *start,			/* where the match should start */ chr *min,			/* match must end at or after here */ chr *max,			/* match must end at or <a class="wiki-source-link" href="../../source/src/backend/regex/regc_locale.c.html#L487" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__regex__regc_locale_c__before.html&quot;}, '*');">before</a> here */ bool <a class="wiki-source-link" href="../../source/src/backend/regex/rege_dfa.c.html#L203" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__regex__rege_dfa_c__shortest.html&quot;}, '*');">shortest</a>) { int			n = d-&gt;backno; int			backmin = d-&gt;backmin; int			backmax = d-&gt;backmax; size_t		numreps; size_t		minreps; size_t		maxreps; size_t		brlen; chr		   *brstring; chr		   *p;</p>
+<p>/* get the backreferenced string (caller should have checked this) */ if (v-&gt;pmatch[n].rm_so == -1) return NULL; brstring = v-&gt;start + v-&gt;pmatch[n].rm_so; brlen = v-&gt;pmatch[n].rm_eo - v-&gt;pmatch[n].rm_so;</p>
+<p>/* special-case zero-length backreference to avoid divide by zero */ if (brlen == 0) { /*</p>
+<ul>
+<li>matches only a zero-length string, but any number of repetitions</li>
+<li>can be considered to be present</li>
+<p>*/ if (min == start &amp;&amp; backmin &lt;= backmax) return start; return NULL; }</p>
+</ul>
+<p>/*</p>
+<ul>
+<li><a class="wiki-source-link" href="../../source/src/timezone/zic.c.html#L1993" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__timezone__zic_c__convert.html&quot;}, '*');">convert</a> min and max into numbers of possible repetitions of the backref</li>
+<li>string, rounding appropriately</li>
+<p>*/ if (min &lt;= start) minreps = 0; else minreps = (min - start - 1) / brlen + 1; maxreps = (max - start) / brlen;</p>
+</ul>
+<p>/* apply bounds, then see if there <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> any allowed match length */ if (minreps &lt; backmin) minreps = backmin; if (backmax != <a class="wiki-source-link" href="../../source/src/include/regex/regguts.h.html#L107" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/regex/regguts.h.html&quot;}, '*');">DUPINF</a> &amp;&amp; maxreps &gt; backmax) maxreps = backmax; if (maxreps &lt; minreps) return NULL;</p>
+<p>/* quick exit if zero-repetitions match <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> valid and preferred */ if (<a class="wiki-source-link" href="../../source/src/backend/regex/rege_dfa.c.html#L203" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__regex__rege_dfa_c__shortest.html&quot;}, '*');">shortest</a> &amp;&amp; minreps == 0) return start;</p>
+<p>/* okay, <a class="wiki-source-link" href="../../source/src/backend/optimizer/geqo/geqo_pool.c.html#L144" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__geqo__geqo_pool_c__compare.html&quot;}, '*');">compare</a> the actual string contents */ p = start; ~~~</p>
+<h2>失敗モードと境界条件</h2>
+<p>まだ解析していません。</p>
+<h2>保守担当者向けメモ</h2>
+<ul>
+<li>後続フェーズで、ソース本文の文脈と caller/callee 情報を使ってこのページを強化する。</li>
+</ul><script>
+(function() {
+  function notifyParent() {
+    if (parent === window) return;
+    parent.postMessage({type: "frame-location", frame: window.name || "", href: window.location.href}, "*");
+  }
+  document.addEventListener("click", function(event) {
+    const link = event.target.closest("a[data-panel]");
+    if (!link || parent === window) return;
+    parent.postMessage({type: "source-link", panel: link.dataset.panel}, "*");
+  });
+  window.addEventListener("load", notifyParent);
+  window.addEventListener("hashchange", notifyParent);
+})();
+</script></body></html>

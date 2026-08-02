@@ -1,0 +1,62 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>symbols/src__test__modules__dummy_index_am__dummy_index_am_c__dibulkdelete.md</title><link rel="stylesheet" href="../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../source/src/test/modules/dummy_index_am/dummy_index_am.c.html#L194" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__test__modules__dummy_index_am__dummy_index_am_c__dibulkdelete.html&quot;}, '*');">dibulkdelete</a></h1>
+<h2>定義</h2>
+<ul>
+<li>種別: <code>function</code></li>
+<li>定義箇所: <code>src/test/modules/dummy_index_am/dummy_index_am.c:194</code></li>
+<li>所属モジュール: <a class="wiki-entity-link" href="../modules/src__test__modules__dummy_index_am.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/modules/src__test__modules__dummy_index_am.html&quot;, &quot;source&quot;: &quot;source/src/test/modules/dummy_index_am/dummy_index_am.c.html&quot;}, '*');"><code>module:src/test/modules/dummy_index_am</code></a></li>
+</ul>
+<h2>目的</h2>
+<p>静的シンボル索引から生成された初期シンボルページです。</p>
+<h2>シグネチャまたは形状</h2>
+<ul>
+<li>シグネチャ: <code>static IndexBulkDeleteResult * dibulkdelete(IndexVacuumInfo *info, IndexBulkDeleteResult *stats, IndexBulkDeleteCallback callback, void *callback_state)</code></li>
+</ul>
+<h2>入力と出力</h2>
+<ul>
+<li>引数: <code>IndexVacuumInfo *info</code>, <code>IndexBulkDeleteResult *stats</code>, <code>IndexBulkDeleteCallback callback</code>, <code>void *callback_state</code></li>
+<li>戻り値: <code>IndexBulkDeleteResult *</code></li>
+</ul>
+<h2>前提条件と不変条件</h2>
+<p>まだ解析していません。</p>
+<h2>アルゴリズムまたは振る舞い</h2>
+<ul>
+<li>複雑度: <code>low</code> (score 2)</li>
+</ul>
+<p>まだ解析していません。</p>
+<h2>呼び出し元と呼び出し先</h2>
+<ul>
+<li>呼び出し元: なし</li>
+<li>呼び出し先: なし</li>
+<li>呼び出し元サイト: なし</li>
+<li>呼び出しサイト: なし</li>
+</ul>
+<h2>関連データ構造</h2>
+<p><a class="wiki-source-link" href="../../source/src/include/access/amapi.h.html#L135" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__access__amapi_h__IndexBulkDeleteCallback.html&quot;}, '*');"><code>IndexBulkDeleteCallback</code></a>, <code>IndexBulkDeleteResult</code>, <a class="wiki-source-link" href="../../source/src/include/access/genam.h.html#L52" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__access__genam_h__IndexVacuumInfo.html&quot;}, '*');"><code>IndexVacuumInfo</code></a></p>
+<h2>ソース抜粋</h2>
+<p>~~~c static IndexBulkDeleteResult * <a class="wiki-source-link" href="../../source/src/test/modules/dummy_index_am/dummy_index_am.c.html#L194" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__test__modules__dummy_index_am__dummy_index_am_c__dibulkdelete.html&quot;}, '*');">dibulkdelete</a>(<a class="wiki-source-link" href="../../source/src/include/access/genam.h.html#L52" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__access__genam_h__IndexVacuumInfo.html&quot;}, '*');">IndexVacuumInfo</a> *info, IndexBulkDeleteResult *stats, <a class="wiki-source-link" href="../../source/src/include/access/amapi.h.html#L135" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__access__amapi_h__IndexBulkDeleteCallback.html&quot;}, '*');">IndexBulkDeleteCallback</a> <a class="wiki-source-link" href="../../source/src/tools/ifaddrs/test_ifaddrs.c.html#L45" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__tools__ifaddrs__test_ifaddrs_c__callback.html&quot;}, '*');">callback</a>, void *callback_state) { /*</p>
+<ul>
+<li>There <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> nothing to delete.  Return NULL as there <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> nothing to pass to</li>
+<li>amvacuumcleanup.</li>
+<p>*/ return NULL; } ~~~</p>
+</ul>
+<h2>失敗モードと境界条件</h2>
+<p>まだ解析していません。</p>
+<h2>保守担当者向けメモ</h2>
+<ul>
+<li>後続フェーズで、ソース本文の文脈と caller/callee 情報を使ってこのページを強化する。</li>
+</ul><script>
+(function() {
+  function notifyParent() {
+    if (parent === window) return;
+    parent.postMessage({type: "frame-location", frame: window.name || "", href: window.location.href}, "*");
+  }
+  document.addEventListener("click", function(event) {
+    const link = event.target.closest("a[data-panel]");
+    if (!link || parent === window) return;
+    parent.postMessage({type: "source-link", panel: link.dataset.panel}, "*");
+  });
+  window.addEventListener("load", notifyParent);
+  window.addEventListener("hashchange", notifyParent);
+})();
+</script></body></html>

@@ -1,0 +1,16 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>src/test/regress/expected/collate.windows.win1252_1.out</title><link rel="stylesheet" href="../../../../../styles.css"></head><body><header class="source-header">src/test/regress/expected/collate.windows.win1252_1.out</header><pre class="source-code"><div class="code-line" id="L1"><a class="line-no" href="#L1">1</a><span>/*</span></div><div class="code-line" id="L2"><a class="line-no" href="#L2">2</a><span> * This test is meant to run on Windows systems that has successfully</span></div><div class="code-line" id="L3"><a class="line-no" href="#L3">3</a><span> * run pg_import_system_collations().  Also, the database must have</span></div><div class="code-line" id="L4"><a class="line-no" href="#L4">4</a><span> * WIN1252 encoding, because of the locales&#x27; own encodings.  Because</span></div><div class="code-line" id="L5"><a class="line-no" href="#L5">5</a><span> * of this, some test are lost from UTF-8 version, such as Turkish</span></div><div class="code-line" id="L6"><a class="line-no" href="#L6">6</a><span> * dotted and undotted &#x27;i&#x27;.</span></div><div class="code-line" id="L7"><a class="line-no" href="#L7">7</a><span> */</span></div><div class="code-line" id="L8"><a class="line-no" href="#L8">8</a><span>SELECT getdatabaseencoding() &lt;&gt; &#x27;WIN1252&#x27; OR</span></div><div class="code-line" id="L9"><a class="line-no" href="#L9">9</a><span>       (SELECT count(*) FROM pg_collation WHERE collname IN (&#x27;de_DE&#x27;, &#x27;en_US&#x27;, &#x27;sv_SE&#x27;) AND collencoding = pg_char_to_encoding(&#x27;WIN1252&#x27;)) &lt;&gt; 3 OR</span></div><div class="code-line" id="L10"><a class="line-no" href="#L10">10</a><span>       (version() !~ &#x27;Visual C\+\+&#x27; AND version() !~ &#x27;mingw32&#x27; AND version() !~ &#x27;windows&#x27;)</span></div><div class="code-line" id="L11"><a class="line-no" href="#L11">11</a><span>       AS skip_test \gset</span></div><div class="code-line" id="L12"><a class="line-no" href="#L12">12</a><span>\if :skip_test</span></div><div class="code-line" id="L13"><a class="line-no" href="#L13">13</a><span>\quit</span></div></pre><script>parent.postMessage({"type": "source-page", "panel": "panels/src/test/regress/expected/collate.windows.win1252_1.out.html"}, "*");</script><script>
+(function() {
+  function notifyParent() {
+    if (parent === window) return;
+    parent.postMessage({type: "frame-location", frame: window.name || "", href: window.location.href}, "*");
+  }
+  document.addEventListener("click", function(event) {
+    const link = event.target.closest("a[data-panel]");
+    if (!link || parent === window) return;
+    parent.postMessage({type: "source-link", panel: link.dataset.panel}, "*");
+  });
+  window.addEventListener("load", notifyParent);
+  window.addEventListener("hashchange", notifyParent);
+})();
+</script></body></html>

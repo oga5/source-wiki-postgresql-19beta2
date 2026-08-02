@@ -1,0 +1,85 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>symbols/src__include__nodes__primnodes_h__Var.md</title><link rel="stylesheet" href="../../styles.css"></head><body><h1>Var</h1>
+<h2>定義</h2>
+<ul>
+<li>種別: <code>struct</code></li>
+<li>定義箇所: <code>src/include/nodes/primnodes.h:262</code></li>
+<li>所属モジュール: <a class="wiki-entity-link" href="../modules/src__include__nodes.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/modules/src__include__nodes.html&quot;, &quot;source&quot;: &quot;source/src/include/nodes/bitmapset.h.html&quot;}, '*');"><code>module:src/include/nodes</code></a></li>
+</ul>
+<h2>目的</h2>
+<p>静的シンボル索引から生成された初期シンボルページです。</p>
+<h2>シグネチャまたは形状</h2>
+<ul>
+<li>シグネチャ: <code>typedef struct Var</code></li>
+</ul>
+<h2>入力と出力</h2>
+<p>まだ解析していません。</p>
+<h2>前提条件と不変条件</h2>
+<p>まだ解析していません。</p>
+<h2>アルゴリズムまたは振る舞い</h2>
+<p>まだ解析していません。</p>
+<h2>呼び出し元と呼び出し先</h2>
+<ul>
+<li>呼び出し元: なし</li>
+<li>呼び出し先: なし</li>
+<li>呼び出し元サイト: なし</li>
+<li>呼び出しサイト: なし</li>
+</ul>
+<h2>関連データ構造</h2>
+<p><code>AttrNumber</code>, <a class="wiki-source-link" href="../../source/src/include/nodes/bitmapset.h.html#L49" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__nodes__bitmapset_h__Bitmapset.html&quot;}, '*');"><code>Bitmapset</code></a>, <a class="wiki-source-link" href="../../source/src/include/nodes/primnodes.h.html#L189" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__nodes__primnodes_h__Expr.html&quot;}, '*');"><code>Expr</code></a>, <code>Index</code>, <a class="wiki-source-link" href="../../source/src/interfaces/ecpg/preproc/type.h.html#L96" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__interfaces__ecpg__preproc__type_h__index.html&quot;}, '*');"><code>index</code></a>, <code>int32</code>, <code>Oid</code>, <a class="wiki-source-link" href="../../source/src/include/nodes/nodes.h.html#L248" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__nodes__nodes_h__ParseLoc.html&quot;}, '*');"><code>ParseLoc</code></a>, <code>token</code>, <a class="wiki-source-link" href="../../source/src/include/nodes/primnodes.h.html#L255" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/nodes/primnodes.h.html&quot;}, '*');"><code>VarReturningType</code></a></p>
+<h2>ソース抜粋</h2>
+<p>~~~c typedef struct Var { <a class="wiki-source-link" href="../../source/src/include/nodes/primnodes.h.html#L189" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__nodes__primnodes_h__Expr.html&quot;}, '*');">Expr</a>		xpr;</p>
+<p>/*</p>
+<ul>
+<li><a class="wiki-source-link" href="../../source/src/interfaces/ecpg/preproc/type.h.html#L96" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__interfaces__ecpg__preproc__type_h__index.html&quot;}, '*');">index</a> of this var&#x27;s relation in the <a class="wiki-source-link" href="../../source/src/backend/regex/regc_locale.c.html#L411" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__regex__regc_locale_c__range.html&quot;}, '*');">range</a> <a class="wiki-source-link" href="../../source/src/port/pg_localeconv_r.c.html#L63" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/port/pg_localeconv_r.c.html&quot;}, '*');">table</a>, or</li>
+<li>INNER_VAR/OUTER_VAR/etc</li>
+<p>*/ int			varno;</p>
+</ul>
+<p>/*</p>
+<ul>
+<li>attribute number of this var, or zero for all attrs (&quot;whole-row Var&quot;)</li>
+<p>*/ AttrNumber	varattno;</p>
+</ul>
+<p>/* pg_type OID for the type of this var */ Oid			vartype <a class="wiki-source-link" href="../../source/src/include/nodes/nodes.h.html#L124" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/nodes/nodes.h.html&quot;}, '*');">pg_node_attr</a>(query_jumble_ignore); /* pg_attribute typmod <a class="wiki-source-link" href="../../source/src/interfaces/ecpg/compatlib/informix.c.html#L687" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/ecpg/compatlib/informix.c.html&quot;}, '*');">value</a> */ int32		vartypmod <a class="wiki-source-link" href="../../source/src/include/nodes/nodes.h.html#L124" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/nodes/nodes.h.html&quot;}, '*');">pg_node_attr</a>(query_jumble_ignore); /* OID of collation, or <a class="wiki-source-link" href="../../source/src/include/postgres_ext.h.html#L35" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/postgres_ext.h.html&quot;}, '*');">InvalidOid</a> if <a class="wiki-source-link" href="../../source/src/backend/optimizer/util/predtest.c.html#L1672" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/optimizer/util/predtest.c.html&quot;}, '*');">none</a> */ Oid			varcollid <a class="wiki-source-link" href="../../source/src/include/nodes/nodes.h.html#L124" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/nodes/nodes.h.html&quot;}, '*');">pg_node_attr</a>(query_jumble_ignore);</p>
+<p>/*</p>
+<ul>
+<li>RT indexes of outer joins that can replace the Var&#x27;s <a class="wiki-source-link" href="../../source/src/interfaces/ecpg/compatlib/informix.c.html#L687" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/ecpg/compatlib/informix.c.html&quot;}, '*');">value</a> with null.</li>
+<li>We can omit varnullingrels in the query jumble, because it&#x27;s fully</li>
+<li>determined by varno/varlevelsup plus the Var&#x27;s query location.</li>
+<p>*/ <a class="wiki-source-link" href="../../source/src/include/nodes/bitmapset.h.html#L49" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__nodes__bitmapset_h__Bitmapset.html&quot;}, '*');">Bitmapset</a>  *varnullingrels <a class="wiki-source-link" href="../../source/src/include/nodes/nodes.h.html#L124" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/nodes/nodes.h.html&quot;}, '*');">pg_node_attr</a>(query_jumble_ignore);</p>
+</ul>
+<p>/*</p>
+<ul>
+<li>for subquery variables referencing outer relations; 0 in a normal var,</li>
+<li>&gt;0 means N levels up</li>
+<p>*/ Index		varlevelsup;</p>
+</ul>
+<p>/* returning type of this var (see above) */ <a class="wiki-source-link" href="../../source/src/include/nodes/primnodes.h.html#L255" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/nodes/primnodes.h.html&quot;}, '*');">VarReturningType</a> varreturningtype;</p>
+<p>/*</p>
+<ul>
+<li>varnosyn/varattnosyn are ignored for equality, because Vars with</li>
+<li>different syntactic identifiers are semantically the same as long as</li>
+<li>their varno/varattno match.</li>
+<p>*/ /* syntactic relation <a class="wiki-source-link" href="../../source/src/interfaces/ecpg/preproc/type.h.html#L96" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__interfaces__ecpg__preproc__type_h__index.html&quot;}, '*');">index</a> (0 if unknown) */ Index		varnosyn <a class="wiki-source-link" href="../../source/src/include/nodes/nodes.h.html#L124" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/nodes/nodes.h.html&quot;}, '*');">pg_node_attr</a>(equal_ignore, query_jumble_ignore); /* syntactic attribute number */ AttrNumber	varattnosyn <a class="wiki-source-link" href="../../source/src/include/nodes/nodes.h.html#L124" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/nodes/nodes.h.html&quot;}, '*');">pg_node_attr</a>(equal_ignore, query_jumble_ignore);</p>
+</ul>
+<p>/* token location, or -1 if unknown */ <a class="wiki-source-link" href="../../source/src/include/nodes/nodes.h.html#L248" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__nodes__nodes_h__ParseLoc.html&quot;}, '*');">ParseLoc</a>	location; } Var; ~~~</p>
+<h2>失敗モードと境界条件</h2>
+<p>まだ解析していません。</p>
+<h2>保守担当者向けメモ</h2>
+<ul>
+<li>後続フェーズで、ソース本文の文脈と caller/callee 情報を使ってこのページを強化する。</li>
+</ul><script>
+(function() {
+  function notifyParent() {
+    if (parent === window) return;
+    parent.postMessage({type: "frame-location", frame: window.name || "", href: window.location.href}, "*");
+  }
+  document.addEventListener("click", function(event) {
+    const link = event.target.closest("a[data-panel]");
+    if (!link || parent === window) return;
+    parent.postMessage({type: "source-link", panel: link.dataset.panel}, "*");
+  });
+  window.addEventListener("load", notifyParent);
+  window.addEventListener("hashchange", notifyParent);
+})();
+</script></body></html>

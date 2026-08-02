@@ -1,0 +1,16 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>ST_ELEMENT_TYPE</title><link rel="stylesheet" href="../styles.css"></head><body><h1>Multiple definitions: <code>ST_ELEMENT_TYPE</code></h1><ul><li><a href="../source/contrib/intarray/_int_tool.c.html#L215" target="source-view">contrib/intarray/_int_tool.c:215 (macro)</a></li><li><a href="../source/src/backend/access/gin/ginutil.c.html#L427" target="source-view">src/backend/access/gin/ginutil.c:427 (macro)</a></li><li><a href="../source/src/backend/storage/buffer/bufmgr.c.html#L3558" target="source-view">src/backend/storage/buffer/bufmgr.c:3558 (macro)</a></li><li><a href="../source/src/backend/utils/sort/tuplesort.c.html#L490" target="source-view">src/backend/utils/sort/tuplesort.c:490 (macro)</a></li><li><a href="../source/src/include/lib/sort_template.h.html#L188" target="source-view">src/include/lib/sort_template.h:188 (typedef)</a></li></ul><script>
+(function() {
+  function notifyParent() {
+    if (parent === window) return;
+    parent.postMessage({type: "frame-location", frame: window.name || "", href: window.location.href}, "*");
+  }
+  document.addEventListener("click", function(event) {
+    const link = event.target.closest("a[data-panel]");
+    if (!link || parent === window) return;
+    parent.postMessage({type: "source-link", panel: link.dataset.panel}, "*");
+  });
+  window.addEventListener("load", notifyParent);
+  window.addEventListener("hashchange", notifyParent);
+})();
+</script></body></html>

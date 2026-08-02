@@ -1,0 +1,59 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>symbols/src__fe_utils__parallel_slot_c__processQueryResult.md</title><link rel="stylesheet" href="../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../source/src/fe_utils/parallel_slot.c.html#L38" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__fe_utils__parallel_slot_c__processQueryResult.html&quot;}, '*');">processQueryResult</a></h1>
+<h2>定義</h2>
+<ul>
+<li>種別: <code>function</code></li>
+<li>定義箇所: <code>src/fe_utils/parallel_slot.c:38</code></li>
+<li>所属モジュール: <a class="wiki-entity-link" href="../modules/src__fe_utils.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/modules/src__fe_utils.html&quot;, &quot;source&quot;: &quot;source/src/fe_utils/archive.c.html&quot;}, '*');"><code>module:src/fe_utils</code></a></li>
+</ul>
+<h2>目的</h2>
+<p>静的シンボル索引から生成された初期シンボルページです。</p>
+<h2>シグネチャまたは形状</h2>
+<ul>
+<li>シグネチャ: <code>static bool processQueryResult(ParallelSlot *slot, PGresult *result)</code></li>
+</ul>
+<h2>入力と出力</h2>
+<ul>
+<li>引数: <code>ParallelSlot *slot</code>, <code>PGresult *result</code></li>
+<li>戻り値: <code>bool</code></li>
+</ul>
+<h2>前提条件と不変条件</h2>
+<p>まだ解析していません。</p>
+<h2>アルゴリズムまたは振る舞い</h2>
+<ul>
+<li>複雑度: <code>medium</code> (score 6)</li>
+</ul>
+<p>まだ解析していません。</p>
+<h2>呼び出し元と呼び出し先</h2>
+<ul>
+<li>呼び出し元: <a class="wiki-source-link" href="../../source/src/fe_utils/parallel_slot.c.html#L57" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__fe_utils__parallel_slot_c__consumeQueryResult.html&quot;}, '*');"><code>consumeQueryResult</code></a>, <code>wait_on_slots</code></li>
+<li>呼び出し先: <code>PQclear</code></li>
+<li>呼び出し元サイト: <a class="wiki-source-link" href="../../source/src/fe_utils/parallel_slot.c.html#L57" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__fe_utils__parallel_slot_c__consumeQueryResult.html&quot;}, '*');"><code>consumeQueryResult</code></a> at <code>src/fe_utils/parallel_slot.c:66:8</code> (direct, confidence=high, resolved=<a class="wiki-entity-link" href="src__fe_utils__parallel_slot_c__processQueryResult.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__fe_utils__parallel_slot_c__processQueryResult.html&quot;, &quot;source&quot;: &quot;source/src/fe_utils/parallel_slot.c.html#L38&quot;}, '*');"><code>symbol:src/fe_utils/parallel_slot.c#processQueryResult</code></a>), <code>wait_on_slots</code> at <code>src/fe_utils/parallel_slot.c:266:10</code> (direct, confidence=high, resolved=<a class="wiki-entity-link" href="src__fe_utils__parallel_slot_c__processQueryResult.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__fe_utils__parallel_slot_c__processQueryResult.html&quot;, &quot;source&quot;: &quot;source/src/fe_utils/parallel_slot.c.html#L38&quot;}, '*');"><code>symbol:src/fe_utils/parallel_slot.c#processQueryResult</code></a>)</li>
+<li>呼び出しサイト: <a class="wiki-source-link" href="../../source/src/include/c.h.html#L950" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/c.h.html&quot;}, '*');"><code>Assert</code></a> at <code>src/fe_utils/parallel_slot.c:41:2</code> (unresolved), <code>slot-&gt;handler</code> at <code>src/fe_utils/parallel_slot.c:44:7</code> (indirect), <code>PQclear</code> at <code>src/fe_utils/parallel_slot.c:48:2</code> (direct, confidence=high, resolved=<a class="wiki-entity-link" href="src__interfaces__libpq__fe-exec_c__PQclear.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__interfaces__libpq__fe-exec_c__PQclear.html&quot;, &quot;source&quot;: &quot;source/src/interfaces/libpq/fe-exec.c.html#L726&quot;}, '*');"><code>symbol:src/interfaces/libpq/fe-exec.c#PQclear</code></a>)</li>
+</ul>
+<h2>関連データ構造</h2>
+<p><a class="wiki-source-link" href="../../source/src/interfaces/ecpg/ecpglib/ecpglib_extern.h.html#L101" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__interfaces__ecpg__ecpglib__ecpglib_extern_h__connection.html&quot;}, '*');"><code>connection</code></a>, <code>ParallelSlot</code>, <code>PGresult</code></p>
+<h2>ソース抜粋</h2>
+<p>~~~c static bool <a class="wiki-source-link" href="../../source/src/fe_utils/parallel_slot.c.html#L38" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__fe_utils__parallel_slot_c__processQueryResult.html&quot;}, '*');">processQueryResult</a>(ParallelSlot *slot, PGresult *<a class="wiki-source-link" href="../../source/src/include/storage/checksum_block_internal.h.html#L18" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/storage/checksum_block_internal.h.html&quot;}, '*');">result</a>) { <a class="wiki-source-link" href="../../source/src/include/c.h.html#L950" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/c.h.html&quot;}, '*');">Assert</a>(slot-&gt;handler != NULL);</p>
+<p>/* On failure, the handler should return NULL after freeing the <a class="wiki-source-link" href="../../source/src/include/storage/checksum_block_internal.h.html#L18" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/storage/checksum_block_internal.h.html&quot;}, '*');">result</a> */ if (!slot-&gt;handler(<a class="wiki-source-link" href="../../source/src/include/storage/checksum_block_internal.h.html#L18" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/storage/checksum_block_internal.h.html&quot;}, '*');">result</a>, slot-&gt;<a class="wiki-source-link" href="../../source/src/interfaces/ecpg/ecpglib/ecpglib_extern.h.html#L101" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__interfaces__ecpg__ecpglib__ecpglib_extern_h__connection.html&quot;}, '*');">connection</a>, slot-&gt;handler_context)) return <a class="wiki-source-link" href="../../source/src/tools/pg_bsd_indent/indent_globs.h.html#L43" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/tools/pg_bsd_indent/indent_globs.h.html&quot;}, '*');">false</a>;</p>
+<p>/* Ok, we have to <a class="wiki-source-link" href="../../source/src/include/snowball/snowball_runtime.h.html#L65" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/snowball/snowball_runtime.h.html&quot;}, '*');">free</a> it ourself */ PQclear(<a class="wiki-source-link" href="../../source/src/include/storage/checksum_block_internal.h.html#L18" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/storage/checksum_block_internal.h.html&quot;}, '*');">result</a>); return <a class="wiki-source-link" href="../../source/src/tools/pg_bsd_indent/indent_globs.h.html#L46" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/tools/pg_bsd_indent/indent_globs.h.html&quot;}, '*');">true</a>; } ~~~</p>
+<h2>失敗モードと境界条件</h2>
+<p>まだ解析していません。</p>
+<h2>保守担当者向けメモ</h2>
+<ul>
+<li>後続フェーズで、ソース本文の文脈と caller/callee 情報を使ってこのページを強化する。</li>
+</ul><script>
+(function() {
+  function notifyParent() {
+    if (parent === window) return;
+    parent.postMessage({type: "frame-location", frame: window.name || "", href: window.location.href}, "*");
+  }
+  document.addEventListener("click", function(event) {
+    const link = event.target.closest("a[data-panel]");
+    if (!link || parent === window) return;
+    parent.postMessage({type: "source-link", panel: link.dataset.panel}, "*");
+  });
+  window.addEventListener("load", notifyParent);
+  window.addEventListener("hashchange", notifyParent);
+})();
+</script></body></html>

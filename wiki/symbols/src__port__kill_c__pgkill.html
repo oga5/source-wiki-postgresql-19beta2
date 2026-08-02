@@ -1,0 +1,68 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>symbols/src__port__kill_c__pgkill.md</title><link rel="stylesheet" href="../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../source/src/port/kill.c.html#L21" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__port__kill_c__pgkill.html&quot;}, '*');">pgkill</a></h1>
+<h2>定義</h2>
+<ul>
+<li>種別: <code>function</code></li>
+<li>定義箇所: <code>src/port/kill.c:21</code></li>
+<li>所属モジュール: <a class="wiki-entity-link" href="../modules/src__port.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/modules/src__port.html&quot;, &quot;source&quot;: &quot;source/src/port/bsearch_arg.c.html&quot;}, '*');"><code>module:src/port</code></a></li>
+</ul>
+<h2>目的</h2>
+<p>静的シンボル索引から生成された初期シンボルページです。</p>
+<h2>シグネチャまたは形状</h2>
+<ul>
+<li>シグネチャ: <code>int pgkill(int pid, int sig)</code></li>
+</ul>
+<h2>入力と出力</h2>
+<ul>
+<li>引数: <code>int pid</code>, <code>int sig</code></li>
+<li>戻り値: <code>int</code></li>
+</ul>
+<h2>前提条件と不変条件</h2>
+<p>まだ解析していません。</p>
+<h2>アルゴリズムまたは振る舞い</h2>
+<ul>
+<li>複雑度: <code>high</code> (score 25)</li>
+</ul>
+<p>まだ解析していません。</p>
+<h2>呼び出し元と呼び出し先</h2>
+<ul>
+<li>呼び出し元: なし</li>
+<li>呼び出し先: <a class="wiki-source-link" href="../../source/src/port/win32error.c.html#L176" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__port__win32error_c___dosmaperr.html&quot;}, '*');"><code>_dosmaperr</code></a></li>
+<li>呼び出し元サイト: なし</li>
+<li>呼び出しサイト: <code>OpenProcess</code> at <code>src/port/kill.c:47:21</code> (unresolved), <code>TerminateProcess</code> at <code>src/port/kill.c:52:8</code> (unresolved), <a class="wiki-source-link" href="../../source/src/port/win32error.c.html#L176" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__port__win32error_c___dosmaperr.html&quot;}, '*');"><code>_dosmaperr</code></a> at <code>src/port/kill.c:54:4</code> (direct, confidence=high, resolved=<a class="wiki-entity-link" href="src__port__win32error_c___dosmaperr.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__port__win32error_c___dosmaperr.html&quot;, &quot;source&quot;: &quot;source/src/port/win32error.c.html#L176&quot;}, '*');"><code>symbol:src/port/win32error.c#_dosmaperr</code></a>), <code>GetLastError</code> at <code>src/port/kill.c:54:15</code> (unresolved), <code>CloseHandle</code> at <code>src/port/kill.c:55:4</code> (unresolved), <code>CloseHandle</code> at <code>src/port/kill.c:58:3</code> (unresolved), <code>snprintf</code> at <code>src/port/kill.c:61:2</code> (unresolved), <code>CallNamedPipe</code> at <code>src/port/kill.c:63:6</code> (unresolved), <code>GetLastError</code> at <code>src/port/kill.c:73:10</code> (unresolved)</li>
+</ul>
+<h2>関連データ構造</h2>
+<p><a class="wiki-source-link" href="../../source/src/port/win32error.c.html#L20" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__port__win32error_c__DWORD.html&quot;}, '*');"><code>DWORD</code></a></p>
+<h2>ソース抜粋</h2>
+<p>~~~c int <a class="wiki-source-link" href="../../source/src/port/kill.c.html#L21" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__port__kill_c__pgkill.html&quot;}, '*');">pgkill</a>(int pid, int <a class="wiki-source-link" href="../../source/src/bin/pg_ctl/pg_ctl.c.html#L81" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/bin/pg_ctl/pg_ctl.c.html&quot;}, '*');">sig</a>) { char		pipename[128]; BYTE		sigData = <a class="wiki-source-link" href="../../source/src/bin/pg_ctl/pg_ctl.c.html#L81" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/bin/pg_ctl/pg_ctl.c.html&quot;}, '*');">sig</a>; BYTE		sigRet = 0; <a class="wiki-source-link" href="../../source/src/port/win32error.c.html#L20" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__port__win32error_c__DWORD.html&quot;}, '*');">DWORD</a>		bytes;</p>
+<p>/* we allow signal 0 here, but it will be ignored in <a class="wiki-source-link" href="../../source/src/backend/port/win32/signal.c.html#L262" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__port__win32__signal_c__pg_queue_signal.html&quot;}, '*');">pg_queue_signal</a> */ if (<a class="wiki-source-link" href="../../source/src/bin/pg_ctl/pg_ctl.c.html#L81" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/bin/pg_ctl/pg_ctl.c.html&quot;}, '*');">sig</a> &gt;= <a class="wiki-source-link" href="../../source/src/include/port/win32_port.h.html#L482" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/port/win32_port.h.html&quot;}, '*');">PG_SIGNAL_COUNT</a> || <a class="wiki-source-link" href="../../source/src/bin/pg_ctl/pg_ctl.c.html#L81" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/bin/pg_ctl/pg_ctl.c.html&quot;}, '*');">sig</a> &lt; 0) { errno = EINVAL; return -1; } if (pid &lt;= 0) { /* No support for process groups */ errno = EINVAL; return -1; }</p>
+<p>/* special case for <a class="wiki-source-link" href="../../source/src/include/port/win32_port.h.html#L162" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/port/win32_port.h.html&quot;}, '*');">SIGKILL</a>: just ask the <a class="wiki-source-link" href="../../source/src/include/port.h.html#L388" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/port.h.html&quot;}, '*');">system</a> to terminate the target */ if (<a class="wiki-source-link" href="../../source/src/bin/pg_ctl/pg_ctl.c.html#L81" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/bin/pg_ctl/pg_ctl.c.html&quot;}, '*');">sig</a> == <a class="wiki-source-link" href="../../source/src/include/port/win32_port.h.html#L162" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/port/win32_port.h.html&quot;}, '*');">SIGKILL</a>) { HANDLE		prochandle;</p>
+<p>if ((prochandle = OpenProcess(PROCESS_TERMINATE, FALSE, (<a class="wiki-source-link" href="../../source/src/port/win32error.c.html#L20" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__port__win32error_c__DWORD.html&quot;}, '*');">DWORD</a>) pid)) == NULL) { errno = ESRCH; return -1; } if (!TerminateProcess(prochandle, 255)) { <a class="wiki-source-link" href="../../source/src/port/win32error.c.html#L176" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__port__win32error_c___dosmaperr.html&quot;}, '*');">_dosmaperr</a>(GetLastError()); CloseHandle(prochandle); return -1; } CloseHandle(prochandle); return 0; } snprintf(pipename, sizeof(pipename), &quot;\\\\.\\pipe\\pgsignal_%u&quot;, pid);</p>
+<p>if (CallNamedPipe(pipename, &amp;sigData, 1, &amp;sigRet, 1, &amp;bytes, 1000)) { if (bytes != 1 || sigRet != <a class="wiki-source-link" href="../../source/src/bin/pg_ctl/pg_ctl.c.html#L81" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/bin/pg_ctl/pg_ctl.c.html&quot;}, '*');">sig</a>) { errno = ESRCH; return -1; } return 0; }</p>
+<p>switch (GetLastError()) { case ERROR_BROKEN_PIPE: case ERROR_BAD_PIPE:</p>
+<p>/*</p>
+<ul>
+<li>These arise transiently as a process <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> exiting.  Treat them</li>
+<li>like POSIX treats a zombie process, reporting success.</li>
+<p>~~~</p>
+</ul>
+<h2>失敗モードと境界条件</h2>
+<p>まだ解析していません。</p>
+<h2>保守担当者向けメモ</h2>
+<ul>
+<li>後続フェーズで、ソース本文の文脈と caller/callee 情報を使ってこのページを強化する。</li>
+</ul><script>
+(function() {
+  function notifyParent() {
+    if (parent === window) return;
+    parent.postMessage({type: "frame-location", frame: window.name || "", href: window.location.href}, "*");
+  }
+  document.addEventListener("click", function(event) {
+    const link = event.target.closest("a[data-panel]");
+    if (!link || parent === window) return;
+    parent.postMessage({type: "source-link", panel: link.dataset.panel}, "*");
+  });
+  window.addEventListener("load", notifyParent);
+  window.addEventListener("hashchange", notifyParent);
+})();
+</script></body></html>

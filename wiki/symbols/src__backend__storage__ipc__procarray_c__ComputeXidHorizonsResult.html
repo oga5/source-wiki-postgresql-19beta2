@@ -1,0 +1,108 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>symbols/src__backend__storage__ipc__procarray_c__ComputeXidHorizonsResult.md</title><link rel="stylesheet" href="../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../source/src/backend/storage/ipc/procarray.c.html#L196" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__storage__ipc__procarray_c__ComputeXidHorizonsResult.html&quot;}, '*');">ComputeXidHorizonsResult</a></h1>
+<h2>定義</h2>
+<ul>
+<li>種別: <code>struct</code></li>
+<li>定義箇所: <code>src/backend/storage/ipc/procarray.c:196</code></li>
+<li>所属モジュール: <a class="wiki-entity-link" href="../modules/src__backend__storage__ipc.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/modules/src__backend__storage__ipc.html&quot;, &quot;source&quot;: &quot;source/src/backend/storage/ipc/barrier.c.html&quot;}, '*');"><code>module:src/backend/storage/ipc</code></a></li>
+</ul>
+<h2>目的</h2>
+<p>静的シンボル索引から生成された初期シンボルページです。</p>
+<h2>シグネチャまたは形状</h2>
+<ul>
+<li>シグネチャ: <code>typedef struct ComputeXidHorizonsResult</code></li>
+</ul>
+<h2>入力と出力</h2>
+<p>まだ解析していません。</p>
+<h2>前提条件と不変条件</h2>
+<p>まだ解析していません。</p>
+<h2>アルゴリズムまたは振る舞い</h2>
+<p>まだ解析していません。</p>
+<h2>呼び出し元と呼び出し先</h2>
+<ul>
+<li>呼び出し元: なし</li>
+<li>呼び出し先: なし</li>
+<li>呼び出し元サイト: なし</li>
+<li>呼び出しサイト: なし</li>
+</ul>
+<h2>関連データ構造</h2>
+<p><code>FullTransactionId</code>, <code>TransactionId</code>, <a class="wiki-source-link" href="../../source/src/interfaces/ecpg/preproc/type.h.html#L89" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__interfaces__ecpg__preproc__type_h__when.html&quot;}, '*');"><code>when</code></a></p>
+<h2>ソース抜粋</h2>
+<p>~~~c typedef struct <a class="wiki-source-link" href="../../source/src/backend/storage/ipc/procarray.c.html#L196" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__storage__ipc__procarray_c__ComputeXidHorizonsResult.html&quot;}, '*');">ComputeXidHorizonsResult</a> { /*</p>
+<ul>
+<li>The <a class="wiki-source-link" href="../../source/src/interfaces/ecpg/compatlib/informix.c.html#L687" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/ecpg/compatlib/informix.c.html&quot;}, '*');">value</a> of TransamVariables-&gt;latestCompletedXid <a class="wiki-source-link" href="../../source/src/interfaces/ecpg/preproc/type.h.html#L89" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__interfaces__ecpg__preproc__type_h__when.html&quot;}, '*');">when</a></li>
+<li><a class="wiki-source-link" href="../../source/src/backend/storage/ipc/procarray.c.html#L1673" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__storage__ipc__procarray_c__ComputeXidHorizons.html&quot;}, '*');">ComputeXidHorizons</a>() held ProcArrayLock.</li>
+<p>*/ FullTransactionId latest_completed;</p>
+</ul>
+<p>/*</p>
+<ul>
+<li>The same for procArray-&gt;replication_slot_xmin and</li>
+<li>procArray-&gt;replication_slot_catalog_xmin.</li>
+<p>*/ TransactionId slot_xmin; TransactionId slot_catalog_xmin;</p>
+</ul>
+<p>/*</p>
+<ul>
+<li>Oldest xid that any backend might still consider running. This needs to</li>
+<li>include processes running VACUUM, in contrast to the normal visibility</li>
+<li>cutoffs, as <a class="wiki-source-link" href="../../source/src/backend/commands/vacuum.c.html#L493" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__commands__vacuum_c__vacuum.html&quot;}, '*');">vacuum</a> needs to be able to perform pg_subtrans lookups <a class="wiki-source-link" href="../../source/src/interfaces/ecpg/preproc/type.h.html#L89" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__interfaces__ecpg__preproc__type_h__when.html&quot;}, '*');">when</a></li>
+<li>determining visibility, but doesn&#x27;t care about rows above its xmin to</li>
+<li>be removed.</li>
+<p>*</p>
+<li>This <a class="wiki-source-link" href="../../source/src/include/c.h.html#L441" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/c.h.html&quot;}, '*');">likely</a> should only be needed to determine whether pg_subtrans can</li>
+<li>be truncated. It currently includes the effects of replication slots,</li>
+<li>for historical reasons. But that could <a class="wiki-source-link" href="../../source/src/include/c.h.html#L441" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/c.h.html&quot;}, '*');">likely</a> be changed.</li>
+<p>*/ TransactionId oldest_considered_running;</p>
+</ul>
+<p>/*</p>
+<ul>
+<li>Oldest xid for which deleted tuples need to be retained in shared</li>
+<li>tables.</li>
+<p>*</p>
+<li>This includes the effects of replication slots. If that&#x27;s not desired,</li>
+<li>look at shared_oldest_nonremovable_raw;</li>
+<p>*/ TransactionId shared_oldest_nonremovable;</p>
+</ul>
+<p>/*</p>
+<ul>
+<li>Oldest xid that may be necessary to retain in shared tables. This <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a></li>
+<li>the same as shared_oldest_nonremovable, except that <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> not affected by</li>
+<li>replication slot&#x27;s catalog_xmin.</li>
+<p>*</p>
+<li>This <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> mainly useful to be able to <a class="wiki-source-link" href="../../source/src/include/port/win32_port.h.html#L502" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/port/win32_port.h.html&quot;}, '*');">send</a> the catalog_xmin to upstream</li>
+<li>streaming replication servers via <a class="wiki-source-link" href="../../source/src/backend/replication/walreceiver.c.html#L92" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/replication/walreceiver.c.html&quot;}, '*');">hot_standby_feedback</a>, so they can</li>
+<li>apply the limit only <a class="wiki-source-link" href="../../source/src/interfaces/ecpg/preproc/type.h.html#L89" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__interfaces__ecpg__preproc__type_h__when.html&quot;}, '*');">when</a> accessing catalog tables.</li>
+<p>*/ TransactionId shared_oldest_nonremovable_raw;</p>
+</ul>
+<p>/*</p>
+<ul>
+<li>Oldest xid for which deleted tuples need to be retained in non-shared</li>
+<li>catalog tables.</li>
+<p>*/ TransactionId catalog_oldest_nonremovable;</p>
+</ul>
+<p>/*</p>
+<ul>
+<li>Oldest xid for which deleted tuples need to be retained in normal <a class="wiki-source-link" href="../../source/src/test/regress/pg_regress.c.html#L121" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/test/regress/pg_regress.c.html&quot;}, '*');">user</a></li>
+<li>defined tables.</li>
+<p>*/ TransactionId data_oldest_nonremovable;</p>
+</ul>
+<p>~~~</p>
+<h2>失敗モードと境界条件</h2>
+<p>まだ解析していません。</p>
+<h2>保守担当者向けメモ</h2>
+<ul>
+<li>後続フェーズで、ソース本文の文脈と caller/callee 情報を使ってこのページを強化する。</li>
+</ul><script>
+(function() {
+  function notifyParent() {
+    if (parent === window) return;
+    parent.postMessage({type: "frame-location", frame: window.name || "", href: window.location.href}, "*");
+  }
+  document.addEventListener("click", function(event) {
+    const link = event.target.closest("a[data-panel]");
+    if (!link || parent === window) return;
+    parent.postMessage({type: "source-link", panel: link.dataset.panel}, "*");
+  });
+  window.addEventListener("load", notifyParent);
+  window.addEventListener("hashchange", notifyParent);
+})();
+</script></body></html>

@@ -1,0 +1,63 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>symbols/src__interfaces__ecpg__ecpglib__misc_c__ECPGdebug.md</title><link rel="stylesheet" href="../../styles.css"></head><body><h1>ECPGdebug</h1>
+<h2>定義</h2>
+<ul>
+<li>種別: <code>function</code></li>
+<li>定義箇所: <code>src/interfaces/ecpg/ecpglib/misc.c:203</code></li>
+<li>所属モジュール: <a class="wiki-entity-link" href="../modules/src__interfaces__ecpg__ecpglib.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/modules/src__interfaces__ecpg__ecpglib.html&quot;, &quot;source&quot;: &quot;source/src/interfaces/ecpg/ecpglib/connect.c.html&quot;}, '*');"><code>module:src/interfaces/ecpg/ecpglib</code></a></li>
+</ul>
+<h2>目的</h2>
+<p>静的シンボル索引から生成された初期シンボルページです。</p>
+<h2>シグネチャまたは形状</h2>
+<ul>
+<li>シグネチャ: <code>void ECPGdebug(int n, FILE *dbgs)</code></li>
+</ul>
+<h2>入力と出力</h2>
+<ul>
+<li>引数: <code>int n</code>, <code>FILE *dbgs</code></li>
+<li>戻り値: <code>void</code></li>
+</ul>
+<h2>前提条件と不変条件</h2>
+<p>まだ解析していません。</p>
+<h2>アルゴリズムまたは振る舞い</h2>
+<ul>
+<li>複雑度: <code>medium</code> (score 5)</li>
+</ul>
+<p>まだ解析していません。</p>
+<h2>呼び出し元と呼び出し先</h2>
+<ul>
+<li>呼び出し元: なし</li>
+<li>呼び出し先: <a class="wiki-source-link" href="../../source/src/interfaces/ecpg/ecpglib/misc.c.html#L231" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__interfaces__ecpg__ecpglib__misc_c__ecpg_log.html&quot;}, '*');"><code>ecpg_log</code></a></li>
+<li>呼び出し元サイト: なし</li>
+<li>呼び出しサイト: <code>pthread_mutex_lock</code> at <code>src/interfaces/ecpg/ecpglib/misc.c:207:2</code> (unresolved, confidence=low), <code>pthread_mutex_lock</code> at <code>src/interfaces/ecpg/ecpglib/misc.c:210:2</code> (unresolved, confidence=low), <code>pthread_mutex_unlock</code> at <code>src/interfaces/ecpg/ecpglib/misc.c:223:2</code> (unresolved, confidence=low), <a class="wiki-source-link" href="../../source/src/interfaces/ecpg/ecpglib/misc.c.html#L231" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__interfaces__ecpg__ecpglib__misc_c__ecpg_log.html&quot;}, '*');"><code>ecpg_log</code></a> at <code>src/interfaces/ecpg/ecpglib/misc.c:226:2</code> (direct, confidence=high, resolved=<a class="wiki-entity-link" href="src__interfaces__ecpg__ecpglib__misc_c__ecpg_log.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__interfaces__ecpg__ecpglib__misc_c__ecpg_log.html&quot;, &quot;source&quot;: &quot;source/src/interfaces/ecpg/ecpglib/misc.c.html#L231&quot;}, '*');"><code>symbol:src/interfaces/ecpg/ecpglib/misc.c#ecpg_log</code></a>), <code>pthread_mutex_unlock</code> at <code>src/interfaces/ecpg/ecpglib/misc.c:228:2</code> (unresolved, confidence=low)</li>
+</ul>
+<h2>関連データ構造</h2>
+<p>なし</p>
+<h2>ソース抜粋</h2>
+<p>~~~c void ECPGdebug(int n, FILE *dbgs) { /* Interlock against concurrent executions of ECPGdebug() */ pthread_mutex_lock(&amp;<a class="wiki-source-link" href="../../source/src/interfaces/ecpg/ecpglib/misc.c.html#L62" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/ecpg/ecpglib/misc.c.html&quot;}, '*');">debug_init_mutex</a>);</p>
+<p>/* Prevent <a class="wiki-source-link" href="../../source/src/interfaces/ecpg/ecpglib/misc.c.html#L231" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__interfaces__ecpg__ecpglib__misc_c__ecpg_log.html&quot;}, '*');">ecpg_log</a>() from printing while we change settings */ pthread_mutex_lock(&amp;<a class="wiki-source-link" href="../../source/src/interfaces/ecpg/ecpglib/misc.c.html#L61" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/ecpg/ecpglib/misc.c.html&quot;}, '*');">debug_mutex</a>);</p>
+<p>if (n &gt; 100) { <a class="wiki-source-link" href="../../source/src/interfaces/ecpg/ecpglib/misc.c.html#L29" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/ecpg/ecpglib/misc.c.html&quot;}, '*');">ecpg_internal_regression_mode</a> = <a class="wiki-source-link" href="../../source/src/tools/pg_bsd_indent/indent_globs.h.html#L46" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/tools/pg_bsd_indent/indent_globs.h.html&quot;}, '*');">true</a>; <a class="wiki-source-link" href="../../source/src/interfaces/ecpg/ecpglib/misc.c.html#L63" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/ecpg/ecpglib/misc.c.html&quot;}, '*');">simple_debug</a> = n - 100; } else <a class="wiki-source-link" href="../../source/src/interfaces/ecpg/ecpglib/misc.c.html#L63" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/ecpg/ecpglib/misc.c.html&quot;}, '*');">simple_debug</a> = n;</p>
+<p><a class="wiki-source-link" href="../../source/src/interfaces/ecpg/ecpglib/misc.c.html#L64" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/ecpg/ecpglib/misc.c.html&quot;}, '*');">debugstream</a> = dbgs;</p>
+<p>/* We must release <a class="wiki-source-link" href="../../source/src/interfaces/ecpg/ecpglib/misc.c.html#L61" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/ecpg/ecpglib/misc.c.html&quot;}, '*');">debug_mutex</a> <a class="wiki-source-link" href="../../source/src/backend/regex/regc_locale.c.html#L487" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__regex__regc_locale_c__before.html&quot;}, '*');">before</a> invoking <a class="wiki-source-link" href="../../source/src/interfaces/ecpg/ecpglib/misc.c.html#L231" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__interfaces__ecpg__ecpglib__misc_c__ecpg_log.html&quot;}, '*');">ecpg_log</a>() ... */ pthread_mutex_unlock(&amp;<a class="wiki-source-link" href="../../source/src/interfaces/ecpg/ecpglib/misc.c.html#L61" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/ecpg/ecpglib/misc.c.html&quot;}, '*');">debug_mutex</a>);</p>
+<p>/* ... but keep holding <a class="wiki-source-link" href="../../source/src/interfaces/ecpg/ecpglib/misc.c.html#L62" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/ecpg/ecpglib/misc.c.html&quot;}, '*');">debug_init_mutex</a> to avoid racy printout */ <a class="wiki-source-link" href="../../source/src/interfaces/ecpg/ecpglib/misc.c.html#L231" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__interfaces__ecpg__ecpglib__misc_c__ecpg_log.html&quot;}, '*');">ecpg_log</a>(&quot;ECPGdebug: set to %d\n&quot;, <a class="wiki-source-link" href="../../source/src/interfaces/ecpg/ecpglib/misc.c.html#L63" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/ecpg/ecpglib/misc.c.html&quot;}, '*');">simple_debug</a>);</p>
+<p>pthread_mutex_unlock(&amp;<a class="wiki-source-link" href="../../source/src/interfaces/ecpg/ecpglib/misc.c.html#L62" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/ecpg/ecpglib/misc.c.html&quot;}, '*');">debug_init_mutex</a>); } ~~~</p>
+<h2>失敗モードと境界条件</h2>
+<p>まだ解析していません。</p>
+<h2>保守担当者向けメモ</h2>
+<ul>
+<li>後続フェーズで、ソース本文の文脈と caller/callee 情報を使ってこのページを強化する。</li>
+</ul><script>
+(function() {
+  function notifyParent() {
+    if (parent === window) return;
+    parent.postMessage({type: "frame-location", frame: window.name || "", href: window.location.href}, "*");
+  }
+  document.addEventListener("click", function(event) {
+    const link = event.target.closest("a[data-panel]");
+    if (!link || parent === window) return;
+    parent.postMessage({type: "source-link", panel: link.dataset.panel}, "*");
+  });
+  window.addEventListener("load", notifyParent);
+  window.addEventListener("hashchange", notifyParent);
+})();
+</script></body></html>

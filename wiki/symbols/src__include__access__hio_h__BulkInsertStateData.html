@@ -1,0 +1,67 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>symbols/src__include__access__hio_h__BulkInsertStateData.md</title><link rel="stylesheet" href="../../styles.css"></head><body><h1>BulkInsertStateData</h1>
+<h2>定義</h2>
+<ul>
+<li>種別: <code>struct</code></li>
+<li>定義箇所: <code>src/include/access/hio.h:29</code></li>
+<li>所属モジュール: <a class="wiki-entity-link" href="../modules/src__include__access.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/modules/src__include__access.html&quot;, &quot;source&quot;: &quot;source/src/include/access/amapi.h.html&quot;}, '*');"><code>module:src/include/access</code></a></li>
+</ul>
+<h2>目的</h2>
+<p>静的シンボル索引から生成された初期シンボルページです。</p>
+<h2>シグネチャまたは形状</h2>
+<ul>
+<li>シグネチャ: <code>typedef struct BulkInsertStateData</code></li>
+</ul>
+<h2>入力と出力</h2>
+<p>まだ解析していません。</p>
+<h2>前提条件と不変条件</h2>
+<p>まだ解析していません。</p>
+<h2>アルゴリズムまたは振る舞い</h2>
+<p>まだ解析していません。</p>
+<h2>呼び出し元と呼び出し先</h2>
+<ul>
+<li>呼び出し元: なし</li>
+<li>呼び出し先: なし</li>
+<li>呼び出し元サイト: なし</li>
+<li>呼び出しサイト: なし</li>
+</ul>
+<h2>関連データ構造</h2>
+<p><code>BlockNumber</code>, <a class="wiki-source-link" href="../../source/src/include/storage/buf.h.html#L23" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__storage__buf_h__Buffer.html&quot;}, '*');"><code>Buffer</code></a>, <code>BufferAccessStrategy</code>, <a class="wiki-source-link" href="../../source/src/include/utils/rel.h.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__utils__rel_h__RelationData.html&quot;}, '*');"><code>RelationData</code></a>, <code>uint32</code></p>
+<h2>ソース抜粋</h2>
+<p>~~~c typedef struct BulkInsertStateData { BufferAccessStrategy strategy;	/* our BULKWRITE strategy object */ <a class="wiki-source-link" href="../../source/src/include/storage/buf.h.html#L23" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__storage__buf_h__Buffer.html&quot;}, '*');">Buffer</a>		current_buf;	/* current insertion target page */</p>
+<p>/*</p>
+<ul>
+<li>State for bulk extensions.</li>
+<p>*</p>
+<li>last_free..next_free are further pages that were unused at the time of</li>
+<li>the last extension. They might be in use by the time we use them</li>
+<li>though, so rechecks are needed.</li>
+<p>*</p>
+<li>XXX: Eventually these should probably live in <a class="wiki-source-link" href="../../source/src/include/utils/rel.h.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__utils__rel_h__RelationData.html&quot;}, '*');">RelationData</a> instead,</li>
+<li>alongside targetblock.</li>
+<p>*</p>
+<li>already_extended_by <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> the number of pages that this bulk inserted</li>
+<li>extended by. If we already extended by a significant number of pages,</li>
+<li>we can be more aggressive about extending going forward.</li>
+<p>*/ BlockNumber next_free; BlockNumber last_free; uint32		already_extended_by; } BulkInsertStateData; ~~~</p>
+</ul>
+<h2>失敗モードと境界条件</h2>
+<p>まだ解析していません。</p>
+<h2>保守担当者向けメモ</h2>
+<ul>
+<li>後続フェーズで、ソース本文の文脈と caller/callee 情報を使ってこのページを強化する。</li>
+</ul><script>
+(function() {
+  function notifyParent() {
+    if (parent === window) return;
+    parent.postMessage({type: "frame-location", frame: window.name || "", href: window.location.href}, "*");
+  }
+  document.addEventListener("click", function(event) {
+    const link = event.target.closest("a[data-panel]");
+    if (!link || parent === window) return;
+    parent.postMessage({type: "source-link", panel: link.dataset.panel}, "*");
+  });
+  window.addEventListener("load", notifyParent);
+  window.addEventListener("hashchange", notifyParent);
+})();
+</script></body></html>

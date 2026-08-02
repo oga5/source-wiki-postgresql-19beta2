@@ -1,0 +1,67 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>symbols/contrib__sepgsql__label_c__sepgsql_xact_callback.md</title><link rel="stylesheet" href="../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../source/contrib/sepgsql/label.c.html#L163" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/contrib__sepgsql__label_c__sepgsql_xact_callback.html&quot;}, '*');">sepgsql_xact_callback</a></h1>
+<h2>定義</h2>
+<ul>
+<li>種別: <code>function</code></li>
+<li>定義箇所: <code>contrib/sepgsql/label.c:163</code></li>
+<li>所属モジュール: <a class="wiki-entity-link" href="../modules/contrib__sepgsql.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/modules/contrib__sepgsql.html&quot;, &quot;source&quot;: &quot;source/contrib/sepgsql/database.c.html&quot;}, '*');"><code>module:contrib/sepgsql</code></a></li>
+</ul>
+<h2>目的</h2>
+<p>静的シンボル索引から生成された初期シンボルページです。</p>
+<h2>シグネチャまたは形状</h2>
+<ul>
+<li>シグネチャ: <code>static void sepgsql_xact_callback(XactEvent event, void *arg)</code></li>
+</ul>
+<h2>入力と出力</h2>
+<ul>
+<li>引数: <code>XactEvent event</code>, <code>void *arg</code></li>
+<li>戻り値: <code>void</code></li>
+</ul>
+<h2>前提条件と不変条件</h2>
+<p>まだ解析していません。</p>
+<h2>アルゴリズムまたは振る舞い</h2>
+<ul>
+<li>複雑度: <code>high</code> (score 12)</li>
+</ul>
+<p>まだ解析していません。</p>
+<h2>呼び出し元と呼び出し先</h2>
+<ul>
+<li>呼び出し元: なし</li>
+<li>呼び出し先: <a class="wiki-source-link" href="../../source/src/backend/utils/mmgr/mcxt.c.html#L1896" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__utils__mmgr__mcxt_c__MemoryContextStrdup.html&quot;}, '*');"><code>MemoryContextStrdup</code></a></li>
+<li>呼び出し元サイト: なし</li>
+<li>呼び出しサイト: <a class="wiki-source-link" href="../../source/src/include/nodes/pg_list.h.html#L198" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/nodes/pg_list.h.html&quot;}, '*');"><code>llast</code></a> at <code>contrib/sepgsql/label.c:170:28</code> (unresolved), <a class="wiki-source-link" href="../../source/src/backend/utils/mmgr/mcxt.c.html#L1896" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__utils__mmgr__mcxt_c__MemoryContextStrdup.html&quot;}, '*');"><code>MemoryContextStrdup</code></a> at <code>contrib/sepgsql/label.c:174:17</code> (direct, confidence=high, resolved=<a class="wiki-entity-link" href="src__backend__utils__mmgr__mcxt_c__MemoryContextStrdup.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__utils__mmgr__mcxt_c__MemoryContextStrdup.html&quot;, &quot;source&quot;: &quot;source/src/backend/utils/mmgr/mcxt.c.html#L1896&quot;}, '*');"><code>symbol:src/backend/utils/mmgr/mcxt.c#MemoryContextStrdup</code></a>), <code>pfree</code> at <code>contrib/sepgsql/label.c:180:5</code> (unresolved, confidence=low)</li>
+</ul>
+<h2>関連データ構造</h2>
+<p><a class="wiki-source-link" href="../../source/contrib/sepgsql/label.c.html#L65" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/contrib__sepgsql__label_c__pending_label.html&quot;}, '*');"><code>pending_label</code></a>, <a class="wiki-source-link" href="../../source/src/include/access/xact.h.html#L127" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/access/xact.h.html&quot;}, '*');"><code>XactEvent</code></a></p>
+<h2>ソース抜粋</h2>
+<p>~~~c static void <a class="wiki-source-link" href="../../source/contrib/sepgsql/label.c.html#L163" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/contrib__sepgsql__label_c__sepgsql_xact_callback.html&quot;}, '*');">sepgsql_xact_callback</a>(<a class="wiki-source-link" href="../../source/src/include/access/xact.h.html#L127" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/access/xact.h.html&quot;}, '*');">XactEvent</a> event, void *arg) { if (event == XACT_EVENT_COMMIT) { if (<a class="wiki-source-link" href="../../source/contrib/sepgsql/label.c.html#L59" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/contrib/sepgsql/label.c.html&quot;}, '*');">client_label_pending</a> != <a class="wiki-source-link" href="../../source/src/include/nodes/pg_list.h.html#L68" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/nodes/pg_list.h.html&quot;}, '*');">NIL</a>) { <a class="wiki-source-link" href="../../source/contrib/sepgsql/label.c.html#L65" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/contrib__sepgsql__label_c__pending_label.html&quot;}, '*');">pending_label</a> *plabel = <a class="wiki-source-link" href="../../source/src/include/nodes/pg_list.h.html#L198" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/nodes/pg_list.h.html&quot;}, '*');">llast</a>(<a class="wiki-source-link" href="../../source/contrib/sepgsql/label.c.html#L59" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/contrib/sepgsql/label.c.html&quot;}, '*');">client_label_pending</a>); char	   *new_label;</p>
+<p>if (plabel-&gt;<a class="wiki-source-link" href="../../source/src/bin/pg_basebackup/pg_basebackup.c.html#L135" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/bin/pg_basebackup/pg_basebackup.c.html&quot;}, '*');">label</a>) new_label = <a class="wiki-source-link" href="../../source/src/backend/utils/mmgr/mcxt.c.html#L1896" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__utils__mmgr__mcxt_c__MemoryContextStrdup.html&quot;}, '*');">MemoryContextStrdup</a>(<a class="wiki-source-link" href="../../source/src/backend/utils/mmgr/mcxt.c.html#L167" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/utils/mmgr/mcxt.c.html&quot;}, '*');">TopMemoryContext</a>, plabel-&gt;<a class="wiki-source-link" href="../../source/src/bin/pg_basebackup/pg_basebackup.c.html#L135" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/bin/pg_basebackup/pg_basebackup.c.html&quot;}, '*');">label</a>); else new_label = NULL;</p>
+<p>if (<a class="wiki-source-link" href="../../source/contrib/sepgsql/label.c.html#L61" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/contrib/sepgsql/label.c.html&quot;}, '*');">client_label_committed</a>) pfree(<a class="wiki-source-link" href="../../source/contrib/sepgsql/label.c.html#L61" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/contrib/sepgsql/label.c.html&quot;}, '*');">client_label_committed</a>);</p>
+<p><a class="wiki-source-link" href="../../source/contrib/sepgsql/label.c.html#L61" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/contrib/sepgsql/label.c.html&quot;}, '*');">client_label_committed</a> = new_label;</p>
+<p>/*</p>
+<ul>
+<li>XXX - Note that <a class="wiki-source-link" href="../../source/src/test/modules/test_tidstore/test_tidstore.c.html#L48" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/test/modules/test_tidstore/test_tidstore.c.html&quot;}, '*');">items</a> of <a class="wiki-source-link" href="../../source/contrib/sepgsql/label.c.html#L59" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/contrib/sepgsql/label.c.html&quot;}, '*');">client_label_pending</a> are allocated on</li>
+<li><a class="wiki-source-link" href="../../source/src/backend/utils/mmgr/mcxt.c.html#L173" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/utils/mmgr/mcxt.c.html&quot;}, '*');">CurTransactionContext</a>, thus, all acquired memory region shall</li>
+<li>be released implicitly.</li>
+<p>*/ <a class="wiki-source-link" href="../../source/contrib/sepgsql/label.c.html#L59" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/contrib/sepgsql/label.c.html&quot;}, '*');">client_label_pending</a> = <a class="wiki-source-link" href="../../source/src/include/nodes/pg_list.h.html#L68" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/nodes/pg_list.h.html&quot;}, '*');">NIL</a>; } } else if (event == XACT_EVENT_ABORT) <a class="wiki-source-link" href="../../source/contrib/sepgsql/label.c.html#L59" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/contrib/sepgsql/label.c.html&quot;}, '*');">client_label_pending</a> = <a class="wiki-source-link" href="../../source/src/include/nodes/pg_list.h.html#L68" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/nodes/pg_list.h.html&quot;}, '*');">NIL</a>; } ~~~</p>
+</ul>
+<h2>失敗モードと境界条件</h2>
+<p>まだ解析していません。</p>
+<h2>保守担当者向けメモ</h2>
+<ul>
+<li>後続フェーズで、ソース本文の文脈と caller/callee 情報を使ってこのページを強化する。</li>
+</ul><script>
+(function() {
+  function notifyParent() {
+    if (parent === window) return;
+    parent.postMessage({type: "frame-location", frame: window.name || "", href: window.location.href}, "*");
+  }
+  document.addEventListener("click", function(event) {
+    const link = event.target.closest("a[data-panel]");
+    if (!link || parent === window) return;
+    parent.postMessage({type: "source-link", panel: link.dataset.panel}, "*");
+  });
+  window.addEventListener("load", notifyParent);
+  window.addEventListener("hashchange", notifyParent);
+})();
+</script></body></html>

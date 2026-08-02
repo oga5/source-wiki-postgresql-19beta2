@@ -1,0 +1,54 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>symbols/src__include__regex__regguts_h__colormap.md</title><link rel="stylesheet" href="../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../source/src/include/regex/regguts.h.html#L236" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__regex__regguts_h__colormap.html&quot;}, '*');">colormap</a></h1>
+<h2>定義</h2>
+<ul>
+<li>種別: <code>struct</code></li>
+<li>定義箇所: <code>src/include/regex/regguts.h:236</code></li>
+<li>所属モジュール: <a class="wiki-entity-link" href="../modules/src__include__regex.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/modules/src__include__regex.html&quot;, &quot;source&quot;: &quot;source/src/include/regex/regcustom.h.html&quot;}, '*');"><code>module:src/include/regex</code></a></li>
+</ul>
+<h2>目的</h2>
+<p>静的シンボル索引から生成された初期シンボルページです。</p>
+<h2>シグネチャまたは形状</h2>
+<ul>
+<li>シグネチャ: <code>struct colormap</code></li>
+</ul>
+<h2>入力と出力</h2>
+<p>まだ解析していません。</p>
+<h2>前提条件と不変条件</h2>
+<p>まだ解析していません。</p>
+<h2>アルゴリズムまたは振る舞い</h2>
+<p>まだ解析していません。</p>
+<h2>呼び出し元と呼び出し先</h2>
+<ul>
+<li>呼び出し元: なし</li>
+<li>呼び出し先: なし</li>
+<li>呼び出し元サイト: なし</li>
+<li>呼び出しサイト: なし</li>
+</ul>
+<h2>関連データ構造</h2>
+<p><code>chr</code>, <a class="wiki-source-link" href="../../source/src/include/regex/regguts.h.html#L163" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/regex/regguts.h.html&quot;}, '*');"><code>color</code></a>, <a class="wiki-source-link" href="../../source/src/include/regex/regguts.h.html#L184" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__regex__regguts_h__colordesc.html&quot;}, '*');"><code>colordesc</code></a>, <a class="wiki-source-link" href="../../source/src/include/regex/regguts.h.html#L229" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__regex__regguts_h__colormaprange.html&quot;}, '*');"><code>colormaprange</code></a>, <code>vars</code></p>
+<h2>ソース抜粋</h2>
+<p>~~~c struct <a class="wiki-source-link" href="../../source/src/include/regex/regguts.h.html#L236" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__regex__regguts_h__colormap.html&quot;}, '*');">colormap</a> { int			magic; #define  <a class="wiki-source-link" href="../../source/src/include/regex/regguts.h.html#L239" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/regex/regguts.h.html&quot;}, '*');">CMMAGIC</a> 0x876 struct vars *v;				/* for compile error reporting */ size_t		ncds;			/* allocated length of colordescs array */ size_t		max;			/* highest <a class="wiki-source-link" href="../../source/src/include/regex/regguts.h.html#L163" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/regex/regguts.h.html&quot;}, '*');">color</a> number currently in use */ <a class="wiki-source-link" href="../../source/src/include/regex/regguts.h.html#L163" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/regex/regguts.h.html&quot;}, '*');">color</a>		<a class="wiki-source-link" href="../../source/src/include/snowball/snowball_runtime.h.html#L65" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/snowball/snowball_runtime.h.html&quot;}, '*');">free</a>;			/* beginning of <a class="wiki-source-link" href="../../source/src/include/snowball/snowball_runtime.h.html#L65" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/snowball/snowball_runtime.h.html&quot;}, '*');">free</a> chain (if non-0) */ struct <a class="wiki-source-link" href="../../source/src/include/regex/regguts.h.html#L184" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__regex__regguts_h__colordesc.html&quot;}, '*');">colordesc</a> *cd;		/* pointer to array of colordescs */ #define  <a class="wiki-source-link" href="../../source/src/include/regex/regguts.h.html#L245" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/regex/regguts.h.html&quot;}, '*');">CDEND</a>(cm)	 (&amp;(cm)-&gt;cd[(cm)-&gt;max + 1])</p>
+<p>/* mapping data for chrs &lt;= MAX_SIMPLE_CHR: */ <a class="wiki-source-link" href="../../source/src/include/regex/regguts.h.html#L163" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/regex/regguts.h.html&quot;}, '*');">color</a>	   *locolormap;		/* simple array indexed by chr code */</p>
+<p>/* mapping data for chrs &gt; MAX_SIMPLE_CHR: */ int			classbits[<a class="wiki-source-link" href="../../source/src/include/regex/regguts.h.html#L152" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/regex/regguts.h.html&quot;}, '*');">NUM_CCLASSES</a>];	/* see <a class="wiki-source-link" href="../../source/src/tools/pg_bsd_indent/indent_codes.h.html#L49" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/tools/pg_bsd_indent/indent_codes.h.html&quot;}, '*');">comment</a> above */ int			numcmranges;	/* number of colormapranges */ <a class="wiki-source-link" href="../../source/src/include/regex/regguts.h.html#L229" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__regex__regguts_h__colormaprange.html&quot;}, '*');">colormaprange</a> *cmranges;	/* ranges of high chrs */ <a class="wiki-source-link" href="../../source/src/include/regex/regguts.h.html#L163" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/regex/regguts.h.html&quot;}, '*');">color</a>	   *hicolormap;		/* 2-D array of <a class="wiki-source-link" href="../../source/src/include/regex/regguts.h.html#L163" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/regex/regguts.h.html&quot;}, '*');">color</a> entries */ int			maxarrayrows;	/* number of array rows allocated */ int			hiarrayrows;	/* number of array rows in use */ int			hiarraycols;	/* number of array columns (2^N) */</p>
+<p>/* If we need up to <a class="wiki-source-link" href="../../source/src/include/regex/regguts.h.html#L260" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/regex/regguts.h.html&quot;}, '*');">NINLINECDS</a>, we store them here to save a <a class="wiki-source-link" href="../../source/src/include/snowball/snowball_runtime.h.html#L50" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/snowball/snowball_runtime.h.html&quot;}, '*');">malloc</a> */ #define  <a class="wiki-source-link" href="../../source/src/include/regex/regguts.h.html#L260" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/regex/regguts.h.html&quot;}, '*');">NINLINECDS</a>  ((size_t) 10) struct <a class="wiki-source-link" href="../../source/src/include/regex/regguts.h.html#L184" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__regex__regguts_h__colordesc.html&quot;}, '*');">colordesc</a> cdspace[<a class="wiki-source-link" href="../../source/src/include/regex/regguts.h.html#L260" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/regex/regguts.h.html&quot;}, '*');">NINLINECDS</a>]; }; ~~~</p>
+<h2>失敗モードと境界条件</h2>
+<p>まだ解析していません。</p>
+<h2>保守担当者向けメモ</h2>
+<ul>
+<li>後続フェーズで、ソース本文の文脈と caller/callee 情報を使ってこのページを強化する。</li>
+</ul><script>
+(function() {
+  function notifyParent() {
+    if (parent === window) return;
+    parent.postMessage({type: "frame-location", frame: window.name || "", href: window.location.href}, "*");
+  }
+  document.addEventListener("click", function(event) {
+    const link = event.target.closest("a[data-panel]");
+    if (!link || parent === window) return;
+    parent.postMessage({type: "source-link", panel: link.dataset.panel}, "*");
+  });
+  window.addEventListener("load", notifyParent);
+  window.addEventListener("hashchange", notifyParent);
+})();
+</script></body></html>

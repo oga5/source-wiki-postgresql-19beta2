@@ -1,0 +1,104 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>symbols/src__include__storage__predicate_internals_h__SERIALIZABLEXACT.md</title><link rel="stylesheet" href="../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../source/src/include/storage/predicate_internals.h.html#L58" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__storage__predicate_internals_h__SERIALIZABLEXACT.html&quot;}, '*');">SERIALIZABLEXACT</a></h1>
+<h2>定義</h2>
+<ul>
+<li>種別: <code>struct</code></li>
+<li>定義箇所: <code>src/include/storage/predicate_internals.h:58</code></li>
+<li>所属モジュール: <a class="wiki-entity-link" href="../modules/src__include__storage.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/modules/src__include__storage.html&quot;, &quot;source&quot;: &quot;source/src/include/storage/aio.h.html&quot;}, '*');"><code>module:src/include/storage</code></a></li>
+</ul>
+<h2>目的</h2>
+<p>静的シンボル索引から生成された初期シンボルページです。</p>
+<h2>シグネチャまたは形状</h2>
+<ul>
+<li>シグネチャ: <code>typedef struct SERIALIZABLEXACT</code></li>
+</ul>
+<h2>入力と出力</h2>
+<p>まだ解析していません。</p>
+<h2>前提条件と不変条件</h2>
+<p>まだ解析していません。</p>
+<h2>アルゴリズムまたは振る舞い</h2>
+<p>まだ解析していません。</p>
+<h2>呼び出し元と呼び出し先</h2>
+<ul>
+<li>呼び出し元: なし</li>
+<li>呼び出し先: なし</li>
+<li>呼び出し元サイト: なし</li>
+<li>呼び出しサイト: なし</li>
+</ul>
+<h2>関連データ構造</h2>
+<p><a class="wiki-source-link" href="../../source/src/include/lib/ilist.h.html#L151" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__lib__ilist_h__dlist_head.html&quot;}, '*');"><code>dlist_head</code></a>, <a class="wiki-source-link" href="../../source/src/include/lib/ilist.h.html#L136" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__lib__ilist_h__dlist_node.html&quot;}, '*');"><code>dlist_node</code></a>, <code>link</code>, <a class="wiki-source-link" href="../../source/src/include/storage/lwlock.h.html#L41" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__storage__lwlock_h__LWLock.html&quot;}, '*');"><code>LWLock</code></a>, <a class="wiki-source-link" href="../../source/src/include/storage/predicate_internals.h.html#L317" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__storage__predicate_internals_h__PREDICATELOCK.html&quot;}, '*');"><code>PREDICATELOCK</code></a>, <a class="wiki-source-link" href="../../source/src/include/storage/predicate_internals.h.html#L24" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/storage/predicate_internals.h.html&quot;}, '*');"><code>SerCommitSeqNo</code></a>, <code>state</code>, <code>TransactionId</code>, <code>uint32</code>, <code>VirtualTransactionId</code>, <a class="wiki-source-link" href="../../source/src/interfaces/ecpg/preproc/type.h.html#L89" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__interfaces__ecpg__preproc__type_h__when.html&quot;}, '*');"><code>when</code></a></p>
+<h2>ソース抜粋</h2>
+<p>~~~c typedef struct <a class="wiki-source-link" href="../../source/src/include/storage/predicate_internals.h.html#L58" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__storage__predicate_internals_h__SERIALIZABLEXACT.html&quot;}, '*');">SERIALIZABLEXACT</a> { VirtualTransactionId vxid;	/* The executing process always has one of</p>
+<ul>
+<li>these. */</li>
+</ul>
+<p>/*</p>
+<ul>
+<li>We use two numbers to track the order that transactions commit. Before</li>
+<li>commit, a transaction <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> marked as prepared, and prepareSeqNo <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> set.</li>
+<li>Shortly after commit, it&#x27;s marked as committed, and commitSeqNo <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> set.</li>
+<li>This doesn&#x27;t give a strict commit order, but these two values together</li>
+<li>are good enough for us, as we can always <a class="wiki-source-link" href="../../source/src/tools/pg_bsd_indent/err.c.html#L42" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__tools__pg_bsd_indent__err_c__err.html&quot;}, '*');">err</a> on the safe side and</li>
+<li>assume that there&#x27;s a conflict, if we can&#x27;t be sure of the exact</li>
+<li>ordering of two commits.</li>
+<p>*</p>
+<li>Note that a transaction <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> marked as prepared for a short <a class="wiki-source-link" href="../../source/src/tools/pg_bsd_indent/indent_codes.h.html#L66" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/tools/pg_bsd_indent/indent_codes.h.html&quot;}, '*');">period</a> during</li>
+<li>commit processing, even if two-phase commit <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> not used. But with</li>
+<li>two-phase commit, a transaction can stay in prepared state for some</li>
+<li>time.</li>
+<p>*/ <a class="wiki-source-link" href="../../source/src/include/storage/predicate_internals.h.html#L24" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/storage/predicate_internals.h.html&quot;}, '*');">SerCommitSeqNo</a> prepareSeqNo; <a class="wiki-source-link" href="../../source/src/include/storage/predicate_internals.h.html#L24" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/storage/predicate_internals.h.html&quot;}, '*');">SerCommitSeqNo</a> commitSeqNo;</p>
+</ul>
+<p>/* these values are not both interesting at the same time */ union { <a class="wiki-source-link" href="../../source/src/include/storage/predicate_internals.h.html#L24" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/storage/predicate_internals.h.html&quot;}, '*');">SerCommitSeqNo</a> earliestOutConflictCommit;	/* <a class="wiki-source-link" href="../../source/src/interfaces/ecpg/preproc/type.h.html#L89" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__interfaces__ecpg__preproc__type_h__when.html&quot;}, '*');">when</a> committed with</p>
+<ul>
+<li>conflict out */</li>
+<p><a class="wiki-source-link" href="../../source/src/include/storage/predicate_internals.h.html#L24" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/storage/predicate_internals.h.html&quot;}, '*');">SerCommitSeqNo</a> lastCommitBeforeSnapshot;	/* <a class="wiki-source-link" href="../../source/src/interfaces/ecpg/preproc/type.h.html#L89" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__interfaces__ecpg__preproc__type_h__when.html&quot;}, '*');">when</a> not committed or</p>
+<li>no conflict out */</li>
+<p>}			SeqNo; <a class="wiki-source-link" href="../../source/src/include/lib/ilist.h.html#L151" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__lib__ilist_h__dlist_head.html&quot;}, '*');">dlist_head</a>	outConflicts;	/* list of <a class="wiki-source-link" href="../../source/src/interfaces/libpq/win32.h.html#L14" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq/win32.h.html&quot;}, '*');">write</a> transactions whose data we</p>
+<li>couldn&#x27;t <a class="wiki-source-link" href="../../source/src/interfaces/libpq/win32.h.html#L13" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq/win32.h.html&quot;}, '*');">read</a>. */</li>
+<p><a class="wiki-source-link" href="../../source/src/include/lib/ilist.h.html#L151" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__lib__ilist_h__dlist_head.html&quot;}, '*');">dlist_head</a>	inConflicts;	/* list of <a class="wiki-source-link" href="../../source/src/interfaces/libpq/win32.h.html#L13" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq/win32.h.html&quot;}, '*');">read</a> transactions which couldn&#x27;t</p>
+<li>see our <a class="wiki-source-link" href="../../source/src/interfaces/libpq/win32.h.html#L14" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq/win32.h.html&quot;}, '*');">write</a>. */</li>
+<p><a class="wiki-source-link" href="../../source/src/include/lib/ilist.h.html#L151" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__lib__ilist_h__dlist_head.html&quot;}, '*');">dlist_head</a>	predicateLocks; /* list of associated <a class="wiki-source-link" href="../../source/src/include/storage/predicate_internals.h.html#L317" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__storage__predicate_internals_h__PREDICATELOCK.html&quot;}, '*');">PREDICATELOCK</a> objects */ <a class="wiki-source-link" href="../../source/src/include/lib/ilist.h.html#L136" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__lib__ilist_h__dlist_node.html&quot;}, '*');">dlist_node</a>	finishedLink;	/* list link in</p>
+<li>FinishedSerializableTransactions */</li>
+<p><a class="wiki-source-link" href="../../source/src/include/lib/ilist.h.html#L136" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__lib__ilist_h__dlist_node.html&quot;}, '*');">dlist_node</a>	xactLink;		/* PredXact-&gt;activeList/availableList */</p>
+</ul>
+<p>/*</p>
+<ul>
+<li>perXactPredicateListLock <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> only used in parallel queries: it protects</li>
+<li>this <a class="wiki-source-link" href="../../source/src/include/storage/predicate_internals.h.html#L58" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__storage__predicate_internals_h__SERIALIZABLEXACT.html&quot;}, '*');">SERIALIZABLEXACT</a>&#x27;s predicate lock list against other workers of</li>
+<li>the same session.</li>
+<p>*/ <a class="wiki-source-link" href="../../source/src/include/storage/lwlock.h.html#L41" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__storage__lwlock_h__LWLock.html&quot;}, '*');">LWLock</a>		perXactPredicateListLock;</p>
+</ul>
+<p>/*</p>
+<ul>
+<li>for r/o transactions: list of concurrent r/w transactions that we could</li>
+<li>potentially have conflicts with, and vice versa for r/w transactions</li>
+<p>*/ <a class="wiki-source-link" href="../../source/src/include/lib/ilist.h.html#L151" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__lib__ilist_h__dlist_head.html&quot;}, '*');">dlist_head</a>	possibleUnsafeConflicts;</p>
+</ul>
+<p>TransactionId topXid;		/* top level xid for the transaction, if one</p>
+<ul>
+<li>exists; else invalid */</li>
+<p>TransactionId finishedBefore;	/* invalid means still running; else the</p>
+<li>struct expires <a class="wiki-source-link" href="../../source/src/interfaces/ecpg/preproc/type.h.html#L89" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__interfaces__ecpg__preproc__type_h__when.html&quot;}, '*');">when</a> no serializable</li>
+<li>xids are <a class="wiki-source-link" href="../../source/src/backend/regex/regc_locale.c.html#L487" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__regex__regc_locale_c__before.html&quot;}, '*');">before</a> this. */</li>
+<p>TransactionId xmin;			/* the transaction&#x27;s snapshot xmin */ uint32		flags;			/* OR&#x27;d combination of values defined below */ int			pid;			/* pid of associated process */ ~~~</p>
+</ul>
+<h2>失敗モードと境界条件</h2>
+<p>まだ解析していません。</p>
+<h2>保守担当者向けメモ</h2>
+<ul>
+<li>後続フェーズで、ソース本文の文脈と caller/callee 情報を使ってこのページを強化する。</li>
+</ul><script>
+(function() {
+  function notifyParent() {
+    if (parent === window) return;
+    parent.postMessage({type: "frame-location", frame: window.name || "", href: window.location.href}, "*");
+  }
+  document.addEventListener("click", function(event) {
+    const link = event.target.closest("a[data-panel]");
+    if (!link || parent === window) return;
+    parent.postMessage({type: "source-link", panel: link.dataset.panel}, "*");
+  });
+  window.addEventListener("load", notifyParent);
+  window.addEventListener("hashchange", notifyParent);
+})();
+</script></body></html>

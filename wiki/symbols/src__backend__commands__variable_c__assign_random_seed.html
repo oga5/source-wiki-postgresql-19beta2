@@ -1,0 +1,57 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>symbols/src__backend__commands__variable_c__assign_random_seed.md</title><link rel="stylesheet" href="../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../source/src/backend/commands/variable.c.html#L667" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__commands__variable_c__assign_random_seed.html&quot;}, '*');">assign_random_seed</a></h1>
+<h2>定義</h2>
+<ul>
+<li>種別: <code>function</code></li>
+<li>定義箇所: <code>src/backend/commands/variable.c:667</code></li>
+<li>所属モジュール: <a class="wiki-entity-link" href="../modules/src__backend__commands.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/modules/src__backend__commands.html&quot;, &quot;source&quot;: &quot;source/src/backend/commands/aggregatecmds.c.html&quot;}, '*');"><code>module:src/backend/commands</code></a></li>
+</ul>
+<h2>目的</h2>
+<p>静的シンボル索引から生成された初期シンボルページです。</p>
+<h2>シグネチャまたは形状</h2>
+<ul>
+<li>シグネチャ: <code>void assign_random_seed(double newval, void *extra)</code></li>
+</ul>
+<h2>入力と出力</h2>
+<ul>
+<li>引数: <code>double newval</code>, <code>void *extra</code></li>
+<li>戻り値: <code>void</code></li>
+</ul>
+<h2>前提条件と不変条件</h2>
+<p>まだ解析していません。</p>
+<h2>アルゴリズムまたは振る舞い</h2>
+<ul>
+<li>複雑度: <code>low</code> (score 3)</li>
+</ul>
+<p>まだ解析していません。</p>
+<h2>呼び出し元と呼び出し先</h2>
+<ul>
+<li>呼び出し元: なし</li>
+<li>呼び出し先: なし</li>
+<li>呼び出し元サイト: なし</li>
+<li>呼び出しサイト: <a class="wiki-source-link" href="../../source/src/include/fmgr.h.html#L688" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/fmgr.h.html&quot;}, '*');"><code>DirectFunctionCall1</code></a> at <code>src/backend/commands/variable.c:672:3</code> (unresolved), <a class="wiki-source-link" href="../../source/src/include/postgres.h.html#L514" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__postgres_h__Float8GetDatum.html&quot;}, '*');"><code>Float8GetDatum</code></a> at <code>src/backend/commands/variable.c:672:32</code> (unresolved)</li>
+</ul>
+<h2>関連データ構造</h2>
+<p><code>variable</code></p>
+<h2>ソース抜粋</h2>
+<p>~~~c void <a class="wiki-source-link" href="../../source/src/backend/commands/variable.c.html#L667" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__commands__variable_c__assign_random_seed.html&quot;}, '*');">assign_random_seed</a>(double <a class="wiki-source-link" href="../../source/src/backend/utils/misc/guc.c.html#L3621" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/utils/misc/guc.c.html&quot;}, '*');">newval</a>, void *extra) { /* We&#x27;ll do this at most once for any setting of the GUC variable */ if (*((int *) extra)) <a class="wiki-source-link" href="../../source/src/include/fmgr.h.html#L688" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/fmgr.h.html&quot;}, '*');">DirectFunctionCall1</a>(<a class="wiki-source-link" href="../../source/src/backend/utils/adt/pseudorandomfuncs.c.html#L74" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__utils__adt__pseudorandomfuncs_c__setseed.html&quot;}, '*');">setseed</a>, <a class="wiki-source-link" href="../../source/src/include/postgres.h.html#L514" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__postgres_h__Float8GetDatum.html&quot;}, '*');">Float8GetDatum</a>(<a class="wiki-source-link" href="../../source/src/backend/utils/misc/guc.c.html#L3621" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/utils/misc/guc.c.html&quot;}, '*');">newval</a>)); *((int *) extra) = 0; } ~~~</p>
+<h2>失敗モードと境界条件</h2>
+<p>まだ解析していません。</p>
+<h2>保守担当者向けメモ</h2>
+<ul>
+<li>後続フェーズで、ソース本文の文脈と caller/callee 情報を使ってこのページを強化する。</li>
+</ul><script>
+(function() {
+  function notifyParent() {
+    if (parent === window) return;
+    parent.postMessage({type: "frame-location", frame: window.name || "", href: window.location.href}, "*");
+  }
+  document.addEventListener("click", function(event) {
+    const link = event.target.closest("a[data-panel]");
+    if (!link || parent === window) return;
+    parent.postMessage({type: "source-link", panel: link.dataset.panel}, "*");
+  });
+  window.addEventListener("load", notifyParent);
+  window.addEventListener("hashchange", notifyParent);
+})();
+</script></body></html>

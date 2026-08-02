@@ -1,0 +1,81 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>symbols/src__backend__port__win32__socket_c__pgwin32_select.md</title><link rel="stylesheet" href="../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../source/src/backend/port/win32/socket.c.html#L516" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__port__win32__socket_c__pgwin32_select.html&quot;}, '*');">pgwin32_select</a></h1>
+<h2>定義</h2>
+<ul>
+<li>種別: <code>function</code></li>
+<li>定義箇所: <code>src/backend/port/win32/socket.c:516</code></li>
+<li>所属モジュール: <a class="wiki-entity-link" href="../modules/src__backend__port__win32.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/modules/src__backend__port__win32.html&quot;, &quot;source&quot;: &quot;source/src/backend/port/win32/crashdump.c.html&quot;}, '*');"><code>module:src/backend/port/win32</code></a></li>
+</ul>
+<h2>目的</h2>
+<p>静的シンボル索引から生成された初期シンボルページです。</p>
+<h2>シグネチャまたは形状</h2>
+<ul>
+<li>シグネチャ: <code>int pgwin32_select(int nfds, fd_set *readfds, fd_set *writefds, fd_set *exceptfds, const struct timeval *timeout)</code></li>
+</ul>
+<h2>入力と出力</h2>
+<ul>
+<li>引数: <code>int nfds</code>, <code>fd_set *readfds</code>, <code>fd_set *writefds</code>, <code>fd_set *exceptfds</code>, <code>const struct timeval *timeout</code></li>
+<li>戻り値: <code>int</code></li>
+</ul>
+<h2>前提条件と不変条件</h2>
+<p>まだ解析していません。</p>
+<h2>アルゴリズムまたは振る舞い</h2>
+<ul>
+<li>複雑度: <code>high</code> (score 43)</li>
+</ul>
+<p>まだ解析していません。</p>
+<h2>呼び出し元と呼び出し先</h2>
+<ul>
+<li>呼び出し元: なし</li>
+<li>呼び出し先: <a class="wiki-source-link" href="../../source/src/backend/port/win32/signal.c.html#L119" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__port__win32__signal_c__pgwin32_dispatch_queued_signals.html&quot;}, '*');"><code>pgwin32_dispatch_queued_signals</code></a>, <a class="wiki-source-link" href="../../source/src/backend/port/win32/socket.c.html#L156" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__port__win32__socket_c__pgwin32_poll_signals.html&quot;}, '*');"><code>pgwin32_poll_signals</code></a>, <a class="wiki-source-link" href="../../source/src/backend/port/win32/socket.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__port__win32__socket_c__TranslateSocketError.html&quot;}, '*');"><code>TranslateSocketError</code></a></li>
+<li>呼び出し元サイト: なし</li>
+<li>呼び出しサイト: <a class="wiki-source-link" href="../../source/src/include/c.h.html#L950" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/c.h.html&quot;}, '*');"><code>Assert</code></a> at <code>src/backend/port/win32/socket.c:531:2</code> (unresolved), <a class="wiki-source-link" href="../../source/src/backend/port/win32/socket.c.html#L156" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__port__win32__socket_c__pgwin32_poll_signals.html&quot;}, '*');"><code>pgwin32_poll_signals</code></a> at <code>src/backend/port/win32/socket.c:533:6</code> (direct, confidence=high, resolved=<a class="wiki-entity-link" href="src__backend__port__win32__socket_c__pgwin32_poll_signals.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__port__win32__socket_c__pgwin32_poll_signals.html&quot;, &quot;source&quot;: &quot;source/src/backend/port/win32/socket.c.html#L156&quot;}, '*');"><code>symbol:src/backend/port/win32/socket.c#pgwin32_poll_signals</code></a>), <code>FD_ZERO</code> at <code>src/backend/port/win32/socket.c:536:2</code> (unresolved), <code>FD_ZERO</code> at <code>src/backend/port/win32/socket.c:537:2</code> (unresolved), <code>WSASend</code> at <code>src/backend/port/win32/socket.c:560:8</code> (unresolved), <code>WSAGetLastError</code> at <code>src/backend/port/win32/socket.c:561:18</code> (unresolved), <code>FD_SET</code> at <code>src/backend/port/win32/socket.c:562:5</code> (unresolved), <code>memcpy</code> at <code>src/backend/port/win32/socket.c:568:4</code> (unresolved), <code>FD_ZERO</code> at <code>src/backend/port/win32/socket.c:570:5</code> (unresolved), <code>WSACreateEvent</code> at <code>src/backend/port/win32/socket.c:588:24</code> (unresolved), <code>FD_ISSET</code> at <code>src/backend/port/win32/socket.c:598:6</code> (unresolved), <code>WSACreateEvent</code> at <code>src/backend/port/win32/socket.c:601:25</code> (unresolved), <code>FD_ISSET</code> at <code>src/backend/port/win32/socket.c:612:18</code> (unresolved), <code>FD_ISSET</code> at <code>src/backend/port/win32/socket.c:615:19</code> (unresolved), <code>WSAEventSelect</code> at <code>src/backend/port/win32/socket.c:618:7</code> (unresolved), <a class="wiki-source-link" href="../../source/src/backend/port/win32/socket.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__port__win32__socket_c__TranslateSocketError.html&quot;}, '*');"><code>TranslateSocketError</code></a> at <code>src/backend/port/win32/socket.c:620:4</code> (direct, confidence=high, resolved=<a class="wiki-entity-link" href="src__backend__port__win32__socket_c__TranslateSocketError.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__port__win32__socket_c__TranslateSocketError.html&quot;, &quot;source&quot;: &quot;source/src/backend/port/win32/socket.c.html#L55&quot;}, '*');"><code>symbol:src/backend/port/win32/socket.c#TranslateSocketError</code></a>), <code>WSAEventSelect</code> at <code>src/backend/port/win32/socket.c:623:5</code> (unresolved), <code>WSACloseEvent</code> at <code>src/backend/port/win32/socket.c:625:5</code> (unresolved), <code>WaitForMultipleObjectsEx</code> at <code>src/backend/port/win32/socket.c:631:6</code> (unresolved), <code>ZeroMemory</code> at <code>src/backend/port/win32/socket.c:642:4</code> (unresolved), <code>WSAEnumNetworkEvents</code> at <code>src/backend/port/win32/socket.c:643:8</code> (unresolved), <a class="wiki-source-link" href="../../source/src/include/utils/elog.h.html#L242" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/utils/elog.h.html&quot;}, '*');"><code>elog</code></a> at <code>src/backend/port/win32/socket.c:644:5</code> (unresolved), <code>WSAGetLastError</code> at <code>src/backend/port/win32/socket.c:645:7</code> (unresolved), <code>FD_ISSET</code> at <code>src/backend/port/win32/socket.c:647:19</code> (unresolved), <code>FD_SET</code> at <code>src/backend/port/win32/socket.c:653:6</code> (unresolved), <code>FD_ISSET</code> at <code>src/backend/port/win32/socket.c:659:20</code> (unresolved), <code>FD_SET</code> at <code>src/backend/port/win32/socket.c:664:6</code> (unresolved), <code>WSAEventSelect</code> at <code>src/backend/port/win32/socket.c:675:3</code> (unresolved), <code>WSACloseEvent</code> at <code>src/backend/port/win32/socket.c:676:3</code> (unresolved), <code>FD_ZERO</code> at <code>src/backend/port/win32/socket.c:682:4</code> (unresolved), <code>FD_ZERO</code> at <code>src/backend/port/win32/socket.c:684:4</code> (unresolved), <a class="wiki-source-link" href="../../source/src/backend/port/win32/signal.c.html#L119" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__port__win32__signal_c__pgwin32_dispatch_queued_signals.html&quot;}, '*');"><code>pgwin32_dispatch_queued_signals</code></a> at <code>src/backend/port/win32/socket.c:691:3</code> (direct, confidence=high, resolved=<a class="wiki-entity-link" href="src__backend__port__win32__signal_c__pgwin32_dispatch_queued_signals.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__port__win32__signal_c__pgwin32_dispatch_queued_signals.html&quot;, &quot;source&quot;: &quot;source/src/backend/port/win32/signal.c.html#L119&quot;}, '*');"><code>symbol:src/backend/port/win32/signal.c#pgwin32_dispatch_queued_signals</code></a>), <code>FD_ZERO</code> at <code>src/backend/port/win32/socket.c:694:4</code> (unresolved), <code>FD_ZERO</code> at <code>src/backend/port/win32/socket.c:696:4</code> (unresolved), <code>memcpy</code> at <code>src/backend/port/win32/socket.c:702:3</code> (unresolved), <code>memcpy</code> at <code>src/backend/port/win32/socket.c:704:3</code> (unresolved)</li>
+</ul>
+<h2>関連データ構造</h2>
+<p><code>c</code>, <a class="wiki-source-link" href="../../source/src/port/win32error.c.html#L20" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__port__win32error_c__DWORD.html&quot;}, '*');"><code>DWORD</code></a></p>
+<h2>ソース抜粋</h2>
+<p>~~~c int <a class="wiki-source-link" href="../../source/src/backend/port/win32/socket.c.html#L516" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__port__win32__socket_c__pgwin32_select.html&quot;}, '*');">pgwin32_select</a>(int nfds, fd_set *readfds, fd_set *writefds, fd_set *exceptfds, const struct timeval *timeout) { WSAEVENT	events[FD_SETSIZE * 2]; /* worst case <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> readfds totally</p>
+<ul>
+<li>different from writefds, so</li>
+<li>2*FD_SETSIZE sockets */</li>
+<p>SOCKET		sockets[FD_SETSIZE * 2]; int			numevents = 0; int			i; int			r; <a class="wiki-source-link" href="../../source/src/port/win32error.c.html#L20" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__port__win32error_c__DWORD.html&quot;}, '*');">DWORD</a>		timeoutval = WSA_INFINITE; FD_SET		outreadfds; FD_SET		outwritefds; int			nummatches = 0;</p>
+</ul>
+<p><a class="wiki-source-link" href="../../source/src/include/c.h.html#L950" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/c.h.html&quot;}, '*');">Assert</a>(exceptfds == NULL);</p>
+<p>if (<a class="wiki-source-link" href="../../source/src/backend/port/win32/socket.c.html#L156" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__port__win32__socket_c__pgwin32_poll_signals.html&quot;}, '*');">pgwin32_poll_signals</a>()) return -1;</p>
+<p>FD_ZERO(&amp;outreadfds); FD_ZERO(&amp;outwritefds);</p>
+<p>/*</p>
+<ul>
+<li>Windows does not guarantee to log an FD_WRITE network event indicating</li>
+<li>that more data can be sent unless the previous <a class="wiki-source-link" href="../../source/src/include/port/win32_port.h.html#L502" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/port/win32_port.h.html&quot;}, '*');">send</a>() failed with</li>
+<li>WSAEWOULDBLOCK.  While our caller might well have made such a call, we</li>
+<li>cannot assume that here.  Therefore, if waiting for write-ready, force</li>
+<li>the issue by doing a dummy <a class="wiki-source-link" href="../../source/src/include/port/win32_port.h.html#L502" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/port/win32_port.h.html&quot;}, '*');">send</a>().  If the dummy <a class="wiki-source-link" href="../../source/src/include/port/win32_port.h.html#L502" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/port/win32_port.h.html&quot;}, '*');">send</a>() succeeds,</li>
+<li>assume that the <a class="wiki-source-link" href="../../source/src/include/port/win32_port.h.html#L495" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/port/win32_port.h.html&quot;}, '*');">socket</a> <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> in fact write-ready, and return immediately.</li>
+<li>Also, if it fails with something other than WSAEWOULDBLOCK, return a</li>
+<li>write-ready indication to let our caller deal with the error condition.</li>
+<p>*/ if (writefds != NULL) { for (i = 0; i &lt; writefds-&gt;fd_count; i++) { char		c; WSABUF		buf; <a class="wiki-source-link" href="../../source/src/port/win32error.c.html#L20" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__port__win32error_c__DWORD.html&quot;}, '*');">DWORD</a>		sent;</p>
+</ul>
+<p>buf.buf = &amp;c; buf.len = 0;</p>
+<p>r = WSASend(writefds-&gt;fd_array[i], &amp;buf, 1, &amp;sent, 0, NULL, NULL); if (r == 0 || WSAGetLastError() != WSAEWOULDBLOCK) FD_SET(writefds-&gt;fd_array[i], &amp;outwritefds); }</p>
+<p>/* If we found any write-ready sockets, just return them immediately */ if (outwritefds.fd_count &gt; 0) { memcpy(writefds, &amp;outwritefds, sizeof(fd_set)); if (readfds) FD_ZERO(readfds); return outwritefds.fd_count; } }</p>
+<p>~~~</p>
+<h2>失敗モードと境界条件</h2>
+<p>まだ解析していません。</p>
+<h2>保守担当者向けメモ</h2>
+<ul>
+<li>後続フェーズで、ソース本文の文脈と caller/callee 情報を使ってこのページを強化する。</li>
+</ul><script>
+(function() {
+  function notifyParent() {
+    if (parent === window) return;
+    parent.postMessage({type: "frame-location", frame: window.name || "", href: window.location.href}, "*");
+  }
+  document.addEventListener("click", function(event) {
+    const link = event.target.closest("a[data-panel]");
+    if (!link || parent === window) return;
+    parent.postMessage({type: "source-link", panel: link.dataset.panel}, "*");
+  });
+  window.addEventListener("load", notifyParent);
+  window.addEventListener("hashchange", notifyParent);
+})();
+</script></body></html>

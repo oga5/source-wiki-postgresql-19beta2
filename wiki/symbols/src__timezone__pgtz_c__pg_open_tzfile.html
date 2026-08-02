@@ -1,0 +1,76 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>symbols/src__timezone__pgtz_c__pg_open_tzfile.md</title><link rel="stylesheet" href="../../styles.css"></head><body><h1>pg_open_tzfile</h1>
+<h2>定義</h2>
+<ul>
+<li>種別: <code>function</code></li>
+<li>定義箇所: <code>src/timezone/pgtz.c:75</code></li>
+<li>所属モジュール: <a class="wiki-entity-link" href="../modules/src__timezone.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/modules/src__timezone.html&quot;, &quot;source&quot;: &quot;source/src/timezone/localtime.c.html&quot;}, '*');"><code>module:src/timezone</code></a></li>
+</ul>
+<h2>目的</h2>
+<p>静的シンボル索引から生成された初期シンボルページです。</p>
+<h2>シグネチャまたは形状</h2>
+<ul>
+<li>シグネチャ: <code>int pg_open_tzfile(const char *name, char *canonname)</code></li>
+</ul>
+<h2>入力と出力</h2>
+<ul>
+<li>引数: <code>const char *name</code>, <code>char *canonname</code></li>
+<li>戻り値: <code>int</code></li>
+</ul>
+<h2>前提条件と不変条件</h2>
+<p>まだ解析していません。</p>
+<h2>アルゴリズムまたは振る舞い</h2>
+<ul>
+<li>複雑度: <code>high</code> (score 25)</li>
+</ul>
+<p>まだ解析していません。</p>
+<h2>呼び出し元と呼び出し先</h2>
+<ul>
+<li>呼び出し元: なし</li>
+<li>呼び出し先: <code>pg_TZDIR</code>, <a class="wiki-source-link" href="../../source/src/timezone/pgtz.c.html#L150" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__timezone__pgtz_c__scan_directory_ci.html&quot;}, '*');"><code>scan_directory_ci</code></a>, <a class="wiki-source-link" href="../../source/src/port/strlcpy.c.html#L44" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__port__strlcpy_c__strlcpy.html&quot;}, '*');"><code>strlcpy</code></a></li>
+<li>呼び出し元サイト: なし</li>
+<li>呼び出しサイト: <a class="wiki-source-link" href="../../source/src/port/strlcpy.c.html#L44" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__port__strlcpy_c__strlcpy.html&quot;}, '*');"><code>strlcpy</code></a> at <code>src/timezone/pgtz.c:84:2</code> (direct, confidence=high, resolved=<a class="wiki-entity-link" href="src__port__strlcpy_c__strlcpy.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__port__strlcpy_c__strlcpy.html&quot;, &quot;source&quot;: &quot;source/src/port/strlcpy.c.html#L44&quot;}, '*');"><code>symbol:src/port/strlcpy.c#strlcpy</code></a>), <code>pg_TZDIR</code> at <code>src/timezone/pgtz.c:84:20</code> (direct, confidence=high, resolved=<a class="wiki-entity-link" href="src__timezone__pgtz_c__pg_TZDIR.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__timezone__pgtz_c__pg_TZDIR.html&quot;, &quot;source&quot;: &quot;source/src/timezone/pgtz.c.html#L42&quot;}, '*');"><code>symbol:src/timezone/pgtz.c#pg_TZDIR</code></a>), <code>strlen</code> at <code>src/timezone/pgtz.c:85:30</code> (unresolved), <code>strlen</code> at <code>src/timezone/pgtz.c:87:24</code> (unresolved), <code>strcpy</code> at <code>src/timezone/pgtz.c:103:3</code> (unresolved), <a class="wiki-source-link" href="../../source/src/include/port.h.html#L366" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/port.h.html&quot;}, '*');"><code>open</code></a> at <code>src/timezone/pgtz.c:104:12</code> (unresolved), <code>strchr</code> at <code>src/timezone/pgtz.c:121:14</code> (unresolved), <code>strlen</code> at <code>src/timezone/pgtz.c:125:15</code> (unresolved), <a class="wiki-source-link" href="../../source/src/timezone/pgtz.c.html#L150" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__timezone__pgtz_c__scan_directory_ci.html&quot;}, '*');"><code>scan_directory_ci</code></a> at <code>src/timezone/pgtz.c:126:8</code> (direct, confidence=high, resolved=<a class="wiki-entity-link" href="src__timezone__pgtz_c__scan_directory_ci.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__timezone__pgtz_c__scan_directory_ci.html&quot;, &quot;source&quot;: &quot;source/src/timezone/pgtz.c.html#L150&quot;}, '*');"><code>symbol:src/timezone/pgtz.c#scan_directory_ci</code></a>), <code>strlen</code> at <code>src/timezone/pgtz.c:131:18</code> (unresolved), <a class="wiki-source-link" href="../../source/src/port/strlcpy.c.html#L44" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__port__strlcpy_c__strlcpy.html&quot;}, '*');"><code>strlcpy</code></a> at <code>src/timezone/pgtz.c:139:3</code> (direct, confidence=high, resolved=<a class="wiki-entity-link" href="src__port__strlcpy_c__strlcpy.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__port__strlcpy_c__strlcpy.html&quot;, &quot;source&quot;: &quot;source/src/port/strlcpy.c.html#L44&quot;}, '*');"><code>symbol:src/port/strlcpy.c#strlcpy</code></a>), <a class="wiki-source-link" href="../../source/src/include/port.h.html#L366" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/port.h.html&quot;}, '*');"><code>open</code></a> at <code>src/timezone/pgtz.c:141:9</code> (unresolved)</li>
+</ul>
+<h2>関連データ構造</h2>
+<p>なし</p>
+<h2>ソース抜粋</h2>
+<p>~~~c int pg_open_tzfile(const char *name, char *canonname) { const char *fname; char		fullname[<a class="wiki-source-link" href="../../source/src/include/pg_config_manual.h.html#L105" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/pg_config_manual.h.html&quot;}, '*');">MAXPGPATH</a>]; int			fullnamelen; int			orignamelen;</p>
+<p>/* <a class="wiki-source-link" href="../../source/src/bin/pg_archivecleanup/pg_archivecleanup.c.html#L57" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__bin__pg_archivecleanup__pg_archivecleanup_c__Initialize.html&quot;}, '*');">Initialize</a> fullname with base name of tzdata directory */ <a class="wiki-source-link" href="../../source/src/port/strlcpy.c.html#L44" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__port__strlcpy_c__strlcpy.html&quot;}, '*');">strlcpy</a>(fullname, pg_TZDIR(), sizeof(fullname)); orignamelen = fullnamelen = strlen(fullname);</p>
+<p>if (fullnamelen + 1 + strlen(name) &gt;= <a class="wiki-source-link" href="../../source/src/include/pg_config_manual.h.html#L105" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/pg_config_manual.h.html&quot;}, '*');">MAXPGPATH</a>) return -1;				/* not gonna fit */</p>
+<p>/*</p>
+<ul>
+<li>If the caller doesn&#x27;t need the canonical spelling, first just try to</li>
+<li><a class="wiki-source-link" href="../../source/src/include/port.h.html#L366" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/port.h.html&quot;}, '*');">open</a> the name as-<a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a>.  This can be expected to succeed if the given name</li>
+<li><a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> already case-correct, or if the filesystem <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> case-insensitive; and</li>
+<li>we don&#x27;t need to distinguish those situations if we aren&#x27;t tasked with</li>
+<li>reporting the canonical spelling.</li>
+<p>*/ if (canonname == NULL) { int			<a class="wiki-source-link" href="../../source/src/include/storage/checksum_block_internal.h.html#L18" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/storage/checksum_block_internal.h.html&quot;}, '*');">result</a>;</p>
+</ul>
+<p>fullname[fullnamelen] = &#x27;/&#x27;; /* <a class="wiki-source-link" href="../../source/src/interfaces/ecpg/test/expected/preproc-autoprep.c.html#L26" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__interfaces__ecpg__test__expected__preproc-autoprep_c__test.html&quot;}, '*');">test</a> above ensured this will fit: */ strcpy(fullname + fullnamelen + 1, name); <a class="wiki-source-link" href="../../source/src/include/storage/checksum_block_internal.h.html#L18" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/storage/checksum_block_internal.h.html&quot;}, '*');">result</a> = <a class="wiki-source-link" href="../../source/src/include/port.h.html#L366" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/port.h.html&quot;}, '*');">open</a>(fullname, O_RDONLY | <a class="wiki-source-link" href="../../source/src/include/c.h.html#L1391" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/c.h.html&quot;}, '*');">PG_BINARY</a>, 0); if (<a class="wiki-source-link" href="../../source/src/include/storage/checksum_block_internal.h.html#L18" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/storage/checksum_block_internal.h.html&quot;}, '*');">result</a> &gt;= 0) return <a class="wiki-source-link" href="../../source/src/include/storage/checksum_block_internal.h.html#L18" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/storage/checksum_block_internal.h.html&quot;}, '*');">result</a>; /* If that didn&#x27;t work, fall through to do it the hard way */ fullname[fullnamelen] = &#x27;\0&#x27;; }</p>
+<p>/*</p>
+<ul>
+<li>Loop to split the given name into directory levels; for each level,</li>
+<li>search using <a class="wiki-source-link" href="../../source/src/timezone/pgtz.c.html#L150" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__timezone__pgtz_c__scan_directory_ci.html&quot;}, '*');">scan_directory_ci</a>().</li>
+<p>*/ fname = name; for (;;) { const char *slashptr; int			fnamelen;</p>
+</ul>
+<p>slashptr = strchr(fname, &#x27;/&#x27;); if (slashptr) fnamelen = slashptr - fname; else fnamelen = strlen(fname); if (!<a class="wiki-source-link" href="../../source/src/timezone/pgtz.c.html#L150" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__timezone__pgtz_c__scan_directory_ci.html&quot;}, '*');">scan_directory_ci</a>(fullname, fname, fnamelen, fullname + fullnamelen + 1, <a class="wiki-source-link" href="../../source/src/include/pg_config_manual.h.html#L105" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/pg_config_manual.h.html&quot;}, '*');">MAXPGPATH</a> - fullnamelen - 1)) return -1; fullname[fullnamelen++] = &#x27;/&#x27;; fullnamelen += strlen(fullname + fullnamelen); if (slashptr) fname = slashptr + 1; else ~~~</p>
+<h2>失敗モードと境界条件</h2>
+<p>まだ解析していません。</p>
+<h2>保守担当者向けメモ</h2>
+<ul>
+<li>後続フェーズで、ソース本文の文脈と caller/callee 情報を使ってこのページを強化する。</li>
+</ul><script>
+(function() {
+  function notifyParent() {
+    if (parent === window) return;
+    parent.postMessage({type: "frame-location", frame: window.name || "", href: window.location.href}, "*");
+  }
+  document.addEventListener("click", function(event) {
+    const link = event.target.closest("a[data-panel]");
+    if (!link || parent === window) return;
+    parent.postMessage({type: "source-link", panel: link.dataset.panel}, "*");
+  });
+  window.addEventListener("load", notifyParent);
+  window.addEventListener("hashchange", notifyParent);
+})();
+</script></body></html>

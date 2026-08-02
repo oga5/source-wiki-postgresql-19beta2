@@ -1,0 +1,64 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>symbols/src__bin__pg_dump__compress_zstd_c__Zstd_gets.md</title><link rel="stylesheet" href="../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../source/src/bin/pg_dump/compress_zstd.c.html#L404" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__bin__pg_dump__compress_zstd_c__Zstd_gets.html&quot;}, '*');">Zstd_gets</a></h1>
+<h2>定義</h2>
+<ul>
+<li>種別: <code>function</code></li>
+<li>定義箇所: <code>src/bin/pg_dump/compress_zstd.c:404</code></li>
+<li>所属モジュール: <a class="wiki-entity-link" href="../modules/src__bin__pg_dump.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/modules/src__bin__pg_dump.html&quot;, &quot;source&quot;: &quot;source/src/bin/pg_dump/common.c.html&quot;}, '*');"><code>module:src/bin/pg_dump</code></a></li>
+</ul>
+<h2>目的</h2>
+<p>静的シンボル索引から生成された初期シンボルページです。</p>
+<h2>シグネチャまたは形状</h2>
+<ul>
+<li>シグネチャ: <code>static char * Zstd_gets(char *buf, int len, CompressFileHandle *CFH)</code></li>
+</ul>
+<h2>入力と出力</h2>
+<ul>
+<li>引数: <code>char *buf</code>, <code>int len</code>, <code>CompressFileHandle *CFH</code></li>
+<li>戻り値: <code>char *</code></li>
+</ul>
+<h2>前提条件と不変条件</h2>
+<p>まだ解析していません。</p>
+<h2>アルゴリズムまたは振る舞い</h2>
+<ul>
+<li>複雑度: <code>medium</code> (score 10)</li>
+</ul>
+<p>まだ解析していません。</p>
+<h2>呼び出し元と呼び出し先</h2>
+<ul>
+<li>呼び出し元: なし</li>
+<li>呼び出し先: <a class="wiki-source-link" href="../../source/src/bin/pg_dump/compress_zstd.c.html#L260" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__bin__pg_dump__compress_zstd_c__Zstd_read_internal.html&quot;}, '*');"><code>Zstd_read_internal</code></a></li>
+<li>呼び出し元サイト: なし</li>
+<li>呼び出しサイト: <a class="wiki-source-link" href="../../source/src/include/c.h.html#L950" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/c.h.html&quot;}, '*');"><code>Assert</code></a> at <code>src/bin/pg_dump/compress_zstd.c:409:2</code> (unresolved), <a class="wiki-source-link" href="../../source/src/bin/pg_dump/compress_zstd.c.html#L260" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__bin__pg_dump__compress_zstd_c__Zstd_read_internal.html&quot;}, '*');"><code>Zstd_read_internal</code></a> at <code>src/bin/pg_dump/compress_zstd.c:417:7</code> (direct, confidence=high, resolved=<a class="wiki-entity-link" href="src__bin__pg_dump__compress_zstd_c__Zstd_read_internal.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__bin__pg_dump__compress_zstd_c__Zstd_read_internal.html&quot;, &quot;source&quot;: &quot;source/src/bin/pg_dump/compress_zstd.c.html#L260&quot;}, '*');"><code>symbol:src/bin/pg_dump/compress_zstd.c#Zstd_read_internal</code></a>)</li>
+</ul>
+<h2>関連データ構造</h2>
+<p><a class="wiki-source-link" href="../../source/src/bin/pg_dump/compress_io.h.html#L98" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__bin__pg_dump__compress_io_h__CompressFileHandle.html&quot;}, '*');"><code>CompressFileHandle</code></a></p>
+<h2>ソース抜粋</h2>
+<p>~~~c static char * <a class="wiki-source-link" href="../../source/src/bin/pg_dump/compress_zstd.c.html#L404" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__bin__pg_dump__compress_zstd_c__Zstd_gets.html&quot;}, '*');">Zstd_gets</a>(char *buf, int len, <a class="wiki-source-link" href="../../source/src/bin/pg_dump/compress_io.h.html#L98" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__bin__pg_dump__compress_io_h__CompressFileHandle.html&quot;}, '*');">CompressFileHandle</a> *CFH) { int			i;</p>
+<p><a class="wiki-source-link" href="../../source/src/include/c.h.html#L950" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/c.h.html&quot;}, '*');">Assert</a>(len &gt; 0);</p>
+<p>/*</p>
+<ul>
+<li>Read one byte at a time until newline or EOF. This <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> only used to <a class="wiki-source-link" href="../../source/src/interfaces/libpq/win32.h.html#L13" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq/win32.h.html&quot;}, '*');">read</a></li>
+<li>the list of LOs, and the I/O <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> buffered anyway.</li>
+<p>*/ for (i = 0; i &lt; len - 1; ++i) { if (<a class="wiki-source-link" href="../../source/src/bin/pg_dump/compress_zstd.c.html#L260" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__bin__pg_dump__compress_zstd_c__Zstd_read_internal.html&quot;}, '*');">Zstd_read_internal</a>(&amp;buf[i], 1, CFH, <a class="wiki-source-link" href="../../source/src/tools/pg_bsd_indent/indent_globs.h.html#L43" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/tools/pg_bsd_indent/indent_globs.h.html&quot;}, '*');">false</a>) != 1) break; if (buf[i] == &#x27;\n&#x27;) { ++i; break; } } buf[i] = &#x27;\0&#x27;; return i &gt; 0 ? buf : NULL; } ~~~</p>
+</ul>
+<h2>失敗モードと境界条件</h2>
+<p>まだ解析していません。</p>
+<h2>保守担当者向けメモ</h2>
+<ul>
+<li>後続フェーズで、ソース本文の文脈と caller/callee 情報を使ってこのページを強化する。</li>
+</ul><script>
+(function() {
+  function notifyParent() {
+    if (parent === window) return;
+    parent.postMessage({type: "frame-location", frame: window.name || "", href: window.location.href}, "*");
+  }
+  document.addEventListener("click", function(event) {
+    const link = event.target.closest("a[data-panel]");
+    if (!link || parent === window) return;
+    parent.postMessage({type: "source-link", panel: link.dataset.panel}, "*");
+  });
+  window.addEventListener("load", notifyParent);
+  window.addEventListener("hashchange", notifyParent);
+})();
+</script></body></html>

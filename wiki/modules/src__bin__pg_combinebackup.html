@@ -1,0 +1,75 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>modules/src__bin__pg_combinebackup.md</title><link rel="stylesheet" href="../../styles.css"></head><body><h1>src/bin/pg_combinebackup</h1>
+<h2>システム内での役割</h2>
+<p><code>src/bin/pg_combinebackup</code> には 11 個の索引済みソースファイルがあります。この初期モジュールページはディレクトリ境界に基づいています。</p>
+<h2>責務</h2>
+<ul>
+<li>このディレクトリに属するソースファイルを集約する。</li>
+<li>より深い LLM 合成の前段として、モジュール単位の入口を提供する。</li>
+</ul>
+<h2>このモジュールのファイル</h2>
+<ul>
+<li><a class="wiki-source-link" href="../../source/src/bin/pg_combinebackup/backup_label.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/bin/pg_combinebackup/backup_label.c.html&quot;}, '*');"><code>src/bin/pg_combinebackup/backup_label.c</code></a></li>
+<li><a class="wiki-source-link" href="../../source/src/bin/pg_combinebackup/backup_label.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/bin/pg_combinebackup/backup_label.h.html&quot;}, '*');"><code>src/bin/pg_combinebackup/backup_label.h</code></a></li>
+<li><a class="wiki-source-link" href="../../source/src/bin/pg_combinebackup/copy_file.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/bin/pg_combinebackup/copy_file.c.html&quot;}, '*');"><code>src/bin/pg_combinebackup/copy_file.c</code></a></li>
+<li><a class="wiki-source-link" href="../../source/src/bin/pg_combinebackup/copy_file.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/bin/pg_combinebackup/copy_file.h.html&quot;}, '*');"><code>src/bin/pg_combinebackup/copy_file.h</code></a></li>
+<li><a class="wiki-source-link" href="../../source/src/bin/pg_combinebackup/load_manifest.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/bin/pg_combinebackup/load_manifest.c.html&quot;}, '*');"><code>src/bin/pg_combinebackup/load_manifest.c</code></a></li>
+<li><a class="wiki-source-link" href="../../source/src/bin/pg_combinebackup/load_manifest.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/bin/pg_combinebackup/load_manifest.h.html&quot;}, '*');"><code>src/bin/pg_combinebackup/load_manifest.h</code></a></li>
+<li><a class="wiki-source-link" href="../../source/src/bin/pg_combinebackup/pg_combinebackup.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/bin/pg_combinebackup/pg_combinebackup.c.html&quot;}, '*');"><code>src/bin/pg_combinebackup/pg_combinebackup.c</code></a></li>
+<li><a class="wiki-source-link" href="../../source/src/bin/pg_combinebackup/reconstruct.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/bin/pg_combinebackup/reconstruct.c.html&quot;}, '*');"><code>src/bin/pg_combinebackup/reconstruct.c</code></a></li>
+<li><a class="wiki-source-link" href="../../source/src/bin/pg_combinebackup/reconstruct.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/bin/pg_combinebackup/reconstruct.h.html&quot;}, '*');"><code>src/bin/pg_combinebackup/reconstruct.h</code></a></li>
+<li><a class="wiki-source-link" href="../../source/src/bin/pg_combinebackup/write_manifest.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/bin/pg_combinebackup/write_manifest.c.html&quot;}, '*');"><code>src/bin/pg_combinebackup/write_manifest.c</code></a></li>
+<li><a class="wiki-source-link" href="../../source/src/bin/pg_combinebackup/write_manifest.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/bin/pg_combinebackup/write_manifest.h.html&quot;}, '*');"><code>src/bin/pg_combinebackup/write_manifest.h</code></a></li>
+</ul>
+<h2>主要なデータ構造</h2>
+<ul>
+<li><a class="wiki-source-link" href="../../source/src/bin/pg_combinebackup/copy_file.h.html#L19" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__bin__pg_combinebackup__copy_file_h__CopyMethod.html&quot;}, '*');"><code>CopyMethod</code></a></li>
+<li><code>manifest_file</code></li>
+<li><code>manifest_wal_range</code></li>
+<li><code>manifest_data</code></li>
+<li><a class="wiki-source-link" href="../../source/src/bin/pg_combinebackup/pg_combinebackup.c.html#L52" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__bin__pg_combinebackup__pg_combinebackup_c__cb_cleanup_dir.html&quot;}, '*');"><code>cb_cleanup_dir</code></a></li>
+<li><a class="wiki-source-link" href="../../source/src/bin/pg_combinebackup/pg_combinebackup.c.html#L62" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__bin__pg_combinebackup__pg_combinebackup_c__cb_tablespace_mapping.html&quot;}, '*');"><code>cb_tablespace_mapping</code></a></li>
+<li><a class="wiki-source-link" href="../../source/src/bin/pg_combinebackup/pg_combinebackup.c.html#L72" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__bin__pg_combinebackup__pg_combinebackup_c__cb_options.html&quot;}, '*');"><code>cb_options</code></a></li>
+<li><a class="wiki-source-link" href="../../source/src/bin/pg_combinebackup/pg_combinebackup.c.html#L92" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__bin__pg_combinebackup__pg_combinebackup_c__cb_tablespace.html&quot;}, '*');"><code>cb_tablespace</code></a></li>
+<li><a class="wiki-source-link" href="../../source/src/bin/pg_combinebackup/reconstruct.c.html#L37" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__bin__pg_combinebackup__reconstruct_c__rfile.html&quot;}, '*');"><code>rfile</code></a></li>
+<li><code>manifest_writer</code></li>
+</ul>
+<h2>主なフロー</h2>
+<p>初期モジュールページでは、まだエンドツーエンドのフローを推論しません。</p>
+<h2>外部依存</h2>
+<ul>
+<li><code>common/checksum_helper.h</code></li>
+<li><a class="wiki-source-link" href="../../source/src/include/postgres_fe.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/postgres_fe.h.html&quot;}, '*');"><code>postgres_fe.h</code></a></li>
+<li><code>common/logging.h</code></li>
+<li><code>common/file_perm.h</code></li>
+<li><code>lib/stringinfo.h</code></li>
+<li><a class="wiki-source-link" href="../../source/src/bin/pg_combinebackup/copy_file.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/bin/pg_combinebackup/copy_file.h.html&quot;}, '*');"><code>copy_file.h</code></a></li>
+<li><a class="wiki-source-link" href="../../source/src/bin/pg_combinebackup/load_manifest.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/bin/pg_combinebackup/load_manifest.h.html&quot;}, '*');"><code>load_manifest.h</code></a></li>
+<li><code>access/xlogdefs.h</code></li>
+<li><a class="wiki-source-link" href="../../source/src/bin/pg_combinebackup/write_manifest.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/bin/pg_combinebackup/write_manifest.h.html&quot;}, '*');"><code>write_manifest.h</code></a></li>
+<li><a class="wiki-source-link" href="../../source/src/bin/pg_combinebackup/backup_label.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/bin/pg_combinebackup/backup_label.h.html&quot;}, '*');"><code>backup_label.h</code></a></li>
+</ul>
+<h2>内部構成</h2>
+<ul>
+<li>子モジュール数: 0</li>
+</ul>
+<h2>推奨読書順</h2>
+<p>1. <a class="wiki-source-link" href="../../source/src/bin/pg_combinebackup/load_manifest.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/bin/pg_combinebackup/load_manifest.h.html&quot;}, '*');"><code>src/bin/pg_combinebackup/load_manifest.h</code></a> 2. <a class="wiki-source-link" href="../../source/src/bin/pg_combinebackup/copy_file.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/bin/pg_combinebackup/copy_file.h.html&quot;}, '*');"><code>src/bin/pg_combinebackup/copy_file.h</code></a> 3. <a class="wiki-source-link" href="../../source/src/bin/pg_combinebackup/write_manifest.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/bin/pg_combinebackup/write_manifest.h.html&quot;}, '*');"><code>src/bin/pg_combinebackup/write_manifest.h</code></a> 4. <a class="wiki-source-link" href="../../source/src/bin/pg_combinebackup/backup_label.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/bin/pg_combinebackup/backup_label.h.html&quot;}, '*');"><code>src/bin/pg_combinebackup/backup_label.h</code></a> 5. <a class="wiki-source-link" href="../../source/src/bin/pg_combinebackup/reconstruct.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/bin/pg_combinebackup/reconstruct.h.html&quot;}, '*');"><code>src/bin/pg_combinebackup/reconstruct.h</code></a> 6. <a class="wiki-source-link" href="../../source/src/bin/pg_combinebackup/pg_combinebackup.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/bin/pg_combinebackup/pg_combinebackup.c.html&quot;}, '*');"><code>src/bin/pg_combinebackup/pg_combinebackup.c</code></a> 7. <a class="wiki-source-link" href="../../source/src/bin/pg_combinebackup/load_manifest.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/bin/pg_combinebackup/load_manifest.c.html&quot;}, '*');"><code>src/bin/pg_combinebackup/load_manifest.c</code></a> 8. <a class="wiki-source-link" href="../../source/src/bin/pg_combinebackup/reconstruct.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/bin/pg_combinebackup/reconstruct.c.html&quot;}, '*');"><code>src/bin/pg_combinebackup/reconstruct.c</code></a> 9. <a class="wiki-source-link" href="../../source/src/bin/pg_combinebackup/copy_file.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/bin/pg_combinebackup/copy_file.c.html&quot;}, '*');"><code>src/bin/pg_combinebackup/copy_file.c</code></a> 10. <a class="wiki-source-link" href="../../source/src/bin/pg_combinebackup/write_manifest.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/bin/pg_combinebackup/write_manifest.c.html&quot;}, '*');"><code>src/bin/pg_combinebackup/write_manifest.c</code></a> 11. <a class="wiki-source-link" href="../../source/src/bin/pg_combinebackup/backup_label.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/bin/pg_combinebackup/backup_label.c.html&quot;}, '*');"><code>src/bin/pg_combinebackup/backup_label.c</code></a></p>
+<h2>未解決の問い</h2>
+<ul>
+<li>LLM ベースのモジュール合成を追加した後で、責務とフローを精緻化する。</li>
+</ul><script>
+(function() {
+  function notifyParent() {
+    if (parent === window) return;
+    parent.postMessage({type: "frame-location", frame: window.name || "", href: window.location.href}, "*");
+  }
+  document.addEventListener("click", function(event) {
+    const link = event.target.closest("a[data-panel]");
+    if (!link || parent === window) return;
+    parent.postMessage({type: "source-link", panel: link.dataset.panel}, "*");
+  });
+  window.addEventListener("load", notifyParent);
+  window.addEventListener("hashchange", notifyParent);
+})();
+</script></body></html>

@@ -1,0 +1,60 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>symbols/src__backend__access__transam__xlogprefetcher_c__lrq_alloc.md</title><link rel="stylesheet" href="../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../source/src/backend/access/transam/xlogprefetcher.c.html#L212" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__access__transam__xlogprefetcher_c__lrq_alloc.html&quot;}, '*');">lrq_alloc</a></h1>
+<h2>定義</h2>
+<ul>
+<li>種別: <code>function</code></li>
+<li>定義箇所: <code>src/backend/access/transam/xlogprefetcher.c:212</code></li>
+<li>所属モジュール: <a class="wiki-entity-link" href="../modules/src__backend__access__transam.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/modules/src__backend__access__transam.html&quot;, &quot;source&quot;: &quot;source/src/backend/access/transam/clog.c.html&quot;}, '*');"><code>module:src/backend/access/transam</code></a></li>
+</ul>
+<h2>目的</h2>
+<p>静的シンボル索引から生成された初期シンボルページです。</p>
+<h2>シグネチャまたは形状</h2>
+<ul>
+<li>シグネチャ: <code>static inline LsnReadQueue * lrq_alloc(uint32 max_distance, uint32 max_inflight, uintptr_t lrq_private, LsnReadQueueNextFun next)</code></li>
+</ul>
+<h2>入力と出力</h2>
+<ul>
+<li>引数: <code>uint32 max_distance</code>, <code>uint32 max_inflight</code>, <code>uintptr_t lrq_private</code>, <code>LsnReadQueueNextFun next</code></li>
+<li>戻り値: <code>LsnReadQueue *</code></li>
+</ul>
+<h2>前提条件と不変条件</h2>
+<p>まだ解析していません。</p>
+<h2>アルゴリズムまたは振る舞い</h2>
+<ul>
+<li>複雑度: <code>medium</code> (score 10)</li>
+</ul>
+<p>まだ解析していません。</p>
+<h2>呼び出し元と呼び出し先</h2>
+<ul>
+<li>呼び出し元: <a class="wiki-source-link" href="../../source/src/backend/access/transam/xlogprefetcher.c.html#L986" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__access__transam__xlogprefetcher_c__XLogPrefetcherReadRecord.html&quot;}, '*');"><code>XLogPrefetcherReadRecord</code></a></li>
+<li>呼び出し先: なし</li>
+<li>呼び出し元サイト: <a class="wiki-source-link" href="../../source/src/backend/access/transam/xlogprefetcher.c.html#L986" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__access__transam__xlogprefetcher_c__XLogPrefetcherReadRecord.html&quot;}, '*');"><code>XLogPrefetcherReadRecord</code></a> at <code>src/backend/access/transam/xlogprefetcher.c:1016:32</code> (direct, confidence=high, resolved=<a class="wiki-entity-link" href="src__backend__access__transam__xlogprefetcher_c__lrq_alloc.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__access__transam__xlogprefetcher_c__lrq_alloc.html&quot;, &quot;source&quot;: &quot;source/src/backend/access/transam/xlogprefetcher.c.html#L212&quot;}, '*');"><code>symbol:src/backend/access/transam/xlogprefetcher.c#lrq_alloc</code></a>)</li>
+<li>呼び出しサイト: <a class="wiki-source-link" href="../../source/src/include/c.h.html#L950" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/c.h.html&quot;}, '*');"><code>Assert</code></a> at <code>src/backend/access/transam/xlogprefetcher.c:221:2</code> (unresolved), <code>palloc</code> at <code>src/backend/access/transam/xlogprefetcher.c:224:8</code> (unresolved, confidence=low)</li>
+</ul>
+<h2>関連データ構造</h2>
+<p><a class="wiki-source-link" href="../../source/src/backend/access/transam/xlogprefetcher.c.html#L106" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__access__transam__xlogprefetcher_c__LsnReadQueue.html&quot;}, '*');"><code>LsnReadQueue</code></a>, <code>uint32</code></p>
+<h2>ソース抜粋</h2>
+<p>~~~c static <a class="wiki-source-link" href="../../source/src/include/c.h.html#L116" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/c.h.html&quot;}, '*');">inline</a> <a class="wiki-source-link" href="../../source/src/backend/access/transam/xlogprefetcher.c.html#L106" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__access__transam__xlogprefetcher_c__LsnReadQueue.html&quot;}, '*');">LsnReadQueue</a> * <a class="wiki-source-link" href="../../source/src/backend/access/transam/xlogprefetcher.c.html#L212" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__access__transam__xlogprefetcher_c__lrq_alloc.html&quot;}, '*');">lrq_alloc</a>(uint32 max_distance, uint32 max_inflight, uintptr_t lrq_private, LsnReadQueueNextFun next) { <a class="wiki-source-link" href="../../source/src/backend/access/transam/xlogprefetcher.c.html#L106" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__access__transam__xlogprefetcher_c__LsnReadQueue.html&quot;}, '*');">LsnReadQueue</a> *lrq; uint32		size;</p>
+<p><a class="wiki-source-link" href="../../source/src/include/c.h.html#L950" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/c.h.html&quot;}, '*');">Assert</a>(max_distance &gt;= max_inflight);</p>
+<p>size = max_distance + 1;	/* full ring buffer has a gap */ lrq = palloc(offsetof(<a class="wiki-source-link" href="../../source/src/backend/access/transam/xlogprefetcher.c.html#L106" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__access__transam__xlogprefetcher_c__LsnReadQueue.html&quot;}, '*');">LsnReadQueue</a>, queue) + sizeof(lrq-&gt;queue[0]) * size); lrq-&gt;lrq_private = lrq_private; lrq-&gt;max_inflight = max_inflight; lrq-&gt;size = size; lrq-&gt;next = next; lrq-&gt;head = 0; lrq-&gt;tail = 0; lrq-&gt;inflight = 0; lrq-&gt;completed = 0;</p>
+<p>return lrq; } ~~~</p>
+<h2>失敗モードと境界条件</h2>
+<p>まだ解析していません。</p>
+<h2>保守担当者向けメモ</h2>
+<ul>
+<li>後続フェーズで、ソース本文の文脈と caller/callee 情報を使ってこのページを強化する。</li>
+</ul><script>
+(function() {
+  function notifyParent() {
+    if (parent === window) return;
+    parent.postMessage({type: "frame-location", frame: window.name || "", href: window.location.href}, "*");
+  }
+  document.addEventListener("click", function(event) {
+    const link = event.target.closest("a[data-panel]");
+    if (!link || parent === window) return;
+    parent.postMessage({type: "source-link", panel: link.dataset.panel}, "*");
+  });
+  window.addEventListener("load", notifyParent);
+  window.addEventListener("hashchange", notifyParent);
+})();
+</script></body></html>

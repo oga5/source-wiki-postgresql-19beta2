@@ -1,0 +1,93 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>symbols/src__include__nodes__memnodes_h__MemoryContextMethods.md</title><link rel="stylesheet" href="../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../source/src/include/nodes/memnodes.h.html#L58" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__nodes__memnodes_h__MemoryContextMethods.html&quot;}, '*');">MemoryContextMethods</a></h1>
+<h2>定義</h2>
+<ul>
+<li>種別: <code>struct</code></li>
+<li>定義箇所: <code>src/include/nodes/memnodes.h:58</code></li>
+<li>所属モジュール: <a class="wiki-entity-link" href="../modules/src__include__nodes.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/modules/src__include__nodes.html&quot;, &quot;source&quot;: &quot;source/src/include/nodes/bitmapset.h.html&quot;}, '*');"><code>module:src/include/nodes</code></a></li>
+</ul>
+<h2>目的</h2>
+<p>静的シンボル索引から生成された初期シンボルページです。</p>
+<h2>シグネチャまたは形状</h2>
+<ul>
+<li>シグネチャ: <code>typedef struct MemoryContextMethods</code></li>
+</ul>
+<h2>入力と出力</h2>
+<p>まだ解析していません。</p>
+<h2>前提条件と不変条件</h2>
+<p>まだ解析していません。</p>
+<h2>アルゴリズムまたは振る舞い</h2>
+<p>まだ解析していません。</p>
+<h2>呼び出し元と呼び出し先</h2>
+<ul>
+<li>呼び出し元: なし</li>
+<li>呼び出し先: なし</li>
+<li>呼び出し元サイト: なし</li>
+<li>呼び出しサイト: なし</li>
+</ul>
+<h2>関連データ構造</h2>
+<p><code>MemoryContext</code>, <a class="wiki-source-link" href="../../source/src/include/nodes/memnodes.h.html#L29" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__nodes__memnodes_h__MemoryContextCounters.html&quot;}, '*');"><code>MemoryContextCounters</code></a>, <code>Size</code></p>
+<h2>ソース抜粋</h2>
+<p>~~~c typedef struct <a class="wiki-source-link" href="../../source/src/include/nodes/memnodes.h.html#L58" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__nodes__memnodes_h__MemoryContextMethods.html&quot;}, '*');">MemoryContextMethods</a> { /*</p>
+<ul>
+<li>Function to handle memory allocation requests of &#x27;size&#x27; to allocate</li>
+<li>memory into the given &#x27;context&#x27;.  The function must handle flags</li>
+<li>MCXT_ALLOC_HUGE and MCXT_ALLOC_NO_OOM.  MCXT_ALLOC_ZERO <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> handled by</li>
+<li>the calling function.</li>
+<p>*/ void	   *(*alloc) (MemoryContext context, Size size, int flags);</p>
+</ul>
+<p>/* call this free_p in case someone #define&#x27;s <a class="wiki-source-link" href="../../source/src/include/snowball/snowball_runtime.h.html#L65" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/snowball/snowball_runtime.h.html&quot;}, '*');">free</a>() */ void		(*free_p) (void *pointer);</p>
+<p>/*</p>
+<ul>
+<li>Function to handle a size change request for an existing allocation.</li>
+<li>The implementation must handle flags MCXT_ALLOC_HUGE and</li>
+<li>MCXT_ALLOC_NO_OOM.  MCXT_ALLOC_ZERO <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> handled by the calling function.</li>
+<p>*/ void	   *(*<a class="wiki-source-link" href="../../source/src/include/snowball/snowball_runtime.h.html#L60" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/snowball/snowball_runtime.h.html&quot;}, '*');">realloc</a>) (void *pointer, Size size, int flags);</p>
+</ul>
+<p>/*</p>
+<ul>
+<li>Invalidate all previous allocations in the given memory context and</li>
+<li>prepare the context for a new set of allocations.  Implementations may</li>
+<li>optionally <a class="wiki-source-link" href="../../source/src/include/snowball/snowball_runtime.h.html#L65" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/snowball/snowball_runtime.h.html&quot;}, '*');">free</a>() excess memory back to the OS during this time.</li>
+<p>*/ void		(*<a class="wiki-source-link" href="../../source/src/interfaces/ecpg/test/expected/sql-declare.c.html#L600" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__interfaces__ecpg__test__expected__sql-declare_c__reset.html&quot;}, '*');">reset</a>) (MemoryContext context);</p>
+</ul>
+<p>/* Free all memory consumed by the given MemoryContext. */ void		(*delete_context) (MemoryContext context);</p>
+<p>/* Return the MemoryContext that the given pointer belongs to. */ MemoryContext (*get_chunk_context) (void *pointer);</p>
+<p>/*</p>
+<ul>
+<li>Return the number of bytes consumed by the given pointer within its</li>
+<li>memory context, including the overhead of alignment and chunk headers.</li>
+<p>*/ Size		(*get_chunk_space) (void *pointer);</p>
+</ul>
+<p>/*</p>
+<ul>
+<li>Return <a class="wiki-source-link" href="../../source/src/tools/pg_bsd_indent/indent_globs.h.html#L46" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/tools/pg_bsd_indent/indent_globs.h.html&quot;}, '*');">true</a> if the given MemoryContext has not had any allocations</li>
+<li>since it was created or last <a class="wiki-source-link" href="../../source/src/interfaces/ecpg/test/expected/sql-declare.c.html#L600" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__interfaces__ecpg__test__expected__sql-declare_c__reset.html&quot;}, '*');">reset</a>.</li>
+<p>*/ bool		(*is_empty) (MemoryContext context); void		(*stats) (MemoryContext context, MemoryStatsPrintFunc printfunc, void *passthru, <a class="wiki-source-link" href="../../source/src/include/nodes/memnodes.h.html#L29" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__nodes__memnodes_h__MemoryContextCounters.html&quot;}, '*');">MemoryContextCounters</a> *totals, bool print_to_stderr); #ifdef <a class="wiki-source-link" href="../../source/src/include/pg_config_manual.h.html#L278" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/pg_config_manual.h.html&quot;}, '*');">MEMORY_CONTEXT_CHECKING</a></p>
+</ul>
+<p>/*</p>
+<ul>
+<li>Perform validation checks on the given context and raise any discovered</li>
+<li>anomalies as WARNINGs.</li>
+<p>*/ void		(*check) (MemoryContext context); #endif } <a class="wiki-source-link" href="../../source/src/include/nodes/memnodes.h.html#L58" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__nodes__memnodes_h__MemoryContextMethods.html&quot;}, '*');">MemoryContextMethods</a>; ~~~</p>
+</ul>
+<h2>失敗モードと境界条件</h2>
+<p>まだ解析していません。</p>
+<h2>保守担当者向けメモ</h2>
+<ul>
+<li>後続フェーズで、ソース本文の文脈と caller/callee 情報を使ってこのページを強化する。</li>
+</ul><script>
+(function() {
+  function notifyParent() {
+    if (parent === window) return;
+    parent.postMessage({type: "frame-location", frame: window.name || "", href: window.location.href}, "*");
+  }
+  document.addEventListener("click", function(event) {
+    const link = event.target.closest("a[data-panel]");
+    if (!link || parent === window) return;
+    parent.postMessage({type: "source-link", panel: link.dataset.panel}, "*");
+  });
+  window.addEventListener("load", notifyParent);
+  window.addEventListener("hashchange", notifyParent);
+})();
+</script></body></html>

@@ -1,0 +1,16 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>contrib/pg_prewarm/expected/pg_prewarm.out</title><link rel="stylesheet" href="../../../../styles.css"></head><body><header class="source-header">contrib/pg_prewarm/expected/pg_prewarm.out</header><pre class="source-code"><div class="code-line" id="L1"><a class="line-no" href="#L1">1</a><span>-- Test pg_prewarm extension</span></div><div class="code-line" id="L2"><a class="line-no" href="#L2">2</a><span>CREATE EXTENSION pg_prewarm;</span></div><div class="code-line" id="L3"><a class="line-no" href="#L3">3</a><span>-- pg_prewarm() should fail if the target relation has no storage.</span></div><div class="code-line" id="L4"><a class="line-no" href="#L4">4</a><span>CREATE TABLE test (c1 int) PARTITION BY RANGE (c1);</span></div><div class="code-line" id="L5"><a class="line-no" href="#L5">5</a><span>SELECT pg_prewarm(&#x27;test&#x27;, &#x27;buffer&#x27;);</span></div><div class="code-line" id="L6"><a class="line-no" href="#L6">6</a><span>ERROR:  relation &quot;test&quot; does not have storage</span></div><div class="code-line" id="L7"><a class="line-no" href="#L7">7</a><span>DETAIL:  This operation is not supported for partitioned tables.</span></div><div class="code-line" id="L8"><a class="line-no" href="#L8">8</a><span>-- Cleanup</span></div><div class="code-line" id="L9"><a class="line-no" href="#L9">9</a><span>DROP TABLE test;</span></div><div class="code-line" id="L10"><a class="line-no" href="#L10">10</a><span>DROP EXTENSION pg_prewarm;</span></div></pre><script>parent.postMessage({"type": "source-page", "panel": "panels/contrib/pg_prewarm/expected/pg_prewarm.out.html"}, "*");</script><script>
+(function() {
+  function notifyParent() {
+    if (parent === window) return;
+    parent.postMessage({type: "frame-location", frame: window.name || "", href: window.location.href}, "*");
+  }
+  document.addEventListener("click", function(event) {
+    const link = event.target.closest("a[data-panel]");
+    if (!link || parent === window) return;
+    parent.postMessage({type: "source-link", panel: link.dataset.panel}, "*");
+  });
+  window.addEventListener("load", notifyParent);
+  window.addEventListener("hashchange", notifyParent);
+})();
+</script></body></html>

@@ -1,0 +1,96 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>symbols/src__backend__main__main_c__startup_hacks.md</title><link rel="stylesheet" href="../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../source/src/backend/main/main.c.html#L283" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__main__main_c__startup_hacks.html&quot;}, '*');">startup_hacks</a></h1>
+<h2>定義</h2>
+<ul>
+<li>種別: <code>function</code></li>
+<li>定義箇所: <code>src/backend/main/main.c:283</code></li>
+<li>所属モジュール: <a class="wiki-entity-link" href="../modules/src__backend__main.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/modules/src__backend__main.html&quot;, &quot;source&quot;: &quot;source/src/backend/main/main.c.html&quot;}, '*');"><code>module:src/backend/main</code></a></li>
+</ul>
+<h2>目的</h2>
+<p>静的シンボル索引から生成された初期シンボルページです。</p>
+<h2>シグネチャまたは形状</h2>
+<ul>
+<li>シグネチャ: <code>static void startup_hacks(const char *progname)</code></li>
+</ul>
+<h2>入力と出力</h2>
+<ul>
+<li>引数: <code>const char *progname</code></li>
+<li>戻り値: <code>void</code></li>
+</ul>
+<h2>前提条件と不変条件</h2>
+<p>まだ解析していません。</p>
+<h2>アルゴリズムまたは振る舞い</h2>
+<ul>
+<li>複雑度: <code>medium</code> (score 10)</li>
+</ul>
+<p>まだ解析していません。</p>
+<h2>呼び出し元と呼び出し先</h2>
+<ul>
+<li>呼び出し元: <code>main</code></li>
+<li>呼び出し先: <code>write_stderr</code></li>
+<li>呼び出し元サイト: <code>main</code> at <code>src/backend/main/main.c:91:2</code> (direct, confidence=high, resolved=<a class="wiki-entity-link" href="src__backend__main__main_c__startup_hacks.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__main__main_c__startup_hacks.html&quot;, &quot;source&quot;: &quot;source/src/backend/main/main.c.html#L283&quot;}, '*');"><code>symbol:src/backend/main/main.c#startup_hacks</code></a>)</li>
+<li>呼び出しサイト: <code>setvbuf</code> at <code>src/backend/main/main.c:295:3</code> (unresolved), <code>setvbuf</code> at <code>src/backend/main/main.c:296:3</code> (unresolved), <code>WSAStartup</code> at <code>src/backend/main/main.c:299:9</code> (unresolved), <code>MAKEWORD</code> at <code>src/backend/main/main.c:299:20</code> (unresolved), <code>write_stderr</code> at <code>src/backend/main/main.c:302:4</code> (direct, confidence=high, resolved=<a class="wiki-entity-link" href="src__backend__utils__error__elog_c__write_stderr.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__utils__error__elog_c__write_stderr.html&quot;, &quot;source&quot;: &quot;source/src/backend/utils/error/elog.c.html#L4228&quot;}, '*');"><code>symbol:src/backend/utils/error/elog.c#write_stderr</code></a>), <code>exit</code> at <code>src/backend/main/main.c:304:4</code> (unresolved), <code>_set_abort_behavior</code> at <code>src/backend/main/main.c:318:3</code> (unresolved), <code>SetErrorMode</code> at <code>src/backend/main/main.c:334:3</code> (unresolved), <code>_set_error_mode</code> at <code>src/backend/main/main.c:340:3</code> (unresolved), <code>_CrtSetReportMode</code> at <code>src/backend/main/main.c:350:3</code> (unresolved), <code>_CrtSetReportFile</code> at <code>src/backend/main/main.c:351:3</code> (unresolved), <code>_CrtSetReportMode</code> at <code>src/backend/main/main.c:352:3</code> (unresolved), <code>_CrtSetReportFile</code> at <code>src/backend/main/main.c:353:3</code> (unresolved), <code>_CrtSetReportMode</code> at <code>src/backend/main/main.c:354:3</code> (unresolved), <code>_CrtSetReportFile</code> at <code>src/backend/main/main.c:355:3</code> (unresolved)</li>
+</ul>
+<h2>関連データ構造</h2>
+<p>なし</p>
+<h2>ソース抜粋</h2>
+<p>~~~c static void <a class="wiki-source-link" href="../../source/src/backend/main/main.c.html#L283" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__main__main_c__startup_hacks.html&quot;}, '*');">startup_hacks</a>(const char *progname) { /*</p>
+<ul>
+<li>Windows-specific execution environment hacking.</li>
+<p>*/ #ifdef <a class="wiki-source-link" href="../../source/src/include/port/win32.h.html#L9" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/port/win32.h.html&quot;}, '*');">WIN32</a> { WSADATA		wsaData; int			<a class="wiki-source-link" href="../../source/src/tools/pg_bsd_indent/err.c.html#L42" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__tools__pg_bsd_indent__err_c__err.html&quot;}, '*');">err</a>;</p>
+</ul>
+<p>/* Make <a class="wiki-source-link" href="../../source/src/bin/pg_test_timing/pg_test_timing.c.html#L357" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__bin__pg_test_timing__pg_test_timing_c__output.html&quot;}, '*');">output</a> streams unbuffered by default */ setvbuf(stdout, NULL, _IONBF, 0); setvbuf(stderr, NULL, _IONBF, 0);</p>
+<p>/* Prepare Winsock */ <a class="wiki-source-link" href="../../source/src/tools/pg_bsd_indent/err.c.html#L42" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__tools__pg_bsd_indent__err_c__err.html&quot;}, '*');">err</a> = WSAStartup(MAKEWORD(2, 2), &amp;wsaData); if (<a class="wiki-source-link" href="../../source/src/tools/pg_bsd_indent/err.c.html#L42" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__tools__pg_bsd_indent__err_c__err.html&quot;}, '*');">err</a> != 0) { write_stderr(&quot;%s: WSAStartup failed: %d\n&quot;, progname, <a class="wiki-source-link" href="../../source/src/tools/pg_bsd_indent/err.c.html#L42" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__tools__pg_bsd_indent__err_c__err.html&quot;}, '*');">err</a>); exit(1); }</p>
+<p>/*</p>
+<ul>
+<li>By default abort() only generates a crash-dump in *non* debug</li>
+<li>builds. As our <a class="wiki-source-link" href="../../source/src/include/c.h.html#L950" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/c.h.html&quot;}, '*');">Assert</a>() / <a class="wiki-source-link" href="../../source/src/backend/utils/error/assert.c.html#L29" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__utils__error__assert_c__ExceptionalCondition.html&quot;}, '*');">ExceptionalCondition</a>() uses abort(),</li>
+<li>leaving the default in place would make debugging harder.</li>
+<p>*</p>
+<li>MINGW&#x27;s own C runtime doesn&#x27;t have _set_abort_behavior(). When</li>
+<li>targeting Microsoft&#x27;s UCRT with mingw, it never links to the debug</li>
+<li>version of the library and thus doesn&#x27;t need the call to</li>
+<li>_set_abort_behavior() either.</li>
+<p>*/ #if !defined(__MINGW32__) &amp;&amp; !defined(__MINGW64__) _set_abort_behavior(_CALL_REPORTFAULT | _WRITE_ABORT_MSG, _CALL_REPORTFAULT | _WRITE_ABORT_MSG); #endif							/* !defined(__MINGW32__) &amp;&amp;</p>
+<li>!defined(__MINGW64__) */</li>
+</ul>
+<p>/*</p>
+<ul>
+<li>SEM_FAILCRITICALERRORS causes more <a class="wiki-source-link" href="../../source/src/timezone/zic.c.html#L183" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/timezone/zic.c.html&quot;}, '*');">errors</a> to be reported to</li>
+<li>callers.</li>
+<p>*</p>
+<li>We used to also specify SEM_NOGPFAULTERRORBOX, but that prevents</li>
+<li>windows crash reporting from working. Which includes registered</li>
+<li>just-in-time debuggers, making it unnecessarily hard to debug</li>
+<li>problems on windows. Now we try to disable sources of popups</li>
+<li>separately below (<a class="wiki-source-link" href="../../source/src/test/regress/pg_regress.c.html#L165" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/test/regress/pg_regress.c.html&quot;}, '*');">note</a> that SEM_NOGPFAULTERRORBOX did not actually</li>
+<li>prevent all sources of such popups).</li>
+<p>*/ SetErrorMode(SEM_FAILCRITICALERRORS);</p>
+</ul>
+<p>/*</p>
+<ul>
+<li>Show <a class="wiki-source-link" href="../../source/src/timezone/zic.c.html#L183" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/timezone/zic.c.html&quot;}, '*');">errors</a> on stderr instead of popup box (<a class="wiki-source-link" href="../../source/src/test/regress/pg_regress.c.html#L165" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/test/regress/pg_regress.c.html&quot;}, '*');">note</a> this doesn&#x27;t</li>
+<li>affect <a class="wiki-source-link" href="../../source/src/timezone/zic.c.html#L183" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/timezone/zic.c.html&quot;}, '*');">errors</a> originating in the C runtime, see below).</li>
+<p>*/ _set_error_mode(_OUT_TO_STDERR);</p>
+</ul>
+<p>/* ~~~</p>
+<h2>失敗モードと境界条件</h2>
+<p>まだ解析していません。</p>
+<h2>保守担当者向けメモ</h2>
+<ul>
+<li>後続フェーズで、ソース本文の文脈と caller/callee 情報を使ってこのページを強化する。</li>
+</ul><script>
+(function() {
+  function notifyParent() {
+    if (parent === window) return;
+    parent.postMessage({type: "frame-location", frame: window.name || "", href: window.location.href}, "*");
+  }
+  document.addEventListener("click", function(event) {
+    const link = event.target.closest("a[data-panel]");
+    if (!link || parent === window) return;
+    parent.postMessage({type: "source-link", panel: link.dataset.panel}, "*");
+  });
+  window.addEventListener("load", notifyParent);
+  window.addEventListener("hashchange", notifyParent);
+})();
+</script></body></html>

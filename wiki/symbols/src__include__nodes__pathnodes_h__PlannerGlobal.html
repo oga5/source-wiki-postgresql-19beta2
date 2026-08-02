@@ -1,0 +1,79 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>symbols/src__include__nodes__pathnodes_h__PlannerGlobal.md</title><link rel="stylesheet" href="../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../source/src/include/nodes/pathnodes.h.html#L168" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__nodes__pathnodes_h__PlannerGlobal.html&quot;}, '*');">PlannerGlobal</a></h1>
+<h2>定義</h2>
+<ul>
+<li>種別: <code>struct</code></li>
+<li>定義箇所: <code>src/include/nodes/pathnodes.h:168</code></li>
+<li>所属モジュール: <a class="wiki-entity-link" href="../modules/src__include__nodes.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/modules/src__include__nodes.html&quot;, &quot;source&quot;: &quot;source/src/include/nodes/bitmapset.h.html&quot;}, '*');"><code>module:src/include/nodes</code></a></li>
+</ul>
+<h2>目的</h2>
+<p>静的シンボル索引から生成された初期シンボルページです。</p>
+<h2>シグネチャまたは形状</h2>
+<ul>
+<li>シグネチャ: <code>typedef struct PlannerGlobal</code></li>
+</ul>
+<h2>入力と出力</h2>
+<p>まだ解析していません。</p>
+<h2>前提条件と不変条件</h2>
+<p>まだ解析していません。</p>
+<h2>アルゴリズムまたは振る舞い</h2>
+<p>まだ解析していません。</p>
+<h2>呼び出し元と呼び出し先</h2>
+<ul>
+<li>呼び出し元: なし</li>
+<li>呼び出し先: なし</li>
+<li>呼び出し元サイト: なし</li>
+<li>呼び出しサイト: なし</li>
+</ul>
+<h2>関連データ構造</h2>
+<p><a class="wiki-source-link" href="../../source/src/include/nodes/bitmapset.h.html#L49" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__nodes__bitmapset_h__Bitmapset.html&quot;}, '*');"><code>Bitmapset</code></a>, <code>HTAB</code>, <code>Index</code>, <code>List</code>, <code>NodeTag</code>, <code>Param</code>, <code>ParamListInfo</code>, <a class="wiki-source-link" href="../../source/src/include/partitioning/partdefs.h.html#L24" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__partitioning__partdefs_h__PartitionDirectory.html&quot;}, '*');"><code>PartitionDirectory</code></a>, <a class="wiki-source-link" href="../../source/src/include/nodes/pathnodes.h.html#L3115" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__nodes__pathnodes_h__PlaceHolderVar.html&quot;}, '*');"><code>PlaceHolderVar</code></a>, <a class="wiki-source-link" href="../../source/src/include/nodes/plannodes.h.html#L1605" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__nodes__plannodes_h__PlanRowMark.html&quot;}, '*');"><code>PlanRowMark</code></a>, <code>state</code>, <a class="wiki-source-link" href="../../source/src/include/nodes/primnodes.h.html#L1073" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__nodes__primnodes_h__SubPlan.html&quot;}, '*');"><code>SubPlan</code></a>, <a class="wiki-source-link" href="../../source/src/include/nodes/plannodes.h.html#L1851" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__nodes__plannodes_h__SubPlanRTInfo.html&quot;}, '*');"><code>SubPlanRTInfo</code></a>, <code>uint64</code>, <a class="wiki-source-link" href="../../source/src/interfaces/ecpg/preproc/type.h.html#L89" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__interfaces__ecpg__preproc__type_h__when.html&quot;}, '*');"><code>when</code></a></p>
+<h2>ソース抜粋</h2>
+<p>~~~c typedef struct <a class="wiki-source-link" href="../../source/src/include/nodes/pathnodes.h.html#L168" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__nodes__pathnodes_h__PlannerGlobal.html&quot;}, '*');">PlannerGlobal</a> { <a class="wiki-source-link" href="../../source/src/include/nodes/nodes.h.html#L124" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/nodes/nodes.h.html&quot;}, '*');">pg_node_attr</a>(no_copy_equal, no_read, no_query_jumble)</p>
+<p>NodeTag		type;</p>
+<p>/* Param values provided to <a class="wiki-source-link" href="../../source/src/backend/optimizer/plan/planner.c.html#L327" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__plan__planner_c__planner.html&quot;}, '*');">planner</a>() */ ParamListInfo boundParams <a class="wiki-source-link" href="../../source/src/include/nodes/nodes.h.html#L124" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/nodes/nodes.h.html&quot;}, '*');">pg_node_attr</a>(read_write_ignore);</p>
+<p>/* Plans for <a class="wiki-source-link" href="../../source/src/include/nodes/primnodes.h.html#L1073" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__nodes__primnodes_h__SubPlan.html&quot;}, '*');">SubPlan</a> nodes */ List	   *subplans;</p>
+<p>/* Paths from which the <a class="wiki-source-link" href="../../source/src/include/nodes/primnodes.h.html#L1073" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__nodes__primnodes_h__SubPlan.html&quot;}, '*');">SubPlan</a> Plans were made */ List	   *subpaths;</p>
+<p>/* PlannerInfos for <a class="wiki-source-link" href="../../source/src/include/nodes/primnodes.h.html#L1073" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__nodes__primnodes_h__SubPlan.html&quot;}, '*');">SubPlan</a> nodes */ List	   *subroots <a class="wiki-source-link" href="../../source/src/include/nodes/nodes.h.html#L124" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/nodes/nodes.h.html&quot;}, '*');">pg_node_attr</a>(read_write_ignore);</p>
+<p>/* names already used for subplans (list of C strings) */ List	   *subplanNames <a class="wiki-source-link" href="../../source/src/include/nodes/nodes.h.html#L124" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/nodes/nodes.h.html&quot;}, '*');">pg_node_attr</a>(read_write_ignore);</p>
+<p>/* indices of subplans that require REWIND */ <a class="wiki-source-link" href="../../source/src/include/nodes/bitmapset.h.html#L49" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__nodes__bitmapset_h__Bitmapset.html&quot;}, '*');">Bitmapset</a>  *rewindPlanIDs;</p>
+<p>/* &quot;flat&quot; rangetable for executor */ List	   *finalrtable;</p>
+<p>/*</p>
+<ul>
+<li>RT indexes of all relation RTEs in finalrtable (RTE_RELATION and</li>
+<li>RTE_SUBQUERY RTEs of views)</li>
+<p>*/ <a class="wiki-source-link" href="../../source/src/include/nodes/bitmapset.h.html#L49" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__nodes__bitmapset_h__Bitmapset.html&quot;}, '*');">Bitmapset</a>  *allRelids;</p>
+</ul>
+<p>/*</p>
+<ul>
+<li>RT indexes of all leaf <a class="wiki-source-link" href="../../source/src/bin/pgbench/pgbench.c.html#L224" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/bin/pgbench/pgbench.c.html&quot;}, '*');">partitions</a> in nodes that support pruning and are</li>
+<li>subject to runtime pruning at <a class="wiki-source-link" href="../../source/src/test/regress/pg_regress.c.html#L164" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/test/regress/pg_regress.c.html&quot;}, '*');">plan</a> initialization time (&quot;initial&quot;</li>
+<li>pruning).</li>
+<p>*/ <a class="wiki-source-link" href="../../source/src/include/nodes/bitmapset.h.html#L49" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__nodes__bitmapset_h__Bitmapset.html&quot;}, '*');">Bitmapset</a>  *prunableRelids;</p>
+</ul>
+<p>/* &quot;flat&quot; list of RTEPermissionInfos */ List	   *finalrteperminfos;</p>
+<p>/* list of <a class="wiki-source-link" href="../../source/src/include/nodes/plannodes.h.html#L1851" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__nodes__plannodes_h__SubPlanRTInfo.html&quot;}, '*');">SubPlanRTInfo</a> nodes */ List	   *subrtinfos;</p>
+<p>/* &quot;flat&quot; list of PlanRowMarks */ List	   *finalrowmarks;</p>
+<p>/* &quot;flat&quot; list of integer RT indexes */ List	   *resultRelations;</p>
+<p>/* &quot;flat&quot; list of AppendRelInfos */ List	   *appendRelations;</p>
+<p>/* &quot;flat&quot; list of PartitionPruneInfos */ List	   *partPruneInfos;</p>
+<p>/* OIDs of relations the <a class="wiki-source-link" href="../../source/src/test/regress/pg_regress.c.html#L164" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/test/regress/pg_regress.c.html&quot;}, '*');">plan</a> depends on */ List	   *relationOids; ~~~</p>
+<h2>失敗モードと境界条件</h2>
+<p>まだ解析していません。</p>
+<h2>保守担当者向けメモ</h2>
+<ul>
+<li>後続フェーズで、ソース本文の文脈と caller/callee 情報を使ってこのページを強化する。</li>
+</ul><script>
+(function() {
+  function notifyParent() {
+    if (parent === window) return;
+    parent.postMessage({type: "frame-location", frame: window.name || "", href: window.location.href}, "*");
+  }
+  document.addEventListener("click", function(event) {
+    const link = event.target.closest("a[data-panel]");
+    if (!link || parent === window) return;
+    parent.postMessage({type: "source-link", panel: link.dataset.panel}, "*");
+  });
+  window.addEventListener("load", notifyParent);
+  window.addEventListener("hashchange", notifyParent);
+})();
+</script></body></html>

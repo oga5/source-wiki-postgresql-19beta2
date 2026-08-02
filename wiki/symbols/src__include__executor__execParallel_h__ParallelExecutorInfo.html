@@ -1,0 +1,51 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>symbols/src__include__executor__execParallel_h__ParallelExecutorInfo.md</title><link rel="stylesheet" href="../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../source/src/include/executor/execParallel.h.html#L24" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__executor__execParallel_h__ParallelExecutorInfo.html&quot;}, '*');">ParallelExecutorInfo</a></h1>
+<h2>定義</h2>
+<ul>
+<li>種別: <code>struct</code></li>
+<li>定義箇所: <code>src/include/executor/execParallel.h:24</code></li>
+<li>所属モジュール: <a class="wiki-entity-link" href="../modules/src__include__executor.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/modules/src__include__executor.html&quot;, &quot;source&quot;: &quot;source/src/include/executor/execAsync.h.html&quot;}, '*');"><code>module:src/include/executor</code></a></li>
+</ul>
+<h2>目的</h2>
+<p>静的シンボル索引から生成された初期シンボルページです。</p>
+<h2>シグネチャまたは形状</h2>
+<ul>
+<li>シグネチャ: <code>typedef struct ParallelExecutorInfo</code></li>
+</ul>
+<h2>入力と出力</h2>
+<p>まだ解析していません。</p>
+<h2>前提条件と不変条件</h2>
+<p>まだ解析していません。</p>
+<h2>アルゴリズムまたは振る舞い</h2>
+<p>まだ解析していません。</p>
+<h2>呼び出し元と呼び出し先</h2>
+<ul>
+<li>呼び出し元: なし</li>
+<li>呼び出し先: なし</li>
+<li>呼び出し元サイト: なし</li>
+<li>呼び出しサイト: なし</li>
+</ul>
+<h2>関連データ構造</h2>
+<p><code>BufferUsage</code>, <code>dsa_area</code>, <a class="wiki-source-link" href="../../source/src/include/utils/dsa.h.html#L53" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__utils__dsa_h__dsa_pointer.html&quot;}, '*');"><code>dsa_pointer</code></a>, <code>ParallelContext</code>, <code>PlanState</code>, <code>SharedExecutorInstrumentation</code>, <a class="wiki-source-link" href="../../source/src/include/jit/jit.h.html#L51" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__jit__jit_h__SharedJitInstrumentation.html&quot;}, '*');"><code>SharedJitInstrumentation</code></a>, <code>shm_mq_handle</code>, <code>TupleQueueReader</code>, <code>WalUsage</code></p>
+<h2>ソース抜粋</h2>
+<p>~~~c typedef struct <a class="wiki-source-link" href="../../source/src/include/executor/execParallel.h.html#L24" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__executor__execParallel_h__ParallelExecutorInfo.html&quot;}, '*');">ParallelExecutorInfo</a> { PlanState  *planstate;		/* <a class="wiki-source-link" href="../../source/src/test/regress/pg_regress.c.html#L164" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/test/regress/pg_regress.c.html&quot;}, '*');">plan</a> subtree we&#x27;re running in parallel */ ParallelContext *pcxt;		/* parallel context we&#x27;re using */ BufferUsage *buffer_usage;	/* points to bufusage area in DSM */ WalUsage   *wal_usage;		/* walusage area in DSM */ SharedExecutorInstrumentation *instrumentation; /* optional */ struct <a class="wiki-source-link" href="../../source/src/include/jit/jit.h.html#L51" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__jit__jit_h__SharedJitInstrumentation.html&quot;}, '*');">SharedJitInstrumentation</a> *jit_instrumentation;	/* optional */ dsa_area   *area;			/* points to DSA area in DSM */ <a class="wiki-source-link" href="../../source/src/include/utils/dsa.h.html#L53" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__utils__dsa_h__dsa_pointer.html&quot;}, '*');">dsa_pointer</a> param_exec;		/* serialized PARAM_EXEC parameters */ bool		finished;		/* set <a class="wiki-source-link" href="../../source/src/tools/pg_bsd_indent/indent_globs.h.html#L46" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/tools/pg_bsd_indent/indent_globs.h.html&quot;}, '*');">true</a> by <a class="wiki-source-link" href="../../source/src/backend/executor/execParallel.c.html#L1220" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__executor__execParallel_c__ExecParallelFinish.html&quot;}, '*');">ExecParallelFinish</a> */ /* These two arrays have pcxt-&gt;nworkers_launched entries: */ shm_mq_handle **tqueue;		/* tuple queues for worker <a class="wiki-source-link" href="../../source/src/bin/pg_test_timing/pg_test_timing.c.html#L357" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__bin__pg_test_timing__pg_test_timing_c__output.html&quot;}, '*');">output</a> */ struct TupleQueueReader **reader;	/* tuple reader/writer support */ } <a class="wiki-source-link" href="../../source/src/include/executor/execParallel.h.html#L24" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__executor__execParallel_h__ParallelExecutorInfo.html&quot;}, '*');">ParallelExecutorInfo</a>; ~~~</p>
+<h2>失敗モードと境界条件</h2>
+<p>まだ解析していません。</p>
+<h2>保守担当者向けメモ</h2>
+<ul>
+<li>後続フェーズで、ソース本文の文脈と caller/callee 情報を使ってこのページを強化する。</li>
+</ul><script>
+(function() {
+  function notifyParent() {
+    if (parent === window) return;
+    parent.postMessage({type: "frame-location", frame: window.name || "", href: window.location.href}, "*");
+  }
+  document.addEventListener("click", function(event) {
+    const link = event.target.closest("a[data-panel]");
+    if (!link || parent === window) return;
+    parent.postMessage({type: "source-link", panel: link.dataset.panel}, "*");
+  });
+  window.addEventListener("load", notifyParent);
+  window.addEventListener("hashchange", notifyParent);
+})();
+</script></body></html>

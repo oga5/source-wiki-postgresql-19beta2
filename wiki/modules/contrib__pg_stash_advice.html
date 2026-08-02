@@ -1,0 +1,67 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>modules/contrib__pg_stash_advice.md</title><link rel="stylesheet" href="../../styles.css"></head><body><h1>contrib/pg_stash_advice</h1>
+<h2>システム内での役割</h2>
+<p><code>contrib/pg_stash_advice</code> には 4 個の索引済みソースファイルがあります。この初期モジュールページはディレクトリ境界に基づいています。</p>
+<h2>責務</h2>
+<ul>
+<li>このディレクトリに属するソースファイルを集約する。</li>
+<li>より深い LLM 合成の前段として、モジュール単位の入口を提供する。</li>
+</ul>
+<h2>このモジュールのファイル</h2>
+<ul>
+<li><a class="wiki-source-link" href="../../source/contrib/pg_stash_advice/pg_stash_advice.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/contrib/pg_stash_advice/pg_stash_advice.c.html&quot;}, '*');"><code>contrib/pg_stash_advice/pg_stash_advice.c</code></a></li>
+<li><a class="wiki-source-link" href="../../source/contrib/pg_stash_advice/pg_stash_advice.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/contrib/pg_stash_advice/pg_stash_advice.h.html&quot;}, '*');"><code>contrib/pg_stash_advice/pg_stash_advice.h</code></a></li>
+<li><a class="wiki-source-link" href="../../source/contrib/pg_stash_advice/stashfuncs.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/contrib/pg_stash_advice/stashfuncs.c.html&quot;}, '*');"><code>contrib/pg_stash_advice/stashfuncs.c</code></a></li>
+<li><a class="wiki-source-link" href="../../source/contrib/pg_stash_advice/stashpersist.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/contrib/pg_stash_advice/stashpersist.c.html&quot;}, '*');"><code>contrib/pg_stash_advice/stashpersist.c</code></a></li>
+</ul>
+<h2>主要なデータ構造</h2>
+<ul>
+<li><a class="wiki-source-link" href="../../source/contrib/pg_stash_advice/pg_stash_advice.h.html#L30" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/contrib__pg_stash_advice__pg_stash_advice_h__pgsa_entry_key.html&quot;}, '*');"><code>pgsa_entry_key</code></a></li>
+<li><a class="wiki-source-link" href="../../source/contrib/pg_stash_advice/pg_stash_advice.h.html#L39" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/contrib__pg_stash_advice__pg_stash_advice_h__pgsa_entry.html&quot;}, '*');"><code>pgsa_entry</code></a></li>
+<li><a class="wiki-source-link" href="../../source/contrib/pg_stash_advice/pg_stash_advice.h.html#L48" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/contrib__pg_stash_advice__pg_stash_advice_h__pgsa_stash.html&quot;}, '*');"><code>pgsa_stash</code></a></li>
+<li><a class="wiki-source-link" href="../../source/contrib/pg_stash_advice/pg_stash_advice.h.html#L57" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/contrib__pg_stash_advice__pg_stash_advice_h__pgsa_shared_state.html&quot;}, '*');"><code>pgsa_shared_state</code></a></li>
+<li><a class="wiki-source-link" href="../../source/contrib/pg_stash_advice/pg_stash_advice.h.html#L73" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/contrib__pg_stash_advice__pg_stash_advice_h__pgsa_stash_name.html&quot;}, '*');"><code>pgsa_stash_name</code></a></li>
+<li><a class="wiki-source-link" href="../../source/contrib/pg_stash_advice/stashfuncs.c.html#L29" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/contrib__pg_stash_advice__stashfuncs_c__pgsa_stash_count.html&quot;}, '*');"><code>pgsa_stash_count</code></a></li>
+<li><a class="wiki-source-link" href="../../source/contrib/pg_stash_advice/stashpersist.c.html#L31" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/contrib__pg_stash_advice__stashpersist_c__pgsa_writer_context.html&quot;}, '*');"><code>pgsa_writer_context</code></a></li>
+<li><a class="wiki-source-link" href="../../source/contrib/pg_stash_advice/stashpersist.c.html#L43" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/contrib__pg_stash_advice__stashpersist_c__pgsa_saved_entry.html&quot;}, '*');"><code>pgsa_saved_entry</code></a></li>
+<li><a class="wiki-source-link" href="../../source/contrib/pg_stash_advice/stashpersist.c.html#L54" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/contrib__pg_stash_advice__stashpersist_c__pgsa_saved_stash.html&quot;}, '*');"><code>pgsa_saved_stash</code></a></li>
+</ul>
+<h2>主なフロー</h2>
+<p>初期モジュールページでは、まだエンドツーエンドのフローを推論しません。</p>
+<h2>外部依存</h2>
+<ul>
+<li><code>lib/simplehash.h</code></li>
+<li><a class="wiki-source-link" href="../../source/src/include/postgres.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/postgres.h.html&quot;}, '*');"><code>postgres.h</code></a></li>
+<li><code>common/hashfn.h</code></li>
+<li><a class="wiki-source-link" href="../../source/src/include/miscadmin.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/miscadmin.h.html&quot;}, '*');"><code>miscadmin.h</code></a></li>
+<li><a class="wiki-source-link" href="../../source/contrib/pg_stash_advice/pg_stash_advice.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/contrib/pg_stash_advice/pg_stash_advice.h.html&quot;}, '*');"><code>pg_stash_advice.h</code></a></li>
+<li><code>postmaster/bgworker.h</code></li>
+<li><code>utils/guc.h</code></li>
+<li><code>utils/memutils.h</code></li>
+<li><code>common/string.h</code></li>
+<li><code>nodes/queryjumble.h</code></li>
+</ul>
+<h2>内部構成</h2>
+<ul>
+<li>子モジュール数: 0</li>
+</ul>
+<h2>推奨読書順</h2>
+<p>1. <a class="wiki-source-link" href="../../source/contrib/pg_stash_advice/pg_stash_advice.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/contrib/pg_stash_advice/pg_stash_advice.h.html&quot;}, '*');"><code>contrib/pg_stash_advice/pg_stash_advice.h</code></a> 2. <a class="wiki-source-link" href="../../source/contrib/pg_stash_advice/pg_stash_advice.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/contrib/pg_stash_advice/pg_stash_advice.c.html&quot;}, '*');"><code>contrib/pg_stash_advice/pg_stash_advice.c</code></a> 3. <a class="wiki-source-link" href="../../source/contrib/pg_stash_advice/stashpersist.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/contrib/pg_stash_advice/stashpersist.c.html&quot;}, '*');"><code>contrib/pg_stash_advice/stashpersist.c</code></a> 4. <a class="wiki-source-link" href="../../source/contrib/pg_stash_advice/stashfuncs.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/contrib/pg_stash_advice/stashfuncs.c.html&quot;}, '*');"><code>contrib/pg_stash_advice/stashfuncs.c</code></a></p>
+<h2>未解決の問い</h2>
+<ul>
+<li>LLM ベースのモジュール合成を追加した後で、責務とフローを精緻化する。</li>
+</ul><script>
+(function() {
+  function notifyParent() {
+    if (parent === window) return;
+    parent.postMessage({type: "frame-location", frame: window.name || "", href: window.location.href}, "*");
+  }
+  document.addEventListener("click", function(event) {
+    const link = event.target.closest("a[data-panel]");
+    if (!link || parent === window) return;
+    parent.postMessage({type: "source-link", panel: link.dataset.panel}, "*");
+  });
+  window.addEventListener("load", notifyParent);
+  window.addEventListener("hashchange", notifyParent);
+})();
+</script></body></html>

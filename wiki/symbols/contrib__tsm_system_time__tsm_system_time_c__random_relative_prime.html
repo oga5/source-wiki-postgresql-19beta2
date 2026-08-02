@@ -1,0 +1,66 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>symbols/contrib__tsm_system_time__tsm_system_time_c__random_relative_prime.md</title><link rel="stylesheet" href="../../styles.css"></head><body><h1>random_relative_prime</h1>
+<h2>定義</h2>
+<ul>
+<li>種別: <code>function</code></li>
+<li>定義箇所: <code>contrib/tsm_system_time/tsm_system_time.c:335</code></li>
+<li>所属モジュール: <a class="wiki-entity-link" href="../modules/contrib__tsm_system_time.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/modules/contrib__tsm_system_time.html&quot;, &quot;source&quot;: &quot;source/contrib/tsm_system_time/tsm_system_time.c.html&quot;}, '*');"><code>module:contrib/tsm_system_time</code></a></li>
+</ul>
+<h2>目的</h2>
+<p>静的シンボル索引から生成された初期シンボルページです。</p>
+<h2>シグネチャまたは形状</h2>
+<ul>
+<li>シグネチャ: <code>static uint32 random_relative_prime(uint32 n, pg_prng_state *randstate)</code></li>
+</ul>
+<h2>入力と出力</h2>
+<ul>
+<li>引数: <code>uint32 n</code>, <code>pg_prng_state *randstate</code></li>
+<li>戻り値: <code>uint32</code></li>
+</ul>
+<h2>前提条件と不変条件</h2>
+<p>まだ解析していません。</p>
+<h2>アルゴリズムまたは振る舞い</h2>
+<ul>
+<li>複雑度: <code>medium</code> (score 8)</li>
+</ul>
+<p>まだ解析していません。</p>
+<h2>呼び出し元と呼び出し先</h2>
+<ul>
+<li>呼び出し元: <a class="wiki-source-link" href="../../source/contrib/tsm_system_time/tsm_system_time.c.html#L217" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/contrib__tsm_system_time__tsm_system_time_c__system_time_nextsampleblock.html&quot;}, '*');"><code>system_time_nextsampleblock</code></a></li>
+<li>呼び出し先: <code>gcd</code>, <a class="wiki-source-link" href="../../source/src/backend/utils/misc/sampling.c.html#L240" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__utils__misc__sampling_c__sampler_random_fract.html&quot;}, '*');"><code>sampler_random_fract</code></a></li>
+<li>呼び出し元サイト: <a class="wiki-source-link" href="../../source/contrib/tsm_system_time/tsm_system_time.c.html#L217" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/contrib__tsm_system_time__tsm_system_time_c__system_time_nextsampleblock.html&quot;}, '*');"><code>system_time_nextsampleblock</code></a> at <code>contrib/tsm_system_time/tsm_system_time.c:248:20</code> (direct, confidence=high, resolved=<a class="wiki-entity-link" href="contrib__tsm_system_time__tsm_system_time_c__random_relative_prime.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/contrib__tsm_system_time__tsm_system_time_c__random_relative_prime.html&quot;, &quot;source&quot;: &quot;source/contrib/tsm_system_time/tsm_system_time.c.html#L335&quot;}, '*');"><code>symbol:contrib/tsm_system_time/tsm_system_time.c#random_relative_prime</code></a>)</li>
+<li>呼び出しサイト: <a class="wiki-source-link" href="../../source/src/include/miscadmin.h.html#L125" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/miscadmin.h.html&quot;}, '*');"><code>CHECK_FOR_INTERRUPTS</code></a> at <code>contrib/tsm_system_time/tsm_system_time.c:351:3</code> (macro), <code>(uint32)</code> at <code>contrib/tsm_system_time/tsm_system_time.c:352:7</code> (indirect), <a class="wiki-source-link" href="../../source/src/backend/utils/misc/sampling.c.html#L240" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__utils__misc__sampling_c__sampler_random_fract.html&quot;}, '*');"><code>sampler_random_fract</code></a> at <code>contrib/tsm_system_time/tsm_system_time.c:352:17</code> (direct, confidence=high, resolved=<a class="wiki-entity-link" href="src__backend__utils__misc__sampling_c__sampler_random_fract.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__utils__misc__sampling_c__sampler_random_fract.html&quot;, &quot;source&quot;: &quot;source/src/backend/utils/misc/sampling.c.html#L240&quot;}, '*');"><code>symbol:src/backend/utils/misc/sampling.c#sampler_random_fract</code></a>), <code>gcd</code> at <code>contrib/tsm_system_time/tsm_system_time.c:353:21</code> (direct, confidence=high, resolved=<a class="wiki-entity-link" href="contrib__tsm_system_time__tsm_system_time_c__gcd.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/contrib__tsm_system_time__tsm_system_time_c__gcd.html&quot;, &quot;source&quot;: &quot;source/contrib/tsm_system_time/tsm_system_time.c.html#L316&quot;}, '*');"><code>symbol:contrib/tsm_system_time/tsm_system_time.c#gcd</code></a>)</li>
+</ul>
+<h2>関連データ構造</h2>
+<p><a class="wiki-source-link" href="../../source/src/include/common/pg_prng.h.html#L19" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__common__pg_prng_h__pg_prng_state.html&quot;}, '*');"><code>pg_prng_state</code></a>, <code>uint32</code></p>
+<h2>ソース抜粋</h2>
+<p>~~~c static uint32 random_relative_prime(uint32 n, <a class="wiki-source-link" href="../../source/src/include/common/pg_prng.h.html#L19" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__common__pg_prng_h__pg_prng_state.html&quot;}, '*');">pg_prng_state</a> *randstate) { uint32		r;</p>
+<p>/* Safety check to avoid infinite loop or zero <a class="wiki-source-link" href="../../source/src/include/storage/checksum_block_internal.h.html#L18" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/storage/checksum_block_internal.h.html&quot;}, '*');">result</a> for small n. */ if (n &lt;= 1) return 1;</p>
+<p>/*</p>
+<ul>
+<li>This should only take 2 or 3 iterations as the probability of 2 numbers</li>
+<li>being relatively prime <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> ~61%; but just in case, we&#x27;ll include a</li>
+<li><a class="wiki-source-link" href="../../source/src/include/miscadmin.h.html#L125" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/miscadmin.h.html&quot;}, '*');">CHECK_FOR_INTERRUPTS</a> in the loop.</li>
+<p>*/ do { <a class="wiki-source-link" href="../../source/src/include/miscadmin.h.html#L125" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/miscadmin.h.html&quot;}, '*');">CHECK_FOR_INTERRUPTS</a>(); r = (uint32) (<a class="wiki-source-link" href="../../source/src/backend/utils/misc/sampling.c.html#L240" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__utils__misc__sampling_c__sampler_random_fract.html&quot;}, '*');">sampler_random_fract</a>(randstate) * n); } while (r == 0 || gcd(r, n) &gt; 1);</p>
+</ul>
+<p>return r; } ~~~</p>
+<h2>失敗モードと境界条件</h2>
+<p>まだ解析していません。</p>
+<h2>保守担当者向けメモ</h2>
+<ul>
+<li>後続フェーズで、ソース本文の文脈と caller/callee 情報を使ってこのページを強化する。</li>
+</ul><script>
+(function() {
+  function notifyParent() {
+    if (parent === window) return;
+    parent.postMessage({type: "frame-location", frame: window.name || "", href: window.location.href}, "*");
+  }
+  document.addEventListener("click", function(event) {
+    const link = event.target.closest("a[data-panel]");
+    if (!link || parent === window) return;
+    parent.postMessage({type: "source-link", panel: link.dataset.panel}, "*");
+  });
+  window.addEventListener("load", notifyParent);
+  window.addEventListener("hashchange", notifyParent);
+})();
+</script></body></html>

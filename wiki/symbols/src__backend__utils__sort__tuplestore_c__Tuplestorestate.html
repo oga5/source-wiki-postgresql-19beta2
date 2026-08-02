@@ -1,0 +1,96 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>symbols/src__backend__utils__sort__tuplestore_c__Tuplestorestate.md</title><link rel="stylesheet" href="../../styles.css"></head><body><h1>Tuplestorestate</h1>
+<h2>定義</h2>
+<ul>
+<li>種別: <code>struct</code></li>
+<li>定義箇所: <code>src/backend/utils/sort/tuplestore.c:104</code></li>
+<li>所属モジュール: <a class="wiki-entity-link" href="../modules/src__backend__utils__sort.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/modules/src__backend__utils__sort.html&quot;, &quot;source&quot;: &quot;source/src/backend/utils/sort/logtape.c.html&quot;}, '*');"><code>module:src/backend/utils/sort</code></a></li>
+</ul>
+<h2>目的</h2>
+<p>静的シンボル索引から生成された初期シンボルページです。</p>
+<h2>シグネチャまたは形状</h2>
+<ul>
+<li>シグネチャ: <code>struct Tuplestorestate</code></li>
+</ul>
+<h2>入力と出力</h2>
+<p>まだ解析していません。</p>
+<h2>前提条件と不変条件</h2>
+<p>まだ解析していません。</p>
+<h2>アルゴリズムまたは振る舞い</h2>
+<p>まだ解析していません。</p>
+<h2>呼び出し元と呼び出し先</h2>
+<ul>
+<li>呼び出し元: なし</li>
+<li>呼び出し先: なし</li>
+<li>呼び出し元サイト: なし</li>
+<li>呼び出しサイト: なし</li>
+</ul>
+<h2>関連データ構造</h2>
+<p><code>BufFile</code>, <code>c</code>, <a class="wiki-source-link" href="../../source/src/interfaces/ecpg/preproc/type.h.html#L96" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__interfaces__ecpg__preproc__type_h__index.html&quot;}, '*');"><code>index</code></a>, <code>int64</code>, <code>MemoryContext</code>, <code>pgoff_t</code>, <a class="wiki-source-link" href="../../source/src/include/utils/resowner.h.html#L27" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__utils__resowner_h__ResourceOwner.html&quot;}, '*');"><code>ResourceOwner</code></a>, <code>state</code>, <a class="wiki-source-link" href="../../source/src/backend/utils/sort/tuplestore.c.html#L92" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__utils__sort__tuplestore_c__TSReadPointer.html&quot;}, '*');"><code>TSReadPointer</code></a>, <a class="wiki-source-link" href="../../source/src/backend/utils/sort/tuplestore.c.html#L73" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__utils__sort__tuplestore_c__TupStoreStatus.html&quot;}, '*');"><code>TupStoreStatus</code></a></p>
+<h2>ソース抜粋</h2>
+<p>~~~c struct Tuplestorestate { <a class="wiki-source-link" href="../../source/src/backend/utils/sort/tuplestore.c.html#L73" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__utils__sort__tuplestore_c__TupStoreStatus.html&quot;}, '*');">TupStoreStatus</a> status;		/* enumerated <a class="wiki-source-link" href="../../source/src/interfaces/ecpg/compatlib/informix.c.html#L687" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/ecpg/compatlib/informix.c.html&quot;}, '*');">value</a> as shown above */ int			eflags;			/* capability flags (OR of pointers&#x27; flags) */ bool		backward;		/* store extra length words in file? */ bool		interXact;		/* keep <a class="wiki-source-link" href="../../source/src/include/port.h.html#L366" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/port.h.html&quot;}, '*');">open</a> through transactions? */ bool		truncated;		/* <a class="wiki-source-link" href="../../source/src/backend/utils/sort/tuplestore.c.html#L1456" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__utils__sort__tuplestore_c__tuplestore_trim.html&quot;}, '*');">tuplestore_trim</a> has removed tuples? */ bool		usedDisk;		/* used by <a class="wiki-source-link" href="../../source/src/backend/utils/sort/tuplestore.c.html#L1579" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__utils__sort__tuplestore_c__tuplestore_get_stats.html&quot;}, '*');">tuplestore_get_stats</a>() */ int64		maxSpace;		/* used by <a class="wiki-source-link" href="../../source/src/backend/utils/sort/tuplestore.c.html#L1579" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__utils__sort__tuplestore_c__tuplestore_get_stats.html&quot;}, '*');">tuplestore_get_stats</a>() */ int64		availMem;		/* remaining memory available, in bytes */ int64		allowedMem;		/* total memory allowed, in bytes */ int64		tuples;			/* number of tuples added */ BufFile    *myfile;			/* underlying file, or NULL if <a class="wiki-source-link" href="../../source/src/backend/optimizer/util/predtest.c.html#L1672" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/optimizer/util/predtest.c.html&quot;}, '*');">none</a> */ MemoryContext context;		/* memory context for holding tuples */ <a class="wiki-source-link" href="../../source/src/include/utils/resowner.h.html#L27" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__utils__resowner_h__ResourceOwner.html&quot;}, '*');">ResourceOwner</a> resowner;		/* resowner for holding temp files */</p>
+<p>/*</p>
+<ul>
+<li>These function pointers decouple the <a class="wiki-source-link" href="../../source/src/port/win32ntdll.c.html#L30" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/port/win32ntdll.c.html&quot;}, '*');">routines</a> that must know what kind</li>
+<li>of tuple we are handling from the <a class="wiki-source-link" href="../../source/src/port/win32ntdll.c.html#L30" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/port/win32ntdll.c.html&quot;}, '*');">routines</a> that don&#x27;t need to know it.</li>
+<li>They are set up by the tuplestore_begin_xxx <a class="wiki-source-link" href="../../source/src/port/win32ntdll.c.html#L30" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/port/win32ntdll.c.html&quot;}, '*');">routines</a>.</li>
+<p>*</p>
+<li>(Although <a class="wiki-source-link" href="../../source/src/backend/utils/sort/tuplestore.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/utils/sort/tuplestore.c.html&quot;}, '*');">tuplestore.c</a> currently only supports heap tuples, <a class="wiki-source-link" href="../../source/src/common/md5.c.html#L63" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/common/md5.c.html&quot;}, '*');">I</a>&#x27;ve copied</li>
+<li>this part of <a class="wiki-source-link" href="../../source/src/backend/utils/sort/tuplesort.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/utils/sort/tuplesort.c.html&quot;}, '*');">tuplesort.c</a> so that extension to other kinds of objects</li>
+<li>will be easy if it&#x27;s ever needed.)</li>
+<p>*</p>
+<li>Function to copy a supplied input tuple into palloc&#x27;d space. (NB: we</li>
+<li>assume that a single pfree() <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> enough to release the tuple later, so</li>
+<li>the representation must be &quot;flat&quot; in one palloc chunk.) state-&gt;availMem</li>
+<li>must be decreased by the amount of space used.</li>
+<p>*/ void	   *(*copytup) (Tuplestorestate *state, void *tup);</p>
+</ul>
+<p>/*</p>
+<ul>
+<li>Function to <a class="wiki-source-link" href="../../source/src/interfaces/libpq/win32.h.html#L14" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq/win32.h.html&quot;}, '*');">write</a> a stored tuple onto tape.  The representation of the</li>
+<li>tuple on tape need not be the same as it <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> in memory; requirements on</li>
+<li>the tape representation are given below.  After writing the tuple,</li>
+<li>pfree() it, and increase state-&gt;availMem by the amount of memory space</li>
+<li>thereby released.</li>
+<p>*/ void		(*writetup) (Tuplestorestate *state, void *tup);</p>
+</ul>
+<p>/*</p>
+<ul>
+<li>Function to <a class="wiki-source-link" href="../../source/src/interfaces/libpq/win32.h.html#L13" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq/win32.h.html&quot;}, '*');">read</a> a stored tuple from tape back into memory. &#x27;len&#x27; <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a></li>
+<li>the already-<a class="wiki-source-link" href="../../source/src/interfaces/libpq/win32.h.html#L13" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq/win32.h.html&quot;}, '*');">read</a> length of the stored tuple.  Create and return a</li>
+<li>palloc&#x27;d copy, and decrease state-&gt;availMem by the amount of memory</li>
+<li>space consumed.</li>
+<p>*/ void	   *(*readtup) (Tuplestorestate *state, unsigned int len);</p>
+</ul>
+<p>/*</p>
+<ul>
+<li>This array holds pointers to tuples in memory if we are in state INMEM.</li>
+<li>In states WRITEFILE and READFILE it&#x27;s not used.</li>
+<p>*</p>
+<li>When memtupdeleted &gt; 0, the first memtupdeleted pointers are already</li>
+<li>released due to a <a class="wiki-source-link" href="../../source/src/backend/utils/sort/tuplestore.c.html#L1456" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__utils__sort__tuplestore_c__tuplestore_trim.html&quot;}, '*');">tuplestore_trim</a>() <a class="wiki-source-link" href="../../source/src/backend/postmaster/datachecksum_state.c.html#L380" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/postmaster/datachecksum_state.c.html&quot;}, '*');">operation</a>, but we haven&#x27;t expended</li>
+<li>the effort to slide the remaining pointers down.  These unused pointers</li>
+<li>are set to NULL to catch any invalid accesses.  Note that memtupcount</li>
+<li>includes the deleted pointers.</li>
+<p>*/ void	  **memtuples;		/* array of pointers to palloc&#x27;d tuples */ ~~~</p>
+</ul>
+<h2>失敗モードと境界条件</h2>
+<p>まだ解析していません。</p>
+<h2>保守担当者向けメモ</h2>
+<ul>
+<li>後続フェーズで、ソース本文の文脈と caller/callee 情報を使ってこのページを強化する。</li>
+</ul><script>
+(function() {
+  function notifyParent() {
+    if (parent === window) return;
+    parent.postMessage({type: "frame-location", frame: window.name || "", href: window.location.href}, "*");
+  }
+  document.addEventListener("click", function(event) {
+    const link = event.target.closest("a[data-panel]");
+    if (!link || parent === window) return;
+    parent.postMessage({type: "source-link", panel: link.dataset.panel}, "*");
+  });
+  window.addEventListener("load", notifyParent);
+  window.addEventListener("hashchange", notifyParent);
+})();
+</script></body></html>

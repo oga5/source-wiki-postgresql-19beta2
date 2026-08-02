@@ -1,0 +1,77 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>symbols/src__backend__utils__sort__tuplesort_c__consider_abort_common.md</title><link rel="stylesheet" href="../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../source/src/backend/utils/sort/tuplesort.c.html#L1215" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__utils__sort__tuplesort_c__consider_abort_common.html&quot;}, '*');">consider_abort_common</a></h1>
+<h2>定義</h2>
+<ul>
+<li>種別: <code>function</code></li>
+<li>定義箇所: <code>src/backend/utils/sort/tuplesort.c:1215</code></li>
+<li>所属モジュール: <a class="wiki-entity-link" href="../modules/src__backend__utils__sort.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/modules/src__backend__utils__sort.html&quot;, &quot;source&quot;: &quot;source/src/backend/utils/sort/logtape.c.html&quot;}, '*');"><code>module:src/backend/utils/sort</code></a></li>
+</ul>
+<h2>目的</h2>
+<p>静的シンボル索引から生成された初期シンボルページです。</p>
+<h2>シグネチャまたは形状</h2>
+<ul>
+<li>シグネチャ: <code>static bool consider_abort_common(Tuplesortstate *state)</code></li>
+</ul>
+<h2>入力と出力</h2>
+<ul>
+<li>引数: <code>Tuplesortstate *state</code></li>
+<li>戻り値: <code>bool</code></li>
+</ul>
+<h2>前提条件と不変条件</h2>
+<p>まだ解析していません。</p>
+<h2>アルゴリズムまたは振る舞い</h2>
+<ul>
+<li>複雑度: <code>high</code> (score 17)</li>
+</ul>
+<p>まだ解析していません。</p>
+<h2>呼び出し元と呼び出し先</h2>
+<ul>
+<li>呼び出し元: <a class="wiki-source-link" href="../../source/src/backend/utils/sort/tuplesort.c.html#L1065" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__utils__sort__tuplesort_c__tuplesort_puttuple_common.html&quot;}, '*');"><code>tuplesort_puttuple_common</code></a></li>
+<li>呼び出し先: なし</li>
+<li>呼び出し元サイト: <a class="wiki-source-link" href="../../source/src/backend/utils/sort/tuplesort.c.html#L1065" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__utils__sort__tuplesort_c__tuplesort_puttuple_common.html&quot;}, '*');"><code>tuplesort_puttuple_common</code></a> at <code>src/backend/utils/sort/tuplesort.c:1088:12</code> (direct, confidence=high, resolved=<a class="wiki-entity-link" href="src__backend__utils__sort__tuplesort_c__consider_abort_common.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__utils__sort__tuplesort_c__consider_abort_common.html&quot;, &quot;source&quot;: &quot;source/src/backend/utils/sort/tuplesort.c.html#L1215&quot;}, '*');"><code>symbol:src/backend/utils/sort/tuplesort.c#consider_abort_common</code></a>)</li>
+<li>呼び出しサイト: <a class="wiki-source-link" href="../../source/src/include/c.h.html#L950" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/c.h.html&quot;}, '*');"><code>Assert</code></a> at <code>src/backend/utils/sort/tuplesort.c:1218:2</code> (unresolved), <a class="wiki-source-link" href="../../source/src/include/c.h.html#L950" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/c.h.html&quot;}, '*');"><code>Assert</code></a> at <code>src/backend/utils/sort/tuplesort.c:1219:2</code> (unresolved), <a class="wiki-source-link" href="../../source/src/include/c.h.html#L950" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/c.h.html&quot;}, '*');"><code>Assert</code></a> at <code>src/backend/utils/sort/tuplesort.c:1220:2</code> (unresolved), <code>state-&gt;base.sortKeys-&gt;abbrev_abort</code> at <code>src/backend/utils/sort/tuplesort.c:1235:8</code> (indirect)</li>
+</ul>
+<h2>関連データ構造</h2>
+<p><code>state</code>, <code>Tuplesortstate</code>, <a class="wiki-source-link" href="../../source/src/interfaces/ecpg/preproc/type.h.html#L89" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__interfaces__ecpg__preproc__type_h__when.html&quot;}, '*');"><code>when</code></a></p>
+<h2>ソース抜粋</h2>
+<p>~~~c static bool <a class="wiki-source-link" href="../../source/src/backend/utils/sort/tuplesort.c.html#L1215" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__utils__sort__tuplesort_c__consider_abort_common.html&quot;}, '*');">consider_abort_common</a>(Tuplesortstate *state) { <a class="wiki-source-link" href="../../source/src/include/c.h.html#L950" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/c.h.html&quot;}, '*');">Assert</a>(state-&gt;base.sortKeys[0].abbrev_converter != NULL); <a class="wiki-source-link" href="../../source/src/include/c.h.html#L950" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/c.h.html&quot;}, '*');">Assert</a>(state-&gt;base.sortKeys[0].abbrev_abort != NULL); <a class="wiki-source-link" href="../../source/src/include/c.h.html#L950" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/c.h.html&quot;}, '*');">Assert</a>(state-&gt;base.sortKeys[0].abbrev_full_comparator != NULL);</p>
+<p>/*</p>
+<ul>
+<li>Check effectiveness of abbreviation optimization.  Consider aborting</li>
+<li><a class="wiki-source-link" href="../../source/src/interfaces/ecpg/preproc/type.h.html#L89" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__interfaces__ecpg__preproc__type_h__when.html&quot;}, '*');">when</a> still within memory limit.</li>
+<p>*/ if (state-&gt;status == TSS_INITIAL &amp;&amp; state-&gt;memtupcount &gt;= state-&gt;abbrevNext) { state-&gt;abbrevNext *= 2;</p>
+</ul>
+<p>/*</p>
+<ul>
+<li>Check opclass-supplied abbreviation abort routine.  It may indicate</li>
+<li>that abbreviation should not proceed.</li>
+<p>*/ if (!state-&gt;base.sortKeys-&gt;abbrev_abort(state-&gt;memtupcount, state-&gt;base.sortKeys)) return <a class="wiki-source-link" href="../../source/src/tools/pg_bsd_indent/indent_globs.h.html#L43" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/tools/pg_bsd_indent/indent_globs.h.html&quot;}, '*');">false</a>;</p>
+</ul>
+<p>/*</p>
+<ul>
+<li>Finally, <a class="wiki-source-link" href="../../source/contrib/seg/seg.c.html#L923" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/contrib__seg__seg_c__restore.html&quot;}, '*');">restore</a> authoritative comparator, and indicate that</li>
+<li>abbreviation <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> not in play by setting abbrev_converter to NULL</li>
+<p>*/ state-&gt;base.sortKeys[0].comparator = state-&gt;base.sortKeys[0].abbrev_full_comparator; state-&gt;base.sortKeys[0].abbrev_converter = NULL; /* Not strictly necessary, but be tidy */ state-&gt;base.sortKeys[0].abbrev_abort = NULL; state-&gt;base.sortKeys[0].abbrev_full_comparator = NULL;</p>
+</ul>
+<p>/* Give up - expect original pass-by-value representation */ return <a class="wiki-source-link" href="../../source/src/tools/pg_bsd_indent/indent_globs.h.html#L46" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/tools/pg_bsd_indent/indent_globs.h.html&quot;}, '*');">true</a>; }</p>
+<p>return <a class="wiki-source-link" href="../../source/src/tools/pg_bsd_indent/indent_globs.h.html#L43" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/tools/pg_bsd_indent/indent_globs.h.html&quot;}, '*');">false</a>; } ~~~</p>
+<h2>失敗モードと境界条件</h2>
+<p>まだ解析していません。</p>
+<h2>保守担当者向けメモ</h2>
+<ul>
+<li>後続フェーズで、ソース本文の文脈と caller/callee 情報を使ってこのページを強化する。</li>
+</ul><script>
+(function() {
+  function notifyParent() {
+    if (parent === window) return;
+    parent.postMessage({type: "frame-location", frame: window.name || "", href: window.location.href}, "*");
+  }
+  document.addEventListener("click", function(event) {
+    const link = event.target.closest("a[data-panel]");
+    if (!link || parent === window) return;
+    parent.postMessage({type: "source-link", panel: link.dataset.panel}, "*");
+  });
+  window.addEventListener("load", notifyParent);
+  window.addEventListener("hashchange", notifyParent);
+})();
+</script></body></html>

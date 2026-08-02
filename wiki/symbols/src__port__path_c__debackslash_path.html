@@ -1,0 +1,66 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>symbols/src__port__path_c__debackslash_path.md</title><link rel="stylesheet" href="../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../source/src/port/path.c.html#L163" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__port__path_c__debackslash_path.html&quot;}, '*');">debackslash_path</a></h1>
+<h2>定義</h2>
+<ul>
+<li>種別: <code>function</code></li>
+<li>定義箇所: <code>src/port/path.c:163</code></li>
+<li>所属モジュール: <a class="wiki-entity-link" href="../modules/src__port.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/modules/src__port.html&quot;, &quot;source&quot;: &quot;source/src/port/bsearch_arg.c.html&quot;}, '*');"><code>module:src/port</code></a></li>
+</ul>
+<h2>目的</h2>
+<p>静的シンボル索引から生成された初期シンボルページです。</p>
+<h2>シグネチャまたは形状</h2>
+<ul>
+<li>シグネチャ: <code>static void debackslash_path(char *path, int encoding)</code></li>
+</ul>
+<h2>入力と出力</h2>
+<ul>
+<li>引数: <code>char *path</code>, <code>int encoding</code></li>
+<li>戻り値: <code>void</code></li>
+</ul>
+<h2>前提条件と不変条件</h2>
+<p>まだ解析していません。</p>
+<h2>アルゴリズムまたは振る舞い</h2>
+<ul>
+<li>複雑度: <code>high</code> (score 14)</li>
+</ul>
+<p>まだ解析していません。</p>
+<h2>呼び出し元と呼び出し先</h2>
+<ul>
+<li>呼び出し元: <a class="wiki-source-link" href="../../source/src/port/path.c.html#L343" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__port__path_c__canonicalize_path_enc.html&quot;}, '*');"><code>canonicalize_path_enc</code></a>, <a class="wiki-source-link" href="../../source/src/port/path.c.html#L257" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__port__path_c__cleanup_path.html&quot;}, '*');"><code>cleanup_path</code></a></li>
+<li>呼び出し先: <code>pg_sjis_mblen</code></li>
+<li>呼び出し元サイト: <a class="wiki-source-link" href="../../source/src/port/path.c.html#L257" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__port__path_c__cleanup_path.html&quot;}, '*');"><code>cleanup_path</code></a> at <code>src/port/path.c:271:2</code> (direct, confidence=high, resolved=<a class="wiki-entity-link" href="src__port__path_c__debackslash_path.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__port__path_c__debackslash_path.html&quot;, &quot;source&quot;: &quot;source/src/port/path.c.html#L163&quot;}, '*');"><code>symbol:src/port/path.c#debackslash_path</code></a>), <a class="wiki-source-link" href="../../source/src/port/path.c.html#L343" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__port__path_c__canonicalize_path_enc.html&quot;}, '*');"><code>canonicalize_path_enc</code></a> at <code>src/port/path.c:362:2</code> (direct, confidence=high, resolved=<a class="wiki-entity-link" href="src__port__path_c__debackslash_path.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__port__path_c__debackslash_path.html&quot;, &quot;source&quot;: &quot;source/src/port/path.c.html#L163&quot;}, '*');"><code>symbol:src/port/path.c#debackslash_path</code></a>)</li>
+<li>呼び出しサイト: <code>pg_sjis_mblen</code> at <code>src/port/path.c:177:27</code> (direct, confidence=high, resolved=<a class="wiki-entity-link" href="src__port__path_c__pg_sjis_mblen.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__port__path_c__pg_sjis_mblen.html&quot;, &quot;source&quot;: &quot;source/src/port/path.c.html#L201&quot;}, '*');"><code>symbol:src/port/path.c#pg_sjis_mblen</code></a>)</li>
+</ul>
+<h2>関連データ構造</h2>
+<p><code>c</code></p>
+<h2>ソース抜粋</h2>
+<p>~~~c static void <a class="wiki-source-link" href="../../source/src/port/path.c.html#L163" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__port__path_c__debackslash_path.html&quot;}, '*');">debackslash_path</a>(char *path, int encoding) { char	   *p;</p>
+<p>/*</p>
+<ul>
+<li>Of the supported encodings, only Shift-JIS has multibyte characters</li>
+<li>that can include a byte <a class="wiki-source-link" href="../../source/src/backend/nodes/equalfuncs.c.html#L222" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__nodes__equalfuncs_c__equal.html&quot;}, '*');">equal</a> to &#x27;\&#x27; (0x5C).  <a class="wiki-source-link" href="../../source/src/common/md5.c.html#L110" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/common/md5.c.html&quot;}, '*');">So</a> rather than implement</li>
+<li>a fully encoding-aware conversion, we special-case SJIS.  (Invoking the</li>
+<li>general encoding-aware logic in <a class="wiki-source-link" href="../../source/src/common/wchar.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/common/wchar.c.html&quot;}, '*');">wchar.c</a> <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> impractical here for</li>
+<li>assorted reasons.)</li>
+<p>*/ if (encoding == PG_SJIS) { for (p = path; *p; p += pg_sjis_mblen((const unsigned char *) p)) { if (*p == &#x27;\\&#x27;) *p = &#x27;/&#x27;; } } else { for (p = path; *p; p++) { if (*p == &#x27;\\&#x27;) *p = &#x27;/&#x27;; } } } ~~~</p>
+</ul>
+<h2>失敗モードと境界条件</h2>
+<p>まだ解析していません。</p>
+<h2>保守担当者向けメモ</h2>
+<ul>
+<li>後続フェーズで、ソース本文の文脈と caller/callee 情報を使ってこのページを強化する。</li>
+</ul><script>
+(function() {
+  function notifyParent() {
+    if (parent === window) return;
+    parent.postMessage({type: "frame-location", frame: window.name || "", href: window.location.href}, "*");
+  }
+  document.addEventListener("click", function(event) {
+    const link = event.target.closest("a[data-panel]");
+    if (!link || parent === window) return;
+    parent.postMessage({type: "source-link", panel: link.dataset.panel}, "*");
+  });
+  window.addEventListener("load", notifyParent);
+  window.addEventListener("hashchange", notifyParent);
+})();
+</script></body></html>

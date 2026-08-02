@@ -1,0 +1,84 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>symbols/src__port__pg_popcount_aarch64_c__pg_popcount_neon.md</title><link rel="stylesheet" href="../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../source/src/port/pg_popcount_aarch64.c.html#L308" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__port__pg_popcount_aarch64_c__pg_popcount_neon.html&quot;}, '*');">pg_popcount_neon</a></h1>
+<h2>定義</h2>
+<ul>
+<li>種別: <code>function</code></li>
+<li>定義箇所: <code>src/port/pg_popcount_aarch64.c:308</code></li>
+<li>所属モジュール: <a class="wiki-entity-link" href="../modules/src__port.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/modules/src__port.html&quot;, &quot;source&quot;: &quot;source/src/port/bsearch_arg.c.html&quot;}, '*');"><code>module:src/port</code></a></li>
+</ul>
+<h2>目的</h2>
+<p>静的シンボル索引から生成された初期シンボルページです。</p>
+<h2>シグネチャまたは形状</h2>
+<ul>
+<li>シグネチャ: <code>static uint64 pg_popcount_neon(const char *buf, int bytes)</code></li>
+</ul>
+<h2>入力と出力</h2>
+<ul>
+<li>引数: <code>const char *buf</code>, <code>int bytes</code></li>
+<li>戻り値: <code>uint64</code></li>
+</ul>
+<h2>前提条件と不変条件</h2>
+<p>まだ解析していません。</p>
+<h2>アルゴリズムまたは振る舞い</h2>
+<ul>
+<li>複雑度: <code>high</code> (score 19)</li>
+</ul>
+<p>まだ解析していません。</p>
+<h2>呼び出し元と呼び出し先</h2>
+<ul>
+<li>呼び出し元: <code>pg_popcount_optimized</code></li>
+<li>呼び出し先: <a class="wiki-source-link" href="../../source/src/port/pg_popcount_aarch64.c.html#L298" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__port__pg_popcount_aarch64_c__pg_popcount64_neon.html&quot;}, '*');"><code>pg_popcount64_neon</code></a></li>
+<li>呼び出し元サイト: <code>pg_popcount_optimized</code> at <code>src/port/pg_popcount_aarch64.c:283:9</code> (direct, confidence=high, resolved=<a class="wiki-entity-link" href="src__port__pg_popcount_aarch64_c__pg_popcount_neon.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__port__pg_popcount_aarch64_c__pg_popcount_neon.html&quot;, &quot;source&quot;: &quot;source/src/port/pg_popcount_aarch64.c.html#L308&quot;}, '*');"><code>symbol:src/port/pg_popcount_aarch64.c#pg_popcount_neon</code></a>)</li>
+<li>呼び出しサイト: <code>vdupq_n_u64</code> at <code>src/port/pg_popcount_aarch64.c:312:22</code> (unresolved), <code>vdupq_n_u64</code> at <code>src/port/pg_popcount_aarch64.c:313:14</code> (unresolved), <code>vdupq_n_u64</code> at <code>src/port/pg_popcount_aarch64.c:314:14</code> (unresolved), <code>vdupq_n_u64</code> at <code>src/port/pg_popcount_aarch64.c:315:14</code> (unresolved), <code>vld1q_u8</code> at <code>src/port/pg_popcount_aarch64.c:325:9</code> (unresolved), <code>vpadalq_u32</code> at <code>src/port/pg_popcount_aarch64.c:326:12</code> (unresolved), <code>vpaddlq_u16</code> at <code>src/port/pg_popcount_aarch64.c:326:32</code> (unresolved), <code>vpaddlq_u8</code> at <code>src/port/pg_popcount_aarch64.c:326:44</code> (unresolved), <code>vcntq_u8</code> at <code>src/port/pg_popcount_aarch64.c:326:55</code> (unresolved), <code>vld1q_u8</code> at <code>src/port/pg_popcount_aarch64.c:329:9</code> (unresolved), <code>vpadalq_u32</code> at <code>src/port/pg_popcount_aarch64.c:330:12</code> (unresolved), <code>vpaddlq_u16</code> at <code>src/port/pg_popcount_aarch64.c:330:32</code> (unresolved), <code>vpaddlq_u8</code> at <code>src/port/pg_popcount_aarch64.c:330:44</code> (unresolved), <code>vcntq_u8</code> at <code>src/port/pg_popcount_aarch64.c:330:55</code> (unresolved), <code>vld1q_u8</code> at <code>src/port/pg_popcount_aarch64.c:333:9</code> (unresolved), <code>vpadalq_u32</code> at <code>src/port/pg_popcount_aarch64.c:334:12</code> (unresolved), <code>vpaddlq_u16</code> at <code>src/port/pg_popcount_aarch64.c:334:32</code> (unresolved), <code>vpaddlq_u8</code> at <code>src/port/pg_popcount_aarch64.c:334:44</code> (unresolved), <code>vcntq_u8</code> at <code>src/port/pg_popcount_aarch64.c:334:55</code> (unresolved), <code>vld1q_u8</code> at <code>src/port/pg_popcount_aarch64.c:337:9</code> (unresolved), <code>vpadalq_u32</code> at <code>src/port/pg_popcount_aarch64.c:338:12</code> (unresolved), <code>vpaddlq_u16</code> at <code>src/port/pg_popcount_aarch64.c:338:32</code> (unresolved), <code>vpaddlq_u8</code> at <code>src/port/pg_popcount_aarch64.c:338:44</code> (unresolved), <code>vcntq_u8</code> at <code>src/port/pg_popcount_aarch64.c:338:55</code> (unresolved), <code>vld1q_u8</code> at <code>src/port/pg_popcount_aarch64.c:349:9</code> (unresolved), <code>vpadalq_u32</code> at <code>src/port/pg_popcount_aarch64.c:350:12</code> (unresolved), <code>vpaddlq_u16</code> at <code>src/port/pg_popcount_aarch64.c:350:32</code> (unresolved), <code>vpaddlq_u8</code> at <code>src/port/pg_popcount_aarch64.c:350:44</code> (unresolved), <code>vcntq_u8</code> at <code>src/port/pg_popcount_aarch64.c:350:55</code> (unresolved), <code>vld1q_u8</code> at <code>src/port/pg_popcount_aarch64.c:353:9</code> (unresolved), <code>vpadalq_u32</code> at <code>src/port/pg_popcount_aarch64.c:354:12</code> (unresolved), <code>vpaddlq_u16</code> at <code>src/port/pg_popcount_aarch64.c:354:32</code> (unresolved), <code>vpaddlq_u8</code> at <code>src/port/pg_popcount_aarch64.c:354:44</code> (unresolved), <code>vcntq_u8</code> at <code>src/port/pg_popcount_aarch64.c:354:55</code> (unresolved), <code>vaddvq_u64</code> at <code>src/port/pg_popcount_aarch64.c:363:12</code> (unresolved), <code>vaddq_u64</code> at <code>src/port/pg_popcount_aarch64.c:363:23</code> (unresolved), <code>vaddvq_u64</code> at <code>src/port/pg_popcount_aarch64.c:364:12</code> (unresolved), <code>vaddq_u64</code> at <code>src/port/pg_popcount_aarch64.c:364:23</code> (unresolved), <a class="wiki-source-link" href="../../source/src/port/pg_popcount_aarch64.c.html#L298" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__port__pg_popcount_aarch64_c__pg_popcount64_neon.html&quot;}, '*');"><code>pg_popcount64_neon</code></a> at <code>src/port/pg_popcount_aarch64.c:371:13</code> (direct, confidence=high, resolved=<a class="wiki-entity-link" href="src__port__pg_popcount_aarch64_c__pg_popcount64_neon.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__port__pg_popcount_aarch64_c__pg_popcount64_neon.html&quot;, &quot;source&quot;: &quot;source/src/port/pg_popcount_aarch64.c.html#L298&quot;}, '*');"><code>symbol:src/port/pg_popcount_aarch64.c#pg_popcount64_neon</code></a>)</li>
+</ul>
+<h2>関連データ構造</h2>
+<p><code>uint32</code>, <code>uint64</code>, <code>uint8</code></p>
+<h2>ソース抜粋</h2>
+<p>~~~c static uint64 <a class="wiki-source-link" href="../../source/src/port/pg_popcount_aarch64.c.html#L308" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__port__pg_popcount_aarch64_c__pg_popcount_neon.html&quot;}, '*');">pg_popcount_neon</a>(const char *buf, int bytes) { uint8x16_t	vec; uint64x2_t	accum1 = vdupq_n_u64(0), accum2 = vdupq_n_u64(0), accum3 = vdupq_n_u64(0), accum4 = vdupq_n_u64(0); uint32		bytes_per_iteration = 4 * sizeof(uint8x16_t); uint64		popcnt = 0;</p>
+<p>/*</p>
+<ul>
+<li>For better instruction-level parallelism, each loop iteration operates</li>
+<li>on a block of four registers.</li>
+<p>*/ for (; bytes &gt;= bytes_per_iteration; bytes -= bytes_per_iteration) { vec = vld1q_u8((const uint8 *) buf); accum1 = vpadalq_u32(accum1, vpaddlq_u16(vpaddlq_u8(vcntq_u8(vec)))); buf += sizeof(uint8x16_t);</p>
+</ul>
+<p>vec = vld1q_u8((const uint8 *) buf); accum2 = vpadalq_u32(accum2, vpaddlq_u16(vpaddlq_u8(vcntq_u8(vec)))); buf += sizeof(uint8x16_t);</p>
+<p>vec = vld1q_u8((const uint8 *) buf); accum3 = vpadalq_u32(accum3, vpaddlq_u16(vpaddlq_u8(vcntq_u8(vec)))); buf += sizeof(uint8x16_t);</p>
+<p>vec = vld1q_u8((const uint8 *) buf); accum4 = vpadalq_u32(accum4, vpaddlq_u16(vpaddlq_u8(vcntq_u8(vec)))); buf += sizeof(uint8x16_t); }</p>
+<p>/*</p>
+<ul>
+<li>If enough data remains, do another iteration on a block of two</li>
+<li>registers.</li>
+<p>*/ bytes_per_iteration = 2 * sizeof(uint8x16_t); if (bytes &gt;= bytes_per_iteration) { vec = vld1q_u8((const uint8 *) buf); accum1 = vpadalq_u32(accum1, vpaddlq_u16(vpaddlq_u8(vcntq_u8(vec)))); buf += sizeof(uint8x16_t);</p>
+</ul>
+<p>vec = vld1q_u8((const uint8 *) buf); accum2 = vpadalq_u32(accum2, vpaddlq_u16(vpaddlq_u8(vcntq_u8(vec)))); buf += sizeof(uint8x16_t);</p>
+<p>bytes -= bytes_per_iteration; }</p>
+<p>/*</p>
+<ul>
+<li>Add the accumulators.</li>
+<p>*/ popcnt += vaddvq_u64(vaddq_u64(accum1, accum2)); popcnt += vaddvq_u64(vaddq_u64(accum3, accum4));</p>
+</ul>
+<p>/*</p>
+<ul>
+<li>Process remaining 8-byte blocks.</li>
+<p>~~~</p>
+</ul>
+<h2>失敗モードと境界条件</h2>
+<p>まだ解析していません。</p>
+<h2>保守担当者向けメモ</h2>
+<ul>
+<li>後続フェーズで、ソース本文の文脈と caller/callee 情報を使ってこのページを強化する。</li>
+</ul><script>
+(function() {
+  function notifyParent() {
+    if (parent === window) return;
+    parent.postMessage({type: "frame-location", frame: window.name || "", href: window.location.href}, "*");
+  }
+  document.addEventListener("click", function(event) {
+    const link = event.target.closest("a[data-panel]");
+    if (!link || parent === window) return;
+    parent.postMessage({type: "source-link", panel: link.dataset.panel}, "*");
+  });
+  window.addEventListener("load", notifyParent);
+  window.addEventListener("hashchange", notifyParent);
+})();
+</script></body></html>

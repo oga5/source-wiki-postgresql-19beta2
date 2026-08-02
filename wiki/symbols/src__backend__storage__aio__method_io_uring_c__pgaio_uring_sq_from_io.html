@@ -1,0 +1,69 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>symbols/src__backend__storage__aio__method_io_uring_c__pgaio_uring_sq_from_io.md</title><link rel="stylesheet" href="../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../source/src/backend/storage/aio/method_io_uring.c.html#L742" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__storage__aio__method_io_uring_c__pgaio_uring_sq_from_io.html&quot;}, '*');">pgaio_uring_sq_from_io</a></h1>
+<h2>定義</h2>
+<ul>
+<li>種別: <code>function</code></li>
+<li>定義箇所: <code>src/backend/storage/aio/method_io_uring.c:742</code></li>
+<li>所属モジュール: <a class="wiki-entity-link" href="../modules/src__backend__storage__aio.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/modules/src__backend__storage__aio.html&quot;, &quot;source&quot;: &quot;source/src/backend/storage/aio/aio.c.html&quot;}, '*');"><code>module:src/backend/storage/aio</code></a></li>
+</ul>
+<h2>目的</h2>
+<p>静的シンボル索引から生成された初期シンボルページです。</p>
+<h2>シグネチャまたは形状</h2>
+<ul>
+<li>シグネチャ: <code>static void pgaio_uring_sq_from_io(PgAioHandle *ioh, struct io_uring_sqe *sqe)</code></li>
+</ul>
+<h2>入力と出力</h2>
+<ul>
+<li>引数: <code>PgAioHandle *ioh</code>, <code>struct io_uring_sqe *sqe</code></li>
+<li>戻り値: <code>void</code></li>
+</ul>
+<h2>前提条件と不変条件</h2>
+<p>まだ解析していません。</p>
+<h2>アルゴリズムまたは振る舞い</h2>
+<ul>
+<li>複雑度: <code>high</code> (score 24)</li>
+</ul>
+<p>まだ解析していません。</p>
+<h2>呼び出し元と呼び出し先</h2>
+<ul>
+<li>呼び出し元: <a class="wiki-source-link" href="../../source/src/backend/storage/aio/method_io_uring.c.html#L414" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__storage__aio__method_io_uring_c__pgaio_uring_submit.html&quot;}, '*');"><code>pgaio_uring_submit</code></a></li>
+<li>呼び出し先: <a class="wiki-source-link" href="../../source/src/backend/storage/aio/method_io_uring.c.html#L715" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__storage__aio__method_io_uring_c__pgaio_uring_should_use_async.html&quot;}, '*');"><code>pgaio_uring_should_use_async</code></a></li>
+<li>呼び出し元サイト: <a class="wiki-source-link" href="../../source/src/backend/storage/aio/method_io_uring.c.html#L414" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__storage__aio__method_io_uring_c__pgaio_uring_submit.html&quot;}, '*');"><code>pgaio_uring_submit</code></a> at <code>src/backend/storage/aio/method_io_uring.c:432:3</code> (direct, confidence=high, resolved=<a class="wiki-entity-link" href="src__backend__storage__aio__method_io_uring_c__pgaio_uring_sq_from_io.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__storage__aio__method_io_uring_c__pgaio_uring_sq_from_io.html&quot;, &quot;source&quot;: &quot;source/src/backend/storage/aio/method_io_uring.c.html#L742&quot;}, '*');"><code>symbol:src/backend/storage/aio/method_io_uring.c#pgaio_uring_sq_from_io</code></a>)</li>
+<li>呼び出しサイト: <code>io_uring_prep_read</code> at <code>src/backend/storage/aio/method_io_uring.c:754:5</code> (unresolved), <code>io_uring_prep_readv</code> at <code>src/backend/storage/aio/method_io_uring.c:764:5</code> (unresolved), <a class="wiki-source-link" href="../../source/src/backend/storage/aio/method_io_uring.c.html#L715" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__storage__aio__method_io_uring_c__pgaio_uring_should_use_async.html&quot;}, '*');"><code>pgaio_uring_should_use_async</code></a> at <code>src/backend/storage/aio/method_io_uring.c:774:8</code> (direct, confidence=high, resolved=<a class="wiki-entity-link" href="src__backend__storage__aio__method_io_uring_c__pgaio_uring_should_use_async.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__storage__aio__method_io_uring_c__pgaio_uring_should_use_async.html&quot;, &quot;source&quot;: &quot;source/src/backend/storage/aio/method_io_uring.c.html#L715&quot;}, '*');"><code>symbol:src/backend/storage/aio/method_io_uring.c#pgaio_uring_should_use_async</code></a>), <code>io_uring_sqe_set_flags</code> at <code>src/backend/storage/aio/method_io_uring.c:775:5</code> (unresolved), <code>io_uring_prep_write</code> at <code>src/backend/storage/aio/method_io_uring.c:783:5</code> (unresolved), <code>io_uring_prep_writev</code> at <code>src/backend/storage/aio/method_io_uring.c:791:5</code> (unresolved), <a class="wiki-source-link" href="../../source/src/include/utils/elog.h.html#L242" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/utils/elog.h.html&quot;}, '*');"><code>elog</code></a> at <code>src/backend/storage/aio/method_io_uring.c:806:4</code> (unresolved), <code>io_uring_sqe_set_data</code> at <code>src/backend/storage/aio/method_io_uring.c:809:2</code> (unresolved)</li>
+</ul>
+<h2>関連データ構造</h2>
+<p><a class="wiki-source-link" href="../../source/src/include/port/pg_iovec.h.html#L25" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__port__pg_iovec_h__iovec.html&quot;}, '*');"><code>iovec</code></a>, <code>PgAioHandle</code>, <a class="wiki-source-link" href="../../source/src/include/storage/aio.h.html#L87" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__storage__aio_h__PgAioOp.html&quot;}, '*');"><code>PgAioOp</code></a></p>
+<h2>ソース抜粋</h2>
+<p>~~~c static void <a class="wiki-source-link" href="../../source/src/backend/storage/aio/method_io_uring.c.html#L742" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__storage__aio__method_io_uring_c__pgaio_uring_sq_from_io.html&quot;}, '*');">pgaio_uring_sq_from_io</a>(PgAioHandle *ioh, struct io_uring_sqe *sqe) { struct <a class="wiki-source-link" href="../../source/src/include/port/pg_iovec.h.html#L25" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__port__pg_iovec_h__iovec.html&quot;}, '*');">iovec</a> *iov; size_t		io_size = 0;</p>
+<p>switch ((<a class="wiki-source-link" href="../../source/src/include/storage/aio.h.html#L87" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__storage__aio_h__PgAioOp.html&quot;}, '*');">PgAioOp</a>) ioh-&gt;op) { case PGAIO_OP_READV: iov = &amp;pgaio_ctl-&gt;iovecs[ioh-&gt;iovec_off]; if (ioh-&gt;op_data.read.iov_length == 1) { io_uring_prep_read(sqe, ioh-&gt;op_data.read.fd, iov-&gt;iov_base, iov-&gt;iov_len, ioh-&gt;op_data.read.offset);</p>
+<p>io_size = iov-&gt;iov_len; } else { io_uring_prep_readv(sqe, ioh-&gt;op_data.read.fd, iov, ioh-&gt;op_data.read.iov_length, ioh-&gt;op_data.read.offset);</p>
+<p>for (int i = 0; i &lt; ioh-&gt;op_data.read.iov_length; i++, iov++) io_size += iov-&gt;iov_len; }</p>
+<p>if (<a class="wiki-source-link" href="../../source/src/backend/storage/aio/method_io_uring.c.html#L715" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__storage__aio__method_io_uring_c__pgaio_uring_should_use_async.html&quot;}, '*');">pgaio_uring_should_use_async</a>(ioh, io_size)) io_uring_sqe_set_flags(sqe, IOSQE_ASYNC);</p>
+<p>break;</p>
+<p>case PGAIO_OP_WRITEV: iov = &amp;pgaio_ctl-&gt;iovecs[ioh-&gt;iovec_off]; if (ioh-&gt;op_data.write.iov_length == 1) { io_uring_prep_write(sqe, ioh-&gt;op_data.write.fd, iov-&gt;iov_base, iov-&gt;iov_len, ioh-&gt;op_data.write.offset); } else { io_uring_prep_writev(sqe, ioh-&gt;op_data.write.fd, iov, ioh-&gt;op_data.write.iov_length, ioh-&gt;op_data.write.offset); }</p>
+<p>/*</p>
+<ul>
+<li>For <a class="wiki-source-link" href="../../source/src/backend/utils/adt/timestamp.c.html#L1612" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__utils__adt__timestamp_c__now.html&quot;}, '*');">now</a> don&#x27;t trigger use of IOSQE_ASYNC for writes, it&#x27;s not</li>
+<li>clear there <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> a performance benefit in doing so.</li>
+<p>*/ ~~~</p>
+</ul>
+<h2>失敗モードと境界条件</h2>
+<p>まだ解析していません。</p>
+<h2>保守担当者向けメモ</h2>
+<ul>
+<li>後続フェーズで、ソース本文の文脈と caller/callee 情報を使ってこのページを強化する。</li>
+</ul><script>
+(function() {
+  function notifyParent() {
+    if (parent === window) return;
+    parent.postMessage({type: "frame-location", frame: window.name || "", href: window.location.href}, "*");
+  }
+  document.addEventListener("click", function(event) {
+    const link = event.target.closest("a[data-panel]");
+    if (!link || parent === window) return;
+    parent.postMessage({type: "source-link", panel: link.dataset.panel}, "*");
+  });
+  window.addEventListener("load", notifyParent);
+  window.addEventListener("hashchange", notifyParent);
+})();
+</script></body></html>

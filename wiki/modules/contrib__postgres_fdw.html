@@ -1,0 +1,70 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>modules/contrib__postgres_fdw.md</title><link rel="stylesheet" href="../../styles.css"></head><body><h1>contrib/postgres_fdw</h1>
+<h2>システム内での役割</h2>
+<p><code>contrib/postgres_fdw</code> には 6 個の索引済みソースファイルがあります。この初期モジュールページはディレクトリ境界に基づいています。</p>
+<h2>責務</h2>
+<ul>
+<li>このディレクトリに属するソースファイルを集約する。</li>
+<li>より深い LLM 合成の前段として、モジュール単位の入口を提供する。</li>
+</ul>
+<h2>このモジュールのファイル</h2>
+<ul>
+<li><a class="wiki-source-link" href="../../source/contrib/postgres_fdw/connection.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/contrib/postgres_fdw/connection.c.html&quot;}, '*');"><code>contrib/postgres_fdw/connection.c</code></a></li>
+<li><a class="wiki-source-link" href="../../source/contrib/postgres_fdw/deparse.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/contrib/postgres_fdw/deparse.c.html&quot;}, '*');"><code>contrib/postgres_fdw/deparse.c</code></a></li>
+<li><a class="wiki-source-link" href="../../source/contrib/postgres_fdw/option.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/contrib/postgres_fdw/option.c.html&quot;}, '*');"><code>contrib/postgres_fdw/option.c</code></a></li>
+<li><a class="wiki-source-link" href="../../source/contrib/postgres_fdw/postgres_fdw.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/contrib/postgres_fdw/postgres_fdw.c.html&quot;}, '*');"><code>contrib/postgres_fdw/postgres_fdw.c</code></a></li>
+<li><a class="wiki-source-link" href="../../source/contrib/postgres_fdw/postgres_fdw.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/contrib/postgres_fdw/postgres_fdw.h.html&quot;}, '*');"><code>contrib/postgres_fdw/postgres_fdw.h</code></a></li>
+<li><a class="wiki-source-link" href="../../source/contrib/postgres_fdw/shippable.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/contrib/postgres_fdw/shippable.c.html&quot;}, '*');"><code>contrib/postgres_fdw/shippable.c</code></a></li>
+</ul>
+<h2>主要なデータ構造</h2>
+<ul>
+<li><a class="wiki-source-link" href="../../source/contrib/postgres_fdw/connection.c.html#L54" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/contrib__postgres_fdw__connection_c__ConnCacheKey.html&quot;}, '*');"><code>ConnCacheKey</code></a></li>
+<li><a class="wiki-source-link" href="../../source/contrib/postgres_fdw/connection.c.html#L56" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/contrib__postgres_fdw__connection_c__ConnCacheEntry.html&quot;}, '*');"><code>ConnCacheEntry</code></a></li>
+<li><a class="wiki-source-link" href="../../source/contrib/postgres_fdw/connection.c.html#L130" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/contrib__postgres_fdw__connection_c__pgfdwVersion.html&quot;}, '*');"><code>pgfdwVersion</code></a></li>
+<li><a class="wiki-source-link" href="../../source/contrib/postgres_fdw/deparse.c.html#L67" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/contrib__postgres_fdw__deparse_c__foreign_glob_cxt.html&quot;}, '*');"><code>foreign_glob_cxt</code></a></li>
+<li><a class="wiki-source-link" href="../../source/contrib/postgres_fdw/deparse.c.html#L79" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/contrib__postgres_fdw__deparse_c__FDWCollateState.html&quot;}, '*');"><code>FDWCollateState</code></a></li>
+<li><a class="wiki-source-link" href="../../source/contrib/postgres_fdw/deparse.c.html#L89" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/contrib__postgres_fdw__deparse_c__foreign_loc_cxt.html&quot;}, '*');"><code>foreign_loc_cxt</code></a></li>
+<li><a class="wiki-source-link" href="../../source/contrib/postgres_fdw/deparse.c.html#L98" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/contrib__postgres_fdw__deparse_c__deparse_expr_cxt.html&quot;}, '*');"><code>deparse_expr_cxt</code></a></li>
+<li><a class="wiki-source-link" href="../../source/contrib/postgres_fdw/option.c.html#L30" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/contrib__postgres_fdw__option_c__PgFdwOption.html&quot;}, '*');"><code>PgFdwOption</code></a></li>
+<li><a class="wiki-source-link" href="../../source/contrib/postgres_fdw/postgres_fdw.c.html#L79" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/contrib__postgres_fdw__postgres_fdw_c__FdwScanPrivateIndex.html&quot;}, '*');"><code>FdwScanPrivateIndex</code></a></li>
+<li><a class="wiki-source-link" href="../../source/contrib/postgres_fdw/postgres_fdw.c.html#L107" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/contrib__postgres_fdw__postgres_fdw_c__FdwModifyPrivateIndex.html&quot;}, '*');"><code>FdwModifyPrivateIndex</code></a></li>
+</ul>
+<h2>主なフロー</h2>
+<p>初期モジュールページでは、まだエンドツーエンドのフローを推論しません。</p>
+<h2>外部依存</h2>
+<ul>
+<li><a class="wiki-source-link" href="../../source/src/include/postgres.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/postgres.h.html&quot;}, '*');"><code>postgres.h</code></a></li>
+<li><a class="wiki-source-link" href="../../source/contrib/postgres_fdw/postgres_fdw.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/contrib/postgres_fdw/postgres_fdw.h.html&quot;}, '*');"><code>postgres_fdw.h</code></a></li>
+<li><code>commands/defrem.h</code></li>
+<li><code>access/htup_details.h</code></li>
+<li><a class="wiki-source-link" href="../../source/src/include/miscadmin.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/miscadmin.h.html&quot;}, '*');"><code>miscadmin.h</code></a></li>
+<li><code>utils/builtins.h</code></li>
+<li><code>utils/syscache.h</code></li>
+<li><code>catalog/pg_user_mapping.h</code></li>
+<li><a class="wiki-source-link" href="../../source/src/include/funcapi.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/funcapi.h.html&quot;}, '*');"><code>funcapi.h</code></a></li>
+<li><code>libpq/libpq-be.h</code></li>
+</ul>
+<h2>内部構成</h2>
+<ul>
+<li>子モジュール数: 0</li>
+</ul>
+<h2>推奨読書順</h2>
+<p>1. <a class="wiki-source-link" href="../../source/contrib/postgres_fdw/postgres_fdw.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/contrib/postgres_fdw/postgres_fdw.h.html&quot;}, '*');"><code>contrib/postgres_fdw/postgres_fdw.h</code></a> 2. <a class="wiki-source-link" href="../../source/contrib/postgres_fdw/postgres_fdw.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/contrib/postgres_fdw/postgres_fdw.c.html&quot;}, '*');"><code>contrib/postgres_fdw/postgres_fdw.c</code></a> 3. <a class="wiki-source-link" href="../../source/contrib/postgres_fdw/deparse.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/contrib/postgres_fdw/deparse.c.html&quot;}, '*');"><code>contrib/postgres_fdw/deparse.c</code></a> 4. <a class="wiki-source-link" href="../../source/contrib/postgres_fdw/connection.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/contrib/postgres_fdw/connection.c.html&quot;}, '*');"><code>contrib/postgres_fdw/connection.c</code></a> 5. <a class="wiki-source-link" href="../../source/contrib/postgres_fdw/option.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/contrib/postgres_fdw/option.c.html&quot;}, '*');"><code>contrib/postgres_fdw/option.c</code></a> 6. <a class="wiki-source-link" href="../../source/contrib/postgres_fdw/shippable.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/contrib/postgres_fdw/shippable.c.html&quot;}, '*');"><code>contrib/postgres_fdw/shippable.c</code></a></p>
+<h2>未解決の問い</h2>
+<ul>
+<li>LLM ベースのモジュール合成を追加した後で、責務とフローを精緻化する。</li>
+</ul><script>
+(function() {
+  function notifyParent() {
+    if (parent === window) return;
+    parent.postMessage({type: "frame-location", frame: window.name || "", href: window.location.href}, "*");
+  }
+  document.addEventListener("click", function(event) {
+    const link = event.target.closest("a[data-panel]");
+    if (!link || parent === window) return;
+    parent.postMessage({type: "source-link", panel: link.dataset.panel}, "*");
+  });
+  window.addEventListener("load", notifyParent);
+  window.addEventListener("hashchange", notifyParent);
+})();
+</script></body></html>

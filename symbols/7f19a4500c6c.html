@@ -1,0 +1,16 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>sigexit_handler</title><link rel="stylesheet" href="../styles.css"></head><body><h1>Multiple definitions: <code>sigexit_handler</code></h1><ul><li><a href="../source/src/bin/pg_basebackup/pg_receivewal.c.html#L616" target="source-view">src/bin/pg_basebackup/pg_receivewal.c:616 (function)</a></li><li><a href="../source/src/bin/pg_basebackup/pg_recvlogical.c.html#L678" target="source-view">src/bin/pg_basebackup/pg_recvlogical.c:678 (function)</a></li></ul><script>
+(function() {
+  function notifyParent() {
+    if (parent === window) return;
+    parent.postMessage({type: "frame-location", frame: window.name || "", href: window.location.href}, "*");
+  }
+  document.addEventListener("click", function(event) {
+    const link = event.target.closest("a[data-panel]");
+    if (!link || parent === window) return;
+    parent.postMessage({type: "source-link", panel: link.dataset.panel}, "*");
+  });
+  window.addEventListener("load", notifyParent);
+  window.addEventListener("hashchange", notifyParent);
+})();
+</script></body></html>

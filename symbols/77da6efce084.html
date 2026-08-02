@@ -1,0 +1,16 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>MAX_BUFFERS_TO_EXTEND_BY</title><link rel="stylesheet" href="../styles.css"></head><body><h1>Multiple definitions: <code>MAX_BUFFERS_TO_EXTEND_BY</code></h1><ul><li><a href="../source/src/backend/access/heap/hio.c.html#L239" target="source-view">src/backend/access/heap/hio.c:239 (macro)</a></li><li><a href="../source/src/test/modules/test_aio/test_aio.c.html#L184" target="source-view">src/test/modules/test_aio/test_aio.c:184 (macro)</a></li></ul><script>
+(function() {
+  function notifyParent() {
+    if (parent === window) return;
+    parent.postMessage({type: "frame-location", frame: window.name || "", href: window.location.href}, "*");
+  }
+  document.addEventListener("click", function(event) {
+    const link = event.target.closest("a[data-panel]");
+    if (!link || parent === window) return;
+    parent.postMessage({type: "source-link", panel: link.dataset.panel}, "*");
+  });
+  window.addEventListener("load", notifyParent);
+  window.addEventListener("hashchange", notifyParent);
+})();
+</script></body></html>

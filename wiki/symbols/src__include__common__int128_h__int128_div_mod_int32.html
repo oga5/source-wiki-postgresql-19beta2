@@ -1,0 +1,76 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>symbols/src__include__common__int128_h__int128_div_mod_int32.md</title><link rel="stylesheet" href="../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../source/src/include/common/int128.h.html#L307" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__common__int128_h__int128_div_mod_int32.html&quot;}, '*');">int128_div_mod_int32</a></h1>
+<h2>定義</h2>
+<ul>
+<li>種別: <code>function</code></li>
+<li>定義箇所: <code>src/include/common/int128.h:307</code></li>
+<li>所属モジュール: <a class="wiki-entity-link" href="../modules/src__include__common.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/modules/src__include__common.html&quot;, &quot;source&quot;: &quot;source/src/include/common/archive.h.html&quot;}, '*');"><code>module:src/include/common</code></a></li>
+</ul>
+<h2>目的</h2>
+<p>静的シンボル索引から生成された初期シンボルページです。</p>
+<h2>シグネチャまたは形状</h2>
+<ul>
+<li>シグネチャ: <code>static inline void int128_div_mod_int32(INT128 *i128, int32 v, int32 *remainder)</code></li>
+</ul>
+<h2>入力と出力</h2>
+<ul>
+<li>引数: <code>INT128 *i128</code>, <code>int32 v</code>, <code>int32 *remainder</code></li>
+<li>戻り値: <code>void</code></li>
+</ul>
+<h2>前提条件と不変条件</h2>
+<p>まだ解析していません。</p>
+<h2>アルゴリズムまたは振る舞い</h2>
+<ul>
+<li>複雑度: <code>high</code> (score 16)</li>
+</ul>
+<p>まだ解析していません。</p>
+<h2>呼び出し元と呼び出し先</h2>
+<ul>
+<li>呼び出し元: なし</li>
+<li>呼び出し先: なし</li>
+<li>呼び出し元サイト: なし</li>
+<li>呼び出しサイト: <code>(int32)</code> at <code>src/include/common/int128.h:314:15</code> (indirect), <code>abs</code> at <code>src/include/common/int128.h:350:6</code> (unresolved), <code>(int32)</code> at <code>src/include/common/int128.h:370:30</code> (indirect)</li>
+</ul>
+<h2>関連データ構造</h2>
+<p><code>c</code>, <a class="wiki-source-link" href="../../source/src/include/c.h.html#L657" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__c_h__int128.html&quot;}, '*');"><code>int128</code></a>, <a class="wiki-source-link" href="../../source/src/include/common/int128.h.html#L54" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__common__int128_h__INT128.html&quot;}, '*');"><code>INT128</code></a>, <code>int32</code>, <code>int64</code>, <code>numeric</code>, <code>uint32</code>, <code>uint64</code>, <a class="wiki-source-link" href="../../source/src/interfaces/ecpg/preproc/type.h.html#L89" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__interfaces__ecpg__preproc__type_h__when.html&quot;}, '*');"><code>when</code></a></p>
+<h2>ソース抜粋</h2>
+<p>~~~c static <a class="wiki-source-link" href="../../source/src/include/c.h.html#L116" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/c.h.html&quot;}, '*');">inline</a> void <a class="wiki-source-link" href="../../source/src/include/common/int128.h.html#L307" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__common__int128_h__int128_div_mod_int32.html&quot;}, '*');">int128_div_mod_int32</a>(<a class="wiki-source-link" href="../../source/src/include/common/int128.h.html#L54" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__common__int128_h__INT128.html&quot;}, '*');">INT128</a> *i128, int32 v, int32 *remainder) { #if USE_NATIVE_INT128 <a class="wiki-source-link" href="../../source/src/include/c.h.html#L657" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__c_h__int128.html&quot;}, '*');">int128</a>		old_i128 = *i128;</p>
+<p>*i128 /= v; *remainder = (int32) (old_i128 - *i128 * v); #else /*</p>
+<ul>
+<li>To avoid any intermediate values overflowing (as happens if INT64_MIN</li>
+<li><a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> divided by -1), we first compute the quotient abs(*i128) / abs(v)</li>
+<li>using unsigned 64-bit arithmetic, and then fix the signs up at the end.</li>
+<p>*</p>
+<li>The quotient <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> computed using the short division algorithm described</li>
+<li>in Knuth volume 2, section 4.3.1 exercise 16 (cf. <a class="wiki-source-link" href="../../source/src/backend/utils/adt/numeric.c.html#L9453" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__utils__adt__numeric_c__div_var_int.html&quot;}, '*');">div_var_int</a>() in</li>
+<li>numeric.c).  Since the absolute <a class="wiki-source-link" href="../../source/src/interfaces/ecpg/compatlib/informix.c.html#L687" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/ecpg/compatlib/informix.c.html&quot;}, '*');">value</a> of the divisor <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> known to be at</li>
+<li>most 2^31, the remainder carried from one digit to the next <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> at most</li>
+<li>2^31 - 1, and so there <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> no danger of overflow <a class="wiki-source-link" href="../../source/src/interfaces/ecpg/preproc/type.h.html#L89" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__interfaces__ecpg__preproc__type_h__when.html&quot;}, '*');">when</a> this <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> combined</li>
+<li>with the next digit (a 32-bit unsigned integer).</li>
+<p>*/ uint64		n_hi; uint64		n_lo; uint32		d; uint64		q; uint64		r; uint64		tmp;</p>
+</ul>
+<p>/* numerator: absolute <a class="wiki-source-link" href="../../source/src/interfaces/ecpg/compatlib/informix.c.html#L687" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/ecpg/compatlib/informix.c.html&quot;}, '*');">value</a> of *i128 */ if (i128-&gt;hi &lt; 0) { n_hi = 0 - ((uint64) i128-&gt;hi); n_lo = 0 - i128-&gt;lo; if (n_lo != 0) n_hi--; } else { n_hi = i128-&gt;hi; n_lo = i128-&gt;lo; }</p>
+<p>/* denominator: absolute <a class="wiki-source-link" href="../../source/src/interfaces/ecpg/compatlib/informix.c.html#L687" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/ecpg/compatlib/informix.c.html&quot;}, '*');">value</a> of v */ d = abs(v);</p>
+<p>/* quotient and remainder of high 64 bits */ q = n_hi / d; r = n_hi % d; n_hi = q;</p>
+<p>/* quotient and remainder of next 32 bits (<a class="wiki-source-link" href="../../source/src/backend/utils/adt/oracle_compat.c.html#L79" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__utils__adt__oracle_compat_c__upper.html&quot;}, '*');">upper</a> half of n_lo) */ tmp = (r &lt;&lt; 32) + (n_lo &gt;&gt; 32); q = tmp / d; r = tmp % d;</p>
+<p>/* quotient and remainder of last 32 bits (<a class="wiki-source-link" href="../../source/src/backend/utils/adt/oracle_compat.c.html#L48" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__utils__adt__oracle_compat_c__lower.html&quot;}, '*');">lower</a> half of n_lo) */ tmp = (r &lt;&lt; 32) + (uint32) n_lo; n_lo = q &lt;&lt; 32; q = tmp / d; r = tmp % d; ~~~</p>
+<h2>失敗モードと境界条件</h2>
+<p>まだ解析していません。</p>
+<h2>保守担当者向けメモ</h2>
+<ul>
+<li>後続フェーズで、ソース本文の文脈と caller/callee 情報を使ってこのページを強化する。</li>
+</ul><script>
+(function() {
+  function notifyParent() {
+    if (parent === window) return;
+    parent.postMessage({type: "frame-location", frame: window.name || "", href: window.location.href}, "*");
+  }
+  document.addEventListener("click", function(event) {
+    const link = event.target.closest("a[data-panel]");
+    if (!link || parent === window) return;
+    parent.postMessage({type: "source-link", panel: link.dataset.panel}, "*");
+  });
+  window.addEventListener("load", notifyParent);
+  window.addEventListener("hashchange", notifyParent);
+})();
+</script></body></html>

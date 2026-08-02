@@ -1,0 +1,74 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>modules/src__backend__utils__mmgr.md</title><link rel="stylesheet" href="../../styles.css"></head><body><h1>src/backend/utils/mmgr</h1>
+<h2>システム内での役割</h2>
+<p><code>src/backend/utils/mmgr</code> には 10 個の索引済みソースファイルがあります。この初期モジュールページはディレクトリ境界に基づいています。</p>
+<h2>責務</h2>
+<ul>
+<li>このディレクトリに属するソースファイルを集約する。</li>
+<li>より深い LLM 合成の前段として、モジュール単位の入口を提供する。</li>
+</ul>
+<h2>このモジュールのファイル</h2>
+<ul>
+<li><a class="wiki-source-link" href="../../source/src/backend/utils/mmgr/alignedalloc.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/utils/mmgr/alignedalloc.c.html&quot;}, '*');"><code>src/backend/utils/mmgr/alignedalloc.c</code></a></li>
+<li><a class="wiki-source-link" href="../../source/src/backend/utils/mmgr/aset.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/utils/mmgr/aset.c.html&quot;}, '*');"><code>src/backend/utils/mmgr/aset.c</code></a></li>
+<li><a class="wiki-source-link" href="../../source/src/backend/utils/mmgr/bump.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/utils/mmgr/bump.c.html&quot;}, '*');"><code>src/backend/utils/mmgr/bump.c</code></a></li>
+<li><a class="wiki-source-link" href="../../source/src/backend/utils/mmgr/dsa.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/utils/mmgr/dsa.c.html&quot;}, '*');"><code>src/backend/utils/mmgr/dsa.c</code></a></li>
+<li><a class="wiki-source-link" href="../../source/src/backend/utils/mmgr/freepage.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/utils/mmgr/freepage.c.html&quot;}, '*');"><code>src/backend/utils/mmgr/freepage.c</code></a></li>
+<li><a class="wiki-source-link" href="../../source/src/backend/utils/mmgr/generation.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/utils/mmgr/generation.c.html&quot;}, '*');"><code>src/backend/utils/mmgr/generation.c</code></a></li>
+<li><a class="wiki-source-link" href="../../source/src/backend/utils/mmgr/mcxt.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/utils/mmgr/mcxt.c.html&quot;}, '*');"><code>src/backend/utils/mmgr/mcxt.c</code></a></li>
+<li><a class="wiki-source-link" href="../../source/src/backend/utils/mmgr/memdebug.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/utils/mmgr/memdebug.c.html&quot;}, '*');"><code>src/backend/utils/mmgr/memdebug.c</code></a></li>
+<li><a class="wiki-source-link" href="../../source/src/backend/utils/mmgr/portalmem.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/utils/mmgr/portalmem.c.html&quot;}, '*');"><code>src/backend/utils/mmgr/portalmem.c</code></a></li>
+<li><a class="wiki-source-link" href="../../source/src/backend/utils/mmgr/slab.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/utils/mmgr/slab.c.html&quot;}, '*');"><code>src/backend/utils/mmgr/slab.c</code></a></li>
+</ul>
+<h2>主要なデータ構造</h2>
+<ul>
+<li><a class="wiki-source-link" href="../../source/src/backend/utils/mmgr/aset.c.html#L113" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__utils__mmgr__aset_c__AllocBlock.html&quot;}, '*');"><code>AllocBlock</code></a></li>
+<li><a class="wiki-source-link" href="../../source/src/backend/utils/mmgr/aset.c.html#L119" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__utils__mmgr__aset_c__AllocPointer.html&quot;}, '*');"><code>AllocPointer</code></a></li>
+<li><a class="wiki-source-link" href="../../source/src/backend/utils/mmgr/aset.c.html#L128" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__utils__mmgr__aset_c__AllocFreeListLink.html&quot;}, '*');"><code>AllocFreeListLink</code></a></li>
+<li><a class="wiki-source-link" href="../../source/src/backend/utils/mmgr/aset.c.html#L158" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__utils__mmgr__aset_c__AllocSetContext.html&quot;}, '*');"><code>AllocSetContext</code></a></li>
+<li><a class="wiki-source-link" href="../../source/src/backend/utils/mmgr/aset.c.html#L173" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__utils__mmgr__aset_c__AllocSet.html&quot;}, '*');"><code>AllocSet</code></a></li>
+<li><a class="wiki-source-link" href="../../source/src/backend/utils/mmgr/aset.c.html#L187" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__utils__mmgr__aset_c__AllocBlockData.html&quot;}, '*');"><code>AllocBlockData</code></a></li>
+<li><a class="wiki-source-link" href="../../source/src/backend/utils/mmgr/aset.c.html#L250" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__utils__mmgr__aset_c__AllocSetFreeList.html&quot;}, '*');"><code>AllocSetFreeList</code></a></li>
+<li><a class="wiki-source-link" href="../../source/src/backend/utils/mmgr/bump.c.html#L66" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__utils__mmgr__bump_c__BumpBlock.html&quot;}, '*');"><code>BumpBlock</code></a></li>
+<li><a class="wiki-source-link" href="../../source/src/backend/utils/mmgr/bump.c.html#L68" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__utils__mmgr__bump_c__BumpContext.html&quot;}, '*');"><code>BumpContext</code></a></li>
+<li><a class="wiki-source-link" href="../../source/src/backend/utils/mmgr/dsa.c.html#L102" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/utils/mmgr/dsa.c.html&quot;}, '*');"><code>dsa_segment_index</code></a></li>
+</ul>
+<h2>主なフロー</h2>
+<p>初期モジュールページでは、まだエンドツーエンドのフローを推論しません。</p>
+<h2>外部依存</h2>
+<ul>
+<li><a class="wiki-source-link" href="../../source/src/include/postgres.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/postgres.h.html&quot;}, '*');"><code>postgres.h</code></a></li>
+<li><code>utils/memdebug.h</code></li>
+<li><code>utils/memutils.h</code></li>
+<li><code>utils/memutils_memorychunk.h</code></li>
+<li><code>utils/memutils_internal.h</code></li>
+<li><code>port/pg_bitutils.h</code></li>
+<li><code>lib/ilist.h</code></li>
+<li><a class="wiki-source-link" href="../../source/src/include/miscadmin.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/miscadmin.h.html&quot;}, '*');"><code>miscadmin.h</code></a></li>
+<li><code>utils/freepage.h</code></li>
+<li><code>port/atomics.h</code></li>
+</ul>
+<h2>内部構成</h2>
+<ul>
+<li>子モジュール数: 0</li>
+</ul>
+<h2>推奨読書順</h2>
+<p>1. <a class="wiki-source-link" href="../../source/src/backend/utils/mmgr/mcxt.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/utils/mmgr/mcxt.c.html&quot;}, '*');"><code>src/backend/utils/mmgr/mcxt.c</code></a> 2. <a class="wiki-source-link" href="../../source/src/backend/utils/mmgr/dsa.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/utils/mmgr/dsa.c.html&quot;}, '*');"><code>src/backend/utils/mmgr/dsa.c</code></a> 3. <a class="wiki-source-link" href="../../source/src/backend/utils/mmgr/freepage.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/utils/mmgr/freepage.c.html&quot;}, '*');"><code>src/backend/utils/mmgr/freepage.c</code></a> 4. <a class="wiki-source-link" href="../../source/src/backend/utils/mmgr/aset.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/utils/mmgr/aset.c.html&quot;}, '*');"><code>src/backend/utils/mmgr/aset.c</code></a> 5. <a class="wiki-source-link" href="../../source/src/backend/utils/mmgr/portalmem.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/utils/mmgr/portalmem.c.html&quot;}, '*');"><code>src/backend/utils/mmgr/portalmem.c</code></a> 6. <a class="wiki-source-link" href="../../source/src/backend/utils/mmgr/generation.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/utils/mmgr/generation.c.html&quot;}, '*');"><code>src/backend/utils/mmgr/generation.c</code></a> 7. <a class="wiki-source-link" href="../../source/src/backend/utils/mmgr/slab.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/utils/mmgr/slab.c.html&quot;}, '*');"><code>src/backend/utils/mmgr/slab.c</code></a> 8. <a class="wiki-source-link" href="../../source/src/backend/utils/mmgr/bump.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/utils/mmgr/bump.c.html&quot;}, '*');"><code>src/backend/utils/mmgr/bump.c</code></a> 9. <a class="wiki-source-link" href="../../source/src/backend/utils/mmgr/alignedalloc.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/utils/mmgr/alignedalloc.c.html&quot;}, '*');"><code>src/backend/utils/mmgr/alignedalloc.c</code></a> 10. <a class="wiki-source-link" href="../../source/src/backend/utils/mmgr/memdebug.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/utils/mmgr/memdebug.c.html&quot;}, '*');"><code>src/backend/utils/mmgr/memdebug.c</code></a></p>
+<h2>未解決の問い</h2>
+<ul>
+<li>LLM ベースのモジュール合成を追加した後で、責務とフローを精緻化する。</li>
+</ul><script>
+(function() {
+  function notifyParent() {
+    if (parent === window) return;
+    parent.postMessage({type: "frame-location", frame: window.name || "", href: window.location.href}, "*");
+  }
+  document.addEventListener("click", function(event) {
+    const link = event.target.closest("a[data-panel]");
+    if (!link || parent === window) return;
+    parent.postMessage({type: "source-link", panel: link.dataset.panel}, "*");
+  });
+  window.addEventListener("load", notifyParent);
+  window.addEventListener("hashchange", notifyParent);
+})();
+</script></body></html>

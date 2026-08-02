@@ -1,0 +1,60 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>symbols/contrib__pgcrypto__openssl_c__gen_ossl_encrypt.md</title><link rel="stylesheet" href="../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../source/contrib/pgcrypto/openssl.c.html#L367" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/contrib__pgcrypto__openssl_c__gen_ossl_encrypt.html&quot;}, '*');">gen_ossl_encrypt</a></h1>
+<h2>定義</h2>
+<ul>
+<li>種別: <code>function</code></li>
+<li>定義箇所: <code>contrib/pgcrypto/openssl.c:367</code></li>
+<li>所属モジュール: <a class="wiki-entity-link" href="../modules/contrib__pgcrypto.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/modules/contrib__pgcrypto.html&quot;, &quot;source&quot;: &quot;source/contrib/pgcrypto/crypt-blowfish.c.html&quot;}, '*');"><code>module:contrib/pgcrypto</code></a></li>
+</ul>
+<h2>目的</h2>
+<p>静的シンボル索引から生成された初期シンボルページです。</p>
+<h2>シグネチャまたは形状</h2>
+<ul>
+<li>シグネチャ: <code>static int gen_ossl_encrypt(PX_Cipher *c, int padding, const uint8 *data, unsigned dlen, uint8 *res, unsigned *rlen)</code></li>
+</ul>
+<h2>入力と出力</h2>
+<ul>
+<li>引数: <code>PX_Cipher *c</code>, <code>int padding</code>, <code>const uint8 *data</code>, <code>unsigned dlen</code>, <code>uint8 *res</code>, <code>unsigned *rlen</code></li>
+<li>戻り値: <code>int</code></li>
+</ul>
+<h2>前提条件と不変条件</h2>
+<p>まだ解析していません。</p>
+<h2>アルゴリズムまたは振る舞い</h2>
+<ul>
+<li>複雑度: <code>high</code> (score 21)</li>
+</ul>
+<p>まだ解析していません。</p>
+<h2>呼び出し元と呼び出し先</h2>
+<ul>
+<li>呼び出し元: なし</li>
+<li>呼び出し先: なし</li>
+<li>呼び出し元サイト: なし</li>
+<li>呼び出しサイト: <code>EVP_EncryptInit_ex</code> at <code>contrib/pgcrypto/openssl.c:377:8</code> (unresolved), <code>EVP_CIPHER_CTX_set_padding</code> at <code>contrib/pgcrypto/openssl.c:379:8</code> (unresolved), <code>EVP_CIPHER_CTX_set_key_length</code> at <code>contrib/pgcrypto/openssl.c:381:8</code> (unresolved), <code>EVP_EncryptInit_ex</code> at <code>contrib/pgcrypto/openssl.c:383:8</code> (unresolved), <code>EVP_EncryptUpdate</code> at <code>contrib/pgcrypto/openssl.c:388:7</code> (unresolved), <code>EVP_EncryptFinal_ex</code> at <code>contrib/pgcrypto/openssl.c:390:7</code> (unresolved)</li>
+</ul>
+<h2>関連データ構造</h2>
+<p><code>c</code>, <a class="wiki-source-link" href="../../source/contrib/pgcrypto/openssl.c.html#L254" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/contrib__pgcrypto__openssl_c__OSSLCipher.html&quot;}, '*');"><code>OSSLCipher</code></a>, <a class="wiki-source-link" href="../../source/contrib/pgcrypto/px.h.html#L102" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/contrib__pgcrypto__px_h__PX_Cipher.html&quot;}, '*');"><code>PX_Cipher</code></a>, <code>uint8</code></p>
+<h2>ソース抜粋</h2>
+<p>~~~c static int <a class="wiki-source-link" href="../../source/contrib/pgcrypto/openssl.c.html#L367" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/contrib__pgcrypto__openssl_c__gen_ossl_encrypt.html&quot;}, '*');">gen_ossl_encrypt</a>(<a class="wiki-source-link" href="../../source/contrib/pgcrypto/px.h.html#L102" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/contrib__pgcrypto__px_h__PX_Cipher.html&quot;}, '*');">PX_Cipher</a> *c, int padding, const uint8 *data, unsigned dlen, uint8 *res, unsigned *rlen) { <a class="wiki-source-link" href="../../source/contrib/pgcrypto/openssl.c.html#L254" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/contrib__pgcrypto__openssl_c__OSSLCipher.html&quot;}, '*');">OSSLCipher</a> *od = c-&gt;ptr; int			outlen, outlen2;</p>
+<p>if (!od-&gt;<a class="wiki-source-link" href="../../source/src/interfaces/ecpg/test/expected/sql-bytea.c.html#L72" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/ecpg/test/expected/sql-bytea.c.html&quot;}, '*');">init</a>) { if (!EVP_EncryptInit_ex(od-&gt;evp_ctx, od-&gt;evp_ciph, NULL, NULL, NULL)) return <a class="wiki-source-link" href="../../source/contrib/pgcrypto/px.h.html#L54" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/contrib/pgcrypto/px.h.html&quot;}, '*');">PXE_CIPHER_INIT</a>; if (!EVP_CIPHER_CTX_set_padding(od-&gt;evp_ctx, padding)) return <a class="wiki-source-link" href="../../source/contrib/pgcrypto/px.h.html#L54" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/contrib/pgcrypto/px.h.html&quot;}, '*');">PXE_CIPHER_INIT</a>; if (!EVP_CIPHER_CTX_set_key_length(od-&gt;evp_ctx, od-&gt;klen)) return <a class="wiki-source-link" href="../../source/contrib/pgcrypto/px.h.html#L54" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/contrib/pgcrypto/px.h.html&quot;}, '*');">PXE_CIPHER_INIT</a>; if (!EVP_EncryptInit_ex(od-&gt;evp_ctx, NULL, NULL, od-&gt;key, od-&gt;iv)) return <a class="wiki-source-link" href="../../source/contrib/pgcrypto/px.h.html#L54" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/contrib/pgcrypto/px.h.html&quot;}, '*');">PXE_CIPHER_INIT</a>; od-&gt;<a class="wiki-source-link" href="../../source/src/interfaces/ecpg/test/expected/sql-bytea.c.html#L72" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/ecpg/test/expected/sql-bytea.c.html&quot;}, '*');">init</a> = <a class="wiki-source-link" href="../../source/src/tools/pg_bsd_indent/indent_globs.h.html#L46" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/tools/pg_bsd_indent/indent_globs.h.html&quot;}, '*');">true</a>; }</p>
+<p>if (!EVP_EncryptUpdate(od-&gt;evp_ctx, res, &amp;outlen, data, dlen)) return <a class="wiki-source-link" href="../../source/contrib/pgcrypto/px.h.html#L65" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/contrib/pgcrypto/px.h.html&quot;}, '*');">PXE_ENCRYPT_FAILED</a>; if (!EVP_EncryptFinal_ex(od-&gt;evp_ctx, res + outlen, &amp;outlen2)) return <a class="wiki-source-link" href="../../source/contrib/pgcrypto/px.h.html#L65" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/contrib/pgcrypto/px.h.html&quot;}, '*');">PXE_ENCRYPT_FAILED</a>; *rlen = outlen + outlen2;</p>
+<p>return 0; } ~~~</p>
+<h2>失敗モードと境界条件</h2>
+<p>まだ解析していません。</p>
+<h2>保守担当者向けメモ</h2>
+<ul>
+<li>後続フェーズで、ソース本文の文脈と caller/callee 情報を使ってこのページを強化する。</li>
+</ul><script>
+(function() {
+  function notifyParent() {
+    if (parent === window) return;
+    parent.postMessage({type: "frame-location", frame: window.name || "", href: window.location.href}, "*");
+  }
+  document.addEventListener("click", function(event) {
+    const link = event.target.closest("a[data-panel]");
+    if (!link || parent === window) return;
+    parent.postMessage({type: "source-link", panel: link.dataset.panel}, "*");
+  });
+  window.addEventListener("load", notifyParent);
+  window.addEventListener("hashchange", notifyParent);
+})();
+</script></body></html>

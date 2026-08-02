@@ -1,0 +1,92 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>symbols/src__backend__utils__resowner__resowner_c__ResourceOwnerData.md</title><link rel="stylesheet" href="../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../source/src/backend/utils/resowner/resowner.c.html#L112" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__utils__resowner__resowner_c__ResourceOwnerData.html&quot;}, '*');">ResourceOwnerData</a></h1>
+<h2>定義</h2>
+<ul>
+<li>種別: <code>struct</code></li>
+<li>定義箇所: <code>src/backend/utils/resowner/resowner.c:112</code></li>
+<li>所属モジュール: <a class="wiki-entity-link" href="../modules/src__backend__utils__resowner.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/modules/src__backend__utils__resowner.html&quot;, &quot;source&quot;: &quot;source/src/backend/utils/resowner/resowner.c.html&quot;}, '*');"><code>module:src/backend/utils/resowner</code></a></li>
+</ul>
+<h2>目的</h2>
+<p>静的シンボル索引から生成された初期シンボルページです。</p>
+<h2>シグネチャまたは形状</h2>
+<ul>
+<li>シグネチャ: <code>struct ResourceOwnerData</code></li>
+</ul>
+<h2>入力と出力</h2>
+<p>まだ解析していません。</p>
+<h2>前提条件と不変条件</h2>
+<p>まだ解析していません。</p>
+<h2>アルゴリズムまたは振る舞い</h2>
+<p>まだ解析していません。</p>
+<h2>呼び出し元と呼び出し先</h2>
+<ul>
+<li>呼び出し元: なし</li>
+<li>呼び出し先: なし</li>
+<li>呼び出し元サイト: なし</li>
+<li>呼び出しサイト: なし</li>
+</ul>
+<h2>関連データ構造</h2>
+<p><a class="wiki-source-link" href="../../source/src/include/lib/ilist.h.html#L151" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__lib__ilist_h__dlist_head.html&quot;}, '*');"><code>dlist_head</code></a>, <a class="wiki-source-link" href="../../source/src/include/storage/lock.h.html#L257" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__storage__lock_h__LOCALLOCK.html&quot;}, '*');"><code>LOCALLOCK</code></a>, <a class="wiki-source-link" href="../../source/src/backend/utils/resowner/resowner.c.html#L64" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__utils__resowner__resowner_c__ResourceElem.html&quot;}, '*');"><code>ResourceElem</code></a>, <a class="wiki-source-link" href="../../source/src/include/utils/resowner.h.html#L27" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__utils__resowner_h__ResourceOwner.html&quot;}, '*');"><code>ResourceOwner</code></a>, <code>uint32</code>, <code>uint8</code>, <a class="wiki-source-link" href="../../source/src/interfaces/ecpg/preproc/type.h.html#L89" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__interfaces__ecpg__preproc__type_h__when.html&quot;}, '*');"><code>when</code></a></p>
+<h2>ソース抜粋</h2>
+<p>~~~c struct <a class="wiki-source-link" href="../../source/src/backend/utils/resowner/resowner.c.html#L112" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__utils__resowner__resowner_c__ResourceOwnerData.html&quot;}, '*');">ResourceOwnerData</a> { <a class="wiki-source-link" href="../../source/src/include/utils/resowner.h.html#L27" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__utils__resowner_h__ResourceOwner.html&quot;}, '*');">ResourceOwner</a> parent;		/* NULL if no parent (toplevel owner) */ <a class="wiki-source-link" href="../../source/src/include/utils/resowner.h.html#L27" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__utils__resowner_h__ResourceOwner.html&quot;}, '*');">ResourceOwner</a> firstchild;	/* head of linked list of children */ <a class="wiki-source-link" href="../../source/src/include/utils/resowner.h.html#L27" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__utils__resowner_h__ResourceOwner.html&quot;}, '*');">ResourceOwner</a> nextchild;	/* next child of same parent */ const char *name;			/* name (just for debugging) */</p>
+<p>/*</p>
+<ul>
+<li>When <a class="wiki-source-link" href="../../source/src/backend/utils/resowner/resowner.c.html#L664" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__utils__resowner__resowner_c__ResourceOwnerRelease.html&quot;}, '*');">ResourceOwnerRelease</a> <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> called, we <a class="wiki-source-link" href="../../source/contrib/intarray/_int_op.c.html#L198" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/contrib__intarray___int_op_c__sort.html&quot;}, '*');">sort</a> the &#x27;<a class="wiki-source-link" href="../../source/src/backend/regex/rege_dfa.c.html#L723" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__regex__rege_dfa_c__hash.html&quot;}, '*');">hash</a>&#x27; and &#x27;arr&#x27; by</li>
+<li>the release priority.  After that, no new resources can be remembered</li>
+<li>or forgotten in retail.  We have separate flags because</li>
+<li><a class="wiki-source-link" href="../../source/src/backend/utils/resowner/resowner.c.html#L824" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__utils__resowner__resowner_c__ResourceOwnerReleaseAllOfKind.html&quot;}, '*');">ResourceOwnerReleaseAllOfKind</a>() temporarily sets &#x27;releasing&#x27; without</li>
+<li>sorting the arrays.</li>
+<p>*/ bool		releasing; bool		sorted;			/* are &#x27;<a class="wiki-source-link" href="../../source/src/backend/regex/rege_dfa.c.html#L723" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__regex__rege_dfa_c__hash.html&quot;}, '*');">hash</a>&#x27; and &#x27;arr&#x27; sorted by priority? */</p>
+</ul>
+<p>/*</p>
+<ul>
+<li>Number of <a class="wiki-source-link" href="../../source/src/test/modules/test_tidstore/test_tidstore.c.html#L48" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/test/modules/test_tidstore/test_tidstore.c.html&quot;}, '*');">items</a> in the locks cache, array, and <a class="wiki-source-link" href="../../source/src/backend/regex/rege_dfa.c.html#L723" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__regex__rege_dfa_c__hash.html&quot;}, '*');">hash</a> <a class="wiki-source-link" href="../../source/src/port/pg_localeconv_r.c.html#L63" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/port/pg_localeconv_r.c.html&quot;}, '*');">table</a> respectively.</li>
+<li>(These are packed together to avoid padding in the struct.)</li>
+<p>*/ uint8		nlocks;			/* number of owned locks */ uint8		narr;			/* how many <a class="wiki-source-link" href="../../source/src/test/modules/test_tidstore/test_tidstore.c.html#L48" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/test/modules/test_tidstore/test_tidstore.c.html&quot;}, '*');">items</a> are stored in the array */ uint32		nhash;			/* how many <a class="wiki-source-link" href="../../source/src/test/modules/test_tidstore/test_tidstore.c.html#L48" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/test/modules/test_tidstore/test_tidstore.c.html&quot;}, '*');">items</a> are stored in the <a class="wiki-source-link" href="../../source/src/backend/regex/rege_dfa.c.html#L723" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__regex__rege_dfa_c__hash.html&quot;}, '*');">hash</a> */</p>
+</ul>
+<p>/*</p>
+<ul>
+<li>The fixed-size array for recent resources.</li>
+<p>*</p>
+<li>If &#x27;sorted&#x27; <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> set, the contents are sorted by release priority.</li>
+<p>*/ <a class="wiki-source-link" href="../../source/src/backend/utils/resowner/resowner.c.html#L64" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__utils__resowner__resowner_c__ResourceElem.html&quot;}, '*');">ResourceElem</a> arr[<a class="wiki-source-link" href="../../source/src/backend/utils/resowner/resowner.c.html#L73" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/utils/resowner/resowner.c.html&quot;}, '*');">RESOWNER_ARRAY_SIZE</a>];</p>
+</ul>
+<p>/*</p>
+<ul>
+<li>The <a class="wiki-source-link" href="../../source/src/backend/regex/rege_dfa.c.html#L723" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__regex__rege_dfa_c__hash.html&quot;}, '*');">hash</a> <a class="wiki-source-link" href="../../source/src/port/pg_localeconv_r.c.html#L63" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/port/pg_localeconv_r.c.html&quot;}, '*');">table</a>.  Uses open-addressing.  &#x27;nhash&#x27; <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> the number of <a class="wiki-source-link" href="../../source/src/test/modules/test_tidstore/test_tidstore.c.html#L48" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/test/modules/test_tidstore/test_tidstore.c.html&quot;}, '*');">items</a></li>
+<li>present; if it would exceed &#x27;grow_at&#x27;, we enlarge it and re-<a class="wiki-source-link" href="../../source/src/backend/regex/rege_dfa.c.html#L723" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__regex__rege_dfa_c__hash.html&quot;}, '*');">hash</a>.</li>
+<li>&#x27;grow_at&#x27; should be rather less than &#x27;capacity&#x27; so that we don&#x27;t waste</li>
+<li>too much time searching for empty slots.</li>
+<p>*</p>
+<li>If &#x27;sorted&#x27; <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> set, the contents are no longer hashed, but sorted by</li>
+<li>release priority.  The first &#x27;nhash&#x27; elements are occupied, the rest</li>
+<li>are empty.</li>
+<p>*/ <a class="wiki-source-link" href="../../source/src/backend/utils/resowner/resowner.c.html#L64" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__utils__resowner__resowner_c__ResourceElem.html&quot;}, '*');">ResourceElem</a> *<a class="wiki-source-link" href="../../source/src/backend/regex/rege_dfa.c.html#L723" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__regex__rege_dfa_c__hash.html&quot;}, '*');">hash</a>; uint32		capacity;		/* allocated length of <a class="wiki-source-link" href="../../source/src/backend/regex/rege_dfa.c.html#L723" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__regex__rege_dfa_c__hash.html&quot;}, '*');">hash</a>[] */ uint32		grow_at;		/* grow <a class="wiki-source-link" href="../../source/src/backend/regex/rege_dfa.c.html#L723" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__regex__rege_dfa_c__hash.html&quot;}, '*');">hash</a> <a class="wiki-source-link" href="../../source/src/interfaces/ecpg/preproc/type.h.html#L89" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__interfaces__ecpg__preproc__type_h__when.html&quot;}, '*');">when</a> reach this */</p>
+</ul>
+<p>/* The local locks cache. */ <a class="wiki-source-link" href="../../source/src/include/storage/lock.h.html#L257" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__storage__lock_h__LOCALLOCK.html&quot;}, '*');">LOCALLOCK</a>  *locks[<a class="wiki-source-link" href="../../source/src/backend/utils/resowner/resowner.c.html#L107" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/utils/resowner/resowner.c.html&quot;}, '*');">MAX_RESOWNER_LOCKS</a>];	/* list of owned locks */</p>
+<p>/*</p>
+<ul>
+<li>AIO handles need be registered in critical sections and therefore</li>
+<li>cannot use the normal <a class="wiki-source-link" href="../../source/src/backend/utils/resowner/resowner.c.html#L64" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__utils__resowner__resowner_c__ResourceElem.html&quot;}, '*');">ResourceElem</a> mechanism.</li>
+<p>*/ <a class="wiki-source-link" href="../../source/src/include/lib/ilist.h.html#L151" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__lib__ilist_h__dlist_head.html&quot;}, '*');">dlist_head</a>	aio_handles; }; ~~~</p>
+</ul>
+<h2>失敗モードと境界条件</h2>
+<p>まだ解析していません。</p>
+<h2>保守担当者向けメモ</h2>
+<ul>
+<li>後続フェーズで、ソース本文の文脈と caller/callee 情報を使ってこのページを強化する。</li>
+</ul><script>
+(function() {
+  function notifyParent() {
+    if (parent === window) return;
+    parent.postMessage({type: "frame-location", frame: window.name || "", href: window.location.href}, "*");
+  }
+  document.addEventListener("click", function(event) {
+    const link = event.target.closest("a[data-panel]");
+    if (!link || parent === window) return;
+    parent.postMessage({type: "source-link", panel: link.dataset.panel}, "*");
+  });
+  window.addEventListener("load", notifyParent);
+  window.addEventListener("hashchange", notifyParent);
+})();
+</script></body></html>

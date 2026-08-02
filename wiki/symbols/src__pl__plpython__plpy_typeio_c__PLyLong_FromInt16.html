@@ -1,0 +1,57 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>symbols/src__pl__plpython__plpy_typeio_c__PLyLong_FromInt16.md</title><link rel="stylesheet" href="../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../source/src/pl/plpython/plpy_typeio.c.html#L603" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__pl__plpython__plpy_typeio_c__PLyLong_FromInt16.html&quot;}, '*');">PLyLong_FromInt16</a></h1>
+<h2>定義</h2>
+<ul>
+<li>種別: <code>function</code></li>
+<li>定義箇所: <code>src/pl/plpython/plpy_typeio.c:603</code></li>
+<li>所属モジュール: <a class="wiki-entity-link" href="../modules/src__pl__plpython.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/modules/src__pl__plpython.html&quot;, &quot;source&quot;: &quot;source/src/pl/plpython/plpy_cursorobject.c.html&quot;}, '*');"><code>module:src/pl/plpython</code></a></li>
+</ul>
+<h2>目的</h2>
+<p>静的シンボル索引から生成された初期シンボルページです。</p>
+<h2>シグネチャまたは形状</h2>
+<ul>
+<li>シグネチャ: <code>static PyObject * PLyLong_FromInt16(PLyDatumToOb *arg, Datum d)</code></li>
+</ul>
+<h2>入力と出力</h2>
+<ul>
+<li>引数: <code>PLyDatumToOb *arg</code>, <code>Datum d</code></li>
+<li>戻り値: <code>PyObject *</code></li>
+</ul>
+<h2>前提条件と不変条件</h2>
+<p>まだ解析していません。</p>
+<h2>アルゴリズムまたは振る舞い</h2>
+<ul>
+<li>複雑度: <code>low</code> (score 1)</li>
+</ul>
+<p>まだ解析していません。</p>
+<h2>呼び出し元と呼び出し先</h2>
+<ul>
+<li>呼び出し元: なし</li>
+<li>呼び出し先: なし</li>
+<li>呼び出し元サイト: なし</li>
+<li>呼び出しサイト: <code>PyLong_FromLong</code> at <code>src/pl/plpython/plpy_typeio.c:606:9</code> (unresolved), <a class="wiki-source-link" href="../../source/src/include/postgres.h.html#L161" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__postgres_h__DatumGetInt16.html&quot;}, '*');"><code>DatumGetInt16</code></a> at <code>src/pl/plpython/plpy_typeio.c:606:25</code> (unresolved)</li>
+</ul>
+<h2>関連データ構造</h2>
+<p><code>Datum</code>, <a class="wiki-source-link" href="../../source/src/pl/plpython/plpy_typeio.h.html#L26" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__pl__plpython__plpy_typeio_h__PLyDatumToOb.html&quot;}, '*');"><code>PLyDatumToOb</code></a>, <code>PyObject</code></p>
+<h2>ソース抜粋</h2>
+<p>~~~c static PyObject * <a class="wiki-source-link" href="../../source/src/pl/plpython/plpy_typeio.c.html#L603" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__pl__plpython__plpy_typeio_c__PLyLong_FromInt16.html&quot;}, '*');">PLyLong_FromInt16</a>(<a class="wiki-source-link" href="../../source/src/pl/plpython/plpy_typeio.h.html#L26" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__pl__plpython__plpy_typeio_h__PLyDatumToOb.html&quot;}, '*');">PLyDatumToOb</a> *arg, Datum d) { return PyLong_FromLong(<a class="wiki-source-link" href="../../source/src/include/postgres.h.html#L161" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__postgres_h__DatumGetInt16.html&quot;}, '*');">DatumGetInt16</a>(d)); } ~~~</p>
+<h2>失敗モードと境界条件</h2>
+<p>まだ解析していません。</p>
+<h2>保守担当者向けメモ</h2>
+<ul>
+<li>後続フェーズで、ソース本文の文脈と caller/callee 情報を使ってこのページを強化する。</li>
+</ul><script>
+(function() {
+  function notifyParent() {
+    if (parent === window) return;
+    parent.postMessage({type: "frame-location", frame: window.name || "", href: window.location.href}, "*");
+  }
+  document.addEventListener("click", function(event) {
+    const link = event.target.closest("a[data-panel]");
+    if (!link || parent === window) return;
+    parent.postMessage({type: "source-link", panel: link.dataset.panel}, "*");
+  });
+  window.addEventListener("load", notifyParent);
+  window.addEventListener("hashchange", notifyParent);
+})();
+</script></body></html>

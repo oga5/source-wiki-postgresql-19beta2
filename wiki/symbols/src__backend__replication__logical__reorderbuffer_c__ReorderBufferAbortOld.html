@@ -1,0 +1,70 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>symbols/src__backend__replication__logical__reorderbuffer_c__ReorderBufferAbortOld.md</title><link rel="stylesheet" href="../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../source/src/backend/replication/logical/reorderbuffer.c.html#L3128" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__replication__logical__reorderbuffer_c__ReorderBufferAbortOld.html&quot;}, '*');">ReorderBufferAbortOld</a></h1>
+<h2>定義</h2>
+<ul>
+<li>種別: <code>function</code></li>
+<li>定義箇所: <code>src/backend/replication/logical/reorderbuffer.c:3128</code></li>
+<li>所属モジュール: <a class="wiki-entity-link" href="../modules/src__backend__replication__logical.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/modules/src__backend__replication__logical.html&quot;, &quot;source&quot;: &quot;source/src/backend/replication/logical/applyparallelworker.c.html&quot;}, '*');"><code>module:src/backend/replication/logical</code></a></li>
+</ul>
+<h2>目的</h2>
+<p>静的シンボル索引から生成された初期シンボルページです。</p>
+<h2>シグネチャまたは形状</h2>
+<ul>
+<li>シグネチャ: <code>void ReorderBufferAbortOld(ReorderBuffer *rb, TransactionId oldestRunningXid)</code></li>
+</ul>
+<h2>入力と出力</h2>
+<ul>
+<li>引数: <code>ReorderBuffer *rb</code>, <code>TransactionId oldestRunningXid</code></li>
+<li>戻り値: <code>void</code></li>
+</ul>
+<h2>前提条件と不変条件</h2>
+<p>まだ解析していません。</p>
+<h2>アルゴリズムまたは振る舞い</h2>
+<ul>
+<li>複雑度: <code>medium</code> (score 8)</li>
+</ul>
+<p>まだ解析していません。</p>
+<h2>呼び出し元と呼び出し先</h2>
+<ul>
+<li>呼び出し元: <a class="wiki-source-link" href="../../source/src/backend/replication/logical/decode.c.html#L370" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__replication__logical__decode_c__standby_decode.html&quot;}, '*');"><code>standby_decode</code></a></li>
+<li>呼び出し先: <a class="wiki-source-link" href="../../source/src/backend/replication/logical/reorderbuffer.c.html#L1535" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__replication__logical__reorderbuffer_c__ReorderBufferCleanupTXN.html&quot;}, '*');"><code>ReorderBufferCleanupTXN</code></a></li>
+<li>呼び出し元サイト: <a class="wiki-source-link" href="../../source/src/backend/replication/logical/decode.c.html#L370" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__replication__logical__decode_c__standby_decode.html&quot;}, '*');"><code>standby_decode</code></a> at <code>src/backend/replication/logical/decode.c:401:5</code> (direct, confidence=high, resolved=<a class="wiki-entity-link" href="src__backend__replication__logical__reorderbuffer_c__ReorderBufferAbortOld.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__replication__logical__reorderbuffer_c__ReorderBufferAbortOld.html&quot;, &quot;source&quot;: &quot;source/src/backend/replication/logical/reorderbuffer.c.html#L3128&quot;}, '*');"><code>symbol:src/backend/replication/logical/reorderbuffer.c#ReorderBufferAbortOld</code></a>)</li>
+<li>呼び出しサイト: <a class="wiki-source-link" href="../../source/src/include/lib/ilist.h.html#L640" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/lib/ilist.h.html&quot;}, '*');"><code>dlist_foreach_modify</code></a> at <code>src/backend/replication/logical/reorderbuffer.c:3140:2</code> (unresolved), <a class="wiki-source-link" href="../../source/src/include/lib/ilist.h.html#L593" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/lib/ilist.h.html&quot;}, '*');"><code>dlist_container</code></a> at <code>src/backend/replication/logical/reorderbuffer.c:3144:9</code> (unresolved), <a class="wiki-source-link" href="../../source/src/include/access/transam.h.html#L262" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__access__transam_h__TransactionIdPrecedes.html&quot;}, '*');"><code>TransactionIdPrecedes</code></a> at <code>src/backend/replication/logical/reorderbuffer.c:3146:7</code> (unresolved), <a class="wiki-source-link" href="../../source/src/include/utils/elog.h.html#L242" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/utils/elog.h.html&quot;}, '*');"><code>elog</code></a> at <code>src/backend/replication/logical/reorderbuffer.c:3148:4</code> (unresolved), <a class="wiki-source-link" href="../../source/src/include/replication/reorderbuffer.h.html#L228" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/replication/reorderbuffer.h.html&quot;}, '*');"><code>rbtxn_is_streamed</code></a> at <code>src/backend/replication/logical/reorderbuffer.c:3151:8</code> (macro), <code>rb-&gt;stream_abort</code> at <code>src/backend/replication/logical/reorderbuffer.c:3152:5</code> (indirect), <a class="wiki-source-link" href="../../source/src/backend/replication/logical/reorderbuffer.c.html#L1535" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__replication__logical__reorderbuffer_c__ReorderBufferCleanupTXN.html&quot;}, '*');"><code>ReorderBufferCleanupTXN</code></a> at <code>src/backend/replication/logical/reorderbuffer.c:3155:4</code> (direct, confidence=high, resolved=<a class="wiki-entity-link" href="src__backend__replication__logical__reorderbuffer_c__ReorderBufferCleanupTXN.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__replication__logical__reorderbuffer_c__ReorderBufferCleanupTXN.html&quot;, &quot;source&quot;: &quot;source/src/backend/replication/logical/reorderbuffer.c.html#L1535&quot;}, '*');"><code>symbol:src/backend/replication/logical/reorderbuffer.c#ReorderBufferCleanupTXN</code></a>)</li>
+</ul>
+<h2>関連データ構造</h2>
+<p><a class="wiki-source-link" href="../../source/src/include/lib/ilist.h.html#L198" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__lib__ilist_h__dlist_mutable_iter.html&quot;}, '*');"><code>dlist_mutable_iter</code></a>, <code>ReorderBuffer</code>, <code>ReorderBufferTXN</code>, <code>TransactionId</code></p>
+<h2>ソース抜粋</h2>
+<p>~~~c void <a class="wiki-source-link" href="../../source/src/backend/replication/logical/reorderbuffer.c.html#L3128" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__replication__logical__reorderbuffer_c__ReorderBufferAbortOld.html&quot;}, '*');">ReorderBufferAbortOld</a>(ReorderBuffer *rb, TransactionId oldestRunningXid) { <a class="wiki-source-link" href="../../source/src/include/lib/ilist.h.html#L198" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__lib__ilist_h__dlist_mutable_iter.html&quot;}, '*');">dlist_mutable_iter</a> it;</p>
+<p>/*</p>
+<ul>
+<li>Iterate through all (potential) toplevel TXNs and abort all that are</li>
+<li>older than what possibly can be running. Once we&#x27;ve found the first</li>
+<li>that <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> alive we stop, there might be some that acquired an xid earlier</li>
+<li>but started writing later, but it&#x27;s <a class="wiki-source-link" href="../../source/src/include/c.h.html#L442" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/c.h.html&quot;}, '*');">unlikely</a> and they will be cleaned</li>
+<li>up in a later call to this function.</li>
+<p>*/ <a class="wiki-source-link" href="../../source/src/include/lib/ilist.h.html#L640" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/lib/ilist.h.html&quot;}, '*');">dlist_foreach_modify</a>(it, &amp;rb-&gt;toplevel_by_lsn) { ReorderBufferTXN *txn;</p>
+</ul>
+<p>txn = <a class="wiki-source-link" href="../../source/src/include/lib/ilist.h.html#L593" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/lib/ilist.h.html&quot;}, '*');">dlist_container</a>(ReorderBufferTXN, node, it.cur);</p>
+<p>if (<a class="wiki-source-link" href="../../source/src/include/access/transam.h.html#L262" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__access__transam_h__TransactionIdPrecedes.html&quot;}, '*');">TransactionIdPrecedes</a>(txn-&gt;xid, oldestRunningXid)) { <a class="wiki-source-link" href="../../source/src/include/utils/elog.h.html#L242" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/utils/elog.h.html&quot;}, '*');">elog</a>(<a class="wiki-source-link" href="../../source/src/include/utils/elog.h.html#L31" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/utils/elog.h.html&quot;}, '*');">DEBUG2</a>, &quot;aborting old transaction %u&quot;, txn-&gt;xid);</p>
+<p>/* Notify the remote node about the crash/immediate restart. */ if (<a class="wiki-source-link" href="../../source/src/include/replication/reorderbuffer.h.html#L228" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/replication/reorderbuffer.h.html&quot;}, '*');">rbtxn_is_streamed</a>(txn)) rb-&gt;stream_abort(rb, txn, <a class="wiki-source-link" href="../../source/src/include/access/xlogdefs.h.html#L28" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/access/xlogdefs.h.html&quot;}, '*');">InvalidXLogRecPtr</a>);</p>
+<p>/* remove potential on-disk data, and deallocate this tx */ <a class="wiki-source-link" href="../../source/src/backend/replication/logical/reorderbuffer.c.html#L1535" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__replication__logical__reorderbuffer_c__ReorderBufferCleanupTXN.html&quot;}, '*');">ReorderBufferCleanupTXN</a>(rb, txn); } else return; } } ~~~</p>
+<h2>失敗モードと境界条件</h2>
+<p>まだ解析していません。</p>
+<h2>保守担当者向けメモ</h2>
+<ul>
+<li>後続フェーズで、ソース本文の文脈と caller/callee 情報を使ってこのページを強化する。</li>
+</ul><script>
+(function() {
+  function notifyParent() {
+    if (parent === window) return;
+    parent.postMessage({type: "frame-location", frame: window.name || "", href: window.location.href}, "*");
+  }
+  document.addEventListener("click", function(event) {
+    const link = event.target.closest("a[data-panel]");
+    if (!link || parent === window) return;
+    parent.postMessage({type: "source-link", panel: link.dataset.panel}, "*");
+  });
+  window.addEventListener("load", notifyParent);
+  window.addEventListener("hashchange", notifyParent);
+})();
+</script></body></html>

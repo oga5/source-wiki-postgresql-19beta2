@@ -1,0 +1,83 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>symbols/src__bin__psql__tab-complete_in_c__initialize_readline.md</title><link rel="stylesheet" href="../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../source/src/bin/psql/tab-complete.in.c.html#L1536" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__bin__psql__tab-complete_in_c__initialize_readline.html&quot;}, '*');">initialize_readline</a></h1>
+<h2>定義</h2>
+<ul>
+<li>種別: <code>function</code></li>
+<li>定義箇所: <code>src/bin/psql/tab-complete.in.c:1536</code></li>
+<li>所属モジュール: <a class="wiki-entity-link" href="../modules/src__bin__psql.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/modules/src__bin__psql.html&quot;, &quot;source&quot;: &quot;source/src/bin/psql/command.c.html&quot;}, '*');"><code>module:src/bin/psql</code></a></li>
+</ul>
+<h2>目的</h2>
+<p>静的シンボル索引から生成された初期シンボルページです。</p>
+<h2>シグネチャまたは形状</h2>
+<ul>
+<li>シグネチャ: <code>void initialize_readline(void)</code></li>
+</ul>
+<h2>入力と出力</h2>
+<ul>
+<li>戻り値: <code>void</code></li>
+</ul>
+<h2>前提条件と不変条件</h2>
+<p>まだ解析していません。</p>
+<h2>アルゴリズムまたは振る舞い</h2>
+<ul>
+<li>複雑度: <code>medium</code> (score 7)</li>
+</ul>
+<p>まだ解析していません。</p>
+<h2>呼び出し元と呼び出し先</h2>
+<ul>
+<li>呼び出し元: <a class="wiki-source-link" href="../../source/src/bin/psql/input.c.html#L343" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__bin__psql__input_c__initializeInput.html&quot;}, '*');"><code>initializeInput</code></a></li>
+<li>呼び出し先: <a class="wiki-source-link" href="../../source/src/common/fe_memutils.c.html#L52" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__common__fe_memutils_c__pg_malloc.html&quot;}, '*');"><code>pg_malloc</code></a></li>
+<li>呼び出し元サイト: <a class="wiki-source-link" href="../../source/src/bin/psql/input.c.html#L343" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__bin__psql__input_c__initializeInput.html&quot;}, '*');"><code>initializeInput</code></a> at <code>src/bin/psql/input.c:355:3</code> (direct, confidence=high, resolved=<a class="wiki-entity-link" href="src__bin__psql__tab-complete_in_c__initialize_readline.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__bin__psql__tab-complete_in_c__initialize_readline.html&quot;, &quot;source&quot;: &quot;source/src/bin/psql/tab-complete.in.c.html#L1536&quot;}, '*');"><code>symbol:src/bin/psql/tab-complete.in.c#initialize_readline</code></a>)</li>
+<li>呼び出しサイト: <a class="wiki-source-link" href="../../source/src/common/fe_memutils.c.html#L52" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__common__fe_memutils_c__pg_malloc.html&quot;}, '*');"><code>pg_malloc</code></a> at <code>src/bin/psql/tab-complete.in.c:1566:42</code> (direct, confidence=high, resolved=<a class="wiki-entity-link" href="src__common__fe_memutils_c__pg_malloc.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__common__fe_memutils_c__pg_malloc.html&quot;, &quot;source&quot;: &quot;source/src/common/fe_memutils.c.html#L52&quot;}, '*');"><code>symbol:src/common/fe_memutils.c#pg_malloc</code></a>)</li>
+</ul>
+<h2>関連データ構造</h2>
+<p><code>variable</code></p>
+<h2>ソース抜粋</h2>
+<p>~~~c void <a class="wiki-source-link" href="../../source/src/bin/psql/tab-complete.in.c.html#L1536" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__bin__psql__tab-complete_in_c__initialize_readline.html&quot;}, '*');">initialize_readline</a>(void) { rl_readline_name = (char *) pset.progname; rl_attempted_completion_function = <a class="wiki-source-link" href="../../source/src/bin/psql/tab-complete.in.c.html#L1870" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__bin__psql__tab-complete_in_c__psql_completion.html&quot;}, '*');">psql_completion</a>;</p>
+<p>#ifdef <a class="wiki-source-link" href="../../source/src/bin/psql/tab-complete.in.c.html#L82" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/bin/psql/tab-complete.in.c.html&quot;}, '*');">USE_FILENAME_QUOTING_FUNCTIONS</a> rl_filename_quoting_function = <a class="wiki-source-link" href="../../source/src/bin/psql/tab-complete.in.c.html#L7243" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__bin__psql__tab-complete_in_c__quote_file_name.html&quot;}, '*');">quote_file_name</a>; rl_filename_dequoting_function = <a class="wiki-source-link" href="../../source/src/bin/psql/tab-complete.in.c.html#L7304" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__bin__psql__tab-complete_in_c__dequote_file_name.html&quot;}, '*');">dequote_file_name</a>; #endif</p>
+<p>rl_basic_word_break_characters = <a class="wiki-source-link" href="../../source/src/bin/psql/tab-complete.in.c.html#L86" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/bin/psql/tab-complete.in.c.html&quot;}, '*');">WORD_BREAKS</a>;</p>
+<p>/*</p>
+<ul>
+<li>Ideally we&#x27;d include &#x27;&quot;&#x27; in rl_completer_quote_characters too, which</li>
+<li>should allow us to complete quoted identifiers that include spaces.</li>
+<li>However, the library support for rl_completer_quote_characters <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a></li>
+<li>presently too inconsistent to want to <a class="wiki-source-link" href="../../source/src/pl/plperl/ppport.h.html#L14831" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/pl/plperl/ppport.h.html&quot;}, '*');">mess</a> with that.  (Note in</li>
+<li>particular that libedit has this variable but completely ignores it.)</li>
+<p>*/ rl_completer_quote_characters = &quot;&#x27;&quot;;</p>
+</ul>
+<p>/*</p>
+<ul>
+<li>Set rl_filename_quote_characters to &quot;all possible characters&quot;,</li>
+<li>otherwise Readline will skip filename quoting if it thinks a filename</li>
+<li>doesn&#x27;t need quoting.  Readline actually interprets this as bytes, so</li>
+<li>there are no encoding considerations here.</li>
+<p>*/ #ifdef HAVE_RL_FILENAME_QUOTE_CHARACTERS { unsigned char *fqc = (unsigned char *) <a class="wiki-source-link" href="../../source/src/common/fe_memutils.c.html#L52" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__common__fe_memutils_c__pg_malloc.html&quot;}, '*');">pg_malloc</a>(256);</p>
+</ul>
+<p>for (int i = 0; i &lt; 255; i++) fqc[i] = (unsigned char) (i + 1); fqc[255] = &#x27;\0&#x27;; rl_filename_quote_characters = (const char *) fqc; } #endif</p>
+<p>completion_max_records = 1000;</p>
+<p>/*</p>
+<ul>
+<li>There <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> a variable rl_completion_query_items for this but apparently</li>
+<li>it&#x27;s not defined everywhere.</li>
+<p>*/ } ~~~</p>
+</ul>
+<h2>失敗モードと境界条件</h2>
+<p>まだ解析していません。</p>
+<h2>保守担当者向けメモ</h2>
+<ul>
+<li>後続フェーズで、ソース本文の文脈と caller/callee 情報を使ってこのページを強化する。</li>
+</ul><script>
+(function() {
+  function notifyParent() {
+    if (parent === window) return;
+    parent.postMessage({type: "frame-location", frame: window.name || "", href: window.location.href}, "*");
+  }
+  document.addEventListener("click", function(event) {
+    const link = event.target.closest("a[data-panel]");
+    if (!link || parent === window) return;
+    parent.postMessage({type: "source-link", panel: link.dataset.panel}, "*");
+  });
+  window.addEventListener("load", notifyParent);
+  window.addEventListener("hashchange", notifyParent);
+})();
+</script></body></html>

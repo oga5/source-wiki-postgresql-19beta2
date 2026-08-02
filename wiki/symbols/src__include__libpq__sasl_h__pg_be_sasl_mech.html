@@ -1,0 +1,109 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>symbols/src__include__libpq__sasl_h__pg_be_sasl_mech.md</title><link rel="stylesheet" href="../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../source/src/include/libpq/sasl.h.html#L46" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__libpq__sasl_h__pg_be_sasl_mech.html&quot;}, '*');">pg_be_sasl_mech</a></h1>
+<h2>定義</h2>
+<ul>
+<li>種別: <code>struct</code></li>
+<li>定義箇所: <code>src/include/libpq/sasl.h:46</code></li>
+<li>所属モジュール: <a class="wiki-entity-link" href="../modules/src__include__libpq.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/modules/src__include__libpq.html&quot;, &quot;source&quot;: &quot;source/src/include/libpq/auth.h.html&quot;}, '*');"><code>module:src/include/libpq</code></a></li>
+</ul>
+<h2>目的</h2>
+<p>静的シンボル索引から生成された初期シンボルページです。</p>
+<h2>シグネチャまたは形状</h2>
+<ul>
+<li>シグネチャ: <code>typedef struct pg_be_sasl_mech</code></li>
+</ul>
+<h2>入力と出力</h2>
+<p>まだ解析していません。</p>
+<h2>前提条件と不変条件</h2>
+<p>まだ解析していません。</p>
+<h2>アルゴリズムまたは振る舞い</h2>
+<p>まだ解析していません。</p>
+<h2>呼び出し元と呼び出し先</h2>
+<ul>
+<li>呼び出し元: なし</li>
+<li>呼び出し先: なし</li>
+<li>呼び出し元サイト: なし</li>
+<li>呼び出しサイト: なし</li>
+</ul>
+<h2>関連データ構造</h2>
+<p><a class="wiki-source-link" href="../../source/src/interfaces/ecpg/ecpglib/ecpglib_extern.h.html#L101" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__interfaces__ecpg__ecpglib__ecpglib_extern_h__connection.html&quot;}, '*');"><code>connection</code></a>, <code>Port</code>, <code>state</code>, <code>StringInfo</code></p>
+<h2>ソース抜粋</h2>
+<p>~~~c typedef struct <a class="wiki-source-link" href="../../source/src/include/libpq/sasl.h.html#L46" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__libpq__sasl_h__pg_be_sasl_mech.html&quot;}, '*');">pg_be_sasl_mech</a> { /*---------</p>
+<ul>
+<li>get_mechanisms()</li>
+<p>*</p>
+<li>Retrieves the list of SASL mechanism names supported by this</li>
+<li>implementation.</li>
+<p>*</p>
+<li>Input parameters:</li>
+<p>*</p>
+<li><a class="wiki-source-link" href="../../source/src/test/regress/pg_regress.c.html#L117" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/test/regress/pg_regress.c.html&quot;}, '*');">port</a>: The client Port</li>
+<p>*</p>
+<li>Output parameters:</li>
+<p>*</p>
+<li>buf:  A StringInfo buffer that the <a class="wiki-source-link" href="../../source/src/tools/ifaddrs/test_ifaddrs.c.html#L45" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__tools__ifaddrs__test_ifaddrs_c__callback.html&quot;}, '*');">callback</a> should populate with</li>
+<li>supported mechanism names.  The names are appended into this</li>
+<li>StringInfo, each one ending with &#x27;\0&#x27; bytes.</li>
+<p>*--------- */ void		(*get_mechanisms) (Port *<a class="wiki-source-link" href="../../source/src/test/regress/pg_regress.c.html#L117" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/test/regress/pg_regress.c.html&quot;}, '*');">port</a>, StringInfo buf);</p>
+</ul>
+<p>/*---------</p>
+<ul>
+<li><a class="wiki-source-link" href="../../source/src/interfaces/ecpg/test/expected/sql-bytea.c.html#L72" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/ecpg/test/expected/sql-bytea.c.html&quot;}, '*');">init</a>()</li>
+<p>*</p>
+<li>Initializes mechanism-specific state for a <a class="wiki-source-link" href="../../source/src/interfaces/ecpg/ecpglib/ecpglib_extern.h.html#L101" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__interfaces__ecpg__ecpglib__ecpglib_extern_h__connection.html&quot;}, '*');">connection</a>. This <a class="wiki-source-link" href="../../source/src/tools/ifaddrs/test_ifaddrs.c.html#L45" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__tools__ifaddrs__test_ifaddrs_c__callback.html&quot;}, '*');">callback</a></li>
+<li>must return a pointer to its allocated state, which will be passed</li>
+<li>as-<a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> as the first argument to the other callbacks.</li>
+<p>*</p>
+<li>Input parameters:</li>
+<p>*</p>
+<li><a class="wiki-source-link" href="../../source/src/test/regress/pg_regress.c.html#L117" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/test/regress/pg_regress.c.html&quot;}, '*');">port</a>:        The client Port.</li>
+<p>*</p>
+<li>mech:        The actual mechanism name in use by the client.</li>
+<p>*</p>
+<li>shadow_pass: The stored secret for the role being authenticated, or</li>
+<li>NULL if one does not exist.  Mechanisms that do not use</li>
+<li>shadow entries may ignore this parameter.  If a</li>
+<li>mechanism uses shadow entries but shadow_pass <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> NULL,</li>
+<li>the implementation must continue the exchange as if the</li>
+<li><a class="wiki-source-link" href="../../source/src/test/regress/pg_regress.c.html#L121" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/test/regress/pg_regress.c.html&quot;}, '*');">user</a> existed and the <a class="wiki-source-link" href="../../source/src/bin/pg_basebackup/streamutil.c.html#L51" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/bin/pg_basebackup/streamutil.c.html&quot;}, '*');">password</a> did not match, to avoid</li>
+<li>disclosing valid <a class="wiki-source-link" href="../../source/src/test/regress/pg_regress.c.html#L121" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/test/regress/pg_regress.c.html&quot;}, '*');">user</a> names.</li>
+<p>*--------- */ void	   *(*<a class="wiki-source-link" href="../../source/src/interfaces/ecpg/test/expected/sql-bytea.c.html#L72" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/ecpg/test/expected/sql-bytea.c.html&quot;}, '*');">init</a>) (Port *<a class="wiki-source-link" href="../../source/src/test/regress/pg_regress.c.html#L117" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/test/regress/pg_regress.c.html&quot;}, '*');">port</a>, const char *mech, const char *shadow_pass);</p>
+</ul>
+<p>/*---------</p>
+<ul>
+<li>exchange()</li>
+<p>*</p>
+<li>Produces a server challenge to be sent to the client.  The <a class="wiki-source-link" href="../../source/src/tools/ifaddrs/test_ifaddrs.c.html#L45" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__tools__ifaddrs__test_ifaddrs_c__callback.html&quot;}, '*');">callback</a></li>
+<li>must return one of the PG_SASL_EXCHANGE_* values, depending on</li>
+<li>whether the exchange continues, has finished successfully, has</li>
+<li>failed, or was abandoned by the client.</li>
+<p>*</p>
+<li>Input parameters:</li>
+<p>*</p>
+<li>state:	  The opaque mechanism state returned by <a class="wiki-source-link" href="../../source/src/interfaces/ecpg/test/expected/sql-bytea.c.html#L72" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/ecpg/test/expected/sql-bytea.c.html&quot;}, '*');">init</a>()</li>
+<p>*</p>
+<li>input:	  The response data sent by the client, or NULL if the</li>
+<li>mechanism <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> client-first but the client did not <a class="wiki-source-link" href="../../source/src/include/port/win32_port.h.html#L502" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/port/win32_port.h.html&quot;}, '*');">send</a> an</li>
+<li>initial response.  (This can only happen during the first</li>
+<p>~~~</p>
+</ul>
+<h2>失敗モードと境界条件</h2>
+<p>まだ解析していません。</p>
+<h2>保守担当者向けメモ</h2>
+<ul>
+<li>後続フェーズで、ソース本文の文脈と caller/callee 情報を使ってこのページを強化する。</li>
+</ul><script>
+(function() {
+  function notifyParent() {
+    if (parent === window) return;
+    parent.postMessage({type: "frame-location", frame: window.name || "", href: window.location.href}, "*");
+  }
+  document.addEventListener("click", function(event) {
+    const link = event.target.closest("a[data-panel]");
+    if (!link || parent === window) return;
+    parent.postMessage({type: "source-link", panel: link.dataset.panel}, "*");
+  });
+  window.addEventListener("load", notifyParent);
+  window.addEventListener("hashchange", notifyParent);
+})();
+</script></body></html>

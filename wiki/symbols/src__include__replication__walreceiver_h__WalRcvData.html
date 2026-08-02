@@ -1,0 +1,102 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>symbols/src__include__replication__walreceiver_h__WalRcvData.md</title><link rel="stylesheet" href="../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../source/src/include/replication/walreceiver.h.html#L58" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__replication__walreceiver_h__WalRcvData.html&quot;}, '*');">WalRcvData</a></h1>
+<h2>定義</h2>
+<ul>
+<li>種別: <code>struct</code></li>
+<li>定義箇所: <code>src/include/replication/walreceiver.h:58</code></li>
+<li>所属モジュール: <a class="wiki-entity-link" href="../modules/src__include__replication.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/modules/src__include__replication.html&quot;, &quot;source&quot;: &quot;source/src/include/replication/conflict.h.html&quot;}, '*');"><code>module:src/include/replication</code></a></li>
+</ul>
+<h2>目的</h2>
+<p>静的シンボル索引から生成された初期シンボルページです。</p>
+<h2>シグネチャまたは形状</h2>
+<ul>
+<li>シグネチャ: <code>typedef struct</code></li>
+</ul>
+<h2>入力と出力</h2>
+<p>まだ解析していません。</p>
+<h2>前提条件と不変条件</h2>
+<p>まだ解析していません。</p>
+<h2>アルゴリズムまたは振る舞い</h2>
+<p>まだ解析していません。</p>
+<h2>呼び出し元と呼び出し先</h2>
+<ul>
+<li>呼び出し元: なし</li>
+<li>呼び出し先: なし</li>
+<li>呼び出し元サイト: なし</li>
+<li>呼び出しサイト: なし</li>
+</ul>
+<h2>関連データ構造</h2>
+<p><a class="wiki-source-link" href="../../source/src/include/storage/condition_variable.h.html#L28" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__storage__condition_variable_h__ConditionVariable.html&quot;}, '*');"><code>ConditionVariable</code></a>, <a class="wiki-source-link" href="../../source/src/interfaces/ecpg/ecpglib/ecpglib_extern.h.html#L101" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__interfaces__ecpg__ecpglib__ecpglib_extern_h__connection.html&quot;}, '*');"><code>connection</code></a>, <code>pg_atomic_uint64</code>, <a class="wiki-source-link" href="../../source/src/include/pgtime.h.html#L23" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__pgtime_h__pg_time_t.html&quot;}, '*');"><code>pg_time_t</code></a>, <a class="wiki-source-link" href="../../source/src/include/port/win32_port.h.html#L240" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__port__win32_port_h__pid_t.html&quot;}, '*');"><code>pid_t</code></a>, <code>ProcNumber</code>, <a class="wiki-source-link" href="../../source/src/include/storage/s_lock.h.html#L129" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__storage__s_lock_h__slock_t.html&quot;}, '*');"><code>slock_t</code></a>, <code>state</code>, <code>string</code>, <code>TimeLineID</code>, <code>TimestampTz</code>, <a class="wiki-source-link" href="../../source/src/include/replication/walreceiver.h.html#L45" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__replication__walreceiver_h__WalRcvState.html&quot;}, '*');"><code>WalRcvState</code></a>, <a class="wiki-source-link" href="../../source/src/interfaces/ecpg/preproc/type.h.html#L89" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__interfaces__ecpg__preproc__type_h__when.html&quot;}, '*');"><code>when</code></a>, <code>XLogRecPtr</code></p>
+<h2>ソース抜粋</h2>
+<p>~~~c typedef struct { /*</p>
+<ul>
+<li>Currently active walreceiver process&#x27;s proc number and PID.</li>
+<p>*</p>
+<li>The startup process uses the proc number to wake it up after telling it</li>
+<li>where to start streaming (after setting receiveStart and</li>
+<li>receiveStartTLI), and also to tell it to <a class="wiki-source-link" href="../../source/src/include/port/win32_port.h.html#L502" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/port/win32_port.h.html&quot;}, '*');">send</a> apply feedback to the</li>
+<li>primary whenever specially marked commit <a class="wiki-source-link" href="../../source/src/backend/access/transam/twophase.c.html#L1011" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/access/transam/twophase.c.html&quot;}, '*');">records</a> are applied.</li>
+<p>*/ ProcNumber	procno; <a class="wiki-source-link" href="../../source/src/include/port/win32_port.h.html#L240" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__port__win32_port_h__pid_t.html&quot;}, '*');">pid_t</a>		pid;</p>
+</ul>
+<p>/* Its current state */ <a class="wiki-source-link" href="../../source/src/include/replication/walreceiver.h.html#L45" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__replication__walreceiver_h__WalRcvState.html&quot;}, '*');">WalRcvState</a> walRcvState; <a class="wiki-source-link" href="../../source/src/include/storage/condition_variable.h.html#L28" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__storage__condition_variable_h__ConditionVariable.html&quot;}, '*');">ConditionVariable</a> walRcvStoppedCV;</p>
+<p>/*</p>
+<ul>
+<li>Its start time (actually, the time at which it was requested to be</li>
+<li>started).</li>
+<p>*/ <a class="wiki-source-link" href="../../source/src/include/pgtime.h.html#L23" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__pgtime_h__pg_time_t.html&quot;}, '*');">pg_time_t</a>	startTime;</p>
+</ul>
+<p>/*</p>
+<ul>
+<li>receiveStart and receiveStartTLI indicate the first byte position and</li>
+<li>timeline that will be received. When startup process starts the</li>
+<li>walreceiver, it sets these to the point where it wants the streaming to</li>
+<li>begin.</li>
+<p>*/ XLogRecPtr	receiveStart; TimeLineID	receiveStartTLI;</p>
+</ul>
+<p>/*</p>
+<ul>
+<li><a class="wiki-source-link" href="../../source/src/backend/access/transam/xlogrecovery.c.html#L266" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/access/transam/xlogrecovery.c.html&quot;}, '*');">flushedUpto</a>-1 <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> the last byte position that has already been received,</li>
+<li>and receivedTLI <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> the timeline it came from.  At the first startup of</li>
+<li>walreceiver, these are set to receiveStart and receiveStartTLI. After</li>
+<li>that, walreceiver updates these whenever it flushes the received WAL to</li>
+<li>disk.</li>
+<p>*/ XLogRecPtr	<a class="wiki-source-link" href="../../source/src/backend/access/transam/xlogrecovery.c.html#L266" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/access/transam/xlogrecovery.c.html&quot;}, '*');">flushedUpto</a>; TimeLineID	receivedTLI;</p>
+</ul>
+<p>/*</p>
+<ul>
+<li>latestChunkStart <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> the starting byte position of the current &quot;batch&quot;</li>
+<li>of received WAL.  It&#x27;s actually the same as the previous <a class="wiki-source-link" href="../../source/src/interfaces/ecpg/compatlib/informix.c.html#L687" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/ecpg/compatlib/informix.c.html&quot;}, '*');">value</a> of</li>
+<li><a class="wiki-source-link" href="../../source/src/backend/access/transam/xlogrecovery.c.html#L266" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/access/transam/xlogrecovery.c.html&quot;}, '*');">flushedUpto</a> <a class="wiki-source-link" href="../../source/src/backend/regex/regc_locale.c.html#L487" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__regex__regc_locale_c__before.html&quot;}, '*');">before</a> the last flush to disk.  Startup process can use</li>
+<li>this to detect whether it&#x27;s keeping up or not.</li>
+<p>*/ XLogRecPtr	latestChunkStart;</p>
+</ul>
+<p>/*</p>
+<ul>
+<li>Time of <a class="wiki-source-link" href="../../source/src/include/port/win32_port.h.html#L502" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/port/win32_port.h.html&quot;}, '*');">send</a> and receive of any message received.</li>
+<p>*/ TimestampTz lastMsgSendTime; TimestampTz lastMsgReceiptTime;</p>
+</ul>
+<p>/*</p>
+<ul>
+<li>Latest reported end of WAL on the sender</li>
+<p>*/ XLogRecPtr	latestWalEnd; ~~~</p>
+</ul>
+<h2>失敗モードと境界条件</h2>
+<p>まだ解析していません。</p>
+<h2>保守担当者向けメモ</h2>
+<ul>
+<li>後続フェーズで、ソース本文の文脈と caller/callee 情報を使ってこのページを強化する。</li>
+</ul><script>
+(function() {
+  function notifyParent() {
+    if (parent === window) return;
+    parent.postMessage({type: "frame-location", frame: window.name || "", href: window.location.href}, "*");
+  }
+  document.addEventListener("click", function(event) {
+    const link = event.target.closest("a[data-panel]");
+    if (!link || parent === window) return;
+    parent.postMessage({type: "source-link", panel: link.dataset.panel}, "*");
+  });
+  window.addEventListener("load", notifyParent);
+  window.addEventListener("hashchange", notifyParent);
+})();
+</script></body></html>

@@ -1,0 +1,81 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>symbols/src__port__pg_popcount_aarch64_c__pg_popcount_masked_sve.md</title><link rel="stylesheet" href="../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../source/src/port/pg_popcount_aarch64.c.html#L192" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__port__pg_popcount_aarch64_c__pg_popcount_masked_sve.html&quot;}, '*');">pg_popcount_masked_sve</a></h1>
+<h2>定義</h2>
+<ul>
+<li>種別: <code>function</code></li>
+<li>定義箇所: <code>src/port/pg_popcount_aarch64.c:192</code></li>
+<li>所属モジュール: <a class="wiki-entity-link" href="../modules/src__port.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/modules/src__port.html&quot;, &quot;source&quot;: &quot;source/src/port/bsearch_arg.c.html&quot;}, '*');"><code>module:src/port</code></a></li>
+</ul>
+<h2>目的</h2>
+<p>静的シンボル索引から生成された初期シンボルページです。</p>
+<h2>シグネチャまたは形状</h2>
+<ul>
+<li>シグネチャ: <code>static uint64 pg_popcount_masked_sve(const char *buf, int bytes, uint8 mask)</code></li>
+</ul>
+<h2>入力と出力</h2>
+<ul>
+<li>引数: <code>const char *buf</code>, <code>int bytes</code>, <code>uint8 mask</code></li>
+<li>戻り値: <code>uint64</code></li>
+</ul>
+<h2>前提条件と不変条件</h2>
+<p>まだ解析していません。</p>
+<h2>アルゴリズムまたは振る舞い</h2>
+<ul>
+<li>複雑度: <code>high</code> (score 17)</li>
+</ul>
+<p>まだ解析していません。</p>
+<h2>呼び出し元と呼び出し先</h2>
+<ul>
+<li>呼び出し元: なし</li>
+<li>呼び出し先: なし</li>
+<li>呼び出し元サイト: なし</li>
+<li>呼び出しサイト: <code>svptrue_b64</code> at <code>src/port/pg_popcount_aarch64.c:195:18</code> (unresolved), <code>svdup_u64</code> at <code>src/port/pg_popcount_aarch64.c:196:22</code> (unresolved), <code>svdup_u64</code> at <code>src/port/pg_popcount_aarch64.c:197:14</code> (unresolved), <code>svdup_u64</code> at <code>src/port/pg_popcount_aarch64.c:198:14</code> (unresolved), <code>svdup_u64</code> at <code>src/port/pg_popcount_aarch64.c:199:14</code> (unresolved), <code>svcntb</code> at <code>src/port/pg_popcount_aarch64.c:200:20</code> (unresolved), <a class="wiki-source-link" href="../../source/src/include/c.h.html#L638" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/c.h.html&quot;}, '*');"><code>UINT64CONST</code></a> at <code>src/port/pg_popcount_aarch64.c:203:15</code> (macro), <code>svand_n_u64_x</code> at <code>src/port/pg_popcount_aarch64.c:213:9</code> (unresolved), <code>svld1_u64</code> at <code>src/port/pg_popcount_aarch64.c:213:29</code> (unresolved), <code>svadd_u64_x</code> at <code>src/port/pg_popcount_aarch64.c:214:12</code> (unresolved), <code>svcnt_u64_x</code> at <code>src/port/pg_popcount_aarch64.c:214:38</code> (unresolved), <code>svand_n_u64_x</code> at <code>src/port/pg_popcount_aarch64.c:217:9</code> (unresolved), <code>svld1_u64</code> at <code>src/port/pg_popcount_aarch64.c:217:29</code> (unresolved), <code>svadd_u64_x</code> at <code>src/port/pg_popcount_aarch64.c:218:12</code> (unresolved), <code>svcnt_u64_x</code> at <code>src/port/pg_popcount_aarch64.c:218:38</code> (unresolved), <code>svand_n_u64_x</code> at <code>src/port/pg_popcount_aarch64.c:221:9</code> (unresolved), <code>svld1_u64</code> at <code>src/port/pg_popcount_aarch64.c:221:29</code> (unresolved), <code>svadd_u64_x</code> at <code>src/port/pg_popcount_aarch64.c:222:12</code> (unresolved), <code>svcnt_u64_x</code> at <code>src/port/pg_popcount_aarch64.c:222:38</code> (unresolved), <code>svand_n_u64_x</code> at <code>src/port/pg_popcount_aarch64.c:225:9</code> (unresolved), <code>svld1_u64</code> at <code>src/port/pg_popcount_aarch64.c:225:29</code> (unresolved), <code>svadd_u64_x</code> at <code>src/port/pg_popcount_aarch64.c:226:12</code> (unresolved), <code>svcnt_u64_x</code> at <code>src/port/pg_popcount_aarch64.c:226:38</code> (unresolved), <code>svand_n_u64_x</code> at <code>src/port/pg_popcount_aarch64.c:239:9</code> (unresolved), <code>svld1_u64</code> at <code>src/port/pg_popcount_aarch64.c:239:29</code> (unresolved), <code>svadd_u64_x</code> at <code>src/port/pg_popcount_aarch64.c:240:12</code> (unresolved), <code>svcnt_u64_x</code> at <code>src/port/pg_popcount_aarch64.c:240:38</code> (unresolved), <code>svand_n_u64_x</code> at <code>src/port/pg_popcount_aarch64.c:243:9</code> (unresolved), <code>svld1_u64</code> at <code>src/port/pg_popcount_aarch64.c:243:29</code> (unresolved), <code>svadd_u64_x</code> at <code>src/port/pg_popcount_aarch64.c:244:12</code> (unresolved), <code>svcnt_u64_x</code> at <code>src/port/pg_popcount_aarch64.c:244:38</code> (unresolved), <code>svaddv_u64</code> at <code>src/port/pg_popcount_aarch64.c:253:12</code> (unresolved), <code>svadd_u64_x</code> at <code>src/port/pg_popcount_aarch64.c:253:29</code> (unresolved), <code>svaddv_u64</code> at <code>src/port/pg_popcount_aarch64.c:254:12</code> (unresolved), <code>svadd_u64_x</code> at <code>src/port/pg_popcount_aarch64.c:254:29</code> (unresolved), <code>svwhilelt_b8_s32</code> at <code>src/port/pg_popcount_aarch64.c:263:10</code> (unresolved), <code>svand_n_u8_x</code> at <code>src/port/pg_popcount_aarch64.c:264:9</code> (unresolved), <code>svld1_u8</code> at <code>src/port/pg_popcount_aarch64.c:264:28</code> (unresolved), <code>svaddv_u8</code> at <code>src/port/pg_popcount_aarch64.c:265:13</code> (unresolved), <code>svcnt_u8_x</code> at <code>src/port/pg_popcount_aarch64.c:265:29</code> (unresolved)</li>
+</ul>
+<h2>関連データ構造</h2>
+<p><code>uint32</code>, <code>uint64</code>, <code>uint8</code></p>
+<h2>ソース抜粋</h2>
+<p>~~~c static uint64 <a class="wiki-source-link" href="../../source/src/port/pg_popcount_aarch64.c.html#L192" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__port__pg_popcount_aarch64_c__pg_popcount_masked_sve.html&quot;}, '*');">pg_popcount_masked_sve</a>(const char *buf, int bytes, uint8 mask) { svbool_t	pred = svptrue_b64(); svuint64_t	accum1 = svdup_u64(0), accum2 = svdup_u64(0), accum3 = svdup_u64(0), accum4 = svdup_u64(0); uint32		vec_len = svcntb(), bytes_per_iteration = 4 * vec_len; uint64		popcnt = 0, mask64 = ~<a class="wiki-source-link" href="../../source/src/include/c.h.html#L638" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/c.h.html&quot;}, '*');">UINT64CONST</a>(0) / 0xFF * mask;</p>
+<p>/*</p>
+<ul>
+<li>For better instruction-level parallelism, each loop iteration operates</li>
+<li>on a block of four registers.</li>
+<p>*/ for (; bytes &gt;= bytes_per_iteration; bytes -= bytes_per_iteration) { svuint64_t	vec;</p>
+</ul>
+<p>vec = svand_n_u64_x(pred, svld1_u64(pred, (const uint64 *) buf), mask64); accum1 = svadd_u64_x(pred, accum1, svcnt_u64_x(pred, vec)); buf += vec_len;</p>
+<p>vec = svand_n_u64_x(pred, svld1_u64(pred, (const uint64 *) buf), mask64); accum2 = svadd_u64_x(pred, accum2, svcnt_u64_x(pred, vec)); buf += vec_len;</p>
+<p>vec = svand_n_u64_x(pred, svld1_u64(pred, (const uint64 *) buf), mask64); accum3 = svadd_u64_x(pred, accum3, svcnt_u64_x(pred, vec)); buf += vec_len;</p>
+<p>vec = svand_n_u64_x(pred, svld1_u64(pred, (const uint64 *) buf), mask64); accum4 = svadd_u64_x(pred, accum4, svcnt_u64_x(pred, vec)); buf += vec_len; }</p>
+<p>/*</p>
+<ul>
+<li>If enough data remains, do another iteration on a block of two</li>
+<li>registers.</li>
+<p>*/ bytes_per_iteration = 2 * vec_len; if (bytes &gt;= bytes_per_iteration) { svuint64_t	vec;</p>
+</ul>
+<p>vec = svand_n_u64_x(pred, svld1_u64(pred, (const uint64 *) buf), mask64); accum1 = svadd_u64_x(pred, accum1, svcnt_u64_x(pred, vec)); buf += vec_len;</p>
+<p>vec = svand_n_u64_x(pred, svld1_u64(pred, (const uint64 *) buf), mask64); accum2 = svadd_u64_x(pred, accum2, svcnt_u64_x(pred, vec)); buf += vec_len;</p>
+<p>bytes -= bytes_per_iteration; }</p>
+<p>/*</p>
+<ul>
+<li>Add the accumulators.</li>
+<p>~~~</p>
+</ul>
+<h2>失敗モードと境界条件</h2>
+<p>まだ解析していません。</p>
+<h2>保守担当者向けメモ</h2>
+<ul>
+<li>後続フェーズで、ソース本文の文脈と caller/callee 情報を使ってこのページを強化する。</li>
+</ul><script>
+(function() {
+  function notifyParent() {
+    if (parent === window) return;
+    parent.postMessage({type: "frame-location", frame: window.name || "", href: window.location.href}, "*");
+  }
+  document.addEventListener("click", function(event) {
+    const link = event.target.closest("a[data-panel]");
+    if (!link || parent === window) return;
+    parent.postMessage({type: "source-link", panel: link.dataset.panel}, "*");
+  });
+  window.addEventListener("load", notifyParent);
+  window.addEventListener("hashchange", notifyParent);
+})();
+</script></body></html>

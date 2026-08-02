@@ -1,0 +1,85 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>symbols/src__backend__utils__adt__ruleutils_c__quote_identifier.md</title><link rel="stylesheet" href="../../styles.css"></head><body><h1>quote_identifier</h1>
+<h2>定義</h2>
+<ul>
+<li>種別: <code>function</code></li>
+<li>定義箇所: <code>src/backend/utils/adt/ruleutils.c:13722</code></li>
+<li>所属モジュール: <a class="wiki-entity-link" href="../modules/src__backend__utils__adt.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/modules/src__backend__utils__adt.html&quot;, &quot;source&quot;: &quot;source/src/backend/utils/adt/acl.c.html&quot;}, '*');"><code>module:src/backend/utils/adt</code></a></li>
+</ul>
+<h2>目的</h2>
+<p>静的シンボル索引から生成された初期シンボルページです。</p>
+<h2>シグネチャまたは形状</h2>
+<ul>
+<li>シグネチャ: <code>const char * quote_identifier(const char *ident)</code></li>
+</ul>
+<h2>入力と出力</h2>
+<ul>
+<li>引数: <code>const char *ident</code></li>
+<li>戻り値: <code>const char *</code></li>
+</ul>
+<h2>前提条件と不変条件</h2>
+<p>まだ解析していません。</p>
+<h2>アルゴリズムまたは振る舞い</h2>
+<ul>
+<li>複雑度: <code>high</code> (score 23)</li>
+</ul>
+<p>まだ解析していません。</p>
+<h2>呼び出し元と呼び出し先</h2>
+<ul>
+<li>呼び出し元: なし</li>
+<li>呼び出し先: <a class="wiki-source-link" href="../../source/src/common/kwlookup.c.html#L37" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__common__kwlookup_c__ScanKeywordLookup.html&quot;}, '*');"><code>ScanKeywordLookup</code></a></li>
+<li>呼び出し元サイト: なし</li>
+<li>呼び出しサイト: <a class="wiki-source-link" href="../../source/src/common/kwlookup.c.html#L37" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__common__kwlookup_c__ScanKeywordLookup.html&quot;}, '*');"><code>ScanKeywordLookup</code></a> at <code>src/backend/utils/adt/ruleutils.c:13773:17</code> (direct, confidence=high, resolved=<a class="wiki-entity-link" href="src__common__kwlookup_c__ScanKeywordLookup.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__common__kwlookup_c__ScanKeywordLookup.html&quot;, &quot;source&quot;: &quot;source/src/common/kwlookup.c.html#L37&quot;}, '*');"><code>symbol:src/common/kwlookup.c#ScanKeywordLookup</code></a>), <code>palloc</code> at <code>src/backend/utils/adt/ruleutils.c:13782:20</code> (unresolved, confidence=low), <code>strlen</code> at <code>src/backend/utils/adt/ruleutils.c:13782:27</code> (unresolved)</li>
+</ul>
+<h2>関連データ構造</h2>
+<p>なし</p>
+<h2>ソース抜粋</h2>
+<p>~~~c const char * quote_identifier(const char *<a class="wiki-source-link" href="../../source/src/tools/pg_bsd_indent/indent_codes.h.html#L47" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/tools/pg_bsd_indent/indent_codes.h.html&quot;}, '*');">ident</a>) { /*</p>
+<ul>
+<li>Can avoid quoting if <a class="wiki-source-link" href="../../source/src/tools/pg_bsd_indent/indent_codes.h.html#L47" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/tools/pg_bsd_indent/indent_codes.h.html&quot;}, '*');">ident</a> starts with a lowercase letter or underscore</li>
+<li>and contains only lowercase letters, digits, and underscores, *and* <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a></li>
+<li>not any SQL keyword.  Otherwise, supply quotes.</li>
+<p>*/ int			nquotes = 0; bool		safe; const char *ptr; char	   *<a class="wiki-source-link" href="../../source/src/include/storage/checksum_block_internal.h.html#L18" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/storage/checksum_block_internal.h.html&quot;}, '*');">result</a>; char	   *optr;</p>
+</ul>
+<p>/*</p>
+<ul>
+<li>would like to use &lt;ctype.h&gt; macros here, but they might yield unwanted</li>
+<li>locale-specific results...</li>
+<p>*/ safe = ((<a class="wiki-source-link" href="../../source/src/tools/pg_bsd_indent/indent_codes.h.html#L47" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/tools/pg_bsd_indent/indent_codes.h.html&quot;}, '*');">ident</a>[0] &gt;= &#x27;a&#x27; &amp;&amp; <a class="wiki-source-link" href="../../source/src/tools/pg_bsd_indent/indent_codes.h.html#L47" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/tools/pg_bsd_indent/indent_codes.h.html&quot;}, '*');">ident</a>[0] &lt;= &#x27;z&#x27;) || <a class="wiki-source-link" href="../../source/src/tools/pg_bsd_indent/indent_codes.h.html#L47" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/tools/pg_bsd_indent/indent_codes.h.html&quot;}, '*');">ident</a>[0] == &#x27;_&#x27;);</p>
+</ul>
+<p>for (ptr = <a class="wiki-source-link" href="../../source/src/tools/pg_bsd_indent/indent_codes.h.html#L47" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/tools/pg_bsd_indent/indent_codes.h.html&quot;}, '*');">ident</a>; *ptr; ptr++) { char		ch = *ptr;</p>
+<p>if ((ch &gt;= &#x27;a&#x27; &amp;&amp; ch &lt;= &#x27;z&#x27;) || (ch &gt;= &#x27;0&#x27; &amp;&amp; ch &lt;= &#x27;9&#x27;) || (ch == &#x27;_&#x27;)) { /* okay */ } else { safe = <a class="wiki-source-link" href="../../source/src/tools/pg_bsd_indent/indent_globs.h.html#L43" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/tools/pg_bsd_indent/indent_globs.h.html&quot;}, '*');">false</a>; if (ch == &#x27;&quot;&#x27;) nquotes++; } }</p>
+<p>if (quote_all_identifiers) safe = <a class="wiki-source-link" href="../../source/src/tools/pg_bsd_indent/indent_globs.h.html#L43" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/tools/pg_bsd_indent/indent_globs.h.html&quot;}, '*');">false</a>;</p>
+<p>if (safe) { /*</p>
+<ul>
+<li>Check for keyword.  We quote keywords except for unreserved ones.</li>
+<li>(In some cases we could avoid quoting a col_name or type_func_name</li>
+<li>keyword, but it seems much harder than it&#x27;s worth to tell that.)</li>
+<p>*</p>
+<li>Note: <a class="wiki-source-link" href="../../source/src/common/kwlookup.c.html#L37" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__common__kwlookup_c__ScanKeywordLookup.html&quot;}, '*');">ScanKeywordLookup</a>() does case-insensitive comparison, but</li>
+<li>that&#x27;s fine, since we already know we have all-lower-case.</li>
+<p>*/ int			kwnum = <a class="wiki-source-link" href="../../source/src/common/kwlookup.c.html#L37" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__common__kwlookup_c__ScanKeywordLookup.html&quot;}, '*');">ScanKeywordLookup</a>(<a class="wiki-source-link" href="../../source/src/tools/pg_bsd_indent/indent_codes.h.html#L47" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/tools/pg_bsd_indent/indent_codes.h.html&quot;}, '*');">ident</a>, &amp;ScanKeywords);</p>
+</ul>
+<p>if (kwnum &gt;= 0 &amp;&amp; <a class="wiki-source-link" href="../../source/src/common/keywords.c.html#L29" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/common/keywords.c.html&quot;}, '*');">ScanKeywordCategories</a>[kwnum] != <a class="wiki-source-link" href="../../source/src/include/common/keywords.h.html#L20" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/common/keywords.h.html&quot;}, '*');">UNRESERVED_KEYWORD</a>) safe = <a class="wiki-source-link" href="../../source/src/tools/pg_bsd_indent/indent_globs.h.html#L43" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/tools/pg_bsd_indent/indent_globs.h.html&quot;}, '*');">false</a>; }</p>
+<p>if (safe) return <a class="wiki-source-link" href="../../source/src/tools/pg_bsd_indent/indent_codes.h.html#L47" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/tools/pg_bsd_indent/indent_codes.h.html&quot;}, '*');">ident</a>;			/* no change needed */</p>
+<p>~~~</p>
+<h2>失敗モードと境界条件</h2>
+<p>まだ解析していません。</p>
+<h2>保守担当者向けメモ</h2>
+<ul>
+<li>後続フェーズで、ソース本文の文脈と caller/callee 情報を使ってこのページを強化する。</li>
+</ul><script>
+(function() {
+  function notifyParent() {
+    if (parent === window) return;
+    parent.postMessage({type: "frame-location", frame: window.name || "", href: window.location.href}, "*");
+  }
+  document.addEventListener("click", function(event) {
+    const link = event.target.closest("a[data-panel]");
+    if (!link || parent === window) return;
+    parent.postMessage({type: "source-link", panel: link.dataset.panel}, "*");
+  });
+  window.addEventListener("load", notifyParent);
+  window.addEventListener("hashchange", notifyParent);
+})();
+</script></body></html>

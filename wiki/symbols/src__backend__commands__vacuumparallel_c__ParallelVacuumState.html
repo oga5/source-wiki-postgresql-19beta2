@@ -1,0 +1,87 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>symbols/src__backend__commands__vacuumparallel_c__ParallelVacuumState.md</title><link rel="stylesheet" href="../../styles.css"></head><body><h1>ParallelVacuumState</h1>
+<h2>定義</h2>
+<ul>
+<li>種別: <code>struct</code></li>
+<li>定義箇所: <code>src/backend/commands/vacuumparallel.c:211</code></li>
+<li>所属モジュール: <a class="wiki-entity-link" href="../modules/src__backend__commands.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/modules/src__backend__commands.html&quot;, &quot;source&quot;: &quot;source/src/backend/commands/aggregatecmds.c.html&quot;}, '*');"><code>module:src/backend/commands</code></a></li>
+</ul>
+<h2>目的</h2>
+<p>静的シンボル索引から生成された初期シンボルページです。</p>
+<h2>シグネチャまたは形状</h2>
+<ul>
+<li>シグネチャ: <code>struct ParallelVacuumState</code></li>
+</ul>
+<h2>入力と出力</h2>
+<p>まだ解析していません。</p>
+<h2>前提条件と不変条件</h2>
+<p>まだ解析していません。</p>
+<h2>アルゴリズムまたは振る舞い</h2>
+<p>まだ解析していません。</p>
+<h2>呼び出し元と呼び出し先</h2>
+<ul>
+<li>呼び出し元: なし</li>
+<li>呼び出し先: なし</li>
+<li>呼び出し元サイト: なし</li>
+<li>呼び出しサイト: なし</li>
+</ul>
+<h2>関連データ構造</h2>
+<p><a class="wiki-source-link" href="../../source/src/interfaces/ecpg/test/expected/preproc-type.c.html#L36" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__interfaces__ecpg__test__expected__preproc-type_c__access.html&quot;}, '*');"><code>access</code></a>, <a class="wiki-source-link" href="../../source/src/include/snowball/libstemmer/snowball_runtime.h.html#L47" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__snowball__libstemmer__snowball_runtime_h__among.html&quot;}, '*');"><code>among</code></a>, <a class="wiki-source-link" href="../../source/src/include/storage/buf.h.html#L23" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__storage__buf_h__Buffer.html&quot;}, '*');"><code>Buffer</code></a>, <code>BufferAccessStrategy</code>, <code>BufferUsage</code>, <a class="wiki-source-link" href="../../source/src/interfaces/ecpg/test/expected/preproc-init.c.html#L82" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__interfaces__ecpg__test__expected__preproc-init_c__e.html&quot;}, '*');"><code>e</code></a>, <a class="wiki-source-link" href="../../source/src/interfaces/ecpg/preproc/type.h.html#L96" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__interfaces__ecpg__preproc__type_h__index.html&quot;}, '*');"><code>index</code></a>, <code>IndexBulkDeleteResult</code>, <code>ParallelContext</code>, <a class="wiki-source-link" href="../../source/src/backend/commands/vacuumparallel.c.html#L186" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__commands__vacuumparallel_c__PVIndStats.html&quot;}, '*');"><code>PVIndStats</code></a>, <a class="wiki-source-link" href="../../source/src/backend/commands/vacuumparallel.c.html#L174" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__commands__vacuumparallel_c__PVIndVacStatus.html&quot;}, '*');"><code>PVIndVacStatus</code></a>, <a class="wiki-source-link" href="../../source/src/backend/commands/vacuumparallel.c.html#L94" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__commands__vacuumparallel_c__PVShared.html&quot;}, '*');"><code>PVShared</code></a>, <code>Relation</code>, <code>state</code>, <code>TidStore</code>, <code>WalUsage</code></p>
+<h2>ソース抜粋</h2>
+<p>~~~c struct ParallelVacuumState { /* NULL for worker processes */ ParallelContext *pcxt;</p>
+<p>/* Parent Heap Relation */ Relation	heaprel;</p>
+<p>/* Target indexes */ Relation   *indrels; int			nindexes;</p>
+<p>/* Shared information <a class="wiki-source-link" href="../../source/src/include/snowball/libstemmer/snowball_runtime.h.html#L47" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__snowball__libstemmer__snowball_runtime_h__among.html&quot;}, '*');">among</a> parallel <a class="wiki-source-link" href="../../source/src/backend/commands/vacuum.c.html#L493" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__commands__vacuum_c__vacuum.html&quot;}, '*');">vacuum</a> workers */ <a class="wiki-source-link" href="../../source/src/backend/commands/vacuumparallel.c.html#L94" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__commands__vacuumparallel_c__PVShared.html&quot;}, '*');">PVShared</a>   *shared;</p>
+<p>/*</p>
+<ul>
+<li>Shared <a class="wiki-source-link" href="../../source/src/interfaces/ecpg/preproc/type.h.html#L96" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__interfaces__ecpg__preproc__type_h__index.html&quot;}, '*');">index</a> statistics <a class="wiki-source-link" href="../../source/src/include/snowball/libstemmer/snowball_runtime.h.html#L47" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__snowball__libstemmer__snowball_runtime_h__among.html&quot;}, '*');">among</a> parallel <a class="wiki-source-link" href="../../source/src/backend/commands/vacuum.c.html#L493" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__commands__vacuum_c__vacuum.html&quot;}, '*');">vacuum</a> workers. The array</li>
+<li><a class="wiki-source-link" href="../../source/src/backend/regex/regc_locale.c.html#L375" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__regex__regc_locale_c__element.html&quot;}, '*');">element</a> <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> allocated for every <a class="wiki-source-link" href="../../source/src/interfaces/ecpg/preproc/type.h.html#L96" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__interfaces__ecpg__preproc__type_h__index.html&quot;}, '*');">index</a>, even those indexes where parallel</li>
+<li><a class="wiki-source-link" href="../../source/src/interfaces/ecpg/preproc/type.h.html#L96" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__interfaces__ecpg__preproc__type_h__index.html&quot;}, '*');">index</a> vacuuming <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> unsafe or not worthwhile (e.g.,</li>
+<li>will_parallel_vacuum[] <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> <a class="wiki-source-link" href="../../source/src/tools/pg_bsd_indent/indent_globs.h.html#L43" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/tools/pg_bsd_indent/indent_globs.h.html&quot;}, '*');">false</a>).  During parallel <a class="wiki-source-link" href="../../source/src/backend/commands/vacuum.c.html#L493" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__commands__vacuum_c__vacuum.html&quot;}, '*');">vacuum</a>,</li>
+<li>IndexBulkDeleteResult of each <a class="wiki-source-link" href="../../source/src/interfaces/ecpg/preproc/type.h.html#L96" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__interfaces__ecpg__preproc__type_h__index.html&quot;}, '*');">index</a> <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> kept in DSM and <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> copied into</li>
+<li>local memory at the end of parallel <a class="wiki-source-link" href="../../source/src/backend/commands/vacuum.c.html#L493" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__commands__vacuum_c__vacuum.html&quot;}, '*');">vacuum</a>.</li>
+<p>*/ <a class="wiki-source-link" href="../../source/src/backend/commands/vacuumparallel.c.html#L186" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__commands__vacuumparallel_c__PVIndStats.html&quot;}, '*');">PVIndStats</a> *indstats;</p>
+</ul>
+<p>/* Shared dead <a class="wiki-source-link" href="../../source/src/test/modules/test_tidstore/test_tidstore.c.html#L48" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/test/modules/test_tidstore/test_tidstore.c.html&quot;}, '*');">items</a> space <a class="wiki-source-link" href="../../source/src/include/snowball/libstemmer/snowball_runtime.h.html#L47" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__snowball__libstemmer__snowball_runtime_h__among.html&quot;}, '*');">among</a> parallel <a class="wiki-source-link" href="../../source/src/backend/commands/vacuum.c.html#L493" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__commands__vacuum_c__vacuum.html&quot;}, '*');">vacuum</a> workers */ TidStore   *dead_items;</p>
+<p>/* Points to buffer usage area in DSM */ BufferUsage *buffer_usage;</p>
+<p>/* Points to WAL usage area in DSM */ WalUsage   *wal_usage;</p>
+<p>/*</p>
+<ul>
+<li>False if the <a class="wiki-source-link" href="../../source/src/interfaces/ecpg/preproc/type.h.html#L96" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__interfaces__ecpg__preproc__type_h__index.html&quot;}, '*');">index</a> <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> totally unsuitable target for all parallel</li>
+<li>processing. For example, the <a class="wiki-source-link" href="../../source/src/interfaces/ecpg/preproc/type.h.html#L96" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__interfaces__ecpg__preproc__type_h__index.html&quot;}, '*');">index</a> could be &lt;</li>
+<li><a class="wiki-source-link" href="../../source/src/backend/optimizer/path/allpaths.c.html#L86" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/optimizer/path/allpaths.c.html&quot;}, '*');">min_parallel_index_scan_size</a> cutoff.</li>
+<p>*/ bool	   *will_parallel_vacuum;</p>
+</ul>
+<p>/*</p>
+<ul>
+<li>The number of indexes that support parallel <a class="wiki-source-link" href="../../source/src/interfaces/ecpg/preproc/type.h.html#L96" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__interfaces__ecpg__preproc__type_h__index.html&quot;}, '*');">index</a> bulk-deletion and</li>
+<li>parallel <a class="wiki-source-link" href="../../source/src/interfaces/ecpg/preproc/type.h.html#L96" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__interfaces__ecpg__preproc__type_h__index.html&quot;}, '*');">index</a> cleanup respectively.</li>
+<p>*/ int			nindexes_parallel_bulkdel; int			nindexes_parallel_cleanup; int			nindexes_parallel_condcleanup;</p>
+</ul>
+<p>/* <a class="wiki-source-link" href="../../source/src/include/storage/buf.h.html#L23" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__storage__buf_h__Buffer.html&quot;}, '*');">Buffer</a> <a class="wiki-source-link" href="../../source/src/interfaces/ecpg/test/expected/preproc-type.c.html#L36" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__interfaces__ecpg__test__expected__preproc-type_c__access.html&quot;}, '*');">access</a> strategy used by leader process */ BufferAccessStrategy bstrategy;</p>
+<p>/*</p>
+<ul>
+<li>Error reporting state.  The error <a class="wiki-source-link" href="../../source/src/tools/ifaddrs/test_ifaddrs.c.html#L45" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__tools__ifaddrs__test_ifaddrs_c__callback.html&quot;}, '*');">callback</a> <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> set only for workers</li>
+<li>processes during parallel <a class="wiki-source-link" href="../../source/src/interfaces/ecpg/preproc/type.h.html#L96" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__interfaces__ecpg__preproc__type_h__index.html&quot;}, '*');">index</a> <a class="wiki-source-link" href="../../source/src/backend/commands/vacuum.c.html#L493" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__commands__vacuum_c__vacuum.html&quot;}, '*');">vacuum</a>.</li>
+<p>*/ char	   *relnamespace; char	   *<a class="wiki-source-link" href="../../source/src/timezone/zic.c.html#L976" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__timezone__zic_c__relname.html&quot;}, '*');">relname</a>; char	   *indname; <a class="wiki-source-link" href="../../source/src/backend/commands/vacuumparallel.c.html#L174" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__commands__vacuumparallel_c__PVIndVacStatus.html&quot;}, '*');">PVIndVacStatus</a> status; ~~~</p>
+</ul>
+<h2>失敗モードと境界条件</h2>
+<p>まだ解析していません。</p>
+<h2>保守担当者向けメモ</h2>
+<ul>
+<li>後続フェーズで、ソース本文の文脈と caller/callee 情報を使ってこのページを強化する。</li>
+</ul><script>
+(function() {
+  function notifyParent() {
+    if (parent === window) return;
+    parent.postMessage({type: "frame-location", frame: window.name || "", href: window.location.href}, "*");
+  }
+  document.addEventListener("click", function(event) {
+    const link = event.target.closest("a[data-panel]");
+    if (!link || parent === window) return;
+    parent.postMessage({type: "source-link", panel: link.dataset.panel}, "*");
+  });
+  window.addEventListener("load", notifyParent);
+  window.addEventListener("hashchange", notifyParent);
+})();
+</script></body></html>

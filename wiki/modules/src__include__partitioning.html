@@ -1,0 +1,63 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>modules/src__include__partitioning.md</title><link rel="stylesheet" href="../../styles.css"></head><body><h1>src/include/partitioning</h1>
+<h2>システム内での役割</h2>
+<p><code>src/include/partitioning</code> には 4 個の索引済みソースファイルがあります。この初期モジュールページはディレクトリ境界に基づいています。</p>
+<h2>責務</h2>
+<ul>
+<li>このディレクトリに属するソースファイルを集約する。</li>
+<li>より深い LLM 合成の前段として、モジュール単位の入口を提供する。</li>
+</ul>
+<h2>このモジュールのファイル</h2>
+<ul>
+<li><a class="wiki-source-link" href="../../source/src/include/partitioning/partbounds.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/partitioning/partbounds.h.html&quot;}, '*');"><code>src/include/partitioning/partbounds.h</code></a></li>
+<li><a class="wiki-source-link" href="../../source/src/include/partitioning/partdefs.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/partitioning/partdefs.h.html&quot;}, '*');"><code>src/include/partitioning/partdefs.h</code></a></li>
+<li><a class="wiki-source-link" href="../../source/src/include/partitioning/partdesc.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/partitioning/partdesc.h.html&quot;}, '*');"><code>src/include/partitioning/partdesc.h</code></a></li>
+<li><a class="wiki-source-link" href="../../source/src/include/partitioning/partprune.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/partitioning/partprune.h.html&quot;}, '*');"><code>src/include/partitioning/partprune.h</code></a></li>
+</ul>
+<h2>主要なデータ構造</h2>
+<ul>
+<li><code>RelOptInfo</code></li>
+<li><a class="wiki-source-link" href="../../source/src/include/partitioning/partbounds.h.html#L79" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__partitioning__partbounds_h__PartitionBoundInfoData.html&quot;}, '*');"><code>PartitionBoundInfoData</code></a></li>
+<li><a class="wiki-source-link" href="../../source/src/include/partitioning/partdefs.h.html#L16" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__partitioning__partdefs_h__PartitionBoundInfo.html&quot;}, '*');"><code>PartitionBoundInfo</code></a></li>
+<li><a class="wiki-source-link" href="../../source/src/include/partitioning/partdefs.h.html#L18" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__partitioning__partdefs_h__PartitionKey.html&quot;}, '*');"><code>PartitionKey</code></a></li>
+<li><code>PartitionBoundSpec</code></li>
+<li><a class="wiki-source-link" href="../../source/src/include/partitioning/partdefs.h.html#L22" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__partitioning__partdefs_h__PartitionDesc.html&quot;}, '*');"><code>PartitionDesc</code></a></li>
+<li><a class="wiki-source-link" href="../../source/src/include/partitioning/partdefs.h.html#L24" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__partitioning__partdefs_h__PartitionDirectory.html&quot;}, '*');"><code>PartitionDirectory</code></a></li>
+<li><a class="wiki-source-link" href="../../source/src/include/partitioning/partdesc.h.html#L29" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__partitioning__partdesc_h__PartitionDescData.html&quot;}, '*');"><code>PartitionDescData</code></a></li>
+<li><code>PlannerInfo</code></li>
+<li><code>RelOptInfo</code></li>
+</ul>
+<h2>主なフロー</h2>
+<p>初期モジュールページでは、まだエンドツーエンドのフローを推論しません。</p>
+<h2>外部依存</h2>
+<ul>
+<li><code>partitioning/partdefs.h</code></li>
+<li><a class="wiki-source-link" href="../../source/src/include/fmgr.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/fmgr.h.html&quot;}, '*');"><code>fmgr.h</code></a></li>
+<li><code>parser/parse_node.h</code></li>
+<li><code>utils/relcache.h</code></li>
+<li><code>nodes/execnodes.h</code></li>
+</ul>
+<h2>内部構成</h2>
+<ul>
+<li>子モジュール数: 0</li>
+</ul>
+<h2>推奨読書順</h2>
+<p>1. <a class="wiki-source-link" href="../../source/src/include/partitioning/partdefs.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/partitioning/partdefs.h.html&quot;}, '*');"><code>src/include/partitioning/partdefs.h</code></a> 2. <a class="wiki-source-link" href="../../source/src/include/partitioning/partbounds.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/partitioning/partbounds.h.html&quot;}, '*');"><code>src/include/partitioning/partbounds.h</code></a> 3. <a class="wiki-source-link" href="../../source/src/include/partitioning/partprune.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/partitioning/partprune.h.html&quot;}, '*');"><code>src/include/partitioning/partprune.h</code></a> 4. <a class="wiki-source-link" href="../../source/src/include/partitioning/partdesc.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/partitioning/partdesc.h.html&quot;}, '*');"><code>src/include/partitioning/partdesc.h</code></a></p>
+<h2>未解決の問い</h2>
+<ul>
+<li>LLM ベースのモジュール合成を追加した後で、責務とフローを精緻化する。</li>
+</ul><script>
+(function() {
+  function notifyParent() {
+    if (parent === window) return;
+    parent.postMessage({type: "frame-location", frame: window.name || "", href: window.location.href}, "*");
+  }
+  document.addEventListener("click", function(event) {
+    const link = event.target.closest("a[data-panel]");
+    if (!link || parent === window) return;
+    parent.postMessage({type: "source-link", panel: link.dataset.panel}, "*");
+  });
+  window.addEventListener("load", notifyParent);
+  window.addEventListener("hashchange", notifyParent);
+})();
+</script></body></html>

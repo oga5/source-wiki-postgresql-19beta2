@@ -1,0 +1,85 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>symbols/src__backend__access__table__tableam_c__table_block_relation_estimate_size.md</title><link rel="stylesheet" href="../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../source/src/backend/access/table/tableam.c.html#L717" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__access__table__tableam_c__table_block_relation_estimate_size.html&quot;}, '*');">table_block_relation_estimate_size</a></h1>
+<h2>定義</h2>
+<ul>
+<li>種別: <code>function</code></li>
+<li>定義箇所: <code>src/backend/access/table/tableam.c:717</code></li>
+<li>所属モジュール: <a class="wiki-entity-link" href="../modules/src__backend__access__table.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/modules/src__backend__access__table.html&quot;, &quot;source&quot;: &quot;source/src/backend/access/table/table.c.html&quot;}, '*');"><code>module:src/backend/access/table</code></a></li>
+</ul>
+<h2>目的</h2>
+<p>静的シンボル索引から生成された初期シンボルページです。</p>
+<h2>シグネチャまたは形状</h2>
+<ul>
+<li>シグネチャ: <code>void table_block_relation_estimate_size(Relation rel, int32 *attr_widths, BlockNumber *pages, double *tuples, double *allvisfrac, Size overhead_bytes_per_tuple, Size usable_bytes_per_page)</code></li>
+</ul>
+<h2>入力と出力</h2>
+<ul>
+<li>引数: <code>Relation rel</code>, <code>int32 *attr_widths</code>, <code>BlockNumber *pages</code>, <code>double *tuples</code>, <code>double *allvisfrac</code>, <code>Size overhead_bytes_per_tuple</code>, <code>Size usable_bytes_per_page</code></li>
+<li>戻り値: <code>void</code></li>
+</ul>
+<h2>前提条件と不変条件</h2>
+<p>まだ解析していません。</p>
+<h2>アルゴリズムまたは振る舞い</h2>
+<ul>
+<li>複雑度: <code>high</code> (score 17)</li>
+</ul>
+<p>まだ解析していません。</p>
+<h2>呼び出し元と呼び出し先</h2>
+<ul>
+<li>呼び出し元: <a class="wiki-source-link" href="../../source/src/backend/access/heap/heapam_handler.c.html#L2076" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__access__heap__heapam_handler_c__heapam_estimate_rel_size.html&quot;}, '*');"><code>heapam_estimate_rel_size</code></a></li>
+<li>呼び出し先: <a class="wiki-source-link" href="../../source/src/backend/optimizer/path/costsize.c.html#L213" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__path__costsize_c__clamp_row_est.html&quot;}, '*');"><code>clamp_row_est</code></a>, <a class="wiki-source-link" href="../../source/src/backend/optimizer/util/plancat.c.html#L1429" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__plancat_c__get_rel_data_width.html&quot;}, '*');"><code>get_rel_data_width</code></a></li>
+<li>呼び出し元サイト: <a class="wiki-source-link" href="../../source/src/backend/access/heap/heapam_handler.c.html#L2076" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__access__heap__heapam_handler_c__heapam_estimate_rel_size.html&quot;}, '*');"><code>heapam_estimate_rel_size</code></a> at <code>src/backend/access/heap/heapam_handler.c:2081:2</code> (direct, confidence=high, resolved=<a class="wiki-entity-link" href="src__backend__access__table__tableam_c__table_block_relation_estimate_size.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__access__table__tableam_c__table_block_relation_estimate_size.html&quot;, &quot;source&quot;: &quot;source/src/backend/access/table/tableam.c.html#L717&quot;}, '*');"><code>symbol:src/backend/access/table/tableam.c#table_block_relation_estimate_size</code></a>)</li>
+<li>呼び出しサイト: <a class="wiki-source-link" href="../../source/src/include/storage/bufmgr.h.html#L309" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/storage/bufmgr.h.html&quot;}, '*');"><code>RelationGetNumberOfBlocks</code></a> at <code>src/backend/access/table/tableam.c:731:13</code> (macro), <a class="wiki-source-link" href="../../source/src/include/utils/rel.h.html#L376" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/utils/rel.h.html&quot;}, '*');"><code>RelationGetFillFactor</code></a> at <code>src/backend/access/table/tableam.c:802:16</code> (unresolved), <a class="wiki-source-link" href="../../source/src/backend/optimizer/util/plancat.c.html#L1429" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__plancat_c__get_rel_data_width.html&quot;}, '*');"><code>get_rel_data_width</code></a> at <code>src/backend/access/table/tableam.c:804:17</code> (direct, confidence=high, resolved=<a class="wiki-entity-link" href="src__backend__optimizer__util__plancat_c__get_rel_data_width.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__plancat_c__get_rel_data_width.html&quot;, &quot;source&quot;: &quot;source/src/backend/optimizer/util/plancat.c.html#L1429&quot;}, '*');"><code>symbol:src/backend/optimizer/util/plancat.c#get_rel_data_width</code></a>), <a class="wiki-source-link" href="../../source/src/backend/optimizer/path/costsize.c.html#L213" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__path__costsize_c__clamp_row_est.html&quot;}, '*');"><code>clamp_row_est</code></a> at <code>src/backend/access/table/tableam.c:809:13</code> (direct, confidence=high, resolved=<a class="wiki-entity-link" href="src__backend__optimizer__path__costsize_c__clamp_row_est.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__path__costsize_c__clamp_row_est.html&quot;, &quot;source&quot;: &quot;source/src/backend/optimizer/path/costsize.c.html#L213&quot;}, '*');"><code>symbol:src/backend/optimizer/path/costsize.c#clamp_row_est</code></a>), <code>rint</code> at <code>src/backend/access/table/tableam.c:811:12</code> (unresolved)</li>
+</ul>
+<h2>関連データ構造</h2>
+<p><code>BlockNumber</code>, <code>c</code>, <code>int32</code>, <code>Relation</code>, <code>Size</code></p>
+<h2>ソース抜粋</h2>
+<p>~~~c void <a class="wiki-source-link" href="../../source/src/backend/access/table/tableam.c.html#L717" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__access__table__tableam_c__table_block_relation_estimate_size.html&quot;}, '*');">table_block_relation_estimate_size</a>(Relation rel, int32 *attr_widths, BlockNumber *pages, double *tuples, double *allvisfrac, Size overhead_bytes_per_tuple, Size usable_bytes_per_page) { BlockNumber curpages; BlockNumber relpages; double		reltuples; BlockNumber relallvisible; double		density;</p>
+<p>/* it should have <a class="wiki-source-link" href="../../source/src/tools/pg_bsd_indent/indent_codes.h.html#L68" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/tools/pg_bsd_indent/indent_codes.h.html&quot;}, '*');">storage</a>, so we can call the smgr */ curpages = <a class="wiki-source-link" href="../../source/src/include/storage/bufmgr.h.html#L309" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/storage/bufmgr.h.html&quot;}, '*');">RelationGetNumberOfBlocks</a>(rel);</p>
+<p>/* coerce values in pg_class to more desirable <a class="wiki-source-link" href="../../source/src/interfaces/ecpg/preproc/ecpg.c.html#L30" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/ecpg/preproc/ecpg.c.html&quot;}, '*');">types</a> */ relpages = (BlockNumber) rel-&gt;rd_rel-&gt;relpages; reltuples = (double) rel-&gt;rd_rel-&gt;reltuples; relallvisible = (BlockNumber) rel-&gt;rd_rel-&gt;relallvisible;</p>
+<p>/*</p>
+<ul>
+<li>HACK: if the relation has never yet been vacuumed, use a minimum size</li>
+<li>estimate of 10 pages.  The idea here <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> to avoid assuming a</li>
+<li>newly-created <a class="wiki-source-link" href="../../source/src/port/pg_localeconv_r.c.html#L63" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/port/pg_localeconv_r.c.html&quot;}, '*');">table</a> <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> really small, even if it currently <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a>, because</li>
+<li>that may not be <a class="wiki-source-link" href="../../source/src/tools/pg_bsd_indent/indent_globs.h.html#L46" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/tools/pg_bsd_indent/indent_globs.h.html&quot;}, '*');">true</a> once some data gets loaded into it.  Once a <a class="wiki-source-link" href="../../source/src/backend/commands/vacuum.c.html#L493" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__commands__vacuum_c__vacuum.html&quot;}, '*');">vacuum</a></li>
+<li>or <a class="wiki-source-link" href="../../source/src/backend/regex/regc_nfa.c.html#L3050" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__regex__regc_nfa_c__analyze.html&quot;}, '*');">analyze</a> cycle has been done on it, it&#x27;s more reasonable to believe</li>
+<li>the size <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> somewhat stable.</li>
+<p>*</p>
+<li>(Note that this <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> only an issue if the <a class="wiki-source-link" href="../../source/src/test/regress/pg_regress.c.html#L164" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/test/regress/pg_regress.c.html&quot;}, '*');">plan</a> gets cached and used again</li>
+<li>after the <a class="wiki-source-link" href="../../source/src/port/pg_localeconv_r.c.html#L63" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/port/pg_localeconv_r.c.html&quot;}, '*');">table</a> has been filled.  What we&#x27;re trying to avoid <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> using a</li>
+<li>nestloop-type <a class="wiki-source-link" href="../../source/src/test/regress/pg_regress.c.html#L164" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/test/regress/pg_regress.c.html&quot;}, '*');">plan</a> on a <a class="wiki-source-link" href="../../source/src/port/pg_localeconv_r.c.html#L63" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/port/pg_localeconv_r.c.html&quot;}, '*');">table</a> that has grown substantially since the</li>
+<li><a class="wiki-source-link" href="../../source/src/test/regress/pg_regress.c.html#L164" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/test/regress/pg_regress.c.html&quot;}, '*');">plan</a> was made.  Normally, autovacuum/autoanalyze will occur once enough</li>
+<li><a class="wiki-source-link" href="../../source/src/bin/pg_dump/pg_dumpall.c.html#L93" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/bin/pg_dump/pg_dumpall.c.html&quot;}, '*');">inserts</a> have happened and cause cached-<a class="wiki-source-link" href="../../source/src/test/regress/pg_regress.c.html#L164" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/test/regress/pg_regress.c.html&quot;}, '*');">plan</a> invalidation; but that</li>
+<li>doesn&#x27;t happen instantaneously, and it won&#x27;t happen at all for cases</li>
+<li>such as temporary tables.)</li>
+<p>*</p>
+<li>We <a class="wiki-source-link" href="../../source/src/interfaces/ecpg/test/expected/preproc-autoprep.c.html#L26" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__interfaces__ecpg__test__expected__preproc-autoprep_c__test.html&quot;}, '*');">test</a> &quot;never vacuumed&quot; by seeing whether reltuples &lt; 0.</li>
+<p>*</p>
+<li>If the <a class="wiki-source-link" href="../../source/src/port/pg_localeconv_r.c.html#L63" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/port/pg_localeconv_r.c.html&quot;}, '*');">table</a> has inheritance children, we don&#x27;t apply this heuristic.</li>
+<li>Totally empty parent tables are quite common, so we should be willing</li>
+<li>to believe that they are empty.</li>
+<p>*/ if (curpages &lt; 10 &amp;&amp; reltuples &lt; 0 &amp;&amp; !rel-&gt;rd_rel-&gt;relhassubclass) curpages = 10;</p>
+</ul>
+<p>/* report estimated # pages */ *pages = curpages; /* quick exit if rel <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> clearly empty */ if (curpages == 0) { *tuples = 0; *allvisfrac = 0; return; }</p>
+<p>/* estimate number of tuples from previous tuple density */ if (reltuples &gt;= 0 &amp;&amp; relpages &gt; 0) ~~~</p>
+<h2>失敗モードと境界条件</h2>
+<p>まだ解析していません。</p>
+<h2>保守担当者向けメモ</h2>
+<ul>
+<li>後続フェーズで、ソース本文の文脈と caller/callee 情報を使ってこのページを強化する。</li>
+</ul><script>
+(function() {
+  function notifyParent() {
+    if (parent === window) return;
+    parent.postMessage({type: "frame-location", frame: window.name || "", href: window.location.href}, "*");
+  }
+  document.addEventListener("click", function(event) {
+    const link = event.target.closest("a[data-panel]");
+    if (!link || parent === window) return;
+    parent.postMessage({type: "source-link", panel: link.dataset.panel}, "*");
+  });
+  window.addEventListener("load", notifyParent);
+  window.addEventListener("hashchange", notifyParent);
+})();
+</script></body></html>

@@ -1,0 +1,97 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>symbols/src__interfaces__libpq-oauth__oauth-curl_c__async_ctx.md</title><link rel="stylesheet" href="../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/oauth-curl.c.html#L220" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__interfaces__libpq-oauth__oauth-curl_c__async_ctx.html&quot;}, '*');">async_ctx</a></h1>
+<h2>定義</h2>
+<ul>
+<li>種別: <code>struct</code></li>
+<li>定義箇所: <code>src/interfaces/libpq-oauth/oauth-curl.c:220</code></li>
+<li>所属モジュール: <a class="wiki-entity-link" href="../modules/src__interfaces__libpq-oauth.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/modules/src__interfaces__libpq-oauth.html&quot;, &quot;source&quot;: &quot;source/src/interfaces/libpq-oauth/oauth-curl.c.html&quot;}, '*');"><code>module:src/interfaces/libpq-oauth</code></a></li>
+</ul>
+<h2>目的</h2>
+<p>静的シンボル索引から生成された初期シンボルページです。</p>
+<h2>シグネチャまたは形状</h2>
+<ul>
+<li>シグネチャ: <code>struct async_ctx</code></li>
+</ul>
+<h2>入力と出力</h2>
+<p>まだ解析していません。</p>
+<h2>前提条件と不変条件</h2>
+<p>まだ解析していません。</p>
+<h2>アルゴリズムまたは振る舞い</h2>
+<p>まだ解析していません。</p>
+<h2>呼び出し元と呼び出し先</h2>
+<ul>
+<li>呼び出し元: なし</li>
+<li>呼び出し先: なし</li>
+<li>呼び出し元サイト: なし</li>
+<li>呼び出しサイト: なし</li>
+</ul>
+<h2>関連データ構造</h2>
+<p><a class="wiki-source-link" href="../../source/src/interfaces/ecpg/ecpglib/ecpglib_extern.h.html#L101" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__interfaces__ecpg__ecpglib__ecpglib_extern_h__connection.html&quot;}, '*');"><code>connection</code></a>, <code>descriptor</code>, <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/oauth-curl.c.html#L128" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__interfaces__libpq-oauth__oauth-curl_c__device_authz.html&quot;}, '*');"><code>device_authz</code></a>, <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/oauth-curl.c.html#L206" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__interfaces__libpq-oauth__oauth-curl_c__OAuthStep.html&quot;}, '*');"><code>OAuthStep</code></a>, <code>options</code>, <code>PGconn</code>, <a class="wiki-source-link" href="../../source/src/interfaces/libpq/libpq-fe.h.html#L771" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__interfaces__libpq__libpq-fe_h__PGoauthBearerRequest.html&quot;}, '*');"><code>PGoauthBearerRequest</code></a>, <code>pgsocket</code>, <a class="wiki-source-link" href="../../source/src/interfaces/libpq/pqexpbuffer.h.html#L44" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__interfaces__libpq__pqexpbuffer_h__PQExpBufferData.html&quot;}, '*');"><code>PQExpBufferData</code></a>, <code>provider</code>, <code>string</code>, <code>uint32</code>, <a class="wiki-source-link" href="../../source/src/interfaces/ecpg/preproc/type.h.html#L89" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__interfaces__ecpg__preproc__type_h__when.html&quot;}, '*');"><code>when</code></a></p>
+<h2>ソース抜粋</h2>
+<p>~~~c struct <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/oauth-curl.c.html#L220" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__interfaces__libpq-oauth__oauth-curl_c__async_ctx.html&quot;}, '*');">async_ctx</a> { /* relevant <a class="wiki-source-link" href="../../source/src/interfaces/ecpg/ecpglib/ecpglib_extern.h.html#L101" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__interfaces__ecpg__ecpglib__ecpglib_extern_h__connection.html&quot;}, '*');">connection</a> options cached from the PGconn */ char	   *client_id;		/* oauth_client_id */ char	   *client_secret;	/* oauth_client_secret (may be NULL) */ char	   *ca_file;		/* oauth_ca_file */</p>
+<p>/* options cached from the <a class="wiki-source-link" href="../../source/src/interfaces/libpq/libpq-fe.h.html#L771" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__interfaces__libpq__libpq-fe_h__PGoauthBearerRequest.html&quot;}, '*');">PGoauthBearerRequest</a> (we don&#x27;t own these) */ const char *discovery_uri; const char *issuer_id; const char *scope;</p>
+<p>enum <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/oauth-curl.c.html#L206" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__interfaces__libpq-oauth__oauth-curl_c__OAuthStep.html&quot;}, '*');">OAuthStep</a> step;		/* where are we in the flow? */</p>
+<p>int			timerfd;		/* descriptor for signaling async timeouts */ pgsocket	mux;			/* the multiplexer <a class="wiki-source-link" href="../../source/src/include/port/win32_port.h.html#L495" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/port/win32_port.h.html&quot;}, '*');">socket</a> containing all</p>
+<ul>
+<li>descriptors tracked by libcurl, plus the</li>
+<li>timerfd */</li>
+<p>CURLM	   *curlm;			/* top-level multi handle for libcurl</p>
+<li>operations */</li>
+<p>CURL	   *curl;			/* the (single) easy handle for serial</p>
+<li>requests */</li>
+</ul>
+<p>struct curl_slist *headers; /* common headers for all requests */ <a class="wiki-source-link" href="../../source/src/interfaces/libpq/pqexpbuffer.h.html#L44" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__interfaces__libpq__pqexpbuffer_h__PQExpBufferData.html&quot;}, '*');">PQExpBufferData</a> work_data;	/* scratch buffer for general use (remember to</p>
+<ul>
+<li>clear out prior contents first!) */</li>
+</ul>
+<p>/*------</p>
+<ul>
+<li>Since a single logical <a class="wiki-source-link" href="../../source/src/backend/postmaster/datachecksum_state.c.html#L380" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/postmaster/datachecksum_state.c.html&quot;}, '*');">operation</a> may stretch across multiple calls to</li>
+<li>our entry point, <a class="wiki-source-link" href="../../source/src/timezone/zic.c.html#L183" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/timezone/zic.c.html&quot;}, '*');">errors</a> have three parts:</li>
+<p>*</p>
+<li>- errctx:	an optional static string, describing the global <a class="wiki-source-link" href="../../source/src/backend/postmaster/datachecksum_state.c.html#L380" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/postmaster/datachecksum_state.c.html&quot;}, '*');">operation</a></li>
+<li>currently in progress. Should be translated with</li>
+<li>libpq_gettext().</li>
+<p>*</p>
+<li>- errbuf:	contains the actual error message. Generally speaking, use</li>
+<li><a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/oauth-curl.c.html#L419" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/oauth-curl.c.html&quot;}, '*');">actx_error</a>[_str] to manipulate this. This must be filled</li>
+<li>with something useful on an error.</li>
+<p>*</p>
+<li>- curl_err:	an optional static error buffer used by libcurl to put</li>
+<li>detailed information about failures. Unfortunately</li>
+<li>untranslatable.</li>
+<p>*</p>
+<li>These pieces will be combined into a single error message looking</li>
+<li>something like the following, with errctx and/or curl_err omitted <a class="wiki-source-link" href="../../source/src/interfaces/ecpg/preproc/type.h.html#L89" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__interfaces__ecpg__preproc__type_h__when.html&quot;}, '*');">when</a></li>
+<li>absent:</li>
+<p>*</p>
+<li><a class="wiki-source-link" href="../../source/src/interfaces/ecpg/ecpglib/ecpglib_extern.h.html#L101" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__interfaces__ecpg__ecpglib__ecpglib_extern_h__connection.html&quot;}, '*');">connection</a> to server ... failed: errctx: errbuf (libcurl: curl_err)</li>
+<p>*/ const char *errctx;			/* not freed; must point to static allocation */ <a class="wiki-source-link" href="../../source/src/interfaces/libpq/pqexpbuffer.h.html#L44" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__interfaces__libpq__pqexpbuffer_h__PQExpBufferData.html&quot;}, '*');">PQExpBufferData</a> errbuf; char		curl_err[CURL_ERROR_SIZE];</p>
+</ul>
+<p>/*</p>
+<ul>
+<li>These documents need to survive over multiple calls, and are therefore</li>
+<li>cached directly in the <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/oauth-curl.c.html#L220" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__interfaces__libpq-oauth__oauth-curl_c__async_ctx.html&quot;}, '*');">async_ctx</a>.</li>
+<p>*/ struct provider provider; struct <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/oauth-curl.c.html#L128" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__interfaces__libpq-oauth__oauth-curl_c__device_authz.html&quot;}, '*');">device_authz</a> authz;</p>
+</ul>
+<p>~~~</p>
+<h2>失敗モードと境界条件</h2>
+<p>まだ解析していません。</p>
+<h2>保守担当者向けメモ</h2>
+<ul>
+<li>後続フェーズで、ソース本文の文脈と caller/callee 情報を使ってこのページを強化する。</li>
+</ul><script>
+(function() {
+  function notifyParent() {
+    if (parent === window) return;
+    parent.postMessage({type: "frame-location", frame: window.name || "", href: window.location.href}, "*");
+  }
+  document.addEventListener("click", function(event) {
+    const link = event.target.closest("a[data-panel]");
+    if (!link || parent === window) return;
+    parent.postMessage({type: "source-link", panel: link.dataset.panel}, "*");
+  });
+  window.addEventListener("load", notifyParent);
+  window.addEventListener("hashchange", notifyParent);
+})();
+</script></body></html>

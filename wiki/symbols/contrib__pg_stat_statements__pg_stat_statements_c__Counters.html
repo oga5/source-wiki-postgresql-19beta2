@@ -1,0 +1,87 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>symbols/contrib__pg_stat_statements__pg_stat_statements_c__Counters.md</title><link rel="stylesheet" href="../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../source/contrib/pg_stat_statements/pg_stat_statements.c.html#L154" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/contrib__pg_stat_statements__pg_stat_statements_c__Counters.html&quot;}, '*');">Counters</a></h1>
+<h2>定義</h2>
+<ul>
+<li>種別: <code>struct</code></li>
+<li>定義箇所: <code>contrib/pg_stat_statements/pg_stat_statements.c:154</code></li>
+<li>所属モジュール: <a class="wiki-entity-link" href="../modules/contrib__pg_stat_statements.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/modules/contrib__pg_stat_statements.html&quot;, &quot;source&quot;: &quot;source/contrib/pg_stat_statements/pg_stat_statements.c.html&quot;}, '*');"><code>module:contrib/pg_stat_statements</code></a></li>
+</ul>
+<h2>目的</h2>
+<p>静的シンボル索引から生成された初期シンボルページです。</p>
+<h2>シグネチャまたは形状</h2>
+<ul>
+<li>シグネチャ: <code>typedef struct Counters</code></li>
+</ul>
+<h2>入力と出力</h2>
+<p>まだ解析していません。</p>
+<h2>前提条件と不変条件</h2>
+<p>まだ解析していません。</p>
+<h2>アルゴリズムまたは振る舞い</h2>
+<p>まだ解析していません。</p>
+<h2>呼び出し元と呼び出し先</h2>
+<ul>
+<li>呼び出し元: なし</li>
+<li>呼び出し先: なし</li>
+<li>呼び出し元サイト: なし</li>
+<li>呼び出しサイト: なし</li>
+</ul>
+<h2>関連データ構造</h2>
+<p><code>int64</code>, <code>uint64</code></p>
+<h2>ソース抜粋</h2>
+<p>~~~c typedef struct <a class="wiki-source-link" href="../../source/contrib/pg_stat_statements/pg_stat_statements.c.html#L154" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/contrib__pg_stat_statements__pg_stat_statements_c__Counters.html&quot;}, '*');">Counters</a> { int64		calls[<a class="wiki-source-link" href="../../source/contrib/pg_stat_statements/pg_stat_statements.c.html#L133" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/contrib/pg_stat_statements/pg_stat_statements.c.html&quot;}, '*');">PGSS_NUMKIND</a>];	/* # of <a class="wiki-source-link" href="../../source/src/interfaces/ecpg/test/expected/pgtypeslib-dt_test2.c.html#L60" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/ecpg/test/expected/pgtypeslib-dt_test2.c.html&quot;}, '*');">times</a> planned/executed */ double		total_time[<a class="wiki-source-link" href="../../source/contrib/pg_stat_statements/pg_stat_statements.c.html#L133" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/contrib/pg_stat_statements/pg_stat_statements.c.html&quot;}, '*');">PGSS_NUMKIND</a>];	/* total planning/execution time,</p>
+<ul>
+<li>in msec */</li>
+<p>double		<a class="wiki-source-link" href="../../source/src/timezone/zic.c.html#L605" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/timezone/zic.c.html&quot;}, '*');">min_time</a>[<a class="wiki-source-link" href="../../source/contrib/pg_stat_statements/pg_stat_statements.c.html#L133" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/contrib/pg_stat_statements/pg_stat_statements.c.html&quot;}, '*');">PGSS_NUMKIND</a>]; /* minimum planning/execution time in</p>
+<li>msec since min/max <a class="wiki-source-link" href="../../source/src/interfaces/ecpg/test/expected/sql-declare.c.html#L600" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__interfaces__ecpg__test__expected__sql-declare_c__reset.html&quot;}, '*');">reset</a> */</li>
+<p>double		<a class="wiki-source-link" href="../../source/src/timezone/zic.c.html#L606" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/timezone/zic.c.html&quot;}, '*');">max_time</a>[<a class="wiki-source-link" href="../../source/contrib/pg_stat_statements/pg_stat_statements.c.html#L133" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/contrib/pg_stat_statements/pg_stat_statements.c.html&quot;}, '*');">PGSS_NUMKIND</a>]; /* maximum planning/execution time in</p>
+<li>msec since min/max <a class="wiki-source-link" href="../../source/src/interfaces/ecpg/test/expected/sql-declare.c.html#L600" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__interfaces__ecpg__test__expected__sql-declare_c__reset.html&quot;}, '*');">reset</a> */</li>
+<p>double		mean_time[<a class="wiki-source-link" href="../../source/contrib/pg_stat_statements/pg_stat_statements.c.html#L133" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/contrib/pg_stat_statements/pg_stat_statements.c.html&quot;}, '*');">PGSS_NUMKIND</a>];	/* mean planning/execution time in</p>
+<li>msec */</li>
+<p>double		sum_var_time[<a class="wiki-source-link" href="../../source/contrib/pg_stat_statements/pg_stat_statements.c.html#L133" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/contrib/pg_stat_statements/pg_stat_statements.c.html&quot;}, '*');">PGSS_NUMKIND</a>]; /* sum of variances in</p>
+<li>planning/execution time in msec */</li>
+<p>int64		rows;			/* total # of retrieved or affected rows */ int64		shared_blks_hit;	/* # of shared buffer hits */ int64		shared_blks_read;	/* # of shared disk blocks <a class="wiki-source-link" href="../../source/src/interfaces/libpq/win32.h.html#L13" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq/win32.h.html&quot;}, '*');">read</a> */ int64		shared_blks_dirtied;	/* # of shared disk blocks dirtied */ int64		shared_blks_written;	/* # of shared disk blocks written */ int64		local_blks_hit; /* # of local buffer hits */ int64		local_blks_read;	/* # of local disk blocks <a class="wiki-source-link" href="../../source/src/interfaces/libpq/win32.h.html#L13" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq/win32.h.html&quot;}, '*');">read</a> */ int64		local_blks_dirtied; /* # of local disk blocks dirtied */ int64		local_blks_written; /* # of local disk blocks written */ int64		temp_blks_read; /* # of temp blocks <a class="wiki-source-link" href="../../source/src/interfaces/libpq/win32.h.html#L13" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq/win32.h.html&quot;}, '*');">read</a> */ int64		temp_blks_written;	/* # of temp blocks written */ double		shared_blk_read_time;	/* time spent reading shared blocks,</p>
+<li>in msec */</li>
+<p>double		shared_blk_write_time;	/* time spent writing shared blocks,</p>
+<li>in msec */</li>
+<p>double		local_blk_read_time;	/* time spent reading local blocks, in</p>
+<li>msec */</li>
+<p>double		local_blk_write_time;	/* time spent writing local blocks, in</p>
+<li>msec */</li>
+<p>double		temp_blk_read_time; /* time spent reading temp blocks, in msec */ double		temp_blk_write_time;	/* time spent writing temp blocks, in</p>
+<li>msec */</li>
+<p>double		usage;			/* usage factor */ int64		wal_records;	/* # of WAL <a class="wiki-source-link" href="../../source/src/backend/access/transam/twophase.c.html#L1011" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/access/transam/twophase.c.html&quot;}, '*');">records</a> generated */ int64		wal_fpi;		/* # of WAL full page images generated */ uint64		wal_bytes;		/* total amount of WAL generated in bytes */ int64		wal_buffers_full;	/* # of <a class="wiki-source-link" href="../../source/src/interfaces/ecpg/test/expected/pgtypeslib-dt_test2.c.html#L60" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/ecpg/test/expected/pgtypeslib-dt_test2.c.html&quot;}, '*');">times</a> the WAL buffers became full */ int64		jit_functions;	/* total number of JIT <a class="wiki-source-link" href="../../source/src/backend/regex/regcomp.c.html#L358" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/regex/regcomp.c.html&quot;}, '*');">functions</a> emitted */ double		jit_generation_time;	/* total time to generate jit code */ int64		jit_inlining_count; /* number of <a class="wiki-source-link" href="../../source/src/interfaces/ecpg/test/expected/pgtypeslib-dt_test2.c.html#L60" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/ecpg/test/expected/pgtypeslib-dt_test2.c.html&quot;}, '*');">times</a> inlining time has been</p>
+<li>&gt; 0 */</li>
+<p>double		jit_deform_time;	/* total time to deform tuples in jit code */ int64		jit_deform_count;	/* number of <a class="wiki-source-link" href="../../source/src/interfaces/ecpg/test/expected/pgtypeslib-dt_test2.c.html#L60" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/ecpg/test/expected/pgtypeslib-dt_test2.c.html&quot;}, '*');">times</a> deform time has been &gt;</p>
+<li>0 */</li>
+</ul>
+<p>double		jit_inlining_time;	/* total time to <a class="wiki-source-link" href="../../source/src/include/c.h.html#L116" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/c.h.html&quot;}, '*');">inline</a> jit code */ int64		jit_optimization_count; /* number of <a class="wiki-source-link" href="../../source/src/interfaces/ecpg/test/expected/pgtypeslib-dt_test2.c.html#L60" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/ecpg/test/expected/pgtypeslib-dt_test2.c.html&quot;}, '*');">times</a> optimization time</p>
+<ul>
+<li>has been &gt; 0 */</li>
+<p>double		jit_optimization_time;	/* total time to <a class="wiki-source-link" href="../../source/src/backend/regex/regc_nfa.c.html#L1593" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__regex__regc_nfa_c__optimize.html&quot;}, '*');">optimize</a> jit code */ int64		jit_emission_count; /* number of <a class="wiki-source-link" href="../../source/src/interfaces/ecpg/test/expected/pgtypeslib-dt_test2.c.html#L60" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/ecpg/test/expected/pgtypeslib-dt_test2.c.html&quot;}, '*');">times</a> emission time has been</p>
+<li>&gt; 0 */</li>
+<p>double		jit_emission_time;	/* total time to emit jit code */ int64		parallel_workers_to_launch; /* # of parallel workers planned</p>
+<li>to be launched */</li>
+<p>int64		parallel_workers_launched;	/* # of parallel workers actually</p>
+<li>launched */</li>
+<p>int64		generic_plan_calls; /* number of calls using a generic <a class="wiki-source-link" href="../../source/src/test/regress/pg_regress.c.html#L164" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/test/regress/pg_regress.c.html&quot;}, '*');">plan</a> */ ~~~</p>
+</ul>
+<h2>失敗モードと境界条件</h2>
+<p>まだ解析していません。</p>
+<h2>保守担当者向けメモ</h2>
+<ul>
+<li>後続フェーズで、ソース本文の文脈と caller/callee 情報を使ってこのページを強化する。</li>
+</ul><script>
+(function() {
+  function notifyParent() {
+    if (parent === window) return;
+    parent.postMessage({type: "frame-location", frame: window.name || "", href: window.location.href}, "*");
+  }
+  document.addEventListener("click", function(event) {
+    const link = event.target.closest("a[data-panel]");
+    if (!link || parent === window) return;
+    parent.postMessage({type: "source-link", panel: link.dataset.panel}, "*");
+  });
+  window.addEventListener("load", notifyParent);
+  window.addEventListener("hashchange", notifyParent);
+})();
+</script></body></html>

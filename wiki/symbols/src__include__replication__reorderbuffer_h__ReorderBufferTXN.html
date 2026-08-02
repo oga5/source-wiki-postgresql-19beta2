@@ -1,0 +1,98 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>symbols/src__include__replication__reorderbuffer_h__ReorderBufferTXN.md</title><link rel="stylesheet" href="../../styles.css"></head><body><h1>ReorderBufferTXN</h1>
+<h2>定義</h2>
+<ul>
+<li>種別: <code>struct</code></li>
+<li>定義箇所: <code>src/include/replication/reorderbuffer.h:293</code></li>
+<li>所属モジュール: <a class="wiki-entity-link" href="../modules/src__include__replication.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/modules/src__include__replication.html&quot;, &quot;source&quot;: &quot;source/src/include/replication/conflict.h.html&quot;}, '*');"><code>module:src/include/replication</code></a></li>
+</ul>
+<h2>目的</h2>
+<p>静的シンボル索引から生成された初期シンボルページです。</p>
+<h2>シグネチャまたは形状</h2>
+<ul>
+<li>シグネチャ: <code>typedef struct ReorderBufferTXN</code></li>
+</ul>
+<h2>入力と出力</h2>
+<p>まだ解析していません。</p>
+<h2>前提条件と不変条件</h2>
+<p>まだ解析していません。</p>
+<h2>アルゴリズムまたは振る舞い</h2>
+<p>まだ解析していません。</p>
+<h2>呼び出し元と呼び出し先</h2>
+<ul>
+<li>呼び出し元: なし</li>
+<li>呼び出し先: なし</li>
+<li>呼び出し元サイト: なし</li>
+<li>呼び出しサイト: なし</li>
+</ul>
+<h2>関連データ構造</h2>
+<p><a class="wiki-source-link" href="../../source/src/include/c.h.html#L757" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/c.h.html&quot;}, '*');"><code>CommandId</code></a>, <a class="wiki-source-link" href="../../source/src/include/lib/ilist.h.html#L151" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__lib__ilist_h__dlist_head.html&quot;}, '*');"><code>dlist_head</code></a>, <a class="wiki-source-link" href="../../source/src/include/lib/ilist.h.html#L136" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__lib__ilist_h__dlist_node.html&quot;}, '*');"><code>dlist_node</code></a>, <a class="wiki-source-link" href="../../source/src/include/nodes/plannodes.h.html#L1421" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__nodes__plannodes_h__Hash.html&quot;}, '*');"><code>Hash</code></a>, <code>HTAB</code>, <code>link</code>, <code>List</code>, <a class="wiki-source-link" href="../../source/src/include/lib/pairingheap.h.html#L30" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__lib__pairingheap_h__pairingheap_node.html&quot;}, '*');"><code>pairingheap_node</code></a>, <code>ReorderBufferChange</code>, <code>ReplOriginId</code>, <a class="wiki-source-link" href="../../source/src/include/storage/sinval.h.html#L124" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__storage__sinval_h__SharedInvalidationMessage.html&quot;}, '*');"><code>SharedInvalidationMessage</code></a>, <code>Size</code>, <code>Snapshot</code>, <code>TimestampTz</code>, <code>TransactionId</code>, <code>uint32</code>, <code>uint64</code>, <a class="wiki-source-link" href="../../source/src/interfaces/ecpg/preproc/type.h.html#L89" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__interfaces__ecpg__preproc__type_h__when.html&quot;}, '*');"><code>when</code></a>, <code>XLogRecPtr</code></p>
+<h2>ソース抜粋</h2>
+<p>~~~c typedef struct ReorderBufferTXN { /* See above */ uint32		txn_flags;</p>
+<p>/* The transaction&#x27;s transaction id, can be a toplevel or sub xid. */ TransactionId xid;</p>
+<p>/* Xid of top-level transaction, if known */ TransactionId toplevel_xid;</p>
+<p>/*</p>
+<ul>
+<li>Global transaction id required for identification of prepared</li>
+<li>transactions.</li>
+<p>*/ char	   *gid;</p>
+</ul>
+<p>/*</p>
+<ul>
+<li>LSN of the first data carrying, WAL record with knowledge about this</li>
+<li>xid. This <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> allowed to *not* be first record adorned with this xid, if</li>
+<li>the previous <a class="wiki-source-link" href="../../source/src/backend/access/transam/twophase.c.html#L1011" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/access/transam/twophase.c.html&quot;}, '*');">records</a> aren&#x27;t relevant for logical decoding.</li>
+<p>*/ XLogRecPtr	first_lsn;</p>
+</ul>
+<p>/* ----</p>
+<ul>
+<li>LSN of the record that lead to this xact to be prepared or committed or</li>
+<li>aborted. This can be a</li>
+<li>* plain commit record</li>
+<li>* plain commit record, of a parent transaction</li>
+<li>* prepared transaction</li>
+<li>* prepared transaction commit</li>
+<li>* plain abort record</li>
+<li>* prepared transaction abort</li>
+<p>*</p>
+<li>This can also become set to earlier values than transaction end <a class="wiki-source-link" href="../../source/src/interfaces/ecpg/preproc/type.h.html#L89" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__interfaces__ecpg__preproc__type_h__when.html&quot;}, '*');">when</a></li>
+<li>a transaction <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> spilled to disk; specifically it&#x27;s set to the LSN of</li>
+<li>the latest change written to disk so far.</li>
+<li>----</li>
+<p>*/ XLogRecPtr	final_lsn;</p>
+</ul>
+<p>/*</p>
+<ul>
+<li>LSN pointing to the end of the commit record + 1.</li>
+<p>*/ XLogRecPtr	end_lsn;</p>
+</ul>
+<p>/* Toplevel transaction for this subxact (NULL for top-level). */ struct ReorderBufferTXN *toptxn;</p>
+<p>/*</p>
+<ul>
+<li>LSN of the last lsn at which snapshot information reside, so we can</li>
+<li>restart decoding from there and fully recover this transaction from</li>
+<li>WAL.</li>
+<p>*/ XLogRecPtr	restart_decoding_lsn;</p>
+</ul>
+<p>/* origin of the change that caused this transaction */ ReplOriginId origin_id; XLogRecPtr	origin_lsn;</p>
+<p>~~~</p>
+<h2>失敗モードと境界条件</h2>
+<p>まだ解析していません。</p>
+<h2>保守担当者向けメモ</h2>
+<ul>
+<li>後続フェーズで、ソース本文の文脈と caller/callee 情報を使ってこのページを強化する。</li>
+</ul><script>
+(function() {
+  function notifyParent() {
+    if (parent === window) return;
+    parent.postMessage({type: "frame-location", frame: window.name || "", href: window.location.href}, "*");
+  }
+  document.addEventListener("click", function(event) {
+    const link = event.target.closest("a[data-panel]");
+    if (!link || parent === window) return;
+    parent.postMessage({type: "source-link", panel: link.dataset.panel}, "*");
+  });
+  window.addEventListener("load", notifyParent);
+  window.addEventListener("hashchange", notifyParent);
+})();
+</script></body></html>

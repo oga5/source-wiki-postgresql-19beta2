@@ -1,0 +1,62 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>symbols/src__bin__pg_archivecleanup__pg_archivecleanup_c__Initialize.md</title><link rel="stylesheet" href="../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../source/src/bin/pg_archivecleanup/pg_archivecleanup.c.html#L57" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__bin__pg_archivecleanup__pg_archivecleanup_c__Initialize.html&quot;}, '*');">Initialize</a></h1>
+<h2>定義</h2>
+<ul>
+<li>種別: <code>function</code></li>
+<li>定義箇所: <code>src/bin/pg_archivecleanup/pg_archivecleanup.c:57</code></li>
+<li>所属モジュール: <a class="wiki-entity-link" href="../modules/src__bin__pg_archivecleanup.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/modules/src__bin__pg_archivecleanup.html&quot;, &quot;source&quot;: &quot;source/src/bin/pg_archivecleanup/pg_archivecleanup.c.html&quot;}, '*');"><code>module:src/bin/pg_archivecleanup</code></a></li>
+</ul>
+<h2>目的</h2>
+<p>静的シンボル索引から生成された初期シンボルページです。</p>
+<h2>シグネチャまたは形状</h2>
+<ul>
+<li>シグネチャ: <code>static void Initialize(void)</code></li>
+</ul>
+<h2>入力と出力</h2>
+<ul>
+<li>戻り値: <code>void</code></li>
+</ul>
+<h2>前提条件と不変条件</h2>
+<p>まだ解析していません。</p>
+<h2>アルゴリズムまたは振る舞い</h2>
+<ul>
+<li>複雑度: <code>low</code> (score 4)</li>
+</ul>
+<p>まだ解析していません。</p>
+<h2>呼び出し元と呼び出し先</h2>
+<ul>
+<li>呼び出し元: <code>main</code></li>
+<li>呼び出し先: <code>stat</code></li>
+<li>呼び出し元サイト: <code>main</code> at <code>src/bin/pg_archivecleanup/pg_archivecleanup.c:387:2</code> (direct, confidence=high, resolved=<a class="wiki-entity-link" href="src__bin__pg_archivecleanup__pg_archivecleanup_c__Initialize.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__bin__pg_archivecleanup__pg_archivecleanup_c__Initialize.html&quot;, &quot;source&quot;: &quot;source/src/bin/pg_archivecleanup/pg_archivecleanup.c.html#L57&quot;}, '*');"><code>symbol:src/bin/pg_archivecleanup/pg_archivecleanup.c#Initialize</code></a>)</li>
+<li>呼び出しサイト: <code>stat</code> at <code>src/bin/pg_archivecleanup/pg_archivecleanup.c:66:6</code> (direct, confidence=high, resolved=<a class="wiki-entity-link" href="src__backend__utils__adt__pgstatfuncs_c__stat.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__utils__adt__pgstatfuncs_c__stat.html&quot;, &quot;source&quot;: &quot;source/src/backend/utils/adt/pgstatfuncs.c.html#L58&quot;}, '*');"><code>symbol:src/backend/utils/adt/pgstatfuncs.c#stat</code></a>), <code>S_ISDIR</code> at <code>src/bin/pg_archivecleanup/pg_archivecleanup.c:67:4</code> (unresolved), <a class="wiki-source-link" href="../../source/src/include/common/logging.h.html#L108" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/common/logging.h.html&quot;}, '*');"><code>pg_log_error</code></a> at <code>src/bin/pg_archivecleanup/pg_archivecleanup.c:69:3</code> (macro), <code>exit</code> at <code>src/bin/pg_archivecleanup/pg_archivecleanup.c:71:3</code> (unresolved)</li>
+</ul>
+<h2>関連データ構造</h2>
+<p><code>stat</code></p>
+<h2>ソース抜粋</h2>
+<p>~~~c static void <a class="wiki-source-link" href="../../source/src/bin/pg_archivecleanup/pg_archivecleanup.c.html#L57" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__bin__pg_archivecleanup__pg_archivecleanup_c__Initialize.html&quot;}, '*');">Initialize</a>(void) { /*</p>
+<ul>
+<li>This code assumes that archiveLocation <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> a directory, so we use stat</li>
+<li>to <a class="wiki-source-link" href="../../source/src/interfaces/ecpg/test/expected/preproc-autoprep.c.html#L26" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__interfaces__ecpg__test__expected__preproc-autoprep_c__test.html&quot;}, '*');">test</a> if it&#x27;s accessible.</li>
+<p>*/ struct stat stat_buf;</p>
+</ul>
+<p>if (stat(archiveLocation, &amp;stat_buf) != 0 || !S_ISDIR(stat_buf.st_mode)) { <a class="wiki-source-link" href="../../source/src/include/common/logging.h.html#L108" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/common/logging.h.html&quot;}, '*');">pg_log_error</a>(&quot;archive location \&quot;%s\&quot; does not exist&quot;, archiveLocation); exit(2); } } ~~~</p>
+<h2>失敗モードと境界条件</h2>
+<p>まだ解析していません。</p>
+<h2>保守担当者向けメモ</h2>
+<ul>
+<li>後続フェーズで、ソース本文の文脈と caller/callee 情報を使ってこのページを強化する。</li>
+</ul><script>
+(function() {
+  function notifyParent() {
+    if (parent === window) return;
+    parent.postMessage({type: "frame-location", frame: window.name || "", href: window.location.href}, "*");
+  }
+  document.addEventListener("click", function(event) {
+    const link = event.target.closest("a[data-panel]");
+    if (!link || parent === window) return;
+    parent.postMessage({type: "source-link", panel: link.dataset.panel}, "*");
+  });
+  window.addEventListener("load", notifyParent);
+  window.addEventListener("hashchange", notifyParent);
+})();
+</script></body></html>

@@ -1,0 +1,62 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>symbols/contrib__seg__seg_c__significant_digits.md</title><link rel="stylesheet" href="../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../source/contrib/seg/seg.c.html#L1074" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/contrib__seg__seg_c__significant_digits.html&quot;}, '*');">significant_digits</a></h1>
+<h2>定義</h2>
+<ul>
+<li>種別: <code>function</code></li>
+<li>定義箇所: <code>contrib/seg/seg.c:1074</code></li>
+<li>所属モジュール: <a class="wiki-entity-link" href="../modules/contrib__seg.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/modules/contrib__seg.html&quot;, &quot;source&quot;: &quot;source/contrib/seg/seg.c.html&quot;}, '*');"><code>module:contrib/seg</code></a></li>
+</ul>
+<h2>目的</h2>
+<p>静的シンボル索引から生成された初期シンボルページです。</p>
+<h2>シグネチャまたは形状</h2>
+<ul>
+<li>シグネチャ: <code>int significant_digits(const char *s)</code></li>
+</ul>
+<h2>入力と出力</h2>
+<ul>
+<li>引数: <code>const char *s</code></li>
+<li>戻り値: <code>int</code></li>
+</ul>
+<h2>前提条件と不変条件</h2>
+<p>まだ解析していません。</p>
+<h2>アルゴリズムまたは振る舞い</h2>
+<ul>
+<li>複雑度: <code>high</code> (score 18)</li>
+</ul>
+<p>まだ解析していません。</p>
+<h2>呼び出し元と呼び出し先</h2>
+<ul>
+<li>呼び出し元: なし</li>
+<li>呼び出し先: なし</li>
+<li>呼び出し元サイト: なし</li>
+<li>呼び出しサイト: なし</li>
+</ul>
+<h2>関連データ構造</h2>
+<p><code>c</code>, <code>decimal</code></p>
+<h2>ソース抜粋</h2>
+<p>~~~c int <a class="wiki-source-link" href="../../source/contrib/seg/seg.c.html#L1074" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/contrib__seg__seg_c__significant_digits.html&quot;}, '*');">significant_digits</a>(const char *s) { const char *p = s; int			n, c, zeroes;</p>
+<p>zeroes = 1; /* skip leading zeroes and sign */ for (c = *p; (c == &#x27;0&#x27; || c == &#x27;+&#x27; || c == &#x27;-&#x27;) &amp;&amp; c != 0; c = *(++p));</p>
+<p>/* skip decimal point and following zeroes */ for (c = *p; (c == &#x27;0&#x27; || c == &#x27;.&#x27;) &amp;&amp; c != 0; c = *(++p)) { if (c != &#x27;.&#x27;) zeroes++; }</p>
+<p>/* count significant digits (n) */ for (c = *p, n = 0; c != 0; c = *(++p)) { if (!((c &gt;= &#x27;0&#x27; &amp;&amp; c &lt;= &#x27;9&#x27;) || (c == &#x27;.&#x27;))) break; if (c != &#x27;.&#x27;) n++; }</p>
+<p>if (!n) return zeroes;</p>
+<p>return n; } ~~~</p>
+<h2>失敗モードと境界条件</h2>
+<p>まだ解析していません。</p>
+<h2>保守担当者向けメモ</h2>
+<ul>
+<li>後続フェーズで、ソース本文の文脈と caller/callee 情報を使ってこのページを強化する。</li>
+</ul><script>
+(function() {
+  function notifyParent() {
+    if (parent === window) return;
+    parent.postMessage({type: "frame-location", frame: window.name || "", href: window.location.href}, "*");
+  }
+  document.addEventListener("click", function(event) {
+    const link = event.target.closest("a[data-panel]");
+    if (!link || parent === window) return;
+    parent.postMessage({type: "source-link", panel: link.dataset.panel}, "*");
+  });
+  window.addEventListener("load", notifyParent);
+  window.addEventListener("hashchange", notifyParent);
+})();
+</script></body></html>

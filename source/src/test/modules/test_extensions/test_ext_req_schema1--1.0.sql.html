@@ -1,0 +1,16 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>src/test/modules/test_extensions/test_ext_req_schema1--1.0.sql</title><link rel="stylesheet" href="../../../../../styles.css"></head><body><header class="source-header">src/test/modules/test_extensions/test_ext_req_schema1--1.0.sql</header><pre class="source-code"><div class="code-line" id="L1"><a class="line-no" href="#L1">1</a><span>/* src/test/modules/test_extensions/test_ext_req_schema1--1.0.sql */</span></div><div class="code-line" id="L2"><a class="line-no" href="#L2">2</a><span>-- complain if script is sourced in psql, rather than via CREATE EXTENSION</span></div><div class="code-line" id="L3"><a class="line-no" href="#L3">3</a><span>\echo Use &quot;CREATE EXTENSION test_ext_req_schema1&quot; to load this file. \quit</span></div><div class="code-line" id="L4"><a class="line-no" href="#L4">4</a><span></span></div><div class="code-line" id="L5"><a class="line-no" href="#L5">5</a><span>CREATE FUNCTION dep_req1() RETURNS text</span></div><div class="code-line" id="L6"><a class="line-no" href="#L6">6</a><span>LANGUAGE SQL AS $$ SELECT &#x27;req1&#x27; $$;</span></div></pre><script>parent.postMessage({"type": "source-page", "panel": "panels/src/test/modules/test_extensions/test_ext_req_schema1--1.0.sql.html"}, "*");</script><script>
+(function() {
+  function notifyParent() {
+    if (parent === window) return;
+    parent.postMessage({type: "frame-location", frame: window.name || "", href: window.location.href}, "*");
+  }
+  document.addEventListener("click", function(event) {
+    const link = event.target.closest("a[data-panel]");
+    if (!link || parent === window) return;
+    parent.postMessage({type: "source-link", panel: link.dataset.panel}, "*");
+  });
+  window.addEventListener("load", notifyParent);
+  window.addEventListener("hashchange", notifyParent);
+})();
+</script></body></html>

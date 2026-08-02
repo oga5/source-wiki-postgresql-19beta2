@@ -1,0 +1,60 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>symbols/src__port__strerror_c__win32_socket_strerror.md</title><link rel="stylesheet" href="../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../source/src/port/strerror.c.html#L276" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__port__strerror_c__win32_socket_strerror.html&quot;}, '*');">win32_socket_strerror</a></h1>
+<h2>定義</h2>
+<ul>
+<li>種別: <code>function</code></li>
+<li>定義箇所: <code>src/port/strerror.c:276</code></li>
+<li>所属モジュール: <a class="wiki-entity-link" href="../modules/src__port.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/modules/src__port.html&quot;, &quot;source&quot;: &quot;source/src/port/bsearch_arg.c.html&quot;}, '*');"><code>module:src/port</code></a></li>
+</ul>
+<h2>目的</h2>
+<p>静的シンボル索引から生成された初期シンボルページです。</p>
+<h2>シグネチャまたは形状</h2>
+<ul>
+<li>シグネチャ: <code>static char * win32_socket_strerror(int errnum, char *buf, size_t buflen)</code></li>
+</ul>
+<h2>入力と出力</h2>
+<ul>
+<li>引数: <code>int errnum</code>, <code>char *buf</code>, <code>size_t buflen</code></li>
+<li>戻り値: <code>char *</code></li>
+</ul>
+<h2>前提条件と不変条件</h2>
+<p>まだ解析していません。</p>
+<h2>アルゴリズムまたは振る舞い</h2>
+<ul>
+<li>複雑度: <code>high</code> (score 13)</li>
+</ul>
+<p>まだ解析していません。</p>
+<h2>呼び出し元と呼び出し先</h2>
+<ul>
+<li>呼び出し元: <a class="wiki-source-link" href="../../source/src/port/strerror.c.html#L45" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__port__strerror_c__pg_strerror_r.html&quot;}, '*');"><code>pg_strerror_r</code></a></li>
+<li>呼び出し先: なし</li>
+<li>呼び出し元サイト: <a class="wiki-source-link" href="../../source/src/port/strerror.c.html#L45" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__port__strerror_c__pg_strerror_r.html&quot;}, '*');"><code>pg_strerror_r</code></a> at <code>src/port/strerror.c:54:10</code> (direct, confidence=high, resolved=<a class="wiki-entity-link" href="src__port__strerror_c__win32_socket_strerror.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__port__strerror_c__win32_socket_strerror.html&quot;, &quot;source&quot;: &quot;source/src/port/strerror.c.html#L276&quot;}, '*');"><code>symbol:src/port/strerror.c#win32_socket_strerror</code></a>)</li>
+<li>呼び出しサイト: <code>LoadLibraryEx</code> at <code>src/port/strerror.c:283:15</code> (unresolved), <code>snprintf</code> at <code>src/port/strerror.c:287:4</code> (unresolved), <code>GetLastError</code> at <code>src/port/strerror.c:289:15</code> (unresolved), <code>ZeroMemory</code> at <code>src/port/strerror.c:294:2</code> (unresolved), <code>FormatMessage</code> at <code>src/port/strerror.c:295:6</code> (unresolved), <code>MAKELANGID</code> at <code>src/port/strerror.c:300:8</code> (unresolved), <code>snprintf</code> at <code>src/port/strerror.c:306:3</code> (unresolved)</li>
+</ul>
+<h2>関連データ構造</h2>
+<p>なし</p>
+<h2>ソース抜粋</h2>
+<p>~~~c static char * <a class="wiki-source-link" href="../../source/src/port/strerror.c.html#L276" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__port__strerror_c__win32_socket_strerror.html&quot;}, '*');">win32_socket_strerror</a>(int errnum, char *buf, size_t buflen) { static HANDLE handleDLL = INVALID_HANDLE_VALUE;</p>
+<p>if (handleDLL == INVALID_HANDLE_VALUE) { handleDLL = LoadLibraryEx(&quot;netmsg.dll&quot;, NULL, DONT_RESOLVE_DLL_REFERENCES | LOAD_LIBRARY_AS_DATAFILE); if (handleDLL == NULL) { snprintf(buf, buflen, &quot;winsock error %d (could not load netmsg.dll to translate: error code %lu)&quot;, errnum, GetLastError()); return buf; } }</p>
+<p>ZeroMemory(buf, buflen); if (FormatMessage(FORMAT_MESSAGE_IGNORE_INSERTS | FORMAT_MESSAGE_FROM_SYSTEM | FORMAT_MESSAGE_FROM_HMODULE, handleDLL, errnum, MAKELANGID(LANG_ENGLISH, SUBLANG_DEFAULT), buf, buflen - 1, NULL) == 0) { /* Failed to get id */ snprintf(buf, buflen, &quot;unrecognized winsock error %d&quot;, errnum); }</p>
+<p>return buf; } ~~~</p>
+<h2>失敗モードと境界条件</h2>
+<p>まだ解析していません。</p>
+<h2>保守担当者向けメモ</h2>
+<ul>
+<li>後続フェーズで、ソース本文の文脈と caller/callee 情報を使ってこのページを強化する。</li>
+</ul><script>
+(function() {
+  function notifyParent() {
+    if (parent === window) return;
+    parent.postMessage({type: "frame-location", frame: window.name || "", href: window.location.href}, "*");
+  }
+  document.addEventListener("click", function(event) {
+    const link = event.target.closest("a[data-panel]");
+    if (!link || parent === window) return;
+    parent.postMessage({type: "source-link", panel: link.dataset.panel}, "*");
+  });
+  window.addEventListener("load", notifyParent);
+  window.addEventListener("hashchange", notifyParent);
+})();
+</script></body></html>

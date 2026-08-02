@@ -1,0 +1,98 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>symbols/src__interfaces__libpq-oauth__oauth-curl_c__initialize_curl.md</title><link rel="stylesheet" href="../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/oauth-curl.c.html#L2689" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__interfaces__libpq-oauth__oauth-curl_c__initialize_curl.html&quot;}, '*');">initialize_curl</a></h1>
+<h2>定義</h2>
+<ul>
+<li>種別: <code>function</code></li>
+<li>定義箇所: <code>src/interfaces/libpq-oauth/oauth-curl.c:2689</code></li>
+<li>所属モジュール: <a class="wiki-entity-link" href="../modules/src__interfaces__libpq-oauth.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/modules/src__interfaces__libpq-oauth.html&quot;, &quot;source&quot;: &quot;source/src/interfaces/libpq-oauth/oauth-curl.c.html&quot;}, '*');"><code>module:src/interfaces/libpq-oauth</code></a></li>
+</ul>
+<h2>目的</h2>
+<p>静的シンボル索引から生成された初期シンボルページです。</p>
+<h2>シグネチャまたは形状</h2>
+<ul>
+<li>シグネチャ: <code>static bool initialize_curl(PGoauthBearerRequestV2 *req, uint32 debug_flags)</code></li>
+</ul>
+<h2>入力と出力</h2>
+<ul>
+<li>引数: <code>PGoauthBearerRequestV2 *req</code>, <code>uint32 debug_flags</code></li>
+<li>戻り値: <code>bool</code></li>
+</ul>
+<h2>前提条件と不変条件</h2>
+<p>まだ解析していません。</p>
+<h2>アルゴリズムまたは振る舞い</h2>
+<ul>
+<li>複雑度: <code>high</code> (score 25)</li>
+</ul>
+<p>まだ解析していません。</p>
+<h2>呼び出し元と呼び出し先</h2>
+<ul>
+<li>呼び出し元: <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/oauth-curl.c.html#L3077" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__interfaces__libpq-oauth__oauth-curl_c__pg_start_oauthbearer.html&quot;}, '*');"><code>pg_start_oauthbearer</code></a></li>
+<li>呼び出し先: なし</li>
+<li>呼び出し元サイト: <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/oauth-curl.c.html#L3077" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__interfaces__libpq-oauth__oauth-curl_c__pg_start_oauthbearer.html&quot;}, '*');"><code>pg_start_oauthbearer</code></a> at <code>src/interfaces/libpq-oauth/oauth-curl.c:3087:7</code> (direct, confidence=high, resolved=<a class="wiki-entity-link" href="src__interfaces__libpq-oauth__oauth-curl_c__initialize_curl.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__interfaces__libpq-oauth__oauth-curl_c__initialize_curl.html&quot;, &quot;source&quot;: &quot;source/src/interfaces/libpq-oauth/oauth-curl.c.html#L2689&quot;}, '*');"><code>symbol:src/interfaces/libpq-oauth/oauth-curl.c#initialize_curl</code></a>)</li>
+<li>呼び出しサイト: <code>pglock_thread</code> at <code>src/interfaces/libpq-oauth/oauth-curl.c:2710:2</code> (unresolved), <code>libpq_gettext</code> at <code>src/interfaces/libpq-oauth/oauth-curl.c:2722:16</code> (unresolved, confidence=low), <code>curl_global_init</code> at <code>src/interfaces/libpq-oauth/oauth-curl.c:2738:6</code> (unresolved), <code>libpq_gettext</code> at <code>src/interfaces/libpq-oauth/oauth-curl.c:2740:16</code> (unresolved, confidence=low), <code>curl_version_info</code> at <code>src/interfaces/libpq-oauth/oauth-curl.c:2745:9</code> (unresolved), <code>libpq_gettext</code> at <code>src/interfaces/libpq-oauth/oauth-curl.c:2762:16</code> (unresolved, confidence=low), <code>fprintf</code> at <code>src/interfaces/libpq-oauth/oauth-curl.c:2783:3</code> (unresolved), <code>pgunlock_thread</code> at <code>src/interfaces/libpq-oauth/oauth-curl.c:2792:2</code> (unresolved)</li>
+</ul>
+<h2>関連データ構造</h2>
+<p><a class="wiki-source-link" href="../../source/src/interfaces/libpq/libpq-fe.h.html#L831" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__interfaces__libpq__libpq-fe_h__PGoauthBearerRequestV2.html&quot;}, '*');"><code>PGoauthBearerRequestV2</code></a>, <code>PGTernaryBool</code>, <code>state</code>, <code>uint32</code>, <code>variable</code>, <a class="wiki-source-link" href="../../source/src/interfaces/ecpg/preproc/type.h.html#L89" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__interfaces__ecpg__preproc__type_h__when.html&quot;}, '*');"><code>when</code></a></p>
+<h2>ソース抜粋</h2>
+<p>~~~c static bool <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/oauth-curl.c.html#L2689" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__interfaces__libpq-oauth__oauth-curl_c__initialize_curl.html&quot;}, '*');">initialize_curl</a>(<a class="wiki-source-link" href="../../source/src/interfaces/libpq/libpq-fe.h.html#L831" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__interfaces__libpq__libpq-fe_h__PGoauthBearerRequestV2.html&quot;}, '*');">PGoauthBearerRequestV2</a> *req, uint32 debug_flags) { /*</p>
+<ul>
+<li>Don&#x27;t let the compiler play tricks with this variable. In the</li>
+<li>HAVE_THREADSAFE_CURL_GLOBAL_INIT case, we don&#x27;t care if two threads</li>
+<li>enter simultaneously, but we do care if this gets set transiently to</li>
+<li>PG_BOOL_YES/NO in cases where that&#x27;s not the <a class="wiki-source-link" href="../../source/src/common/hashfn.c.html#L116" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/common/hashfn.c.html&quot;}, '*');">final</a> answer.</li>
+<p>*/ static volatile PGTernaryBool init_successful = PG_BOOL_UNKNOWN; curl_version_info_data *info;</p>
+</ul>
+<p>#if !HAVE_THREADSAFE_CURL_GLOBAL_INIT</p>
+<p>/*</p>
+<ul>
+<li>Lock around the whole function. If a libpq client performs its own work</li>
+<li>with libcurl, it must either ensure that Curl <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> <a class="wiki-source-link" href="../../source/src/port/win32ntdll.c.html#L36" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/port/win32ntdll.c.html&quot;}, '*');">initialized</a> safely</li>
+<li><a class="wiki-source-link" href="../../source/src/backend/regex/regc_locale.c.html#L487" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__regex__regc_locale_c__before.html&quot;}, '*');">before</a> calling us (in which case our call will be a no-op), or else it</li>
+<li>must guard its own calls to curl_global_init() with a registered</li>
+<li>threadlock handler. See <a class="wiki-source-link" href="../../source/src/interfaces/libpq/fe-connect.c.html#L8422" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__interfaces__libpq__fe-connect_c__PQregisterThreadLock.html&quot;}, '*');">PQregisterThreadLock</a>().</li>
+<p>*/ pglock_thread(); #endif</p>
+</ul>
+<p>/*</p>
+<ul>
+<li>Skip initialization if we&#x27;ve already done it. (Curl tracks the number</li>
+<li>of calls; there&#x27;s no point in incrementing the counter every time we</li>
+<li>connect.)</li>
+<p>*/ if (init_successful == PG_BOOL_YES) goto done; else if (init_successful == PG_BOOL_NO) { req-&gt;error = libpq_gettext(&quot;curl_global_init previously failed during OAuth <a class="wiki-source-link" href="../../source/src/bin/pg_upgrade/pg_upgrade.c.html#L361" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__bin__pg_upgrade__pg_upgrade_c__setup.html&quot;}, '*');">setup</a>&quot;); goto done; }</p>
+</ul>
+<p>/*</p>
+<ul>
+<li>We know we&#x27;ve already <a class="wiki-source-link" href="../../source/src/port/win32ntdll.c.html#L36" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/port/win32ntdll.c.html&quot;}, '*');">initialized</a> Winsock by this point (see</li>
+<li><a class="wiki-source-link" href="../../source/src/interfaces/libpq/fe-connect.c.html#L4990" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__interfaces__libpq__fe-connect_c__pqMakeEmptyPGconn.html&quot;}, '*');">pqMakeEmptyPGconn</a>()), so we should be able to safely skip that bit. But</li>
+<li>we have to tell libcurl to <a class="wiki-source-link" href="../../source/src/backend/regex/rege_dfa.c.html#L739" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__regex__rege_dfa_c__initialize.html&quot;}, '*');">initialize</a> everything else, because other</li>
+<li>pieces of our client executable may already be using libcurl for their</li>
+<li>own purposes. If we <a class="wiki-source-link" href="../../source/src/backend/regex/rege_dfa.c.html#L739" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__regex__rege_dfa_c__initialize.html&quot;}, '*');">initialize</a> libcurl with only a <a class="wiki-source-link" href="../../source/src/backend/regex/regexec.c.html#L703" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__regex__regexec_c__subset.html&quot;}, '*');">subset</a> of its</li>
+<li>features, we could break those other clients nondeterministically, and</li>
+<li>that would probably be a nightmare to debug.</li>
+<p>*</p>
+<li>If some other part of the program has already called this, it&#x27;s a</li>
+<li>no-op.</li>
+<p>*/ if (curl_global_init(CURL_GLOBAL_ALL &amp; ~CURL_GLOBAL_WIN32) != CURLE_OK) { req-&gt;error = libpq_gettext(&quot;curl_global_init failed during OAuth <a class="wiki-source-link" href="../../source/src/bin/pg_upgrade/pg_upgrade.c.html#L361" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__bin__pg_upgrade__pg_upgrade_c__setup.html&quot;}, '*');">setup</a>&quot;); init_successful = PG_BOOL_NO; goto done; }</p>
+</ul>
+<p>info = curl_version_info(CURLVERSION_NOW);</p>
+<p>#if HAVE_THREADSAFE_CURL_GLOBAL_INIT</p>
+<p>~~~</p>
+<h2>失敗モードと境界条件</h2>
+<p>まだ解析していません。</p>
+<h2>保守担当者向けメモ</h2>
+<ul>
+<li>後続フェーズで、ソース本文の文脈と caller/callee 情報を使ってこのページを強化する。</li>
+</ul><script>
+(function() {
+  function notifyParent() {
+    if (parent === window) return;
+    parent.postMessage({type: "frame-location", frame: window.name || "", href: window.location.href}, "*");
+  }
+  document.addEventListener("click", function(event) {
+    const link = event.target.closest("a[data-panel]");
+    if (!link || parent === window) return;
+    parent.postMessage({type: "source-link", panel: link.dataset.panel}, "*");
+  });
+  window.addEventListener("load", notifyParent);
+  window.addEventListener("hashchange", notifyParent);
+})();
+</script></body></html>

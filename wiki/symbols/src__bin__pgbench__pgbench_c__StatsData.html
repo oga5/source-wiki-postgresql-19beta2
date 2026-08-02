@@ -1,0 +1,108 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>symbols/src__bin__pgbench__pgbench_c__StatsData.md</title><link rel="stylesheet" href="../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../source/src/bin/pgbench/pgbench.c.html#L378" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__bin__pgbench__pgbench_c__StatsData.html&quot;}, '*');">StatsData</a></h1>
+<h2>定義</h2>
+<ul>
+<li>種別: <code>struct</code></li>
+<li>定義箇所: <code>src/bin/pgbench/pgbench.c:378</code></li>
+<li>所属モジュール: <a class="wiki-entity-link" href="../modules/src__bin__pgbench.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/modules/src__bin__pgbench.html&quot;, &quot;source&quot;: &quot;source/src/bin/pgbench/pgbench.c.html&quot;}, '*');"><code>module:src/bin/pgbench</code></a></li>
+</ul>
+<h2>目的</h2>
+<p>静的シンボル索引から生成された初期シンボルページです。</p>
+<h2>シグネチャまたは形状</h2>
+<ul>
+<li>シグネチャ: <code>typedef struct StatsData</code></li>
+</ul>
+<h2>入力と出力</h2>
+<p>まだ解析していません。</p>
+<h2>前提条件と不変条件</h2>
+<p>まだ解析していません。</p>
+<h2>アルゴリズムまたは振る舞い</h2>
+<p>まだ解析していません。</p>
+<h2>呼び出し元と呼び出し先</h2>
+<ul>
+<li>呼び出し元: なし</li>
+<li>呼び出し先: なし</li>
+<li>呼び出し元サイト: なし</li>
+<li>呼び出しサイト: なし</li>
+</ul>
+<h2>関連データ構造</h2>
+<p><code>int64</code>, <a class="wiki-source-link" href="../../source/src/interfaces/ecpg/include/pgtypes_interval.h.html#L19" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__interfaces__ecpg__include__pgtypes_interval_h__interval.html&quot;}, '*');"><code>interval</code></a>, <a class="wiki-source-link" href="../../source/src/bin/pgbench/pgbench.c.html#L372" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/bin/pgbench/pgbench.c.html&quot;}, '*');"><code>pg_time_usec_t</code></a>, <a class="wiki-source-link" href="../../source/src/bin/pgbench/pgbench.c.html#L358" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__bin__pgbench__pgbench_c__SimpleStats.html&quot;}, '*');"><code>SimpleStats</code></a>, <a class="wiki-source-link" href="../../source/src/interfaces/ecpg/preproc/type.h.html#L89" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__interfaces__ecpg__preproc__type_h__when.html&quot;}, '*');"><code>when</code></a></p>
+<h2>ソース抜粋</h2>
+<p>~~~c typedef struct <a class="wiki-source-link" href="../../source/src/bin/pgbench/pgbench.c.html#L378" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__bin__pgbench__pgbench_c__StatsData.html&quot;}, '*');">StatsData</a> { <a class="wiki-source-link" href="../../source/src/bin/pgbench/pgbench.c.html#L372" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/bin/pgbench/pgbench.c.html&quot;}, '*');">pg_time_usec_t</a> <a class="wiki-source-link" href="../../source/src/bin/pg_ctl/pg_ctl.c.html#L96" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/bin/pg_ctl/pg_ctl.c.html&quot;}, '*');">start_time</a>;	/* <a class="wiki-source-link" href="../../source/src/interfaces/ecpg/include/pgtypes_interval.h.html#L19" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__interfaces__ecpg__include__pgtypes_interval_h__interval.html&quot;}, '*');">interval</a> start time, for aggregates */</p>
+<p>/*----------</p>
+<ul>
+<li>Transactions are counted depending on their execution and outcome.</li>
+<li>First a transaction may have started or not: skipped transactions occur</li>
+<li>under --rate and --latency-limit <a class="wiki-source-link" href="../../source/src/interfaces/ecpg/preproc/type.h.html#L89" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__interfaces__ecpg__preproc__type_h__when.html&quot;}, '*');">when</a> the client <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> too late to <a class="wiki-source-link" href="../../source/contrib/intarray/_int_bool.c.html#L263" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/contrib__intarray___int_bool_c__execute.html&quot;}, '*');">execute</a></li>
+<li>them. Secondly, a started transaction may ultimately succeed or fail,</li>
+<li>possibly after some retries <a class="wiki-source-link" href="../../source/src/interfaces/ecpg/preproc/type.h.html#L89" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__interfaces__ecpg__preproc__type_h__when.html&quot;}, '*');">when</a> --max-tries <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> not one. Thus</li>
+<p>*</p>
+<li>the number of all transactions =</li>
+<li>&#x27;skipped&#x27; (it was too late to <a class="wiki-source-link" href="../../source/contrib/intarray/_int_bool.c.html#L263" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/contrib__intarray___int_bool_c__execute.html&quot;}, '*');">execute</a> them) +</li>
+<li>&#x27;cnt&#x27; (the number of successful transactions) +</li>
+<li>&#x27;failed&#x27; (the number of failed transactions).</li>
+<p>*</p>
+<li>A successful transaction can have several unsuccessful tries <a class="wiki-source-link" href="../../source/src/backend/regex/regc_locale.c.html#L487" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__regex__regc_locale_c__before.html&quot;}, '*');">before</a> a</li>
+<li>successful run. Thus</li>
+<p>*</p>
+<li>&#x27;cnt&#x27; (the number of successful transactions) =</li>
+<li>successfully retried transactions (they got a serialization or a</li>
+<li>deadlock error(s), but were</li>
+<li>successfully retried from the very</li>
+<li>beginning) +</li>
+<li>directly successful transactions (they were successfully completed on</li>
+<li>the first try).</li>
+<p>*</p>
+<li>&#x27;failed&#x27; (the number of failed transactions) =</li>
+<li>&#x27;serialization_failures&#x27; (they got a serialization error and were not</li>
+<li>successfully retried) +</li>
+<li>&#x27;deadlock_failures&#x27; (they got a deadlock error and were not</li>
+<li>successfully retried) +</li>
+<li>&#x27;other_sql_failures&#x27;  (they failed on the first try or after retries</li>
+<li>due to a SQL error other than serialization or</li>
+<li>deadlock; they are counted as a failed transaction</li>
+<li>only <a class="wiki-source-link" href="../../source/src/interfaces/ecpg/preproc/type.h.html#L89" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__interfaces__ecpg__preproc__type_h__when.html&quot;}, '*');">when</a> --continue-on-error <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> specified).</li>
+<p>*</p>
+<li>If the transaction was retried after a serialization or a deadlock</li>
+<li>error this does not guarantee that this retry was successful. Thus</li>
+<p>*</p>
+<li>&#x27;retries&#x27; (number of retries) =</li>
+<li>number of retries in all retried transactions =</li>
+<li>number of retries in (successfully retried transactions +</li>
+<li>failed transactions);</li>
+<p>*</p>
+<li>&#x27;retried&#x27; (number of all retried transactions) =</li>
+<li>successfully retried transactions +</li>
+<li>unsuccessful retried transactions.</li>
+<p>*---------- */ int64		cnt;			/* number of successful transactions, not</p>
+<li>including &#x27;skipped&#x27; */</li>
+<p>int64		skipped;		/* number of transactions skipped under --rate</p>
+<li>and --latency-limit */</li>
+<p>int64		retries;		/* number of retries after a serialization or</p>
+<li>a deadlock error in all the transactions */</li>
+<p>int64		retried;		/* number of all transactions that were</p>
+<li>retried after a serialization or a deadlock</li>
+<li>error (perhaps the last try was</li>
+<li>unsuccessful) */</li>
+<p>~~~</p>
+</ul>
+<h2>失敗モードと境界条件</h2>
+<p>まだ解析していません。</p>
+<h2>保守担当者向けメモ</h2>
+<ul>
+<li>後続フェーズで、ソース本文の文脈と caller/callee 情報を使ってこのページを強化する。</li>
+</ul><script>
+(function() {
+  function notifyParent() {
+    if (parent === window) return;
+    parent.postMessage({type: "frame-location", frame: window.name || "", href: window.location.href}, "*");
+  }
+  document.addEventListener("click", function(event) {
+    const link = event.target.closest("a[data-panel]");
+    if (!link || parent === window) return;
+    parent.postMessage({type: "source-link", panel: link.dataset.panel}, "*");
+  });
+  window.addEventListener("load", notifyParent);
+  window.addEventListener("hashchange", notifyParent);
+})();
+</script></body></html>

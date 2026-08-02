@@ -1,0 +1,65 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>symbols/src__backend__replication__logical__reorderbuffer_c__ReorderBufferFreeTXN.md</title><link rel="stylesheet" href="../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../source/src/backend/replication/logical/reorderbuffer.c.html#L459" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__replication__logical__reorderbuffer_c__ReorderBufferFreeTXN.html&quot;}, '*');">ReorderBufferFreeTXN</a></h1>
+<h2>定義</h2>
+<ul>
+<li>種別: <code>function</code></li>
+<li>定義箇所: <code>src/backend/replication/logical/reorderbuffer.c:459</code></li>
+<li>所属モジュール: <a class="wiki-entity-link" href="../modules/src__backend__replication__logical.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/modules/src__backend__replication__logical.html&quot;, &quot;source&quot;: &quot;source/src/backend/replication/logical/applyparallelworker.c.html&quot;}, '*');"><code>module:src/backend/replication/logical</code></a></li>
+</ul>
+<h2>目的</h2>
+<p>静的シンボル索引から生成された初期シンボルページです。</p>
+<h2>シグネチャまたは形状</h2>
+<ul>
+<li>シグネチャ: <code>static void ReorderBufferFreeTXN(ReorderBuffer *rb, ReorderBufferTXN *txn)</code></li>
+</ul>
+<h2>入力と出力</h2>
+<ul>
+<li>引数: <code>ReorderBuffer *rb</code>, <code>ReorderBufferTXN *txn</code></li>
+<li>戻り値: <code>void</code></li>
+</ul>
+<h2>前提条件と不変条件</h2>
+<p>まだ解析していません。</p>
+<h2>アルゴリズムまたは振る舞い</h2>
+<ul>
+<li>複雑度: <code>high</code> (score 19)</li>
+</ul>
+<p>まだ解析していません。</p>
+<h2>呼び出し元と呼び出し先</h2>
+<ul>
+<li>呼び出し元: <a class="wiki-source-link" href="../../source/src/backend/replication/logical/reorderbuffer.c.html#L1535" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__replication__logical__reorderbuffer_c__ReorderBufferCleanupTXN.html&quot;}, '*');"><code>ReorderBufferCleanupTXN</code></a></li>
+<li>呼び出し先: <a class="wiki-source-link" href="../../source/src/backend/utils/hash/dynahash.c.html#L801" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__utils__hash__dynahash_c__hash_destroy.html&quot;}, '*');"><code>hash_destroy</code></a>, <a class="wiki-source-link" href="../../source/src/backend/replication/logical/reorderbuffer.c.html#L5260" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__replication__logical__reorderbuffer_c__ReorderBufferToastReset.html&quot;}, '*');"><code>ReorderBufferToastReset</code></a></li>
+<li>呼び出し元サイト: <a class="wiki-source-link" href="../../source/src/backend/replication/logical/reorderbuffer.c.html#L1535" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__replication__logical__reorderbuffer_c__ReorderBufferCleanupTXN.html&quot;}, '*');"><code>ReorderBufferCleanupTXN</code></a> at <code>src/backend/replication/logical/reorderbuffer.c:1641:2</code> (direct, confidence=high, resolved=<a class="wiki-entity-link" href="src__backend__replication__logical__reorderbuffer_c__ReorderBufferFreeTXN.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__replication__logical__reorderbuffer_c__ReorderBufferFreeTXN.html&quot;, &quot;source&quot;: &quot;source/src/backend/replication/logical/reorderbuffer.c.html#L459&quot;}, '*');"><code>symbol:src/backend/replication/logical/reorderbuffer.c#ReorderBufferFreeTXN</code></a>)</li>
+<li>呼び出しサイト: <code>pfree</code> at <code>src/backend/replication/logical/reorderbuffer.c:473:3</code> (unresolved, confidence=low), <a class="wiki-source-link" href="../../source/src/backend/utils/hash/dynahash.c.html#L801" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__utils__hash__dynahash_c__hash_destroy.html&quot;}, '*');"><code>hash_destroy</code></a> at <code>src/backend/replication/logical/reorderbuffer.c:479:3</code> (direct, confidence=high, resolved=<a class="wiki-entity-link" href="src__backend__utils__hash__dynahash_c__hash_destroy.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__utils__hash__dynahash_c__hash_destroy.html&quot;, &quot;source&quot;: &quot;source/src/backend/utils/hash/dynahash.c.html#L801&quot;}, '*');"><code>symbol:src/backend/utils/hash/dynahash.c#hash_destroy</code></a>), <code>pfree</code> at <code>src/backend/replication/logical/reorderbuffer.c:485:3</code> (unresolved, confidence=low), <code>pfree</code> at <code>src/backend/replication/logical/reorderbuffer.c:491:3</code> (unresolved, confidence=low), <a class="wiki-source-link" href="../../source/src/backend/replication/logical/reorderbuffer.c.html#L5260" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__replication__logical__reorderbuffer_c__ReorderBufferToastReset.html&quot;}, '*');"><code>ReorderBufferToastReset</code></a> at <code>src/backend/replication/logical/reorderbuffer.c:496:2</code> (direct, confidence=high, resolved=<a class="wiki-entity-link" href="src__backend__replication__logical__reorderbuffer_c__ReorderBufferToastReset.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__replication__logical__reorderbuffer_c__ReorderBufferToastReset.html&quot;, &quot;source&quot;: &quot;source/src/backend/replication/logical/reorderbuffer.c.html#L5260&quot;}, '*');"><code>symbol:src/backend/replication/logical/reorderbuffer.c#ReorderBufferToastReset</code></a>), <a class="wiki-source-link" href="../../source/src/include/c.h.html#L950" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/c.h.html&quot;}, '*');"><code>Assert</code></a> at <code>src/backend/replication/logical/reorderbuffer.c:499:2</code> (unresolved), <code>pfree</code> at <code>src/backend/replication/logical/reorderbuffer.c:501:2</code> (unresolved, confidence=low)</li>
+</ul>
+<h2>関連データ構造</h2>
+<p><a class="wiki-source-link" href="../../source/src/timezone/zic.c.html#L310" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__timezone__zic_c__lookup.html&quot;}, '*');"><code>lookup</code></a>, <code>ReorderBuffer</code>, <code>ReorderBufferTXN</code></p>
+<h2>ソース抜粋</h2>
+<p>~~~c static void <a class="wiki-source-link" href="../../source/src/backend/replication/logical/reorderbuffer.c.html#L459" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__replication__logical__reorderbuffer_c__ReorderBufferFreeTXN.html&quot;}, '*');">ReorderBufferFreeTXN</a>(ReorderBuffer *rb, ReorderBufferTXN *txn) { /* clean the <a class="wiki-source-link" href="../../source/src/timezone/zic.c.html#L310" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__timezone__zic_c__lookup.html&quot;}, '*');">lookup</a> cache if we were cached (quite <a class="wiki-source-link" href="../../source/src/include/c.h.html#L441" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/c.h.html&quot;}, '*');">likely</a>) */ if (rb-&gt;by_txn_last_xid == txn-&gt;xid) { rb-&gt;by_txn_last_xid = <a class="wiki-source-link" href="../../source/src/include/access/transam.h.html#L31" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/access/transam.h.html&quot;}, '*');">InvalidTransactionId</a>; rb-&gt;by_txn_last_txn = NULL; }</p>
+<p>/* <a class="wiki-source-link" href="../../source/src/include/snowball/snowball_runtime.h.html#L65" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/snowball/snowball_runtime.h.html&quot;}, '*');">free</a> data that&#x27;s contained */</p>
+<p>if (txn-&gt;gid != NULL) { pfree(txn-&gt;gid); txn-&gt;gid = NULL; }</p>
+<p>if (txn-&gt;tuplecid_hash != NULL) { <a class="wiki-source-link" href="../../source/src/backend/utils/hash/dynahash.c.html#L801" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__utils__hash__dynahash_c__hash_destroy.html&quot;}, '*');">hash_destroy</a>(txn-&gt;tuplecid_hash); txn-&gt;tuplecid_hash = NULL; }</p>
+<p>if (txn-&gt;invalidations) { pfree(txn-&gt;invalidations); txn-&gt;invalidations = NULL; }</p>
+<p>if (txn-&gt;invalidations_distributed) { pfree(txn-&gt;invalidations_distributed); txn-&gt;invalidations_distributed = NULL; }</p>
+<p>/* Reset the toast <a class="wiki-source-link" href="../../source/src/backend/regex/rege_dfa.c.html#L723" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__regex__rege_dfa_c__hash.html&quot;}, '*');">hash</a> */ <a class="wiki-source-link" href="../../source/src/backend/replication/logical/reorderbuffer.c.html#L5260" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__replication__logical__reorderbuffer_c__ReorderBufferToastReset.html&quot;}, '*');">ReorderBufferToastReset</a>(rb, txn);</p>
+<p>/* All changes must be deallocated */ <a class="wiki-source-link" href="../../source/src/include/c.h.html#L950" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/c.h.html&quot;}, '*');">Assert</a>(txn-&gt;size == 0);</p>
+<p>pfree(txn); } ~~~</p>
+<h2>失敗モードと境界条件</h2>
+<p>まだ解析していません。</p>
+<h2>保守担当者向けメモ</h2>
+<ul>
+<li>後続フェーズで、ソース本文の文脈と caller/callee 情報を使ってこのページを強化する。</li>
+</ul><script>
+(function() {
+  function notifyParent() {
+    if (parent === window) return;
+    parent.postMessage({type: "frame-location", frame: window.name || "", href: window.location.href}, "*");
+  }
+  document.addEventListener("click", function(event) {
+    const link = event.target.closest("a[data-panel]");
+    if (!link || parent === window) return;
+    parent.postMessage({type: "source-link", panel: link.dataset.panel}, "*");
+  });
+  window.addEventListener("load", notifyParent);
+  window.addEventListener("hashchange", notifyParent);
+})();
+</script></body></html>

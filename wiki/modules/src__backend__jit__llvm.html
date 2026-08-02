@@ -1,0 +1,72 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>modules/src__backend__jit__llvm.md</title><link rel="stylesheet" href="../../styles.css"></head><body><h1>src/backend/jit/llvm</h1>
+<h2>システム内での役割</h2>
+<p><code>src/backend/jit/llvm</code> には 8 個の索引済みソースファイルがあります。この初期モジュールページはディレクトリ境界に基づいています。</p>
+<h2>責務</h2>
+<ul>
+<li>このディレクトリに属するソースファイルを集約する。</li>
+<li>より深い LLM 合成の前段として、モジュール単位の入口を提供する。</li>
+</ul>
+<h2>このモジュールのファイル</h2>
+<ul>
+<li><a class="wiki-source-link" href="../../source/src/backend/jit/llvm/SectionMemoryManager.cpp.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/jit/llvm/SectionMemoryManager.cpp.html&quot;}, '*');"><code>src/backend/jit/llvm/SectionMemoryManager.cpp</code></a></li>
+<li><a class="wiki-source-link" href="../../source/src/backend/jit/llvm/llvmjit.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/jit/llvm/llvmjit.c.html&quot;}, '*');"><code>src/backend/jit/llvm/llvmjit.c</code></a></li>
+<li><a class="wiki-source-link" href="../../source/src/backend/jit/llvm/llvmjit_deform.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/jit/llvm/llvmjit_deform.c.html&quot;}, '*');"><code>src/backend/jit/llvm/llvmjit_deform.c</code></a></li>
+<li><a class="wiki-source-link" href="../../source/src/backend/jit/llvm/llvmjit_error.cpp.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/jit/llvm/llvmjit_error.cpp.html&quot;}, '*');"><code>src/backend/jit/llvm/llvmjit_error.cpp</code></a></li>
+<li><a class="wiki-source-link" href="../../source/src/backend/jit/llvm/llvmjit_expr.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/jit/llvm/llvmjit_expr.c.html&quot;}, '*');"><code>src/backend/jit/llvm/llvmjit_expr.c</code></a></li>
+<li><a class="wiki-source-link" href="../../source/src/backend/jit/llvm/llvmjit_inline.cpp.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/jit/llvm/llvmjit_inline.cpp.html&quot;}, '*');"><code>src/backend/jit/llvm/llvmjit_inline.cpp</code></a></li>
+<li><a class="wiki-source-link" href="../../source/src/backend/jit/llvm/llvmjit_types.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/jit/llvm/llvmjit_types.c.html&quot;}, '*');"><code>src/backend/jit/llvm/llvmjit_types.c</code></a></li>
+<li><a class="wiki-source-link" href="../../source/src/backend/jit/llvm/llvmjit_wrap.cpp.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/jit/llvm/llvmjit_wrap.cpp.html&quot;}, '*');"><code>src/backend/jit/llvm/llvmjit_wrap.cpp</code></a></li>
+</ul>
+<h2>主要なデータ構造</h2>
+<ul>
+<li><a class="wiki-source-link" href="../../source/src/backend/jit/llvm/llvmjit.c.html#L48" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__jit__llvm__llvmjit_c__LLVMJitHandle.html&quot;}, '*');"><code>LLVMJitHandle</code></a></li>
+<li><a class="wiki-source-link" href="../../source/src/backend/jit/llvm/llvmjit_expr.c.html#L48" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__jit__llvm__llvmjit_expr_c__CompiledExprState.html&quot;}, '*');"><code>CompiledExprState</code></a></li>
+<li><a class="wiki-source-link" href="../../source/src/backend/jit/llvm/llvmjit_inline.cpp.html#L67" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__jit__llvm__llvmjit_inline_cpp__InlineSearchPath.html&quot;}, '*');"><code>InlineSearchPath</code></a></li>
+<li><a class="wiki-source-link" href="../../source/src/backend/jit/llvm/llvmjit_inline.cpp.html#L72" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__jit__llvm__llvmjit_inline_cpp__InlineWorkListItem.html&quot;}, '*');"><code>InlineWorkListItem</code></a></li>
+<li><a class="wiki-source-link" href="../../source/src/backend/jit/llvm/llvmjit_inline.cpp.html#L77" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__jit__llvm__llvmjit_inline_cpp__InlineWorkList.html&quot;}, '*');"><code>InlineWorkList</code></a></li>
+<li><a class="wiki-source-link" href="../../source/src/backend/jit/llvm/llvmjit_inline.cpp.html#L83" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__jit__llvm__llvmjit_inline_cpp__FunctionInlineState.html&quot;}, '*');"><code>FunctionInlineState</code></a></li>
+<li><a class="wiki-source-link" href="../../source/src/backend/jit/llvm/llvmjit_inline.cpp.html#L90" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__jit__llvm__llvmjit_inline_cpp__FunctionInlineStates.html&quot;}, '*');"><code>FunctionInlineStates</code></a></li>
+<li><a class="wiki-source-link" href="../../source/src/backend/jit/llvm/llvmjit_inline.cpp.html#L96" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__jit__llvm__llvmjit_inline_cpp__ImportMapTy.html&quot;}, '*');"><code>ImportMapTy</code></a></li>
+<li><a class="wiki-source-link" href="../../source/src/backend/jit/llvm/llvmjit_inline.cpp.html#L106" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__jit__llvm__llvmjit_inline_cpp__ModuleCache.html&quot;}, '*');"><code>ModuleCache</code></a></li>
+<li><a class="wiki-source-link" href="../../source/src/backend/jit/llvm/llvmjit_inline.cpp.html#L108" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__jit__llvm__llvmjit_inline_cpp__SummaryCache.html&quot;}, '*');"><code>SummaryCache</code></a></li>
+</ul>
+<h2>主なフロー</h2>
+<p>初期モジュールページでは、まだエンドツーエンドのフローを推論しません。</p>
+<h2>外部依存</h2>
+<ul>
+<li><a class="wiki-source-link" href="../../source/src/include/postgres.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/postgres.h.html&quot;}, '*');"><code>postgres.h</code></a></li>
+<li><code>jit/llvmjit.h</code></li>
+<li><code>jit/llvmjit_backport.h</code></li>
+<li><code>jit/llvmjit_emit.h</code></li>
+<li><a class="wiki-source-link" href="../../source/src/include/miscadmin.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/miscadmin.h.html&quot;}, '*');"><code>miscadmin.h</code></a></li>
+<li><code>access/htup_details.h</code></li>
+<li><code>jit/SectionMemoryManager.h</code></li>
+<li><code>utils/memutils.h</code></li>
+<li><code>executor/tuptable.h</code></li>
+<li><code>executor/execExpr.h</code></li>
+</ul>
+<h2>内部構成</h2>
+<ul>
+<li>子モジュール数: 0</li>
+</ul>
+<h2>推奨読書順</h2>
+<p>1. <a class="wiki-source-link" href="../../source/src/backend/jit/llvm/llvmjit.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/jit/llvm/llvmjit.c.html&quot;}, '*');"><code>src/backend/jit/llvm/llvmjit.c</code></a> 2. <a class="wiki-source-link" href="../../source/src/backend/jit/llvm/llvmjit_types.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/jit/llvm/llvmjit_types.c.html&quot;}, '*');"><code>src/backend/jit/llvm/llvmjit_types.c</code></a> 3. <a class="wiki-source-link" href="../../source/src/backend/jit/llvm/llvmjit_inline.cpp.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/jit/llvm/llvmjit_inline.cpp.html&quot;}, '*');"><code>src/backend/jit/llvm/llvmjit_inline.cpp</code></a> 4. <a class="wiki-source-link" href="../../source/src/backend/jit/llvm/SectionMemoryManager.cpp.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/jit/llvm/SectionMemoryManager.cpp.html&quot;}, '*');"><code>src/backend/jit/llvm/SectionMemoryManager.cpp</code></a> 5. <a class="wiki-source-link" href="../../source/src/backend/jit/llvm/llvmjit_error.cpp.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/jit/llvm/llvmjit_error.cpp.html&quot;}, '*');"><code>src/backend/jit/llvm/llvmjit_error.cpp</code></a> 6. <a class="wiki-source-link" href="../../source/src/backend/jit/llvm/llvmjit_expr.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/jit/llvm/llvmjit_expr.c.html&quot;}, '*');"><code>src/backend/jit/llvm/llvmjit_expr.c</code></a> 7. <a class="wiki-source-link" href="../../source/src/backend/jit/llvm/llvmjit_wrap.cpp.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/jit/llvm/llvmjit_wrap.cpp.html&quot;}, '*');"><code>src/backend/jit/llvm/llvmjit_wrap.cpp</code></a> 8. <a class="wiki-source-link" href="../../source/src/backend/jit/llvm/llvmjit_deform.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/jit/llvm/llvmjit_deform.c.html&quot;}, '*');"><code>src/backend/jit/llvm/llvmjit_deform.c</code></a></p>
+<h2>未解決の問い</h2>
+<ul>
+<li>LLM ベースのモジュール合成を追加した後で、責務とフローを精緻化する。</li>
+</ul><script>
+(function() {
+  function notifyParent() {
+    if (parent === window) return;
+    parent.postMessage({type: "frame-location", frame: window.name || "", href: window.location.href}, "*");
+  }
+  document.addEventListener("click", function(event) {
+    const link = event.target.closest("a[data-panel]");
+    if (!link || parent === window) return;
+    parent.postMessage({type: "source-link", panel: link.dataset.panel}, "*");
+  });
+  window.addEventListener("load", notifyParent);
+  window.addEventListener("hashchange", notifyParent);
+})();
+</script></body></html>

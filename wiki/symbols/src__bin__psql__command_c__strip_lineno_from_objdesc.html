@@ -1,0 +1,77 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>symbols/src__bin__psql__command_c__strip_lineno_from_objdesc.md</title><link rel="stylesheet" href="../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../source/src/bin/psql/command.c.html#L6418" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__bin__psql__command_c__strip_lineno_from_objdesc.html&quot;}, '*');">strip_lineno_from_objdesc</a></h1>
+<h2>定義</h2>
+<ul>
+<li>種別: <code>function</code></li>
+<li>定義箇所: <code>src/bin/psql/command.c:6418</code></li>
+<li>所属モジュール: <a class="wiki-entity-link" href="../modules/src__bin__psql.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/modules/src__bin__psql.html&quot;, &quot;source&quot;: &quot;source/src/bin/psql/command.c.html&quot;}, '*');"><code>module:src/bin/psql</code></a></li>
+</ul>
+<h2>目的</h2>
+<p>静的シンボル索引から生成された初期シンボルページです。</p>
+<h2>シグネチャまたは形状</h2>
+<ul>
+<li>シグネチャ: <code>static int strip_lineno_from_objdesc(char *obj)</code></li>
+</ul>
+<h2>入力と出力</h2>
+<ul>
+<li>引数: <code>char *obj</code></li>
+<li>戻り値: <code>int</code></li>
+</ul>
+<h2>前提条件と不変条件</h2>
+<p>まだ解析していません。</p>
+<h2>アルゴリズムまたは振る舞い</h2>
+<ul>
+<li>複雑度: <code>high</code> (score 23)</li>
+</ul>
+<p>まだ解析していません。</p>
+<h2>呼び出し元と呼び出し先</h2>
+<ul>
+<li>呼び出し元: <a class="wiki-source-link" href="../../source/src/bin/psql/command.c.html#L1443" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__bin__psql__command_c__exec_command_ef_ev.html&quot;}, '*');"><code>exec_command_ef_ev</code></a></li>
+<li>呼び出し先: なし</li>
+<li>呼び出し元サイト: <a class="wiki-source-link" href="../../source/src/bin/psql/command.c.html#L1443" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__bin__psql__command_c__exec_command_ef_ev.html&quot;}, '*');"><code>exec_command_ef_ev</code></a> at <code>src/bin/psql/command.c:1466:13</code> (direct, confidence=high, resolved=<a class="wiki-entity-link" href="src__bin__psql__command_c__strip_lineno_from_objdesc.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__bin__psql__command_c__strip_lineno_from_objdesc.html&quot;, &quot;source&quot;: &quot;source/src/bin/psql/command.c.html#L6418&quot;}, '*');"><code>symbol:src/bin/psql/command.c#strip_lineno_from_objdesc</code></a>)</li>
+<li>呼び出しサイト: <code>strlen</code> at <code>src/bin/psql/command.c:6427:12</code> (unresolved), <code>isascii</code> at <code>src/bin/psql/command.c:6440:20</code> (unresolved), <code>isspace</code> at <code>src/bin/psql/command.c:6440:51</code> (unresolved), <code>isascii</code> at <code>src/bin/psql/command.c:6444:19</code> (unresolved), <code>isdigit</code> at <code>src/bin/psql/command.c:6444:51</code> (unresolved), <code>isascii</code> at <code>src/bin/psql/command.c:6448:20</code> (unresolved), <code>isdigit</code> at <code>src/bin/psql/command.c:6448:51</code> (unresolved), <code>isascii</code> at <code>src/bin/psql/command.c:6453:19</code> (unresolved), <code>isspace</code> at <code>src/bin/psql/command.c:6454:5</code> (unresolved), <code>atoi</code> at <code>src/bin/psql/command.c:6459:11</code> (unresolved), <a class="wiki-source-link" href="../../source/src/include/common/logging.h.html#L108" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/common/logging.h.html&quot;}, '*');"><code>pg_log_error</code></a> at <code>src/bin/psql/command.c:6462:3</code> (macro)</li>
+</ul>
+<h2>関連データ構造</h2>
+<p><code>c</code>, <code>string</code></p>
+<h2>ソース抜粋</h2>
+<p>~~~c static int <a class="wiki-source-link" href="../../source/src/bin/psql/command.c.html#L6418" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__bin__psql__command_c__strip_lineno_from_objdesc.html&quot;}, '*');">strip_lineno_from_objdesc</a>(char *obj) { char	   *c; int			lineno;</p>
+<p>if (!obj || obj[0] == &#x27;\0&#x27;) return -1;</p>
+<p>c = obj + strlen(obj) - 1;</p>
+<p>/*</p>
+<ul>
+<li>This business of parsing backwards <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> dangerous as can be in a</li>
+<li>multibyte environment: there <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> no reason to believe that we are</li>
+<li>looking at the first byte of a character, nor are we necessarily</li>
+<li>working in a &quot;safe&quot; encoding.  Fortunately the bitpatterns we are</li>
+<li>looking for are <a class="wiki-source-link" href="../../source/src/include/c.h.html#L442" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/c.h.html&quot;}, '*');">unlikely</a> to occur as non-first bytes, but beware of</li>
+<li>trying to expand the set of cases that can be recognized.  We must</li>
+<li>guard the &lt;ctype.h&gt; macros by using isascii() first, too.</li>
+<p>*/</p>
+</ul>
+<p>/* skip trailing whitespace */ while (c &gt; obj &amp;&amp; isascii((unsigned char) *c) &amp;&amp; isspace((unsigned char) *c)) c--;</p>
+<p>/* must have a digit as last non-space char */ if (c == obj || !isascii((unsigned char) *c) || !isdigit((unsigned char) *c)) return -1;</p>
+<p>/* <a class="wiki-source-link" href="../../source/src/backend/regex/regexec.c.html#L420" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__regex__regexec_c__find.html&quot;}, '*');">find</a> start of digit string */ while (c &gt; obj &amp;&amp; isascii((unsigned char) *c) &amp;&amp; isdigit((unsigned char) *c)) c--;</p>
+<p>/* digits must be separated from object name by space or closing paren */ /* notice also that we are not allowing an empty object name ... */ if (c == obj || !isascii((unsigned char) *c) || !(isspace((unsigned char) *c) || *c == &#x27;)&#x27;)) return -1;</p>
+<p>/* parse digit string */ c++; lineno = atoi(c); if (lineno &lt; 1) { <a class="wiki-source-link" href="../../source/src/include/common/logging.h.html#L108" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/common/logging.h.html&quot;}, '*');">pg_log_error</a>(&quot;invalid line number: %s&quot;, c); return 0; }</p>
+<p>/* strip digit string from object name */ *c = &#x27;\0&#x27;;</p>
+<p>return lineno; } ~~~</p>
+<h2>失敗モードと境界条件</h2>
+<p>まだ解析していません。</p>
+<h2>保守担当者向けメモ</h2>
+<ul>
+<li>後続フェーズで、ソース本文の文脈と caller/callee 情報を使ってこのページを強化する。</li>
+</ul><script>
+(function() {
+  function notifyParent() {
+    if (parent === window) return;
+    parent.postMessage({type: "frame-location", frame: window.name || "", href: window.location.href}, "*");
+  }
+  document.addEventListener("click", function(event) {
+    const link = event.target.closest("a[data-panel]");
+    if (!link || parent === window) return;
+    parent.postMessage({type: "source-link", panel: link.dataset.panel}, "*");
+  });
+  window.addEventListener("load", notifyParent);
+  window.addEventListener("hashchange", notifyParent);
+})();
+</script></body></html>

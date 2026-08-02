@@ -1,0 +1,61 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>symbols/contrib__btree_gist__btree_uuid_c__gbt_uuid_compress.md</title><link rel="stylesheet" href="../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../source/contrib/btree_gist/btree_uuid.c.html#L100" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/contrib__btree_gist__btree_uuid_c__gbt_uuid_compress.html&quot;}, '*');">gbt_uuid_compress</a></h1>
+<h2>定義</h2>
+<ul>
+<li>種別: <code>function</code></li>
+<li>定義箇所: <code>contrib/btree_gist/btree_uuid.c:100</code></li>
+<li>所属モジュール: <a class="wiki-entity-link" href="../modules/contrib__btree_gist.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/modules/contrib__btree_gist.html&quot;, &quot;source&quot;: &quot;source/contrib/btree_gist/btree_bit.c.html&quot;}, '*');"><code>module:contrib/btree_gist</code></a></li>
+</ul>
+<h2>目的</h2>
+<p>静的シンボル索引から生成された初期シンボルページです。</p>
+<h2>シグネチャまたは形状</h2>
+<ul>
+<li>シグネチャ: <code>Datum gbt_uuid_compress(PG_FUNCTION_ARGS)</code></li>
+</ul>
+<h2>入力と出力</h2>
+<ul>
+<li>引数: <code>PG_FUNCTION_ARGS</code></li>
+<li>戻り値: <code>Datum</code></li>
+</ul>
+<h2>前提条件と不変条件</h2>
+<p>まだ解析していません。</p>
+<h2>アルゴリズムまたは振る舞い</h2>
+<ul>
+<li>複雑度: <code>medium</code> (score 11)</li>
+</ul>
+<p>まだ解析していません。</p>
+<h2>呼び出し元と呼び出し先</h2>
+<ul>
+<li>呼び出し元: なし</li>
+<li>呼び出し先: なし</li>
+<li>呼び出し元サイト: なし</li>
+<li>呼び出しサイト: <a class="wiki-source-link" href="../../source/src/include/fmgr.h.html#L277" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/fmgr.h.html&quot;}, '*');"><code>PG_GETARG_POINTER</code></a> at <code>contrib/btree_gist/btree_uuid.c:103:36</code> (unresolved), <code>palloc</code> at <code>contrib/btree_gist/btree_uuid.c:108:25</code> (unresolved, confidence=low), <a class="wiki-source-link" href="../../source/src/include/utils/uuid.h.html#L34" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__utils__uuid_h__DatumGetUUIDP.html&quot;}, '*');"><code>DatumGetUUIDP</code></a> at <code>contrib/btree_gist/btree_uuid.c:109:21</code> (unresolved), <code>palloc_object</code> at <code>contrib/btree_gist/btree_uuid.c:111:12</code> (unresolved), <code>memcpy</code> at <code>contrib/btree_gist/btree_uuid.c:113:3</code> (unresolved), <code>memcpy</code> at <code>contrib/btree_gist/btree_uuid.c:114:3</code> (unresolved), <a class="wiki-source-link" href="../../source/src/include/access/gist.h.html#L247" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/access/gist.h.html&quot;}, '*');"><code>gistentryinit</code></a> at <code>contrib/btree_gist/btree_uuid.c:115:3</code> (unresolved), <a class="wiki-source-link" href="../../source/src/include/postgres.h.html#L354" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/postgres.h.html&quot;}, '*');"><code>PointerGetDatum</code></a> at <code>contrib/btree_gist/btree_uuid.c:115:26</code> (macro), <a class="wiki-source-link" href="../../source/src/include/fmgr.h.html#L363" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/fmgr.h.html&quot;}, '*');"><code>PG_RETURN_POINTER</code></a> at <code>contrib/btree_gist/btree_uuid.c:122:2</code> (unresolved)</li>
+</ul>
+<h2>関連データ構造</h2>
+<p><code>Datum</code>, <a class="wiki-source-link" href="../../source/src/include/access/gist.h.html#L161" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__access__gist_h__GISTENTRY.html&quot;}, '*');"><code>GISTENTRY</code></a>, <code>PG_FUNCTION_ARGS</code>, <a class="wiki-source-link" href="../../source/src/include/utils/uuid.h.html#L20" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__utils__uuid_h__pg_uuid_t.html&quot;}, '*');"><code>pg_uuid_t</code></a></p>
+<h2>ソース抜粋</h2>
+<p>~~~c Datum <a class="wiki-source-link" href="../../source/contrib/btree_gist/btree_uuid.c.html#L100" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/contrib__btree_gist__btree_uuid_c__gbt_uuid_compress.html&quot;}, '*');">gbt_uuid_compress</a>(PG_FUNCTION_ARGS) { <a class="wiki-source-link" href="../../source/src/include/access/gist.h.html#L161" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__access__gist_h__GISTENTRY.html&quot;}, '*');">GISTENTRY</a>  *entry = (<a class="wiki-source-link" href="../../source/src/include/access/gist.h.html#L161" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__access__gist_h__GISTENTRY.html&quot;}, '*');">GISTENTRY</a> *) <a class="wiki-source-link" href="../../source/src/include/fmgr.h.html#L277" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/fmgr.h.html&quot;}, '*');">PG_GETARG_POINTER</a>(0); <a class="wiki-source-link" href="../../source/src/include/access/gist.h.html#L161" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__access__gist_h__GISTENTRY.html&quot;}, '*');">GISTENTRY</a>  *retval;</p>
+<p>if (entry-&gt;leafkey) { char	   *r = (char *) palloc(2 * <a class="wiki-source-link" href="../../source/src/include/utils/uuid.h.html#L18" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/utils/uuid.h.html&quot;}, '*');">UUID_LEN</a>); <a class="wiki-source-link" href="../../source/src/include/utils/uuid.h.html#L20" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__utils__uuid_h__pg_uuid_t.html&quot;}, '*');">pg_uuid_t</a>  *key = <a class="wiki-source-link" href="../../source/src/include/utils/uuid.h.html#L34" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__utils__uuid_h__DatumGetUUIDP.html&quot;}, '*');">DatumGetUUIDP</a>(entry-&gt;key);</p>
+<p>retval = palloc_object(<a class="wiki-source-link" href="../../source/src/include/access/gist.h.html#L161" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__access__gist_h__GISTENTRY.html&quot;}, '*');">GISTENTRY</a>);</p>
+<p>memcpy(r, key, <a class="wiki-source-link" href="../../source/src/include/utils/uuid.h.html#L18" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/utils/uuid.h.html&quot;}, '*');">UUID_LEN</a>); memcpy(r + <a class="wiki-source-link" href="../../source/src/include/utils/uuid.h.html#L18" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/utils/uuid.h.html&quot;}, '*');">UUID_LEN</a>, key, <a class="wiki-source-link" href="../../source/src/include/utils/uuid.h.html#L18" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/utils/uuid.h.html&quot;}, '*');">UUID_LEN</a>); <a class="wiki-source-link" href="../../source/src/include/access/gist.h.html#L247" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/access/gist.h.html&quot;}, '*');">gistentryinit</a>(*retval, <a class="wiki-source-link" href="../../source/src/include/postgres.h.html#L354" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/postgres.h.html&quot;}, '*');">PointerGetDatum</a>(r), entry-&gt;rel, entry-&gt;page, entry-&gt;offset, <a class="wiki-source-link" href="../../source/src/tools/pg_bsd_indent/indent_globs.h.html#L43" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/tools/pg_bsd_indent/indent_globs.h.html&quot;}, '*');">false</a>); } else retval = entry;</p>
+<p><a class="wiki-source-link" href="../../source/src/include/fmgr.h.html#L363" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/fmgr.h.html&quot;}, '*');">PG_RETURN_POINTER</a>(retval); } ~~~</p>
+<h2>失敗モードと境界条件</h2>
+<p>まだ解析していません。</p>
+<h2>保守担当者向けメモ</h2>
+<ul>
+<li>後続フェーズで、ソース本文の文脈と caller/callee 情報を使ってこのページを強化する。</li>
+</ul><script>
+(function() {
+  function notifyParent() {
+    if (parent === window) return;
+    parent.postMessage({type: "frame-location", frame: window.name || "", href: window.location.href}, "*");
+  }
+  document.addEventListener("click", function(event) {
+    const link = event.target.closest("a[data-panel]");
+    if (!link || parent === window) return;
+    parent.postMessage({type: "source-link", panel: link.dataset.panel}, "*");
+  });
+  window.addEventListener("load", notifyParent);
+  window.addEventListener("hashchange", notifyParent);
+})();
+</script></body></html>

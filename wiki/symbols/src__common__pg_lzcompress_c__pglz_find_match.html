@@ -1,0 +1,77 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>symbols/src__common__pg_lzcompress_c__pglz_find_match.md</title><link rel="stylesheet" href="../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../source/src/common/pg_lzcompress.c.html#L398" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__common__pg_lzcompress_c__pglz_find_match.html&quot;}, '*');">pglz_find_match</a></h1>
+<h2>定義</h2>
+<ul>
+<li>種別: <code>function</code></li>
+<li>定義箇所: <code>src/common/pg_lzcompress.c:398</code></li>
+<li>所属モジュール: <a class="wiki-entity-link" href="../modules/src__common.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/modules/src__common.html&quot;, &quot;source&quot;: &quot;source/src/common/archive.c.html&quot;}, '*');"><code>module:src/common</code></a></li>
+</ul>
+<h2>目的</h2>
+<p>静的シンボル索引から生成された初期シンボルページです。</p>
+<h2>シグネチャまたは形状</h2>
+<ul>
+<li>シグネチャ: <code>static inline int pglz_find_match(int16 *hstart, const char *input, const char *end, int *lenp, int *offp, int good_match, int good_drop, int mask)</code></li>
+</ul>
+<h2>入力と出力</h2>
+<ul>
+<li>引数: <code>int16 *hstart</code>, <code>const char *input</code>, <code>const char *end</code>, <code>int *lenp</code>, <code>int *offp</code>, <code>int good_match</code>, <code>int good_drop</code>, <code>int mask</code></li>
+<li>戻り値: <code>int</code></li>
+</ul>
+<h2>前提条件と不変条件</h2>
+<p>まだ解析していません。</p>
+<h2>アルゴリズムまたは振る舞い</h2>
+<ul>
+<li>複雑度: <code>high</code> (score 25)</li>
+</ul>
+<p>まだ解析していません。</p>
+<h2>呼び出し元と呼び出し先</h2>
+<ul>
+<li>呼び出し元: <a class="wiki-source-link" href="../../source/src/common/pg_lzcompress.c.html#L508" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__common__pg_lzcompress_c__pglz_compress.html&quot;}, '*');"><code>pglz_compress</code></a></li>
+<li>呼び出し先: なし</li>
+<li>呼び出し元サイト: <a class="wiki-source-link" href="../../source/src/common/pg_lzcompress.c.html#L508" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__common__pg_lzcompress_c__pglz_compress.html&quot;}, '*');"><code>pglz_compress</code></a> at <code>src/common/pg_lzcompress.c:633:7</code> (direct, confidence=high, resolved=<a class="wiki-entity-link" href="src__common__pg_lzcompress_c__pglz_find_match.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__common__pg_lzcompress_c__pglz_find_match.html&quot;, &quot;source&quot;: &quot;source/src/common/pg_lzcompress.c.html#L398&quot;}, '*');"><code>symbol:src/common/pg_lzcompress.c#pglz_find_match</code></a>)</li>
+<li>呼び出しサイト: <a class="wiki-source-link" href="../../source/src/common/pg_lzcompress.c.html#L277" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/common/pg_lzcompress.c.html&quot;}, '*');"><code>pglz_hist_idx</code></a> at <code>src/common/pg_lzcompress.c:410:18</code> (macro), <code>memcmp</code> at <code>src/common/pg_lzcompress.c:437:8</code> (unresolved)</li>
+</ul>
+<h2>関連データ構造</h2>
+<p><code>int16</code>, <code>int32</code>, <a class="wiki-source-link" href="../../source/src/common/pg_lzcompress.c.html#L210" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__common__pg_lzcompress_c__PGLZ_HistEntry.html&quot;}, '*');"><code>PGLZ_HistEntry</code></a></p>
+<h2>ソース抜粋</h2>
+<p>~~~c static <a class="wiki-source-link" href="../../source/src/include/c.h.html#L116" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/c.h.html&quot;}, '*');">inline</a> int <a class="wiki-source-link" href="../../source/src/common/pg_lzcompress.c.html#L398" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__common__pg_lzcompress_c__pglz_find_match.html&quot;}, '*');">pglz_find_match</a>(int16 *hstart, const char *input, const char *end, int *lenp, int *offp, int good_match, int good_drop, int mask) { <a class="wiki-source-link" href="../../source/src/common/pg_lzcompress.c.html#L210" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__common__pg_lzcompress_c__PGLZ_HistEntry.html&quot;}, '*');">PGLZ_HistEntry</a> *hent; int16		hentno; int32		len = 0; int32		off = 0;</p>
+<p>/*</p>
+<ul>
+<li>Traverse the linked history list until a good enough match <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> found.</li>
+<p>*/ hentno = hstart[<a class="wiki-source-link" href="../../source/src/common/pg_lzcompress.c.html#L277" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/common/pg_lzcompress.c.html&quot;}, '*');">pglz_hist_idx</a>(input, end, mask)]; hent = &amp;hist_entries[hentno]; while (hent != <a class="wiki-source-link" href="../../source/src/common/pg_lzcompress.c.html#L263" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/common/pg_lzcompress.c.html&quot;}, '*');">INVALID_ENTRY_PTR</a>) { const char *ip = input; const char *hp = hent-&gt;pos; int32		thisoff; int32		thislen;</p>
+</ul>
+<p>/*</p>
+<ul>
+<li>Stop if the offset does not fit into our tag anymore.</li>
+<p>*/ thisoff = ip - hp; if (thisoff &gt;= 0x0fff) break;</p>
+</ul>
+<p>/*</p>
+<ul>
+<li>Determine length of match. A better match must be larger than the</li>
+<li>best so far. And if we already have a match of 16 or more bytes,</li>
+<li>it&#x27;s worth the call overhead to use memcmp() to check if this match</li>
+<li><a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> <a class="wiki-source-link" href="../../source/src/backend/nodes/equalfuncs.c.html#L222" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__nodes__equalfuncs_c__equal.html&quot;}, '*');">equal</a> for the same size. After that we must fallback to</li>
+<li>character by character comparison to know the exact position where</li>
+<li>the diff occurred.</li>
+<p>*/ thislen = 0; if (len &gt;= 16) { if (memcmp(ip, hp, len) == 0) { thislen = len; ip += len; hp += len; while (ip &lt; end &amp;&amp; *ip == *hp &amp;&amp; thislen &lt; <a class="wiki-source-link" href="../../source/src/common/pg_lzcompress.c.html#L197" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/common/pg_lzcompress.c.html&quot;}, '*');">PGLZ_MAX_MATCH</a>) { thislen++; ip++; hp++; } } } else { while (ip &lt; end &amp;&amp; *ip == *hp &amp;&amp; thislen &lt; <a class="wiki-source-link" href="../../source/src/common/pg_lzcompress.c.html#L197" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/common/pg_lzcompress.c.html&quot;}, '*');">PGLZ_MAX_MATCH</a>) { thislen++; ip++; hp++; } ~~~</p>
+</ul>
+<h2>失敗モードと境界条件</h2>
+<p>まだ解析していません。</p>
+<h2>保守担当者向けメモ</h2>
+<ul>
+<li>後続フェーズで、ソース本文の文脈と caller/callee 情報を使ってこのページを強化する。</li>
+</ul><script>
+(function() {
+  function notifyParent() {
+    if (parent === window) return;
+    parent.postMessage({type: "frame-location", frame: window.name || "", href: window.location.href}, "*");
+  }
+  document.addEventListener("click", function(event) {
+    const link = event.target.closest("a[data-panel]");
+    if (!link || parent === window) return;
+    parent.postMessage({type: "source-link", panel: link.dataset.panel}, "*");
+  });
+  window.addEventListener("load", notifyParent);
+  window.addEventListener("hashchange", notifyParent);
+})();
+</script></body></html>

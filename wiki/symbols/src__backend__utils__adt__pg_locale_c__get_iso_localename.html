@@ -1,0 +1,80 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>symbols/src__backend__utils__adt__pg_locale_c__get_iso_localename.md</title><link rel="stylesheet" href="../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../source/src/backend/utils/adt/pg_locale.c.html#L953" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__utils__adt__pg_locale_c__get_iso_localename.html&quot;}, '*');">get_iso_localename</a></h1>
+<h2>定義</h2>
+<ul>
+<li>種別: <code>function</code></li>
+<li>定義箇所: <code>src/backend/utils/adt/pg_locale.c:953</code></li>
+<li>所属モジュール: <a class="wiki-entity-link" href="../modules/src__backend__utils__adt.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/modules/src__backend__utils__adt.html&quot;, &quot;source&quot;: &quot;source/src/backend/utils/adt/acl.c.html&quot;}, '*');"><code>module:src/backend/utils/adt</code></a></li>
+</ul>
+<h2>目的</h2>
+<p>静的シンボル索引から生成された初期シンボルページです。</p>
+<h2>シグネチャまたは形状</h2>
+<ul>
+<li>シグネチャ: <code>static char * get_iso_localename(const char *winlocname)</code></li>
+</ul>
+<h2>入力と出力</h2>
+<ul>
+<li>引数: <code>const char *winlocname</code></li>
+<li>戻り値: <code>char *</code></li>
+</ul>
+<h2>前提条件と不変条件</h2>
+<p>まだ解析していません。</p>
+<h2>アルゴリズムまたは振る舞い</h2>
+<ul>
+<li>複雑度: <code>high</code> (score 24)</li>
+</ul>
+<p>まだ解析していません。</p>
+<h2>呼び出し元と呼び出し先</h2>
+<ul>
+<li>呼び出し元: <a class="wiki-source-link" href="../../source/src/backend/utils/adt/pg_locale.c.html#L1028" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__utils__adt__pg_locale_c__IsoLocaleName.html&quot;}, '*');"><code>IsoLocaleName</code></a></li>
+<li>呼び出し先: <a class="wiki-source-link" href="../../source/src/backend/utils/mb/mbutils.c.html#L1164" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__utils__mb__mbutils_c__pg_mbstrlen.html&quot;}, '*');"><code>pg_mbstrlen</code></a>, <a class="wiki-source-link" href="../../source/src/backend/utils/adt/pg_locale_libc.c.html#L1242" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__utils__adt__pg_locale_libc_c__wchar2char.html&quot;}, '*');"><code>wchar2char</code></a></li>
+<li>呼び出し元サイト: <a class="wiki-source-link" href="../../source/src/backend/utils/adt/pg_locale.c.html#L1028" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__utils__adt__pg_locale_c__IsoLocaleName.html&quot;}, '*');"><code>IsoLocaleName</code></a> at <code>src/backend/utils/adt/pg_locale.c:1040:10</code> (direct, confidence=high, resolved=<a class="wiki-entity-link" href="src__backend__utils__adt__pg_locale_c__get_iso_localename.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__utils__adt__pg_locale_c__get_iso_localename.html&quot;, &quot;source&quot;: &quot;source/src/backend/utils/adt/pg_locale.c.html#L953&quot;}, '*');"><code>symbol:src/backend/utils/adt/pg_locale.c#get_iso_localename</code></a>)</li>
+<li>呼び出しサイト: <code>strchr</code> at <code>src/backend/utils/adt/pg_locale.c:970:11</code> (unresolved), <a class="wiki-source-link" href="../../source/src/backend/utils/mb/mbutils.c.html#L1164" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__utils__mb__mbutils_c__pg_mbstrlen.html&quot;}, '*');"><code>pg_mbstrlen</code></a> at <code>src/backend/utils/adt/pg_locale.c:974:9</code> (direct, confidence=high, resolved=<a class="wiki-entity-link" href="src__backend__utils__mb__mbutils_c__pg_mbstrlen.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__utils__mb__mbutils_c__pg_mbstrlen.html&quot;, &quot;source&quot;: &quot;source/src/backend/utils/mb/mbutils.c.html#L1164&quot;}, '*');"><code>symbol:src/backend/utils/mb/mbutils.c#pg_mbstrlen</code></a>), <code>memset</code> at <code>src/backend/utils/adt/pg_locale.c:976:2</code> (unresolved), <code>memset</code> at <code>src/backend/utils/adt/pg_locale.c:977:2</code> (unresolved), <code>MultiByteToWideChar</code> at <code>src/backend/utils/adt/pg_locale.c:978:2</code> (unresolved), <code>GetLocaleInfoEx</code> at <code>src/backend/utils/adt/pg_locale.c:985:12</code> (unresolved), <code>EnumSystemLocalesEx</code> at <code>src/backend/utils/adt/pg_locale.c:998:3</code> (unresolved), <a class="wiki-source-link" href="../../source/src/backend/utils/adt/pg_locale_libc.c.html#L1242" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__utils__adt__pg_locale_libc_c__wchar2char.html&quot;}, '*');"><code>wchar2char</code></a> at <code>src/backend/utils/adt/pg_locale.c:1008:8</code> (direct, confidence=high, resolved=<a class="wiki-entity-link" href="src__backend__utils__adt__pg_locale_libc_c__wchar2char.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__utils__adt__pg_locale_libc_c__wchar2char.html&quot;, &quot;source&quot;: &quot;source/src/backend/utils/adt/pg_locale_libc.c.html#L1242&quot;}, '*');"><code>symbol:src/backend/utils/adt/pg_locale_libc.c#wchar2char</code></a>), <code>strchr</code> at <code>src/backend/utils/adt/pg_locale.c:1019:12</code> (unresolved)</li>
+</ul>
+<h2>関連データ構造</h2>
+<p><a class="wiki-source-link" href="../../source/src/interfaces/ecpg/test/expected/preproc-init.c.html#L82" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__interfaces__ecpg__test__expected__preproc-init_c__e.html&quot;}, '*');"><code>e</code></a>, <code>string</code></p>
+<h2>ソース抜粋</h2>
+<p>~~~c static char * <a class="wiki-source-link" href="../../source/src/backend/utils/adt/pg_locale.c.html#L953" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__utils__adt__pg_locale_c__get_iso_localename.html&quot;}, '*');">get_iso_localename</a>(const char *winlocname) { wchar_t		wc_locale_name[LOCALE_NAME_MAX_LENGTH]; wchar_t		buffer[LOCALE_NAME_MAX_LENGTH]; static char iso_lc_messages[LOCALE_NAME_MAX_LENGTH]; const char *<a class="wiki-source-link" href="../../source/src/tools/pg_bsd_indent/indent_codes.h.html#L66" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/tools/pg_bsd_indent/indent_codes.h.html&quot;}, '*');">period</a>; int			len; int			ret_val;</p>
+<p>/*</p>
+<ul>
+<li>Valid locales have the following syntax:</li>
+<li>&lt;Language&gt;[_&lt;Country&gt;[.&lt;CodePage&gt;]]</li>
+<p>*</p>
+<li>GetLocaleInfoEx can only take <a class="wiki-source-link" href="../../source/src/bin/initdb/initdb.c.html#L140" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/bin/initdb/initdb.c.html&quot;}, '*');">locale</a> name without code-page and for the</li>
+<li>purpose of this API the code-page doesn&#x27;t matter.</li>
+<p>*/ <a class="wiki-source-link" href="../../source/src/tools/pg_bsd_indent/indent_codes.h.html#L66" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/tools/pg_bsd_indent/indent_codes.h.html&quot;}, '*');">period</a> = strchr(winlocname, &#x27;.&#x27;); if (<a class="wiki-source-link" href="../../source/src/tools/pg_bsd_indent/indent_codes.h.html#L66" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/tools/pg_bsd_indent/indent_codes.h.html&quot;}, '*');">period</a> != NULL) len = <a class="wiki-source-link" href="../../source/src/tools/pg_bsd_indent/indent_codes.h.html#L66" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/tools/pg_bsd_indent/indent_codes.h.html&quot;}, '*');">period</a> - winlocname; else len = <a class="wiki-source-link" href="../../source/src/backend/utils/mb/mbutils.c.html#L1164" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__utils__mb__mbutils_c__pg_mbstrlen.html&quot;}, '*');">pg_mbstrlen</a>(winlocname);</p>
+</ul>
+<p>memset(wc_locale_name, 0, sizeof(wc_locale_name)); memset(buffer, 0, sizeof(buffer)); MultiByteToWideChar(CP_ACP, 0, winlocname, len, wc_locale_name, LOCALE_NAME_MAX_LENGTH);</p>
+<p>/*</p>
+<ul>
+<li>If the <a class="wiki-source-link" href="../../source/src/bin/initdb/initdb.c.html#L146" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/bin/initdb/initdb.c.html&quot;}, '*');">lc_messages</a> <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> already a Unix-style string, we have a direct</li>
+<li>match with LOCALE_SNAME, e.g. en-US, en_US.</li>
+<p>*/ ret_val = GetLocaleInfoEx(wc_locale_name, LOCALE_SNAME, (LPWSTR) &amp;buffer, LOCALE_NAME_MAX_LENGTH); if (!ret_val) { /*</p>
+<li>Search for a <a class="wiki-source-link" href="../../source/src/bin/initdb/initdb.c.html#L140" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/bin/initdb/initdb.c.html&quot;}, '*');">locale</a> in the <a class="wiki-source-link" href="../../source/src/include/port.h.html#L388" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/port.h.html&quot;}, '*');">system</a> that matches language and country</li>
+<li>name.</li>
+<p>*/ wchar_t    *argv[3];</p>
+</ul>
+<p>argv[0] = wc_locale_name; argv[1] = buffer; argv[2] = (wchar_t *) &amp;ret_val; EnumSystemLocalesEx(<a class="wiki-source-link" href="../../source/src/backend/utils/adt/pg_locale.c.html#L887" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__utils__adt__pg_locale_c__search_locale_enum.html&quot;}, '*');">search_locale_enum</a>, LOCALE_WINDOWS, (LPARAM) argv, NULL); }</p>
+<p>if (ret_val) { size_t		rc; char	   *hyphen;</p>
+<p>/* <a class="wiki-source-link" href="../../source/src/timezone/strftime.c.html#L62" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/timezone/strftime.c.html&quot;}, '*');">Locale</a> names use only ASCII, any conversion <a class="wiki-source-link" href="../../source/src/bin/initdb/initdb.c.html#L140" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/bin/initdb/initdb.c.html&quot;}, '*');">locale</a> suffices. */ rc = <a class="wiki-source-link" href="../../source/src/backend/utils/adt/pg_locale_libc.c.html#L1242" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__utils__adt__pg_locale_libc_c__wchar2char.html&quot;}, '*');">wchar2char</a>(iso_lc_messages, buffer, sizeof(iso_lc_messages), NULL); if (rc == -1 || rc == sizeof(iso_lc_messages)) return NULL;</p>
+<p>/* ~~~</p>
+<h2>失敗モードと境界条件</h2>
+<p>まだ解析していません。</p>
+<h2>保守担当者向けメモ</h2>
+<ul>
+<li>後続フェーズで、ソース本文の文脈と caller/callee 情報を使ってこのページを強化する。</li>
+</ul><script>
+(function() {
+  function notifyParent() {
+    if (parent === window) return;
+    parent.postMessage({type: "frame-location", frame: window.name || "", href: window.location.href}, "*");
+  }
+  document.addEventListener("click", function(event) {
+    const link = event.target.closest("a[data-panel]");
+    if (!link || parent === window) return;
+    parent.postMessage({type: "source-link", panel: link.dataset.panel}, "*");
+  });
+  window.addEventListener("load", notifyParent);
+  window.addEventListener("hashchange", notifyParent);
+})();
+</script></body></html>

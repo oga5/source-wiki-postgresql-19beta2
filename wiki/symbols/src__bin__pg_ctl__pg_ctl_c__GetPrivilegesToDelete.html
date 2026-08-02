@@ -1,0 +1,63 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>symbols/src__bin__pg_ctl__pg_ctl_c__GetPrivilegesToDelete.md</title><link rel="stylesheet" href="../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../source/src/bin/pg_ctl/pg_ctl.c.html#L1907" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__bin__pg_ctl__pg_ctl_c__GetPrivilegesToDelete.html&quot;}, '*');">GetPrivilegesToDelete</a></h1>
+<h2>定義</h2>
+<ul>
+<li>種別: <code>function</code></li>
+<li>定義箇所: <code>src/bin/pg_ctl/pg_ctl.c:1907</code></li>
+<li>所属モジュール: <a class="wiki-entity-link" href="../modules/src__bin__pg_ctl.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/modules/src__bin__pg_ctl.html&quot;, &quot;source&quot;: &quot;source/src/bin/pg_ctl/pg_ctl.c.html&quot;}, '*');"><code>module:src/bin/pg_ctl</code></a></li>
+</ul>
+<h2>目的</h2>
+<p>静的シンボル索引から生成された初期シンボルページです。</p>
+<h2>シグネチャまたは形状</h2>
+<ul>
+<li>シグネチャ: <code>static PTOKEN_PRIVILEGES GetPrivilegesToDelete(HANDLE hToken)</code></li>
+</ul>
+<h2>入力と出力</h2>
+<ul>
+<li>引数: <code>HANDLE hToken</code></li>
+<li>戻り値: <code>PTOKEN_PRIVILEGES</code></li>
+</ul>
+<h2>前提条件と不変条件</h2>
+<p>まだ解析していません。</p>
+<h2>アルゴリズムまたは振る舞い</h2>
+<ul>
+<li>複雑度: <code>high</code> (score 29)</li>
+</ul>
+<p>まだ解析していません。</p>
+<h2>呼び出し元と呼び出し先</h2>
+<ul>
+<li>呼び出し元: <code>CreateRestrictedProcess</code></li>
+<li>呼び出し先: <a class="wiki-source-link" href="../../source/src/common/fe_memutils.c.html#L64" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__common__fe_memutils_c__pg_malloc_extended.html&quot;}, '*');"><code>pg_malloc_extended</code></a>, <code>write_stderr</code></li>
+<li>呼び出し元サイト: <code>CreateRestrictedProcess</code> at <code>src/bin/pg_ctl/pg_ctl.c:1819:13</code> (direct, confidence=high, resolved=<a class="wiki-entity-link" href="src__bin__pg_ctl__pg_ctl_c__GetPrivilegesToDelete.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__bin__pg_ctl__pg_ctl_c__GetPrivilegesToDelete.html&quot;, &quot;source&quot;: &quot;source/src/bin/pg_ctl/pg_ctl.c.html#L1907&quot;}, '*');"><code>symbol:src/bin/pg_ctl/pg_ctl.c#GetPrivilegesToDelete</code></a>)</li>
+<li>呼び出しサイト: <code>LookupPrivilegeValue</code> at <code>src/bin/pg_ctl/pg_ctl.c:1917:7</code> (unresolved), <code>LookupPrivilegeValue</code> at <code>src/bin/pg_ctl/pg_ctl.c:1918:4</code> (unresolved), <code>write_stderr</code> at <code>src/bin/pg_ctl/pg_ctl.c:1920:3</code> (direct, confidence=high, resolved=<a class="wiki-entity-link" href="src__bin__pg_ctl__pg_ctl_c__write_stderr.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__bin__pg_ctl__pg_ctl_c__write_stderr.html&quot;, &quot;source&quot;: &quot;source/src/bin/pg_ctl/pg_ctl.c.html#L202&quot;}, '*');"><code>symbol:src/bin/pg_ctl/pg_ctl.c#write_stderr</code></a>), <code>_</code> at <code>src/bin/pg_ctl/pg_ctl.c:1920:16</code> (unresolved), <code>GetLastError</code> at <code>src/bin/pg_ctl/pg_ctl.c:1921:17</code> (unresolved), <code>GetTokenInformation</code> at <code>src/bin/pg_ctl/pg_ctl.c:1925:7</code> (unresolved), <code>GetLastError</code> at <code>src/bin/pg_ctl/pg_ctl.c:1926:3</code> (unresolved), <code>write_stderr</code> at <code>src/bin/pg_ctl/pg_ctl.c:1928:3</code> (direct, confidence=high, resolved=<a class="wiki-entity-link" href="src__bin__pg_ctl__pg_ctl_c__write_stderr.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__bin__pg_ctl__pg_ctl_c__write_stderr.html&quot;, &quot;source&quot;: &quot;source/src/bin/pg_ctl/pg_ctl.c.html#L202&quot;}, '*');"><code>symbol:src/bin/pg_ctl/pg_ctl.c#write_stderr</code></a>), <code>_</code> at <code>src/bin/pg_ctl/pg_ctl.c:1928:16</code> (unresolved), <code>GetLastError</code> at <code>src/bin/pg_ctl/pg_ctl.c:1929:17</code> (unresolved), <a class="wiki-source-link" href="../../source/src/common/fe_memutils.c.html#L64" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__common__fe_memutils_c__pg_malloc_extended.html&quot;}, '*');"><code>pg_malloc_extended</code></a> at <code>src/bin/pg_ctl/pg_ctl.c:1933:35</code> (direct, confidence=high, resolved=<a class="wiki-entity-link" href="src__common__fe_memutils_c__pg_malloc_extended.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__common__fe_memutils_c__pg_malloc_extended.html&quot;, &quot;source&quot;: &quot;source/src/common/fe_memutils.c.html#L64&quot;}, '*');"><code>symbol:src/common/fe_memutils.c#pg_malloc_extended</code></a>), <code>write_stderr</code> at <code>src/bin/pg_ctl/pg_ctl.c:1937:3</code> (direct, confidence=high, resolved=<a class="wiki-entity-link" href="src__bin__pg_ctl__pg_ctl_c__write_stderr.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__bin__pg_ctl__pg_ctl_c__write_stderr.html&quot;, &quot;source&quot;: &quot;source/src/bin/pg_ctl/pg_ctl.c.html#L202&quot;}, '*');"><code>symbol:src/bin/pg_ctl/pg_ctl.c#write_stderr</code></a>), <code>_</code> at <code>src/bin/pg_ctl/pg_ctl.c:1937:16</code> (unresolved), <code>GetTokenInformation</code> at <code>src/bin/pg_ctl/pg_ctl.c:1941:7</code> (unresolved), <code>write_stderr</code> at <code>src/bin/pg_ctl/pg_ctl.c:1943:3</code> (direct, confidence=high, resolved=<a class="wiki-entity-link" href="src__bin__pg_ctl__pg_ctl_c__write_stderr.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__bin__pg_ctl__pg_ctl_c__write_stderr.html&quot;, &quot;source&quot;: &quot;source/src/bin/pg_ctl/pg_ctl.c.html#L202&quot;}, '*');"><code>symbol:src/bin/pg_ctl/pg_ctl.c#write_stderr</code></a>), <code>_</code> at <code>src/bin/pg_ctl/pg_ctl.c:1943:16</code> (unresolved), <code>GetLastError</code> at <code>src/bin/pg_ctl/pg_ctl.c:1944:17</code> (unresolved), <a class="wiki-source-link" href="../../source/src/include/snowball/snowball_runtime.h.html#L65" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/snowball/snowball_runtime.h.html&quot;}, '*');"><code>free</code></a> at <code>src/bin/pg_ctl/pg_ctl.c:1945:3</code> (unresolved), <code>memcmp</code> at <code>src/bin/pg_ctl/pg_ctl.c:1951:7</code> (unresolved), <code>memcmp</code> at <code>src/bin/pg_ctl/pg_ctl.c:1952:4</code> (unresolved)</li>
+</ul>
+<h2>関連データ構造</h2>
+<p><a class="wiki-source-link" href="../../source/src/port/win32error.c.html#L20" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__port__win32error_c__DWORD.html&quot;}, '*');"><code>DWORD</code></a>, <code>token</code></p>
+<h2>ソース抜粋</h2>
+<p>~~~c static PTOKEN_PRIVILEGES <a class="wiki-source-link" href="../../source/src/bin/pg_ctl/pg_ctl.c.html#L1907" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__bin__pg_ctl__pg_ctl_c__GetPrivilegesToDelete.html&quot;}, '*');">GetPrivilegesToDelete</a>(HANDLE hToken) { int			i, j; <a class="wiki-source-link" href="../../source/src/port/win32error.c.html#L20" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__port__win32error_c__DWORD.html&quot;}, '*');">DWORD</a>		length; PTOKEN_PRIVILEGES tokenPrivs; LUID		luidLockPages; LUID		luidChangeNotify;</p>
+<p>if (!LookupPrivilegeValue(NULL, SE_LOCK_MEMORY_NAME, &amp;luidLockPages) || !LookupPrivilegeValue(NULL, SE_CHANGE_NOTIFY_NAME, &amp;luidChangeNotify)) { write_stderr(_(&quot;%s: could not get LUIDs for privileges: error code %lu\n&quot;), progname, GetLastError()); return NULL; }</p>
+<p>if (!GetTokenInformation(hToken, TokenPrivileges, NULL, 0, &amp;length) &amp;&amp; GetLastError() != ERROR_INSUFFICIENT_BUFFER) { write_stderr(_(&quot;%s: could not get token information: error code %lu\n&quot;), progname, GetLastError()); return NULL; }</p>
+<p>tokenPrivs = (PTOKEN_PRIVILEGES) <a class="wiki-source-link" href="../../source/src/common/fe_memutils.c.html#L64" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__common__fe_memutils_c__pg_malloc_extended.html&quot;}, '*');">pg_malloc_extended</a>(length, MCXT_ALLOC_NO_OOM); if (tokenPrivs == NULL) { write_stderr(_(&quot;%s: out of memory\n&quot;), progname); return NULL; }</p>
+<p>if (!GetTokenInformation(hToken, TokenPrivileges, tokenPrivs, length, &amp;length)) { write_stderr(_(&quot;%s: could not get token information: error code %lu\n&quot;), progname, GetLastError()); <a class="wiki-source-link" href="../../source/src/include/snowball/snowball_runtime.h.html#L65" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/snowball/snowball_runtime.h.html&quot;}, '*');">free</a>(tokenPrivs); return NULL; }</p>
+<p>for (i = 0; i &lt; tokenPrivs-&gt;PrivilegeCount; i++) { if (memcmp(&amp;tokenPrivs-&gt;Privileges[i].Luid, &amp;luidLockPages, sizeof(LUID)) == 0 || memcmp(&amp;tokenPrivs-&gt;Privileges[i].Luid, &amp;luidChangeNotify, sizeof(LUID)) == 0) { for (j = i; j &lt; tokenPrivs-&gt;PrivilegeCount - 1; j++) tokenPrivs-&gt;Privileges[j] = tokenPrivs-&gt;Privileges[j + 1]; tokenPrivs-&gt;PrivilegeCount--; } }</p>
+<p>return tokenPrivs; } ~~~</p>
+<h2>失敗モードと境界条件</h2>
+<p>まだ解析していません。</p>
+<h2>保守担当者向けメモ</h2>
+<ul>
+<li>後続フェーズで、ソース本文の文脈と caller/callee 情報を使ってこのページを強化する。</li>
+</ul><script>
+(function() {
+  function notifyParent() {
+    if (parent === window) return;
+    parent.postMessage({type: "frame-location", frame: window.name || "", href: window.location.href}, "*");
+  }
+  document.addEventListener("click", function(event) {
+    const link = event.target.closest("a[data-panel]");
+    if (!link || parent === window) return;
+    parent.postMessage({type: "source-link", panel: link.dataset.panel}, "*");
+  });
+  window.addEventListener("load", notifyParent);
+  window.addEventListener("hashchange", notifyParent);
+})();
+</script></body></html>

@@ -1,0 +1,60 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>symbols/src__backend__optimizer__prep__prepjointree_c__find_dependent_phvs.md</title><link rel="stylesheet" href="../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../source/src/backend/optimizer/prep/prepjointree.c.html#L4334" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__prep__prepjointree_c__find_dependent_phvs.html&quot;}, '*');">find_dependent_phvs</a></h1>
+<h2>定義</h2>
+<ul>
+<li>種別: <code>function</code></li>
+<li>定義箇所: <code>src/backend/optimizer/prep/prepjointree.c:4334</code></li>
+<li>所属モジュール: <a class="wiki-entity-link" href="../modules/src__backend__optimizer__prep.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/modules/src__backend__optimizer__prep.html&quot;, &quot;source&quot;: &quot;source/src/backend/optimizer/prep/prepagg.c.html&quot;}, '*');"><code>module:src/backend/optimizer/prep</code></a></li>
+</ul>
+<h2>目的</h2>
+<p>静的シンボル索引から生成された初期シンボルページです。</p>
+<h2>シグネチャまたは形状</h2>
+<ul>
+<li>シグネチャ: <code>static bool find_dependent_phvs(PlannerInfo *root, int varno)</code></li>
+</ul>
+<h2>入力と出力</h2>
+<ul>
+<li>引数: <code>PlannerInfo *root</code>, <code>int varno</code></li>
+<li>戻り値: <code>bool</code></li>
+</ul>
+<h2>前提条件と不変条件</h2>
+<p>まだ解析していません。</p>
+<h2>アルゴリズムまたは振る舞い</h2>
+<ul>
+<li>複雑度: <code>medium</code> (score 10)</li>
+</ul>
+<p>まだ解析していません。</p>
+<h2>呼び出し元と呼び出し先</h2>
+<ul>
+<li>呼び出し元: <a class="wiki-source-link" href="../../source/src/backend/optimizer/prep/prepjointree.c.html#L3959" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__prep__prepjointree_c__remove_useless_results_recurse.html&quot;}, '*');"><code>remove_useless_results_recurse</code></a></li>
+<li>呼び出し先: <a class="wiki-source-link" href="../../source/src/backend/nodes/bitmapset.c.html#L215" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__nodes__bitmapset_c__bms_make_singleton.html&quot;}, '*');"><code>bms_make_singleton</code></a></li>
+<li>呼び出し元サイト: <a class="wiki-source-link" href="../../source/src/backend/optimizer/prep/prepjointree.c.html#L3959" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__prep__prepjointree_c__remove_useless_results_recurse.html&quot;}, '*');"><code>remove_useless_results_recurse</code></a> at <code>src/backend/optimizer/prep/prepjointree.c:4161:8</code> (direct, confidence=high, resolved=<a class="wiki-entity-link" href="src__backend__optimizer__prep__prepjointree_c__find_dependent_phvs.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__prep__prepjointree_c__find_dependent_phvs.html&quot;, &quot;source&quot;: &quot;source/src/backend/optimizer/prep/prepjointree.c.html#L4334&quot;}, '*');"><code>symbol:src/backend/optimizer/prep/prepjointree.c#find_dependent_phvs</code></a>)</li>
+<li>呼び出しサイト: <a class="wiki-source-link" href="../../source/src/backend/nodes/bitmapset.c.html#L215" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__nodes__bitmapset_c__bms_make_singleton.html&quot;}, '*');"><code>bms_make_singleton</code></a> at <code>src/backend/optimizer/prep/prepjointree.c:4343:19</code> (direct, confidence=high, resolved=<a class="wiki-entity-link" href="src__backend__nodes__bitmapset_c__bms_make_singleton.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__nodes__bitmapset_c__bms_make_singleton.html&quot;, &quot;source&quot;: &quot;source/src/backend/nodes/bitmapset.c.html#L215&quot;}, '*');"><code>symbol:src/backend/nodes/bitmapset.c#bms_make_singleton</code></a>), <a class="wiki-source-link" href="../../source/src/include/nodes/nodeFuncs.h.html#L160" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/nodes/nodeFuncs.h.html&quot;}, '*');"><code>query_tree_walker</code></a> at <code>src/backend/optimizer/prep/prepjointree.c:4346:6</code> (macro), <a class="wiki-source-link" href="../../source/src/include/nodes/nodeFuncs.h.html#L155" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/nodes/nodeFuncs.h.html&quot;}, '*');"><code>expression_tree_walker</code></a> at <code>src/backend/optimizer/prep/prepjointree.c:4349:6</code> (macro)</li>
+</ul>
+<h2>関連データ構造</h2>
+<p><a class="wiki-source-link" href="../../source/src/backend/optimizer/prep/prepjointree.c.html#L4293" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__prep__prepjointree_c__find_dependent_phvs_context.html&quot;}, '*');"><code>find_dependent_phvs_context</code></a>, <code>Node</code>, <code>PlannerInfo</code></p>
+<h2>ソース抜粋</h2>
+<p>~~~c static bool <a class="wiki-source-link" href="../../source/src/backend/optimizer/prep/prepjointree.c.html#L4334" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__prep__prepjointree_c__find_dependent_phvs.html&quot;}, '*');">find_dependent_phvs</a>(PlannerInfo *root, int varno) { <a class="wiki-source-link" href="../../source/src/backend/optimizer/prep/prepjointree.c.html#L4293" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__prep__prepjointree_c__find_dependent_phvs_context.html&quot;}, '*');">find_dependent_phvs_context</a> context;</p>
+<p>/* If there are no PHVs anywhere, we needn&#x27;t work hard */ if (root-&gt;glob-&gt;lastPHId == 0) return <a class="wiki-source-link" href="../../source/src/tools/pg_bsd_indent/indent_globs.h.html#L43" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/tools/pg_bsd_indent/indent_globs.h.html&quot;}, '*');">false</a>;</p>
+<p>context.relids = <a class="wiki-source-link" href="../../source/src/backend/nodes/bitmapset.c.html#L215" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__nodes__bitmapset_c__bms_make_singleton.html&quot;}, '*');">bms_make_singleton</a>(varno); context.sublevels_up = 0;</p>
+<p>if (<a class="wiki-source-link" href="../../source/src/include/nodes/nodeFuncs.h.html#L160" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/nodes/nodeFuncs.h.html&quot;}, '*');">query_tree_walker</a>(root-&gt;parse, <a class="wiki-source-link" href="../../source/src/backend/optimizer/prep/prepjointree.c.html#L4299" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__prep__prepjointree_c__find_dependent_phvs_walker.html&quot;}, '*');">find_dependent_phvs_walker</a>, &amp;context, 0)) return <a class="wiki-source-link" href="../../source/src/tools/pg_bsd_indent/indent_globs.h.html#L46" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/tools/pg_bsd_indent/indent_globs.h.html&quot;}, '*');">true</a>; /* The append_rel_list could be populated already, so check it too */ if (<a class="wiki-source-link" href="../../source/src/include/nodes/nodeFuncs.h.html#L155" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/nodes/nodeFuncs.h.html&quot;}, '*');">expression_tree_walker</a>((Node *) root-&gt;append_rel_list, <a class="wiki-source-link" href="../../source/src/backend/optimizer/prep/prepjointree.c.html#L4299" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__prep__prepjointree_c__find_dependent_phvs_walker.html&quot;}, '*');">find_dependent_phvs_walker</a>, &amp;context)) return <a class="wiki-source-link" href="../../source/src/tools/pg_bsd_indent/indent_globs.h.html#L46" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/tools/pg_bsd_indent/indent_globs.h.html&quot;}, '*');">true</a>; return <a class="wiki-source-link" href="../../source/src/tools/pg_bsd_indent/indent_globs.h.html#L43" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/tools/pg_bsd_indent/indent_globs.h.html&quot;}, '*');">false</a>; } ~~~</p>
+<h2>失敗モードと境界条件</h2>
+<p>まだ解析していません。</p>
+<h2>保守担当者向けメモ</h2>
+<ul>
+<li>後続フェーズで、ソース本文の文脈と caller/callee 情報を使ってこのページを強化する。</li>
+</ul><script>
+(function() {
+  function notifyParent() {
+    if (parent === window) return;
+    parent.postMessage({type: "frame-location", frame: window.name || "", href: window.location.href}, "*");
+  }
+  document.addEventListener("click", function(event) {
+    const link = event.target.closest("a[data-panel]");
+    if (!link || parent === window) return;
+    parent.postMessage({type: "source-link", panel: link.dataset.panel}, "*");
+  });
+  window.addEventListener("load", notifyParent);
+  window.addEventListener("hashchange", notifyParent);
+})();
+</script></body></html>

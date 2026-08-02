@@ -1,0 +1,60 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>symbols/src__backend__tsearch__ts_typanalyze_c__ts_typanalyze.md</title><link rel="stylesheet" href="../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../source/src/backend/tsearch/ts_typanalyze.c.html#L57" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__tsearch__ts_typanalyze_c__ts_typanalyze.html&quot;}, '*');">ts_typanalyze</a></h1>
+<h2>定義</h2>
+<ul>
+<li>種別: <code>function</code></li>
+<li>定義箇所: <code>src/backend/tsearch/ts_typanalyze.c:57</code></li>
+<li>所属モジュール: <a class="wiki-entity-link" href="../modules/src__backend__tsearch.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/modules/src__backend__tsearch.html&quot;, &quot;source&quot;: &quot;source/src/backend/tsearch/dict.c.html&quot;}, '*');"><code>module:src/backend/tsearch</code></a></li>
+</ul>
+<h2>目的</h2>
+<p>静的シンボル索引から生成された初期シンボルページです。</p>
+<h2>シグネチャまたは形状</h2>
+<ul>
+<li>シグネチャ: <code>Datum ts_typanalyze(PG_FUNCTION_ARGS)</code></li>
+</ul>
+<h2>入力と出力</h2>
+<ul>
+<li>引数: <code>PG_FUNCTION_ARGS</code></li>
+<li>戻り値: <code>Datum</code></li>
+</ul>
+<h2>前提条件と不変条件</h2>
+<p>まだ解析していません。</p>
+<h2>アルゴリズムまたは振る舞い</h2>
+<ul>
+<li>複雑度: <code>medium</code> (score 6)</li>
+</ul>
+<p>まだ解析していません。</p>
+<h2>呼び出し元と呼び出し先</h2>
+<ul>
+<li>呼び出し元: なし</li>
+<li>呼び出し先: なし</li>
+<li>呼び出し元サイト: なし</li>
+<li>呼び出しサイト: <a class="wiki-source-link" href="../../source/src/include/fmgr.h.html#L277" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/fmgr.h.html&quot;}, '*');"><code>PG_GETARG_POINTER</code></a> at <code>src/backend/tsearch/ts_typanalyze.c:60:41</code> (unresolved), <a class="wiki-source-link" href="../../source/src/include/fmgr.h.html#L360" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/fmgr.h.html&quot;}, '*');"><code>PG_RETURN_BOOL</code></a> at <code>src/backend/tsearch/ts_typanalyze.c:70:2</code> (unresolved)</li>
+</ul>
+<h2>関連データ構造</h2>
+<p><code>c</code>, <code>Datum</code>, <code>PG_FUNCTION_ARGS</code>, <a class="wiki-source-link" href="../../source/src/include/commands/vacuum.h.html#L115" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__commands__vacuum_h__VacAttrStats.html&quot;}, '*');"><code>VacAttrStats</code></a></p>
+<h2>ソース抜粋</h2>
+<p>~~~c Datum <a class="wiki-source-link" href="../../source/src/backend/tsearch/ts_typanalyze.c.html#L57" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__tsearch__ts_typanalyze_c__ts_typanalyze.html&quot;}, '*');">ts_typanalyze</a>(PG_FUNCTION_ARGS) { <a class="wiki-source-link" href="../../source/src/include/commands/vacuum.h.html#L115" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__commands__vacuum_h__VacAttrStats.html&quot;}, '*');">VacAttrStats</a> *stats = (<a class="wiki-source-link" href="../../source/src/include/commands/vacuum.h.html#L115" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__commands__vacuum_h__VacAttrStats.html&quot;}, '*');">VacAttrStats</a> *) <a class="wiki-source-link" href="../../source/src/include/fmgr.h.html#L277" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/fmgr.h.html&quot;}, '*');">PG_GETARG_POINTER</a>(0);</p>
+<p>/* If the attstattarget column <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> negative, use the default <a class="wiki-source-link" href="../../source/src/interfaces/ecpg/compatlib/informix.c.html#L687" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/ecpg/compatlib/informix.c.html&quot;}, '*');">value</a> */ if (stats-&gt;attstattarget &lt; 0) stats-&gt;attstattarget = <a class="wiki-source-link" href="../../source/src/backend/commands/analyze.c.html#L71" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/commands/analyze.c.html&quot;}, '*');">default_statistics_target</a>;</p>
+<p>stats-&gt;compute_stats = <a class="wiki-source-link" href="../../source/src/backend/tsearch/ts_typanalyze.c.html#L140" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__tsearch__ts_typanalyze_c__compute_tsvector_stats.html&quot;}, '*');">compute_tsvector_stats</a>; /* see <a class="wiki-source-link" href="../../source/src/tools/pg_bsd_indent/indent_codes.h.html#L49" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/tools/pg_bsd_indent/indent_codes.h.html&quot;}, '*');">comment</a> about the choice of minrows in commands/analyze.c */ stats-&gt;minrows = 300 * stats-&gt;attstattarget;</p>
+<p><a class="wiki-source-link" href="../../source/src/include/fmgr.h.html#L360" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/fmgr.h.html&quot;}, '*');">PG_RETURN_BOOL</a>(<a class="wiki-source-link" href="../../source/src/tools/pg_bsd_indent/indent_globs.h.html#L46" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/tools/pg_bsd_indent/indent_globs.h.html&quot;}, '*');">true</a>); } ~~~</p>
+<h2>失敗モードと境界条件</h2>
+<p>まだ解析していません。</p>
+<h2>保守担当者向けメモ</h2>
+<ul>
+<li>後続フェーズで、ソース本文の文脈と caller/callee 情報を使ってこのページを強化する。</li>
+</ul><script>
+(function() {
+  function notifyParent() {
+    if (parent === window) return;
+    parent.postMessage({type: "frame-location", frame: window.name || "", href: window.location.href}, "*");
+  }
+  document.addEventListener("click", function(event) {
+    const link = event.target.closest("a[data-panel]");
+    if (!link || parent === window) return;
+    parent.postMessage({type: "source-link", panel: link.dataset.panel}, "*");
+  });
+  window.addEventListener("load", notifyParent);
+  window.addEventListener("hashchange", notifyParent);
+})();
+</script></body></html>

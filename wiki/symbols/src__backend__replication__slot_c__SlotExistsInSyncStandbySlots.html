@@ -1,0 +1,67 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>symbols/src__backend__replication__slot_c__SlotExistsInSyncStandbySlots.md</title><link rel="stylesheet" href="../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../source/src/backend/replication/slot.c.html#L3075" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__replication__slot_c__SlotExistsInSyncStandbySlots.html&quot;}, '*');">SlotExistsInSyncStandbySlots</a></h1>
+<h2>定義</h2>
+<ul>
+<li>種別: <code>function</code></li>
+<li>定義箇所: <code>src/backend/replication/slot.c:3075</code></li>
+<li>所属モジュール: <a class="wiki-entity-link" href="../modules/src__backend__replication.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/modules/src__backend__replication.html&quot;, &quot;source&quot;: &quot;source/src/backend/replication/slot.c.html&quot;}, '*');"><code>module:src/backend/replication</code></a></li>
+</ul>
+<h2>目的</h2>
+<p>静的シンボル索引から生成された初期シンボルページです。</p>
+<h2>シグネチャまたは形状</h2>
+<ul>
+<li>シグネチャ: <code>bool SlotExistsInSyncStandbySlots(const char *slot_name)</code></li>
+</ul>
+<h2>入力と出力</h2>
+<ul>
+<li>引数: <code>const char *slot_name</code></li>
+<li>戻り値: <code>bool</code></li>
+</ul>
+<h2>前提条件と不変条件</h2>
+<p>まだ解析していません。</p>
+<h2>アルゴリズムまたは振る舞い</h2>
+<ul>
+<li>複雑度: <code>medium</code> (score 11)</li>
+</ul>
+<p>まだ解析していません。</p>
+<h2>呼び出し元と呼び出し先</h2>
+<ul>
+<li>呼び出し元: <a class="wiki-source-link" href="../../source/src/backend/replication/walsender.c.html#L1822" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__replication__walsender_c__PhysicalWakeupLogicalWalSnd.html&quot;}, '*');"><code>PhysicalWakeupLogicalWalSnd</code></a></li>
+<li>呼び出し先: なし</li>
+<li>呼び出し元サイト: <a class="wiki-source-link" href="../../source/src/backend/replication/walsender.c.html#L1822" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__replication__walsender_c__PhysicalWakeupLogicalWalSnd.html&quot;}, '*');"><code>PhysicalWakeupLogicalWalSnd</code></a> at <code>src/backend/replication/walsender.c:1835:6</code> (direct, confidence=high, resolved=<a class="wiki-entity-link" href="src__backend__replication__slot_c__SlotExistsInSyncStandbySlots.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__replication__slot_c__SlotExistsInSyncStandbySlots.html&quot;, &quot;source&quot;: &quot;source/src/backend/replication/slot.c.html#L3075&quot;}, '*');"><code>symbol:src/backend/replication/slot.c#SlotExistsInSyncStandbySlots</code></a>)</li>
+<li>呼び出しサイト: <code>strcmp</code> at <code>src/backend/replication/slot.c:3092:7</code> (unresolved), <code>strlen</code> at <code>src/backend/replication/slot.c:3095:24</code> (unresolved)</li>
+</ul>
+<h2>関連データ構造</h2>
+<p>なし</p>
+<h2>ソース抜粋</h2>
+<p>~~~c bool <a class="wiki-source-link" href="../../source/src/backend/replication/slot.c.html#L3075" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__replication__slot_c__SlotExistsInSyncStandbySlots.html&quot;}, '*');">SlotExistsInSyncStandbySlots</a>(const char *slot_name) { const char *standby_slot_name;</p>
+<p>/* Return <a class="wiki-source-link" href="../../source/src/tools/pg_bsd_indent/indent_globs.h.html#L43" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/tools/pg_bsd_indent/indent_globs.h.html&quot;}, '*');">false</a> if there <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> no <a class="wiki-source-link" href="../../source/src/interfaces/ecpg/compatlib/informix.c.html#L687" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/ecpg/compatlib/informix.c.html&quot;}, '*');">value</a> in synchronized_standby_slots */ if (synchronized_standby_slots_config == NULL) return <a class="wiki-source-link" href="../../source/src/tools/pg_bsd_indent/indent_globs.h.html#L43" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/tools/pg_bsd_indent/indent_globs.h.html&quot;}, '*');">false</a>;</p>
+<p>/*</p>
+<ul>
+<li>XXX: We are not expecting this list to be long so a linear search</li>
+<li>shouldn&#x27;t hurt but if that turns out not to be <a class="wiki-source-link" href="../../source/src/tools/pg_bsd_indent/indent_globs.h.html#L46" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/tools/pg_bsd_indent/indent_globs.h.html&quot;}, '*');">true</a> then we can cache</li>
+<li>this information for each WalSender as well.</li>
+<p>*/ standby_slot_name = synchronized_standby_slots_config-&gt;slot_names; for (int i = 0; i &lt; synchronized_standby_slots_config-&gt;nslotnames; i++) { if (strcmp(standby_slot_name, slot_name) == 0) return <a class="wiki-source-link" href="../../source/src/tools/pg_bsd_indent/indent_globs.h.html#L46" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/tools/pg_bsd_indent/indent_globs.h.html&quot;}, '*');">true</a>;</p>
+</ul>
+<p>standby_slot_name += strlen(standby_slot_name) + 1; }</p>
+<p>return <a class="wiki-source-link" href="../../source/src/tools/pg_bsd_indent/indent_globs.h.html#L43" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/tools/pg_bsd_indent/indent_globs.h.html&quot;}, '*');">false</a>; } ~~~</p>
+<h2>失敗モードと境界条件</h2>
+<p>まだ解析していません。</p>
+<h2>保守担当者向けメモ</h2>
+<ul>
+<li>後続フェーズで、ソース本文の文脈と caller/callee 情報を使ってこのページを強化する。</li>
+</ul><script>
+(function() {
+  function notifyParent() {
+    if (parent === window) return;
+    parent.postMessage({type: "frame-location", frame: window.name || "", href: window.location.href}, "*");
+  }
+  document.addEventListener("click", function(event) {
+    const link = event.target.closest("a[data-panel]");
+    if (!link || parent === window) return;
+    parent.postMessage({type: "source-link", panel: link.dataset.panel}, "*");
+  });
+  window.addEventListener("load", notifyParent);
+  window.addEventListener("hashchange", notifyParent);
+})();
+</script></body></html>

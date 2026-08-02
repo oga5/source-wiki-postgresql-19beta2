@@ -1,0 +1,65 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>symbols/contrib__pgcrypto__pgp-cfb_c__cfb_process.md</title><link rel="stylesheet" href="../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../source/contrib/pgcrypto/pgp-cfb.c.html#L196" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/contrib__pgcrypto__pgp-cfb_c__cfb_process.html&quot;}, '*');">cfb_process</a></h1>
+<h2>定義</h2>
+<ul>
+<li>種別: <code>function</code></li>
+<li>定義箇所: <code>contrib/pgcrypto/pgp-cfb.c:196</code></li>
+<li>所属モジュール: <a class="wiki-entity-link" href="../modules/contrib__pgcrypto.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/modules/contrib__pgcrypto.html&quot;, &quot;source&quot;: &quot;source/contrib/pgcrypto/crypt-blowfish.c.html&quot;}, '*');"><code>module:contrib/pgcrypto</code></a></li>
+</ul>
+<h2>目的</h2>
+<p>静的シンボル索引から生成された初期シンボルページです。</p>
+<h2>シグネチャまたは形状</h2>
+<ul>
+<li>シグネチャ: <code>static int cfb_process(PGP_CFB *ctx, const uint8 *data, int len, uint8 *dst, mix_data_t mix_data)</code></li>
+</ul>
+<h2>入力と出力</h2>
+<ul>
+<li>引数: <code>PGP_CFB *ctx</code>, <code>const uint8 *data</code>, <code>int len</code>, <code>uint8 *dst</code>, <code>mix_data_t mix_data</code></li>
+<li>戻り値: <code>int</code></li>
+</ul>
+<h2>前提条件と不変条件</h2>
+<p>まだ解析していません。</p>
+<h2>アルゴリズムまたは振る舞い</h2>
+<ul>
+<li>複雑度: <code>high</code> (score 21)</li>
+</ul>
+<p>まだ解析していません。</p>
+<h2>呼び出し元と呼び出し先</h2>
+<ul>
+<li>呼び出し元: <a class="wiki-source-link" href="../../source/contrib/pgcrypto/pgp-cfb.c.html#L259" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/contrib__pgcrypto__pgp-cfb_c__pgp_cfb_decrypt.html&quot;}, '*');"><code>pgp_cfb_decrypt</code></a>, <a class="wiki-source-link" href="../../source/contrib/pgcrypto/pgp-cfb.c.html#L251" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/contrib__pgcrypto__pgp-cfb_c__pgp_cfb_encrypt.html&quot;}, '*');"><code>pgp_cfb_encrypt</code></a></li>
+<li>呼び出し先: なし</li>
+<li>呼び出し元サイト: <a class="wiki-source-link" href="../../source/contrib/pgcrypto/pgp-cfb.c.html#L251" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/contrib__pgcrypto__pgp-cfb_c__pgp_cfb_encrypt.html&quot;}, '*');"><code>pgp_cfb_encrypt</code></a> at <code>contrib/pgcrypto/pgp-cfb.c:256:9</code> (direct, confidence=high, resolved=<a class="wiki-entity-link" href="contrib__pgcrypto__pgp-cfb_c__cfb_process.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/contrib__pgcrypto__pgp-cfb_c__cfb_process.html&quot;, &quot;source&quot;: &quot;source/contrib/pgcrypto/pgp-cfb.c.html#L196&quot;}, '*');"><code>symbol:contrib/pgcrypto/pgp-cfb.c#cfb_process</code></a>), <a class="wiki-source-link" href="../../source/contrib/pgcrypto/pgp-cfb.c.html#L259" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/contrib__pgcrypto__pgp-cfb_c__pgp_cfb_decrypt.html&quot;}, '*');"><code>pgp_cfb_decrypt</code></a> at <code>contrib/pgcrypto/pgp-cfb.c:264:9</code> (direct, confidence=high, resolved=<a class="wiki-entity-link" href="contrib__pgcrypto__pgp-cfb_c__cfb_process.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/contrib__pgcrypto__pgp-cfb_c__cfb_process.html&quot;, &quot;source&quot;: &quot;source/contrib/pgcrypto/pgp-cfb.c.html#L196&quot;}, '*');"><code>symbol:contrib/pgcrypto/pgp-cfb.c#cfb_process</code></a>)</li>
+<li>呼び出しサイト: <code>mix_data</code> at <code>contrib/pgcrypto/pgp-cfb.c:209:7</code> (indirect), <code>memcpy</code> at <code>contrib/pgcrypto/pgp-cfb.c:216:4</code> (unresolved), <a class="wiki-source-link" href="../../source/contrib/pgcrypto/px.h.html#L222" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/contrib/pgcrypto/px.h.html&quot;}, '*');"><code>px_cipher_encrypt</code></a> at <code>contrib/pgcrypto/pgp-cfb.c:225:3</code> (unresolved), <code>mix_data</code> at <code>contrib/pgcrypto/pgp-cfb.c:233:9</code> (indirect), <code>memcpy</code> at <code>contrib/pgcrypto/pgp-cfb.c:240:4</code> (unresolved)</li>
+</ul>
+<h2>関連データ構造</h2>
+<p><code>PGP_CFB</code>, <code>uint8</code></p>
+<h2>ソース抜粋</h2>
+<p>~~~c static int <a class="wiki-source-link" href="../../source/contrib/pgcrypto/pgp-cfb.c.html#L196" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/contrib__pgcrypto__pgp-cfb_c__cfb_process.html&quot;}, '*');">cfb_process</a>(PGP_CFB *ctx, const uint8 *data, int len, uint8 *dst, mix_data_t mix_data) { int			n; int			res;</p>
+<p>while (len &gt; 0 &amp;&amp; ctx-&gt;pos &gt; 0) { n = ctx-&gt;<a class="wiki-source-link" href="../../source/src/backend/utils/misc/guc_tables.c.html#L643" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/utils/misc/guc_tables.c.html&quot;}, '*');">block_size</a> - ctx-&gt;pos; if (len &lt; n) n = len;</p>
+<p>n = mix_data(ctx, data, n, dst); data += n; dst += n; len -= n;</p>
+<p>if (ctx-&gt;pos == ctx-&gt;<a class="wiki-source-link" href="../../source/src/backend/utils/misc/guc_tables.c.html#L643" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/utils/misc/guc_tables.c.html&quot;}, '*');">block_size</a>) { memcpy(ctx-&gt;fr, ctx-&gt;encbuf, ctx-&gt;<a class="wiki-source-link" href="../../source/src/backend/utils/misc/guc_tables.c.html#L643" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/utils/misc/guc_tables.c.html&quot;}, '*');">block_size</a>); ctx-&gt;pos = 0; } }</p>
+<p>while (len &gt; 0) { unsigned	rlen;</p>
+<p><a class="wiki-source-link" href="../../source/contrib/pgcrypto/px.h.html#L222" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/contrib/pgcrypto/px.h.html&quot;}, '*');">px_cipher_encrypt</a>(ctx-&gt;ciph, 0, ctx-&gt;fr, ctx-&gt;<a class="wiki-source-link" href="../../source/src/backend/utils/misc/guc_tables.c.html#L643" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/utils/misc/guc_tables.c.html&quot;}, '*');">block_size</a>, ctx-&gt;fre, &amp;rlen); if (ctx-&gt;block_no &lt; 5) ctx-&gt;block_no++;</p>
+<p>n = ctx-&gt;<a class="wiki-source-link" href="../../source/src/backend/utils/misc/guc_tables.c.html#L643" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/utils/misc/guc_tables.c.html&quot;}, '*');">block_size</a>; if (len &lt; n) n = len;</p>
+<p>res = mix_data(ctx, data, n, dst); data += res; dst += res; len -= res;</p>
+<p>if (ctx-&gt;pos == ctx-&gt;<a class="wiki-source-link" href="../../source/src/backend/utils/misc/guc_tables.c.html#L643" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/utils/misc/guc_tables.c.html&quot;}, '*');">block_size</a>) { memcpy(ctx-&gt;fr, ctx-&gt;encbuf, ctx-&gt;<a class="wiki-source-link" href="../../source/src/backend/utils/misc/guc_tables.c.html#L643" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/utils/misc/guc_tables.c.html&quot;}, '*');">block_size</a>); ctx-&gt;pos = 0; } } return 0; } ~~~</p>
+<h2>失敗モードと境界条件</h2>
+<p>まだ解析していません。</p>
+<h2>保守担当者向けメモ</h2>
+<ul>
+<li>後続フェーズで、ソース本文の文脈と caller/callee 情報を使ってこのページを強化する。</li>
+</ul><script>
+(function() {
+  function notifyParent() {
+    if (parent === window) return;
+    parent.postMessage({type: "frame-location", frame: window.name || "", href: window.location.href}, "*");
+  }
+  document.addEventListener("click", function(event) {
+    const link = event.target.closest("a[data-panel]");
+    if (!link || parent === window) return;
+    parent.postMessage({type: "source-link", panel: link.dataset.panel}, "*");
+  });
+  window.addEventListener("load", notifyParent);
+  window.addEventListener("hashchange", notifyParent);
+})();
+</script></body></html>

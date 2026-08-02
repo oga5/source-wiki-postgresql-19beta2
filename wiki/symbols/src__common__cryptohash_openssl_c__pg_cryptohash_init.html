@@ -1,0 +1,67 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>symbols/src__common__cryptohash_openssl_c__pg_cryptohash_init.md</title><link rel="stylesheet" href="../../styles.css"></head><body><h1>pg_cryptohash_init</h1>
+<h2>定義</h2>
+<ul>
+<li>種別: <code>function</code></li>
+<li>定義箇所: <code>src/common/cryptohash_openssl.c:177</code></li>
+<li>所属モジュール: <a class="wiki-entity-link" href="../modules/src__common.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/modules/src__common.html&quot;, &quot;source&quot;: &quot;source/src/common/archive.c.html&quot;}, '*');"><code>module:src/common</code></a></li>
+</ul>
+<h2>目的</h2>
+<p>静的シンボル索引から生成された初期シンボルページです。</p>
+<h2>シグネチャまたは形状</h2>
+<ul>
+<li>シグネチャ: <code>int pg_cryptohash_init(pg_cryptohash_ctx *ctx)</code></li>
+</ul>
+<h2>入力と出力</h2>
+<ul>
+<li>引数: <code>pg_cryptohash_ctx *ctx</code></li>
+<li>戻り値: <code>int</code></li>
+</ul>
+<h2>前提条件と不変条件</h2>
+<p>まだ解析していません。</p>
+<h2>アルゴリズムまたは振る舞い</h2>
+<ul>
+<li>複雑度: <code>high</code> (score 26)</li>
+</ul>
+<p>まだ解析していません。</p>
+<h2>呼び出し元と呼び出し先</h2>
+<ul>
+<li>呼び出し元: なし</li>
+<li>呼び出し先: <code>SSLerrmessage</code></li>
+<li>呼び出し元サイト: なし</li>
+<li>呼び出しサイト: <code>EVP_DigestInit_ex</code> at <code>src/common/cryptohash_openssl.c:188:13</code> (unresolved), <code>EVP_md5</code> at <code>src/common/cryptohash_openssl.c:188:44</code> (unresolved), <code>EVP_DigestInit_ex</code> at <code>src/common/cryptohash_openssl.c:191:13</code> (unresolved), <code>EVP_sha1</code> at <code>src/common/cryptohash_openssl.c:191:44</code> (unresolved), <code>EVP_DigestInit_ex</code> at <code>src/common/cryptohash_openssl.c:194:13</code> (unresolved), <code>EVP_sha224</code> at <code>src/common/cryptohash_openssl.c:194:44</code> (unresolved), <code>EVP_DigestInit_ex</code> at <code>src/common/cryptohash_openssl.c:197:13</code> (unresolved), <code>EVP_sha256</code> at <code>src/common/cryptohash_openssl.c:197:44</code> (unresolved), <code>EVP_DigestInit_ex</code> at <code>src/common/cryptohash_openssl.c:200:13</code> (unresolved), <code>EVP_sha384</code> at <code>src/common/cryptohash_openssl.c:200:44</code> (unresolved), <code>EVP_DigestInit_ex</code> at <code>src/common/cryptohash_openssl.c:203:13</code> (unresolved), <code>EVP_sha512</code> at <code>src/common/cryptohash_openssl.c:203:44</code> (unresolved), <code>SSLerrmessage</code> at <code>src/common/cryptohash_openssl.c:210:20</code> (direct, confidence=high, resolved=<a class="wiki-entity-link" href="src__common__cryptohash_openssl_c__SSLerrmessage.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__common__cryptohash_openssl_c__SSLerrmessage.html&quot;, &quot;source&quot;: &quot;source/src/common/cryptohash_openssl.c.html#L102&quot;}, '*');"><code>symbol:src/common/cryptohash_openssl.c#SSLerrmessage</code></a>), <code>ERR_get_error</code> at <code>src/common/cryptohash_openssl.c:210:34</code> (unresolved), <code>ERR_clear_error</code> at <code>src/common/cryptohash_openssl.c:218:3</code> (unresolved)</li>
+</ul>
+<h2>関連データ構造</h2>
+<p><code>pg_cryptohash_ctx</code></p>
+<h2>ソース抜粋</h2>
+<p>~~~c int pg_cryptohash_init(pg_cryptohash_ctx *ctx) { int			status = 0;</p>
+<p>if (ctx == NULL) return -1;</p>
+<p>switch (ctx-&gt;type) { case PG_MD5: status = EVP_DigestInit_ex(ctx-&gt;evpctx, EVP_md5(), NULL); break; case PG_SHA1: status = EVP_DigestInit_ex(ctx-&gt;evpctx, EVP_sha1(), NULL); break; case PG_SHA224: status = EVP_DigestInit_ex(ctx-&gt;evpctx, EVP_sha224(), NULL); break; case PG_SHA256: status = EVP_DigestInit_ex(ctx-&gt;evpctx, EVP_sha256(), NULL); break; case PG_SHA384: status = EVP_DigestInit_ex(ctx-&gt;evpctx, EVP_sha384(), NULL); break; case PG_SHA512: status = EVP_DigestInit_ex(ctx-&gt;evpctx, EVP_sha512(), NULL); break; }</p>
+<p>/* OpenSSL internals return 1 on success, 0 on failure */ if (status &lt;= 0) { ctx-&gt;errreason = SSLerrmessage(ERR_get_error()); ctx-&gt;error = PG_CRYPTOHASH_ERROR_OPENSSL;</p>
+<p>/*</p>
+<ul>
+<li>The OpenSSL error queue should normally be empty since we&#x27;ve</li>
+<li>consumed an error, but cipher initialization can in FIPS-enabled</li>
+<li>OpenSSL builds generate two <a class="wiki-source-link" href="../../source/src/timezone/zic.c.html#L183" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/timezone/zic.c.html&quot;}, '*');">errors</a> so clear the queue here as well.</li>
+<p>*/ ERR_clear_error(); return -1; } return 0; } ~~~</p>
+</ul>
+<h2>失敗モードと境界条件</h2>
+<p>まだ解析していません。</p>
+<h2>保守担当者向けメモ</h2>
+<ul>
+<li>後続フェーズで、ソース本文の文脈と caller/callee 情報を使ってこのページを強化する。</li>
+</ul><script>
+(function() {
+  function notifyParent() {
+    if (parent === window) return;
+    parent.postMessage({type: "frame-location", frame: window.name || "", href: window.location.href}, "*");
+  }
+  document.addEventListener("click", function(event) {
+    const link = event.target.closest("a[data-panel]");
+    if (!link || parent === window) return;
+    parent.postMessage({type: "source-link", panel: link.dataset.panel}, "*");
+  });
+  window.addEventListener("load", notifyParent);
+  window.addEventListener("hashchange", notifyParent);
+})();
+</script></body></html>

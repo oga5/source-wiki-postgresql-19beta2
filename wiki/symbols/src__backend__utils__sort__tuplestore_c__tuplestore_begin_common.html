@@ -1,0 +1,77 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>symbols/src__backend__utils__sort__tuplestore_c__tuplestore_begin_common.md</title><link rel="stylesheet" href="../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../source/src/backend/utils/sort/tuplestore.c.html#L256" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__utils__sort__tuplestore_c__tuplestore_begin_common.html&quot;}, '*');">tuplestore_begin_common</a></h1>
+<h2>定義</h2>
+<ul>
+<li>種別: <code>function</code></li>
+<li>定義箇所: <code>src/backend/utils/sort/tuplestore.c:256</code></li>
+<li>所属モジュール: <a class="wiki-entity-link" href="../modules/src__backend__utils__sort.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/modules/src__backend__utils__sort.html&quot;, &quot;source&quot;: &quot;source/src/backend/utils/sort/logtape.c.html&quot;}, '*');"><code>module:src/backend/utils/sort</code></a></li>
+</ul>
+<h2>目的</h2>
+<p>静的シンボル索引から生成された初期シンボルページです。</p>
+<h2>シグネチャまたは形状</h2>
+<ul>
+<li>シグネチャ: <code>static Tuplestorestate * tuplestore_begin_common(int eflags, bool interXact, int maxKBytes)</code></li>
+</ul>
+<h2>入力と出力</h2>
+<ul>
+<li>引数: <code>int eflags</code>, <code>bool interXact</code>, <code>int maxKBytes</code></li>
+<li>戻り値: <code>Tuplestorestate *</code></li>
+</ul>
+<h2>前提条件と不変条件</h2>
+<p>まだ解析していません。</p>
+<h2>アルゴリズムまたは振る舞い</h2>
+<ul>
+<li>複雑度: <code>high</code> (score 12)</li>
+</ul>
+<p>まだ解析していません。</p>
+<h2>呼び出し元と呼び出し先</h2>
+<ul>
+<li>呼び出し元: <a class="wiki-source-link" href="../../source/src/backend/utils/sort/tuplestore.c.html#L330" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__utils__sort__tuplestore_c__tuplestore_begin_heap.html&quot;}, '*');"><code>tuplestore_begin_heap</code></a></li>
+<li>呼び出し先: <a class="wiki-source-link" href="../../source/src/backend/utils/mmgr/generation.c.html#L161" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__utils__mmgr__generation_c__GenerationContextCreate.html&quot;}, '*');"><code>GenerationContextCreate</code></a>, <a class="wiki-source-link" href="../../source/src/backend/utils/mmgr/mcxt.c.html#L772" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__utils__mmgr__mcxt_c__GetMemoryChunkSpace.html&quot;}, '*');"><code>GetMemoryChunkSpace</code></a></li>
+<li>呼び出し元サイト: <a class="wiki-source-link" href="../../source/src/backend/utils/sort/tuplestore.c.html#L330" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__utils__sort__tuplestore_c__tuplestore_begin_heap.html&quot;}, '*');"><code>tuplestore_begin_heap</code></a> at <code>src/backend/utils/sort/tuplestore.c:344:10</code> (direct, confidence=high, resolved=<a class="wiki-entity-link" href="src__backend__utils__sort__tuplestore_c__tuplestore_begin_common.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__utils__sort__tuplestore_c__tuplestore_begin_common.html&quot;, &quot;source&quot;: &quot;source/src/backend/utils/sort/tuplestore.c.html#L256&quot;}, '*');"><code>symbol:src/backend/utils/sort/tuplestore.c#tuplestore_begin_common</code></a>)</li>
+<li>呼び出しサイト: <code>palloc0_object</code> at <code>src/backend/utils/sort/tuplestore.c:261:10</code> (unresolved), <a class="wiki-source-link" href="../../source/src/backend/utils/mmgr/generation.c.html#L161" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__utils__mmgr__generation_c__GenerationContextCreate.html&quot;}, '*');"><code>GenerationContextCreate</code></a> at <code>src/backend/utils/sort/tuplestore.c:277:19</code> (direct, confidence=high, resolved=<a class="wiki-entity-link" href="src__backend__utils__mmgr__generation_c__GenerationContextCreate.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__utils__mmgr__generation_c__GenerationContextCreate.html&quot;, &quot;source&quot;: &quot;source/src/backend/utils/mmgr/generation.c.html#L161&quot;}, '*');"><code>symbol:src/backend/utils/mmgr/generation.c#GenerationContextCreate</code></a>), <code>Max</code> at <code>src/backend/utils/sort/tuplestore.c:290:22</code> (unresolved), <code>palloc</code> at <code>src/backend/utils/sort/tuplestore.c:294:31</code> (unresolved, confidence=low), <code>USEMEM</code> at <code>src/backend/utils/sort/tuplestore.c:296:2</code> (macro), <a class="wiki-source-link" href="../../source/src/backend/utils/mmgr/mcxt.c.html#L772" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__utils__mmgr__mcxt_c__GetMemoryChunkSpace.html&quot;}, '*');"><code>GetMemoryChunkSpace</code></a> at <code>src/backend/utils/sort/tuplestore.c:296:16</code> (direct, confidence=high, resolved=<a class="wiki-entity-link" href="src__backend__utils__mmgr__mcxt_c__GetMemoryChunkSpace.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__utils__mmgr__mcxt_c__GetMemoryChunkSpace.html&quot;, &quot;source&quot;: &quot;source/src/backend/utils/mmgr/mcxt.c.html#L772&quot;}, '*');"><code>symbol:src/backend/utils/mmgr/mcxt.c#GetMemoryChunkSpace</code></a>), <code>palloc</code> at <code>src/backend/utils/sort/tuplestore.c:302:3</code> (unresolved, confidence=low)</li>
+</ul>
+<h2>関連データ構造</h2>
+<p><code>int64</code>, <code>state</code>, <a class="wiki-source-link" href="../../source/src/backend/utils/sort/tuplestore.c.html#L92" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__utils__sort__tuplestore_c__TSReadPointer.html&quot;}, '*');"><code>TSReadPointer</code></a>, <code>Tuplestorestate</code></p>
+<h2>ソース抜粋</h2>
+<p>~~~c static Tuplestorestate * <a class="wiki-source-link" href="../../source/src/backend/utils/sort/tuplestore.c.html#L256" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__utils__sort__tuplestore_c__tuplestore_begin_common.html&quot;}, '*');">tuplestore_begin_common</a>(int eflags, bool interXact, int maxKBytes) { Tuplestorestate *state;</p>
+<p>state = palloc0_object(Tuplestorestate);</p>
+<p>state-&gt;status = TSS_INMEM; state-&gt;eflags = eflags; state-&gt;interXact = interXact; state-&gt;truncated = <a class="wiki-source-link" href="../../source/src/tools/pg_bsd_indent/indent_globs.h.html#L43" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/tools/pg_bsd_indent/indent_globs.h.html&quot;}, '*');">false</a>; state-&gt;usedDisk = <a class="wiki-source-link" href="../../source/src/tools/pg_bsd_indent/indent_globs.h.html#L43" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/tools/pg_bsd_indent/indent_globs.h.html&quot;}, '*');">false</a>; state-&gt;maxSpace = 0; state-&gt;allowedMem = maxKBytes * (int64) 1024; state-&gt;availMem = state-&gt;allowedMem; state-&gt;myfile = NULL;</p>
+<p>/*</p>
+<ul>
+<li>The palloc/pfree pattern for tuple memory <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> in a FIFO pattern.  A</li>
+<li>generation context <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> perfectly suited for this.</li>
+<p>*/ state-&gt;context = <a class="wiki-source-link" href="../../source/src/backend/utils/mmgr/generation.c.html#L161" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__utils__mmgr__generation_c__GenerationContextCreate.html&quot;}, '*');">GenerationContextCreate</a>(<a class="wiki-source-link" href="../../source/src/backend/utils/mmgr/mcxt.c.html#L161" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/utils/mmgr/mcxt.c.html&quot;}, '*');">CurrentMemoryContext</a>, &quot;tuplestore tuples&quot;, <a class="wiki-source-link" href="../../source/src/include/utils/memutils.h.html#L160" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/utils/memutils.h.html&quot;}, '*');">ALLOCSET_DEFAULT_SIZES</a>); state-&gt;resowner = <a class="wiki-source-link" href="../../source/src/backend/utils/resowner/resowner.c.html#L173" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/utils/resowner/resowner.c.html&quot;}, '*');">CurrentResourceOwner</a>;</p>
+</ul>
+<p>state-&gt;memtupdeleted = 0; state-&gt;memtupcount = 0; state-&gt;tuples = 0;</p>
+<p>/*</p>
+<ul>
+<li>Initial size of array must be more than <a class="wiki-source-link" href="../../source/src/include/utils/memutils.h.html#L187" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/utils/memutils.h.html&quot;}, '*');">ALLOCSET_SEPARATE_THRESHOLD</a>;</li>
+<li>see <a class="wiki-source-link" href="../../source/src/bin/pg_dump/pg_dump.c.html#L202" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/bin/pg_dump/pg_dump.c.html&quot;}, '*');">comments</a> in grow_memtuples().</li>
+<p>*/ state-&gt;memtupsize = Max(16384 / sizeof(void *), <a class="wiki-source-link" href="../../source/src/include/utils/memutils.h.html#L187" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/utils/memutils.h.html&quot;}, '*');">ALLOCSET_SEPARATE_THRESHOLD</a> / sizeof(void *) + 1);</p>
+</ul>
+<p>state-&gt;growmemtuples = <a class="wiki-source-link" href="../../source/src/tools/pg_bsd_indent/indent_globs.h.html#L46" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/tools/pg_bsd_indent/indent_globs.h.html&quot;}, '*');">true</a>; state-&gt;memtuples = (void **) palloc(state-&gt;memtupsize * sizeof(void *));</p>
+<p>USEMEM(state, <a class="wiki-source-link" href="../../source/src/backend/utils/mmgr/mcxt.c.html#L772" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__utils__mmgr__mcxt_c__GetMemoryChunkSpace.html&quot;}, '*');">GetMemoryChunkSpace</a>(state-&gt;memtuples));</p>
+<p>state-&gt;activeptr = 0; state-&gt;readptrcount = 1; state-&gt;readptrsize = 8;		/* arbitrary */ state-&gt;readptrs = (<a class="wiki-source-link" href="../../source/src/backend/utils/sort/tuplestore.c.html#L92" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__utils__sort__tuplestore_c__TSReadPointer.html&quot;}, '*');">TSReadPointer</a> *) palloc(state-&gt;readptrsize * sizeof(<a class="wiki-source-link" href="../../source/src/backend/utils/sort/tuplestore.c.html#L92" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__utils__sort__tuplestore_c__TSReadPointer.html&quot;}, '*');">TSReadPointer</a>));</p>
+<p>state-&gt;readptrs[0].eflags = eflags; state-&gt;readptrs[0].eof_reached = <a class="wiki-source-link" href="../../source/src/tools/pg_bsd_indent/indent_globs.h.html#L43" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/tools/pg_bsd_indent/indent_globs.h.html&quot;}, '*');">false</a>; state-&gt;readptrs[0].current = 0;</p>
+<p>return state; } ~~~</p>
+<h2>失敗モードと境界条件</h2>
+<p>まだ解析していません。</p>
+<h2>保守担当者向けメモ</h2>
+<ul>
+<li>後続フェーズで、ソース本文の文脈と caller/callee 情報を使ってこのページを強化する。</li>
+</ul><script>
+(function() {
+  function notifyParent() {
+    if (parent === window) return;
+    parent.postMessage({type: "frame-location", frame: window.name || "", href: window.location.href}, "*");
+  }
+  document.addEventListener("click", function(event) {
+    const link = event.target.closest("a[data-panel]");
+    if (!link || parent === window) return;
+    parent.postMessage({type: "source-link", panel: link.dataset.panel}, "*");
+  });
+  window.addEventListener("load", notifyParent);
+  window.addEventListener("hashchange", notifyParent);
+})();
+</script></body></html>

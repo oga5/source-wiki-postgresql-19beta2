@@ -1,0 +1,60 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>modules/src__test__modules__test_custom_stats.md</title><link rel="stylesheet" href="../../styles.css"></head><body><h1>src/test/modules/test_custom_stats</h1>
+<h2>システム内での役割</h2>
+<p><code>src/test/modules/test_custom_stats</code> には 2 個の索引済みソースファイルがあります。この初期モジュールページはディレクトリ境界に基づいています。</p>
+<h2>責務</h2>
+<ul>
+<li>このディレクトリに属するソースファイルを集約する。</li>
+<li>より深い LLM 合成の前段として、モジュール単位の入口を提供する。</li>
+</ul>
+<h2>このモジュールのファイル</h2>
+<ul>
+<li><a class="wiki-source-link" href="../../source/src/test/modules/test_custom_stats/test_custom_fixed_stats.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/test/modules/test_custom_stats/test_custom_fixed_stats.c.html&quot;}, '*');"><code>src/test/modules/test_custom_stats/test_custom_fixed_stats.c</code></a></li>
+<li><a class="wiki-source-link" href="../../source/src/test/modules/test_custom_stats/test_custom_var_stats.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/test/modules/test_custom_stats/test_custom_var_stats.c.html&quot;}, '*');"><code>src/test/modules/test_custom_stats/test_custom_var_stats.c</code></a></li>
+</ul>
+<h2>主要なデータ構造</h2>
+<ul>
+<li><a class="wiki-source-link" href="../../source/src/test/modules/test_custom_stats/test_custom_fixed_stats.c.html#L29" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__test__modules__test_custom_stats__test_custom_fixed_stats_c__PgStat_StatCustomFixedEntry.html&quot;}, '*');"><code>PgStat_StatCustomFixedEntry</code></a></li>
+<li><a class="wiki-source-link" href="../../source/src/test/modules/test_custom_stats/test_custom_fixed_stats.c.html#L35" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__test__modules__test_custom_stats__test_custom_fixed_stats_c__PgStatShared_CustomFixedEntry.html&quot;}, '*');"><code>PgStatShared_CustomFixedEntry</code></a></li>
+<li><a class="wiki-source-link" href="../../source/src/test/modules/test_custom_stats/test_custom_var_stats.c.html#L54" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__test__modules__test_custom_stats__test_custom_var_stats_c__PgStat_StatCustomVarEntry.html&quot;}, '*');"><code>PgStat_StatCustomVarEntry</code></a></li>
+<li><a class="wiki-source-link" href="../../source/src/test/modules/test_custom_stats/test_custom_var_stats.c.html#L60" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__test__modules__test_custom_stats__test_custom_var_stats_c__PgStatShared_CustomVarEntry.html&quot;}, '*');"><code>PgStatShared_CustomVarEntry</code></a></li>
+</ul>
+<h2>主なフロー</h2>
+<p>初期モジュールページでは、まだエンドツーエンドのフローを推論しません。</p>
+<h2>外部依存</h2>
+<ul>
+<li><a class="wiki-source-link" href="../../source/src/include/postgres.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/postgres.h.html&quot;}, '*');"><code>postgres.h</code></a></li>
+<li><code>access/htup_details.h</code></li>
+<li><a class="wiki-source-link" href="../../source/src/include/funcapi.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/funcapi.h.html&quot;}, '*');"><code>funcapi.h</code></a></li>
+<li><code>utils/builtins.h</code></li>
+<li><code>utils/pgstat_internal.h</code></li>
+<li><a class="wiki-source-link" href="../../source/src/include/pgstat.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/pgstat.h.html&quot;}, '*');"><code>pgstat.h</code></a></li>
+<li><code>utils/timestamp.h</code></li>
+<li><code>common/hashfn.h</code></li>
+<li><code>storage/dsm_registry.h</code></li>
+<li><code>storage/fd.h</code></li>
+</ul>
+<h2>内部構成</h2>
+<ul>
+<li>子モジュール数: 0</li>
+</ul>
+<h2>推奨読書順</h2>
+<p>1. <a class="wiki-source-link" href="../../source/src/test/modules/test_custom_stats/test_custom_var_stats.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/test/modules/test_custom_stats/test_custom_var_stats.c.html&quot;}, '*');"><code>src/test/modules/test_custom_stats/test_custom_var_stats.c</code></a> 2. <a class="wiki-source-link" href="../../source/src/test/modules/test_custom_stats/test_custom_fixed_stats.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/test/modules/test_custom_stats/test_custom_fixed_stats.c.html&quot;}, '*');"><code>src/test/modules/test_custom_stats/test_custom_fixed_stats.c</code></a></p>
+<h2>未解決の問い</h2>
+<ul>
+<li>LLM ベースのモジュール合成を追加した後で、責務とフローを精緻化する。</li>
+</ul><script>
+(function() {
+  function notifyParent() {
+    if (parent === window) return;
+    parent.postMessage({type: "frame-location", frame: window.name || "", href: window.location.href}, "*");
+  }
+  document.addEventListener("click", function(event) {
+    const link = event.target.closest("a[data-panel]");
+    if (!link || parent === window) return;
+    parent.postMessage({type: "source-link", panel: link.dataset.panel}, "*");
+  });
+  window.addEventListener("load", notifyParent);
+  window.addEventListener("hashchange", notifyParent);
+})();
+</script></body></html>

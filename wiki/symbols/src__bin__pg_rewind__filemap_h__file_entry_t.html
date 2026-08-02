@@ -1,0 +1,73 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>symbols/src__bin__pg_rewind__filemap_h__file_entry_t.md</title><link rel="stylesheet" href="../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../source/src/bin/pg_rewind/filemap.h.html#L57" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__bin__pg_rewind__filemap_h__file_entry_t.html&quot;}, '*');">file_entry_t</a></h1>
+<h2>定義</h2>
+<ul>
+<li>種別: <code>struct</code></li>
+<li>定義箇所: <code>src/bin/pg_rewind/filemap.h:57</code></li>
+<li>所属モジュール: <a class="wiki-entity-link" href="../modules/src__bin__pg_rewind.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/modules/src__bin__pg_rewind.html&quot;, &quot;source&quot;: &quot;source/src/bin/pg_rewind/datapagemap.c.html&quot;}, '*');"><code>module:src/bin/pg_rewind</code></a></li>
+</ul>
+<h2>目的</h2>
+<p>静的シンボル索引から生成された初期シンボルページです。</p>
+<h2>シグネチャまたは形状</h2>
+<ul>
+<li>シグネチャ: <code>typedef struct file_entry_t</code></li>
+</ul>
+<h2>入力と出力</h2>
+<p>まだ解析していません。</p>
+<h2>前提条件と不変条件</h2>
+<p>まだ解析していません。</p>
+<h2>アルゴリズムまたは振る舞い</h2>
+<p>まだ解析していません。</p>
+<h2>呼び出し元と呼び出し先</h2>
+<ul>
+<li>呼び出し元: なし</li>
+<li>呼び出し先: なし</li>
+<li>呼び出し元サイト: なし</li>
+<li>呼び出しサイト: なし</li>
+</ul>
+<h2>関連データ構造</h2>
+<p><a class="wiki-source-link" href="../../source/src/bin/pg_rewind/datapagemap.h.html#L20" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__bin__pg_rewind__datapagemap_h__datapagemap_t.html&quot;}, '*');"><code>datapagemap_t</code></a>, <a class="wiki-source-link" href="../../source/src/bin/pg_rewind/filemap.h.html#L17" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__bin__pg_rewind__filemap_h__file_action_t.html&quot;}, '*');"><code>file_action_t</code></a>, <a class="wiki-source-link" href="../../source/src/bin/pg_rewind/filemap.h.html#L40" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__bin__pg_rewind__filemap_h__file_content_type_t.html&quot;}, '*');"><code>file_content_type_t</code></a>, <code>file_type_t</code>, <code>uint32</code></p>
+<h2>ソース抜粋</h2>
+<p>~~~c typedef struct <a class="wiki-source-link" href="../../source/src/bin/pg_rewind/filemap.h.html#L57" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__bin__pg_rewind__filemap_h__file_entry_t.html&quot;}, '*');">file_entry_t</a> { uint32		status;			/* <a class="wiki-source-link" href="../../source/src/backend/regex/rege_dfa.c.html#L723" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__regex__rege_dfa_c__hash.html&quot;}, '*');">hash</a> status */</p>
+<p>const char *path; <a class="wiki-source-link" href="../../source/src/bin/pg_rewind/filemap.h.html#L40" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__bin__pg_rewind__filemap_h__file_content_type_t.html&quot;}, '*');">file_content_type_t</a> content_type;</p>
+<p>/*</p>
+<ul>
+<li>Status of the file in the target.</li>
+<p>*/ bool		target_exists; file_type_t target_type; size_t		target_size;	/* for a regular file */ char	   *target_link_target; /* for a symlink */</p>
+</ul>
+<p>/*</p>
+<ul>
+<li>Pages that were modified in the target and need to be replaced from the</li>
+<li>source.</li>
+<p>*/ <a class="wiki-source-link" href="../../source/src/bin/pg_rewind/datapagemap.h.html#L20" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__bin__pg_rewind__datapagemap_h__datapagemap_t.html&quot;}, '*');">datapagemap_t</a> target_pages_to_overwrite;</p>
+</ul>
+<p>/*</p>
+<ul>
+<li>Status of the file in the source.</li>
+<p>*/ bool		source_exists; file_type_t source_type; size_t		source_size; char	   *source_link_target; /* for a symlink */</p>
+</ul>
+<p>/*</p>
+<ul>
+<li>What will we do to the file?</li>
+<p>*/ <a class="wiki-source-link" href="../../source/src/bin/pg_rewind/filemap.h.html#L17" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__bin__pg_rewind__filemap_h__file_action_t.html&quot;}, '*');">file_action_t</a> action; } <a class="wiki-source-link" href="../../source/src/bin/pg_rewind/filemap.h.html#L57" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__bin__pg_rewind__filemap_h__file_entry_t.html&quot;}, '*');">file_entry_t</a>; ~~~</p>
+</ul>
+<h2>失敗モードと境界条件</h2>
+<p>まだ解析していません。</p>
+<h2>保守担当者向けメモ</h2>
+<ul>
+<li>後続フェーズで、ソース本文の文脈と caller/callee 情報を使ってこのページを強化する。</li>
+</ul><script>
+(function() {
+  function notifyParent() {
+    if (parent === window) return;
+    parent.postMessage({type: "frame-location", frame: window.name || "", href: window.location.href}, "*");
+  }
+  document.addEventListener("click", function(event) {
+    const link = event.target.closest("a[data-panel]");
+    if (!link || parent === window) return;
+    parent.postMessage({type: "source-link", panel: link.dataset.panel}, "*");
+  });
+  window.addEventListener("load", notifyParent);
+  window.addEventListener("hashchange", notifyParent);
+})();
+</script></body></html>

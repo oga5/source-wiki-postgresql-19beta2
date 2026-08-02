@@ -1,0 +1,76 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>symbols/src__backend__utils__adt__pg_locale_c__search_locale_enum.md</title><link rel="stylesheet" href="../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../source/src/backend/utils/adt/pg_locale.c.html#L887" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__utils__adt__pg_locale_c__search_locale_enum.html&quot;}, '*');">search_locale_enum</a></h1>
+<h2>定義</h2>
+<ul>
+<li>種別: <code>function</code></li>
+<li>定義箇所: <code>src/backend/utils/adt/pg_locale.c:887</code></li>
+<li>所属モジュール: <a class="wiki-entity-link" href="../modules/src__backend__utils__adt.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/modules/src__backend__utils__adt.html&quot;, &quot;source&quot;: &quot;source/src/backend/utils/adt/acl.c.html&quot;}, '*');"><code>module:src/backend/utils/adt</code></a></li>
+</ul>
+<h2>目的</h2>
+<p>静的シンボル索引から生成された初期シンボルページです。</p>
+<h2>シグネチャまたは形状</h2>
+<ul>
+<li>シグネチャ: <code>static BOOL CALLBACK search_locale_enum(LPWSTR pStr, DWORD dwFlags, LPARAM lparam)</code></li>
+</ul>
+<h2>入力と出力</h2>
+<ul>
+<li>引数: <code>LPWSTR pStr</code>, <code>DWORD dwFlags</code>, <code>LPARAM lparam</code></li>
+<li>戻り値: <code>BOOL CALLBACK</code></li>
+</ul>
+<h2>前提条件と不変条件</h2>
+<p>まだ解析していません。</p>
+<h2>アルゴリズムまたは振る舞い</h2>
+<ul>
+<li>複雑度: <code>high</code> (score 17)</li>
+</ul>
+<p>まだ解析していません。</p>
+<h2>呼び出し元と呼び出し先</h2>
+<ul>
+<li>呼び出し元: なし</li>
+<li>呼び出し先: なし</li>
+<li>呼び出し元サイト: なし</li>
+<li>呼び出しサイト: <code>memset</code> at <code>src/backend/utils/adt/pg_locale.c:898:2</code> (unresolved), <code>GetLocaleInfoEx</code> at <code>src/backend/utils/adt/pg_locale.c:901:6</code> (unresolved), <code>wcsrchr</code> at <code>src/backend/utils/adt/pg_locale.c:909:7</code> (unresolved), <code>wcsrchr</code> at <code>src/backend/utils/adt/pg_locale.c:909:37</code> (unresolved), <code>_wcsicmp</code> at <code>src/backend/utils/adt/pg_locale.c:911:8</code> (unresolved), <code>wcscpy</code> at <code>src/backend/utils/adt/pg_locale.c:913:5</code> (unresolved), <code>wcscat</code> at <code>src/backend/utils/adt/pg_locale.c:928:4</code> (unresolved), <code>wcslen</code> at <code>src/backend/utils/adt/pg_locale.c:929:10</code> (unresolved), <code>GetLocaleInfoEx</code> at <code>src/backend/utils/adt/pg_locale.c:930:8</code> (unresolved), <code>_wcsicmp</code> at <code>src/backend/utils/adt/pg_locale.c:934:9</code> (unresolved), <code>wcscpy</code> at <code>src/backend/utils/adt/pg_locale.c:936:6</code> (unresolved)</li>
+</ul>
+<h2>関連データ構造</h2>
+<p><a class="wiki-source-link" href="../../source/src/port/win32error.c.html#L20" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__port__win32error_c__DWORD.html&quot;}, '*');"><code>DWORD</code></a>, <a class="wiki-source-link" href="../../source/src/interfaces/ecpg/test/expected/preproc-init.c.html#L82" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__interfaces__ecpg__test__expected__preproc-init_c__e.html&quot;}, '*');"><code>e</code></a></p>
+<h2>ソース抜粋</h2>
+<p>~~~c static BOOL CALLBACK <a class="wiki-source-link" href="../../source/src/backend/utils/adt/pg_locale.c.html#L887" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__utils__adt__pg_locale_c__search_locale_enum.html&quot;}, '*');">search_locale_enum</a>(LPWSTR pStr, <a class="wiki-source-link" href="../../source/src/port/win32error.c.html#L20" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__port__win32error_c__DWORD.html&quot;}, '*');">DWORD</a> dwFlags, LPARAM lparam) { wchar_t		test_locale[LOCALE_NAME_MAX_LENGTH]; wchar_t   **argv;</p>
+<p>(void) (dwFlags);</p>
+<p>argv = (wchar_t **) lparam; *argv[2] = (wchar_t) 0;</p>
+<p>memset(test_locale, 0, sizeof(test_locale));</p>
+<p>/* Get the name of the &lt;Language&gt; in English */ if (GetLocaleInfoEx(pStr, LOCALE_SENGLISHLANGUAGENAME, test_locale, LOCALE_NAME_MAX_LENGTH)) { /*</p>
+<ul>
+<li>If the enumerated <a class="wiki-source-link" href="../../source/src/bin/initdb/initdb.c.html#L140" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/bin/initdb/initdb.c.html&quot;}, '*');">locale</a> does not have a hyphen (&quot;en&quot;) OR the</li>
+<li>locale_name input does not have an underscore (&quot;English&quot;), we only</li>
+<li>need to <a class="wiki-source-link" href="../../source/src/backend/optimizer/geqo/geqo_pool.c.html#L144" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__geqo__geqo_pool_c__compare.html&quot;}, '*');">compare</a> the &lt;Language&gt; tags.</li>
+<p>*/ if (wcsrchr(pStr, &#x27;-&#x27;) == NULL || wcsrchr(argv[0], &#x27;_&#x27;) == NULL) { if (_wcsicmp(argv[0], test_locale) == 0) { wcscpy(argv[1], pStr); *argv[2] = (wchar_t) 1; return FALSE; } }</p>
+</ul>
+<p>/*</p>
+<ul>
+<li>We have to <a class="wiki-source-link" href="../../source/src/backend/optimizer/geqo/geqo_pool.c.html#L144" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__geqo__geqo_pool_c__compare.html&quot;}, '*');">compare</a> a full &lt;Language&gt;_&lt;Country&gt; tag, so we append</li>
+<li>the underscore and name of the country/region in English, e.g.</li>
+<li>&quot;English_United States&quot;.</li>
+<p>*/ else { size_t		len;</p>
+</ul>
+<p>wcscat(test_locale, L&quot;_&quot;); len = wcslen(test_locale); if (GetLocaleInfoEx(pStr, LOCALE_SENGLISHCOUNTRYNAME, test_locale + len, LOCALE_NAME_MAX_LENGTH - len)) { if (_wcsicmp(argv[0], test_locale) == 0) { wcscpy(argv[1], pStr); *argv[2] = (wchar_t) 1; return FALSE; } } } }</p>
+<p>return TRUE; } ~~~</p>
+<h2>失敗モードと境界条件</h2>
+<p>まだ解析していません。</p>
+<h2>保守担当者向けメモ</h2>
+<ul>
+<li>後続フェーズで、ソース本文の文脈と caller/callee 情報を使ってこのページを強化する。</li>
+</ul><script>
+(function() {
+  function notifyParent() {
+    if (parent === window) return;
+    parent.postMessage({type: "frame-location", frame: window.name || "", href: window.location.href}, "*");
+  }
+  document.addEventListener("click", function(event) {
+    const link = event.target.closest("a[data-panel]");
+    if (!link || parent === window) return;
+    parent.postMessage({type: "source-link", panel: link.dataset.panel}, "*");
+  });
+  window.addEventListener("load", notifyParent);
+  window.addEventListener("hashchange", notifyParent);
+})();
+</script></body></html>

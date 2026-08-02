@@ -1,0 +1,63 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>modules/src__backend__utils__time.md</title><link rel="stylesheet" href="../../styles.css"></head><body><h1>src/backend/utils/time</h1>
+<h2>システム内での役割</h2>
+<p><code>src/backend/utils/time</code> には 2 個の索引済みソースファイルがあります。この初期モジュールページはディレクトリ境界に基づいています。</p>
+<h2>責務</h2>
+<ul>
+<li>このディレクトリに属するソースファイルを集約する。</li>
+<li>より深い LLM 合成の前段として、モジュール単位の入口を提供する。</li>
+</ul>
+<h2>このモジュールのファイル</h2>
+<ul>
+<li><a class="wiki-source-link" href="../../source/src/backend/utils/time/combocid.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/utils/time/combocid.c.html&quot;}, '*');"><code>src/backend/utils/time/combocid.c</code></a></li>
+<li><a class="wiki-source-link" href="../../source/src/backend/utils/time/snapmgr.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/utils/time/snapmgr.c.html&quot;}, '*');"><code>src/backend/utils/time/snapmgr.c</code></a></li>
+</ul>
+<h2>主要なデータ構造</h2>
+<ul>
+<li><a class="wiki-source-link" href="../../source/src/backend/utils/time/combocid.c.html#L56" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__utils__time__combocid_c__ComboCidKeyData.html&quot;}, '*');"><code>ComboCidKeyData</code></a></li>
+<li><a class="wiki-source-link" href="../../source/src/backend/utils/time/combocid.c.html#L62" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__utils__time__combocid_c__ComboCidKey.html&quot;}, '*');"><code>ComboCidKey</code></a></li>
+<li><a class="wiki-source-link" href="../../source/src/backend/utils/time/combocid.c.html#L64" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__utils__time__combocid_c__ComboCidEntryData.html&quot;}, '*');"><code>ComboCidEntryData</code></a></li>
+<li><a class="wiki-source-link" href="../../source/src/backend/utils/time/combocid.c.html#L70" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__utils__time__combocid_c__ComboCidEntry.html&quot;}, '*');"><code>ComboCidEntry</code></a></li>
+<li><a class="wiki-source-link" href="../../source/src/backend/utils/time/snapmgr.c.html#L173" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__utils__time__snapmgr_c__ActiveSnapshotElt.html&quot;}, '*');"><code>ActiveSnapshotElt</code></a></li>
+<li><a class="wiki-source-link" href="../../source/src/backend/utils/time/snapmgr.c.html#L206" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__utils__time__snapmgr_c__ExportedSnapshot.html&quot;}, '*');"><code>ExportedSnapshot</code></a></li>
+<li><a class="wiki-source-link" href="../../source/src/backend/utils/time/snapmgr.c.html#L251" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__utils__time__snapmgr_c__SerializedSnapshotData.html&quot;}, '*');"><code>SerializedSnapshotData</code></a></li>
+</ul>
+<h2>主なフロー</h2>
+<p>初期モジュールページでは、まだエンドツーエンドのフローを推論しません。</p>
+<h2>外部依存</h2>
+<ul>
+<li><a class="wiki-source-link" href="../../source/src/include/postgres.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/postgres.h.html&quot;}, '*');"><code>postgres.h</code></a></li>
+<li><code>access/xact.h</code></li>
+<li><a class="wiki-source-link" href="../../source/src/include/miscadmin.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/miscadmin.h.html&quot;}, '*');"><code>miscadmin.h</code></a></li>
+<li><code>utils/memutils.h</code></li>
+<li><code>access/htup_details.h</code></li>
+<li><code>storage/shmem.h</code></li>
+<li><code>utils/combocid.h</code></li>
+<li><code>utils/hsearch.h</code></li>
+<li><code>access/subtrans.h</code></li>
+<li><code>access/transam.h</code></li>
+</ul>
+<h2>内部構成</h2>
+<ul>
+<li>子モジュール数: 0</li>
+</ul>
+<h2>推奨読書順</h2>
+<p>1. <a class="wiki-source-link" href="../../source/src/backend/utils/time/snapmgr.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/utils/time/snapmgr.c.html&quot;}, '*');"><code>src/backend/utils/time/snapmgr.c</code></a> 2. <a class="wiki-source-link" href="../../source/src/backend/utils/time/combocid.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/utils/time/combocid.c.html&quot;}, '*');"><code>src/backend/utils/time/combocid.c</code></a></p>
+<h2>未解決の問い</h2>
+<ul>
+<li>LLM ベースのモジュール合成を追加した後で、責務とフローを精緻化する。</li>
+</ul><script>
+(function() {
+  function notifyParent() {
+    if (parent === window) return;
+    parent.postMessage({type: "frame-location", frame: window.name || "", href: window.location.href}, "*");
+  }
+  document.addEventListener("click", function(event) {
+    const link = event.target.closest("a[data-panel]");
+    if (!link || parent === window) return;
+    parent.postMessage({type: "source-link", panel: link.dataset.panel}, "*");
+  });
+  window.addEventListener("load", notifyParent);
+  window.addEventListener("hashchange", notifyParent);
+})();
+</script></body></html>

@@ -1,0 +1,62 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>symbols/src__backend__utils__adt__geo_spgist_c__getQuadrant.md</title><link rel="stylesheet" href="../../styles.css"></head><body><h1>getQuadrant</h1>
+<h2>定義</h2>
+<ul>
+<li>種別: <code>function</code></li>
+<li>定義箇所: <code>src/backend/utils/adt/geo_spgist.c:129</code></li>
+<li>所属モジュール: <a class="wiki-entity-link" href="../modules/src__backend__utils__adt.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/modules/src__backend__utils__adt.html&quot;, &quot;source&quot;: &quot;source/src/backend/utils/adt/acl.c.html&quot;}, '*');"><code>module:src/backend/utils/adt</code></a></li>
+</ul>
+<h2>目的</h2>
+<p>静的シンボル索引から生成された初期シンボルページです。</p>
+<h2>シグネチャまたは形状</h2>
+<ul>
+<li>シグネチャ: <code>static uint8 getQuadrant(BOX *centroid, BOX *inBox)</code></li>
+</ul>
+<h2>入力と出力</h2>
+<ul>
+<li>引数: <code>BOX *centroid</code>, <code>BOX *inBox</code></li>
+<li>戻り値: <code>uint8</code></li>
+</ul>
+<h2>前提条件と不変条件</h2>
+<p>まだ解析していません。</p>
+<h2>アルゴリズムまたは振る舞い</h2>
+<ul>
+<li>複雑度: <code>medium</code> (score 9)</li>
+</ul>
+<p>まだ解析していません。</p>
+<h2>呼び出し元と呼び出し先</h2>
+<ul>
+<li>呼び出し元: <a class="wiki-source-link" href="../../source/src/backend/utils/adt/geo_spgist.c.html#L416" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__utils__adt__geo_spgist_c__spg_box_quad_choose.html&quot;}, '*');"><code>spg_box_quad_choose</code></a>, <a class="wiki-source-link" href="../../source/src/backend/utils/adt/geo_spgist.c.html#L440" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__utils__adt__geo_spgist_c__spg_box_quad_picksplit.html&quot;}, '*');"><code>spg_box_quad_picksplit</code></a></li>
+<li>呼び出し先: なし</li>
+<li>呼び出し元サイト: <a class="wiki-source-link" href="../../source/src/backend/utils/adt/geo_spgist.c.html#L416" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__utils__adt__geo_spgist_c__spg_box_quad_choose.html&quot;}, '*');"><code>spg_box_quad_choose</code></a> at <code>src/backend/utils/adt/geo_spgist.c:429:33</code> (direct, confidence=high, resolved=<a class="wiki-entity-link" href="src__backend__utils__adt__geo_spgist_c__getQuadrant.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__utils__adt__geo_spgist_c__getQuadrant.html&quot;, &quot;source&quot;: &quot;source/src/backend/utils/adt/geo_spgist.c.html#L129&quot;}, '*');"><code>symbol:src/backend/utils/adt/geo_spgist.c#getQuadrant</code></a>), <a class="wiki-source-link" href="../../source/src/backend/utils/adt/geo_spgist.c.html#L440" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__utils__adt__geo_spgist_c__spg_box_quad_picksplit.html&quot;}, '*');"><code>spg_box_quad_picksplit</code></a> at <code>src/backend/utils/adt/geo_spgist.c:495:21</code> (direct, confidence=high, resolved=<a class="wiki-entity-link" href="src__backend__utils__adt__geo_spgist_c__getQuadrant.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__utils__adt__geo_spgist_c__getQuadrant.html&quot;, &quot;source&quot;: &quot;source/src/backend/utils/adt/geo_spgist.c.html#L129&quot;}, '*');"><code>symbol:src/backend/utils/adt/geo_spgist.c#getQuadrant</code></a>)</li>
+<li>呼び出しサイト: なし</li>
+</ul>
+<h2>関連データ構造</h2>
+<p><a class="wiki-source-link" href="../../source/src/include/utils/geo_decls.h.html#L139" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__utils__geo_decls_h__BOX.html&quot;}, '*');"><code>BOX</code></a>, <code>uint8</code></p>
+<h2>ソース抜粋</h2>
+<p>~~~c static uint8 getQuadrant(<a class="wiki-source-link" href="../../source/src/include/utils/geo_decls.h.html#L139" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__utils__geo_decls_h__BOX.html&quot;}, '*');">BOX</a> *centroid, <a class="wiki-source-link" href="../../source/src/include/utils/geo_decls.h.html#L139" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__utils__geo_decls_h__BOX.html&quot;}, '*');">BOX</a> *inBox) { uint8		quadrant = 0;</p>
+<p>if (inBox-&gt;low.x &gt; centroid-&gt;low.x) quadrant |= 0x8;</p>
+<p>if (inBox-&gt;high.x &gt; centroid-&gt;high.x) quadrant |= 0x4;</p>
+<p>if (inBox-&gt;low.y &gt; centroid-&gt;low.y) quadrant |= 0x2;</p>
+<p>if (inBox-&gt;high.y &gt; centroid-&gt;high.y) quadrant |= 0x1;</p>
+<p>return quadrant; } ~~~</p>
+<h2>失敗モードと境界条件</h2>
+<p>まだ解析していません。</p>
+<h2>保守担当者向けメモ</h2>
+<ul>
+<li>後続フェーズで、ソース本文の文脈と caller/callee 情報を使ってこのページを強化する。</li>
+</ul><script>
+(function() {
+  function notifyParent() {
+    if (parent === window) return;
+    parent.postMessage({type: "frame-location", frame: window.name || "", href: window.location.href}, "*");
+  }
+  document.addEventListener("click", function(event) {
+    const link = event.target.closest("a[data-panel]");
+    if (!link || parent === window) return;
+    parent.postMessage({type: "source-link", panel: link.dataset.panel}, "*");
+  });
+  window.addEventListener("load", notifyParent);
+  window.addEventListener("hashchange", notifyParent);
+})();
+</script></body></html>

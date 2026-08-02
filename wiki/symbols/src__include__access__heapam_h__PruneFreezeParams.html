@@ -1,0 +1,89 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>symbols/src__include__access__heapam_h__PruneFreezeParams.md</title><link rel="stylesheet" href="../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../source/src/include/access/heapam.h.html#L260" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__access__heapam_h__PruneFreezeParams.html&quot;}, '*');">PruneFreezeParams</a></h1>
+<h2>定義</h2>
+<ul>
+<li>種別: <code>struct</code></li>
+<li>定義箇所: <code>src/include/access/heapam.h:260</code></li>
+<li>所属モジュール: <a class="wiki-entity-link" href="../modules/src__include__access.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/modules/src__include__access.html&quot;, &quot;source&quot;: &quot;source/src/include/access/amapi.h.html&quot;}, '*');"><code>module:src/include/access</code></a></li>
+</ul>
+<h2>目的</h2>
+<p>静的シンボル索引から生成された初期シンボルページです。</p>
+<h2>シグネチャまたは形状</h2>
+<ul>
+<li>シグネチャ: <code>typedef struct PruneFreezeParams</code></li>
+</ul>
+<h2>入力と出力</h2>
+<p>まだ解析していません。</p>
+<h2>前提条件と不変条件</h2>
+<p>まだ解析していません。</p>
+<h2>アルゴリズムまたは振る舞い</h2>
+<p>まだ解析していません。</p>
+<h2>呼び出し元と呼び出し先</h2>
+<ul>
+<li>呼び出し元: なし</li>
+<li>呼び出し先: なし</li>
+<li>呼び出し元サイト: なし</li>
+<li>呼び出しサイト: なし</li>
+</ul>
+<h2>関連データ構造</h2>
+<p><a class="wiki-source-link" href="../../source/src/include/storage/buf.h.html#L23" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__storage__buf_h__Buffer.html&quot;}, '*');"><code>Buffer</code></a>, <code>GlobalVisState</code>, <a class="wiki-source-link" href="../../source/src/include/getopt_long.h.html#L17" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__getopt_long_h__option.html&quot;}, '*');"><code>option</code></a>, <code>options</code>, <a class="wiki-source-link" href="../../source/src/include/access/heapam.h.html#L250" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/access/heapam.h.html&quot;}, '*');"><code>PruneReason</code></a>, <code>Relation</code>, <code>VacuumCutoffs</code></p>
+<h2>ソース抜粋</h2>
+<p>~~~c typedef struct <a class="wiki-source-link" href="../../source/src/include/access/heapam.h.html#L260" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__access__heapam_h__PruneFreezeParams.html&quot;}, '*');">PruneFreezeParams</a> { Relation	relation;		/* relation containing buffer to be pruned */ <a class="wiki-source-link" href="../../source/src/include/storage/buf.h.html#L23" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__storage__buf_h__Buffer.html&quot;}, '*');">Buffer</a>		buffer;			/* buffer to be pruned */</p>
+<p>/*</p>
+<ul>
+<li>Callers should provide a pinned vmbuffer corresponding to the heap</li>
+<li>block in buffer. We will check for and repair any corruption in the VM</li>
+<li>and set the VM after pruning if the page <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> all-visible/all-frozen.</li>
+<p>*/ <a class="wiki-source-link" href="../../source/src/include/storage/buf.h.html#L23" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__storage__buf_h__Buffer.html&quot;}, '*');">Buffer</a>		vmbuffer;</p>
+</ul>
+<p>/*</p>
+<ul>
+<li>The reason pruning was performed.  It <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> used to set the WAL record</li>
+<li>opcode which <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> used for debugging and analysis purposes.</li>
+<p>*/ <a class="wiki-source-link" href="../../source/src/include/access/heapam.h.html#L250" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/access/heapam.h.html&quot;}, '*');">PruneReason</a> reason;</p>
+</ul>
+<p>/*</p>
+<ul>
+<li>Contains <a class="wiki-source-link" href="../../source/src/test/locale/test-ctype.c.html#L32" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__test__locale__test-ctype_c__flag.html&quot;}, '*');">flag</a> bits:</li>
+<p>*</p>
+<li><a class="wiki-source-link" href="../../source/src/include/access/heapam.h.html#L42" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/access/heapam.h.html&quot;}, '*');">HEAP_PAGE_PRUNE_MARK_UNUSED_NOW</a> indicates that dead <a class="wiki-source-link" href="../../source/src/test/modules/test_tidstore/test_tidstore.c.html#L48" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/test/modules/test_tidstore/test_tidstore.c.html&quot;}, '*');">items</a> can be set</li>
+<li><a class="wiki-source-link" href="../../source/src/include/storage/itemid.h.html#L38" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/storage/itemid.h.html&quot;}, '*');">LP_UNUSED</a> during pruning.</li>
+<p>*</p>
+<li><a class="wiki-source-link" href="../../source/src/include/access/heapam.h.html#L43" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/access/heapam.h.html&quot;}, '*');">HEAP_PAGE_PRUNE_FREEZE</a> indicates that we will also freeze tuples.</li>
+<p>*/ int			options;</p>
+</ul>
+<p>/*</p>
+<ul>
+<li>vistest <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> used to distinguish whether tuples are DEAD or RECENTLY_DEAD</li>
+<li>(see <a class="wiki-source-link" href="../../source/src/backend/access/heap/pruneheap.c.html#L1420" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__access__heap__pruneheap_c__heap_prune_satisfies_vacuum.html&quot;}, '*');">heap_prune_satisfies_vacuum</a>).</li>
+<p>*/ GlobalVisState *vistest;</p>
+</ul>
+<p>/*</p>
+<ul>
+<li>Contains the cutoffs used for freezing. They are required if the</li>
+<li><a class="wiki-source-link" href="../../source/src/include/access/heapam.h.html#L43" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/access/heapam.h.html&quot;}, '*');">HEAP_PAGE_PRUNE_FREEZE</a> <a class="wiki-source-link" href="../../source/src/include/getopt_long.h.html#L17" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__getopt_long_h__option.html&quot;}, '*');">option</a> <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> set. cutoffs-&gt;OldestXmin <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> also used</li>
+<li>to determine if dead tuples are HEAPTUPLE_RECENTLY_DEAD or</li>
+<li>HEAPTUPLE_DEAD. Currently only <a class="wiki-source-link" href="../../source/src/backend/commands/vacuum.c.html#L493" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__commands__vacuum_c__vacuum.html&quot;}, '*');">vacuum</a> passes in cutoffs. Vacuum</li>
+<li>calculates them once, at the beginning of vacuuming the relation.</li>
+<p>*/ VacuumCutoffs *cutoffs; } <a class="wiki-source-link" href="../../source/src/include/access/heapam.h.html#L260" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__access__heapam_h__PruneFreezeParams.html&quot;}, '*');">PruneFreezeParams</a>; ~~~</p>
+</ul>
+<h2>失敗モードと境界条件</h2>
+<p>まだ解析していません。</p>
+<h2>保守担当者向けメモ</h2>
+<ul>
+<li>後続フェーズで、ソース本文の文脈と caller/callee 情報を使ってこのページを強化する。</li>
+</ul><script>
+(function() {
+  function notifyParent() {
+    if (parent === window) return;
+    parent.postMessage({type: "frame-location", frame: window.name || "", href: window.location.href}, "*");
+  }
+  document.addEventListener("click", function(event) {
+    const link = event.target.closest("a[data-panel]");
+    if (!link || parent === window) return;
+    parent.postMessage({type: "source-link", panel: link.dataset.panel}, "*");
+  });
+  window.addEventListener("load", notifyParent);
+  window.addEventListener("hashchange", notifyParent);
+})();
+</script></body></html>

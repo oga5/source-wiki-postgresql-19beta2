@@ -1,0 +1,16 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>Related: src/port/win32dlopen.c</title><link rel="stylesheet" href="../../../styles.css"></head><body><h1>Related pages</h1><p>src/port/win32dlopen.c</p><ul><li><a href="../../../wiki/symbols/src__port__win32dlopen_c__set_dl_error.html" target="wiki-view">function: set_dl_error</a></li><li><a href="../../../wiki/symbols/src__port__win32dlopen_c__dlerror.html" target="wiki-view">function: dlerror</a></li><li><a href="../../../wiki/symbols/src__port__win32dlopen_c__dlclose.html" target="wiki-view">function: dlclose</a></li><li><a href="../../../wiki/symbols/src__port__win32dlopen_c__dlsym.html" target="wiki-view">function: dlsym</a></li><li><a href="../../../wiki/symbols/src__port__win32dlopen_c__dlopen.html" target="wiki-view">function: dlopen</a></li><li><a href="../../../source/src/include/c.h.html" target="source-view">Include: c.h</a></li></ul><script>
+(function() {
+  function notifyParent() {
+    if (parent === window) return;
+    parent.postMessage({type: "frame-location", frame: window.name || "", href: window.location.href}, "*");
+  }
+  document.addEventListener("click", function(event) {
+    const link = event.target.closest("a[data-panel]");
+    if (!link || parent === window) return;
+    parent.postMessage({type: "source-link", panel: link.dataset.panel}, "*");
+  });
+  window.addEventListener("load", notifyParent);
+  window.addEventListener("hashchange", notifyParent);
+})();
+</script></body></html>

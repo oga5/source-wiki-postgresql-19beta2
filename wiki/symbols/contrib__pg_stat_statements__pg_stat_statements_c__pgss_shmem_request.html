@@ -1,0 +1,57 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>symbols/contrib__pg_stat_statements__pg_stat_statements_c__pgss_shmem_request.md</title><link rel="stylesheet" href="../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../source/contrib/pg_stat_statements/pg_stat_statements.c.html#L505" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/contrib__pg_stat_statements__pg_stat_statements_c__pgss_shmem_request.html&quot;}, '*');">pgss_shmem_request</a></h1>
+<h2>定義</h2>
+<ul>
+<li>種別: <code>function</code></li>
+<li>定義箇所: <code>contrib/pg_stat_statements/pg_stat_statements.c:505</code></li>
+<li>所属モジュール: <a class="wiki-entity-link" href="../modules/contrib__pg_stat_statements.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/modules/contrib__pg_stat_statements.html&quot;, &quot;source&quot;: &quot;source/contrib/pg_stat_statements/pg_stat_statements.c.html&quot;}, '*');"><code>module:contrib/pg_stat_statements</code></a></li>
+</ul>
+<h2>目的</h2>
+<p>静的シンボル索引から生成された初期シンボルページです。</p>
+<h2>シグネチャまたは形状</h2>
+<ul>
+<li>シグネチャ: <code>static void pgss_shmem_request(void *arg)</code></li>
+</ul>
+<h2>入力と出力</h2>
+<ul>
+<li>引数: <code>void *arg</code></li>
+<li>戻り値: <code>void</code></li>
+</ul>
+<h2>前提条件と不変条件</h2>
+<p>まだ解析していません。</p>
+<h2>アルゴリズムまたは振る舞い</h2>
+<ul>
+<li>複雑度: <code>medium</code> (score 5)</li>
+</ul>
+<p>まだ解析していません。</p>
+<h2>呼び出し元と呼び出し先</h2>
+<ul>
+<li>呼び出し元: なし</li>
+<li>呼び出し先: なし</li>
+<li>呼び出し元サイト: なし</li>
+<li>呼び出しサイト: なし</li>
+</ul>
+<h2>関連データ構造</h2>
+<p><a class="wiki-source-link" href="../../source/contrib/pg_stat_statements/pg_stat_statements.c.html#L233" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/contrib__pg_stat_statements__pg_stat_statements_c__pgssEntry.html&quot;}, '*');"><code>pgssEntry</code></a>, <a class="wiki-source-link" href="../../source/contrib/pg_stat_statements/pg_stat_statements.c.html#L143" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/contrib__pg_stat_statements__pg_stat_statements_c__pgssHashKey.html&quot;}, '*');"><code>pgssHashKey</code></a>, <a class="wiki-source-link" href="../../source/contrib/pg_stat_statements/pg_stat_statements.c.html#L248" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/contrib__pg_stat_statements__pg_stat_statements_c__pgssSharedState.html&quot;}, '*');"><code>pgssSharedState</code></a></p>
+<h2>ソース抜粋</h2>
+<p>~~~c static void <a class="wiki-source-link" href="../../source/contrib/pg_stat_statements/pg_stat_statements.c.html#L505" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/contrib__pg_stat_statements__pg_stat_statements_c__pgss_shmem_request.html&quot;}, '*');">pgss_shmem_request</a>(void *arg) { <a class="wiki-source-link" href="../../source/src/include/storage/shmem.h.html#L179" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/storage/shmem.h.html&quot;}, '*');">ShmemRequestHash</a>(.name = &quot;<a class="wiki-source-link" href="../../source/contrib/pg_stat_statements/pg_stat_statements.c.html#L1657" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/contrib__pg_stat_statements__pg_stat_statements_c__pg_stat_statements.html&quot;}, '*');">pg_stat_statements</a> <a class="wiki-source-link" href="../../source/src/backend/regex/rege_dfa.c.html#L723" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__regex__rege_dfa_c__hash.html&quot;}, '*');">hash</a>&quot;, .nelems = <a class="wiki-source-link" href="../../source/contrib/pg_stat_statements/pg_stat_statements.c.html#L303" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/contrib/pg_stat_statements/pg_stat_statements.c.html&quot;}, '*');">pgss_max</a>, .hash_info.keysize = sizeof(<a class="wiki-source-link" href="../../source/contrib/pg_stat_statements/pg_stat_statements.c.html#L143" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/contrib__pg_stat_statements__pg_stat_statements_c__pgssHashKey.html&quot;}, '*');">pgssHashKey</a>), .hash_info.entrysize = sizeof(<a class="wiki-source-link" href="../../source/contrib/pg_stat_statements/pg_stat_statements.c.html#L233" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/contrib__pg_stat_statements__pg_stat_statements_c__pgssEntry.html&quot;}, '*');">pgssEntry</a>), .hash_flags = <a class="wiki-source-link" href="../../source/src/include/utils/hsearch.h.html#L90" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/utils/hsearch.h.html&quot;}, '*');">HASH_ELEM</a> | <a class="wiki-source-link" href="../../source/src/include/utils/hsearch.h.html#L92" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/utils/hsearch.h.html&quot;}, '*');">HASH_BLOBS</a>, .ptr = &amp;pgss_hash, ); <a class="wiki-source-link" href="../../source/src/include/storage/shmem.h.html#L176" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/storage/shmem.h.html&quot;}, '*');">ShmemRequestStruct</a>(.name = &quot;<a class="wiki-source-link" href="../../source/contrib/pg_stat_statements/pg_stat_statements.c.html#L1657" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/contrib__pg_stat_statements__pg_stat_statements_c__pg_stat_statements.html&quot;}, '*');">pg_stat_statements</a>&quot;, .size = sizeof(<a class="wiki-source-link" href="../../source/contrib/pg_stat_statements/pg_stat_statements.c.html#L248" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/contrib__pg_stat_statements__pg_stat_statements_c__pgssSharedState.html&quot;}, '*');">pgssSharedState</a>), .ptr = (void **) &amp;pgss, ); } ~~~</p>
+<h2>失敗モードと境界条件</h2>
+<p>まだ解析していません。</p>
+<h2>保守担当者向けメモ</h2>
+<ul>
+<li>後続フェーズで、ソース本文の文脈と caller/callee 情報を使ってこのページを強化する。</li>
+</ul><script>
+(function() {
+  function notifyParent() {
+    if (parent === window) return;
+    parent.postMessage({type: "frame-location", frame: window.name || "", href: window.location.href}, "*");
+  }
+  document.addEventListener("click", function(event) {
+    const link = event.target.closest("a[data-panel]");
+    if (!link || parent === window) return;
+    parent.postMessage({type: "source-link", panel: link.dataset.panel}, "*");
+  });
+  window.addEventListener("load", notifyParent);
+  window.addEventListener("hashchange", notifyParent);
+})();
+</script></body></html>

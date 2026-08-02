@@ -1,0 +1,101 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>symbols/src__include__replication__snapbuild_internal_h__SnapBuild.md</title><link rel="stylesheet" href="../../styles.css"></head><body><h1>SnapBuild</h1>
+<h2>定義</h2>
+<ul>
+<li>種別: <code>struct</code></li>
+<li>定義箇所: <code>src/include/replication/snapbuild_internal.h:26</code></li>
+<li>所属モジュール: <a class="wiki-entity-link" href="../modules/src__include__replication.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/modules/src__include__replication.html&quot;, &quot;source&quot;: &quot;source/src/include/replication/conflict.h.html&quot;}, '*');"><code>module:src/include/replication</code></a></li>
+</ul>
+<h2>目的</h2>
+<p>静的シンボル索引から生成された初期シンボルページです。</p>
+<h2>シグネチャまたは形状</h2>
+<ul>
+<li>シグネチャ: <code>struct SnapBuild</code></li>
+</ul>
+<h2>入力と出力</h2>
+<p>まだ解析していません。</p>
+<h2>前提条件と不変条件</h2>
+<p>まだ解析していません。</p>
+<h2>アルゴリズムまたは振る舞い</h2>
+<p>まだ解析していません。</p>
+<h2>呼び出し元と呼び出し先</h2>
+<ul>
+<li>呼び出し元: なし</li>
+<li>呼び出し先: なし</li>
+<li>呼び出し元サイト: なし</li>
+<li>呼び出しサイト: なし</li>
+</ul>
+<h2>関連データ構造</h2>
+<p><code>c</code>, <a class="wiki-source-link" href="../../source/src/interfaces/ecpg/test/expected/preproc-init.c.html#L82" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__interfaces__ecpg__test__expected__preproc-init_c__e.html&quot;}, '*');"><code>e</code></a>, <code>MemoryContext</code>, <code>ReorderBuffer</code>, <a class="wiki-source-link" href="../../source/src/include/replication/snapbuild.h.html#L30" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__replication__snapbuild_h__SnapBuildState.html&quot;}, '*');"><code>SnapBuildState</code></a>, <code>Snapshot</code>, <code>state</code>, <code>TransactionId</code>, <a class="wiki-source-link" href="../../source/src/interfaces/ecpg/preproc/type.h.html#L89" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__interfaces__ecpg__preproc__type_h__when.html&quot;}, '*');"><code>when</code></a>, <code>xl_running_xacts</code>, <code>XLogRecPtr</code></p>
+<h2>ソース抜粋</h2>
+<p>~~~c struct SnapBuild { /* how far are we along building our first full snapshot */ <a class="wiki-source-link" href="../../source/src/include/replication/snapbuild.h.html#L30" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__replication__snapbuild_h__SnapBuildState.html&quot;}, '*');">SnapBuildState</a> state;</p>
+<p>/* private memory context used to allocate memory for this module. */ MemoryContext context;</p>
+<p>/* all transactions &lt; than this have committed/aborted */ TransactionId xmin;</p>
+<p>/* all transactions &gt;= than this are uncommitted */ TransactionId xmax;</p>
+<p>/*</p>
+<ul>
+<li>Don&#x27;t replay commits from an LSN &lt; this LSN. This can be set externally</li>
+<li>but it will also be advanced (never retreat) from within snapbuild.c.</li>
+<p>*/ XLogRecPtr	start_decoding_at;</p>
+</ul>
+<p>/*</p>
+<ul>
+<li>LSN at which two-phase decoding was enabled or LSN at which we found a</li>
+<li>consistent point at the time of slot creation.</li>
+<p>*</p>
+<li>The prepared transactions, that were skipped because previously</li>
+<li>two-phase was not enabled or are not covered by initial snapshot, need</li>
+<li>to be sent later along with commit prepared and they must be <a class="wiki-source-link" href="../../source/src/backend/regex/regc_locale.c.html#L487" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__regex__regc_locale_c__before.html&quot;}, '*');">before</a></li>
+<li>this point.</li>
+<p>*/ XLogRecPtr	two_phase_at;</p>
+</ul>
+<p>/*</p>
+<ul>
+<li>Don&#x27;t start decoding WAL until the &quot;xl_running_xacts&quot; information</li>
+<li>indicates there are no running xids with an xid smaller than this.</li>
+<p>*/ TransactionId initial_xmin_horizon;</p>
+</ul>
+<p>/* Indicates if we are building full snapshot or just catalog one. */ bool		building_full_snapshot;</p>
+<p>/*</p>
+<ul>
+<li>Indicates if we are using the snapshot builder for the creation of a</li>
+<li>logical replication slot. If it&#x27;s <a class="wiki-source-link" href="../../source/src/tools/pg_bsd_indent/indent_globs.h.html#L46" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/tools/pg_bsd_indent/indent_globs.h.html&quot;}, '*');">true</a>, the start point for decoding</li>
+<li>changes <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> not determined yet. <a class="wiki-source-link" href="../../source/src/common/md5.c.html#L110" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/common/md5.c.html&quot;}, '*');">So</a> we skip snapshot restores to properly</li>
+<li><a class="wiki-source-link" href="../../source/src/backend/regex/regexec.c.html#L420" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__regex__regexec_c__find.html&quot;}, '*');">find</a> the start point. See <a class="wiki-source-link" href="../../source/src/backend/replication/logical/snapbuild.c.html#L1241" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__replication__logical__snapbuild_c__SnapBuildFindSnapshot.html&quot;}, '*');">SnapBuildFindSnapshot</a>() for details.</li>
+<p>*/ bool		in_slot_creation;</p>
+</ul>
+<p>/*</p>
+<ul>
+<li>Snapshot that&#x27;s valid to see the catalog state seen at this moment.</li>
+<p>*/ Snapshot	snapshot;</p>
+</ul>
+<p>/*</p>
+<ul>
+<li>LSN of the last location we are sure a snapshot has been serialized to.</li>
+<p>*/ XLogRecPtr	last_serialized_snapshot;</p>
+</ul>
+<p>/*</p>
+<ul>
+<li>The reorderbuffer we need to update with usable snapshots et al.</li>
+<p>~~~</p>
+</ul>
+<h2>失敗モードと境界条件</h2>
+<p>まだ解析していません。</p>
+<h2>保守担当者向けメモ</h2>
+<ul>
+<li>後続フェーズで、ソース本文の文脈と caller/callee 情報を使ってこのページを強化する。</li>
+</ul><script>
+(function() {
+  function notifyParent() {
+    if (parent === window) return;
+    parent.postMessage({type: "frame-location", frame: window.name || "", href: window.location.href}, "*");
+  }
+  document.addEventListener("click", function(event) {
+    const link = event.target.closest("a[data-panel]");
+    if (!link || parent === window) return;
+    parent.postMessage({type: "source-link", panel: link.dataset.panel}, "*");
+  });
+  window.addEventListener("load", notifyParent);
+  window.addEventListener("hashchange", notifyParent);
+})();
+</script></body></html>

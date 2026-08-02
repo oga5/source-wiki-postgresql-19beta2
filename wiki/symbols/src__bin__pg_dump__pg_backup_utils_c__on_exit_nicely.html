@@ -1,0 +1,57 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>symbols/src__bin__pg_dump__pg_backup_utils_c__on_exit_nicely.md</title><link rel="stylesheet" href="../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../source/src/bin/pg_dump/pg_backup_utils.c.html#L64" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__bin__pg_dump__pg_backup_utils_c__on_exit_nicely.html&quot;}, '*');">on_exit_nicely</a></h1>
+<h2>定義</h2>
+<ul>
+<li>種別: <code>function</code></li>
+<li>定義箇所: <code>src/bin/pg_dump/pg_backup_utils.c:64</code></li>
+<li>所属モジュール: <a class="wiki-entity-link" href="../modules/src__bin__pg_dump.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/modules/src__bin__pg_dump.html&quot;, &quot;source&quot;: &quot;source/src/bin/pg_dump/common.c.html&quot;}, '*');"><code>module:src/bin/pg_dump</code></a></li>
+</ul>
+<h2>目的</h2>
+<p>静的シンボル索引から生成された初期シンボルページです。</p>
+<h2>シグネチャまたは形状</h2>
+<ul>
+<li>シグネチャ: <code>void on_exit_nicely(on_exit_nicely_callback function, void *arg)</code></li>
+</ul>
+<h2>入力と出力</h2>
+<ul>
+<li>引数: <code>on_exit_nicely_callback function</code>, <code>void *arg</code></li>
+<li>戻り値: <code>void</code></li>
+</ul>
+<h2>前提条件と不変条件</h2>
+<p>まだ解析していません。</p>
+<h2>アルゴリズムまたは振る舞い</h2>
+<ul>
+<li>複雑度: <code>low</code> (score 2)</li>
+</ul>
+<p>まだ解析していません。</p>
+<h2>呼び出し元と呼び出し先</h2>
+<ul>
+<li>呼び出し元: <a class="wiki-source-link" href="../../source/src/bin/pg_dump/parallel.c.html#L329" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__bin__pg_dump__parallel_c__on_exit_close_archive.html&quot;}, '*');"><code>on_exit_close_archive</code></a></li>
+<li>呼び出し先: <code>pg_fatal</code></li>
+<li>呼び出し元サイト: <a class="wiki-source-link" href="../../source/src/bin/pg_dump/parallel.c.html#L329" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__bin__pg_dump__parallel_c__on_exit_close_archive.html&quot;}, '*');"><code>on_exit_close_archive</code></a> at <code>src/bin/pg_dump/parallel.c:333:2</code> (direct, confidence=high, resolved=<a class="wiki-entity-link" href="src__bin__pg_dump__pg_backup_utils_c__on_exit_nicely.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__bin__pg_dump__pg_backup_utils_c__on_exit_nicely.html&quot;, &quot;source&quot;: &quot;source/src/bin/pg_dump/pg_backup_utils.c.html#L64&quot;}, '*');"><code>symbol:src/bin/pg_dump/pg_backup_utils.c#on_exit_nicely</code></a>)</li>
+<li>呼び出しサイト: <code>pg_fatal</code> at <code>src/bin/pg_dump/pg_backup_utils.c:68:3</code> (direct, confidence=high, resolved=<a class="wiki-entity-link" href="src__bin__pg_upgrade__util_c__pg_fatal.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__bin__pg_upgrade__util_c__pg_fatal.html&quot;, &quot;source&quot;: &quot;source/src/bin/pg_upgrade/util.c.html#L269&quot;}, '*');"><code>symbol:src/bin/pg_upgrade/util.c#pg_fatal</code></a>)</li>
+</ul>
+<h2>関連データ構造</h2>
+<p><code>on_exit_nicely_callback</code></p>
+<h2>ソース抜粋</h2>
+<p>~~~c void <a class="wiki-source-link" href="../../source/src/bin/pg_dump/pg_backup_utils.c.html#L64" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__bin__pg_dump__pg_backup_utils_c__on_exit_nicely.html&quot;}, '*');">on_exit_nicely</a>(on_exit_nicely_callback function, void *arg) { if (<a class="wiki-source-link" href="../../source/src/bin/pg_dump/pg_backup_utils.c.html#L32" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/bin/pg_dump/pg_backup_utils.c.html&quot;}, '*');">on_exit_nicely_index</a> &gt;= <a class="wiki-source-link" href="../../source/src/bin/pg_dump/pg_backup_utils.c.html#L24" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/bin/pg_dump/pg_backup_utils.c.html&quot;}, '*');">MAX_ON_EXIT_NICELY</a>) pg_fatal(&quot;out of <a class="wiki-source-link" href="../../source/src/bin/pg_dump/pg_backup_utils.c.html#L64" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__bin__pg_dump__pg_backup_utils_c__on_exit_nicely.html&quot;}, '*');">on_exit_nicely</a> slots&quot;); on_exit_nicely_list[<a class="wiki-source-link" href="../../source/src/bin/pg_dump/pg_backup_utils.c.html#L32" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/bin/pg_dump/pg_backup_utils.c.html&quot;}, '*');">on_exit_nicely_index</a>].function = function; on_exit_nicely_list[<a class="wiki-source-link" href="../../source/src/bin/pg_dump/pg_backup_utils.c.html#L32" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/bin/pg_dump/pg_backup_utils.c.html&quot;}, '*');">on_exit_nicely_index</a>].arg = arg; <a class="wiki-source-link" href="../../source/src/bin/pg_dump/pg_backup_utils.c.html#L32" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/bin/pg_dump/pg_backup_utils.c.html&quot;}, '*');">on_exit_nicely_index</a>++; } ~~~</p>
+<h2>失敗モードと境界条件</h2>
+<p>まだ解析していません。</p>
+<h2>保守担当者向けメモ</h2>
+<ul>
+<li>後続フェーズで、ソース本文の文脈と caller/callee 情報を使ってこのページを強化する。</li>
+</ul><script>
+(function() {
+  function notifyParent() {
+    if (parent === window) return;
+    parent.postMessage({type: "frame-location", frame: window.name || "", href: window.location.href}, "*");
+  }
+  document.addEventListener("click", function(event) {
+    const link = event.target.closest("a[data-panel]");
+    if (!link || parent === window) return;
+    parent.postMessage({type: "source-link", panel: link.dataset.panel}, "*");
+  });
+  window.addEventListener("load", notifyParent);
+  window.addEventListener("hashchange", notifyParent);
+})();
+</script></body></html>

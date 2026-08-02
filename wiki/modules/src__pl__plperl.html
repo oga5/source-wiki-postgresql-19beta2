@@ -1,0 +1,68 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>modules/src__pl__plperl.md</title><link rel="stylesheet" href="../../styles.css"></head><body><h1>src/pl/plperl</h1>
+<h2>システム内での役割</h2>
+<p><code>src/pl/plperl</code> には 4 個の索引済みソースファイルがあります。この初期モジュールページはディレクトリ境界に基づいています。</p>
+<h2>責務</h2>
+<ul>
+<li>このディレクトリに属するソースファイルを集約する。</li>
+<li>より深い LLM 合成の前段として、モジュール単位の入口を提供する。</li>
+</ul>
+<h2>このモジュールのファイル</h2>
+<ul>
+<li><a class="wiki-source-link" href="../../source/src/pl/plperl/plperl.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/pl/plperl/plperl.c.html&quot;}, '*');"><code>src/pl/plperl/plperl.c</code></a></li>
+<li><a class="wiki-source-link" href="../../source/src/pl/plperl/plperl.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/pl/plperl/plperl.h.html&quot;}, '*');"><code>src/pl/plperl/plperl.h</code></a></li>
+<li><a class="wiki-source-link" href="../../source/src/pl/plperl/plperl_system.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/pl/plperl/plperl_system.h.html&quot;}, '*');"><code>src/pl/plperl/plperl_system.h</code></a></li>
+<li><a class="wiki-source-link" href="../../source/src/pl/plperl/ppport.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/pl/plperl/ppport.h.html&quot;}, '*');"><code>src/pl/plperl/ppport.h</code></a></li>
+</ul>
+<h2>主要なデータ構造</h2>
+<ul>
+<li><a class="wiki-source-link" href="../../source/src/pl/plperl/plperl.c.html#L86" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__pl__plperl__plperl_c__plperl_interp_desc.html&quot;}, '*');"><code>plperl_interp_desc</code></a></li>
+<li><a class="wiki-source-link" href="../../source/src/pl/plperl/plperl.c.html#L103" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__pl__plperl__plperl_c__plperl_proc_desc.html&quot;}, '*');"><code>plperl_proc_desc</code></a></li>
+<li><a class="wiki-source-link" href="../../source/src/pl/plperl/plperl.c.html#L152" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__pl__plperl__plperl_c__plperl_proc_key.html&quot;}, '*');"><code>plperl_proc_key</code></a></li>
+<li><a class="wiki-source-link" href="../../source/src/pl/plperl/plperl.c.html#L164" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__pl__plperl__plperl_c__plperl_proc_ptr.html&quot;}, '*');"><code>plperl_proc_ptr</code></a></li>
+<li><a class="wiki-source-link" href="../../source/src/pl/plperl/plperl.c.html#L174" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__pl__plperl__plperl_c__plperl_call_data.html&quot;}, '*');"><code>plperl_call_data</code></a></li>
+<li><a class="wiki-source-link" href="../../source/src/pl/plperl/plperl.c.html#L189" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__pl__plperl__plperl_c__plperl_query_desc.html&quot;}, '*');"><code>plperl_query_desc</code></a></li>
+<li><a class="wiki-source-link" href="../../source/src/pl/plperl/plperl.c.html#L202" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__pl__plperl__plperl_c__plperl_query_entry.html&quot;}, '*');"><code>plperl_query_entry</code></a></li>
+<li><a class="wiki-source-link" href="../../source/src/pl/plperl/plperl.c.html#L211" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__pl__plperl__plperl_c__plperl_array_info.html&quot;}, '*');"><code>plperl_array_info</code></a></li>
+<li><a class="wiki-source-link" href="../../source/src/pl/plperl/ppport.h.html#L12555" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__pl__plperl__ppport_h__pTHX.html&quot;}, '*');"><code>pTHX</code></a></li>
+<li><a class="wiki-source-link" href="../../source/src/pl/plperl/ppport.h.html#L12558" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__pl__plperl__ppport_h__pTHX_.html&quot;}, '*');"><code>pTHX_</code></a></li>
+</ul>
+<h2>主なフロー</h2>
+<p>初期モジュールページでは、まだエンドツーエンドのフローを推論しません。</p>
+<h2>外部依存</h2>
+<ul>
+<li><a class="wiki-source-link" href="../../source/src/pl/plperl/ppport.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/pl/plperl/ppport.h.html&quot;}, '*');"><code>ppport.h</code></a></li>
+<li><a class="wiki-source-link" href="../../source/src/include/postgres.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/postgres.h.html&quot;}, '*');"><code>postgres.h</code></a></li>
+<li><code>access/htup_details.h</code></li>
+<li><code>access/xact.h</code></li>
+<li><code>catalog/pg_language.h</code></li>
+<li><code>catalog/pg_proc.h</code></li>
+<li><code>catalog/pg_type.h</code></li>
+<li><code>commands/event_trigger.h</code></li>
+<li><code>commands/trigger.h</code></li>
+<li><code>executor/spi.h</code></li>
+</ul>
+<h2>内部構成</h2>
+<ul>
+<li>子モジュール数: 0</li>
+</ul>
+<h2>推奨読書順</h2>
+<p>1. <a class="wiki-source-link" href="../../source/src/pl/plperl/ppport.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/pl/plperl/ppport.h.html&quot;}, '*');"><code>src/pl/plperl/ppport.h</code></a> 2. <a class="wiki-source-link" href="../../source/src/pl/plperl/plperl_system.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/pl/plperl/plperl_system.h.html&quot;}, '*');"><code>src/pl/plperl/plperl_system.h</code></a> 3. <a class="wiki-source-link" href="../../source/src/pl/plperl/plperl.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/pl/plperl/plperl.h.html&quot;}, '*');"><code>src/pl/plperl/plperl.h</code></a> 4. <a class="wiki-source-link" href="../../source/src/pl/plperl/plperl.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/pl/plperl/plperl.c.html&quot;}, '*');"><code>src/pl/plperl/plperl.c</code></a></p>
+<h2>未解決の問い</h2>
+<ul>
+<li>LLM ベースのモジュール合成を追加した後で、責務とフローを精緻化する。</li>
+</ul><script>
+(function() {
+  function notifyParent() {
+    if (parent === window) return;
+    parent.postMessage({type: "frame-location", frame: window.name || "", href: window.location.href}, "*");
+  }
+  document.addEventListener("click", function(event) {
+    const link = event.target.closest("a[data-panel]");
+    if (!link || parent === window) return;
+    parent.postMessage({type: "source-link", panel: link.dataset.panel}, "*");
+  });
+  window.addEventListener("load", notifyParent);
+  window.addEventListener("hashchange", notifyParent);
+})();
+</script></body></html>

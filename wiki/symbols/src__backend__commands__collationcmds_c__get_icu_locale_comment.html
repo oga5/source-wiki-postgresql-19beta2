@@ -1,0 +1,61 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>symbols/src__backend__commands__collationcmds_c__get_icu_locale_comment.md</title><link rel="stylesheet" href="../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../source/src/backend/commands/collationcmds.c.html#L650" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__commands__collationcmds_c__get_icu_locale_comment.html&quot;}, '*');">get_icu_locale_comment</a></h1>
+<h2>定義</h2>
+<ul>
+<li>種別: <code>function</code></li>
+<li>定義箇所: <code>src/backend/commands/collationcmds.c:650</code></li>
+<li>所属モジュール: <a class="wiki-entity-link" href="../modules/src__backend__commands.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/modules/src__backend__commands.html&quot;, &quot;source&quot;: &quot;source/src/backend/commands/aggregatecmds.c.html&quot;}, '*');"><code>module:src/backend/commands</code></a></li>
+</ul>
+<h2>目的</h2>
+<p>静的シンボル索引から生成された初期シンボルページです。</p>
+<h2>シグネチャまたは形状</h2>
+<ul>
+<li>シグネチャ: <code>static char * get_icu_locale_comment(const char *localename)</code></li>
+</ul>
+<h2>入力と出力</h2>
+<ul>
+<li>引数: <code>const char *localename</code></li>
+<li>戻り値: <code>char *</code></li>
+</ul>
+<h2>前提条件と不変条件</h2>
+<p>まだ解析していません。</p>
+<h2>アルゴリズムまたは振る舞い</h2>
+<ul>
+<li>複雑度: <code>high</code> (score 17)</li>
+</ul>
+<p>まだ解析していません。</p>
+<h2>呼び出し元と呼び出し先</h2>
+<ul>
+<li>呼び出し元: <a class="wiki-source-link" href="../../source/src/backend/commands/collationcmds.c.html#L840" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__commands__collationcmds_c__pg_import_system_collations.html&quot;}, '*');"><code>pg_import_system_collations</code></a></li>
+<li>呼び出し先: なし</li>
+<li>呼び出し元サイト: <a class="wiki-source-link" href="../../source/src/backend/commands/collationcmds.c.html#L840" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__commands__collationcmds_c__pg_import_system_collations.html&quot;}, '*');"><code>pg_import_system_collations</code></a> at <code>src/backend/commands/collationcmds.c:1024:18</code> (direct, confidence=high, resolved=<a class="wiki-entity-link" href="src__backend__commands__collationcmds_c__get_icu_locale_comment.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__commands__collationcmds_c__get_icu_locale_comment.html&quot;, &quot;source&quot;: &quot;source/src/backend/commands/collationcmds.c.html#L650&quot;}, '*');"><code>symbol:src/backend/commands/collationcmds.c#get_icu_locale_comment</code></a>)</li>
+<li>呼び出しサイト: <code>uloc_getDisplayName</code> at <code>src/backend/commands/collationcmds.c:660:14</code> (unresolved), <a class="wiki-source-link" href="../../source/src/include/c.h.html#L880" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/c.h.html&quot;}, '*');"><code>lengthof</code></a> at <code>src/backend/commands/collationcmds.c:661:23</code> (unresolved), <code>U_FAILURE</code> at <code>src/backend/commands/collationcmds.c:663:6</code> (unresolved), <code>palloc</code> at <code>src/backend/commands/collationcmds.c:674:11</code> (unresolved, confidence=low)</li>
+</ul>
+<h2>関連データ構造</h2>
+<p><code>int32</code>, <a class="wiki-source-link" href="../../source/src/backend/utils/adt/pg_locale_icu.c.html#L89" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__utils__adt__pg_locale_icu_c__UErrorCode.html&quot;}, '*');"><code>UErrorCode</code></a></p>
+<h2>ソース抜粋</h2>
+<p>~~~c static char * <a class="wiki-source-link" href="../../source/src/backend/commands/collationcmds.c.html#L650" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__commands__collationcmds_c__get_icu_locale_comment.html&quot;}, '*');">get_icu_locale_comment</a>(const char *localename) { <a class="wiki-source-link" href="../../source/src/backend/utils/adt/pg_locale_icu.c.html#L89" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__utils__adt__pg_locale_icu_c__UErrorCode.html&quot;}, '*');">UErrorCode</a>	status; UChar		displayname[128]; int32		len_uchar; int32		i; char	   *<a class="wiki-source-link" href="../../source/src/include/storage/checksum_block_internal.h.html#L18" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/storage/checksum_block_internal.h.html&quot;}, '*');">result</a>;</p>
+<p>status = U_ZERO_ERROR; len_uchar = uloc_getDisplayName(localename, &quot;en&quot;, displayname, <a class="wiki-source-link" href="../../source/src/include/c.h.html#L880" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/c.h.html&quot;}, '*');">lengthof</a>(displayname), &amp;status); if (U_FAILURE(status)) return NULL;			/* no good reason to raise an error */</p>
+<p>/* Check for non-ASCII <a class="wiki-source-link" href="../../source/src/tools/pg_bsd_indent/indent_codes.h.html#L49" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/tools/pg_bsd_indent/indent_codes.h.html&quot;}, '*');">comment</a> (can&#x27;t use <a class="wiki-source-link" href="../../source/src/common/string.c.html#L131" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__common__string_c__pg_is_ascii.html&quot;}, '*');">pg_is_ascii</a> for this) */ for (i = 0; i &lt; len_uchar; i++) { if (displayname[i] &gt; 127) return NULL; }</p>
+<p>/* OK, transcribe */ <a class="wiki-source-link" href="../../source/src/include/storage/checksum_block_internal.h.html#L18" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/storage/checksum_block_internal.h.html&quot;}, '*');">result</a> = palloc(len_uchar + 1); for (i = 0; i &lt; len_uchar; i++) <a class="wiki-source-link" href="../../source/src/include/storage/checksum_block_internal.h.html#L18" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/storage/checksum_block_internal.h.html&quot;}, '*');">result</a>[i] = displayname[i]; <a class="wiki-source-link" href="../../source/src/include/storage/checksum_block_internal.h.html#L18" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/storage/checksum_block_internal.h.html&quot;}, '*');">result</a>[len_uchar] = &#x27;\0&#x27;;</p>
+<p>return <a class="wiki-source-link" href="../../source/src/include/storage/checksum_block_internal.h.html#L18" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/storage/checksum_block_internal.h.html&quot;}, '*');">result</a>; } ~~~</p>
+<h2>失敗モードと境界条件</h2>
+<p>まだ解析していません。</p>
+<h2>保守担当者向けメモ</h2>
+<ul>
+<li>後続フェーズで、ソース本文の文脈と caller/callee 情報を使ってこのページを強化する。</li>
+</ul><script>
+(function() {
+  function notifyParent() {
+    if (parent === window) return;
+    parent.postMessage({type: "frame-location", frame: window.name || "", href: window.location.href}, "*");
+  }
+  document.addEventListener("click", function(event) {
+    const link = event.target.closest("a[data-panel]");
+    if (!link || parent === window) return;
+    parent.postMessage({type: "source-link", panel: link.dataset.panel}, "*");
+  });
+  window.addEventListener("load", notifyParent);
+  window.addEventListener("hashchange", notifyParent);
+})();
+</script></body></html>

@@ -1,0 +1,101 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>symbols/src__backend__port__sysv_shmem_c__PGSharedMemoryAttach.md</title><link rel="stylesheet" href="../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../source/src/backend/port/sysv_shmem.c.html#L347" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__port__sysv_shmem_c__PGSharedMemoryAttach.html&quot;}, '*');">PGSharedMemoryAttach</a></h1>
+<h2>定義</h2>
+<ul>
+<li>種別: <code>function</code></li>
+<li>定義箇所: <code>src/backend/port/sysv_shmem.c:347</code></li>
+<li>所属モジュール: <a class="wiki-entity-link" href="../modules/src__backend__port.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/modules/src__backend__port.html&quot;, &quot;source&quot;: &quot;source/src/backend/port/atomics.c.html&quot;}, '*');"><code>module:src/backend/port</code></a></li>
+</ul>
+<h2>目的</h2>
+<p>静的シンボル索引から生成された初期シンボルページです。</p>
+<h2>シグネチャまたは形状</h2>
+<ul>
+<li>シグネチャ: <code>static IpcMemoryState PGSharedMemoryAttach(IpcMemoryId shmId, void *attachAt, PGShmemHeader **addr)</code></li>
+</ul>
+<h2>入力と出力</h2>
+<ul>
+<li>引数: <code>IpcMemoryId shmId</code>, <code>void *attachAt</code>, <code>PGShmemHeader **addr</code></li>
+<li>戻り値: <a class="wiki-source-link" href="../../source/src/backend/port/sysv_shmem.c.html#L85" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__port__sysv_shmem_c__IpcMemoryState.html&quot;}, '*');"><code>IpcMemoryState</code></a></li>
+</ul>
+<h2>前提条件と不変条件</h2>
+<p>まだ解析していません。</p>
+<h2>アルゴリズムまたは振る舞い</h2>
+<ul>
+<li>複雑度: <code>high</code> (score 22)</li>
+</ul>
+<p>まだ解析していません。</p>
+<h2>呼び出し元と呼び出し先</h2>
+<ul>
+<li>呼び出し元: <code>PGSharedMemoryCreate</code>, <code>PGSharedMemoryIsInUse</code>, <code>PGSharedMemoryReAttach</code></li>
+<li>呼び出し先: <code>stat</code></li>
+<li>呼び出し元サイト: <code>PGSharedMemoryIsInUse</code> at <code>src/backend/port/sysv_shmem.c:323:10</code> (direct, confidence=high, resolved=<a class="wiki-entity-link" href="src__backend__port__sysv_shmem_c__PGSharedMemoryAttach.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__port__sysv_shmem_c__PGSharedMemoryAttach.html&quot;, &quot;source&quot;: &quot;source/src/backend/port/sysv_shmem.c.html#L347&quot;}, '*');"><code>symbol:src/backend/port/sysv_shmem.c#PGSharedMemoryAttach</code></a>), <code>PGSharedMemoryCreate</code> at <code>src/backend/port/sysv_shmem.c:792:12</code> (direct, confidence=high, resolved=<a class="wiki-entity-link" href="src__backend__port__sysv_shmem_c__PGSharedMemoryAttach.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__port__sysv_shmem_c__PGSharedMemoryAttach.html&quot;, &quot;source&quot;: &quot;source/src/backend/port/sysv_shmem.c.html#L347&quot;}, '*');"><code>symbol:src/backend/port/sysv_shmem.c#PGSharedMemoryAttach</code></a>), <code>PGSharedMemoryReAttach</code> at <code>src/backend/port/sysv_shmem.c:913:11</code> (direct, confidence=high, resolved=<a class="wiki-entity-link" href="src__backend__port__sysv_shmem_c__PGSharedMemoryAttach.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__port__sysv_shmem_c__PGSharedMemoryAttach.html&quot;, &quot;source&quot;: &quot;source/src/backend/port/sysv_shmem.c.html#L347&quot;}, '*');"><code>symbol:src/backend/port/sysv_shmem.c#PGSharedMemoryAttach</code></a>)</li>
+<li>呼び出しサイト: <code>shmctl</code> at <code>src/backend/port/sysv_shmem.c:361:6</code> (unresolved), <code>stat</code> at <code>src/backend/port/sysv_shmem.c:409:6</code> (direct, confidence=high, resolved=<a class="wiki-entity-link" href="src__backend__utils__adt__pgstatfuncs_c__stat.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__utils__adt__pgstatfuncs_c__stat.html&quot;, &quot;source&quot;: &quot;source/src/backend/utils/adt/pgstatfuncs.c.html#L58&quot;}, '*');"><code>symbol:src/backend/utils/adt/pgstatfuncs.c#stat</code></a>), <code>shmat</code> at <code>src/backend/port/sysv_shmem.c:412:26</code> (unresolved)</li>
+</ul>
+<h2>関連データ構造</h2>
+<p><a class="wiki-source-link" href="../../source/src/backend/port/sysv_shmem.c.html#L72" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__port__sysv_shmem_c__IpcMemoryId.html&quot;}, '*');"><code>IpcMemoryId</code></a>, <a class="wiki-source-link" href="../../source/src/backend/port/sysv_shmem.c.html#L85" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__port__sysv_shmem_c__IpcMemoryState.html&quot;}, '*');"><code>IpcMemoryState</code></a>, <code>PGShmemHeader</code>, <code>stat</code>, <code>state</code>, <a class="wiki-source-link" href="../../source/src/interfaces/ecpg/preproc/type.h.html#L89" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__interfaces__ecpg__preproc__type_h__when.html&quot;}, '*');"><code>when</code></a></p>
+<h2>ソース抜粋</h2>
+<p>~~~c static <a class="wiki-source-link" href="../../source/src/backend/port/sysv_shmem.c.html#L85" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__port__sysv_shmem_c__IpcMemoryState.html&quot;}, '*');">IpcMemoryState</a> <a class="wiki-source-link" href="../../source/src/backend/port/sysv_shmem.c.html#L347" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__port__sysv_shmem_c__PGSharedMemoryAttach.html&quot;}, '*');">PGSharedMemoryAttach</a>(<a class="wiki-source-link" href="../../source/src/backend/port/sysv_shmem.c.html#L72" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__port__sysv_shmem_c__IpcMemoryId.html&quot;}, '*');">IpcMemoryId</a> shmId, void *attachAt, PGShmemHeader **addr) { struct shmid_ds shmStat; struct stat statbuf; PGShmemHeader *hdr;</p>
+<p>*addr = NULL;</p>
+<p>/*</p>
+<ul>
+<li>First, try to stat the shm segment ID, to see if it exists at all.</li>
+<p>*/ if (shmctl(shmId, <a class="wiki-source-link" href="../../source/src/include/port/win32_port.h.html#L98" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/port/win32_port.h.html&quot;}, '*');">IPC_STAT</a>, &amp;shmStat) &lt; 0) { /*</p>
+<li>EINVAL actually has multiple possible causes documented in the</li>
+<li>shmctl man page, but we assume it must mean the segment no longer</li>
+<li>exists.</li>
+<p>*/ if (errno == EINVAL) return SHMSTATE_ENOENT;</p>
+</ul>
+<p>/*</p>
+<ul>
+<li>EACCES implies we have no <a class="wiki-source-link" href="../../source/src/interfaces/libpq/win32.h.html#L13" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq/win32.h.html&quot;}, '*');">read</a> permission, which means it <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> not a</li>
+<li>Postgres shmem segment (or at least, not one that <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> relevant to</li>
+<li>our data directory).</li>
+<p>*/ if (errno == EACCES) return SHMSTATE_FOREIGN;</p>
+</ul>
+<p>/*</p>
+<ul>
+<li>Some Linux kernel versions (in fact, all of them as of July 2007)</li>
+<li>sometimes return <a class="wiki-source-link" href="../../source/src/include/port/win32_port.h.html#L102" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/port/win32_port.h.html&quot;}, '*');">EIDRM</a> <a class="wiki-source-link" href="../../source/src/interfaces/ecpg/preproc/type.h.html#L89" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__interfaces__ecpg__preproc__type_h__when.html&quot;}, '*');">when</a> EINVAL <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> correct.  The Linux kernel</li>
+<li>actually does not have any internal state that would justify</li>
+<li>returning <a class="wiki-source-link" href="../../source/src/include/port/win32_port.h.html#L102" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/port/win32_port.h.html&quot;}, '*');">EIDRM</a>, so we can get away with assuming that <a class="wiki-source-link" href="../../source/src/include/port/win32_port.h.html#L102" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/port/win32_port.h.html&quot;}, '*');">EIDRM</a> <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a></li>
+<li>equivalent to EINVAL on that platform.</li>
+<p>*/ #ifdef <a class="wiki-source-link" href="../../source/src/include/port/linux.h.html#L14" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/port/linux.h.html&quot;}, '*');">HAVE_LINUX_EIDRM_BUG</a> if (errno == <a class="wiki-source-link" href="../../source/src/include/port/win32_port.h.html#L102" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/port/win32_port.h.html&quot;}, '*');">EIDRM</a>) return SHMSTATE_ENOENT; #endif</p>
+</ul>
+<p>/*</p>
+<ul>
+<li>Otherwise, we had better assume that the segment <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> in use.  The</li>
+<li>only <a class="wiki-source-link" href="../../source/src/include/c.h.html#L441" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/c.h.html&quot;}, '*');">likely</a> case <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> (non-Linux, assumed spec-compliant) <a class="wiki-source-link" href="../../source/src/include/port/win32_port.h.html#L102" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/port/win32_port.h.html&quot;}, '*');">EIDRM</a>,</li>
+<li>which implies that the segment has been <a class="wiki-source-link" href="../../source/src/include/port/win32_port.h.html#L93" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/port/win32_port.h.html&quot;}, '*');">IPC_RMID</a>&#x27;d but there are</li>
+<li>still processes attached to it.</li>
+<p>*/ return SHMSTATE_ANALYSIS_FAILURE; }</p>
+</ul>
+<p>/*</p>
+<ul>
+<li>Try to attach to the segment and see if it matches our data directory.</li>
+<li>This avoids any risk of duplicate-shmem-key conflicts on machines that</li>
+<li>are running several postmasters under the same userid.</li>
+<p>*</p>
+<li>(When we&#x27;re called from PGSharedMemoryCreate, this stat call <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a></li>
+<li>duplicative; but since this isn&#x27;t a high-traffic case it&#x27;s not worth</li>
+<p>~~~</p>
+</ul>
+<h2>失敗モードと境界条件</h2>
+<p>まだ解析していません。</p>
+<h2>保守担当者向けメモ</h2>
+<ul>
+<li>後続フェーズで、ソース本文の文脈と caller/callee 情報を使ってこのページを強化する。</li>
+</ul><script>
+(function() {
+  function notifyParent() {
+    if (parent === window) return;
+    parent.postMessage({type: "frame-location", frame: window.name || "", href: window.location.href}, "*");
+  }
+  document.addEventListener("click", function(event) {
+    const link = event.target.closest("a[data-panel]");
+    if (!link || parent === window) return;
+    parent.postMessage({type: "source-link", panel: link.dataset.panel}, "*");
+  });
+  window.addEventListener("load", notifyParent);
+  window.addEventListener("hashchange", notifyParent);
+})();
+</script></body></html>

@@ -1,0 +1,78 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>symbols/src__backend__commands__vacuumparallel_c__parallel_vacuum_compute_workers.md</title><link rel="stylesheet" href="../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../source/src/backend/commands/vacuumparallel.c.html#L741" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__commands__vacuumparallel_c__parallel_vacuum_compute_workers.html&quot;}, '*');">parallel_vacuum_compute_workers</a></h1>
+<h2>定義</h2>
+<ul>
+<li>種別: <code>function</code></li>
+<li>定義箇所: <code>src/backend/commands/vacuumparallel.c:741</code></li>
+<li>所属モジュール: <a class="wiki-entity-link" href="../modules/src__backend__commands.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/modules/src__backend__commands.html&quot;, &quot;source&quot;: &quot;source/src/backend/commands/aggregatecmds.c.html&quot;}, '*');"><code>module:src/backend/commands</code></a></li>
+</ul>
+<h2>目的</h2>
+<p>静的シンボル索引から生成された初期シンボルページです。</p>
+<h2>シグネチャまたは形状</h2>
+<ul>
+<li>シグネチャ: <code>static int parallel_vacuum_compute_workers(Relation *indrels, int nindexes, int nrequested, bool *will_parallel_vacuum)</code></li>
+</ul>
+<h2>入力と出力</h2>
+<ul>
+<li>引数: <code>Relation *indrels</code>, <code>int nindexes</code>, <code>int nrequested</code>, <code>bool *will_parallel_vacuum</code></li>
+<li>戻り値: <code>int</code></li>
+</ul>
+<h2>前提条件と不変条件</h2>
+<p>まだ解析していません。</p>
+<h2>アルゴリズムまたは振る舞い</h2>
+<ul>
+<li>複雑度: <code>high</code> (score 19)</li>
+</ul>
+<p>まだ解析していません。</p>
+<h2>呼び出し元と呼び出し先</h2>
+<ul>
+<li>呼び出し元: <a class="wiki-source-link" href="../../source/src/backend/commands/vacuumparallel.c.html#L304" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__commands__vacuumparallel_c__parallel_vacuum_init.html&quot;}, '*');"><code>parallel_vacuum_init</code></a></li>
+<li>呼び出し先: なし</li>
+<li>呼び出し元サイト: <a class="wiki-source-link" href="../../source/src/backend/commands/vacuumparallel.c.html#L304" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__commands__vacuumparallel_c__parallel_vacuum_init.html&quot;}, '*');"><code>parallel_vacuum_init</code></a> at <code>src/backend/commands/vacuumparallel.c:334:21</code> (direct, confidence=high, resolved=<a class="wiki-entity-link" href="src__backend__commands__vacuumparallel_c__parallel_vacuum_compute_workers.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__commands__vacuumparallel_c__parallel_vacuum_compute_workers.html&quot;, &quot;source&quot;: &quot;source/src/backend/commands/vacuumparallel.c.html#L741&quot;}, '*');"><code>symbol:src/backend/commands/vacuumparallel.c#parallel_vacuum_compute_workers</code></a>)</li>
+<li>呼び出しサイト: <a class="wiki-source-link" href="../../source/src/include/miscadmin.h.html#L389" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/miscadmin.h.html&quot;}, '*');"><code>AmAutoVacuumWorkerProcess</code></a> at <code>src/backend/commands/vacuumparallel.c:751:16</code> (unresolved), <a class="wiki-source-link" href="../../source/src/include/storage/bufmgr.h.html#L309" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/storage/bufmgr.h.html&quot;}, '*');"><code>RelationGetNumberOfBlocks</code></a> at <code>src/backend/commands/vacuumparallel.c:772:4</code> (macro), <code>Max</code> at <code>src/backend/commands/vacuumparallel.c:784:22</code> (unresolved), <code>Min</code> at <code>src/backend/commands/vacuumparallel.c:796:3</code> (unresolved), <code>Min</code> at <code>src/backend/commands/vacuumparallel.c:799:21</code> (unresolved)</li>
+</ul>
+<h2>関連データ構造</h2>
+<p><a class="wiki-source-link" href="../../source/src/interfaces/ecpg/preproc/type.h.html#L96" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__interfaces__ecpg__preproc__type_h__index.html&quot;}, '*');"><code>index</code></a>, <code>Relation</code>, <code>uint8</code>, <code>variable</code>, <a class="wiki-source-link" href="../../source/src/interfaces/ecpg/preproc/type.h.html#L89" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__interfaces__ecpg__preproc__type_h__when.html&quot;}, '*');"><code>when</code></a></p>
+<h2>ソース抜粋</h2>
+<p>~~~c static int <a class="wiki-source-link" href="../../source/src/backend/commands/vacuumparallel.c.html#L741" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__commands__vacuumparallel_c__parallel_vacuum_compute_workers.html&quot;}, '*');">parallel_vacuum_compute_workers</a>(Relation *indrels, int nindexes, int nrequested, bool *will_parallel_vacuum) { int			nindexes_parallel = 0; int			nindexes_parallel_bulkdel = 0; int			nindexes_parallel_cleanup = 0; int			parallel_workers; int			max_workers;</p>
+<p>max_workers = <a class="wiki-source-link" href="../../source/src/include/miscadmin.h.html#L389" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/miscadmin.h.html&quot;}, '*');">AmAutoVacuumWorkerProcess</a>() ? <a class="wiki-source-link" href="../../source/src/backend/utils/init/globals.c.html#L148" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/utils/init/globals.c.html&quot;}, '*');">autovacuum_max_parallel_workers</a> : <a class="wiki-source-link" href="../../source/src/backend/utils/init/globals.c.html#L136" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/utils/init/globals.c.html&quot;}, '*');">max_parallel_maintenance_workers</a>;</p>
+<p>/*</p>
+<ul>
+<li>We don&#x27;t allow performing parallel <a class="wiki-source-link" href="../../source/src/backend/postmaster/datachecksum_state.c.html#L380" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/postmaster/datachecksum_state.c.html&quot;}, '*');">operation</a> in standalone backend or</li>
+<li><a class="wiki-source-link" href="../../source/src/interfaces/ecpg/preproc/type.h.html#L89" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__interfaces__ecpg__preproc__type_h__when.html&quot;}, '*');">when</a> parallelism <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> disabled.</li>
+<p>*/ if (!<a class="wiki-source-link" href="../../source/src/backend/utils/init/globals.c.html#L122" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/utils/init/globals.c.html&quot;}, '*');">IsUnderPostmaster</a> || max_workers == 0) return 0;</p>
+</ul>
+<p>/*</p>
+<ul>
+<li>Compute the number of indexes that can participate in parallel <a class="wiki-source-link" href="../../source/src/backend/commands/vacuum.c.html#L493" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__commands__vacuum_c__vacuum.html&quot;}, '*');">vacuum</a>.</li>
+<p>*/ for (int i = 0; i &lt; nindexes; i++) { Relation	indrel = indrels[i]; uint8		vacoptions = indrel-&gt;rd_indam-&gt;amparallelvacuumoptions;</p>
+</ul>
+<p>/* Skip <a class="wiki-source-link" href="../../source/src/interfaces/ecpg/preproc/type.h.html#L96" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__interfaces__ecpg__preproc__type_h__index.html&quot;}, '*');">index</a> that <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> not a suitable target for parallel <a class="wiki-source-link" href="../../source/src/interfaces/ecpg/preproc/type.h.html#L96" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__interfaces__ecpg__preproc__type_h__index.html&quot;}, '*');">index</a> <a class="wiki-source-link" href="../../source/src/backend/commands/vacuum.c.html#L493" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__commands__vacuum_c__vacuum.html&quot;}, '*');">vacuum</a> */ if (vacoptions == <a class="wiki-source-link" href="../../source/src/include/commands/vacuum.h.html#L41" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/commands/vacuum.h.html&quot;}, '*');">VACUUM_OPTION_NO_PARALLEL</a> || <a class="wiki-source-link" href="../../source/src/include/storage/bufmgr.h.html#L309" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/storage/bufmgr.h.html&quot;}, '*');">RelationGetNumberOfBlocks</a>(indrel) &lt; <a class="wiki-source-link" href="../../source/src/backend/optimizer/path/allpaths.c.html#L86" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/optimizer/path/allpaths.c.html&quot;}, '*');">min_parallel_index_scan_size</a>) continue;</p>
+<p>will_parallel_vacuum[i] = <a class="wiki-source-link" href="../../source/src/tools/pg_bsd_indent/indent_globs.h.html#L46" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/tools/pg_bsd_indent/indent_globs.h.html&quot;}, '*');">true</a>;</p>
+<p>if ((vacoptions &amp; <a class="wiki-source-link" href="../../source/src/include/commands/vacuum.h.html#L47" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/commands/vacuum.h.html&quot;}, '*');">VACUUM_OPTION_PARALLEL_BULKDEL</a>) != 0) nindexes_parallel_bulkdel++; if (((vacoptions &amp; <a class="wiki-source-link" href="../../source/src/include/commands/vacuum.h.html#L62" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/commands/vacuum.h.html&quot;}, '*');">VACUUM_OPTION_PARALLEL_CLEANUP</a>) != 0) || ((vacoptions &amp; <a class="wiki-source-link" href="../../source/src/include/commands/vacuum.h.html#L54" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/commands/vacuum.h.html&quot;}, '*');">VACUUM_OPTION_PARALLEL_COND_CLEANUP</a>) != 0)) nindexes_parallel_cleanup++; }</p>
+<p>nindexes_parallel = Max(nindexes_parallel_bulkdel, nindexes_parallel_cleanup);</p>
+<p>/* The leader process takes one <a class="wiki-source-link" href="../../source/src/interfaces/ecpg/preproc/type.h.html#L96" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__interfaces__ecpg__preproc__type_h__index.html&quot;}, '*');">index</a> */ nindexes_parallel--;</p>
+<p>/* No <a class="wiki-source-link" href="../../source/src/interfaces/ecpg/preproc/type.h.html#L96" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__interfaces__ecpg__preproc__type_h__index.html&quot;}, '*');">index</a> supports parallel <a class="wiki-source-link" href="../../source/src/backend/commands/vacuum.c.html#L493" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__commands__vacuum_c__vacuum.html&quot;}, '*');">vacuum</a> */ if (nindexes_parallel &lt;= 0) return 0;</p>
+<p>/* Compute the parallel degree */ parallel_workers = (nrequested &gt; 0) ? Min(nrequested, nindexes_parallel) : nindexes_parallel;</p>
+<p>/* Cap by GUC variable */ parallel_workers = Min(parallel_workers, max_workers);</p>
+<p>~~~</p>
+<h2>失敗モードと境界条件</h2>
+<p>まだ解析していません。</p>
+<h2>保守担当者向けメモ</h2>
+<ul>
+<li>後続フェーズで、ソース本文の文脈と caller/callee 情報を使ってこのページを強化する。</li>
+</ul><script>
+(function() {
+  function notifyParent() {
+    if (parent === window) return;
+    parent.postMessage({type: "frame-location", frame: window.name || "", href: window.location.href}, "*");
+  }
+  document.addEventListener("click", function(event) {
+    const link = event.target.closest("a[data-panel]");
+    if (!link || parent === window) return;
+    parent.postMessage({type: "source-link", panel: link.dataset.panel}, "*");
+  });
+  window.addEventListener("load", notifyParent);
+  window.addEventListener("hashchange", notifyParent);
+})();
+</script></body></html>

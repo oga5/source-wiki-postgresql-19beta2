@@ -1,0 +1,62 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>symbols/src__pl__plpython__plpy_typeio_c__PLyDecimal_FromNumeric.md</title><link rel="stylesheet" href="../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../source/src/pl/plpython/plpy_typeio.c.html#L569" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__pl__plpython__plpy_typeio_c__PLyDecimal_FromNumeric.html&quot;}, '*');">PLyDecimal_FromNumeric</a></h1>
+<h2>定義</h2>
+<ul>
+<li>種別: <code>function</code></li>
+<li>定義箇所: <code>src/pl/plpython/plpy_typeio.c:569</code></li>
+<li>所属モジュール: <a class="wiki-entity-link" href="../modules/src__pl__plpython.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/modules/src__pl__plpython.html&quot;, &quot;source&quot;: &quot;source/src/pl/plpython/plpy_cursorobject.c.html&quot;}, '*');"><code>module:src/pl/plpython</code></a></li>
+</ul>
+<h2>目的</h2>
+<p>静的シンボル索引から生成された初期シンボルページです。</p>
+<h2>シグネチャまたは形状</h2>
+<ul>
+<li>シグネチャ: <code>static PyObject * PLyDecimal_FromNumeric(PLyDatumToOb *arg, Datum d)</code></li>
+</ul>
+<h2>入力と出力</h2>
+<ul>
+<li>引数: <code>PLyDatumToOb *arg</code>, <code>Datum d</code></li>
+<li>戻り値: <code>PyObject *</code></li>
+</ul>
+<h2>前提条件と不変条件</h2>
+<p>まだ解析していません。</p>
+<h2>アルゴリズムまたは振る舞い</h2>
+<ul>
+<li>複雑度: <code>high</code> (score 17)</li>
+</ul>
+<p>まだ解析していません。</p>
+<h2>呼び出し元と呼び出し先</h2>
+<ul>
+<li>呼び出し元: なし</li>
+<li>呼び出し先: なし</li>
+<li>呼び出し元サイト: なし</li>
+<li>呼び出しサイト: <code>PyImport_ImportModule</code> at <code>src/pl/plpython/plpy_typeio.c:581:20</code> (unresolved), <code>PyErr_Clear</code> at <code>src/pl/plpython/plpy_typeio.c:584:4</code> (unresolved), <code>PyImport_ImportModule</code> at <code>src/pl/plpython/plpy_typeio.c:585:21</code> (unresolved), <code>PLy_elog</code> at <code>src/pl/plpython/plpy_typeio.c:588:4</code> (unresolved), <code>PyObject_GetAttrString</code> at <code>src/pl/plpython/plpy_typeio.c:590:25</code> (unresolved), <code>PLy_elog</code> at <code>src/pl/plpython/plpy_typeio.c:592:4</code> (unresolved), <a class="wiki-source-link" href="../../source/src/include/postgres.h.html#L364" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__postgres_h__DatumGetCString.html&quot;}, '*');"><code>DatumGetCString</code></a> at <code>src/pl/plpython/plpy_typeio.c:595:8</code> (unresolved), <a class="wiki-source-link" href="../../source/src/include/fmgr.h.html#L688" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/fmgr.h.html&quot;}, '*');"><code>DirectFunctionCall1</code></a> at <code>src/pl/plpython/plpy_typeio.c:595:24</code> (unresolved), <code>PyObject_CallFunction</code> at <code>src/pl/plpython/plpy_typeio.c:596:12</code> (unresolved), <code>PLy_elog</code> at <code>src/pl/plpython/plpy_typeio.c:598:3</code> (unresolved)</li>
+</ul>
+<h2>関連データ構造</h2>
+<p><code>Datum</code>, <code>decimal</code>, <code>numeric</code>, <a class="wiki-source-link" href="../../source/src/pl/plpython/plpy_typeio.h.html#L26" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__pl__plpython__plpy_typeio_h__PLyDatumToOb.html&quot;}, '*');"><code>PLyDatumToOb</code></a>, <code>PyObject</code></p>
+<h2>ソース抜粋</h2>
+<p>~~~c static PyObject * <a class="wiki-source-link" href="../../source/src/pl/plpython/plpy_typeio.c.html#L569" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__pl__plpython__plpy_typeio_c__PLyDecimal_FromNumeric.html&quot;}, '*');">PLyDecimal_FromNumeric</a>(<a class="wiki-source-link" href="../../source/src/pl/plpython/plpy_typeio.h.html#L26" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__pl__plpython__plpy_typeio_h__PLyDatumToOb.html&quot;}, '*');">PLyDatumToOb</a> *arg, Datum d) { static PyObject *decimal_constructor; char	   *str; PyObject   *pyvalue;</p>
+<p>/* Try to import cdecimal.  If it doesn&#x27;t exist, fall back to decimal. */ if (!decimal_constructor) { PyObject   *decimal_module;</p>
+<p>decimal_module = PyImport_ImportModule(&quot;cdecimal&quot;); if (!decimal_module) { PyErr_Clear(); decimal_module = PyImport_ImportModule(&quot;decimal&quot;); } if (!decimal_module) PLy_elog(ERROR, &quot;could not import a module for Decimal constructor&quot;);</p>
+<p>decimal_constructor = PyObject_GetAttrString(decimal_module, &quot;Decimal&quot;); if (!decimal_constructor) PLy_elog(ERROR, &quot;no Decimal attribute in module&quot;); }</p>
+<p>str = <a class="wiki-source-link" href="../../source/src/include/postgres.h.html#L364" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__postgres_h__DatumGetCString.html&quot;}, '*');">DatumGetCString</a>(<a class="wiki-source-link" href="../../source/src/include/fmgr.h.html#L688" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/fmgr.h.html&quot;}, '*');">DirectFunctionCall1</a>(<a class="wiki-source-link" href="../../source/src/backend/utils/adt/numeric.c.html#L798" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__utils__adt__numeric_c__numeric_out.html&quot;}, '*');">numeric_out</a>, d)); pyvalue = PyObject_CallFunction(decimal_constructor, &quot;s&quot;, str); if (!pyvalue) PLy_elog(ERROR, &quot;conversion from numeric to Decimal failed&quot;);</p>
+<p>return pyvalue; } ~~~</p>
+<h2>失敗モードと境界条件</h2>
+<p>まだ解析していません。</p>
+<h2>保守担当者向けメモ</h2>
+<ul>
+<li>後続フェーズで、ソース本文の文脈と caller/callee 情報を使ってこのページを強化する。</li>
+</ul><script>
+(function() {
+  function notifyParent() {
+    if (parent === window) return;
+    parent.postMessage({type: "frame-location", frame: window.name || "", href: window.location.href}, "*");
+  }
+  document.addEventListener("click", function(event) {
+    const link = event.target.closest("a[data-panel]");
+    if (!link || parent === window) return;
+    parent.postMessage({type: "source-link", panel: link.dataset.panel}, "*");
+  });
+  window.addEventListener("load", notifyParent);
+  window.addEventListener("hashchange", notifyParent);
+})();
+</script></body></html>

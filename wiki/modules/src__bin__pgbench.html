@@ -1,0 +1,66 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>modules/src__bin__pgbench.md</title><link rel="stylesheet" href="../../styles.css"></head><body><h1>src/bin/pgbench</h1>
+<h2>システム内での役割</h2>
+<p><code>src/bin/pgbench</code> には 2 個の索引済みソースファイルがあります。この初期モジュールページはディレクトリ境界に基づいています。</p>
+<h2>責務</h2>
+<ul>
+<li>このディレクトリに属するソースファイルを集約する。</li>
+<li>より深い LLM 合成の前段として、モジュール単位の入口を提供する。</li>
+</ul>
+<h2>このモジュールのファイル</h2>
+<ul>
+<li><a class="wiki-source-link" href="../../source/src/bin/pgbench/pgbench.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/bin/pgbench/pgbench.c.html&quot;}, '*');"><code>src/bin/pgbench/pgbench.c</code></a></li>
+<li><a class="wiki-source-link" href="../../source/src/bin/pgbench/pgbench.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/bin/pgbench/pgbench.h.html&quot;}, '*');"><code>src/bin/pgbench/pgbench.h</code></a></li>
+</ul>
+<h2>主要なデータ構造</h2>
+<ul>
+<li><a class="wiki-source-link" href="../../source/src/bin/pgbench/pgbench.c.html#L97" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__bin__pgbench__pgbench_c__socket_set.html&quot;}, '*');"><code>socket_set</code></a></li>
+<li><a class="wiki-source-link" href="../../source/src/bin/pgbench/pgbench.c.html#L227" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__bin__pgbench__pgbench_c__partition_method_t.html&quot;}, '*');"><code>partition_method_t</code></a></li>
+<li><a class="wiki-source-link" href="../../source/src/bin/pgbench/pgbench.c.html#L324" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__bin__pgbench__pgbench_c__Variable.html&quot;}, '*');"><code>Variable</code></a></li>
+<li><a class="wiki-source-link" href="../../source/src/bin/pgbench/pgbench.c.html#L334" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__bin__pgbench__pgbench_c__Variables.html&quot;}, '*');"><code>Variables</code></a></li>
+<li><a class="wiki-source-link" href="../../source/src/bin/pgbench/pgbench.c.html#L358" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__bin__pgbench__pgbench_c__SimpleStats.html&quot;}, '*');"><code>SimpleStats</code></a></li>
+<li><a class="wiki-source-link" href="../../source/src/bin/pgbench/pgbench.c.html#L372" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/bin/pgbench/pgbench.c.html&quot;}, '*');"><code>pg_time_usec_t</code></a></li>
+<li><a class="wiki-source-link" href="../../source/src/bin/pgbench/pgbench.c.html#L378" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__bin__pgbench__pgbench_c__StatsData.html&quot;}, '*');"><code>StatsData</code></a></li>
+<li><a class="wiki-source-link" href="../../source/src/bin/pgbench/pgbench.c.html#L462" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/bin/pgbench/pgbench.c.html&quot;}, '*');"><code>EStatus</code></a></li>
+<li><a class="wiki-source-link" href="../../source/src/bin/pgbench/pgbench.c.html#L477" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/bin/pgbench/pgbench.c.html&quot;}, '*');"><code>TStatus</code></a></li>
+<li><a class="wiki-source-link" href="../../source/src/bin/pgbench/pgbench.c.html#L494" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/bin/pgbench/pgbench.c.html&quot;}, '*');"><code>ConnectionStateEnum</code></a></li>
+</ul>
+<h2>主なフロー</h2>
+<p>初期モジュールページでは、まだエンドツーエンドのフローを推論しません。</p>
+<h2>外部依存</h2>
+<ul>
+<li><a class="wiki-source-link" href="../../source/src/include/postgres_fe.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/postgres_fe.h.html&quot;}, '*');"><code>postgres_fe.h</code></a></li>
+<li><code>catalog/pg_class_d.h</code></li>
+<li><code>common/int.h</code></li>
+<li><code>common/logging.h</code></li>
+<li><code>common/pg_prng.h</code></li>
+<li><code>common/string.h</code></li>
+<li><code>common/username.h</code></li>
+<li><code>fe_utils/cancel.h</code></li>
+<li><code>fe_utils/conditional.h</code></li>
+<li><code>fe_utils/option_utils.h</code></li>
+</ul>
+<h2>内部構成</h2>
+<ul>
+<li>子モジュール数: 0</li>
+</ul>
+<h2>推奨読書順</h2>
+<p>1. <a class="wiki-source-link" href="../../source/src/bin/pgbench/pgbench.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/bin/pgbench/pgbench.h.html&quot;}, '*');"><code>src/bin/pgbench/pgbench.h</code></a> 2. <a class="wiki-source-link" href="../../source/src/bin/pgbench/pgbench.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/bin/pgbench/pgbench.c.html&quot;}, '*');"><code>src/bin/pgbench/pgbench.c</code></a></p>
+<h2>未解決の問い</h2>
+<ul>
+<li>LLM ベースのモジュール合成を追加した後で、責務とフローを精緻化する。</li>
+</ul><script>
+(function() {
+  function notifyParent() {
+    if (parent === window) return;
+    parent.postMessage({type: "frame-location", frame: window.name || "", href: window.location.href}, "*");
+  }
+  document.addEventListener("click", function(event) {
+    const link = event.target.closest("a[data-panel]");
+    if (!link || parent === window) return;
+    parent.postMessage({type: "source-link", panel: link.dataset.panel}, "*");
+  });
+  window.addEventListener("load", notifyParent);
+  window.addEventListener("hashchange", notifyParent);
+})();
+</script></body></html>

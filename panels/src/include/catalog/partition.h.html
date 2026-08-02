@@ -1,0 +1,16 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>Related: src/include/catalog/partition.h</title><link rel="stylesheet" href="../../../../styles.css"></head><body><h1>Related pages</h1><p>src/include/catalog/partition.h</p><ul><li><a href="../../../../source/src/backend/catalog/partition.c.html" target="source-view">Paired source: src/backend/catalog/partition.c</a></li><li><a href="../../../../source/src/include/partitioning/partdefs.h.html" target="source-view">Include: partitioning/partdefs.h</a></li><li><a href="../../../../source/src/include/utils/relcache.h.html" target="source-view">Include: utils/relcache.h</a></li></ul><script>
+(function() {
+  function notifyParent() {
+    if (parent === window) return;
+    parent.postMessage({type: "frame-location", frame: window.name || "", href: window.location.href}, "*");
+  }
+  document.addEventListener("click", function(event) {
+    const link = event.target.closest("a[data-panel]");
+    if (!link || parent === window) return;
+    parent.postMessage({type: "source-link", panel: link.dataset.panel}, "*");
+  });
+  window.addEventListener("load", notifyParent);
+  window.addEventListener("hashchange", notifyParent);
+})();
+</script></body></html>

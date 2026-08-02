@@ -1,0 +1,63 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>symbols/src__pl__plperl__ppport_h__DPPP_.md</title><link rel="stylesheet" href="../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../source/src/pl/plperl/ppport.h.html#L11906" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__pl__plperl__ppport_h__DPPP_.html&quot;}, '*');">DPPP_</a></h1>
+<h2>定義</h2>
+<ul>
+<li>種別: <code>function</code></li>
+<li>定義箇所: <code>src/pl/plperl/ppport.h:11906</code></li>
+<li>所属モジュール: <a class="wiki-entity-link" href="../modules/src__pl__plperl.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/modules/src__pl__plperl.html&quot;, &quot;source&quot;: &quot;source/src/pl/plperl/plperl.c.html&quot;}, '*');"><code>module:src/pl/plperl</code></a></li>
+</ul>
+<h2>目的</h2>
+<p>静的シンボル索引から生成された初期シンボルページです。</p>
+<h2>シグネチャまたは形状</h2>
+<ul>
+<li>シグネチャ: <code>CV * DPPP_(my_newCONSTSUB)(HV *stash, const char *name, SV *sv)</code></li>
+</ul>
+<h2>入力と出力</h2>
+<ul>
+<li>引数: <code>HV *stash</code>, <code>const char *name</code>, <code>SV *sv</code></li>
+<li>戻り値: <code>CV *</code></li>
+</ul>
+<h2>前提条件と不変条件</h2>
+<p>まだ解析していません。</p>
+<h2>アルゴリズムまたは振る舞い</h2>
+<ul>
+<li>複雑度: <code>high</code> (score 12)</li>
+</ul>
+<p>まだ解析していません。</p>
+<h2>呼び出し元と呼び出し先</h2>
+<ul>
+<li>呼び出し元: なし</li>
+<li>呼び出し先: なし</li>
+<li>呼び出し元サイト: なし</li>
+<li>呼び出しサイト: <code>newSUB</code> at <code>src/pl/plperl/ppport.h:11920:14</code> (unresolved), <a class="wiki-source-link" href="../../source/src/pl/plperl/ppport.h.html#L11864" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/pl/plperl/ppport.h.html&quot;}, '*');"><code>start_subparse</code></a> at <code>src/pl/plperl/ppport.h:11922:17</code> (macro), <code>newSVOP</code> at <code>src/pl/plperl/ppport.h:11924:17</code> (unresolved), <code>newSVpv</code> at <code>src/pl/plperl/ppport.h:11924:38</code> (unresolved), <code>newSVOP</code> at <code>src/pl/plperl/ppport.h:11925:17</code> (unresolved), <code>newSTATEOP</code> at <code>src/pl/plperl/ppport.h:11926:17</code> (unresolved), <code>newSVOP</code> at <code>src/pl/plperl/ppport.h:11926:39</code> (unresolved)</li>
+</ul>
+<h2>関連データ構造</h2>
+<p>なし</p>
+<h2>ソース抜粋</h2>
+<p>~~~c CV * <a class="wiki-source-link" href="../../source/src/pl/plperl/ppport.h.html#L11906" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__pl__plperl__ppport_h__DPPP_.html&quot;}, '*');">DPPP_</a>(my_newCONSTSUB)(HV *stash, const char *name, SV *sv) { CV *cv; U32 oldhints = <a class="wiki-source-link" href="../../source/src/pl/plperl/ppport.h.html#L11763" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/pl/plperl/ppport.h.html&quot;}, '*');">PL_hints</a>; HV *old_cop_stash = PL_curcop-&gt;cop_stash; HV *old_curstash = <a class="wiki-source-link" href="../../source/src/pl/plperl/ppport.h.html#L11753" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/pl/plperl/ppport.h.html&quot;}, '*');">PL_curstash</a>; line_t oldline = PL_curcop-&gt;cop_line; PL_curcop-&gt;cop_line = <a class="wiki-source-link" href="../../source/src/pl/plperl/ppport.h.html#L11904" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/pl/plperl/ppport.h.html&quot;}, '*');">D_PPP_PL_copline</a>;</p>
+<p><a class="wiki-source-link" href="../../source/src/pl/plperl/ppport.h.html#L11763" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/pl/plperl/ppport.h.html&quot;}, '*');">PL_hints</a> &amp;= ~HINT_BLOCK_SCOPE; if (stash) <a class="wiki-source-link" href="../../source/src/pl/plperl/ppport.h.html#L11753" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/pl/plperl/ppport.h.html&quot;}, '*');">PL_curstash</a> = PL_curcop-&gt;cop_stash = stash;</p>
+<p>cv = newSUB(</p>
+<p><a class="wiki-source-link" href="../../source/src/pl/plperl/ppport.h.html#L11864" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/pl/plperl/ppport.h.html&quot;}, '*');">start_subparse</a>(FALSE, 0),</p>
+<p>newSVOP(OP_CONST, 0, newSVpv((char *) name, 0)), newSVOP(OP_CONST, 0, &amp;<a class="wiki-source-link" href="../../source/src/pl/plperl/ppport.h.html#L11779" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/pl/plperl/ppport.h.html&quot;}, '*');">PL_sv_no</a>),   /* SvPV(&amp;<a class="wiki-source-link" href="../../source/src/pl/plperl/ppport.h.html#L11779" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/pl/plperl/ppport.h.html&quot;}, '*');">PL_sv_no</a>) == &quot;&quot; -- GMB */ newSTATEOP(0, Nullch, newSVOP(OP_CONST, 0, sv)) );</p>
+<p><a class="wiki-source-link" href="../../source/src/pl/plperl/ppport.h.html#L11763" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/pl/plperl/ppport.h.html&quot;}, '*');">PL_hints</a> = oldhints; PL_curcop-&gt;cop_stash = old_cop_stash; <a class="wiki-source-link" href="../../source/src/pl/plperl/ppport.h.html#L11753" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/pl/plperl/ppport.h.html&quot;}, '*');">PL_curstash</a> = old_curstash; PL_curcop-&gt;cop_line = oldline;</p>
+<p>return cv; } ~~~</p>
+<h2>失敗モードと境界条件</h2>
+<p>まだ解析していません。</p>
+<h2>保守担当者向けメモ</h2>
+<ul>
+<li>後続フェーズで、ソース本文の文脈と caller/callee 情報を使ってこのページを強化する。</li>
+</ul><script>
+(function() {
+  function notifyParent() {
+    if (parent === window) return;
+    parent.postMessage({type: "frame-location", frame: window.name || "", href: window.location.href}, "*");
+  }
+  document.addEventListener("click", function(event) {
+    const link = event.target.closest("a[data-panel]");
+    if (!link || parent === window) return;
+    parent.postMessage({type: "source-link", panel: link.dataset.panel}, "*");
+  });
+  window.addEventListener("load", notifyParent);
+  window.addEventListener("hashchange", notifyParent);
+})();
+</script></body></html>

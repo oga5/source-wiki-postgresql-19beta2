@@ -1,0 +1,57 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>symbols/src__backend__commands__tablecmds_c__alter_table_type_to_string.md</title><link rel="stylesheet" href="../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../source/src/backend/commands/tablecmds.c.html#L6689" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__commands__tablecmds_c__alter_table_type_to_string.html&quot;}, '*');">alter_table_type_to_string</a></h1>
+<h2>定義</h2>
+<ul>
+<li>種別: <code>function</code></li>
+<li>定義箇所: <code>src/backend/commands/tablecmds.c:6689</code></li>
+<li>所属モジュール: <a class="wiki-entity-link" href="../modules/src__backend__commands.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/modules/src__backend__commands.html&quot;, &quot;source&quot;: &quot;source/src/backend/commands/aggregatecmds.c.html&quot;}, '*');"><code>module:src/backend/commands</code></a></li>
+</ul>
+<h2>目的</h2>
+<p>静的シンボル索引から生成された初期シンボルページです。</p>
+<h2>シグネチャまたは形状</h2>
+<ul>
+<li>シグネチャ: <code>static const char * alter_table_type_to_string(AlterTableType cmdtype)</code></li>
+</ul>
+<h2>入力と出力</h2>
+<ul>
+<li>引数: <code>AlterTableType cmdtype</code></li>
+<li>戻り値: <code>const char *</code></li>
+</ul>
+<h2>前提条件と不変条件</h2>
+<p>まだ解析していません。</p>
+<h2>アルゴリズムまたは振る舞い</h2>
+<ul>
+<li>複雑度: <code>high</code> (score 21)</li>
+</ul>
+<p>まだ解析していません。</p>
+<h2>呼び出し元と呼び出し先</h2>
+<ul>
+<li>呼び出し元: <a class="wiki-source-link" href="../../source/src/backend/commands/tablecmds.c.html#L6836" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__commands__tablecmds_c__ATSimplePermissions.html&quot;}, '*');"><code>ATSimplePermissions</code></a></li>
+<li>呼び出し先: なし</li>
+<li>呼び出し元サイト: <a class="wiki-source-link" href="../../source/src/backend/commands/tablecmds.c.html#L6836" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__commands__tablecmds_c__ATSimplePermissions.html&quot;}, '*');"><code>ATSimplePermissions</code></a> at <code>src/backend/commands/tablecmds.c:6878:28</code> (direct, confidence=high, resolved=<a class="wiki-entity-link" href="src__backend__commands__tablecmds_c__alter_table_type_to_string.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__commands__tablecmds_c__alter_table_type_to_string.html&quot;, &quot;source&quot;: &quot;source/src/backend/commands/tablecmds.c.html#L6689&quot;}, '*');"><code>symbol:src/backend/commands/tablecmds.c#alter_table_type_to_string</code></a>)</li>
+<li>呼び出しサイト: なし</li>
+</ul>
+<h2>関連データ構造</h2>
+<p><a class="wiki-source-link" href="../../source/src/include/nodes/parsenodes.h.html#L2519" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/nodes/parsenodes.h.html&quot;}, '*');"><code>AlterTableType</code></a></p>
+<h2>ソース抜粋</h2>
+<p>~~~c static const char * <a class="wiki-source-link" href="../../source/src/backend/commands/tablecmds.c.html#L6689" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__commands__tablecmds_c__alter_table_type_to_string.html&quot;}, '*');">alter_table_type_to_string</a>(<a class="wiki-source-link" href="../../source/src/include/nodes/parsenodes.h.html#L2519" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/nodes/parsenodes.h.html&quot;}, '*');">AlterTableType</a> cmdtype) { switch (cmdtype) { case AT_AddColumn: case AT_AddColumnToView: return &quot;ADD COLUMN&quot;; case AT_ColumnDefault: case AT_CookedColumnDefault: return &quot;ALTER COLUMN ... <a class="wiki-source-link" href="../../source/src/backend/regex/regc_lex.c.html#L43" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/regex/regc_lex.c.html&quot;}, '*');">SET</a> DEFAULT&quot;; case AT_DropNotNull: return &quot;ALTER COLUMN ... DROP NOT NULL&quot;; case AT_SetNotNull: return &quot;ALTER COLUMN ... <a class="wiki-source-link" href="../../source/src/backend/regex/regc_lex.c.html#L43" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/regex/regc_lex.c.html&quot;}, '*');">SET</a> NOT NULL&quot;; case AT_SetExpression: return &quot;ALTER COLUMN ... <a class="wiki-source-link" href="../../source/src/backend/regex/regc_lex.c.html#L43" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/regex/regc_lex.c.html&quot;}, '*');">SET</a> EXPRESSION&quot;; case AT_DropExpression: return &quot;ALTER COLUMN ... DROP EXPRESSION&quot;; case AT_SetStatistics: return &quot;ALTER COLUMN ... <a class="wiki-source-link" href="../../source/src/backend/regex/regc_lex.c.html#L43" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/regex/regc_lex.c.html&quot;}, '*');">SET</a> STATISTICS&quot;; case AT_SetOptions: return &quot;ALTER COLUMN ... <a class="wiki-source-link" href="../../source/src/backend/regex/regc_lex.c.html#L43" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/regex/regc_lex.c.html&quot;}, '*');">SET</a>&quot;; case AT_ResetOptions: return &quot;ALTER COLUMN ... RESET&quot;; case AT_SetStorage: return &quot;ALTER COLUMN ... <a class="wiki-source-link" href="../../source/src/backend/regex/regc_lex.c.html#L43" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/regex/regc_lex.c.html&quot;}, '*');">SET</a> STORAGE&quot;; case AT_SetCompression: return &quot;ALTER COLUMN ... <a class="wiki-source-link" href="../../source/src/backend/regex/regc_lex.c.html#L43" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/regex/regc_lex.c.html&quot;}, '*');">SET</a> COMPRESSION&quot;; case AT_DropColumn: return &quot;DROP COLUMN&quot;; case AT_AddIndex: case AT_ReAddIndex: return NULL;		/* not real grammar */ case AT_AddConstraint: case AT_ReAddConstraint: case AT_ReAddDomainConstraint: case AT_AddIndexConstraint: return &quot;ADD CONSTRAINT&quot;; case AT_AlterConstraint: return &quot;ALTER CONSTRAINT&quot;; case AT_ValidateConstraint: return &quot;VALIDATE CONSTRAINT&quot;; case AT_DropConstraint: return &quot;DROP CONSTRAINT&quot;; case AT_ReAddComment: return NULL;		/* not real grammar */ case AT_AlterColumnType: return &quot;ALTER COLUMN ... <a class="wiki-source-link" href="../../source/src/backend/regex/regc_lex.c.html#L43" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/regex/regc_lex.c.html&quot;}, '*');">SET</a> DATA TYPE&quot;; case AT_AlterColumnGenericOptions: return &quot;ALTER COLUMN ... OPTIONS&quot;; case AT_ChangeOwner: return &quot;OWNER TO&quot;; case AT_ClusterOn: return &quot;CLUSTER ON&quot;; case AT_DropCluster: return &quot;<a class="wiki-source-link" href="../../source/src/backend/regex/regc_lex.c.html#L43" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/regex/regc_lex.c.html&quot;}, '*');">SET</a> WITHOUT CLUSTER&quot;; case AT_SetAccessMethod: return &quot;<a class="wiki-source-link" href="../../source/src/backend/regex/regc_lex.c.html#L43" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/regex/regc_lex.c.html&quot;}, '*');">SET</a> ACCESS METHOD&quot;; case AT_SetLogged: ~~~</p>
+<h2>失敗モードと境界条件</h2>
+<p>まだ解析していません。</p>
+<h2>保守担当者向けメモ</h2>
+<ul>
+<li>後続フェーズで、ソース本文の文脈と caller/callee 情報を使ってこのページを強化する。</li>
+</ul><script>
+(function() {
+  function notifyParent() {
+    if (parent === window) return;
+    parent.postMessage({type: "frame-location", frame: window.name || "", href: window.location.href}, "*");
+  }
+  document.addEventListener("click", function(event) {
+    const link = event.target.closest("a[data-panel]");
+    if (!link || parent === window) return;
+    parent.postMessage({type: "source-link", panel: link.dataset.panel}, "*");
+  });
+  window.addEventListener("load", notifyParent);
+  window.addEventListener("hashchange", notifyParent);
+})();
+</script></body></html>

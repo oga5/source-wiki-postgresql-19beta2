@@ -1,0 +1,62 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>symbols/contrib__pgcrypto__pgp-compress_c__decompress_init.md</title><link rel="stylesheet" href="../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../source/contrib/pgcrypto/pgp-compress.c.html#L203" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/contrib__pgcrypto__pgp-compress_c__decompress_init.html&quot;}, '*');">decompress_init</a></h1>
+<h2>定義</h2>
+<ul>
+<li>種別: <code>function</code></li>
+<li>定義箇所: <code>contrib/pgcrypto/pgp-compress.c:203</code></li>
+<li>所属モジュール: <a class="wiki-entity-link" href="../modules/contrib__pgcrypto.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/modules/contrib__pgcrypto.html&quot;, &quot;source&quot;: &quot;source/contrib/pgcrypto/crypt-blowfish.c.html&quot;}, '*');"><code>module:contrib/pgcrypto</code></a></li>
+</ul>
+<h2>目的</h2>
+<p>静的シンボル索引から生成された初期シンボルページです。</p>
+<h2>シグネチャまたは形状</h2>
+<ul>
+<li>シグネチャ: <code>static int decompress_init(void **priv_p, void *arg, PullFilter *src)</code></li>
+</ul>
+<h2>入力と出力</h2>
+<ul>
+<li>引数: <code>void **priv_p</code>, <code>void *arg</code>, <code>PullFilter *src</code></li>
+<li>戻り値: <code>int</code></li>
+</ul>
+<h2>前提条件と不変条件</h2>
+<p>まだ解析していません。</p>
+<h2>アルゴリズムまたは振る舞い</h2>
+<ul>
+<li>複雑度: <code>high</code> (score 15)</li>
+</ul>
+<p>まだ解析していません。</p>
+<h2>呼び出し元と呼び出し先</h2>
+<ul>
+<li>呼び出し元: なし</li>
+<li>呼び出し先: <code>px_debug</code></li>
+<li>呼び出し元サイト: なし</li>
+<li>呼び出しサイト: <code>palloc0_object</code> at <code>contrib/pgcrypto/pgp-compress.c:214:8</code> (unresolved), <code>inflateInit2</code> at <code>contrib/pgcrypto/pgp-compress.c:222:9</code> (unresolved), <code>inflateInit</code> at <code>contrib/pgcrypto/pgp-compress.c:224:9</code> (unresolved), <code>pfree</code> at <code>contrib/pgcrypto/pgp-compress.c:227:3</code> (unresolved, confidence=low), <code>px_debug</code> at <code>contrib/pgcrypto/pgp-compress.c:228:3</code> (direct, confidence=high, resolved=<a class="wiki-entity-link" href="contrib__pgcrypto__px_c__px_debug.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/contrib__pgcrypto__px_c__px_debug.html&quot;, &quot;source&quot;: &quot;source/contrib/pgcrypto/px.c.html#L149&quot;}, '*');"><code>symbol:contrib/pgcrypto/px.c#px_debug</code></a>)</li>
+</ul>
+<h2>関連データ構造</h2>
+<p><a class="wiki-source-link" href="../../source/contrib/pgcrypto/pgp-compress.c.html#L193" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/contrib__pgcrypto__pgp-compress_c__DecomprData.html&quot;}, '*');"><code>DecomprData</code></a>, <a class="wiki-source-link" href="../../source/contrib/pgcrypto/pgp.h.html#L119" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/contrib__pgcrypto__pgp_h__PGP_Context.html&quot;}, '*');"><code>PGP_Context</code></a>, <code>PullFilter</code></p>
+<h2>ソース抜粋</h2>
+<p>~~~c static int <a class="wiki-source-link" href="../../source/contrib/pgcrypto/pgp-compress.c.html#L203" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/contrib__pgcrypto__pgp-compress_c__decompress_init.html&quot;}, '*');">decompress_init</a>(void **priv_p, void *arg, PullFilter *src) { <a class="wiki-source-link" href="../../source/contrib/pgcrypto/pgp.h.html#L119" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/contrib__pgcrypto__pgp_h__PGP_Context.html&quot;}, '*');">PGP_Context</a> *ctx = arg; struct <a class="wiki-source-link" href="../../source/contrib/pgcrypto/pgp-compress.c.html#L193" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/contrib__pgcrypto__pgp-compress_c__DecomprData.html&quot;}, '*');">DecomprData</a> *dec; int			res;</p>
+<p>if (ctx-&gt;compress_algo != PGP_COMPR_ZLIB &amp;&amp; ctx-&gt;compress_algo != PGP_COMPR_ZIP) return <a class="wiki-source-link" href="../../source/contrib/pgcrypto/px.h.html#L69" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/contrib/pgcrypto/px.h.html&quot;}, '*');">PXE_PGP_UNSUPPORTED_COMPR</a>;</p>
+<p>dec = palloc0_object(struct <a class="wiki-source-link" href="../../source/contrib/pgcrypto/pgp-compress.c.html#L193" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/contrib__pgcrypto__pgp-compress_c__DecomprData.html&quot;}, '*');">DecomprData</a>); dec-&gt;buf_len = <a class="wiki-source-link" href="../../source/contrib/pgcrypto/pgp-compress.c.html#L45" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/contrib/pgcrypto/pgp-compress.c.html&quot;}, '*');">ZIP_OUT_BUF</a>; *priv_p = dec;</p>
+<p>dec-&gt;stream.zalloc = <a class="wiki-source-link" href="../../source/contrib/pgcrypto/pgp-compress.c.html#L57" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/contrib__pgcrypto__pgp-compress_c__z_alloc.html&quot;}, '*');">z_alloc</a>; dec-&gt;stream.zfree = <a class="wiki-source-link" href="../../source/contrib/pgcrypto/pgp-compress.c.html#L63" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/contrib__pgcrypto__pgp-compress_c__z_free.html&quot;}, '*');">z_free</a>;</p>
+<p>if (ctx-&gt;compress_algo == PGP_COMPR_ZIP) res = inflateInit2(&amp;dec-&gt;stream, -15); else res = inflateInit(&amp;dec-&gt;stream); if (res != Z_OK) { pfree(dec); px_debug(&quot;<a class="wiki-source-link" href="../../source/contrib/pgcrypto/pgp-compress.c.html#L203" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/contrib__pgcrypto__pgp-compress_c__decompress_init.html&quot;}, '*');">decompress_init</a>: inflateInit error&quot;); return <a class="wiki-source-link" href="../../source/contrib/pgcrypto/px.h.html#L72" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/contrib/pgcrypto/px.h.html&quot;}, '*');">PXE_PGP_COMPRESSION_ERROR</a>; }</p>
+<p>return 0; } ~~~</p>
+<h2>失敗モードと境界条件</h2>
+<p>まだ解析していません。</p>
+<h2>保守担当者向けメモ</h2>
+<ul>
+<li>後続フェーズで、ソース本文の文脈と caller/callee 情報を使ってこのページを強化する。</li>
+</ul><script>
+(function() {
+  function notifyParent() {
+    if (parent === window) return;
+    parent.postMessage({type: "frame-location", frame: window.name || "", href: window.location.href}, "*");
+  }
+  document.addEventListener("click", function(event) {
+    const link = event.target.closest("a[data-panel]");
+    if (!link || parent === window) return;
+    parent.postMessage({type: "source-link", panel: link.dataset.panel}, "*");
+  });
+  window.addEventListener("load", notifyParent);
+  window.addEventListener("hashchange", notifyParent);
+})();
+</script></body></html>

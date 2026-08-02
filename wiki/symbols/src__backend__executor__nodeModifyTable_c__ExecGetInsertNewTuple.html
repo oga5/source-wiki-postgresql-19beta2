@@ -1,0 +1,73 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>symbols/src__backend__executor__nodeModifyTable_c__ExecGetInsertNewTuple.md</title><link rel="stylesheet" href="../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../source/src/backend/executor/nodeModifyTable.c.html#L791" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__executor__nodeModifyTable_c__ExecGetInsertNewTuple.html&quot;}, '*');">ExecGetInsertNewTuple</a></h1>
+<h2>定義</h2>
+<ul>
+<li>種別: <code>function</code></li>
+<li>定義箇所: <code>src/backend/executor/nodeModifyTable.c:791</code></li>
+<li>所属モジュール: <a class="wiki-entity-link" href="../modules/src__backend__executor.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/modules/src__backend__executor.html&quot;, &quot;source&quot;: &quot;source/src/backend/executor/execAmi.c.html&quot;}, '*');"><code>module:src/backend/executor</code></a></li>
+</ul>
+<h2>目的</h2>
+<p>静的シンボル索引から生成された初期シンボルページです。</p>
+<h2>シグネチャまたは形状</h2>
+<ul>
+<li>シグネチャ: <code>static TupleTableSlot * ExecGetInsertNewTuple(ResultRelInfo *relinfo, TupleTableSlot *planSlot)</code></li>
+</ul>
+<h2>入力と出力</h2>
+<ul>
+<li>引数: <code>ResultRelInfo *relinfo</code>, <code>TupleTableSlot *planSlot</code></li>
+<li>戻り値: <code>TupleTableSlot *</code></li>
+</ul>
+<h2>前提条件と不変条件</h2>
+<p>まだ解析していません。</p>
+<h2>アルゴリズムまたは振る舞い</h2>
+<ul>
+<li>複雑度: <code>high</code> (score 12)</li>
+</ul>
+<p>まだ解析していません。</p>
+<h2>呼び出し元と呼び出し先</h2>
+<ul>
+<li>呼び出し元: <a class="wiki-source-link" href="../../source/src/backend/executor/nodeModifyTable.c.html#L4624" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__executor__nodeModifyTable_c__ExecModifyTable.html&quot;}, '*');"><code>ExecModifyTable</code></a></li>
+<li>呼び出し先: なし</li>
+<li>呼び出し元サイト: <a class="wiki-source-link" href="../../source/src/backend/executor/nodeModifyTable.c.html#L4624" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__executor__nodeModifyTable_c__ExecModifyTable.html&quot;}, '*');"><code>ExecModifyTable</code></a> at <code>src/backend/executor/nodeModifyTable.c:4969:12</code> (direct, confidence=high, resolved=<a class="wiki-entity-link" href="src__backend__executor__nodeModifyTable_c__ExecGetInsertNewTuple.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__executor__nodeModifyTable_c__ExecGetInsertNewTuple.html&quot;, &quot;source&quot;: &quot;source/src/backend/executor/nodeModifyTable.c.html#L791&quot;}, '*');"><code>symbol:src/backend/executor/nodeModifyTable.c#ExecGetInsertNewTuple</code></a>)</li>
+<li>呼び出しサイト: <a class="wiki-source-link" href="../../source/src/include/executor/tuptable.h.html#L543" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__executor__tuptable_h__ExecCopySlot.html&quot;}, '*');"><code>ExecCopySlot</code></a> at <code>src/backend/executor/nodeModifyTable.c:807:4</code> (unresolved), <a class="wiki-source-link" href="../../source/src/include/executor/executor.h.html#L490" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__executor__executor_h__ExecProject.html&quot;}, '*');"><code>ExecProject</code></a> at <code>src/backend/executor/nodeModifyTable.c:823:9</code> (unresolved)</li>
+</ul>
+<h2>関連データ構造</h2>
+<p><code>ExprContext</code>, <a class="wiki-source-link" href="../../source/src/include/nodes/execnodes.h.html#L396" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__nodes__execnodes_h__ProjectionInfo.html&quot;}, '*');"><code>ProjectionInfo</code></a>, <code>ResultRelInfo</code>, <code>TupleTableSlot</code></p>
+<h2>ソース抜粋</h2>
+<p>~~~c static TupleTableSlot * <a class="wiki-source-link" href="../../source/src/backend/executor/nodeModifyTable.c.html#L791" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__executor__nodeModifyTable_c__ExecGetInsertNewTuple.html&quot;}, '*');">ExecGetInsertNewTuple</a>(ResultRelInfo *relinfo, TupleTableSlot *planSlot) { <a class="wiki-source-link" href="../../source/src/include/nodes/execnodes.h.html#L396" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__nodes__execnodes_h__ProjectionInfo.html&quot;}, '*');">ProjectionInfo</a> *newProj = relinfo-&gt;ri_projectNew; ExprContext *econtext;</p>
+<p>/*</p>
+<ul>
+<li>If there&#x27;s no projection to be done, just make sure the slot <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> of the</li>
+<li>right type for the target rel.  If the planSlot <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> the right type we</li>
+<li>can use it as-<a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a>, else copy the data into ri_newTupleSlot.</li>
+<p>*/ if (newProj == NULL) { if (relinfo-&gt;ri_newTupleSlot-&gt;tts_ops != planSlot-&gt;tts_ops) { <a class="wiki-source-link" href="../../source/src/include/executor/tuptable.h.html#L543" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__executor__tuptable_h__ExecCopySlot.html&quot;}, '*');">ExecCopySlot</a>(relinfo-&gt;ri_newTupleSlot, planSlot); return relinfo-&gt;ri_newTupleSlot; } else return planSlot; }</p>
+</ul>
+<p>/*</p>
+<ul>
+<li>Else project; since the projection <a class="wiki-source-link" href="../../source/src/bin/pg_test_timing/pg_test_timing.c.html#L357" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__bin__pg_test_timing__pg_test_timing_c__output.html&quot;}, '*');">output</a> slot <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> ri_newTupleSlot, this</li>
+<li>will also fix any slot-type problem.</li>
+<p>*</p>
+<li>Note: currently, this <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> dead code, because INSERT cases don&#x27;t receive</li>
+<li>any junk columns so there&#x27;s never a projection to be done.</li>
+<p>*/ econtext = newProj-&gt;pi_exprContext; econtext-&gt;ecxt_outertuple = planSlot; return <a class="wiki-source-link" href="../../source/src/include/executor/executor.h.html#L490" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__executor__executor_h__ExecProject.html&quot;}, '*');">ExecProject</a>(newProj); } ~~~</p>
+</ul>
+<h2>失敗モードと境界条件</h2>
+<p>まだ解析していません。</p>
+<h2>保守担当者向けメモ</h2>
+<ul>
+<li>後続フェーズで、ソース本文の文脈と caller/callee 情報を使ってこのページを強化する。</li>
+</ul><script>
+(function() {
+  function notifyParent() {
+    if (parent === window) return;
+    parent.postMessage({type: "frame-location", frame: window.name || "", href: window.location.href}, "*");
+  }
+  document.addEventListener("click", function(event) {
+    const link = event.target.closest("a[data-panel]");
+    if (!link || parent === window) return;
+    parent.postMessage({type: "source-link", panel: link.dataset.panel}, "*");
+  });
+  window.addEventListener("load", notifyParent);
+  window.addEventListener("hashchange", notifyParent);
+})();
+</script></body></html>

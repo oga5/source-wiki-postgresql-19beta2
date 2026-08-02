@@ -1,0 +1,60 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>symbols/src__interfaces__libpq__fe-secure-openssl_c__pgconn_bio_write.md</title><link rel="stylesheet" href="../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../source/src/interfaces/libpq/fe-secure-openssl.c.html#L1804" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__interfaces__libpq__fe-secure-openssl_c__pgconn_bio_write.html&quot;}, '*');">pgconn_bio_write</a></h1>
+<h2>定義</h2>
+<ul>
+<li>種別: <code>function</code></li>
+<li>定義箇所: <code>src/interfaces/libpq/fe-secure-openssl.c:1804</code></li>
+<li>所属モジュール: <a class="wiki-entity-link" href="../modules/src__interfaces__libpq.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/modules/src__interfaces__libpq.html&quot;, &quot;source&quot;: &quot;source/src/interfaces/libpq/fe-auth-oauth.c.html&quot;}, '*');"><code>module:src/interfaces/libpq</code></a></li>
+</ul>
+<h2>目的</h2>
+<p>静的シンボル索引から生成された初期シンボルページです。</p>
+<h2>シグネチャまたは形状</h2>
+<ul>
+<li>シグネチャ: <code>static int pgconn_bio_write(BIO *h, const char *buf, int size)</code></li>
+</ul>
+<h2>入力と出力</h2>
+<ul>
+<li>引数: <code>BIO *h</code>, <code>const char *buf</code>, <code>int size</code></li>
+<li>戻り値: <code>int</code></li>
+</ul>
+<h2>前提条件と不変条件</h2>
+<p>まだ解析していません。</p>
+<h2>アルゴリズムまたは振る舞い</h2>
+<ul>
+<li>複雑度: <code>medium</code> (score 11)</li>
+</ul>
+<p>まだ解析していません。</p>
+<h2>呼び出し元と呼び出し先</h2>
+<ul>
+<li>呼び出し元: なし</li>
+<li>呼び出し先: <a class="wiki-source-link" href="../../source/src/interfaces/libpq/fe-secure.c.html#L339" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__interfaces__libpq__fe-secure_c__pqsecure_raw_write.html&quot;}, '*');"><code>pqsecure_raw_write</code></a></li>
+<li>呼び出し元サイト: なし</li>
+<li>呼び出しサイト: <a class="wiki-source-link" href="../../source/src/interfaces/libpq/fe-secure.c.html#L339" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__interfaces__libpq__fe-secure_c__pqsecure_raw_write.html&quot;}, '*');"><code>pqsecure_raw_write</code></a> at <code>src/interfaces/libpq/fe-secure-openssl.c:1809:8</code> (direct, confidence=high, resolved=<a class="wiki-entity-link" href="src__interfaces__libpq__fe-secure_c__pqsecure_raw_write.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__interfaces__libpq__fe-secure_c__pqsecure_raw_write.html&quot;, &quot;source&quot;: &quot;source/src/interfaces/libpq/fe-secure.c.html#L339&quot;}, '*');"><code>symbol:src/interfaces/libpq/fe-secure.c#pqsecure_raw_write</code></a>), <code>BIO_get_data</code> at <code>src/interfaces/libpq/fe-secure-openssl.c:1809:38</code> (unresolved), <code>BIO_clear_retry_flags</code> at <code>src/interfaces/libpq/fe-secure-openssl.c:1810:2</code> (unresolved), <code>BIO_set_retry_write</code> at <code>src/interfaces/libpq/fe-secure-openssl.c:1823:5</code> (unresolved)</li>
+</ul>
+<h2>関連データ構造</h2>
+<p><code>PGconn</code></p>
+<h2>ソース抜粋</h2>
+<p>~~~c static int <a class="wiki-source-link" href="../../source/src/interfaces/libpq/fe-secure-openssl.c.html#L1804" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__interfaces__libpq__fe-secure-openssl_c__pgconn_bio_write.html&quot;}, '*');">pgconn_bio_write</a>(BIO *h, const char *buf, int size) { int			res;</p>
+<p>res = <a class="wiki-source-link" href="../../source/src/interfaces/libpq/fe-secure.c.html#L339" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__interfaces__libpq__fe-secure_c__pqsecure_raw_write.html&quot;}, '*');">pqsecure_raw_write</a>((PGconn *) BIO_get_data(h), buf, size); BIO_clear_retry_flags(h); if (res &lt; 0) { /* If we were interrupted, tell caller to retry */ switch (SOCK_ERRNO) { #ifdef <a class="wiki-source-link" href="../../source/src/include/port/win32_port.h.html#L359" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/port/win32_port.h.html&quot;}, '*');">EAGAIN</a> case <a class="wiki-source-link" href="../../source/src/include/port/win32_port.h.html#L359" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/port/win32_port.h.html&quot;}, '*');">EAGAIN</a>: #endif #if defined(<a class="wiki-source-link" href="../../source/src/include/port/win32_port.h.html#L367" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/port/win32_port.h.html&quot;}, '*');">EWOULDBLOCK</a>) &amp;&amp; (!defined(<a class="wiki-source-link" href="../../source/src/include/port/win32_port.h.html#L359" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/port/win32_port.h.html&quot;}, '*');">EAGAIN</a>) || (<a class="wiki-source-link" href="../../source/src/include/port/win32_port.h.html#L367" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/port/win32_port.h.html&quot;}, '*');">EWOULDBLOCK</a> != <a class="wiki-source-link" href="../../source/src/include/port/win32_port.h.html#L359" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/port/win32_port.h.html&quot;}, '*');">EAGAIN</a>)) case <a class="wiki-source-link" href="../../source/src/include/port/win32_port.h.html#L367" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/port/win32_port.h.html&quot;}, '*');">EWOULDBLOCK</a>: #endif case EINTR: BIO_set_retry_write(h); break;</p>
+<p>default: break; } }</p>
+<p>return res; } ~~~</p>
+<h2>失敗モードと境界条件</h2>
+<p>まだ解析していません。</p>
+<h2>保守担当者向けメモ</h2>
+<ul>
+<li>後続フェーズで、ソース本文の文脈と caller/callee 情報を使ってこのページを強化する。</li>
+</ul><script>
+(function() {
+  function notifyParent() {
+    if (parent === window) return;
+    parent.postMessage({type: "frame-location", frame: window.name || "", href: window.location.href}, "*");
+  }
+  document.addEventListener("click", function(event) {
+    const link = event.target.closest("a[data-panel]");
+    if (!link || parent === window) return;
+    parent.postMessage({type: "source-link", panel: link.dataset.panel}, "*");
+  });
+  window.addEventListener("load", notifyParent);
+  window.addEventListener("hashchange", notifyParent);
+})();
+</script></body></html>

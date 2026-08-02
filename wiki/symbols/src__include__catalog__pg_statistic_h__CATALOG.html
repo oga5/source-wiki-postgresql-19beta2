@@ -1,0 +1,112 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>symbols/src__include__catalog__pg_statistic_h__CATALOG.md</title><link rel="stylesheet" href="../../styles.css"></head><body><h1>CATALOG</h1>
+<h2>定義</h2>
+<ul>
+<li>種別: <code>function</code></li>
+<li>定義箇所: <code>src/include/catalog/pg_statistic.h:29</code></li>
+<li>所属モジュール: <a class="wiki-entity-link" href="../modules/src__include__catalog.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/modules/src__include__catalog.html&quot;, &quot;source&quot;: &quot;source/src/include/catalog/binary_upgrade.h.html&quot;}, '*');"><code>module:src/include/catalog</code></a></li>
+</ul>
+<h2>目的</h2>
+<p>静的シンボル索引から生成された初期シンボルページです。</p>
+<h2>シグネチャまたは形状</h2>
+<ul>
+<li>シグネチャ: <code>BEGIN_CATALOG_STRUCT CATALOG(pg_statistic,2619,StatisticRelationId)</code></li>
+</ul>
+<h2>入力と出力</h2>
+<ul>
+<li>引数: <code>pg_statistic</code>, <code>StatisticRelationId</code></li>
+<li>戻り値: <a class="wiki-source-link" href="../../source/src/include/catalog/genbki.h.html#L34" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/catalog/genbki.h.html&quot;}, '*');"><code>BEGIN_CATALOG_STRUCT</code></a></li>
+</ul>
+<h2>前提条件と不変条件</h2>
+<p>まだ解析していません。</p>
+<h2>アルゴリズムまたは振る舞い</h2>
+<ul>
+<li>複雑度: <code>medium</code> (score 6)</li>
+</ul>
+<p>まだ解析していません。</p>
+<h2>呼び出し元と呼び出し先</h2>
+<ul>
+<li>呼び出し元: なし</li>
+<li>呼び出し先: なし</li>
+<li>呼び出し元サイト: なし</li>
+<li>呼び出しサイト: なし</li>
+</ul>
+<h2>関連データ構造</h2>
+<p><a class="wiki-source-link" href="../../source/src/interfaces/ecpg/preproc/type.h.html#L230" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__interfaces__ecpg__preproc__type_h__describe.html&quot;}, '*');"><code>describe</code></a>, <a class="wiki-source-link" href="../../source/src/include/c.h.html#L720" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/c.h.html&quot;}, '*');"><code>float4</code></a>, <code>int16</code>, <code>int32</code>, <code>Oid</code>, <code>variable</code></p>
+<h2>ソース抜粋</h2>
+<p>~~~c <a class="wiki-source-link" href="../../source/src/include/catalog/genbki.h.html#L34" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/catalog/genbki.h.html&quot;}, '*');">BEGIN_CATALOG_STRUCT</a></p>
+<p>CATALOG(pg_statistic,2619,StatisticRelationId) { /* These fields form the unique key for the entry: */ Oid			starelid <a class="wiki-source-link" href="../../source/src/include/catalog/genbki.h.html#L65" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/catalog/genbki.h.html&quot;}, '*');">BKI_LOOKUP</a>(pg_class);	/* relation containing</p>
+<ul>
+<li>attribute */</li>
+<p>int16		staattnum;		/* attribute (column) stats are for */ bool		stainherit;		/* <a class="wiki-source-link" href="../../source/src/tools/pg_bsd_indent/indent_globs.h.html#L46" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/tools/pg_bsd_indent/indent_globs.h.html&quot;}, '*');">true</a> if inheritance children are included */</p>
+</ul>
+<p>/* the fraction of the column&#x27;s entries that are NULL: */ <a class="wiki-source-link" href="../../source/src/include/c.h.html#L720" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/c.h.html&quot;}, '*');">float4</a>		stanullfrac;</p>
+<p>/*</p>
+<ul>
+<li>stawidth <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> the average width in bytes of non-null entries.  For</li>
+<li>fixed-width datatypes this <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> of course the same as the typlen, but for</li>
+<li>var-width <a class="wiki-source-link" href="../../source/src/interfaces/ecpg/preproc/ecpg.c.html#L30" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/ecpg/preproc/ecpg.c.html&quot;}, '*');">types</a> it <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> more useful.  Note that this <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> the average width</li>
+<li>of the data as actually stored, post-TOASTing (eg, for a</li>
+<li>moved-out-of-line <a class="wiki-source-link" href="../../source/src/interfaces/ecpg/compatlib/informix.c.html#L687" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/ecpg/compatlib/informix.c.html&quot;}, '*');">value</a>, only the size of the pointer object <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a></li>
+<li>counted).  This <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> the appropriate definition for the primary use of</li>
+<li>the statistic, which <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> to estimate sizes of in-memory <a class="wiki-source-link" href="../../source/src/backend/regex/rege_dfa.c.html#L723" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__regex__rege_dfa_c__hash.html&quot;}, '*');">hash</a> tables of</li>
+<li>tuples.</li>
+<p>*/ int32		stawidth;</p>
+</ul>
+<p>/* ----------------</p>
+<ul>
+<li>stadistinct indicates the (approximate) number of distinct non-null</li>
+<li>data values in the column.  The interpretation <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a>:</li>
+<li>0		unknown or not computed</li>
+<li>&gt; 0		actual number of distinct values</li>
+<li>&lt; 0		negative of multiplier for number of rows</li>
+<li>The special negative case allows us to cope with columns that are</li>
+<li>unique (stadistinct = -1) or nearly so (for example, a column in which</li>
+<li>non-null values appear about twice on the average could be represented</li>
+<li>by stadistinct = -0.5 if there are no nulls, or -0.4 if 20% of the</li>
+<li>column <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> nulls).  Because the number-of-rows statistic in pg_class may</li>
+<li>be updated more frequently than pg_statistic <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a>, it&#x27;s important to be</li>
+<li>able to <a class="wiki-source-link" href="../../source/src/interfaces/ecpg/preproc/type.h.html#L230" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__interfaces__ecpg__preproc__type_h__describe.html&quot;}, '*');">describe</a> such situations as a multiple of the number of rows,</li>
+<li>rather than a fixed number of distinct values.  But in other cases a</li>
+<li>fixed number <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> correct (eg, a boolean column).</li>
+<li>----------------</li>
+<p>*/ <a class="wiki-source-link" href="../../source/src/include/c.h.html#L720" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/c.h.html&quot;}, '*');">float4</a>		stadistinct;</p>
+</ul>
+<p>/* ----------------</p>
+<ul>
+<li>To allow keeping statistics on different kinds of datatypes,</li>
+<li>we do not hard-wire any particular meaning for the remaining</li>
+<li>statistical fields.  Instead, we provide several &quot;slots&quot; in which</li>
+<li>statistical data can be placed.  Each slot includes:</li>
+<li>kind			integer code identifying kind of data (see below)</li>
+<li>op				OID of associated operator, if needed</li>
+<li>coll			OID of relevant collation, or 0 if <a class="wiki-source-link" href="../../source/src/backend/optimizer/util/predtest.c.html#L1672" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/optimizer/util/predtest.c.html&quot;}, '*');">none</a></li>
+<li>numbers			<a class="wiki-source-link" href="../../source/src/include/c.h.html#L720" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/c.h.html&quot;}, '*');">float4</a> array (for statistical values)</li>
+<li>values			anyarray (for representations of data values)</li>
+<li>The ID, operator, and collation fields are never NULL; they are zeroes</li>
+<li>in an unused slot.  The numbers and values fields are NULL in an</li>
+<li>unused slot, and might also be NULL in a used slot if the slot kind</li>
+<li>has no need for one or the other.</li>
+<li>----------------</li>
+<p>*/ ~~~</p>
+</ul>
+<h2>失敗モードと境界条件</h2>
+<p>まだ解析していません。</p>
+<h2>保守担当者向けメモ</h2>
+<ul>
+<li>後続フェーズで、ソース本文の文脈と caller/callee 情報を使ってこのページを強化する。</li>
+</ul><script>
+(function() {
+  function notifyParent() {
+    if (parent === window) return;
+    parent.postMessage({type: "frame-location", frame: window.name || "", href: window.location.href}, "*");
+  }
+  document.addEventListener("click", function(event) {
+    const link = event.target.closest("a[data-panel]");
+    if (!link || parent === window) return;
+    parent.postMessage({type: "source-link", panel: link.dataset.panel}, "*");
+  });
+  window.addEventListener("load", notifyParent);
+  window.addEventListener("hashchange", notifyParent);
+})();
+</script></body></html>

@@ -1,0 +1,59 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>symbols/src__backend__optimizer__plan__createplan_c__make_hashjoin.md</title><link rel="stylesheet" href="../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../source/src/backend/optimizer/plan/createplan.c.html#L5953" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__plan__createplan_c__make_hashjoin.html&quot;}, '*');">make_hashjoin</a></h1>
+<h2>定義</h2>
+<ul>
+<li>種別: <code>function</code></li>
+<li>定義箇所: <code>src/backend/optimizer/plan/createplan.c:5953</code></li>
+<li>所属モジュール: <a class="wiki-entity-link" href="../modules/src__backend__optimizer__plan.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/modules/src__backend__optimizer__plan.html&quot;, &quot;source&quot;: &quot;source/src/backend/optimizer/plan/analyzejoins.c.html&quot;}, '*');"><code>module:src/backend/optimizer/plan</code></a></li>
+</ul>
+<h2>目的</h2>
+<p>静的シンボル索引から生成された初期シンボルページです。</p>
+<h2>シグネチャまたは形状</h2>
+<ul>
+<li>シグネチャ: <code>static HashJoin * make_hashjoin(List *tlist, List *joinclauses, List *otherclauses, List *hashclauses, List *hashoperators, List *hashcollations, List *hashkeys, Plan *lefttree, Plan *righttree, JoinType jointype, bool inner_unique)</code></li>
+</ul>
+<h2>入力と出力</h2>
+<ul>
+<li>引数: <code>List *tlist</code>, <code>List *joinclauses</code>, <code>List *otherclauses</code>, <code>List *hashclauses</code>, <code>List *hashoperators</code>, <code>List *hashcollations</code>, <code>List *hashkeys</code>, <code>Plan *lefttree</code>, <code>Plan *righttree</code>, <code>JoinType jointype</code>, <code>bool inner_unique</code></li>
+<li>戻り値: <code>HashJoin *</code></li>
+</ul>
+<h2>前提条件と不変条件</h2>
+<p>まだ解析していません。</p>
+<h2>アルゴリズムまたは振る舞い</h2>
+<ul>
+<li>複雑度: <code>medium</code> (score 8)</li>
+</ul>
+<p>まだ解析していません。</p>
+<h2>呼び出し元と呼び出し先</h2>
+<ul>
+<li>呼び出し元: <a class="wiki-source-link" href="../../source/src/backend/optimizer/plan/createplan.c.html#L4692" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__plan__createplan_c__create_hashjoin_plan.html&quot;}, '*');"><code>create_hashjoin_plan</code></a></li>
+<li>呼び出し先: なし</li>
+<li>呼び出し元サイト: <a class="wiki-source-link" href="../../source/src/backend/optimizer/plan/createplan.c.html#L4692" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__plan__createplan_c__create_hashjoin_plan.html&quot;}, '*');"><code>create_hashjoin_plan</code></a> at <code>src/backend/optimizer/plan/createplan.c:4848:14</code> (direct, confidence=high, resolved=<a class="wiki-entity-link" href="src__backend__optimizer__plan__createplan_c__make_hashjoin.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__plan__createplan_c__make_hashjoin.html&quot;, &quot;source&quot;: &quot;source/src/backend/optimizer/plan/createplan.c.html#L5953&quot;}, '*');"><code>symbol:src/backend/optimizer/plan/createplan.c#make_hashjoin</code></a>)</li>
+<li>呼び出しサイト: <a class="wiki-source-link" href="../../source/src/include/nodes/nodes.h.html#L159" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/nodes/nodes.h.html&quot;}, '*');"><code>makeNode</code></a> at <code>src/backend/optimizer/plan/createplan.c:5966:21</code> (unresolved)</li>
+</ul>
+<h2>関連データ構造</h2>
+<p><a class="wiki-source-link" href="../../source/src/include/nodes/plannodes.h.html#L1064" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__nodes__plannodes_h__HashJoin.html&quot;}, '*');"><code>HashJoin</code></a>, <a class="wiki-source-link" href="../../source/src/include/nodes/nodes.h.html#L295" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__nodes__nodes_h__JoinType.html&quot;}, '*');"><code>JoinType</code></a>, <code>List</code>, <code>Plan</code></p>
+<h2>ソース抜粋</h2>
+<p>~~~c static <a class="wiki-source-link" href="../../source/src/include/nodes/plannodes.h.html#L1064" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__nodes__plannodes_h__HashJoin.html&quot;}, '*');">HashJoin</a> * <a class="wiki-source-link" href="../../source/src/backend/optimizer/plan/createplan.c.html#L5953" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__plan__createplan_c__make_hashjoin.html&quot;}, '*');">make_hashjoin</a>(List *tlist, List *joinclauses, List *otherclauses, List *hashclauses, List *hashoperators, List *hashcollations, List *hashkeys, Plan *lefttree, Plan *righttree, <a class="wiki-source-link" href="../../source/src/include/nodes/nodes.h.html#L295" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__nodes__nodes_h__JoinType.html&quot;}, '*');">JoinType</a> jointype, bool inner_unique) { <a class="wiki-source-link" href="../../source/src/include/nodes/plannodes.h.html#L1064" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__nodes__plannodes_h__HashJoin.html&quot;}, '*');">HashJoin</a>   *node = <a class="wiki-source-link" href="../../source/src/include/nodes/nodes.h.html#L159" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/nodes/nodes.h.html&quot;}, '*');">makeNode</a>(<a class="wiki-source-link" href="../../source/src/include/nodes/plannodes.h.html#L1064" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__nodes__plannodes_h__HashJoin.html&quot;}, '*');">HashJoin</a>); Plan	   *<a class="wiki-source-link" href="../../source/src/test/regress/pg_regress.c.html#L164" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/test/regress/pg_regress.c.html&quot;}, '*');">plan</a> = &amp;node-&gt;join.plan;</p>
+<p><a class="wiki-source-link" href="../../source/src/test/regress/pg_regress.c.html#L164" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/test/regress/pg_regress.c.html&quot;}, '*');">plan</a>-&gt;targetlist = tlist; <a class="wiki-source-link" href="../../source/src/test/regress/pg_regress.c.html#L164" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/test/regress/pg_regress.c.html&quot;}, '*');">plan</a>-&gt;qual = otherclauses; <a class="wiki-source-link" href="../../source/src/test/regress/pg_regress.c.html#L164" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/test/regress/pg_regress.c.html&quot;}, '*');">plan</a>-&gt;lefttree = lefttree; <a class="wiki-source-link" href="../../source/src/test/regress/pg_regress.c.html#L164" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/test/regress/pg_regress.c.html&quot;}, '*');">plan</a>-&gt;righttree = righttree; node-&gt;hashclauses = hashclauses; node-&gt;hashoperators = hashoperators; node-&gt;hashcollations = hashcollations; node-&gt;hashkeys = hashkeys; node-&gt;join.jointype = jointype; node-&gt;join.inner_unique = inner_unique; node-&gt;join.joinqual = joinclauses;</p>
+<p>return node; } ~~~</p>
+<h2>失敗モードと境界条件</h2>
+<p>まだ解析していません。</p>
+<h2>保守担当者向けメモ</h2>
+<ul>
+<li>後続フェーズで、ソース本文の文脈と caller/callee 情報を使ってこのページを強化する。</li>
+</ul><script>
+(function() {
+  function notifyParent() {
+    if (parent === window) return;
+    parent.postMessage({type: "frame-location", frame: window.name || "", href: window.location.href}, "*");
+  }
+  document.addEventListener("click", function(event) {
+    const link = event.target.closest("a[data-panel]");
+    if (!link || parent === window) return;
+    parent.postMessage({type: "source-link", panel: link.dataset.panel}, "*");
+  });
+  window.addEventListener("load", notifyParent);
+  window.addEventListener("hashchange", notifyParent);
+})();
+</script></body></html>

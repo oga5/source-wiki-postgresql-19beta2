@@ -1,0 +1,96 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>symbols/src__backend__lib__integerset_c__IntegerSet.md</title><link rel="stylesheet" href="../../styles.css"></head><body><h1>IntegerSet</h1>
+<h2>定義</h2>
+<ul>
+<li>種別: <code>struct</code></li>
+<li>定義箇所: <code>src/backend/lib/integerset.c:196</code></li>
+<li>所属モジュール: <a class="wiki-entity-link" href="../modules/src__backend__lib.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/modules/src__backend__lib.html&quot;, &quot;source&quot;: &quot;source/src/backend/lib/bipartite_match.c.html&quot;}, '*');"><code>module:src/backend/lib</code></a></li>
+</ul>
+<h2>目的</h2>
+<p>静的シンボル索引から生成された初期シンボルページです。</p>
+<h2>シグネチャまたは形状</h2>
+<ul>
+<li>シグネチャ: <code>struct IntegerSet</code></li>
+</ul>
+<h2>入力と出力</h2>
+<p>まだ解析していません。</p>
+<h2>前提条件と不変条件</h2>
+<p>まだ解析していません。</p>
+<h2>アルゴリズムまたは振る舞い</h2>
+<p>まだ解析していません。</p>
+<h2>呼び出し元と呼び出し先</h2>
+<ul>
+<li>呼び出し元: なし</li>
+<li>呼び出し先: なし</li>
+<li>呼び出し元サイト: なし</li>
+<li>呼び出しサイト: なし</li>
+</ul>
+<h2>関連データ構造</h2>
+<p><code>c</code>, <a class="wiki-source-link" href="../../source/src/interfaces/ecpg/preproc/type.h.html#L96" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__interfaces__ecpg__preproc__type_h__index.html&quot;}, '*');"><code>index</code></a>, <a class="wiki-source-link" href="../../source/src/backend/lib/integerset.c.html#L134" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__lib__integerset_c__intset_leaf_node.html&quot;}, '*');"><code>intset_leaf_node</code></a>, <a class="wiki-source-link" href="../../source/src/backend/lib/integerset.c.html#L133" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__lib__integerset_c__intset_node.html&quot;}, '*');"><code>intset_node</code></a>, <code>MemoryContext</code>, <code>uint64</code>, <a class="wiki-source-link" href="../../source/src/interfaces/ecpg/preproc/type.h.html#L89" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__interfaces__ecpg__preproc__type_h__when.html&quot;}, '*');"><code>when</code></a></p>
+<h2>ソース抜粋</h2>
+<p>~~~c struct IntegerSet { /*</p>
+<ul>
+<li>&#x27;context&#x27; <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> the memory context holding this integer set and all its</li>
+<li>tree nodes.</li>
+<p>*</p>
+<li>&#x27;mem_used&#x27; tracks the amount of memory used.  We don&#x27;t do anything with</li>
+<li>it in <a class="wiki-source-link" href="../../source/src/backend/lib/integerset.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/lib/integerset.c.html&quot;}, '*');">integerset.c</a> itself, but the callers can ask for it with</li>
+<li><a class="wiki-source-link" href="../../source/src/backend/lib/integerset.c.html#L357" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__lib__integerset_c__intset_memory_usage.html&quot;}, '*');">intset_memory_usage</a>().</li>
+<p>*/ MemoryContext context; uint64		mem_used;</p>
+</ul>
+<p>uint64		num_entries;	/* total # of values in the set */ uint64		highest_value;	/* highest <a class="wiki-source-link" href="../../source/src/interfaces/ecpg/compatlib/informix.c.html#L687" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/ecpg/compatlib/informix.c.html&quot;}, '*');">value</a> stored in this set */</p>
+<p>/*</p>
+<ul>
+<li>B-tree to hold the packed values.</li>
+<p>*</p>
+<li>&#x27;rightmost_nodes&#x27; hold pointers to the rightmost node on each level.</li>
+<li>rightmost_parent[0] <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> rightmost leaf, rightmost_parent[1] <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> its</li>
+<li>parent, and so forth, all the way up to the root. These are needed <a class="wiki-source-link" href="../../source/src/interfaces/ecpg/preproc/type.h.html#L89" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__interfaces__ecpg__preproc__type_h__when.html&quot;}, '*');">when</a></li>
+<li>adding new values. (Currently, we require that new values are added at</li>
+<li>the end.)</li>
+<p>*/ int			num_levels;		/* height of the tree */ <a class="wiki-source-link" href="../../source/src/backend/lib/integerset.c.html#L133" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__lib__integerset_c__intset_node.html&quot;}, '*');">intset_node</a> *root;			/* root node */ <a class="wiki-source-link" href="../../source/src/backend/lib/integerset.c.html#L133" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__lib__integerset_c__intset_node.html&quot;}, '*');">intset_node</a> *rightmost_nodes[<a class="wiki-source-link" href="../../source/src/backend/lib/integerset.c.html#L109" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/lib/integerset.c.html&quot;}, '*');">MAX_TREE_LEVELS</a>]; <a class="wiki-source-link" href="../../source/src/backend/lib/integerset.c.html#L134" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__lib__integerset_c__intset_leaf_node.html&quot;}, '*');">intset_leaf_node</a> *leftmost_leaf;	/* leftmost leaf node */</p>
+</ul>
+<p>/*</p>
+<ul>
+<li>Holding area for new <a class="wiki-source-link" href="../../source/src/test/modules/test_tidstore/test_tidstore.c.html#L48" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/test/modules/test_tidstore/test_tidstore.c.html&quot;}, '*');">items</a> that haven&#x27;t been inserted to the tree yet.</li>
+<p>*/ uint64		buffered_values[<a class="wiki-source-link" href="../../source/src/backend/lib/integerset.c.html#L186" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/lib/integerset.c.html&quot;}, '*');">MAX_BUFFERED_VALUES</a>]; int			num_buffered_values;</p>
+</ul>
+<p>/*</p>
+<ul>
+<li>Iterator support.</li>
+<p>*</p>
+<li>&#x27;iter_values&#x27; <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> an array of integers ready to be returned to the</li>
+<li>caller; &#x27;iter_num_values&#x27; <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> the length of that array, and</li>
+<li>&#x27;iter_valueno&#x27; <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> the next <a class="wiki-source-link" href="../../source/src/interfaces/ecpg/preproc/type.h.html#L96" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__interfaces__ecpg__preproc__type_h__index.html&quot;}, '*');">index</a>.  &#x27;iter_node&#x27; and &#x27;iter_itemno&#x27; point</li>
+<li>to the leaf node, and item within the leaf node, to get the next batch</li>
+<li>of values from.</li>
+<p>*</p>
+<li>Normally, &#x27;iter_values&#x27; points to &#x27;iter_values_buf&#x27;, which holds <a class="wiki-source-link" href="../../source/src/test/modules/test_tidstore/test_tidstore.c.html#L48" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/test/modules/test_tidstore/test_tidstore.c.html&quot;}, '*');">items</a></li>
+<li>decoded from a leaf item.  But after we have scanned the whole B-tree,</li>
+<li>we iterate through all the unbuffered values, too, by pointing</li>
+<li>iter_values to &#x27;buffered_values&#x27;.</li>
+<p>*/ bool		iter_active;	/* <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> iteration in <a class="wiki-source-link" href="../../source/src/bin/pgbench/pgbench.c.html#L263" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/bin/pgbench/pgbench.c.html&quot;}, '*');">progress</a>? */</p>
+</ul>
+<p>const uint64 *iter_values; int			iter_num_values;	/* number of elements in &#x27;iter_values&#x27; */ int			iter_valueno;	/* next <a class="wiki-source-link" href="../../source/src/interfaces/ecpg/preproc/type.h.html#L96" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__interfaces__ecpg__preproc__type_h__index.html&quot;}, '*');">index</a> into &#x27;iter_values&#x27; */</p>
+<p><a class="wiki-source-link" href="../../source/src/backend/lib/integerset.c.html#L134" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__lib__integerset_c__intset_leaf_node.html&quot;}, '*');">intset_leaf_node</a> *iter_node;	/* current leaf node */ int			iter_itemno;	/* next item in &#x27;iter_node&#x27; to decode */</p>
+<p>uint64		iter_values_buf[<a class="wiki-source-link" href="../../source/src/backend/lib/integerset.c.html#L166" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/lib/integerset.c.html&quot;}, '*');">MAX_VALUES_PER_LEAF_ITEM</a>]; ~~~</p>
+<h2>失敗モードと境界条件</h2>
+<p>まだ解析していません。</p>
+<h2>保守担当者向けメモ</h2>
+<ul>
+<li>後続フェーズで、ソース本文の文脈と caller/callee 情報を使ってこのページを強化する。</li>
+</ul><script>
+(function() {
+  function notifyParent() {
+    if (parent === window) return;
+    parent.postMessage({type: "frame-location", frame: window.name || "", href: window.location.href}, "*");
+  }
+  document.addEventListener("click", function(event) {
+    const link = event.target.closest("a[data-panel]");
+    if (!link || parent === window) return;
+    parent.postMessage({type: "source-link", panel: link.dataset.panel}, "*");
+  });
+  window.addEventListener("load", notifyParent);
+  window.addEventListener("hashchange", notifyParent);
+})();
+</script></body></html>

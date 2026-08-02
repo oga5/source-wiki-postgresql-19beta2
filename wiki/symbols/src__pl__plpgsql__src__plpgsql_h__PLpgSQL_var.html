@@ -1,0 +1,68 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>symbols/src__pl__plpgsql__src__plpgsql_h__PLpgSQL_var.md</title><link rel="stylesheet" href="../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../source/src/pl/plpgsql/src/plpgsql.h.html#L332" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__pl__plpgsql__src__plpgsql_h__PLpgSQL_var.html&quot;}, '*');">PLpgSQL_var</a></h1>
+<h2>定義</h2>
+<ul>
+<li>種別: <code>struct</code></li>
+<li>定義箇所: <code>src/pl/plpgsql/src/plpgsql.h:332</code></li>
+<li>所属モジュール: <a class="wiki-entity-link" href="../modules/src__pl__plpgsql__src.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/modules/src__pl__plpgsql__src.html&quot;, &quot;source&quot;: &quot;source/src/pl/plpgsql/src/pl_comp.c.html&quot;}, '*');"><code>module:src/pl/plpgsql/src</code></a></li>
+</ul>
+<h2>目的</h2>
+<p>静的シンボル索引から生成された初期シンボルページです。</p>
+<h2>シグネチャまたは形状</h2>
+<ul>
+<li>シグネチャ: <code>typedef struct PLpgSQL_var</code></li>
+</ul>
+<h2>入力と出力</h2>
+<p>まだ解析していません。</p>
+<h2>前提条件と不変条件</h2>
+<p>まだ解析していません。</p>
+<h2>アルゴリズムまたは振る舞い</h2>
+<p>まだ解析していません。</p>
+<h2>呼び出し元と呼び出し先</h2>
+<ul>
+<li>呼び出し元: なし</li>
+<li>呼び出し先: なし</li>
+<li>呼び出し元サイト: なし</li>
+<li>呼び出しサイト: なし</li>
+</ul>
+<h2>関連データ構造</h2>
+<p><code>Datum</code>, <a class="wiki-source-link" href="../../source/src/pl/plpgsql/src/plpgsql.h.html#L62" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/pl/plpgsql/src/plpgsql.h.html&quot;}, '*');"><code>PLpgSQL_datum_type</code></a>, <code>PLpgSQL_expr</code>, <a class="wiki-source-link" href="../../source/src/pl/plpgsql/src/plpgsql.h.html#L74" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/pl/plpgsql/src/plpgsql.h.html&quot;}, '*');"><code>PLpgSQL_promise_type</code></a>, <a class="wiki-source-link" href="../../source/src/pl/plpgsql/src/plpgsql.h.html#L210" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__pl__plpgsql__src__plpgsql_h__PLpgSQL_type.html&quot;}, '*');"><code>PLpgSQL_type</code></a>, <a class="wiki-source-link" href="../../source/src/pl/plpgsql/src/plpgsql.h.html#L310" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__pl__plpgsql__src__plpgsql_h__PLpgSQL_variable.html&quot;}, '*');"><code>PLpgSQL_variable</code></a>, <code>variable</code>, <a class="wiki-source-link" href="../../source/src/bin/pgbench/pgbench.c.html#L334" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__bin__pgbench__pgbench_c__Variables.html&quot;}, '*');"><code>Variables</code></a></p>
+<h2>ソース抜粋</h2>
+<p>~~~c typedef struct <a class="wiki-source-link" href="../../source/src/pl/plpgsql/src/plpgsql.h.html#L332" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__pl__plpgsql__src__plpgsql_h__PLpgSQL_var.html&quot;}, '*');">PLpgSQL_var</a> { <a class="wiki-source-link" href="../../source/src/pl/plpgsql/src/plpgsql.h.html#L62" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/pl/plpgsql/src/plpgsql.h.html&quot;}, '*');">PLpgSQL_datum_type</a> dtype; int			dno; char	   *refname; int			lineno; bool		isconst; bool		notnull; PLpgSQL_expr *default_val; /* end of <a class="wiki-source-link" href="../../source/src/pl/plpgsql/src/plpgsql.h.html#L310" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__pl__plpgsql__src__plpgsql_h__PLpgSQL_variable.html&quot;}, '*');">PLpgSQL_variable</a> fields */</p>
+<p><a class="wiki-source-link" href="../../source/src/pl/plpgsql/src/plpgsql.h.html#L210" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__pl__plpgsql__src__plpgsql_h__PLpgSQL_type.html&quot;}, '*');">PLpgSQL_type</a> *datatype;</p>
+<p>/*</p>
+<ul>
+<li><a class="wiki-source-link" href="../../source/src/bin/pgbench/pgbench.c.html#L334" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__bin__pgbench__pgbench_c__Variables.html&quot;}, '*');">Variables</a> declared as CURSOR FOR &lt;query&gt; are mostly like ordinary</li>
+<li>scalar variables of type refcursor, but they have these additional</li>
+<li>properties:</li>
+<p>*/ PLpgSQL_expr *cursor_explicit_expr; int			cursor_explicit_argrow; int			cursor_options;</p>
+</ul>
+<p>/* Fields below here can change at runtime */</p>
+<p>Datum		<a class="wiki-source-link" href="../../source/src/interfaces/ecpg/compatlib/informix.c.html#L687" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/ecpg/compatlib/informix.c.html&quot;}, '*');">value</a>; bool		isnull; bool		freeval;</p>
+<p>/*</p>
+<ul>
+<li>The promise field <a class="wiki-source-link" href="../../source/src/backend/access/transam/twophase.c.html#L1011" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/access/transam/twophase.c.html&quot;}, '*');">records</a> which &quot;promised&quot; <a class="wiki-source-link" href="../../source/src/interfaces/ecpg/compatlib/informix.c.html#L687" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/ecpg/compatlib/informix.c.html&quot;}, '*');">value</a> to assign if the</li>
+<li>promise must be honored.  If it&#x27;s a normal variable, or the promise has</li>
+<li>been fulfilled, this <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> PLPGSQL_PROMISE_NONE.</li>
+<p>*/ <a class="wiki-source-link" href="../../source/src/pl/plpgsql/src/plpgsql.h.html#L74" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/pl/plpgsql/src/plpgsql.h.html&quot;}, '*');">PLpgSQL_promise_type</a> promise; } <a class="wiki-source-link" href="../../source/src/pl/plpgsql/src/plpgsql.h.html#L332" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__pl__plpgsql__src__plpgsql_h__PLpgSQL_var.html&quot;}, '*');">PLpgSQL_var</a>; ~~~</p>
+</ul>
+<h2>失敗モードと境界条件</h2>
+<p>まだ解析していません。</p>
+<h2>保守担当者向けメモ</h2>
+<ul>
+<li>後続フェーズで、ソース本文の文脈と caller/callee 情報を使ってこのページを強化する。</li>
+</ul><script>
+(function() {
+  function notifyParent() {
+    if (parent === window) return;
+    parent.postMessage({type: "frame-location", frame: window.name || "", href: window.location.href}, "*");
+  }
+  document.addEventListener("click", function(event) {
+    const link = event.target.closest("a[data-panel]");
+    if (!link || parent === window) return;
+    parent.postMessage({type: "source-link", panel: link.dataset.panel}, "*");
+  });
+  window.addEventListener("load", notifyParent);
+  window.addEventListener("hashchange", notifyParent);
+})();
+</script></body></html>

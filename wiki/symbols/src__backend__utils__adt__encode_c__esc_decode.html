@@ -1,0 +1,66 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>symbols/src__backend__utils__adt__encode_c__esc_decode.md</title><link rel="stylesheet" href="../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../source/src/backend/utils/adt/encode.c.html#L716" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__utils__adt__encode_c__esc_decode.html&quot;}, '*');">esc_decode</a></h1>
+<h2>定義</h2>
+<ul>
+<li>種別: <code>function</code></li>
+<li>定義箇所: <code>src/backend/utils/adt/encode.c:716</code></li>
+<li>所属モジュール: <a class="wiki-entity-link" href="../modules/src__backend__utils__adt.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/modules/src__backend__utils__adt.html&quot;, &quot;source&quot;: &quot;source/src/backend/utils/adt/acl.c.html&quot;}, '*');"><code>module:src/backend/utils/adt</code></a></li>
+</ul>
+<h2>目的</h2>
+<p>静的シンボル索引から生成された初期シンボルページです。</p>
+<h2>シグネチャまたは形状</h2>
+<ul>
+<li>シグネチャ: <code>static uint64 esc_decode(const char *src, size_t srclen, char *dst)</code></li>
+</ul>
+<h2>入力と出力</h2>
+<ul>
+<li>引数: <code>const char *src</code>, <code>size_t srclen</code>, <code>char *dst</code></li>
+<li>戻り値: <code>uint64</code></li>
+</ul>
+<h2>前提条件と不変条件</h2>
+<p>まだ解析していません。</p>
+<h2>アルゴリズムまたは振る舞い</h2>
+<ul>
+<li>複雑度: <code>high</code> (score 16)</li>
+</ul>
+<p>まだ解析していません。</p>
+<h2>呼び出し元と呼び出し先</h2>
+<ul>
+<li>呼び出し元: なし</li>
+<li>呼び出し先: <code>errcode</code>, <code>errmsg</code></li>
+<li>呼び出し元サイト: なし</li>
+<li>呼び出しサイト: <code>VAL</code> at <code>src/backend/utils/adt/encode.c:734:10</code> (macro), <code>VAL</code> at <code>src/backend/utils/adt/encode.c:736:11</code> (macro), <code>VAL</code> at <code>src/backend/utils/adt/encode.c:738:18</code> (macro), <a class="wiki-source-link" href="../../source/src/include/utils/elog.h.html#L166" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/utils/elog.h.html&quot;}, '*');"><code>ereport</code></a> at <code>src/backend/utils/adt/encode.c:753:4</code> (unresolved), <code>errcode</code> at <code>src/backend/utils/adt/encode.c:754:7</code> (direct, confidence=high, resolved=<a class="wiki-entity-link" href="src__backend__utils__error__elog_c__errcode.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__utils__error__elog_c__errcode.html&quot;, &quot;source&quot;: &quot;source/src/backend/utils/error/elog.c.html#L874&quot;}, '*');"><code>symbol:src/backend/utils/error/elog.c#errcode</code></a>), <code>errmsg</code> at <code>src/backend/utils/adt/encode.c:755:7</code> (direct, confidence=high, resolved=<a class="wiki-entity-link" href="src__backend__utils__error__elog_c__errmsg.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__utils__error__elog_c__errmsg.html&quot;, &quot;source&quot;: &quot;source/src/backend/utils/error/elog.c.html#L1093&quot;}, '*');"><code>symbol:src/backend/utils/error/elog.c#errmsg</code></a>)</li>
+</ul>
+<h2>関連データ構造</h2>
+<p><a class="wiki-source-link" href="../../source/src/include/c.h.html#L795" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/c.h.html&quot;}, '*');"><code>bytea</code></a>, <code>uint64</code></p>
+<h2>ソース抜粋</h2>
+<p>~~~c static uint64 <a class="wiki-source-link" href="../../source/src/backend/utils/adt/encode.c.html#L716" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__utils__adt__encode_c__esc_decode.html&quot;}, '*');">esc_decode</a>(const char *src, size_t srclen, char *dst) { const char *end = src + srclen; char	   *rp = dst; uint64		len = 0;</p>
+<p>while (src &lt; end) { if (src[0] != &#x27;\\&#x27;) *rp++ = *src++; else if (src + 3 &lt; end &amp;&amp; (src[1] &gt;= &#x27;0&#x27; &amp;&amp; src[1] &lt;= &#x27;3&#x27;) &amp;&amp; (src[2] &gt;= &#x27;0&#x27; &amp;&amp; src[2] &lt;= &#x27;7&#x27;) &amp;&amp; (src[3] &gt;= &#x27;0&#x27; &amp;&amp; src[3] &lt;= &#x27;7&#x27;)) { int			val;</p>
+<p>val = VAL(src[1]); val &lt;&lt;= 3; val += VAL(src[2]); val &lt;&lt;= 3; *rp++ = val + VAL(src[3]); src += 4; } else if (src + 1 &lt; end &amp;&amp; (src[1] == &#x27;\\&#x27;)) { *rp++ = &#x27;\\&#x27;; src += 2; } else { /*</p>
+<ul>
+<li>One backslash, not followed by ### valid octal. Should never</li>
+<li>get here, since <a class="wiki-source-link" href="../../source/src/backend/utils/adt/encode.c.html#L785" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__utils__adt__encode_c__esc_dec_len.html&quot;}, '*');">esc_dec_len</a> does same check.</li>
+<p>*/ <a class="wiki-source-link" href="../../source/src/include/utils/elog.h.html#L166" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/utils/elog.h.html&quot;}, '*');">ereport</a>(ERROR, (errcode(ERRCODE_INVALID_TEXT_REPRESENTATION), errmsg(&quot;invalid input syntax for type %s&quot;, &quot;<a class="wiki-source-link" href="../../source/src/include/c.h.html#L795" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/c.h.html&quot;}, '*');">bytea</a>&quot;))); }</p>
+</ul>
+<p>len++; }</p>
+<p>return len; } ~~~</p>
+<h2>失敗モードと境界条件</h2>
+<p>まだ解析していません。</p>
+<h2>保守担当者向けメモ</h2>
+<ul>
+<li>後続フェーズで、ソース本文の文脈と caller/callee 情報を使ってこのページを強化する。</li>
+</ul><script>
+(function() {
+  function notifyParent() {
+    if (parent === window) return;
+    parent.postMessage({type: "frame-location", frame: window.name || "", href: window.location.href}, "*");
+  }
+  document.addEventListener("click", function(event) {
+    const link = event.target.closest("a[data-panel]");
+    if (!link || parent === window) return;
+    parent.postMessage({type: "source-link", panel: link.dataset.panel}, "*");
+  });
+  window.addEventListener("load", notifyParent);
+  window.addEventListener("hashchange", notifyParent);
+})();
+</script></body></html>

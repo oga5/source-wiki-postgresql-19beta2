@@ -1,0 +1,69 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>modules/src__interfaces__libpq-oauth.md</title><link rel="stylesheet" href="../../styles.css"></head><body><h1>src/interfaces/libpq-oauth</h1>
+<h2>システム内での役割</h2>
+<p><code>src/interfaces/libpq-oauth</code> には 5 個の索引済みソースファイルがあります。この初期モジュールページはディレクトリ境界に基づいています。</p>
+<h2>責務</h2>
+<ul>
+<li>このディレクトリに属するソースファイルを集約する。</li>
+<li>より深い LLM 合成の前段として、モジュール単位の入口を提供する。</li>
+</ul>
+<h2>このモジュールのファイル</h2>
+<ul>
+<li><a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/oauth-curl.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/oauth-curl.c.html&quot;}, '*');"><code>src/interfaces/libpq-oauth/oauth-curl.c</code></a></li>
+<li><a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/oauth-curl.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/oauth-curl.h.html&quot;}, '*');"><code>src/interfaces/libpq-oauth/oauth-curl.h</code></a></li>
+<li><a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/oauth-utils.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/oauth-utils.c.html&quot;}, '*');"><code>src/interfaces/libpq-oauth/oauth-utils.c</code></a></li>
+<li><a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/oauth-utils.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/oauth-utils.h.html&quot;}, '*');"><code>src/interfaces/libpq-oauth/oauth-utils.h</code></a></li>
+<li><a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');"><code>src/interfaces/libpq-oauth/test-oauth-curl.c</code></a></li>
+</ul>
+<h2>主要なデータ構造</h2>
+<ul>
+<li><code>provider</code></li>
+<li><a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/oauth-curl.c.html#L128" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__interfaces__libpq-oauth__oauth-curl_c__device_authz.html&quot;}, '*');"><code>device_authz</code></a></li>
+<li><a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/oauth-curl.c.html#L161" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__interfaces__libpq-oauth__oauth-curl_c__token_error.html&quot;}, '*');"><code>token_error</code></a></li>
+<li><code>token</code></li>
+<li><a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/oauth-curl.c.html#L206" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__interfaces__libpq-oauth__oauth-curl_c__OAuthStep.html&quot;}, '*');"><code>OAuthStep</code></a></li>
+<li><a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/oauth-curl.c.html#L220" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__interfaces__libpq-oauth__oauth-curl_c__async_ctx.html&quot;}, '*');"><code>async_ctx</code></a></li>
+<li><a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/oauth-curl.c.html#L479" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__interfaces__libpq-oauth__oauth-curl_c__json_field.html&quot;}, '*');"><code>json_field</code></a></li>
+<li><a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/oauth-curl.c.html#L500" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__interfaces__libpq-oauth__oauth-curl_c__oauth_parse.html&quot;}, '*');"><code>oauth_parse</code></a></li>
+<li><code>libpq_gettext_func</code></li>
+<li><code>PGTernaryBool</code></li>
+</ul>
+<h2>主なフロー</h2>
+<p>初期モジュールページでは、まだエンドツーエンドのフローを推論しません。</p>
+<h2>外部依存</h2>
+<ul>
+<li><a class="wiki-source-link" href="../../source/src/include/postgres_fe.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/postgres_fe.h.html&quot;}, '*');"><code>postgres_fe.h</code></a></li>
+<li><a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/oauth-utils.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/oauth-utils.h.html&quot;}, '*');"><code>oauth-utils.h</code></a></li>
+<li><a class="wiki-source-link" href="../../source/src/interfaces/libpq/libpq-fe.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq/libpq-fe.h.html&quot;}, '*');"><code>libpq-fe.h</code></a></li>
+<li><code>common/jsonapi.h</code></li>
+<li><code>mb/pg_wchar.h</code></li>
+<li><a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/oauth-curl.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/oauth-curl.h.html&quot;}, '*');"><code>oauth-curl.h</code></a></li>
+<li><a class="wiki-source-link" href="../../source/src/interfaces/libpq/fe-auth-oauth.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq/fe-auth-oauth.h.html&quot;}, '*');"><code>fe-auth-oauth.h</code></a></li>
+<li><a class="wiki-source-link" href="../../source/src/interfaces/libpq/libpq-int.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq/libpq-int.h.html&quot;}, '*');"><code>libpq-int.h</code></a></li>
+<li><a class="wiki-source-link" href="../../source/src/interfaces/libpq/oauth-debug.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq/oauth-debug.h.html&quot;}, '*');"><code>oauth-debug.h</code></a></li>
+<li><a class="wiki-source-link" href="../../source/src/interfaces/libpq/pqexpbuffer.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq/pqexpbuffer.h.html&quot;}, '*');"><code>pqexpbuffer.h</code></a></li>
+</ul>
+<h2>内部構成</h2>
+<ul>
+<li>子モジュール数: 0</li>
+</ul>
+<h2>推奨読書順</h2>
+<p>1. <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/oauth-utils.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/oauth-utils.h.html&quot;}, '*');"><code>src/interfaces/libpq-oauth/oauth-utils.h</code></a> 2. <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/oauth-curl.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/oauth-curl.h.html&quot;}, '*');"><code>src/interfaces/libpq-oauth/oauth-curl.h</code></a> 3. <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/oauth-curl.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/oauth-curl.c.html&quot;}, '*');"><code>src/interfaces/libpq-oauth/oauth-curl.c</code></a> 4. <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');"><code>src/interfaces/libpq-oauth/test-oauth-curl.c</code></a> 5. <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/oauth-utils.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/oauth-utils.c.html&quot;}, '*');"><code>src/interfaces/libpq-oauth/oauth-utils.c</code></a></p>
+<h2>未解決の問い</h2>
+<ul>
+<li>LLM ベースのモジュール合成を追加した後で、責務とフローを精緻化する。</li>
+</ul><script>
+(function() {
+  function notifyParent() {
+    if (parent === window) return;
+    parent.postMessage({type: "frame-location", frame: window.name || "", href: window.location.href}, "*");
+  }
+  document.addEventListener("click", function(event) {
+    const link = event.target.closest("a[data-panel]");
+    if (!link || parent === window) return;
+    parent.postMessage({type: "source-link", panel: link.dataset.panel}, "*");
+  });
+  window.addEventListener("load", notifyParent);
+  window.addEventListener("hashchange", notifyParent);
+})();
+</script></body></html>

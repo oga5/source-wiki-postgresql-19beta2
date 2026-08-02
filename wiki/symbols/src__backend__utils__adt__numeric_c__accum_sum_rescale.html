@@ -1,0 +1,81 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>symbols/src__backend__utils__adt__numeric_c__accum_sum_rescale.md</title><link rel="stylesheet" href="../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../source/src/backend/utils/adt/numeric.c.html#L12001" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__utils__adt__numeric_c__accum_sum_rescale.html&quot;}, '*');">accum_sum_rescale</a></h1>
+<h2>定義</h2>
+<ul>
+<li>種別: <code>function</code></li>
+<li>定義箇所: <code>src/backend/utils/adt/numeric.c:12001</code></li>
+<li>所属モジュール: <a class="wiki-entity-link" href="../modules/src__backend__utils__adt.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/modules/src__backend__utils__adt.html&quot;, &quot;source&quot;: &quot;source/src/backend/utils/adt/acl.c.html&quot;}, '*');"><code>module:src/backend/utils/adt</code></a></li>
+</ul>
+<h2>目的</h2>
+<p>静的シンボル索引から生成された初期シンボルページです。</p>
+<h2>シグネチャまたは形状</h2>
+<ul>
+<li>シグネチャ: <code>static void accum_sum_rescale(NumericSumAccum *accum, const NumericVar *val)</code></li>
+</ul>
+<h2>入力と出力</h2>
+<ul>
+<li>引数: <code>NumericSumAccum *accum</code>, <code>const NumericVar *val</code></li>
+<li>戻り値: <code>void</code></li>
+</ul>
+<h2>前提条件と不変条件</h2>
+<p>まだ解析していません。</p>
+<h2>アルゴリズムまたは振る舞い</h2>
+<ul>
+<li>複雑度: <code>high</code> (score 20)</li>
+</ul>
+<p>まだ解析していません。</p>
+<h2>呼び出し元と呼び出し先</h2>
+<ul>
+<li>呼び出し元: <a class="wiki-source-link" href="../../source/src/backend/utils/adt/numeric.c.html#L11880" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__utils__adt__numeric_c__accum_sum_add.html&quot;}, '*');"><code>accum_sum_add</code></a></li>
+<li>呼び出し先: なし</li>
+<li>呼び出し元サイト: <a class="wiki-source-link" href="../../source/src/backend/utils/adt/numeric.c.html#L11880" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__utils__adt__numeric_c__accum_sum_add.html&quot;}, '*');"><code>accum_sum_add</code></a> at <code>src/backend/utils/adt/numeric.c:11903:2</code> (direct, confidence=high, resolved=<a class="wiki-entity-link" href="src__backend__utils__adt__numeric_c__accum_sum_rescale.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__utils__adt__numeric_c__accum_sum_rescale.html&quot;, &quot;source&quot;: &quot;source/src/backend/utils/adt/numeric.c.html#L12001&quot;}, '*');"><code>symbol:src/backend/utils/adt/numeric.c#accum_sum_rescale</code></a>)</li>
+<li>呼び出しサイト: <code>palloc0</code> at <code>src/backend/utils/adt/numeric.c:12055:20</code> (unresolved, confidence=low), <code>palloc0</code> at <code>src/backend/utils/adt/numeric.c:12056:20</code> (unresolved, confidence=low), <code>memcpy</code> at <code>src/backend/utils/adt/numeric.c:12060:4</code> (unresolved), <code>pfree</code> at <code>src/backend/utils/adt/numeric.c:12062:4</code> (unresolved, confidence=low), <code>memcpy</code> at <code>src/backend/utils/adt/numeric.c:12064:4</code> (unresolved), <code>pfree</code> at <code>src/backend/utils/adt/numeric.c:12066:4</code> (unresolved, confidence=low), <a class="wiki-source-link" href="../../source/src/include/c.h.html#L950" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/c.h.html&quot;}, '*');"><code>Assert</code></a> at <code>src/backend/utils/adt/numeric.c:12075:3</code> (unresolved)</li>
+</ul>
+<h2>関連データ構造</h2>
+<p><code>int32</code>, <a class="wiki-source-link" href="../../source/src/backend/utils/adt/numeric.c.html#L381" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__utils__adt__numeric_c__NumericSumAccum.html&quot;}, '*');"><code>NumericSumAccum</code></a>, <a class="wiki-source-link" href="../../source/src/backend/utils/adt/numeric.c.html#L314" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__utils__adt__numeric_c__NumericVar.html&quot;}, '*');"><code>NumericVar</code></a></p>
+<h2>ソース抜粋</h2>
+<p>~~~c static void <a class="wiki-source-link" href="../../source/src/backend/utils/adt/numeric.c.html#L12001" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__utils__adt__numeric_c__accum_sum_rescale.html&quot;}, '*');">accum_sum_rescale</a>(<a class="wiki-source-link" href="../../source/src/backend/utils/adt/numeric.c.html#L381" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__utils__adt__numeric_c__NumericSumAccum.html&quot;}, '*');">NumericSumAccum</a> *accum, const <a class="wiki-source-link" href="../../source/src/backend/utils/adt/numeric.c.html#L314" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__utils__adt__numeric_c__NumericVar.html&quot;}, '*');">NumericVar</a> *val) { int			old_weight = accum-&gt;weight; int			old_ndigits = accum-&gt;ndigits; int			accum_ndigits; int			accum_weight; int			accum_rscale; int			val_rscale;</p>
+<p>accum_weight = old_weight; accum_ndigits = old_ndigits;</p>
+<p>/*</p>
+<ul>
+<li>Does the new <a class="wiki-source-link" href="../../source/src/interfaces/ecpg/compatlib/informix.c.html#L687" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/ecpg/compatlib/informix.c.html&quot;}, '*');">value</a> have a larger weight? If so, enlarge the buffers,</li>
+<li>and shift the existing <a class="wiki-source-link" href="../../source/src/interfaces/ecpg/compatlib/informix.c.html#L687" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/ecpg/compatlib/informix.c.html&quot;}, '*');">value</a> to the new weight, by adding leading</li>
+<li>zeros.</li>
+<p>*</p>
+<li>We enforce that the accumulator always has a weight one larger than</li>
+<li>needed for the inputs, so that we have space for an extra digit at the</li>
+<li><a class="wiki-source-link" href="../../source/src/common/hashfn.c.html#L116" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/common/hashfn.c.html&quot;}, '*');">final</a> carry-propagation phase, if necessary.</li>
+<p>*/ if (val-&gt;weight &gt;= accum_weight) { accum_weight = val-&gt;weight + 1; accum_ndigits = accum_ndigits + (accum_weight - old_weight); }</p>
+</ul>
+<p>/*</p>
+<ul>
+<li>Even though the new <a class="wiki-source-link" href="../../source/src/interfaces/ecpg/compatlib/informix.c.html#L687" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/ecpg/compatlib/informix.c.html&quot;}, '*');">value</a> <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> small, we might&#x27;ve used up the space</li>
+<li>reserved for the carry digit in the last call to <a class="wiki-source-link" href="../../source/src/backend/utils/adt/numeric.c.html#L11928" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__utils__adt__numeric_c__accum_sum_carry.html&quot;}, '*');">accum_sum_carry</a>().  If</li>
+<li>so, enlarge to make room for another one.</li>
+<p>*/ else if (!accum-&gt;have_carry_space) { accum_weight++; accum_ndigits++; }</p>
+</ul>
+<p>/* Is the new <a class="wiki-source-link" href="../../source/src/interfaces/ecpg/compatlib/informix.c.html#L687" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/ecpg/compatlib/informix.c.html&quot;}, '*');">value</a> wider on the right side? */ accum_rscale = accum_ndigits - accum_weight - 1; val_rscale = val-&gt;ndigits - val-&gt;weight - 1; if (val_rscale &gt; accum_rscale) accum_ndigits = accum_ndigits + (val_rscale - accum_rscale);</p>
+<p>if (accum_ndigits != old_ndigits || accum_weight != old_weight) { int32	   *new_pos_digits; int32	   *new_neg_digits; int			weightdiff;</p>
+<p>weightdiff = accum_weight - old_weight;</p>
+<p>new_pos_digits = palloc0(accum_ndigits * sizeof(int32)); new_neg_digits = palloc0(accum_ndigits * sizeof(int32));</p>
+<p>if (accum-&gt;pos_digits) { memcpy(&amp;new_pos_digits[weightdiff], accum-&gt;pos_digits, ~~~</p>
+<h2>失敗モードと境界条件</h2>
+<p>まだ解析していません。</p>
+<h2>保守担当者向けメモ</h2>
+<ul>
+<li>後続フェーズで、ソース本文の文脈と caller/callee 情報を使ってこのページを強化する。</li>
+</ul><script>
+(function() {
+  function notifyParent() {
+    if (parent === window) return;
+    parent.postMessage({type: "frame-location", frame: window.name || "", href: window.location.href}, "*");
+  }
+  document.addEventListener("click", function(event) {
+    const link = event.target.closest("a[data-panel]");
+    if (!link || parent === window) return;
+    parent.postMessage({type: "source-link", panel: link.dataset.panel}, "*");
+  });
+  window.addEventListener("load", notifyParent);
+  window.addEventListener("hashchange", notifyParent);
+})();
+</script></body></html>

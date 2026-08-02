@@ -1,0 +1,67 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>symbols/src__backend__storage__smgr__bulk_write_c__smgr_bulk_start_smgr.md</title><link rel="stylesheet" href="../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../source/src/backend/storage/smgr/bulk_write.c.html#L99" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__storage__smgr__bulk_write_c__smgr_bulk_start_smgr.html&quot;}, '*');">smgr_bulk_start_smgr</a></h1>
+<h2>定義</h2>
+<ul>
+<li>種別: <code>function</code></li>
+<li>定義箇所: <code>src/backend/storage/smgr/bulk_write.c:99</code></li>
+<li>所属モジュール: <a class="wiki-entity-link" href="../modules/src__backend__storage__smgr.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/modules/src__backend__storage__smgr.html&quot;, &quot;source&quot;: &quot;source/src/backend/storage/smgr/bulk_write.c.html&quot;}, '*');"><code>module:src/backend/storage/smgr</code></a></li>
+</ul>
+<h2>目的</h2>
+<p>静的シンボル索引から生成された初期シンボルページです。</p>
+<h2>シグネチャまたは形状</h2>
+<ul>
+<li>シグネチャ: <code>BulkWriteState * smgr_bulk_start_smgr(SMgrRelation smgr, ForkNumber forknum, bool use_wal)</code></li>
+</ul>
+<h2>入力と出力</h2>
+<ul>
+<li>引数: <code>SMgrRelation smgr</code>, <code>ForkNumber forknum</code>, <code>bool use_wal</code></li>
+<li>戻り値: <code>BulkWriteState *</code></li>
+</ul>
+<h2>前提条件と不変条件</h2>
+<p>まだ解析していません。</p>
+<h2>アルゴリズムまたは振る舞い</h2>
+<ul>
+<li>複雑度: <code>medium</code> (score 7)</li>
+</ul>
+<p>まだ解析していません。</p>
+<h2>呼び出し元と呼び出し先</h2>
+<ul>
+<li>呼び出し元: <a class="wiki-source-link" href="../../source/src/backend/catalog/storage.c.html#L477" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__catalog__storage_c__RelationCopyStorage.html&quot;}, '*');"><code>RelationCopyStorage</code></a>, <a class="wiki-source-link" href="../../source/src/backend/storage/smgr/bulk_write.c.html#L86" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__storage__smgr__bulk_write_c__smgr_bulk_start_rel.html&quot;}, '*');"><code>smgr_bulk_start_rel</code></a></li>
+<li>呼び出し先: <a class="wiki-source-link" href="../../source/src/backend/access/transam/xlog.c.html#L6938" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__access__transam__xlog_c__GetRedoRecPtr.html&quot;}, '*');"><code>GetRedoRecPtr</code></a>, <a class="wiki-source-link" href="../../source/src/backend/storage/smgr/smgr.c.html#L818" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__storage__smgr__smgr_c__smgrnblocks.html&quot;}, '*');"><code>smgrnblocks</code></a></li>
+<li>呼び出し元サイト: <a class="wiki-source-link" href="../../source/src/backend/catalog/storage.c.html#L477" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__catalog__storage_c__RelationCopyStorage.html&quot;}, '*');"><code>RelationCopyStorage</code></a> at <code>src/backend/catalog/storage.c:504:14</code> (direct, confidence=high, resolved=<a class="wiki-entity-link" href="src__backend__storage__smgr__bulk_write_c__smgr_bulk_start_smgr.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__storage__smgr__bulk_write_c__smgr_bulk_start_smgr.html&quot;, &quot;source&quot;: &quot;source/src/backend/storage/smgr/bulk_write.c.html#L99&quot;}, '*');"><code>symbol:src/backend/storage/smgr/bulk_write.c#smgr_bulk_start_smgr</code></a>), <a class="wiki-source-link" href="../../source/src/backend/storage/smgr/bulk_write.c.html#L86" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__storage__smgr__bulk_write_c__smgr_bulk_start_rel.html&quot;}, '*');"><code>smgr_bulk_start_rel</code></a> at <code>src/backend/storage/smgr/bulk_write.c:89:9</code> (direct, confidence=high, resolved=<a class="wiki-entity-link" href="src__backend__storage__smgr__bulk_write_c__smgr_bulk_start_smgr.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__storage__smgr__bulk_write_c__smgr_bulk_start_smgr.html&quot;, &quot;source&quot;: &quot;source/src/backend/storage/smgr/bulk_write.c.html#L99&quot;}, '*');"><code>symbol:src/backend/storage/smgr/bulk_write.c#smgr_bulk_start_smgr</code></a>)</li>
+<li>呼び出しサイト: <code>palloc_object</code> at <code>src/backend/storage/smgr/bulk_write.c:104:10</code> (unresolved), <a class="wiki-source-link" href="../../source/src/backend/storage/smgr/smgr.c.html#L818" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__storage__smgr__smgr_c__smgrnblocks.html&quot;}, '*');"><code>smgrnblocks</code></a> at <code>src/backend/storage/smgr/bulk_write.c:110:19</code> (direct, confidence=high, resolved=<a class="wiki-entity-link" href="src__backend__storage__smgr__smgr_c__smgrnblocks.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__storage__smgr__smgr_c__smgrnblocks.html&quot;, &quot;source&quot;: &quot;source/src/backend/storage/smgr/smgr.c.html#L818&quot;}, '*');"><code>symbol:src/backend/storage/smgr/smgr.c#smgrnblocks</code></a>), <a class="wiki-source-link" href="../../source/src/backend/access/transam/xlog.c.html#L6938" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__access__transam__xlog_c__GetRedoRecPtr.html&quot;}, '*');"><code>GetRedoRecPtr</code></a> at <code>src/backend/storage/smgr/bulk_write.c:112:28</code> (direct, confidence=high, resolved=<a class="wiki-entity-link" href="src__backend__access__transam__xlog_c__GetRedoRecPtr.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__access__transam__xlog_c__GetRedoRecPtr.html&quot;, &quot;source&quot;: &quot;source/src/backend/access/transam/xlog.c.html#L6938&quot;}, '*');"><code>symbol:src/backend/access/transam/xlog.c#GetRedoRecPtr</code></a>)</li>
+</ul>
+<h2>関連データ構造</h2>
+<p><code>BulkWriteState</code>, <a class="wiki-source-link" href="../../source/src/include/common/relpath.h.html#L56" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__common__relpath_h__ForkNumber.html&quot;}, '*');"><code>ForkNumber</code></a>, <code>SMgrRelation</code>, <code>state</code></p>
+<h2>ソース抜粋</h2>
+<p>~~~c BulkWriteState * <a class="wiki-source-link" href="../../source/src/backend/storage/smgr/bulk_write.c.html#L99" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__storage__smgr__bulk_write_c__smgr_bulk_start_smgr.html&quot;}, '*');">smgr_bulk_start_smgr</a>(SMgrRelation smgr, <a class="wiki-source-link" href="../../source/src/include/common/relpath.h.html#L56" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__common__relpath_h__ForkNumber.html&quot;}, '*');">ForkNumber</a> forknum, bool use_wal) { BulkWriteState *state;</p>
+<p>state = palloc_object(BulkWriteState); state-&gt;smgr = smgr; state-&gt;forknum = forknum; state-&gt;use_wal = use_wal;</p>
+<p>state-&gt;npending = 0; state-&gt;relsize = <a class="wiki-source-link" href="../../source/src/backend/storage/smgr/smgr.c.html#L818" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__storage__smgr__smgr_c__smgrnblocks.html&quot;}, '*');">smgrnblocks</a>(smgr, forknum);</p>
+<p>state-&gt;start_RedoRecPtr = <a class="wiki-source-link" href="../../source/src/backend/access/transam/xlog.c.html#L6938" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__access__transam__xlog_c__GetRedoRecPtr.html&quot;}, '*');">GetRedoRecPtr</a>();</p>
+<p>/*</p>
+<ul>
+<li>Remember the memory context.  We will use it to allocate all the</li>
+<li>buffers later.</li>
+<p>*/ state-&gt;memcxt = <a class="wiki-source-link" href="../../source/src/backend/utils/mmgr/mcxt.c.html#L161" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/utils/mmgr/mcxt.c.html&quot;}, '*');">CurrentMemoryContext</a>;</p>
+</ul>
+<p>return state; } ~~~</p>
+<h2>失敗モードと境界条件</h2>
+<p>まだ解析していません。</p>
+<h2>保守担当者向けメモ</h2>
+<ul>
+<li>後続フェーズで、ソース本文の文脈と caller/callee 情報を使ってこのページを強化する。</li>
+</ul><script>
+(function() {
+  function notifyParent() {
+    if (parent === window) return;
+    parent.postMessage({type: "frame-location", frame: window.name || "", href: window.location.href}, "*");
+  }
+  document.addEventListener("click", function(event) {
+    const link = event.target.closest("a[data-panel]");
+    if (!link || parent === window) return;
+    parent.postMessage({type: "source-link", panel: link.dataset.panel}, "*");
+  });
+  window.addEventListener("load", notifyParent);
+  window.addEventListener("hashchange", notifyParent);
+})();
+</script></body></html>

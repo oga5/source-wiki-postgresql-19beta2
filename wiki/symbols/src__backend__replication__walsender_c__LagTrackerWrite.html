@@ -1,0 +1,77 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>symbols/src__backend__replication__walsender_c__LagTrackerWrite.md</title><link rel="stylesheet" href="../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../source/src/backend/replication/walsender.c.html#L4462" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__replication__walsender_c__LagTrackerWrite.html&quot;}, '*');">LagTrackerWrite</a></h1>
+<h2>定義</h2>
+<ul>
+<li>種別: <code>function</code></li>
+<li>定義箇所: <code>src/backend/replication/walsender.c:4462</code></li>
+<li>所属モジュール: <a class="wiki-entity-link" href="../modules/src__backend__replication.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/modules/src__backend__replication.html&quot;, &quot;source&quot;: &quot;source/src/backend/replication/slot.c.html&quot;}, '*');"><code>module:src/backend/replication</code></a></li>
+</ul>
+<h2>目的</h2>
+<p>静的シンボル索引から生成された初期シンボルページです。</p>
+<h2>シグネチャまたは形状</h2>
+<ul>
+<li>シグネチャ: <code>static void LagTrackerWrite(XLogRecPtr lsn, TimestampTz local_flush_time)</code></li>
+</ul>
+<h2>入力と出力</h2>
+<ul>
+<li>引数: <code>XLogRecPtr lsn</code>, <code>TimestampTz local_flush_time</code></li>
+<li>戻り値: <code>void</code></li>
+</ul>
+<h2>前提条件と不変条件</h2>
+<p>まだ解析していません。</p>
+<h2>アルゴリズムまたは振る舞い</h2>
+<ul>
+<li>複雑度: <code>high</code> (score 13)</li>
+</ul>
+<p>まだ解析していません。</p>
+<h2>呼び出し元と呼び出し先</h2>
+<ul>
+<li>呼び出し元: <a class="wiki-source-link" href="../../source/src/backend/replication/walsender.c.html#L1757" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__replication__walsender_c__WalSndUpdateProgress.html&quot;}, '*');"><code>WalSndUpdateProgress</code></a>, <a class="wiki-source-link" href="../../source/src/backend/replication/walsender.c.html#L3343" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__replication__walsender_c__XLogSendPhysical.html&quot;}, '*');"><code>XLogSendPhysical</code></a></li>
+<li>呼び出し先: なし</li>
+<li>呼び出し元サイト: <a class="wiki-source-link" href="../../source/src/backend/replication/walsender.c.html#L1757" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__replication__walsender_c__WalSndUpdateProgress.html&quot;}, '*');"><code>WalSndUpdateProgress</code></a> at <code>src/backend/replication/walsender.c:1778:3</code> (direct, confidence=high, resolved=<a class="wiki-entity-link" href="src__backend__replication__walsender_c__LagTrackerWrite.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__replication__walsender_c__LagTrackerWrite.html&quot;, &quot;source&quot;: &quot;source/src/backend/replication/walsender.c.html#L4462&quot;}, '*');"><code>symbol:src/backend/replication/walsender.c#LagTrackerWrite</code></a>), <a class="wiki-source-link" href="../../source/src/backend/replication/walsender.c.html#L3343" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__replication__walsender_c__XLogSendPhysical.html&quot;}, '*');"><code>XLogSendPhysical</code></a> at <code>src/backend/replication/walsender.c:3475:2</code> (direct, confidence=high, resolved=<a class="wiki-entity-link" href="src__backend__replication__walsender_c__LagTrackerWrite.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__replication__walsender_c__LagTrackerWrite.html&quot;, &quot;source&quot;: &quot;source/src/backend/replication/walsender.c.html#L4462&quot;}, '*');"><code>symbol:src/backend/replication/walsender.c#LagTrackerWrite</code></a>)</li>
+<li>呼び出しサイト: なし</li>
+</ul>
+<h2>関連データ構造</h2>
+<p><code>TimestampTz</code>, <a class="wiki-source-link" href="../../source/src/interfaces/ecpg/preproc/type.h.html#L89" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__interfaces__ecpg__preproc__type_h__when.html&quot;}, '*');"><code>when</code></a>, <code>XLogRecPtr</code></p>
+<h2>ソース抜粋</h2>
+<p>~~~c static void <a class="wiki-source-link" href="../../source/src/backend/replication/walsender.c.html#L4462" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__replication__walsender_c__LagTrackerWrite.html&quot;}, '*');">LagTrackerWrite</a>(XLogRecPtr lsn, TimestampTz local_flush_time) { int			new_write_head; int			i;</p>
+<p>if (!<a class="wiki-source-link" href="../../source/src/backend/replication/walsender.c.html#L135" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/replication/walsender.c.html&quot;}, '*');">am_walsender</a>) return;</p>
+<p>/*</p>
+<ul>
+<li>If the lsn hasn&#x27;t advanced since last time, then do nothing.  This way</li>
+<li>we only record a new sample <a class="wiki-source-link" href="../../source/src/interfaces/ecpg/preproc/type.h.html#L89" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__interfaces__ecpg__preproc__type_h__when.html&quot;}, '*');">when</a> new WAL has been written.</li>
+<p>*/ if (lag_tracker-&gt;last_lsn == lsn) return; lag_tracker-&gt;last_lsn = lsn;</p>
+</ul>
+<p>/*</p>
+<ul>
+<li>If advancing the <a class="wiki-source-link" href="../../source/src/interfaces/libpq/win32.h.html#L14" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq/win32.h.html&quot;}, '*');">write</a> head of the circular buffer would crash into any</li>
+<li>of the <a class="wiki-source-link" href="../../source/src/interfaces/libpq/win32.h.html#L13" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq/win32.h.html&quot;}, '*');">read</a> heads, then the buffer <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> full.  In other words, the</li>
+<li>slowest reader (presumably apply) <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> the one that controls the release</li>
+<li>of space.</li>
+<p>*/ new_write_head = (lag_tracker-&gt;write_head + 1) % <a class="wiki-source-link" href="../../source/src/backend/replication/walsender.c.html#L253" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/replication/walsender.c.html&quot;}, '*');">LAG_TRACKER_BUFFER_SIZE</a>; for (i = 0; i &lt; <a class="wiki-source-link" href="../../source/src/include/replication/syncrep.h.html#L27" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/replication/syncrep.h.html&quot;}, '*');">NUM_SYNC_REP_WAIT_MODE</a>; ++i) { /*</p>
+<li>If the buffer <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> full, move the slowest reader to a separate</li>
+<li>overflow entry and <a class="wiki-source-link" href="../../source/src/include/snowball/snowball_runtime.h.html#L65" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/snowball/snowball_runtime.h.html&quot;}, '*');">free</a> its space in the buffer so the <a class="wiki-source-link" href="../../source/src/interfaces/libpq/win32.h.html#L14" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq/win32.h.html&quot;}, '*');">write</a> head</li>
+<li>can advance.</li>
+<p>*/ if (new_write_head == lag_tracker-&gt;read_heads[i]) { lag_tracker-&gt;overflowed[i] = lag_tracker-&gt;buffer[lag_tracker-&gt;read_heads[i]]; lag_tracker-&gt;read_heads[i] = -1; } }</p>
+</ul>
+<p>/* Store a sample at the current <a class="wiki-source-link" href="../../source/src/interfaces/libpq/win32.h.html#L14" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq/win32.h.html&quot;}, '*');">write</a> head position. */ lag_tracker-&gt;buffer[lag_tracker-&gt;write_head].lsn = lsn; lag_tracker-&gt;buffer[lag_tracker-&gt;write_head].time = local_flush_time; lag_tracker-&gt;write_head = new_write_head; } ~~~</p>
+<h2>失敗モードと境界条件</h2>
+<p>まだ解析していません。</p>
+<h2>保守担当者向けメモ</h2>
+<ul>
+<li>後続フェーズで、ソース本文の文脈と caller/callee 情報を使ってこのページを強化する。</li>
+</ul><script>
+(function() {
+  function notifyParent() {
+    if (parent === window) return;
+    parent.postMessage({type: "frame-location", frame: window.name || "", href: window.location.href}, "*");
+  }
+  document.addEventListener("click", function(event) {
+    const link = event.target.closest("a[data-panel]");
+    if (!link || parent === window) return;
+    parent.postMessage({type: "source-link", panel: link.dataset.panel}, "*");
+  });
+  window.addEventListener("load", notifyParent);
+  window.addEventListener("hashchange", notifyParent);
+})();
+</script></body></html>

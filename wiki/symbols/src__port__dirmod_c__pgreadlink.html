@@ -1,0 +1,61 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>symbols/src__port__dirmod_c__pgreadlink.md</title><link rel="stylesheet" href="../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../source/src/port/dirmod.c.html#L308" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__port__dirmod_c__pgreadlink.html&quot;}, '*');">pgreadlink</a></h1>
+<h2>定義</h2>
+<ul>
+<li>種別: <code>function</code></li>
+<li>定義箇所: <code>src/port/dirmod.c:308</code></li>
+<li>所属モジュール: <a class="wiki-entity-link" href="../modules/src__port.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/modules/src__port.html&quot;, &quot;source&quot;: &quot;source/src/port/bsearch_arg.c.html&quot;}, '*');"><code>module:src/port</code></a></li>
+</ul>
+<h2>目的</h2>
+<p>静的シンボル索引から生成された初期シンボルページです。</p>
+<h2>シグネチャまたは形状</h2>
+<ul>
+<li>シグネチャ: <code>int pgreadlink(const char *path, char *buf, size_t size)</code></li>
+</ul>
+<h2>入力と出力</h2>
+<ul>
+<li>引数: <code>const char *path</code>, <code>char *buf</code>, <code>size_t size</code></li>
+<li>戻り値: <code>int</code></li>
+</ul>
+<h2>前提条件と不変条件</h2>
+<p>まだ解析していません。</p>
+<h2>アルゴリズムまたは振る舞い</h2>
+<ul>
+<li>複雑度: <code>high</code> (score 31)</li>
+</ul>
+<p>まだ解析していません。</p>
+<h2>呼び出し元と呼び出し先</h2>
+<ul>
+<li>呼び出し元: なし</li>
+<li>呼び出し先: <a class="wiki-source-link" href="../../source/src/port/win32error.c.html#L176" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__port__win32error_c___dosmaperr.html&quot;}, '*');"><code>_dosmaperr</code></a>, <a class="wiki-source-link" href="../../source/src/backend/utils/error/elog.c.html#L897" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__utils__error__elog_c__errcode_for_file_access.html&quot;}, '*');"><code>errcode_for_file_access</code></a>, <code>errmsg</code></li>
+<li>呼び出し元サイト: なし</li>
+<li>呼び出しサイト: <code>GetFileAttributes</code> at <code>src/port/dirmod.c:318:9</code> (unresolved), <a class="wiki-source-link" href="../../source/src/port/win32error.c.html#L176" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__port__win32error_c___dosmaperr.html&quot;}, '*');"><code>_dosmaperr</code></a> at <code>src/port/dirmod.c:321:3</code> (direct, confidence=high, resolved=<a class="wiki-entity-link" href="src__port__win32error_c___dosmaperr.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__port__win32error_c___dosmaperr.html&quot;, &quot;source&quot;: &quot;source/src/port/win32error.c.html#L176&quot;}, '*');"><code>symbol:src/port/win32error.c#_dosmaperr</code></a>), <code>GetLastError</code> at <code>src/port/dirmod.c:321:14</code> (unresolved), <code>CreateFile</code> at <code>src/port/dirmod.c:330:6</code> (unresolved), <a class="wiki-source-link" href="../../source/src/port/win32error.c.html#L176" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__port__win32error_c___dosmaperr.html&quot;}, '*');"><code>_dosmaperr</code></a> at <code>src/port/dirmod.c:339:3</code> (direct, confidence=high, resolved=<a class="wiki-entity-link" href="src__port__win32error_c___dosmaperr.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__port__win32error_c___dosmaperr.html&quot;, &quot;source&quot;: &quot;source/src/port/win32error.c.html#L176&quot;}, '*');"><code>symbol:src/port/win32error.c#_dosmaperr</code></a>), <code>GetLastError</code> at <code>src/port/dirmod.c:339:14</code> (unresolved), <code>DeviceIoControl</code> at <code>src/port/dirmod.c:343:7</code> (unresolved), <code>FormatMessage</code> at <code>src/port/dirmod.c:355:3</code> (unresolved), <code>GetLastError</code> at <code>src/port/dirmod.c:358:14</code> (unresolved), <code>MAKELANGID</code> at <code>src/port/dirmod.c:359:8</code> (unresolved), <a class="wiki-source-link" href="../../source/src/include/utils/elog.h.html#L166" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/utils/elog.h.html&quot;}, '*');"><code>ereport</code></a> at <code>src/port/dirmod.c:362:3</code> (unresolved), <a class="wiki-source-link" href="../../source/src/backend/utils/error/elog.c.html#L897" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__utils__error__elog_c__errcode_for_file_access.html&quot;}, '*');"><code>errcode_for_file_access</code></a> at <code>src/port/dirmod.c:363:6</code> (direct, confidence=high, resolved=<a class="wiki-entity-link" href="src__backend__utils__error__elog_c__errcode_for_file_access.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__utils__error__elog_c__errcode_for_file_access.html&quot;, &quot;source&quot;: &quot;source/src/backend/utils/error/elog.c.html#L897&quot;}, '*');"><code>symbol:src/backend/utils/error/elog.c#errcode_for_file_access</code></a>), <code>errmsg</code> at <code>src/port/dirmod.c:364:6</code> (direct, confidence=high, resolved=<a class="wiki-entity-link" href="src__backend__utils__error__elog_c__errmsg.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__utils__error__elog_c__errmsg.html&quot;, &quot;source&quot;: &quot;source/src/backend/utils/error/elog.c.html#L1093&quot;}, '*');"><code>symbol:src/backend/utils/error/elog.c#errmsg</code></a>), <code>fprintf</code> at <code>src/port/dirmod.c:367:3</code> (unresolved), <code>_</code> at <code>src/port/dirmod.c:367:19</code> (unresolved), <code>LocalFree</code> at <code>src/port/dirmod.c:370:3</code> (unresolved), <code>CloseHandle</code> at <code>src/port/dirmod.c:371:3</code> (unresolved), <code>CloseHandle</code> at <code>src/port/dirmod.c:375:2</code> (unresolved), <code>WideCharToMultiByte</code> at <code>src/port/dirmod.c:384:6</code> (unresolved), <code>isalpha</code> at <code>src/port/dirmod.c:412:3</code> (unresolved), <code>memmove</code> at <code>src/port/dirmod.c:416:3</code> (unresolved), <code>strlen</code> at <code>src/port/dirmod.c:416:25</code> (unresolved)</li>
+</ul>
+<h2>関連データ構造</h2>
+<p><a class="wiki-source-link" href="../../source/src/port/win32error.c.html#L20" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__port__win32error_c__DWORD.html&quot;}, '*');"><code>DWORD</code></a>, <a class="wiki-source-link" href="../../source/src/port/dirmod.c.html#L196" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__port__dirmod_c__REPARSE_JUNCTION_DATA_BUFFER.html&quot;}, '*');"><code>REPARSE_JUNCTION_DATA_BUFFER</code></a></p>
+<h2>ソース抜粋</h2>
+<p>~~~c int <a class="wiki-source-link" href="../../source/src/port/dirmod.c.html#L308" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__port__dirmod_c__pgreadlink.html&quot;}, '*');">pgreadlink</a>(const char *path, char *buf, size_t size) { <a class="wiki-source-link" href="../../source/src/port/win32error.c.html#L20" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__port__win32error_c__DWORD.html&quot;}, '*');">DWORD</a>		attr; HANDLE		h; char		buffer[MAX_PATH * sizeof(WCHAR) + offsetof(<a class="wiki-source-link" href="../../source/src/port/dirmod.c.html#L196" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__port__dirmod_c__REPARSE_JUNCTION_DATA_BUFFER.html&quot;}, '*');">REPARSE_JUNCTION_DATA_BUFFER</a>, PathBuffer)]; <a class="wiki-source-link" href="../../source/src/port/dirmod.c.html#L196" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__port__dirmod_c__REPARSE_JUNCTION_DATA_BUFFER.html&quot;}, '*');">REPARSE_JUNCTION_DATA_BUFFER</a> *reparseBuf = (<a class="wiki-source-link" href="../../source/src/port/dirmod.c.html#L196" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__port__dirmod_c__REPARSE_JUNCTION_DATA_BUFFER.html&quot;}, '*');">REPARSE_JUNCTION_DATA_BUFFER</a> *) buffer; <a class="wiki-source-link" href="../../source/src/port/win32error.c.html#L20" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__port__win32error_c__DWORD.html&quot;}, '*');">DWORD</a>		len; int			r;</p>
+<p>attr = GetFileAttributes(path); if (attr == INVALID_FILE_ATTRIBUTES) { <a class="wiki-source-link" href="../../source/src/port/win32error.c.html#L176" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__port__win32error_c___dosmaperr.html&quot;}, '*');">_dosmaperr</a>(GetLastError()); return -1; } if ((attr &amp; FILE_ATTRIBUTE_REPARSE_POINT) == 0) { errno = EINVAL; return -1; }</p>
+<p>h = CreateFile(path, GENERIC_READ, FILE_SHARE_READ | FILE_SHARE_WRITE, NULL, OPEN_EXISTING, FILE_FLAG_OPEN_REPARSE_POINT | FILE_FLAG_BACKUP_SEMANTICS, 0); if (h == INVALID_HANDLE_VALUE) { <a class="wiki-source-link" href="../../source/src/port/win32error.c.html#L176" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__port__win32error_c___dosmaperr.html&quot;}, '*');">_dosmaperr</a>(GetLastError()); return -1; }</p>
+<p>if (!DeviceIoControl(h, FSCTL_GET_REPARSE_POINT, NULL, 0, (LPVOID) reparseBuf, sizeof(buffer), &amp;len, NULL)) { LPSTR		msg;</p>
+<p>errno = 0; FormatMessage(FORMAT_MESSAGE_ALLOCATE_BUFFER | FORMAT_MESSAGE_IGNORE_INSERTS | FORMAT_MESSAGE_FROM_SYSTEM, NULL, GetLastError(), MAKELANGID(LANG_ENGLISH, SUBLANG_DEFAULT), (LPSTR) &amp;msg, 0, NULL); #ifndef FRONTEND <a class="wiki-source-link" href="../../source/src/include/utils/elog.h.html#L166" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/utils/elog.h.html&quot;}, '*');">ereport</a>(ERROR, (<a class="wiki-source-link" href="../../source/src/backend/utils/error/elog.c.html#L897" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__utils__error__elog_c__errcode_for_file_access.html&quot;}, '*');">errcode_for_file_access</a>(), errmsg(&quot;could not get junction for \&quot;%s\&quot;: %s&quot;, path, msg))); #else fprintf(stderr, _(&quot;could not get junction for \&quot;%s\&quot;: %s\n&quot;), ~~~</p>
+<h2>失敗モードと境界条件</h2>
+<p>まだ解析していません。</p>
+<h2>保守担当者向けメモ</h2>
+<ul>
+<li>後続フェーズで、ソース本文の文脈と caller/callee 情報を使ってこのページを強化する。</li>
+</ul><script>
+(function() {
+  function notifyParent() {
+    if (parent === window) return;
+    parent.postMessage({type: "frame-location", frame: window.name || "", href: window.location.href}, "*");
+  }
+  document.addEventListener("click", function(event) {
+    const link = event.target.closest("a[data-panel]");
+    if (!link || parent === window) return;
+    parent.postMessage({type: "source-link", panel: link.dataset.panel}, "*");
+  });
+  window.addEventListener("load", notifyParent);
+  window.addEventListener("hashchange", notifyParent);
+})();
+</script></body></html>

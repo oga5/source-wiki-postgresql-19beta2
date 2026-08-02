@@ -1,0 +1,75 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>symbols/src__test__modules__test_escape__test_escape_c__pe_test_escape_func.md</title><link rel="stylesheet" href="../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../source/src/test/modules/test_escape/test_escape.c.html#L41" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__test__modules__test_escape__test_escape_c__pe_test_escape_func.html&quot;}, '*');">pe_test_escape_func</a></h1>
+<h2>定義</h2>
+<ul>
+<li>種別: <code>struct</code></li>
+<li>定義箇所: <code>src/test/modules/test_escape/test_escape.c:41</code></li>
+<li>所属モジュール: <a class="wiki-entity-link" href="../modules/src__test__modules__test_escape.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/modules/src__test__modules__test_escape.html&quot;, &quot;source&quot;: &quot;source/src/test/modules/test_escape/test_escape.c.html&quot;}, '*');"><code>module:src/test/modules/test_escape</code></a></li>
+</ul>
+<h2>目的</h2>
+<p>静的シンボル索引から生成された初期シンボルページです。</p>
+<h2>シグネチャまたは形状</h2>
+<ul>
+<li>シグネチャ: <code>typedef struct pe_test_escape_func</code></li>
+</ul>
+<h2>入力と出力</h2>
+<p>まだ解析していません。</p>
+<h2>前提条件と不変条件</h2>
+<p>まだ解析していません。</p>
+<h2>アルゴリズムまたは振る舞い</h2>
+<p>まだ解析していません。</p>
+<h2>呼び出し元と呼び出し先</h2>
+<ul>
+<li>呼び出し元: なし</li>
+<li>呼び出し先: なし</li>
+<li>呼び出し元サイト: なし</li>
+<li>呼び出しサイト: なし</li>
+</ul>
+<h2>関連データ構造</h2>
+<p><code>PGconn</code>, <a class="wiki-source-link" href="../../source/src/interfaces/libpq/pqexpbuffer.h.html#L51" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__interfaces__libpq__pqexpbuffer_h__PQExpBuffer.html&quot;}, '*');"><code>PQExpBuffer</code></a></p>
+<h2>ソース抜粋</h2>
+<p>~~~c typedef struct <a class="wiki-source-link" href="../../source/src/test/modules/test_escape/test_escape.c.html#L41" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__test__modules__test_escape__test_escape_c__pe_test_escape_func.html&quot;}, '*');">pe_test_escape_func</a> { const char *name;</p>
+<p>/*</p>
+<ul>
+<li>Can the escape method report <a class="wiki-source-link" href="../../source/src/timezone/zic.c.html#L183" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/timezone/zic.c.html&quot;}, '*');">errors</a>? If so, we <a class="wiki-source-link" href="../../source/src/backend/libpq/auth-oauth.c.html#L671" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__libpq__auth-oauth_c__validate.html&quot;}, '*');">validate</a> that it does in</li>
+<li>case of various invalid inputs.</li>
+<p>*/ bool		reports_errors;</p>
+</ul>
+<p>/*</p>
+<ul>
+<li>Is the escape method known to not handle invalidly encoded input? If</li>
+<li>so, we don&#x27;t run the <a class="wiki-source-link" href="../../source/src/interfaces/ecpg/test/expected/preproc-autoprep.c.html#L26" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__interfaces__ecpg__test__expected__preproc-autoprep_c__test.html&quot;}, '*');">test</a> unless --force-unsupported <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> used.</li>
+<p>*/ bool		supports_only_valid;</p>
+</ul>
+<p>/*</p>
+<ul>
+<li>Is the escape method known to only handle encodings where no byte in a</li>
+<li>multi-byte characters are valid ascii.</li>
+<p>*/ bool		supports_only_ascii_overlap;</p>
+</ul>
+<p>/*</p>
+<ul>
+<li>Does the escape function have a length input?</li>
+<p>*/ bool		supports_input_length;</p>
+</ul>
+<p>bool		(*escape) (PGconn *<a class="wiki-source-link" href="../../source/src/bin/pg_basebackup/streamutil.c.html#L52" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/bin/pg_basebackup/streamutil.c.html&quot;}, '*');">conn</a>, <a class="wiki-source-link" href="../../source/src/interfaces/libpq/pqexpbuffer.h.html#L51" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__interfaces__libpq__pqexpbuffer_h__PQExpBuffer.html&quot;}, '*');">PQExpBuffer</a> target, const char *unescaped, size_t unescaped_len, <a class="wiki-source-link" href="../../source/src/interfaces/libpq/pqexpbuffer.h.html#L51" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__interfaces__libpq__pqexpbuffer_h__PQExpBuffer.html&quot;}, '*');">PQExpBuffer</a> escape_err); } <a class="wiki-source-link" href="../../source/src/test/modules/test_escape/test_escape.c.html#L41" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__test__modules__test_escape__test_escape_c__pe_test_escape_func.html&quot;}, '*');">pe_test_escape_func</a>; ~~~</p>
+<h2>失敗モードと境界条件</h2>
+<p>まだ解析していません。</p>
+<h2>保守担当者向けメモ</h2>
+<ul>
+<li>後続フェーズで、ソース本文の文脈と caller/callee 情報を使ってこのページを強化する。</li>
+</ul><script>
+(function() {
+  function notifyParent() {
+    if (parent === window) return;
+    parent.postMessage({type: "frame-location", frame: window.name || "", href: window.location.href}, "*");
+  }
+  document.addEventListener("click", function(event) {
+    const link = event.target.closest("a[data-panel]");
+    if (!link || parent === window) return;
+    parent.postMessage({type: "source-link", panel: link.dataset.panel}, "*");
+  });
+  window.addEventListener("load", notifyParent);
+  window.addEventListener("hashchange", notifyParent);
+})();
+</script></body></html>

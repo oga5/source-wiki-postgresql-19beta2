@@ -1,0 +1,16 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>END</title><link rel="stylesheet" href="../styles.css"></head><body><h1>Multiple definitions: <code>END</code></h1><ul><li><a href="../source/contrib/intarray/_int.h.html#L160" target="source-view">contrib/intarray/_int.h:160 (macro)</a></li><li><a href="../source/contrib/ltree/ltree.h.html#L169" target="source-view">contrib/ltree/ltree.h:169 (macro)</a></li><li><a href="../source/src/backend/regex/regcomp.c.html#L337" target="source-view">src/backend/regex/regcomp.c:337 (macro)</a></li><li><a href="../source/src/common/wchar.c.html#L1593" target="source-view">src/common/wchar.c:1593 (macro)</a></li></ul><script>
+(function() {
+  function notifyParent() {
+    if (parent === window) return;
+    parent.postMessage({type: "frame-location", frame: window.name || "", href: window.location.href}, "*");
+  }
+  document.addEventListener("click", function(event) {
+    const link = event.target.closest("a[data-panel]");
+    if (!link || parent === window) return;
+    parent.postMessage({type: "source-link", panel: link.dataset.panel}, "*");
+  });
+  window.addEventListener("load", notifyParent);
+  window.addEventListener("hashchange", notifyParent);
+})();
+</script></body></html>

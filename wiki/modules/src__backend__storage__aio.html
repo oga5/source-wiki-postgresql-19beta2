@@ -1,0 +1,73 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>modules/src__backend__storage__aio.md</title><link rel="stylesheet" href="../../styles.css"></head><body><h1>src/backend/storage/aio</h1>
+<h2>システム内での役割</h2>
+<p><code>src/backend/storage/aio</code> には 10 個の索引済みソースファイルがあります。この初期モジュールページはディレクトリ境界に基づいています。</p>
+<h2>責務</h2>
+<ul>
+<li>このディレクトリに属するソースファイルを集約する。</li>
+<li>より深い LLM 合成の前段として、モジュール単位の入口を提供する。</li>
+</ul>
+<h2>このモジュールのファイル</h2>
+<ul>
+<li><a class="wiki-source-link" href="../../source/src/backend/storage/aio/aio.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/storage/aio/aio.c.html&quot;}, '*');"><code>src/backend/storage/aio/aio.c</code></a></li>
+<li><a class="wiki-source-link" href="../../source/src/backend/storage/aio/aio_callback.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/storage/aio/aio_callback.c.html&quot;}, '*');"><code>src/backend/storage/aio/aio_callback.c</code></a></li>
+<li><a class="wiki-source-link" href="../../source/src/backend/storage/aio/aio_funcs.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/storage/aio/aio_funcs.c.html&quot;}, '*');"><code>src/backend/storage/aio/aio_funcs.c</code></a></li>
+<li><a class="wiki-source-link" href="../../source/src/backend/storage/aio/aio_init.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/storage/aio/aio_init.c.html&quot;}, '*');"><code>src/backend/storage/aio/aio_init.c</code></a></li>
+<li><a class="wiki-source-link" href="../../source/src/backend/storage/aio/aio_io.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/storage/aio/aio_io.c.html&quot;}, '*');"><code>src/backend/storage/aio/aio_io.c</code></a></li>
+<li><a class="wiki-source-link" href="../../source/src/backend/storage/aio/aio_target.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/storage/aio/aio_target.c.html&quot;}, '*');"><code>src/backend/storage/aio/aio_target.c</code></a></li>
+<li><a class="wiki-source-link" href="../../source/src/backend/storage/aio/method_io_uring.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/storage/aio/method_io_uring.c.html&quot;}, '*');"><code>src/backend/storage/aio/method_io_uring.c</code></a></li>
+<li><a class="wiki-source-link" href="../../source/src/backend/storage/aio/method_sync.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/storage/aio/method_sync.c.html&quot;}, '*');"><code>src/backend/storage/aio/method_sync.c</code></a></li>
+<li><a class="wiki-source-link" href="../../source/src/backend/storage/aio/method_worker.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/storage/aio/method_worker.c.html&quot;}, '*');"><code>src/backend/storage/aio/method_worker.c</code></a></li>
+<li><a class="wiki-source-link" href="../../source/src/backend/storage/aio/read_stream.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/storage/aio/read_stream.c.html&quot;}, '*');"><code>src/backend/storage/aio/read_stream.c</code></a></li>
+</ul>
+<h2>主要なデータ構造</h2>
+<ul>
+<li><a class="wiki-source-link" href="../../source/src/backend/storage/aio/aio_callback.c.html#L28" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__storage__aio__aio_callback_c__PgAioHandleCallbacksEntry.html&quot;}, '*');"><code>PgAioHandleCallbacksEntry</code></a></li>
+<li><a class="wiki-source-link" href="../../source/src/backend/storage/aio/method_io_uring.c.html#L85" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__storage__aio__method_io_uring_c__PgAioUringContext.html&quot;}, '*');"><code>PgAioUringContext</code></a></li>
+<li><a class="wiki-source-link" href="../../source/src/backend/storage/aio/method_io_uring.c.html#L111" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__storage__aio__method_io_uring_c__PgAioUringCaps.html&quot;}, '*');"><code>PgAioUringCaps</code></a></li>
+<li><a class="wiki-source-link" href="../../source/src/backend/storage/aio/method_worker.c.html#L71" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__storage__aio__method_worker_c__PgAioWorkerSubmissionQueue.html&quot;}, '*');"><code>PgAioWorkerSubmissionQueue</code></a></li>
+<li><a class="wiki-source-link" href="../../source/src/backend/storage/aio/method_worker.c.html#L79" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__storage__aio__method_worker_c__PgAioWorkerSlot.html&quot;}, '*');"><code>PgAioWorkerSlot</code></a></li>
+<li><a class="wiki-source-link" href="../../source/src/backend/storage/aio/method_worker.c.html#L90" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__storage__aio__method_worker_c__PgAioWorkerSet.html&quot;}, '*');"><code>PgAioWorkerSet</code></a></li>
+<li><a class="wiki-source-link" href="../../source/src/backend/storage/aio/method_worker.c.html#L96" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__storage__aio__method_worker_c__PgAioWorkerControl.html&quot;}, '*');"><code>PgAioWorkerControl</code></a></li>
+<li><a class="wiki-source-link" href="../../source/src/backend/storage/aio/read_stream.c.html#L86" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__storage__aio__read_stream_c__InProgressIO.html&quot;}, '*');"><code>InProgressIO</code></a></li>
+<li><code>ReadStream</code></li>
+</ul>
+<h2>主なフロー</h2>
+<p>初期モジュールページでは、まだエンドツーエンドのフローを推論しません。</p>
+<h2>外部依存</h2>
+<ul>
+<li><a class="wiki-source-link" href="../../source/src/include/postgres.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/postgres.h.html&quot;}, '*');"><code>postgres.h</code></a></li>
+<li><code>storage/aio.h</code></li>
+<li><code>storage/aio_internal.h</code></li>
+<li><a class="wiki-source-link" href="../../source/src/include/miscadmin.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/miscadmin.h.html&quot;}, '*');"><code>miscadmin.h</code></a></li>
+<li><code>storage/proc.h</code></li>
+<li><code>storage/aio_subsys.h</code></li>
+<li><code>storage/shmem.h</code></li>
+<li><code>storage/fd.h</code></li>
+<li><code>utils/wait_event.h</code></li>
+<li><code>port/atomics.h</code></li>
+</ul>
+<h2>内部構成</h2>
+<ul>
+<li>子モジュール数: 0</li>
+</ul>
+<h2>推奨読書順</h2>
+<p>1. <a class="wiki-source-link" href="../../source/src/backend/storage/aio/method_worker.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/storage/aio/method_worker.c.html&quot;}, '*');"><code>src/backend/storage/aio/method_worker.c</code></a> 2. <a class="wiki-source-link" href="../../source/src/backend/storage/aio/aio.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/storage/aio/aio.c.html&quot;}, '*');"><code>src/backend/storage/aio/aio.c</code></a> 3. <a class="wiki-source-link" href="../../source/src/backend/storage/aio/read_stream.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/storage/aio/read_stream.c.html&quot;}, '*');"><code>src/backend/storage/aio/read_stream.c</code></a> 4. <a class="wiki-source-link" href="../../source/src/backend/storage/aio/method_io_uring.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/storage/aio/method_io_uring.c.html&quot;}, '*');"><code>src/backend/storage/aio/method_io_uring.c</code></a> 5. <a class="wiki-source-link" href="../../source/src/backend/storage/aio/aio_callback.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/storage/aio/aio_callback.c.html&quot;}, '*');"><code>src/backend/storage/aio/aio_callback.c</code></a> 6. <a class="wiki-source-link" href="../../source/src/backend/storage/aio/aio_init.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/storage/aio/aio_init.c.html&quot;}, '*');"><code>src/backend/storage/aio/aio_init.c</code></a> 7. <a class="wiki-source-link" href="../../source/src/backend/storage/aio/aio_io.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/storage/aio/aio_io.c.html&quot;}, '*');"><code>src/backend/storage/aio/aio_io.c</code></a> 8. <a class="wiki-source-link" href="../../source/src/backend/storage/aio/aio_target.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/storage/aio/aio_target.c.html&quot;}, '*');"><code>src/backend/storage/aio/aio_target.c</code></a> 9. <a class="wiki-source-link" href="../../source/src/backend/storage/aio/aio_funcs.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/storage/aio/aio_funcs.c.html&quot;}, '*');"><code>src/backend/storage/aio/aio_funcs.c</code></a> 10. <a class="wiki-source-link" href="../../source/src/backend/storage/aio/method_sync.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/storage/aio/method_sync.c.html&quot;}, '*');"><code>src/backend/storage/aio/method_sync.c</code></a></p>
+<h2>未解決の問い</h2>
+<ul>
+<li>LLM ベースのモジュール合成を追加した後で、責務とフローを精緻化する。</li>
+</ul><script>
+(function() {
+  function notifyParent() {
+    if (parent === window) return;
+    parent.postMessage({type: "frame-location", frame: window.name || "", href: window.location.href}, "*");
+  }
+  document.addEventListener("click", function(event) {
+    const link = event.target.closest("a[data-panel]");
+    if (!link || parent === window) return;
+    parent.postMessage({type: "source-link", panel: link.dataset.panel}, "*");
+  });
+  window.addEventListener("load", notifyParent);
+  window.addEventListener("hashchange", notifyParent);
+})();
+</script></body></html>

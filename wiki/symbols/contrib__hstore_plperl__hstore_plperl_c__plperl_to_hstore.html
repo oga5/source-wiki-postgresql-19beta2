@@ -1,0 +1,71 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>symbols/contrib__hstore_plperl__hstore_plperl_c__plperl_to_hstore.md</title><link rel="stylesheet" href="../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../source/contrib/hstore_plperl/hstore_plperl.c.html#L100" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/contrib__hstore_plperl__hstore_plperl_c__plperl_to_hstore.html&quot;}, '*');">plperl_to_hstore</a></h1>
+<h2>定義</h2>
+<ul>
+<li>種別: <code>function</code></li>
+<li>定義箇所: <code>contrib/hstore_plperl/hstore_plperl.c:100</code></li>
+<li>所属モジュール: <a class="wiki-entity-link" href="../modules/contrib__hstore_plperl.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/modules/contrib__hstore_plperl.html&quot;, &quot;source&quot;: &quot;source/contrib/hstore_plperl/hstore_plperl.c.html&quot;}, '*');"><code>module:contrib/hstore_plperl</code></a></li>
+</ul>
+<h2>目的</h2>
+<p>静的シンボル索引から生成された初期シンボルページです。</p>
+<h2>シグネチャまたは形状</h2>
+<ul>
+<li>シグネチャ: <code>Datum plperl_to_hstore(PG_FUNCTION_ARGS)</code></li>
+</ul>
+<h2>入力と出力</h2>
+<ul>
+<li>引数: <code>PG_FUNCTION_ARGS</code></li>
+<li>戻り値: <code>Datum</code></li>
+</ul>
+<h2>前提条件と不変条件</h2>
+<p>まだ解析していません。</p>
+<h2>アルゴリズムまたは振る舞い</h2>
+<ul>
+<li>複雑度: <code>high</code> (score 21)</li>
+</ul>
+<p>まだ解析していません。</p>
+<h2>呼び出し元と呼び出し先</h2>
+<ul>
+<li>呼び出し元: なし</li>
+<li>呼び出し先: <code>errcode</code>, <code>errmsg</code></li>
+<li>呼び出し元サイト: なし</li>
+<li>呼び出しサイト: <a class="wiki-source-link" href="../../source/src/include/fmgr.h.html#L277" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/fmgr.h.html&quot;}, '*');"><code>PG_GETARG_POINTER</code></a> at <code>contrib/hstore_plperl/hstore_plperl.c:104:22</code> (macro), <code>SvROK</code> at <code>contrib/hstore_plperl/hstore_plperl.c:114:9</code> (unresolved), <a class="wiki-source-link" href="../../source/src/include/miscadmin.h.html#L125" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/miscadmin.h.html&quot;}, '*');"><code>CHECK_FOR_INTERRUPTS</code></a> at <code>contrib/hstore_plperl/hstore_plperl.c:121:3</code> (macro), <code>SvRV</code> at <code>contrib/hstore_plperl/hstore_plperl.c:122:8</code> (unresolved), <code>SvTYPE</code> at <code>contrib/hstore_plperl/hstore_plperl.c:126:6</code> (unresolved), <a class="wiki-source-link" href="../../source/src/include/utils/elog.h.html#L166" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/utils/elog.h.html&quot;}, '*');"><code>ereport</code></a> at <code>contrib/hstore_plperl/hstore_plperl.c:127:3</code> (unresolved), <code>errcode</code> at <code>contrib/hstore_plperl/hstore_plperl.c:128:6</code> (direct, confidence=high, resolved=<a class="wiki-entity-link" href="src__backend__utils__error__elog_c__errcode.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__utils__error__elog_c__errcode.html&quot;, &quot;source&quot;: &quot;source/src/backend/utils/error/elog.c.html#L874&quot;}, '*');"><code>symbol:src/backend/utils/error/elog.c#errcode</code></a>), <code>errmsg</code> at <code>contrib/hstore_plperl/hstore_plperl.c:129:6</code> (direct, confidence=high, resolved=<a class="wiki-entity-link" href="src__backend__utils__error__elog_c__errmsg.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__utils__error__elog_c__errmsg.html&quot;, &quot;source&quot;: &quot;source/src/backend/utils/error/elog.c.html#L1093&quot;}, '*');"><code>symbol:src/backend/utils/error/elog.c#errmsg</code></a>), <code>hv_iterinit</code> at <code>contrib/hstore_plperl/hstore_plperl.c:132:11</code> (unresolved), <code>palloc_array</code> at <code>contrib/hstore_plperl/hstore_plperl.c:134:10</code> (unresolved), <code>hv_iternext</code> at <code>contrib/hstore_plperl/hstore_plperl.c:137:15</code> (unresolved), <a class="wiki-source-link" href="../../source/src/pl/plperl/plperl.h.html#L88" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__pl__plperl__plperl_h__sv2cstr.html&quot;}, '*');"><code>sv2cstr</code></a> at <code>contrib/hstore_plperl/hstore_plperl.c:139:18</code> (unresolved), <code>HeSVKEY_force</code> at <code>contrib/hstore_plperl/hstore_plperl.c:139:26</code> (unresolved), <code>HeVAL</code> at <code>contrib/hstore_plperl/hstore_plperl.c:140:19</code> (unresolved), <code>pstrdup</code> at <code>contrib/hstore_plperl/hstore_plperl.c:142:18</code> (unresolved, confidence=low), <code>hstoreCheckKeyLen</code> at <code>contrib/hstore_plperl/hstore_plperl.c:143:21</code> (macro), <code>strlen</code> at <code>contrib/hstore_plperl/hstore_plperl.c:143:39</code> (unresolved), <code>SvOK</code> at <code>contrib/hstore_plperl/hstore_plperl.c:146:8</code> (unresolved), <code>pstrdup</code> at <code>contrib/hstore_plperl/hstore_plperl.c:154:19</code> (unresolved, confidence=low), <a class="wiki-source-link" href="../../source/src/pl/plperl/plperl.h.html#L88" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__pl__plperl__plperl_h__sv2cstr.html&quot;}, '*');"><code>sv2cstr</code></a> at <code>contrib/hstore_plperl/hstore_plperl.c:154:27</code> (unresolved), <code>hstoreCheckValLen</code> at <code>contrib/hstore_plperl/hstore_plperl.c:155:22</code> (macro), <code>strlen</code> at <code>contrib/hstore_plperl/hstore_plperl.c:155:40</code> (unresolved), <code>hstoreUniquePairs</code> at <code>contrib/hstore_plperl/hstore_plperl.c:162:11</code> (macro), <code>hstorePairs</code> at <code>contrib/hstore_plperl/hstore_plperl.c:163:8</code> (macro), <a class="wiki-source-link" href="../../source/src/include/fmgr.h.html#L363" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/fmgr.h.html&quot;}, '*');"><code>PG_RETURN_POINTER</code></a> at <code>contrib/hstore_plperl/hstore_plperl.c:164:2</code> (macro)</li>
+</ul>
+<h2>関連データ構造</h2>
+<p><code>Datum</code>, <a class="wiki-source-link" href="../../source/contrib/hstore/hstore.h.html#L44" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/contrib__hstore__hstore_h__HStore.html&quot;}, '*');"><code>HStore</code></a>, <code>int32</code>, <a class="wiki-source-link" href="../../source/contrib/hstore/hstore.h.html#L161" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/contrib__hstore__hstore_h__Pairs.html&quot;}, '*');"><code>Pairs</code></a>, <code>PG_FUNCTION_ARGS</code></p>
+<h2>ソース抜粋</h2>
+<p>~~~c Datum <a class="wiki-source-link" href="../../source/contrib/hstore_plperl/hstore_plperl.c.html#L100" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/contrib__hstore_plperl__hstore_plperl_c__plperl_to_hstore.html&quot;}, '*');">plperl_to_hstore</a>(PG_FUNCTION_ARGS) { <a class="wiki-source-link" href="../../source/src/pl/plperl/ppport.h.html#L11306" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/pl/plperl/ppport.h.html&quot;}, '*');">dTHX</a>; SV		   *in = (SV *) <a class="wiki-source-link" href="../../source/src/include/fmgr.h.html#L277" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/fmgr.h.html&quot;}, '*');">PG_GETARG_POINTER</a>(0); HV		   *hv; HE		   *he; int32		buflen; int32		i; int32		pcount; <a class="wiki-source-link" href="../../source/contrib/hstore/hstore.h.html#L44" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/contrib__hstore__hstore_h__HStore.html&quot;}, '*');">HStore</a>	   *out; <a class="wiki-source-link" href="../../source/contrib/hstore/hstore.h.html#L161" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/contrib__hstore__hstore_h__Pairs.html&quot;}, '*');">Pairs</a>	   *pairs;</p>
+<p>/* Dereference references recursively. */ while (SvROK(in)) { /*</p>
+<ul>
+<li>It&#x27;s possible for circular references to make this an infinite</li>
+<li>loop.  Checking for such a situation seems like much more trouble</li>
+<li>than it&#x27;s worth, but let&#x27;s provide a way to break out of the loop.</li>
+<p>*/ <a class="wiki-source-link" href="../../source/src/include/miscadmin.h.html#L125" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/miscadmin.h.html&quot;}, '*');">CHECK_FOR_INTERRUPTS</a>(); in = SvRV(in); }</p>
+</ul>
+<p>/* Now we must have a hash. */ if (SvTYPE(in) != SVt_PVHV) <a class="wiki-source-link" href="../../source/src/include/utils/elog.h.html#L166" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/utils/elog.h.html&quot;}, '*');">ereport</a>(ERROR, (errcode(ERRCODE_FEATURE_NOT_SUPPORTED), errmsg(&quot;cannot transform non-hash Perl <a class="wiki-source-link" href="../../source/src/interfaces/ecpg/compatlib/informix.c.html#L687" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/ecpg/compatlib/informix.c.html&quot;}, '*');">value</a> to hstore&quot;))); hv = (HV *) in;</p>
+<p>pcount = hv_iterinit(hv);</p>
+<p>pairs = palloc_array(<a class="wiki-source-link" href="../../source/contrib/hstore/hstore.h.html#L161" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/contrib__hstore__hstore_h__Pairs.html&quot;}, '*');">Pairs</a>, pcount);</p>
+<p>i = 0; while ((he = hv_iternext(hv))) { char	   *key = <a class="wiki-source-link" href="../../source/src/pl/plperl/plperl.h.html#L88" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__pl__plperl__plperl_h__sv2cstr.html&quot;}, '*');">sv2cstr</a>(HeSVKEY_force(he)); SV		   *<a class="wiki-source-link" href="../../source/src/interfaces/ecpg/compatlib/informix.c.html#L687" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/ecpg/compatlib/informix.c.html&quot;}, '*');">value</a> = HeVAL(he);</p>
+<p>pairs[i].key = pstrdup(key); pairs[i].keylen = hstoreCheckKeyLen(strlen(pairs[i].key)); pairs[i].needfree = <a class="wiki-source-link" href="../../source/src/tools/pg_bsd_indent/indent_globs.h.html#L46" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/tools/pg_bsd_indent/indent_globs.h.html&quot;}, '*');">true</a>;</p>
+<p>if (!SvOK(<a class="wiki-source-link" href="../../source/src/interfaces/ecpg/compatlib/informix.c.html#L687" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/ecpg/compatlib/informix.c.html&quot;}, '*');">value</a>)) { pairs[i].val = NULL; pairs[i].vallen = 0; pairs[i].isnull = <a class="wiki-source-link" href="../../source/src/tools/pg_bsd_indent/indent_globs.h.html#L46" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/tools/pg_bsd_indent/indent_globs.h.html&quot;}, '*');">true</a>; } else { pairs[i].val = pstrdup(<a class="wiki-source-link" href="../../source/src/pl/plperl/plperl.h.html#L88" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__pl__plperl__plperl_h__sv2cstr.html&quot;}, '*');">sv2cstr</a>(<a class="wiki-source-link" href="../../source/src/interfaces/ecpg/compatlib/informix.c.html#L687" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/ecpg/compatlib/informix.c.html&quot;}, '*');">value</a>)); pairs[i].vallen = hstoreCheckValLen(strlen(pairs[i].val)); pairs[i].isnull = <a class="wiki-source-link" href="../../source/src/tools/pg_bsd_indent/indent_globs.h.html#L43" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/tools/pg_bsd_indent/indent_globs.h.html&quot;}, '*');">false</a>; }</p>
+<p>i++; ~~~</p>
+<h2>失敗モードと境界条件</h2>
+<p>まだ解析していません。</p>
+<h2>保守担当者向けメモ</h2>
+<ul>
+<li>後続フェーズで、ソース本文の文脈と caller/callee 情報を使ってこのページを強化する。</li>
+</ul><script>
+(function() {
+  function notifyParent() {
+    if (parent === window) return;
+    parent.postMessage({type: "frame-location", frame: window.name || "", href: window.location.href}, "*");
+  }
+  document.addEventListener("click", function(event) {
+    const link = event.target.closest("a[data-panel]");
+    if (!link || parent === window) return;
+    parent.postMessage({type: "source-link", panel: link.dataset.panel}, "*");
+  });
+  window.addEventListener("load", notifyParent);
+  window.addEventListener("hashchange", notifyParent);
+})();
+</script></body></html>

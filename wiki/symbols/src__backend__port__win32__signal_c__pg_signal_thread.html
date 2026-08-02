@@ -1,0 +1,87 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>symbols/src__backend__port__win32__signal_c__pg_signal_thread.md</title><link rel="stylesheet" href="../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../source/src/backend/port/win32/signal.c.html#L277" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__port__win32__signal_c__pg_signal_thread.html&quot;}, '*');">pg_signal_thread</a></h1>
+<h2>定義</h2>
+<ul>
+<li>種別: <code>function</code></li>
+<li>定義箇所: <code>src/backend/port/win32/signal.c:277</code></li>
+<li>所属モジュール: <a class="wiki-entity-link" href="../modules/src__backend__port__win32.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/modules/src__backend__port__win32.html&quot;, &quot;source&quot;: &quot;source/src/backend/port/win32/crashdump.c.html&quot;}, '*');"><code>module:src/backend/port/win32</code></a></li>
+</ul>
+<h2>目的</h2>
+<p>静的シンボル索引から生成された初期シンボルページです。</p>
+<h2>シグネチャまたは形状</h2>
+<ul>
+<li>シグネチャ: <code>static DWORD WINAPI pg_signal_thread(LPVOID param)</code></li>
+</ul>
+<h2>入力と出力</h2>
+<ul>
+<li>引数: <code>LPVOID param</code></li>
+<li>戻り値: <code>DWORD WINAPI</code></li>
+</ul>
+<h2>前提条件と不変条件</h2>
+<p>まだ解析していません。</p>
+<h2>アルゴリズムまたは振る舞い</h2>
+<ul>
+<li>複雑度: <code>high</code> (score 22)</li>
+</ul>
+<p>まだ解析していません。</p>
+<h2>呼び出し元と呼び出し先</h2>
+<ul>
+<li>呼び出し元: なし</li>
+<li>呼び出し先: <a class="wiki-source-link" href="../../source/src/backend/port/win32/signal.c.html#L262" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__port__win32__signal_c__pg_queue_signal.html&quot;}, '*');"><code>pg_queue_signal</code></a>, <code>write_stderr</code></li>
+<li>呼び出し元サイト: なし</li>
+<li>呼び出しサイト: <code>snprintf</code> at <code>src/backend/port/win32/signal.c:284:2</code> (unresolved), <code>GetCurrentProcessId</code> at <code>src/backend/port/win32/signal.c:284:68</code> (unresolved), <code>CreateNamedPipe</code> at <code>src/backend/port/win32/signal.c:293:11</code> (unresolved), <code>write_stderr</code> at <code>src/backend/port/win32/signal.c:299:5</code> (direct, confidence=high, resolved=<a class="wiki-entity-link" href="src__backend__utils__error__elog_c__write_stderr.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__utils__error__elog_c__write_stderr.html&quot;, &quot;source&quot;: &quot;source/src/backend/utils/error/elog.c.html#L4228&quot;}, '*');"><code>symbol:src/backend/utils/error/elog.c#write_stderr</code></a>), <code>GetLastError</code> at <code>src/backend/port/win32/signal.c:299:87</code> (unresolved), <code>SleepEx</code> at <code>src/backend/port/win32/signal.c:300:5</code> (unresolved), <code>ConnectNamedPipe</code> at <code>src/backend/port/win32/signal.c:310:16</code> (unresolved), <code>GetLastError</code> at <code>src/backend/port/win32/signal.c:310:55</code> (unresolved), <code>ReadFile</code> at <code>src/backend/port/win32/signal.c:319:8</code> (unresolved), <a class="wiki-source-link" href="../../source/src/backend/port/win32/signal.c.html#L262" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__port__win32__signal_c__pg_queue_signal.html&quot;}, '*');"><code>pg_queue_signal</code></a> at <code>src/backend/port/win32/signal.c:331:5</code> (direct, confidence=high, resolved=<a class="wiki-entity-link" href="src__backend__port__win32__signal_c__pg_queue_signal.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__port__win32__signal_c__pg_queue_signal.html&quot;, &quot;source&quot;: &quot;source/src/backend/port/win32/signal.c.html#L262&quot;}, '*');"><code>symbol:src/backend/port/win32/signal.c#pg_queue_signal</code></a>), <code>WriteFile</code> at <code>src/backend/port/win32/signal.c:337:5</code> (unresolved), <code>FlushFileBuffers</code> at <code>src/backend/port/win32/signal.c:346:5</code> (unresolved), <code>DisconnectNamedPipe</code> at <code>src/backend/port/win32/signal.c:358:4</code> (unresolved), <code>CloseHandle</code> at <code>src/backend/port/win32/signal.c:370:4</code> (unresolved)</li>
+</ul>
+<h2>関連データ構造</h2>
+<p><a class="wiki-source-link" href="../../source/src/interfaces/ecpg/ecpglib/ecpglib_extern.h.html#L101" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__interfaces__ecpg__ecpglib__ecpglib_extern_h__connection.html&quot;}, '*');"><code>connection</code></a>, <a class="wiki-source-link" href="../../source/src/port/win32error.c.html#L20" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__port__win32error_c__DWORD.html&quot;}, '*');"><code>DWORD</code></a></p>
+<h2>ソース抜粋</h2>
+<p>~~~c static <a class="wiki-source-link" href="../../source/src/port/win32error.c.html#L20" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__port__win32error_c__DWORD.html&quot;}, '*');">DWORD</a> WINAPI <a class="wiki-source-link" href="../../source/src/backend/port/win32/signal.c.html#L277" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__port__win32__signal_c__pg_signal_thread.html&quot;}, '*');">pg_signal_thread</a>(LPVOID param) { char		pipename[128]; HANDLE		pipe = <a class="wiki-source-link" href="../../source/src/backend/port/win32/signal.c.html#L28" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/port/win32/signal.c.html&quot;}, '*');">pgwin32_initial_signal_pipe</a>;</p>
+<p>/* Set up pipe name, in case we have to re-create the pipe. */ snprintf(pipename, sizeof(pipename), &quot;\\\\.\\pipe\\pgsignal_%lu&quot;, GetCurrentProcessId());</p>
+<p>for (;;) { BOOL		fConnected;</p>
+<p>/* Create a new pipe instance if we don&#x27;t have one. */ if (pipe == INVALID_HANDLE_VALUE) { pipe = CreateNamedPipe(pipename, PIPE_ACCESS_DUPLEX, PIPE_TYPE_MESSAGE | PIPE_READMODE_MESSAGE | PIPE_WAIT, PIPE_UNLIMITED_INSTANCES, 16, 16, 1000, NULL);</p>
+<p>if (pipe == INVALID_HANDLE_VALUE) { write_stderr(&quot;could not create signal listener pipe: error code %lu; retrying\n&quot;, GetLastError()); SleepEx(500, FALSE); continue; } }</p>
+<p>/*</p>
+<ul>
+<li>Wait for a client to connect.  If something connects <a class="wiki-source-link" href="../../source/src/backend/regex/regc_locale.c.html#L487" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__regex__regc_locale_c__before.html&quot;}, '*');">before</a> we</li>
+<li>reach here, we&#x27;ll get back a &quot;failure&quot; with ERROR_PIPE_CONNECTED,</li>
+<li>which <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> actually a success (way to go, Microsoft).</li>
+<p>*/ fConnected = ConnectNamedPipe(pipe, NULL) ? TRUE : (GetLastError() == ERROR_PIPE_CONNECTED); if (fConnected) { /*</p>
+<li>We have a <a class="wiki-source-link" href="../../source/src/interfaces/ecpg/ecpglib/ecpglib_extern.h.html#L101" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__interfaces__ecpg__ecpglib__ecpglib_extern_h__connection.html&quot;}, '*');">connection</a> from a would-be signal sender. Process it.</li>
+<p>*/ BYTE		sigNum; <a class="wiki-source-link" href="../../source/src/port/win32error.c.html#L20" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__port__win32error_c__DWORD.html&quot;}, '*');">DWORD</a>		bytes;</p>
+</ul>
+<p>if (ReadFile(pipe, &amp;sigNum, 1, &amp;bytes, NULL) &amp;&amp; bytes == 1) { /*</p>
+<ul>
+<li>Queue the signal <a class="wiki-source-link" href="../../source/src/backend/regex/regc_locale.c.html#L487" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__regex__regc_locale_c__before.html&quot;}, '*');">before</a> responding to the client.  In this</li>
+<li>way, it&#x27;s guaranteed that once <a class="wiki-source-link" href="../../source/src/include/port/win32_port.h.html#L490" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/port/win32_port.h.html&quot;}, '*');">kill</a>() has returned in the</li>
+<li>signal sender, the next <a class="wiki-source-link" href="../../source/src/include/miscadmin.h.html#L125" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/miscadmin.h.html&quot;}, '*');">CHECK_FOR_INTERRUPTS</a>() in the</li>
+<li>signal recipient will see the signal.  (This <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> a stronger</li>
+<li>guarantee than POSIX makes; maybe we don&#x27;t need it?  But</li>
+<li>without it, we&#x27;ve seen timing bugs on Windows that do not</li>
+<li><a class="wiki-source-link" href="../../source/src/bin/pg_basebackup/pg_basebackup.c.html#L154" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/bin/pg_basebackup/pg_basebackup.c.html&quot;}, '*');">manifest</a> on any known Unix.)</li>
+<p>*/ <a class="wiki-source-link" href="../../source/src/backend/port/win32/signal.c.html#L262" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__port__win32__signal_c__pg_queue_signal.html&quot;}, '*');">pg_queue_signal</a>(sigNum);</p>
+</ul>
+<p>/*</p>
+<ul>
+<li>Write something back to the client, allowing its</li>
+<li>CallNamedPipe() call to terminate.</li>
+<p>*/ ~~~</p>
+</ul>
+<h2>失敗モードと境界条件</h2>
+<p>まだ解析していません。</p>
+<h2>保守担当者向けメモ</h2>
+<ul>
+<li>後続フェーズで、ソース本文の文脈と caller/callee 情報を使ってこのページを強化する。</li>
+</ul><script>
+(function() {
+  function notifyParent() {
+    if (parent === window) return;
+    parent.postMessage({type: "frame-location", frame: window.name || "", href: window.location.href}, "*");
+  }
+  document.addEventListener("click", function(event) {
+    const link = event.target.closest("a[data-panel]");
+    if (!link || parent === window) return;
+    parent.postMessage({type: "source-link", panel: link.dataset.panel}, "*");
+  });
+  window.addEventListener("load", notifyParent);
+  window.addEventListener("hashchange", notifyParent);
+})();
+</script></body></html>

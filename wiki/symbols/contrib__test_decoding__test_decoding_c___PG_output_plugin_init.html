@@ -1,0 +1,57 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>symbols/contrib__test_decoding__test_decoding_c___PG_output_plugin_init.md</title><link rel="stylesheet" href="../../styles.css"></head><body><h1>_PG_output_plugin_init</h1>
+<h2>定義</h2>
+<ul>
+<li>種別: <code>function</code></li>
+<li>定義箇所: <code>contrib/test_decoding/test_decoding.c:130</code></li>
+<li>所属モジュール: <a class="wiki-entity-link" href="../modules/contrib__test_decoding.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/modules/contrib__test_decoding.html&quot;, &quot;source&quot;: &quot;source/contrib/test_decoding/test_decoding.c.html&quot;}, '*');"><code>module:contrib/test_decoding</code></a></li>
+</ul>
+<h2>目的</h2>
+<p>静的シンボル索引から生成された初期シンボルページです。</p>
+<h2>シグネチャまたは形状</h2>
+<ul>
+<li>シグネチャ: <code>void _PG_output_plugin_init(OutputPluginCallbacks *cb)</code></li>
+</ul>
+<h2>入力と出力</h2>
+<ul>
+<li>引数: <code>OutputPluginCallbacks *cb</code></li>
+<li>戻り値: <code>void</code></li>
+</ul>
+<h2>前提条件と不変条件</h2>
+<p>まだ解析していません。</p>
+<h2>アルゴリズムまたは振る舞い</h2>
+<ul>
+<li>複雑度: <code>medium</code> (score 9)</li>
+</ul>
+<p>まだ解析していません。</p>
+<h2>呼び出し元と呼び出し先</h2>
+<ul>
+<li>呼び出し元: なし</li>
+<li>呼び出し先: なし</li>
+<li>呼び出し元サイト: なし</li>
+<li>呼び出しサイト: なし</li>
+</ul>
+<h2>関連データ構造</h2>
+<p><a class="wiki-source-link" href="../../source/src/include/replication/output_plugin.h.html#L36" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__replication__output_plugin_h__OutputPluginCallbacks.html&quot;}, '*');"><code>OutputPluginCallbacks</code></a></p>
+<h2>ソース抜粋</h2>
+<p>~~~c void _PG_output_plugin_init(<a class="wiki-source-link" href="../../source/src/include/replication/output_plugin.h.html#L36" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__replication__output_plugin_h__OutputPluginCallbacks.html&quot;}, '*');">OutputPluginCallbacks</a> *cb) { cb-&gt;startup_cb = <a class="wiki-source-link" href="../../source/contrib/test_decoding/test_decoding.c.html#L158" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/contrib__test_decoding__test_decoding_c__pg_decode_startup.html&quot;}, '*');">pg_decode_startup</a>; cb-&gt;begin_cb = <a class="wiki-source-link" href="../../source/contrib/test_decoding/test_decoding.c.html#L289" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/contrib__test_decoding__test_decoding_c__pg_decode_begin_txn.html&quot;}, '*');">pg_decode_begin_txn</a>; cb-&gt;change_cb = <a class="wiki-source-link" href="../../source/contrib/test_decoding/test_decoding.c.html#L602" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/contrib__test_decoding__test_decoding_c__pg_decode_change.html&quot;}, '*');">pg_decode_change</a>; cb-&gt;truncate_cb = <a class="wiki-source-link" href="../../source/contrib/test_decoding/test_decoding.c.html#L689" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/contrib__test_decoding__test_decoding_c__pg_decode_truncate.html&quot;}, '*');">pg_decode_truncate</a>; cb-&gt;commit_cb = <a class="wiki-source-link" href="../../source/contrib/test_decoding/test_decoding.c.html#L321" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/contrib__test_decoding__test_decoding_c__pg_decode_commit_txn.html&quot;}, '*');">pg_decode_commit_txn</a>; cb-&gt;filter_by_origin_cb = <a class="wiki-source-link" href="../../source/contrib/test_decoding/test_decoding.c.html#L462" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/contrib__test_decoding__test_decoding_c__pg_decode_filter.html&quot;}, '*');">pg_decode_filter</a>; cb-&gt;shutdown_cb = <a class="wiki-source-link" href="../../source/contrib/test_decoding/test_decoding.c.html#L279" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/contrib__test_decoding__test_decoding_c__pg_decode_shutdown.html&quot;}, '*');">pg_decode_shutdown</a>; cb-&gt;message_cb = <a class="wiki-source-link" href="../../source/contrib/test_decoding/test_decoding.c.html#L744" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/contrib__test_decoding__test_decoding_c__pg_decode_message.html&quot;}, '*');">pg_decode_message</a>; cb-&gt;filter_prepare_cb = <a class="wiki-source-link" href="../../source/contrib/test_decoding/test_decoding.c.html#L452" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/contrib__test_decoding__test_decoding_c__pg_decode_filter_prepare.html&quot;}, '*');">pg_decode_filter_prepare</a>; cb-&gt;begin_prepare_cb = <a class="wiki-source-link" href="../../source/contrib/test_decoding/test_decoding.c.html#L349" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/contrib__test_decoding__test_decoding_c__pg_decode_begin_prepare_txn.html&quot;}, '*');">pg_decode_begin_prepare_txn</a>; cb-&gt;prepare_cb = <a class="wiki-source-link" href="../../source/contrib/test_decoding/test_decoding.c.html#L370" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/contrib__test_decoding__test_decoding_c__pg_decode_prepare_txn.html&quot;}, '*');">pg_decode_prepare_txn</a>; cb-&gt;commit_prepared_cb = <a class="wiki-source-link" href="../../source/contrib/test_decoding/test_decoding.c.html#L400" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/contrib__test_decoding__test_decoding_c__pg_decode_commit_prepared_txn.html&quot;}, '*');">pg_decode_commit_prepared_txn</a>; cb-&gt;rollback_prepared_cb = <a class="wiki-source-link" href="../../source/contrib/test_decoding/test_decoding.c.html#L422" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/contrib__test_decoding__test_decoding_c__pg_decode_rollback_prepared_txn.html&quot;}, '*');">pg_decode_rollback_prepared_txn</a>; cb-&gt;stream_start_cb = <a class="wiki-source-link" href="../../source/contrib/test_decoding/test_decoding.c.html#L768" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/contrib__test_decoding__test_decoding_c__pg_decode_stream_start.html&quot;}, '*');">pg_decode_stream_start</a>; cb-&gt;stream_stop_cb = <a class="wiki-source-link" href="../../source/contrib/test_decoding/test_decoding.c.html#L803" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/contrib__test_decoding__test_decoding_c__pg_decode_stream_stop.html&quot;}, '*');">pg_decode_stream_stop</a>; cb-&gt;stream_abort_cb = <a class="wiki-source-link" href="../../source/contrib/test_decoding/test_decoding.c.html#L821" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/contrib__test_decoding__test_decoding_c__pg_decode_stream_abort.html&quot;}, '*');">pg_decode_stream_abort</a>; cb-&gt;stream_prepare_cb = <a class="wiki-source-link" href="../../source/contrib/test_decoding/test_decoding.c.html#L855" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/contrib__test_decoding__test_decoding_c__pg_decode_stream_prepare.html&quot;}, '*');">pg_decode_stream_prepare</a>; cb-&gt;stream_commit_cb = <a class="wiki-source-link" href="../../source/contrib/test_decoding/test_decoding.c.html#L882" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/contrib__test_decoding__test_decoding_c__pg_decode_stream_commit.html&quot;}, '*');">pg_decode_stream_commit</a>; cb-&gt;stream_change_cb = <a class="wiki-source-link" href="../../source/contrib/test_decoding/test_decoding.c.html#L916" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/contrib__test_decoding__test_decoding_c__pg_decode_stream_change.html&quot;}, '*');">pg_decode_stream_change</a>; cb-&gt;stream_message_cb = <a class="wiki-source-link" href="../../source/contrib/test_decoding/test_decoding.c.html#L945" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/contrib__test_decoding__test_decoding_c__pg_decode_stream_message.html&quot;}, '*');">pg_decode_stream_message</a>; cb-&gt;stream_truncate_cb = <a class="wiki-source-link" href="../../source/contrib/test_decoding/test_decoding.c.html#L984" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/contrib__test_decoding__test_decoding_c__pg_decode_stream_truncate.html&quot;}, '*');">pg_decode_stream_truncate</a>; } ~~~</p>
+<h2>失敗モードと境界条件</h2>
+<p>まだ解析していません。</p>
+<h2>保守担当者向けメモ</h2>
+<ul>
+<li>後続フェーズで、ソース本文の文脈と caller/callee 情報を使ってこのページを強化する。</li>
+</ul><script>
+(function() {
+  function notifyParent() {
+    if (parent === window) return;
+    parent.postMessage({type: "frame-location", frame: window.name || "", href: window.location.href}, "*");
+  }
+  document.addEventListener("click", function(event) {
+    const link = event.target.closest("a[data-panel]");
+    if (!link || parent === window) return;
+    parent.postMessage({type: "source-link", panel: link.dataset.panel}, "*");
+  });
+  window.addEventListener("load", notifyParent);
+  window.addEventListener("hashchange", notifyParent);
+})();
+</script></body></html>

@@ -1,0 +1,16 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>no_such_variable</title><link rel="stylesheet" href="../styles.css"></head><body><h1>Multiple definitions: <code>no_such_variable</code></h1><ul><li><a href="../source/src/backend/utils/adt/tsquery_op.c.html#L240" target="source-view">src/backend/utils/adt/tsquery_op.c:240 (variable)</a></li><li><a href="../source/src/backend/utils/adt/tsvector_op.c.html#L157" target="source-view">src/backend/utils/adt/tsvector_op.c:157 (variable)</a></li></ul><script>
+(function() {
+  function notifyParent() {
+    if (parent === window) return;
+    parent.postMessage({type: "frame-location", frame: window.name || "", href: window.location.href}, "*");
+  }
+  document.addEventListener("click", function(event) {
+    const link = event.target.closest("a[data-panel]");
+    if (!link || parent === window) return;
+    parent.postMessage({type: "source-link", panel: link.dataset.panel}, "*");
+  });
+  window.addEventListener("load", notifyParent);
+  window.addEventListener("hashchange", notifyParent);
+})();
+</script></body></html>

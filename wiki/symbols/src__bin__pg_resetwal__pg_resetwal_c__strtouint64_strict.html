@@ -1,0 +1,67 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>symbols/src__bin__pg_resetwal__pg_resetwal_c__strtouint64_strict.md</title><link rel="stylesheet" href="../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../source/src/bin/pg_resetwal/pg_resetwal.c.html#L1291" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__bin__pg_resetwal__pg_resetwal_c__strtouint64_strict.html&quot;}, '*');">strtouint64_strict</a></h1>
+<h2>定義</h2>
+<ul>
+<li>種別: <code>function</code></li>
+<li>定義箇所: <code>src/bin/pg_resetwal/pg_resetwal.c:1291</code></li>
+<li>所属モジュール: <a class="wiki-entity-link" href="../modules/src__bin__pg_resetwal.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/modules/src__bin__pg_resetwal.html&quot;, &quot;source&quot;: &quot;source/src/bin/pg_resetwal/pg_resetwal.c.html&quot;}, '*');"><code>module:src/bin/pg_resetwal</code></a></li>
+</ul>
+<h2>目的</h2>
+<p>静的シンボル索引から生成された初期シンボルページです。</p>
+<h2>シグネチャまたは形状</h2>
+<ul>
+<li>シグネチャ: <code>static uint64 strtouint64_strict(const char *restrict s, char **restrict endptr, int base)</code></li>
+</ul>
+<h2>入力と出力</h2>
+<ul>
+<li>引数: <code>const char *restrict s</code>, <code>char **restrict endptr</code>, <code>int base</code></li>
+<li>戻り値: <code>uint64</code></li>
+</ul>
+<h2>前提条件と不変条件</h2>
+<p>まだ解析していません。</p>
+<h2>アルゴリズムまたは振る舞い</h2>
+<ul>
+<li>複雑度: <code>medium</code> (score 8)</li>
+</ul>
+<p>まだ解析していません。</p>
+<h2>呼び出し元と呼び出し先</h2>
+<ul>
+<li>呼び出し元: <code>main</code></li>
+<li>呼び出し先: なし</li>
+<li>呼び出し元サイト: <code>main</code> at <code>src/bin/pg_resetwal/pg_resetwal.c:299:22</code> (direct, confidence=high, resolved=<a class="wiki-entity-link" href="src__bin__pg_resetwal__pg_resetwal_c__strtouint64_strict.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__bin__pg_resetwal__pg_resetwal_c__strtouint64_strict.html&quot;, &quot;source&quot;: &quot;source/src/bin/pg_resetwal/pg_resetwal.c.html#L1291&quot;}, '*');"><code>symbol:src/bin/pg_resetwal/pg_resetwal.c#strtouint64_strict</code></a>)</li>
+<li>呼び出しサイト: <code>isspace</code> at <code>src/bin/pg_resetwal/pg_resetwal.c:1298:9</code> (unresolved), <a class="wiki-source-link" href="../../source/src/include/c.h.html#L1418" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/c.h.html&quot;}, '*');"><code>strtou64</code></a> at <code>src/bin/pg_resetwal/pg_resetwal.c:1307:8</code> (unresolved)</li>
+</ul>
+<h2>関連データ構造</h2>
+<p><code>uint64</code></p>
+<h2>ソース抜粋</h2>
+<p>~~~c static uint64 <a class="wiki-source-link" href="../../source/src/bin/pg_resetwal/pg_resetwal.c.html#L1291" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__bin__pg_resetwal__pg_resetwal_c__strtouint64_strict.html&quot;}, '*');">strtouint64_strict</a>(const char *restrict s, char **restrict endptr, int base) { uint64		val; bool		is_neg;</p>
+<p>/* skip leading whitespace */ while (isspace((unsigned char) *s)) s++;</p>
+<p>/*</p>
+<ul>
+<li>Is it negative?  We still call <a class="wiki-source-link" href="../../source/src/include/c.h.html#L1418" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/c.h.html&quot;}, '*');">strtou64</a>() if it was, to set &#x27;endptr&#x27;.</li>
+<li>(The current callers don&#x27;t care though.)</li>
+<p>*/ is_neg = (*s == &#x27;-&#x27;);</p>
+</ul>
+<p>val = <a class="wiki-source-link" href="../../source/src/include/c.h.html#L1418" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/c.h.html&quot;}, '*');">strtou64</a>(s, endptr, base);</p>
+<p>/* reject if it was negative */ if (errno == 0 &amp;&amp; is_neg) { errno = ERANGE; val = 0; }</p>
+<p>return val; } ~~~</p>
+<h2>失敗モードと境界条件</h2>
+<p>まだ解析していません。</p>
+<h2>保守担当者向けメモ</h2>
+<ul>
+<li>後続フェーズで、ソース本文の文脈と caller/callee 情報を使ってこのページを強化する。</li>
+</ul><script>
+(function() {
+  function notifyParent() {
+    if (parent === window) return;
+    parent.postMessage({type: "frame-location", frame: window.name || "", href: window.location.href}, "*");
+  }
+  document.addEventListener("click", function(event) {
+    const link = event.target.closest("a[data-panel]");
+    if (!link || parent === window) return;
+    parent.postMessage({type: "source-link", panel: link.dataset.panel}, "*");
+  });
+  window.addEventListener("load", notifyParent);
+  window.addEventListener("hashchange", notifyParent);
+})();
+</script></body></html>

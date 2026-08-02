@@ -1,0 +1,69 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>symbols/src__backend__commands__copyto_c__CopyToStateData.md</title><link rel="stylesheet" href="../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../source/src/backend/commands/copyto.c.html#L71" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__commands__copyto_c__CopyToStateData.html&quot;}, '*');">CopyToStateData</a></h1>
+<h2>定義</h2>
+<ul>
+<li>種別: <code>struct</code></li>
+<li>定義箇所: <code>src/backend/commands/copyto.c:71</code></li>
+<li>所属モジュール: <a class="wiki-entity-link" href="../modules/src__backend__commands.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/modules/src__backend__commands.html&quot;, &quot;source&quot;: &quot;source/src/backend/commands/aggregatecmds.c.html&quot;}, '*');"><code>module:src/backend/commands</code></a></li>
+</ul>
+<h2>目的</h2>
+<p>静的シンボル索引から生成された初期シンボルページです。</p>
+<h2>シグネチャまたは形状</h2>
+<ul>
+<li>シグネチャ: <code>typedef struct CopyToStateData</code></li>
+</ul>
+<h2>入力と出力</h2>
+<p>まだ解析していません。</p>
+<h2>前提条件と不変条件</h2>
+<p>まだ解析していません。</p>
+<h2>アルゴリズムまたは振る舞い</h2>
+<p>まだ解析していません。</p>
+<h2>呼び出し元と呼び出し先</h2>
+<ul>
+<li>呼び出し元: なし</li>
+<li>呼び出し先: なし</li>
+<li>呼び出し元サイト: なし</li>
+<li>呼び出しサイト: なし</li>
+</ul>
+<h2>関連データ構造</h2>
+<p><a class="wiki-source-link" href="../../source/src/include/commands/copy.h.html#L107" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__commands__copy_h__copy_data_dest_cb.html&quot;}, '*');"><code>copy_data_dest_cb</code></a>, <a class="wiki-source-link" href="../../source/src/backend/commands/copyto.c.html#L49" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__commands__copyto_c__CopyDest.html&quot;}, '*');"><code>CopyDest</code></a>, <a class="wiki-source-link" href="../../source/src/include/commands/copy.h.html#L68" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__commands__copy_h__CopyFormatOptions.html&quot;}, '*');"><code>CopyFormatOptions</code></a>, <a class="wiki-source-link" href="../../source/src/include/commands/copyapi.h.html#L23" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__commands__copyapi_h__CopyToRoutine.html&quot;}, '*');"><code>CopyToRoutine</code></a>, <code>Datum</code>, <code>descriptor</code>, <code>FmgrInfo</code>, <code>List</code>, <a class="wiki-source-link" href="../../source/src/timezone/zic.c.html#L310" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__timezone__zic_c__lookup.html&quot;}, '*');"><code>lookup</code></a>, <code>MemoryContext</code>, <code>Node</code>, <code>QueryDesc</code>, <code>Relation</code>, <code>state</code>, <code>StringInfo</code>, <code>TupleDesc</code>, <code>uint64</code></p>
+<h2>ソース抜粋</h2>
+<p>~~~c typedef struct <a class="wiki-source-link" href="../../source/src/backend/commands/copyto.c.html#L71" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__commands__copyto_c__CopyToStateData.html&quot;}, '*');">CopyToStateData</a> { /* format-specific <a class="wiki-source-link" href="../../source/src/port/win32ntdll.c.html#L30" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/port/win32ntdll.c.html&quot;}, '*');">routines</a> */ const <a class="wiki-source-link" href="../../source/src/include/commands/copyapi.h.html#L23" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__commands__copyapi_h__CopyToRoutine.html&quot;}, '*');">CopyToRoutine</a> *routine;</p>
+<p>/* low-level state data */ <a class="wiki-source-link" href="../../source/src/backend/commands/copyto.c.html#L49" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__commands__copyto_c__CopyDest.html&quot;}, '*');">CopyDest</a>	copy_dest;		/* type of copy source/destination */ FILE	   *copy_file;		/* used if copy_dest == COPY_FILE */ StringInfo	fe_msgbuf;		/* used for all dests during COPY TO */</p>
+<p>int			file_encoding;	/* file or remote side&#x27;s character encoding */ bool		need_transcoding;	/* file encoding diff from server? */ bool		encoding_embeds_ascii;	/* ASCII can be non-first byte? */</p>
+<p>/* parameters from the COPY command */ Relation	rel;			/* relation to copy to */ QueryDesc  *queryDesc;		/* executable query to copy from */ List	   *attnumlist;		/* integer list of attnums to copy */ char	   *filename;		/* filename, or NULL for STDOUT */ bool		is_program;		/* <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> &#x27;filename&#x27; a program to <a class="wiki-source-link" href="../../source/src/include/port.h.html#L389" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/port.h.html&quot;}, '*');">popen</a>? */ bool		json_row_delim_needed;	/* need delimiter <a class="wiki-source-link" href="../../source/src/backend/regex/regc_locale.c.html#L487" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__regex__regc_locale_c__before.html&quot;}, '*');">before</a> next row */ StringInfo	json_buf;		/* reusable buffer for JSON <a class="wiki-source-link" href="../../source/src/bin/pg_test_timing/pg_test_timing.c.html#L357" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__bin__pg_test_timing__pg_test_timing_c__output.html&quot;}, '*');">output</a>,</p>
+<ul>
+<li><a class="wiki-source-link" href="../../source/src/port/win32ntdll.c.html#L36" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/port/win32ntdll.c.html&quot;}, '*');">initialized</a> in <a class="wiki-source-link" href="../../source/src/backend/commands/copyto.c.html#L786" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__commands__copyto_c__BeginCopyTo.html&quot;}, '*');">BeginCopyTo</a> */</li>
+<p>TupleDesc	tupDesc;		/* Descriptor for JSON <a class="wiki-source-link" href="../../source/src/bin/pg_test_timing/pg_test_timing.c.html#L357" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__bin__pg_test_timing__pg_test_timing_c__output.html&quot;}, '*');">output</a>; for a column</p>
+<li>list this <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> a projected descriptor */</li>
+<p>Datum	   *json_projvalues;	/* pre-allocated projection values, or</p>
+<li>NULL */</li>
+<p>bool	   *json_projnulls; /* pre-allocated projection nulls, or NULL */ <a class="wiki-source-link" href="../../source/src/include/commands/copy.h.html#L107" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__commands__copy_h__copy_data_dest_cb.html&quot;}, '*');">copy_data_dest_cb</a> data_dest_cb; /* function for writing data */</p>
+</ul>
+<p><a class="wiki-source-link" href="../../source/src/include/commands/copy.h.html#L68" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__commands__copy_h__CopyFormatOptions.html&quot;}, '*');">CopyFormatOptions</a> <a class="wiki-source-link" href="../../source/src/bin/pg_amcheck/pg_amcheck.c.html#L112" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/bin/pg_amcheck/pg_amcheck.c.html&quot;}, '*');">opts</a>; Node	   *whereClause;	/* WHERE condition (or NULL) */ List	   *<a class="wiki-source-link" href="../../source/src/bin/pgbench/pgbench.c.html#L224" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/bin/pgbench/pgbench.c.html&quot;}, '*');">partitions</a>;		/* OID list of <a class="wiki-source-link" href="../../source/src/bin/pgbench/pgbench.c.html#L224" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/bin/pgbench/pgbench.c.html&quot;}, '*');">partitions</a> to copy data from */</p>
+<p>/*</p>
+<ul>
+<li>Working state</li>
+<p>*/ MemoryContext copycontext;	/* per-copy execution context */</p>
+</ul>
+<p>FmgrInfo   *out_functions;	/* <a class="wiki-source-link" href="../../source/src/timezone/zic.c.html#L310" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__timezone__zic_c__lookup.html&quot;}, '*');">lookup</a> info for <a class="wiki-source-link" href="../../source/src/bin/pg_test_timing/pg_test_timing.c.html#L357" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__bin__pg_test_timing__pg_test_timing_c__output.html&quot;}, '*');">output</a> <a class="wiki-source-link" href="../../source/src/backend/regex/regcomp.c.html#L358" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/regex/regcomp.c.html&quot;}, '*');">functions</a> */ MemoryContext rowcontext;	/* per-row evaluation context */ uint64		bytes_processed;	/* number of bytes processed so far */ } <a class="wiki-source-link" href="../../source/src/backend/commands/copyto.c.html#L71" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__commands__copyto_c__CopyToStateData.html&quot;}, '*');">CopyToStateData</a>; ~~~</p>
+<h2>失敗モードと境界条件</h2>
+<p>まだ解析していません。</p>
+<h2>保守担当者向けメモ</h2>
+<ul>
+<li>後続フェーズで、ソース本文の文脈と caller/callee 情報を使ってこのページを強化する。</li>
+</ul><script>
+(function() {
+  function notifyParent() {
+    if (parent === window) return;
+    parent.postMessage({type: "frame-location", frame: window.name || "", href: window.location.href}, "*");
+  }
+  document.addEventListener("click", function(event) {
+    const link = event.target.closest("a[data-panel]");
+    if (!link || parent === window) return;
+    parent.postMessage({type: "source-link", panel: link.dataset.panel}, "*");
+  });
+  window.addEventListener("load", notifyParent);
+  window.addEventListener("hashchange", notifyParent);
+})();
+</script></body></html>

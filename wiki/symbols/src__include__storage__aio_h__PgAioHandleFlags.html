@@ -1,0 +1,79 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>symbols/src__include__storage__aio_h__PgAioHandleFlags.md</title><link rel="stylesheet" href="../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../source/src/include/storage/aio.h.html#L48" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__storage__aio_h__PgAioHandleFlags.html&quot;}, '*');">PgAioHandleFlags</a></h1>
+<h2>定義</h2>
+<ul>
+<li>種別: <code>enum</code></li>
+<li>定義箇所: <code>src/include/storage/aio.h:48</code></li>
+<li>所属モジュール: <a class="wiki-entity-link" href="../modules/src__include__storage.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/modules/src__include__storage.html&quot;, &quot;source&quot;: &quot;source/src/include/storage/aio.h.html&quot;}, '*');"><code>module:src/include/storage</code></a></li>
+</ul>
+<h2>目的</h2>
+<p>静的シンボル索引から生成された初期シンボルページです。</p>
+<h2>シグネチャまたは形状</h2>
+<ul>
+<li>シグネチャ: <code>typedef enum PgAioHandleFlags</code></li>
+</ul>
+<h2>入力と出力</h2>
+<p>まだ解析していません。</p>
+<h2>前提条件と不変条件</h2>
+<p>まだ解析していません。</p>
+<h2>アルゴリズムまたは振る舞い</h2>
+<p>まだ解析していません。</p>
+<h2>呼び出し元と呼び出し先</h2>
+<ul>
+<li>呼び出し元: なし</li>
+<li>呼び出し先: なし</li>
+<li>呼び出し元サイト: なし</li>
+<li>呼び出しサイト: なし</li>
+</ul>
+<h2>関連データ構造</h2>
+<p>なし</p>
+<h2>ソース抜粋</h2>
+<p>~~~c typedef enum <a class="wiki-source-link" href="../../source/src/include/storage/aio.h.html#L48" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__storage__aio_h__PgAioHandleFlags.html&quot;}, '*');">PgAioHandleFlags</a> { /*</p>
+<ul>
+<li>The IO references backend local memory.</li>
+<p>*</p>
+<li>This needs to be set on an IO whenever the IO references process-local</li>
+<li>memory. Some IO methods do not support executing IO that references</li>
+<li>process local memory and thus need to fall back to executing IO</li>
+<li>synchronously for IOs with this <a class="wiki-source-link" href="../../source/src/test/locale/test-ctype.c.html#L32" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__test__locale__test-ctype_c__flag.html&quot;}, '*');">flag</a> set.</li>
+<p>*</p>
+<li>Required for correctness.</li>
+<p>*/ PGAIO_HF_REFERENCES_LOCAL = 1 &lt;&lt; 1,</p>
+</ul>
+<p>/*</p>
+<ul>
+<li>Hint that IO will be executed synchronously.</li>
+<p>*</p>
+<li>This can make it a <a class="wiki-source-link" href="../../source/src/backend/utils/adt/varbit.c.html#L390" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__utils__adt__varbit_c__bit.html&quot;}, '*');">bit</a> cheaper to <a class="wiki-source-link" href="../../source/contrib/intarray/_int_bool.c.html#L263" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/contrib__intarray___int_bool_c__execute.html&quot;}, '*');">execute</a> <a class="wiki-source-link" href="../../source/src/bin/pg_basebackup/pg_receivewal.c.html#L53" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/bin/pg_basebackup/pg_receivewal.c.html&quot;}, '*');">synchronous</a> IO via the AIO</li>
+<li>interface, to avoid needing an AIO and non-AIO version of code.</li>
+<p>*</p>
+<li>Advantageous to set, if applicable, but not required for correctness.</li>
+<p>*/ PGAIO_HF_SYNCHRONOUS = 1 &lt;&lt; 0,</p>
+</ul>
+<p>/*</p>
+<ul>
+<li>IO <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> using buffered IO, used to control heuristic in some IO methods.</li>
+<p>*</p>
+<li>Advantageous to set, if applicable, but not required for correctness.</li>
+<p>*/ PGAIO_HF_BUFFERED = 1 &lt;&lt; 2, } <a class="wiki-source-link" href="../../source/src/include/storage/aio.h.html#L48" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__storage__aio_h__PgAioHandleFlags.html&quot;}, '*');">PgAioHandleFlags</a>; ~~~</p>
+</ul>
+<h2>失敗モードと境界条件</h2>
+<p>まだ解析していません。</p>
+<h2>保守担当者向けメモ</h2>
+<ul>
+<li>後続フェーズで、ソース本文の文脈と caller/callee 情報を使ってこのページを強化する。</li>
+</ul><script>
+(function() {
+  function notifyParent() {
+    if (parent === window) return;
+    parent.postMessage({type: "frame-location", frame: window.name || "", href: window.location.href}, "*");
+  }
+  document.addEventListener("click", function(event) {
+    const link = event.target.closest("a[data-panel]");
+    if (!link || parent === window) return;
+    parent.postMessage({type: "source-link", panel: link.dataset.panel}, "*");
+  });
+  window.addEventListener("load", notifyParent);
+  window.addEventListener("hashchange", notifyParent);
+})();
+</script></body></html>

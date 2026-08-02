@@ -1,0 +1,85 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>symbols/src__common__blkreftable_c__BlockRefTableEntryGetBlocks.md</title><link rel="stylesheet" href="../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../source/src/common/blkreftable.c.html#L368" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__common__blkreftable_c__BlockRefTableEntryGetBlocks.html&quot;}, '*');">BlockRefTableEntryGetBlocks</a></h1>
+<h2>定義</h2>
+<ul>
+<li>種別: <code>function</code></li>
+<li>定義箇所: <code>src/common/blkreftable.c:368</code></li>
+<li>所属モジュール: <a class="wiki-entity-link" href="../modules/src__common.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/modules/src__common.html&quot;, &quot;source&quot;: &quot;source/src/common/archive.c.html&quot;}, '*');"><code>module:src/common</code></a></li>
+</ul>
+<h2>目的</h2>
+<p>静的シンボル索引から生成された初期シンボルページです。</p>
+<h2>シグネチャまたは形状</h2>
+<ul>
+<li>シグネチャ: <code>int BlockRefTableEntryGetBlocks(BlockRefTableEntry *entry, BlockNumber start_blkno, BlockNumber stop_blkno, BlockNumber *blocks, int nblocks)</code></li>
+</ul>
+<h2>入力と出力</h2>
+<ul>
+<li>引数: <code>BlockRefTableEntry *entry</code>, <code>BlockNumber start_blkno</code>, <code>BlockNumber stop_blkno</code>, <code>BlockNumber *blocks</code>, <code>int nblocks</code></li>
+<li>戻り値: <code>int</code></li>
+</ul>
+<h2>前提条件と不変条件</h2>
+<p>まだ解析していません。</p>
+<h2>アルゴリズムまたは振る舞い</h2>
+<ul>
+<li>複雑度: <code>high</code> (score 30)</li>
+</ul>
+<p>まだ解析していません。</p>
+<h2>呼び出し元と呼び出し先</h2>
+<ul>
+<li>呼び出し元: <a class="wiki-source-link" href="../../source/src/backend/backup/basebackup_incremental.c.html#L660" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__backup__basebackup_incremental_c__GetFileBackupMethod.html&quot;}, '*');"><code>GetFileBackupMethod</code></a></li>
+<li>呼び出し先: なし</li>
+<li>呼び出し元サイト: <a class="wiki-source-link" href="../../source/src/backend/backup/basebackup_incremental.c.html#L660" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__backup__basebackup_incremental_c__GetFileBackupMethod.html&quot;}, '*');"><code>GetFileBackupMethod</code></a> at <code>src/backend/backup/basebackup_incremental.c:800:12</code> (direct, confidence=high, resolved=<a class="wiki-entity-link" href="src__common__blkreftable_c__BlockRefTableEntryGetBlocks.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__common__blkreftable_c__BlockRefTableEntryGetBlocks.html&quot;, &quot;source&quot;: &quot;source/src/common/blkreftable.c.html#L368&quot;}, '*');"><code>symbol:src/common/blkreftable.c#BlockRefTableEntryGetBlocks</code></a>)</li>
+<li>呼び出しサイト: <a class="wiki-source-link" href="../../source/src/include/c.h.html#L950" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/c.h.html&quot;}, '*');"><code>Assert</code></a> at <code>src/common/blkreftable.c:380:2</code> (unresolved), <a class="wiki-source-link" href="../../source/src/include/c.h.html#L950" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/c.h.html&quot;}, '*');"><code>Assert</code></a> at <code>src/common/blkreftable.c:414:4</code> (unresolved), <a class="wiki-source-link" href="../../source/src/include/c.h.html#L950" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/c.h.html&quot;}, '*');"><code>Assert</code></a> at <code>src/common/blkreftable.c:416:4</code> (unresolved)</li>
+</ul>
+<h2>関連データ構造</h2>
+<p><code>BlockNumber</code>, <a class="wiki-source-link" href="../../source/src/common/blkreftable.c.html#L82" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__common__blkreftable_c__BlockRefTableChunk.html&quot;}, '*');"><code>BlockRefTableChunk</code></a>, <code>BlockRefTableEntry</code>, <code>uint16</code>, <code>uint32</code></p>
+<h2>ソース抜粋</h2>
+<p>~~~c int <a class="wiki-source-link" href="../../source/src/common/blkreftable.c.html#L368" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__common__blkreftable_c__BlockRefTableEntryGetBlocks.html&quot;}, '*');">BlockRefTableEntryGetBlocks</a>(BlockRefTableEntry *entry, BlockNumber start_blkno, BlockNumber stop_blkno, BlockNumber *blocks, int nblocks) { uint32		start_chunkno; uint32		stop_chunkno; uint32		chunkno; int			nresults = 0;</p>
+<p><a class="wiki-source-link" href="../../source/src/include/c.h.html#L950" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/c.h.html&quot;}, '*');">Assert</a>(entry != NULL);</p>
+<p>/*</p>
+<ul>
+<li>Figure out which chunks could potentially contain blocks of interest.</li>
+<p>*</p>
+<li>We need to be careful about overflow here, because stop_blkno could be</li>
+<li><a class="wiki-source-link" href="../../source/src/include/storage/block.h.html#L33" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/storage/block.h.html&quot;}, '*');">InvalidBlockNumber</a> or something very <a class="wiki-source-link" href="../../source/src/interfaces/libpq/win32.h.html#L12" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq/win32.h.html&quot;}, '*');">close</a> to it.</li>
+<p>*/ start_chunkno = start_blkno / <a class="wiki-source-link" href="../../source/src/common/blkreftable.c.html#L78" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/common/blkreftable.c.html&quot;}, '*');">BLOCKS_PER_CHUNK</a>; stop_chunkno = stop_blkno / <a class="wiki-source-link" href="../../source/src/common/blkreftable.c.html#L78" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/common/blkreftable.c.html&quot;}, '*');">BLOCKS_PER_CHUNK</a>; if ((stop_blkno % <a class="wiki-source-link" href="../../source/src/common/blkreftable.c.html#L78" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/common/blkreftable.c.html&quot;}, '*');">BLOCKS_PER_CHUNK</a>) != 0) ++stop_chunkno; if (stop_chunkno &gt; entry-&gt;nchunks) stop_chunkno = entry-&gt;nchunks;</p>
+</ul>
+<p>/*</p>
+<ul>
+<li>Loop over chunks.</li>
+<p>*/ for (chunkno = start_chunkno; chunkno &lt; stop_chunkno; ++chunkno) { uint16		chunk_usage = entry-&gt;chunk_usage[chunkno]; <a class="wiki-source-link" href="../../source/src/common/blkreftable.c.html#L82" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__common__blkreftable_c__BlockRefTableChunk.html&quot;}, '*');">BlockRefTableChunk</a> chunk_data = entry-&gt;chunk_data[chunkno]; unsigned	start_offset = 0; unsigned	stop_offset = <a class="wiki-source-link" href="../../source/src/common/blkreftable.c.html#L78" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/common/blkreftable.c.html&quot;}, '*');">BLOCKS_PER_CHUNK</a>;</p>
+</ul>
+<p>/*</p>
+<ul>
+<li>If the start and/or stop block number falls within this chunk, the</li>
+<li>whole chunk may not be of interest. Figure out which portion we</li>
+<li>care about, if it&#x27;s not the whole thing.</li>
+<p>*/ if (chunkno == start_chunkno) start_offset = start_blkno % <a class="wiki-source-link" href="../../source/src/common/blkreftable.c.html#L78" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/common/blkreftable.c.html&quot;}, '*');">BLOCKS_PER_CHUNK</a>; if (chunkno == stop_chunkno - 1) { <a class="wiki-source-link" href="../../source/src/include/c.h.html#L950" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/c.h.html&quot;}, '*');">Assert</a>(stop_blkno &gt; chunkno * <a class="wiki-source-link" href="../../source/src/common/blkreftable.c.html#L78" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/common/blkreftable.c.html&quot;}, '*');">BLOCKS_PER_CHUNK</a>); stop_offset = stop_blkno - (chunkno * <a class="wiki-source-link" href="../../source/src/common/blkreftable.c.html#L78" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/common/blkreftable.c.html&quot;}, '*');">BLOCKS_PER_CHUNK</a>); <a class="wiki-source-link" href="../../source/src/include/c.h.html#L950" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/c.h.html&quot;}, '*');">Assert</a>(stop_offset &lt;= <a class="wiki-source-link" href="../../source/src/common/blkreftable.c.html#L78" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/common/blkreftable.c.html&quot;}, '*');">BLOCKS_PER_CHUNK</a>); }</p>
+</ul>
+<p>/*</p>
+<ul>
+<li>Handling differs depending on whether this <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> an array of offsets</li>
+<li>or a bitmap.</li>
+<p>*/ if (chunk_usage == <a class="wiki-source-link" href="../../source/src/common/blkreftable.c.html#L80" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/common/blkreftable.c.html&quot;}, '*');">MAX_ENTRIES_PER_CHUNK</a>) { unsigned	i;</p>
+</ul>
+<p>/* It&#x27;s a bitmap, so <a class="wiki-source-link" href="../../source/src/interfaces/ecpg/test/expected/preproc-autoprep.c.html#L26" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__interfaces__ecpg__test__expected__preproc-autoprep_c__test.html&quot;}, '*');">test</a> every relevant bit. */ ~~~</p>
+<h2>失敗モードと境界条件</h2>
+<p>まだ解析していません。</p>
+<h2>保守担当者向けメモ</h2>
+<ul>
+<li>後続フェーズで、ソース本文の文脈と caller/callee 情報を使ってこのページを強化する。</li>
+</ul><script>
+(function() {
+  function notifyParent() {
+    if (parent === window) return;
+    parent.postMessage({type: "frame-location", frame: window.name || "", href: window.location.href}, "*");
+  }
+  document.addEventListener("click", function(event) {
+    const link = event.target.closest("a[data-panel]");
+    if (!link || parent === window) return;
+    parent.postMessage({type: "source-link", panel: link.dataset.panel}, "*");
+  });
+  window.addEventListener("load", notifyParent);
+  window.addEventListener("hashchange", notifyParent);
+})();
+</script></body></html>

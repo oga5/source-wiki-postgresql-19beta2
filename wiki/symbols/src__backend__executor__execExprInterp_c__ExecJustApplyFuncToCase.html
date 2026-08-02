@@ -1,0 +1,66 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>symbols/src__backend__executor__execExprInterp_c__ExecJustApplyFuncToCase.md</title><link rel="stylesheet" href="../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../source/src/backend/executor/execExprInterp.c.html#L2640" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__executor__execExprInterp_c__ExecJustApplyFuncToCase.html&quot;}, '*');">ExecJustApplyFuncToCase</a></h1>
+<h2>定義</h2>
+<ul>
+<li>種別: <code>function</code></li>
+<li>定義箇所: <code>src/backend/executor/execExprInterp.c:2640</code></li>
+<li>所属モジュール: <a class="wiki-entity-link" href="../modules/src__backend__executor.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/modules/src__backend__executor.html&quot;, &quot;source&quot;: &quot;source/src/backend/executor/execAmi.c.html&quot;}, '*');"><code>module:src/backend/executor</code></a></li>
+</ul>
+<h2>目的</h2>
+<p>静的シンボル索引から生成された初期シンボルページです。</p>
+<h2>シグネチャまたは形状</h2>
+<ul>
+<li>シグネチャ: <code>static Datum ExecJustApplyFuncToCase(ExprState *state, ExprContext *econtext, bool *isnull)</code></li>
+</ul>
+<h2>入力と出力</h2>
+<ul>
+<li>引数: <code>ExprState *state</code>, <code>ExprContext *econtext</code>, <code>bool *isnull</code></li>
+<li>戻り値: <code>Datum</code></li>
+</ul>
+<h2>前提条件と不変条件</h2>
+<p>まだ解析していません。</p>
+<h2>アルゴリズムまたは振る舞い</h2>
+<ul>
+<li>複雑度: <code>high</code> (score 12)</li>
+</ul>
+<p>まだ解析していません。</p>
+<h2>呼び出し元と呼び出し先</h2>
+<ul>
+<li>呼び出し元: なし</li>
+<li>呼び出し先: なし</li>
+<li>呼び出し元サイト: なし</li>
+<li>呼び出しサイト: <code>op-&gt;d.func.fn_addr</code> at <code>src/backend/executor/execExprInterp.c:2672:6</code> (indirect)</li>
+</ul>
+<h2>関連データ構造</h2>
+<p><a class="wiki-source-link" href="../../source/src/include/nodes/primnodes.h.html#L1368" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__nodes__primnodes_h__CaseTestExpr.html&quot;}, '*');"><code>CaseTestExpr</code></a>, <code>Datum</code>, <code>ExprContext</code>, <a class="wiki-source-link" href="../../source/src/include/executor/execExpr.h.html#L300" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__executor__execExpr_h__ExprEvalStep.html&quot;}, '*');"><code>ExprEvalStep</code></a>, <code>ExprState</code>, <code>FunctionCallInfo</code>, <code>NullableDatum</code>, <code>state</code></p>
+<h2>ソース抜粋</h2>
+<p>~~~c static Datum <a class="wiki-source-link" href="../../source/src/backend/executor/execExprInterp.c.html#L2640" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__executor__execExprInterp_c__ExecJustApplyFuncToCase.html&quot;}, '*');">ExecJustApplyFuncToCase</a>(ExprState *state, ExprContext *econtext, bool *isnull) { <a class="wiki-source-link" href="../../source/src/include/executor/execExpr.h.html#L300" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__executor__execExpr_h__ExprEvalStep.html&quot;}, '*');">ExprEvalStep</a> *op = &amp;state-&gt;steps[0]; FunctionCallInfo fcinfo; NullableDatum *args; int			nargs; Datum		d;</p>
+<p>/*</p>
+<ul>
+<li>XXX with some redesign of the <a class="wiki-source-link" href="../../source/src/include/nodes/primnodes.h.html#L1368" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__nodes__primnodes_h__CaseTestExpr.html&quot;}, '*');">CaseTestExpr</a> mechanism, maybe we could</li>
+<li>get rid of this data shuffling?</li>
+<p>*/ *op-&gt;resvalue = *op-&gt;d.casetest.value; *op-&gt;resnull = *op-&gt;d.casetest.isnull;</p>
+</ul>
+<p>op++;</p>
+<p>nargs = op-&gt;d.func.nargs; fcinfo = op-&gt;d.func.fcinfo_data; args = fcinfo-&gt;args;</p>
+<p>/* strict function, so check for NULL args */ for (int argno = 0; argno &lt; nargs; argno++) { if (args[argno].isnull) { *isnull = <a class="wiki-source-link" href="../../source/src/tools/pg_bsd_indent/indent_globs.h.html#L46" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/tools/pg_bsd_indent/indent_globs.h.html&quot;}, '*');">true</a>; return (Datum) 0; } } fcinfo-&gt;isnull = <a class="wiki-source-link" href="../../source/src/tools/pg_bsd_indent/indent_globs.h.html#L43" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/tools/pg_bsd_indent/indent_globs.h.html&quot;}, '*');">false</a>; d = op-&gt;d.func.fn_addr(fcinfo); *isnull = fcinfo-&gt;isnull; return d; } ~~~</p>
+<h2>失敗モードと境界条件</h2>
+<p>まだ解析していません。</p>
+<h2>保守担当者向けメモ</h2>
+<ul>
+<li>後続フェーズで、ソース本文の文脈と caller/callee 情報を使ってこのページを強化する。</li>
+</ul><script>
+(function() {
+  function notifyParent() {
+    if (parent === window) return;
+    parent.postMessage({type: "frame-location", frame: window.name || "", href: window.location.href}, "*");
+  }
+  document.addEventListener("click", function(event) {
+    const link = event.target.closest("a[data-panel]");
+    if (!link || parent === window) return;
+    parent.postMessage({type: "source-link", panel: link.dataset.panel}, "*");
+  });
+  window.addEventListener("load", notifyParent);
+  window.addEventListener("hashchange", notifyParent);
+})();
+</script></body></html>

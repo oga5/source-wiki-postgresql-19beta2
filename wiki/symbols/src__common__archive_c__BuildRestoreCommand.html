@@ -1,0 +1,61 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>symbols/src__common__archive_c__BuildRestoreCommand.md</title><link rel="stylesheet" href="../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../source/src/common/archive.c.html#L38" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__common__archive_c__BuildRestoreCommand.html&quot;}, '*');">BuildRestoreCommand</a></h1>
+<h2>定義</h2>
+<ul>
+<li>種別: <code>function</code></li>
+<li>定義箇所: <code>src/common/archive.c:38</code></li>
+<li>所属モジュール: <a class="wiki-entity-link" href="../modules/src__common.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/modules/src__common.html&quot;, &quot;source&quot;: &quot;source/src/common/archive.c.html&quot;}, '*');"><code>module:src/common</code></a></li>
+</ul>
+<h2>目的</h2>
+<p>静的シンボル索引から生成された初期シンボルページです。</p>
+<h2>シグネチャまたは形状</h2>
+<ul>
+<li>シグネチャ: <code>char * BuildRestoreCommand(const char *restoreCommand, const char *xlogpath, const char *xlogfname, const char *lastRestartPointFname)</code></li>
+</ul>
+<h2>入力と出力</h2>
+<ul>
+<li>引数: <code>const char *restoreCommand</code>, <code>const char *xlogpath</code>, <code>const char *xlogfname</code>, <code>const char *lastRestartPointFname</code></li>
+<li>戻り値: <code>char *</code></li>
+</ul>
+<h2>前提条件と不変条件</h2>
+<p>まだ解析していません。</p>
+<h2>アルゴリズムまたは振る舞い</h2>
+<ul>
+<li>複雑度: <code>medium</code> (score 9)</li>
+</ul>
+<p>まだ解析していません。</p>
+<h2>呼び出し元と呼び出し先</h2>
+<ul>
+<li>呼び出し元: <code>RestoreArchivedFile</code></li>
+<li>呼び出し先: <a class="wiki-source-link" href="../../source/src/port/path.c.html#L235" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__port__path_c__make_native_path.html&quot;}, '*');"><code>make_native_path</code></a>, <a class="wiki-source-link" href="../../source/src/common/percentrepl.c.html#L58" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__common__percentrepl_c__replace_percent_placeholders.html&quot;}, '*');"><code>replace_percent_placeholders</code></a></li>
+<li>呼び出し元サイト: <code>RestoreArchivedFile</code> at <code>src/backend/access/transam/xlogarchive.c:154:19</code> (direct, confidence=high, resolved=<a class="wiki-entity-link" href="src__common__archive_c__BuildRestoreCommand.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__common__archive_c__BuildRestoreCommand.html&quot;, &quot;source&quot;: &quot;source/src/common/archive.c.html#L38&quot;}, '*');"><code>symbol:src/common/archive.c#BuildRestoreCommand</code></a>), <code>RestoreArchivedFile</code> at <code>src/fe_utils/archive.c:49:19</code> (direct, confidence=high, resolved=<a class="wiki-entity-link" href="src__common__archive_c__BuildRestoreCommand.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__common__archive_c__BuildRestoreCommand.html&quot;, &quot;source&quot;: &quot;source/src/common/archive.c.html#L38&quot;}, '*');"><code>symbol:src/common/archive.c#BuildRestoreCommand</code></a>)</li>
+<li>呼び出しサイト: <code>pstrdup</code> at <code>src/common/archive.c:49:16</code> (unresolved, confidence=low), <a class="wiki-source-link" href="../../source/src/port/path.c.html#L235" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__port__path_c__make_native_path.html&quot;}, '*');"><code>make_native_path</code></a> at <code>src/common/archive.c:50:3</code> (direct, confidence=high, resolved=<a class="wiki-entity-link" href="src__port__path_c__make_native_path.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__port__path_c__make_native_path.html&quot;, &quot;source&quot;: &quot;source/src/port/path.c.html#L235&quot;}, '*');"><code>symbol:src/port/path.c#make_native_path</code></a>), <a class="wiki-source-link" href="../../source/src/common/percentrepl.c.html#L58" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__common__percentrepl_c__replace_percent_placeholders.html&quot;}, '*');"><code>replace_percent_placeholders</code></a> at <code>src/common/archive.c:53:11</code> (direct, confidence=high, resolved=<a class="wiki-entity-link" href="src__common__percentrepl_c__replace_percent_placeholders.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__common__percentrepl_c__replace_percent_placeholders.html&quot;, &quot;source&quot;: &quot;source/src/common/percentrepl.c.html#L58&quot;}, '*');"><code>symbol:src/common/percentrepl.c#replace_percent_placeholders</code></a>), <code>pfree</code> at <code>src/common/archive.c:57:3</code> (unresolved, confidence=low)</li>
+</ul>
+<h2>関連データ構造</h2>
+<p>なし</p>
+<h2>ソース抜粋</h2>
+<p>~~~c char * <a class="wiki-source-link" href="../../source/src/common/archive.c.html#L38" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__common__archive_c__BuildRestoreCommand.html&quot;}, '*');">BuildRestoreCommand</a>(const char *restoreCommand, const char *xlogpath, const char *xlogfname, const char *lastRestartPointFname) { char	   *nativePath = NULL; char	   *<a class="wiki-source-link" href="../../source/src/include/storage/checksum_block_internal.h.html#L18" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/storage/checksum_block_internal.h.html&quot;}, '*');">result</a>;</p>
+<p>if (xlogpath) { nativePath = pstrdup(xlogpath); <a class="wiki-source-link" href="../../source/src/port/path.c.html#L235" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__port__path_c__make_native_path.html&quot;}, '*');">make_native_path</a>(nativePath); }</p>
+<p><a class="wiki-source-link" href="../../source/src/include/storage/checksum_block_internal.h.html#L18" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/storage/checksum_block_internal.h.html&quot;}, '*');">result</a> = <a class="wiki-source-link" href="../../source/src/common/percentrepl.c.html#L58" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__common__percentrepl_c__replace_percent_placeholders.html&quot;}, '*');">replace_percent_placeholders</a>(restoreCommand, &quot;<a class="wiki-source-link" href="../../source/src/bin/pg_rewind/pg_rewind.c.html#L70" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/bin/pg_rewind/pg_rewind.c.html&quot;}, '*');">restore_command</a>&quot;, &quot;frp&quot;, xlogfname, lastRestartPointFname, nativePath);</p>
+<p>if (nativePath) pfree(nativePath);</p>
+<p>return <a class="wiki-source-link" href="../../source/src/include/storage/checksum_block_internal.h.html#L18" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/storage/checksum_block_internal.h.html&quot;}, '*');">result</a>; } ~~~</p>
+<h2>失敗モードと境界条件</h2>
+<p>まだ解析していません。</p>
+<h2>保守担当者向けメモ</h2>
+<ul>
+<li>後続フェーズで、ソース本文の文脈と caller/callee 情報を使ってこのページを強化する。</li>
+</ul><script>
+(function() {
+  function notifyParent() {
+    if (parent === window) return;
+    parent.postMessage({type: "frame-location", frame: window.name || "", href: window.location.href}, "*");
+  }
+  document.addEventListener("click", function(event) {
+    const link = event.target.closest("a[data-panel]");
+    if (!link || parent === window) return;
+    parent.postMessage({type: "source-link", panel: link.dataset.panel}, "*");
+  });
+  window.addEventListener("load", notifyParent);
+  window.addEventListener("hashchange", notifyParent);
+})();
+</script></body></html>

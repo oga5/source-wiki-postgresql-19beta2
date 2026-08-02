@@ -1,0 +1,75 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>symbols/src__backend__port__win32__socket_c__pgwin32_send.md</title><link rel="stylesheet" href="../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../source/src/backend/port/win32/socket.c.html#L458" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__port__win32__socket_c__pgwin32_send.html&quot;}, '*');">pgwin32_send</a></h1>
+<h2>定義</h2>
+<ul>
+<li>種別: <code>function</code></li>
+<li>定義箇所: <code>src/backend/port/win32/socket.c:458</code></li>
+<li>所属モジュール: <a class="wiki-entity-link" href="../modules/src__backend__port__win32.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/modules/src__backend__port__win32.html&quot;, &quot;source&quot;: &quot;source/src/backend/port/win32/crashdump.c.html&quot;}, '*');"><code>module:src/backend/port/win32</code></a></li>
+</ul>
+<h2>目的</h2>
+<p>静的シンボル索引から生成された初期シンボルページです。</p>
+<h2>シグネチャまたは形状</h2>
+<ul>
+<li>シグネチャ: <code>int pgwin32_send(SOCKET s, const void *buf, int len, int flags)</code></li>
+</ul>
+<h2>入力と出力</h2>
+<ul>
+<li>引数: <code>SOCKET s</code>, <code>const void *buf</code>, <code>int len</code>, <code>int flags</code></li>
+<li>戻り値: <code>int</code></li>
+</ul>
+<h2>前提条件と不変条件</h2>
+<p>まだ解析していません。</p>
+<h2>アルゴリズムまたは振る舞い</h2>
+<ul>
+<li>複雑度: <code>high</code> (score 16)</li>
+</ul>
+<p>まだ解析していません。</p>
+<h2>呼び出し元と呼び出し先</h2>
+<ul>
+<li>呼び出し元: なし</li>
+<li>呼び出し先: <a class="wiki-source-link" href="../../source/src/backend/port/win32/socket.c.html#L156" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__port__win32__socket_c__pgwin32_poll_signals.html&quot;}, '*');"><code>pgwin32_poll_signals</code></a>, <a class="wiki-source-link" href="../../source/src/backend/port/win32/socket.c.html#L180" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__port__win32__socket_c__pgwin32_waitforsinglesocket.html&quot;}, '*');"><code>pgwin32_waitforsinglesocket</code></a>, <a class="wiki-source-link" href="../../source/src/backend/port/win32/socket.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__port__win32__socket_c__TranslateSocketError.html&quot;}, '*');"><code>TranslateSocketError</code></a></li>
+<li>呼び出し元サイト: なし</li>
+<li>呼び出しサイト: <a class="wiki-source-link" href="../../source/src/backend/port/win32/socket.c.html#L156" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__port__win32__socket_c__pgwin32_poll_signals.html&quot;}, '*');"><code>pgwin32_poll_signals</code></a> at <code>src/backend/port/win32/socket.c:465:6</code> (direct, confidence=high, resolved=<a class="wiki-entity-link" href="src__backend__port__win32__socket_c__pgwin32_poll_signals.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__port__win32__socket_c__pgwin32_poll_signals.html&quot;, &quot;source&quot;: &quot;source/src/backend/port/win32/socket.c.html#L156&quot;}, '*');"><code>symbol:src/backend/port/win32/socket.c#pgwin32_poll_signals</code></a>), <code>WSASend</code> at <code>src/backend/port/win32/socket.c:477:7</code> (unresolved), <code>WSAGetLastError</code> at <code>src/backend/port/win32/socket.c:483:4</code> (unresolved), <a class="wiki-source-link" href="../../source/src/backend/port/win32/socket.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__port__win32__socket_c__TranslateSocketError.html&quot;}, '*');"><code>TranslateSocketError</code></a> at <code>src/backend/port/win32/socket.c:485:4</code> (direct, confidence=high, resolved=<a class="wiki-entity-link" href="src__backend__port__win32__socket_c__TranslateSocketError.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__port__win32__socket_c__TranslateSocketError.html&quot;, &quot;source&quot;: &quot;source/src/backend/port/win32/socket.c.html#L55&quot;}, '*');"><code>symbol:src/backend/port/win32/socket.c#TranslateSocketError</code></a>), <a class="wiki-source-link" href="../../source/src/backend/port/win32/socket.c.html#L180" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__port__win32__socket_c__pgwin32_waitforsinglesocket.html&quot;}, '*');"><code>pgwin32_waitforsinglesocket</code></a> at <code>src/backend/port/win32/socket.c:501:7</code> (direct, confidence=high, resolved=<a class="wiki-entity-link" href="src__backend__port__win32__socket_c__pgwin32_waitforsinglesocket.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__port__win32__socket_c__pgwin32_waitforsinglesocket.html&quot;, &quot;source&quot;: &quot;source/src/backend/port/win32/socket.c.html#L180&quot;}, '*');"><code>symbol:src/backend/port/win32/socket.c#pgwin32_waitforsinglesocket</code></a>)</li>
+</ul>
+<h2>関連データ構造</h2>
+<p><a class="wiki-source-link" href="../../source/src/port/win32error.c.html#L20" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__port__win32error_c__DWORD.html&quot;}, '*');"><code>DWORD</code></a></p>
+<h2>ソース抜粋</h2>
+<p>~~~c int <a class="wiki-source-link" href="../../source/src/backend/port/win32/socket.c.html#L458" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__port__win32__socket_c__pgwin32_send.html&quot;}, '*');">pgwin32_send</a>(SOCKET s, const void *buf, int len, int flags) { WSABUF		wbuf; int			r; <a class="wiki-source-link" href="../../source/src/port/win32error.c.html#L20" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__port__win32error_c__DWORD.html&quot;}, '*');">DWORD</a>		b;</p>
+<p>if (<a class="wiki-source-link" href="../../source/src/backend/port/win32/socket.c.html#L156" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__port__win32__socket_c__pgwin32_poll_signals.html&quot;}, '*');">pgwin32_poll_signals</a>()) return -1;</p>
+<p>wbuf.len = len; wbuf.buf = (char *) buf;</p>
+<p>/*</p>
+<ul>
+<li>Readiness of <a class="wiki-source-link" href="../../source/src/include/port/win32_port.h.html#L495" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/port/win32_port.h.html&quot;}, '*');">socket</a> to <a class="wiki-source-link" href="../../source/src/include/port/win32_port.h.html#L502" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/port/win32_port.h.html&quot;}, '*');">send</a> data to UDP <a class="wiki-source-link" href="../../source/src/include/port/win32_port.h.html#L495" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/port/win32_port.h.html&quot;}, '*');">socket</a> may be not true: <a class="wiki-source-link" href="../../source/src/include/port/win32_port.h.html#L495" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/port/win32_port.h.html&quot;}, '*');">socket</a></li>
+<li>can become busy again! <a class="wiki-source-link" href="../../source/src/common/md5.c.html#L110" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/common/md5.c.html&quot;}, '*');">So</a> loop until <a class="wiki-source-link" href="../../source/src/include/port/win32_port.h.html#L502" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/port/win32_port.h.html&quot;}, '*');">send</a> or error occurs.</li>
+<p>*/ for (;;) { r = WSASend(s, &amp;wbuf, 1, &amp;b, flags, NULL, NULL); if (r != SOCKET_ERROR &amp;&amp; b &gt; 0) /* Write succeeded right away */ return b;</p>
+</ul>
+<p>if (r == SOCKET_ERROR &amp;&amp; WSAGetLastError() != WSAEWOULDBLOCK) { <a class="wiki-source-link" href="../../source/src/backend/port/win32/socket.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__port__win32__socket_c__TranslateSocketError.html&quot;}, '*');">TranslateSocketError</a>(); return -1; }</p>
+<p>if (<a class="wiki-source-link" href="../../source/src/backend/port/win32/socket.c.html#L28" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/port/win32/socket.c.html&quot;}, '*');">pgwin32_noblock</a>) { /*</p>
+<ul>
+<li>No data sent, and we are in &quot;emulated non-blocking <a class="wiki-source-link" href="../../source/src/bin/pg_checksums/pg_checksums.c.html#L56" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/bin/pg_checksums/pg_checksums.c.html&quot;}, '*');">mode</a>&quot;, so</li>
+<li>return indicating that we&#x27;d block if we were to continue.</li>
+<p>*/ errno = <a class="wiki-source-link" href="../../source/src/include/port/win32_port.h.html#L367" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/port/win32_port.h.html&quot;}, '*');">EWOULDBLOCK</a>; return -1; }</p>
+</ul>
+<p>/* No error, zero bytes */</p>
+<p>if (<a class="wiki-source-link" href="../../source/src/backend/port/win32/socket.c.html#L180" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__port__win32__socket_c__pgwin32_waitforsinglesocket.html&quot;}, '*');">pgwin32_waitforsinglesocket</a>(s, FD_WRITE | FD_CLOSE, INFINITE) == 0) return -1; }</p>
+<p>return -1; } ~~~</p>
+<h2>失敗モードと境界条件</h2>
+<p>まだ解析していません。</p>
+<h2>保守担当者向けメモ</h2>
+<ul>
+<li>後続フェーズで、ソース本文の文脈と caller/callee 情報を使ってこのページを強化する。</li>
+</ul><script>
+(function() {
+  function notifyParent() {
+    if (parent === window) return;
+    parent.postMessage({type: "frame-location", frame: window.name || "", href: window.location.href}, "*");
+  }
+  document.addEventListener("click", function(event) {
+    const link = event.target.closest("a[data-panel]");
+    if (!link || parent === window) return;
+    parent.postMessage({type: "source-link", panel: link.dataset.panel}, "*");
+  });
+  window.addEventListener("load", notifyParent);
+  window.addEventListener("hashchange", notifyParent);
+})();
+</script></body></html>

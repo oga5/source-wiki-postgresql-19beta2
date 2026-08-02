@@ -1,0 +1,71 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>modules/contrib__bloom.md</title><link rel="stylesheet" href="../../styles.css"></head><body><h1>contrib/bloom</h1>
+<h2>システム内での役割</h2>
+<p><code>contrib/bloom</code> には 7 個の索引済みソースファイルがあります。この初期モジュールページはディレクトリ境界に基づいています。</p>
+<h2>責務</h2>
+<ul>
+<li>このディレクトリに属するソースファイルを集約する。</li>
+<li>より深い LLM 合成の前段として、モジュール単位の入口を提供する。</li>
+</ul>
+<h2>このモジュールのファイル</h2>
+<ul>
+<li><a class="wiki-source-link" href="../../source/contrib/bloom/blcost.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/contrib/bloom/blcost.c.html&quot;}, '*');"><code>contrib/bloom/blcost.c</code></a></li>
+<li><a class="wiki-source-link" href="../../source/contrib/bloom/blinsert.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/contrib/bloom/blinsert.c.html&quot;}, '*');"><code>contrib/bloom/blinsert.c</code></a></li>
+<li><a class="wiki-source-link" href="../../source/contrib/bloom/bloom.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/contrib/bloom/bloom.h.html&quot;}, '*');"><code>contrib/bloom/bloom.h</code></a></li>
+<li><a class="wiki-source-link" href="../../source/contrib/bloom/blscan.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/contrib/bloom/blscan.c.html&quot;}, '*');"><code>contrib/bloom/blscan.c</code></a></li>
+<li><a class="wiki-source-link" href="../../source/contrib/bloom/blutils.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/contrib/bloom/blutils.c.html&quot;}, '*');"><code>contrib/bloom/blutils.c</code></a></li>
+<li><a class="wiki-source-link" href="../../source/contrib/bloom/blvacuum.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/contrib/bloom/blvacuum.c.html&quot;}, '*');"><code>contrib/bloom/blvacuum.c</code></a></li>
+<li><a class="wiki-source-link" href="../../source/contrib/bloom/blvalidate.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/contrib/bloom/blvalidate.c.html&quot;}, '*');"><code>contrib/bloom/blvalidate.c</code></a></li>
+</ul>
+<h2>主要なデータ構造</h2>
+<ul>
+<li><a class="wiki-source-link" href="../../source/contrib/bloom/blinsert.c.html#L34" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/contrib__bloom__blinsert_c__BloomBuildState.html&quot;}, '*');"><code>BloomBuildState</code></a></li>
+<li><a class="wiki-source-link" href="../../source/contrib/bloom/bloom.h.html#L33" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/contrib__bloom__bloom_h__BloomPageOpaqueData.html&quot;}, '*');"><code>BloomPageOpaqueData</code></a></li>
+<li><a class="wiki-source-link" href="../../source/contrib/bloom/bloom.h.html#L43" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/contrib__bloom__bloom_h__BloomPageOpaque.html&quot;}, '*');"><code>BloomPageOpaque</code></a></li>
+<li><a class="wiki-source-link" href="../../source/contrib/bloom/bloom.h.html#L84" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/contrib__bloom__bloom_h__BloomSignatureWord.html&quot;}, '*');"><code>BloomSignatureWord</code></a></li>
+<li><code>BloomOptions</code></li>
+<li><a class="wiki-source-link" href="../../source/contrib/bloom/bloom.h.html#L113" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/contrib__bloom__bloom_h__FreeBlockNumberArray.html&quot;}, '*');"><code>FreeBlockNumberArray</code></a></li>
+<li><a class="wiki-source-link" href="../../source/contrib/bloom/bloom.h.html#L118" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/contrib__bloom__bloom_h__BloomMetaPageData.html&quot;}, '*');"><code>BloomMetaPageData</code></a></li>
+<li><a class="wiki-source-link" href="../../source/contrib/bloom/bloom.h.html#L135" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/contrib__bloom__bloom_h__BloomState.html&quot;}, '*');"><code>BloomState</code></a></li>
+<li><a class="wiki-source-link" href="../../source/contrib/bloom/bloom.h.html#L157" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/contrib__bloom__bloom_h__BloomTuple.html&quot;}, '*');"><code>BloomTuple</code></a></li>
+<li><a class="wiki-source-link" href="../../source/contrib/bloom/bloom.h.html#L166" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/contrib__bloom__bloom_h__BloomScanOpaqueData.html&quot;}, '*');"><code>BloomScanOpaqueData</code></a></li>
+</ul>
+<h2>主なフロー</h2>
+<p>初期モジュールページでは、まだエンドツーエンドのフローを推論しません。</p>
+<h2>外部依存</h2>
+<ul>
+<li><a class="wiki-source-link" href="../../source/src/include/postgres.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/postgres.h.html&quot;}, '*');"><code>postgres.h</code></a></li>
+<li><a class="wiki-source-link" href="../../source/contrib/bloom/bloom.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/contrib/bloom/bloom.h.html&quot;}, '*');"><code>bloom.h</code></a></li>
+<li><code>storage/bufmgr.h</code></li>
+<li><code>access/generic_xlog.h</code></li>
+<li><code>access/genam.h</code></li>
+<li><a class="wiki-source-link" href="../../source/src/include/miscadmin.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/miscadmin.h.html&quot;}, '*');"><code>miscadmin.h</code></a></li>
+<li><code>utils/memutils.h</code></li>
+<li><code>access/amapi.h</code></li>
+<li><code>storage/read_stream.h</code></li>
+<li><code>commands/vacuum.h</code></li>
+</ul>
+<h2>内部構成</h2>
+<ul>
+<li>子モジュール数: 0</li>
+</ul>
+<h2>推奨読書順</h2>
+<p>1. <a class="wiki-source-link" href="../../source/contrib/bloom/bloom.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/contrib/bloom/bloom.h.html&quot;}, '*');"><code>contrib/bloom/bloom.h</code></a> 2. <a class="wiki-source-link" href="../../source/contrib/bloom/blutils.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/contrib/bloom/blutils.c.html&quot;}, '*');"><code>contrib/bloom/blutils.c</code></a> 3. <a class="wiki-source-link" href="../../source/contrib/bloom/blinsert.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/contrib/bloom/blinsert.c.html&quot;}, '*');"><code>contrib/bloom/blinsert.c</code></a> 4. <a class="wiki-source-link" href="../../source/contrib/bloom/blscan.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/contrib/bloom/blscan.c.html&quot;}, '*');"><code>contrib/bloom/blscan.c</code></a> 5. <a class="wiki-source-link" href="../../source/contrib/bloom/blvacuum.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/contrib/bloom/blvacuum.c.html&quot;}, '*');"><code>contrib/bloom/blvacuum.c</code></a> 6. <a class="wiki-source-link" href="../../source/contrib/bloom/blcost.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/contrib/bloom/blcost.c.html&quot;}, '*');"><code>contrib/bloom/blcost.c</code></a> 7. <a class="wiki-source-link" href="../../source/contrib/bloom/blvalidate.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/contrib/bloom/blvalidate.c.html&quot;}, '*');"><code>contrib/bloom/blvalidate.c</code></a></p>
+<h2>未解決の問い</h2>
+<ul>
+<li>LLM ベースのモジュール合成を追加した後で、責務とフローを精緻化する。</li>
+</ul><script>
+(function() {
+  function notifyParent() {
+    if (parent === window) return;
+    parent.postMessage({type: "frame-location", frame: window.name || "", href: window.location.href}, "*");
+  }
+  document.addEventListener("click", function(event) {
+    const link = event.target.closest("a[data-panel]");
+    if (!link || parent === window) return;
+    parent.postMessage({type: "source-link", panel: link.dataset.panel}, "*");
+  });
+  window.addEventListener("load", notifyParent);
+  window.addEventListener("hashchange", notifyParent);
+})();
+</script></body></html>

@@ -1,0 +1,64 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>symbols/src__backend__lib__bipartite_match_c__hk_breadth_search.md</title><link rel="stylesheet" href="../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../source/src/backend/lib/bipartite_match.c.html#L92" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__lib__bipartite_match_c__hk_breadth_search.html&quot;}, '*');">hk_breadth_search</a></h1>
+<h2>定義</h2>
+<ul>
+<li>種別: <code>function</code></li>
+<li>定義箇所: <code>src/backend/lib/bipartite_match.c:92</code></li>
+<li>所属モジュール: <a class="wiki-entity-link" href="../modules/src__backend__lib.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/modules/src__backend__lib.html&quot;, &quot;source&quot;: &quot;source/src/backend/lib/bipartite_match.c.html&quot;}, '*');"><code>module:src/backend/lib</code></a></li>
+</ul>
+<h2>目的</h2>
+<p>静的シンボル索引から生成された初期シンボルページです。</p>
+<h2>シグネチャまたは形状</h2>
+<ul>
+<li>シグネチャ: <code>static bool hk_breadth_search(BipartiteMatchState *state)</code></li>
+</ul>
+<h2>入力と出力</h2>
+<ul>
+<li>引数: <code>BipartiteMatchState *state</code></li>
+<li>戻り値: <code>bool</code></li>
+</ul>
+<h2>前提条件と不変条件</h2>
+<p>まだ解析していません。</p>
+<h2>アルゴリズムまたは振る舞い</h2>
+<ul>
+<li>複雑度: <code>high</code> (score 21)</li>
+</ul>
+<p>まだ解析していません。</p>
+<h2>呼び出し元と呼び出し先</h2>
+<ul>
+<li>呼び出し元: <a class="wiki-source-link" href="../../source/src/backend/lib/bipartite_match.c.html#L38" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__lib__bipartite_match_c__BipartiteMatch.html&quot;}, '*');"><code>BipartiteMatch</code></a></li>
+<li>呼び出し先: なし</li>
+<li>呼び出し元サイト: <a class="wiki-source-link" href="../../source/src/backend/lib/bipartite_match.c.html#L38" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__lib__bipartite_match_c__BipartiteMatch.html&quot;}, '*');"><code>BipartiteMatch</code></a> at <code>src/backend/lib/bipartite_match.c:56:9</code> (direct, confidence=high, resolved=<a class="wiki-entity-link" href="src__backend__lib__bipartite_match_c__hk_breadth_search.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__lib__bipartite_match_c__hk_breadth_search.html&quot;, &quot;source&quot;: &quot;source/src/backend/lib/bipartite_match.c.html#L92&quot;}, '*');"><code>symbol:src/backend/lib/bipartite_match.c#hk_breadth_search</code></a>)</li>
+<li>呼び出しサイト: <a class="wiki-source-link" href="../../source/src/include/c.h.html#L950" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/c.h.html&quot;}, '*');"><code>Assert</code></a> at <code>src/backend/lib/bipartite_match.c:131:6</code> (unresolved)</li>
+</ul>
+<h2>関連データ構造</h2>
+<p><a class="wiki-source-link" href="../../source/src/include/lib/bipartite_match.h.html#L27" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__lib__bipartite_match_h__BipartiteMatchState.html&quot;}, '*');"><code>BipartiteMatchState</code></a>, <code>state</code></p>
+<h2>ソース抜粋</h2>
+<p>~~~c static bool <a class="wiki-source-link" href="../../source/src/backend/lib/bipartite_match.c.html#L92" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__lib__bipartite_match_c__hk_breadth_search.html&quot;}, '*');">hk_breadth_search</a>(<a class="wiki-source-link" href="../../source/src/include/lib/bipartite_match.h.html#L27" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__lib__bipartite_match_h__BipartiteMatchState.html&quot;}, '*');">BipartiteMatchState</a> *state) { int			usize = state-&gt;u_size; short	   *queue = state-&gt;queue; short	   *distance = state-&gt;distance; int			qhead = 0;		/* we never enqueue any node more than once */ int			qtail = 0;		/* so don&#x27;t have to worry about wrapping */ int			u;</p>
+<p>distance[0] = <a class="wiki-source-link" href="../../source/src/backend/lib/bipartite_match.c.html#L29" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/lib/bipartite_match.c.html&quot;}, '*');">HK_INFINITY</a>;</p>
+<p>for (u = 1; u &lt;= usize; u++) { if (state-&gt;pair_uv[u] == 0) { distance[u] = 0; queue[qhead++] = u; } else distance[u] = <a class="wiki-source-link" href="../../source/src/backend/lib/bipartite_match.c.html#L29" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/lib/bipartite_match.c.html&quot;}, '*');">HK_INFINITY</a>; }</p>
+<p>while (qtail &lt; qhead) { u = queue[qtail++];</p>
+<p>if (distance[u] &lt; distance[0]) { short	   *u_adj = state-&gt;adjacency[u]; int			i = u_adj ? u_adj[0] : 0;</p>
+<p>for (; i &gt; 0; i--) { int			u_next = state-&gt;pair_vu[u_adj[i]];</p>
+<p>if (distance[u_next] == <a class="wiki-source-link" href="../../source/src/backend/lib/bipartite_match.c.html#L29" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/lib/bipartite_match.c.html&quot;}, '*');">HK_INFINITY</a>) { distance[u_next] = 1 + distance[u]; <a class="wiki-source-link" href="../../source/src/include/c.h.html#L950" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/c.h.html&quot;}, '*');">Assert</a>(qhead &lt; usize + 2); queue[qhead++] = u_next; } } } }</p>
+<p>return (distance[0] != <a class="wiki-source-link" href="../../source/src/backend/lib/bipartite_match.c.html#L29" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/lib/bipartite_match.c.html&quot;}, '*');">HK_INFINITY</a>); } ~~~</p>
+<h2>失敗モードと境界条件</h2>
+<p>まだ解析していません。</p>
+<h2>保守担当者向けメモ</h2>
+<ul>
+<li>後続フェーズで、ソース本文の文脈と caller/callee 情報を使ってこのページを強化する。</li>
+</ul><script>
+(function() {
+  function notifyParent() {
+    if (parent === window) return;
+    parent.postMessage({type: "frame-location", frame: window.name || "", href: window.location.href}, "*");
+  }
+  document.addEventListener("click", function(event) {
+    const link = event.target.closest("a[data-panel]");
+    if (!link || parent === window) return;
+    parent.postMessage({type: "source-link", panel: link.dataset.panel}, "*");
+  });
+  window.addEventListener("load", notifyParent);
+  window.addEventListener("hashchange", notifyParent);
+})();
+</script></body></html>

@@ -1,0 +1,75 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>symbols/src__backend__storage__ipc__procarray_c__ProcArrayShmemRequest.md</title><link rel="stylesheet" href="../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../source/src/backend/storage/ipc/procarray.c.html#L392" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__storage__ipc__procarray_c__ProcArrayShmemRequest.html&quot;}, '*');">ProcArrayShmemRequest</a></h1>
+<h2>定義</h2>
+<ul>
+<li>種別: <code>function</code></li>
+<li>定義箇所: <code>src/backend/storage/ipc/procarray.c:392</code></li>
+<li>所属モジュール: <a class="wiki-entity-link" href="../modules/src__backend__storage__ipc.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/modules/src__backend__storage__ipc.html&quot;, &quot;source&quot;: &quot;source/src/backend/storage/ipc/barrier.c.html&quot;}, '*');"><code>module:src/backend/storage/ipc</code></a></li>
+</ul>
+<h2>目的</h2>
+<p>静的シンボル索引から生成された初期シンボルページです。</p>
+<h2>シグネチャまたは形状</h2>
+<ul>
+<li>シグネチャ: <code>static void ProcArrayShmemRequest(void *arg)</code></li>
+</ul>
+<h2>入力と出力</h2>
+<ul>
+<li>引数: <code>void *arg</code></li>
+<li>戻り値: <code>void</code></li>
+</ul>
+<h2>前提条件と不変条件</h2>
+<p>まだ解析していません。</p>
+<h2>アルゴリズムまたは振る舞い</h2>
+<ul>
+<li>複雑度: <code>medium</code> (score 10)</li>
+</ul>
+<p>まだ解析していません。</p>
+<h2>呼び出し元と呼び出し先</h2>
+<ul>
+<li>呼び出し元: なし</li>
+<li>呼び出し先: なし</li>
+<li>呼び出し元サイト: なし</li>
+<li>呼び出しサイト: <code>mul_size</code> at <code>src/backend/storage/ipc/procarray.c:416:18</code> (unresolved, confidence=low), <code>mul_size</code> at <code>src/backend/storage/ipc/procarray.c:421:18</code> (unresolved, confidence=low), <code>add_size</code> at <code>src/backend/storage/ipc/procarray.c:428:17</code> (unresolved, confidence=low), <code>mul_size</code> at <code>src/backend/storage/ipc/procarray.c:429:11</code> (unresolved, confidence=low)</li>
+</ul>
+<h2>関連データ構造</h2>
+<p><a class="wiki-source-link" href="../../source/src/backend/storage/ipc/procarray.c.html#L76" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__storage__ipc__procarray_c__ProcArrayStruct.html&quot;}, '*');"><code>ProcArrayStruct</code></a>, <code>TransactionId</code></p>
+<h2>ソース抜粋</h2>
+<p>~~~c static void <a class="wiki-source-link" href="../../source/src/backend/storage/ipc/procarray.c.html#L392" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__storage__ipc__procarray_c__ProcArrayShmemRequest.html&quot;}, '*');">ProcArrayShmemRequest</a>(void *arg) { #define <a class="wiki-source-link" href="../../source/src/backend/storage/ipc/procarray.c.html#L395" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/storage/ipc/procarray.c.html&quot;}, '*');">PROCARRAY_MAXPROCS</a>	(<a class="wiki-source-link" href="../../source/src/backend/utils/init/globals.c.html#L149" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/utils/init/globals.c.html&quot;}, '*');">MaxBackends</a> + <a class="wiki-source-link" href="../../source/src/backend/access/transam/twophase.c.html#L118" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/access/transam/twophase.c.html&quot;}, '*');">max_prepared_xacts</a>)</p>
+<p>/*</p>
+<ul>
+<li>During Hot Standby processing we have a data <a class="wiki-source-link" href="../../source/src/tools/pg_bsd_indent/indent_codes.h.html#L71" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/tools/pg_bsd_indent/indent_codes.h.html&quot;}, '*');">structure</a> called</li>
+<li>KnownAssignedXids, created in shared memory. Local data structures are</li>
+<li>also created in various backends during <a class="wiki-source-link" href="../../source/src/backend/storage/ipc/procarray.c.html#L2113" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__storage__ipc__procarray_c__GetSnapshotData.html&quot;}, '*');">GetSnapshotData</a>(),</li>
+<li><a class="wiki-source-link" href="../../source/src/backend/storage/ipc/procarray.c.html#L1392" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__storage__ipc__procarray_c__TransactionIdIsInProgress.html&quot;}, '*');">TransactionIdIsInProgress</a>() and <a class="wiki-source-link" href="../../source/src/backend/storage/ipc/procarray.c.html#L2635" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__storage__ipc__procarray_c__GetRunningTransactionData.html&quot;}, '*');">GetRunningTransactionData</a>(). All of the</li>
+<li>main structures created in those <a class="wiki-source-link" href="../../source/src/backend/regex/regcomp.c.html#L358" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/regex/regcomp.c.html&quot;}, '*');">functions</a> must be identically sized,</li>
+<li>since we may at <a class="wiki-source-link" href="../../source/src/interfaces/ecpg/test/expected/pgtypeslib-dt_test2.c.html#L60" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/ecpg/test/expected/pgtypeslib-dt_test2.c.html&quot;}, '*');">times</a> copy the whole of the data structures around. We</li>
+<li>refer to this size as <a class="wiki-source-link" href="../../source/src/backend/storage/ipc/procarray.c.html#L410" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/storage/ipc/procarray.c.html&quot;}, '*');">TOTAL_MAX_CACHED_SUBXIDS</a>.</li>
+<p>*</p>
+<li>Ideally we&#x27;d only create this <a class="wiki-source-link" href="../../source/src/tools/pg_bsd_indent/indent_codes.h.html#L71" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/tools/pg_bsd_indent/indent_codes.h.html&quot;}, '*');">structure</a> if we were actually doing hot</li>
+<li>standby in the current run, but we don&#x27;t know that yet at the time</li>
+<li>shared memory <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> being set up.</li>
+<p>*/ #define <a class="wiki-source-link" href="../../source/src/backend/storage/ipc/procarray.c.html#L410" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/storage/ipc/procarray.c.html&quot;}, '*');">TOTAL_MAX_CACHED_SUBXIDS</a> \ ((<a class="wiki-source-link" href="../../source/src/include/storage/proc.h.html#L43" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/storage/proc.h.html&quot;}, '*');">PGPROC_MAX_CACHED_SUBXIDS</a> + 1) * <a class="wiki-source-link" href="../../source/src/backend/storage/ipc/procarray.c.html#L395" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/storage/ipc/procarray.c.html&quot;}, '*');">PROCARRAY_MAXPROCS</a>)</p>
+</ul>
+<p>if (<a class="wiki-source-link" href="../../source/src/backend/access/transam/xlog.c.html#L128" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/access/transam/xlog.c.html&quot;}, '*');">EnableHotStandby</a>) { <a class="wiki-source-link" href="../../source/src/include/storage/shmem.h.html#L176" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/storage/shmem.h.html&quot;}, '*');">ShmemRequestStruct</a>(.name = &quot;KnownAssignedXids&quot;, .size = mul_size(sizeof(TransactionId), <a class="wiki-source-link" href="../../source/src/backend/storage/ipc/procarray.c.html#L410" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/storage/ipc/procarray.c.html&quot;}, '*');">TOTAL_MAX_CACHED_SUBXIDS</a>), .ptr = (void **) &amp;KnownAssignedXids, );</p>
+<p><a class="wiki-source-link" href="../../source/src/include/storage/shmem.h.html#L176" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/storage/shmem.h.html&quot;}, '*');">ShmemRequestStruct</a>(.name = &quot;KnownAssignedXidsValid&quot;, .size = mul_size(sizeof(bool), <a class="wiki-source-link" href="../../source/src/backend/storage/ipc/procarray.c.html#L410" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/storage/ipc/procarray.c.html&quot;}, '*');">TOTAL_MAX_CACHED_SUBXIDS</a>), .ptr = (void **) &amp;KnownAssignedXidsValid, ); }</p>
+<p>/* Register the ProcArray shared <a class="wiki-source-link" href="../../source/src/tools/pg_bsd_indent/indent_codes.h.html#L71" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/tools/pg_bsd_indent/indent_codes.h.html&quot;}, '*');">structure</a> */ <a class="wiki-source-link" href="../../source/src/include/storage/shmem.h.html#L176" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/storage/shmem.h.html&quot;}, '*');">ShmemRequestStruct</a>(.name = &quot;Proc Array&quot;, .size = add_size(offsetof(<a class="wiki-source-link" href="../../source/src/backend/storage/ipc/procarray.c.html#L76" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__storage__ipc__procarray_c__ProcArrayStruct.html&quot;}, '*');">ProcArrayStruct</a>, pgprocnos), mul_size(sizeof(int), <a class="wiki-source-link" href="../../source/src/backend/storage/ipc/procarray.c.html#L395" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/storage/ipc/procarray.c.html&quot;}, '*');">PROCARRAY_MAXPROCS</a>)), .ptr = (void **) &amp;procArray, ); } ~~~</p>
+<h2>失敗モードと境界条件</h2>
+<p>まだ解析していません。</p>
+<h2>保守担当者向けメモ</h2>
+<ul>
+<li>後続フェーズで、ソース本文の文脈と caller/callee 情報を使ってこのページを強化する。</li>
+</ul><script>
+(function() {
+  function notifyParent() {
+    if (parent === window) return;
+    parent.postMessage({type: "frame-location", frame: window.name || "", href: window.location.href}, "*");
+  }
+  document.addEventListener("click", function(event) {
+    const link = event.target.closest("a[data-panel]");
+    if (!link || parent === window) return;
+    parent.postMessage({type: "source-link", panel: link.dataset.panel}, "*");
+  });
+  window.addEventListener("load", notifyParent);
+  window.addEventListener("hashchange", notifyParent);
+})();
+</script></body></html>

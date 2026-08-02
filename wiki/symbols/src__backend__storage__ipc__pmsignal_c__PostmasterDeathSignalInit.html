@@ -1,0 +1,64 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>symbols/src__backend__storage__ipc__pmsignal_c__PostmasterDeathSignalInit.md</title><link rel="stylesheet" href="../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../source/src/backend/storage/ipc/pmsignal.c.html#L405" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__storage__ipc__pmsignal_c__PostmasterDeathSignalInit.html&quot;}, '*');">PostmasterDeathSignalInit</a></h1>
+<h2>定義</h2>
+<ul>
+<li>種別: <code>function</code></li>
+<li>定義箇所: <code>src/backend/storage/ipc/pmsignal.c:405</code></li>
+<li>所属モジュール: <a class="wiki-entity-link" href="../modules/src__backend__storage__ipc.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/modules/src__backend__storage__ipc.html&quot;, &quot;source&quot;: &quot;source/src/backend/storage/ipc/barrier.c.html&quot;}, '*');"><code>module:src/backend/storage/ipc</code></a></li>
+</ul>
+<h2>目的</h2>
+<p>静的シンボル索引から生成された初期シンボルページです。</p>
+<h2>シグネチャまたは形状</h2>
+<ul>
+<li>シグネチャ: <code>void PostmasterDeathSignalInit(void)</code></li>
+</ul>
+<h2>入力と出力</h2>
+<ul>
+<li>戻り値: <code>void</code></li>
+</ul>
+<h2>前提条件と不変条件</h2>
+<p>まだ解析していません。</p>
+<h2>アルゴリズムまたは振る舞い</h2>
+<ul>
+<li>複雑度: <code>medium</code> (score 10)</li>
+</ul>
+<p>まだ解析していません。</p>
+<h2>呼び出し元と呼び出し先</h2>
+<ul>
+<li>呼び出し元: <a class="wiki-source-link" href="../../source/src/backend/utils/init/miscinit.c.html#L96" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__utils__init__miscinit_c__InitPostmasterChild.html&quot;}, '*');"><code>InitPostmasterChild</code></a></li>
+<li>呼び出し先: なし</li>
+<li>呼び出し元サイト: <a class="wiki-source-link" href="../../source/src/backend/utils/init/miscinit.c.html#L96" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__utils__init__miscinit_c__InitPostmasterChild.html&quot;}, '*');"><code>InitPostmasterChild</code></a> at <code>src/backend/utils/init/miscinit.c:159:2</code> (direct, confidence=high, resolved=<a class="wiki-entity-link" href="src__backend__storage__ipc__pmsignal_c__PostmasterDeathSignalInit.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__storage__ipc__pmsignal_c__PostmasterDeathSignalInit.html&quot;, &quot;source&quot;: &quot;source/src/backend/storage/ipc/pmsignal.c.html#L405&quot;}, '*');"><code>symbol:src/backend/storage/ipc/pmsignal.c#PostmasterDeathSignalInit</code></a>)</li>
+<li>呼び出しサイト: <code>pqsignal</code> at <code>src/backend/storage/ipc/pmsignal.c:412:2</code> (unresolved, confidence=low), <code>prctl</code> at <code>src/backend/storage/ipc/pmsignal.c:416:6</code> (unresolved), <a class="wiki-source-link" href="../../source/src/include/utils/elog.h.html#L242" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/utils/elog.h.html&quot;}, '*');"><code>elog</code></a> at <code>src/backend/storage/ipc/pmsignal.c:417:3</code> (unresolved), <code>procctl</code> at <code>src/backend/storage/ipc/pmsignal.c:419:6</code> (unresolved), <a class="wiki-source-link" href="../../source/src/include/utils/elog.h.html#L242" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/utils/elog.h.html&quot;}, '*');"><code>elog</code></a> at <code>src/backend/storage/ipc/pmsignal.c:420:3</code> (unresolved)</li>
+</ul>
+<h2>関連データ構造</h2>
+<p>なし</p>
+<h2>ソース抜粋</h2>
+<p>~~~c void <a class="wiki-source-link" href="../../source/src/backend/storage/ipc/pmsignal.c.html#L405" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__storage__ipc__pmsignal_c__PostmasterDeathSignalInit.html&quot;}, '*');">PostmasterDeathSignalInit</a>(void) { #ifdef <a class="wiki-source-link" href="../../source/src/include/storage/pmsignal.h.html#L92" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/storage/pmsignal.h.html&quot;}, '*');">USE_POSTMASTER_DEATH_SIGNAL</a> int			signum = <a class="wiki-source-link" href="../../source/src/backend/storage/ipc/pmsignal.c.html#L123" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/storage/ipc/pmsignal.c.html&quot;}, '*');">POSTMASTER_DEATH_SIGNAL</a>;</p>
+<p>/* Register our signal handler. */ pqsignal(signum, <a class="wiki-source-link" href="../../source/src/backend/storage/ipc/pmsignal.c.html#L108" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__storage__ipc__pmsignal_c__postmaster_death_handler.html&quot;}, '*');">postmaster_death_handler</a>);</p>
+<p>/* Request a signal on parent exit. */ #if defined(PR_SET_PDEATHSIG) if (prctl(PR_SET_PDEATHSIG, signum) &lt; 0) <a class="wiki-source-link" href="../../source/src/include/utils/elog.h.html#L242" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/utils/elog.h.html&quot;}, '*');">elog</a>(ERROR, &quot;could not request parent death signal: %m&quot;); #elif defined(PROC_PDEATHSIG_CTL) if (procctl(P_PID, 0, PROC_PDEATHSIG_CTL, &amp;signum) &lt; 0) <a class="wiki-source-link" href="../../source/src/include/utils/elog.h.html#L242" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/utils/elog.h.html&quot;}, '*');">elog</a>(ERROR, &quot;could not request parent death signal: %m&quot;); #else #error &quot;<a class="wiki-source-link" href="../../source/src/include/storage/pmsignal.h.html#L92" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/storage/pmsignal.h.html&quot;}, '*');">USE_POSTMASTER_DEATH_SIGNAL</a> set, but there <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> no mechanism to request the signal&quot; #endif</p>
+<p>/*</p>
+<ul>
+<li>Just in case the parent was gone already and we missed it, we&#x27;d better</li>
+<li>check the slow way on the first call.</li>
+<p>*/ postmaster_possibly_dead = <a class="wiki-source-link" href="../../source/src/tools/pg_bsd_indent/indent_globs.h.html#L46" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/tools/pg_bsd_indent/indent_globs.h.html&quot;}, '*');">true</a>; #endif							/* <a class="wiki-source-link" href="../../source/src/include/storage/pmsignal.h.html#L92" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/storage/pmsignal.h.html&quot;}, '*');">USE_POSTMASTER_DEATH_SIGNAL</a> */ } ~~~</p>
+</ul>
+<h2>失敗モードと境界条件</h2>
+<p>まだ解析していません。</p>
+<h2>保守担当者向けメモ</h2>
+<ul>
+<li>後続フェーズで、ソース本文の文脈と caller/callee 情報を使ってこのページを強化する。</li>
+</ul><script>
+(function() {
+  function notifyParent() {
+    if (parent === window) return;
+    parent.postMessage({type: "frame-location", frame: window.name || "", href: window.location.href}, "*");
+  }
+  document.addEventListener("click", function(event) {
+    const link = event.target.closest("a[data-panel]");
+    if (!link || parent === window) return;
+    parent.postMessage({type: "source-link", panel: link.dataset.panel}, "*");
+  });
+  window.addEventListener("load", notifyParent);
+  window.addEventListener("hashchange", notifyParent);
+})();
+</script></body></html>

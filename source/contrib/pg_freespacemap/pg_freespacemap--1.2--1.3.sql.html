@@ -1,0 +1,16 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>contrib/pg_freespacemap/pg_freespacemap--1.2--1.3.sql</title><link rel="stylesheet" href="../../../styles.css"></head><body><header class="source-header">contrib/pg_freespacemap/pg_freespacemap--1.2--1.3.sql</header><pre class="source-code"><div class="code-line" id="L1"><a class="line-no" href="#L1">1</a><span>/* contrib/pg_freespacemap/pg_freespacemap--1.2--1.3.sql */</span></div><div class="code-line" id="L2"><a class="line-no" href="#L2">2</a><span></span></div><div class="code-line" id="L3"><a class="line-no" href="#L3">3</a><span>-- complain if script is sourced in psql, rather than via ALTER EXTENSION</span></div><div class="code-line" id="L4"><a class="line-no" href="#L4">4</a><span>\echo Use &quot;ALTER EXTENSION pg_freespacemap UPDATE TO &#x27;1.3&#x27;&quot; to load this file. \quit</span></div><div class="code-line" id="L5"><a class="line-no" href="#L5">5</a><span></span></div><div class="code-line" id="L6"><a class="line-no" href="#L6">6</a><span>CREATE OR REPLACE FUNCTION</span></div><div class="code-line" id="L7"><a class="line-no" href="#L7">7</a><span>  pg_freespace(rel regclass, blkno OUT bigint, avail OUT int2)</span></div><div class="code-line" id="L8"><a class="line-no" href="#L8">8</a><span>RETURNS SETOF RECORD</span></div><div class="code-line" id="L9"><a class="line-no" href="#L9">9</a><span>LANGUAGE SQL PARALLEL SAFE</span></div><div class="code-line" id="L10"><a class="line-no" href="#L10">10</a><span>BEGIN ATOMIC</span></div><div class="code-line" id="L11"><a class="line-no" href="#L11">11</a><span>  SELECT blkno, pg_freespace($1, blkno) AS avail</span></div><div class="code-line" id="L12"><a class="line-no" href="#L12">12</a><span>  FROM generate_series(&#x27;0&#x27;::bigint, pg_relation_size($1) / current_setting(&#x27;block_size&#x27;::text)::bigint - &#x27;1&#x27;::bigint) AS blkno;</span></div><div class="code-line" id="L13"><a class="line-no" href="#L13">13</a><span>END;</span></div></pre><script>parent.postMessage({"type": "source-page", "panel": "panels/contrib/pg_freespacemap/pg_freespacemap--1.2--1.3.sql.html"}, "*");</script><script>
+(function() {
+  function notifyParent() {
+    if (parent === window) return;
+    parent.postMessage({type: "frame-location", frame: window.name || "", href: window.location.href}, "*");
+  }
+  document.addEventListener("click", function(event) {
+    const link = event.target.closest("a[data-panel]");
+    if (!link || parent === window) return;
+    parent.postMessage({type: "source-link", panel: link.dataset.panel}, "*");
+  });
+  window.addEventListener("load", notifyParent);
+  window.addEventListener("hashchange", notifyParent);
+})();
+</script></body></html>

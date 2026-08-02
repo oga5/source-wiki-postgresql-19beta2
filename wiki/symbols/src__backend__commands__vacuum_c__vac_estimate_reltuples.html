@@ -1,0 +1,88 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>symbols/src__backend__commands__vacuum_c__vac_estimate_reltuples.md</title><link rel="stylesheet" href="../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../source/src/backend/commands/vacuum.c.html#L1335" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__commands__vacuum_c__vac_estimate_reltuples.html&quot;}, '*');">vac_estimate_reltuples</a></h1>
+<h2>定義</h2>
+<ul>
+<li>種別: <code>function</code></li>
+<li>定義箇所: <code>src/backend/commands/vacuum.c:1335</code></li>
+<li>所属モジュール: <a class="wiki-entity-link" href="../modules/src__backend__commands.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/modules/src__backend__commands.html&quot;, &quot;source&quot;: &quot;source/src/backend/commands/aggregatecmds.c.html&quot;}, '*');"><code>module:src/backend/commands</code></a></li>
+</ul>
+<h2>目的</h2>
+<p>静的シンボル索引から生成された初期シンボルページです。</p>
+<h2>シグネチャまたは形状</h2>
+<ul>
+<li>シグネチャ: <code>double vac_estimate_reltuples(Relation relation, BlockNumber total_pages, BlockNumber scanned_pages, double scanned_tuples)</code></li>
+</ul>
+<h2>入力と出力</h2>
+<ul>
+<li>引数: <code>Relation relation</code>, <code>BlockNumber total_pages</code>, <code>BlockNumber scanned_pages</code>, <code>double scanned_tuples</code></li>
+<li>戻り値: <code>double</code></li>
+</ul>
+<h2>前提条件と不変条件</h2>
+<p>まだ解析していません。</p>
+<h2>アルゴリズムまたは振る舞い</h2>
+<ul>
+<li>複雑度: <code>high</code> (score 14)</li>
+</ul>
+<p>まだ解析していません。</p>
+<h2>呼び出し元と呼び出し先</h2>
+<ul>
+<li>呼び出し元: <a class="wiki-source-link" href="../../source/src/backend/access/heap/vacuumlazy.c.html#L1278" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__access__heap__vacuumlazy_c__lazy_scan_heap.html&quot;}, '*');"><code>lazy_scan_heap</code></a>, <a class="wiki-source-link" href="../../source/contrib/pgstattuple/pgstatapprox.c.html#L115" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/contrib__pgstattuple__pgstatapprox_c__statapprox_heap.html&quot;}, '*');"><code>statapprox_heap</code></a></li>
+<li>呼び出し先: なし</li>
+<li>呼び出し元サイト: <a class="wiki-source-link" href="../../source/contrib/pgstattuple/pgstatapprox.c.html#L115" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/contrib__pgstattuple__pgstatapprox_c__statapprox_heap.html&quot;}, '*');"><code>statapprox_heap</code></a> at <code>contrib/pgstattuple/pgstatapprox.c:247:22</code> (direct, confidence=high, resolved=<a class="wiki-entity-link" href="src__backend__commands__vacuum_c__vac_estimate_reltuples.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__commands__vacuum_c__vac_estimate_reltuples.html&quot;, &quot;source&quot;: &quot;source/src/backend/commands/vacuum.c.html#L1335&quot;}, '*');"><code>symbol:src/backend/commands/vacuum.c#vac_estimate_reltuples</code></a>), <a class="wiki-source-link" href="../../source/src/backend/access/heap/vacuumlazy.c.html#L1278" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__access__heap__vacuumlazy_c__lazy_scan_heap.html&quot;}, '*');"><code>lazy_scan_heap</code></a> at <code>src/backend/access/heap/vacuumlazy.c:1585:28</code> (direct, confidence=high, resolved=<a class="wiki-entity-link" href="src__backend__commands__vacuum_c__vac_estimate_reltuples.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__commands__vacuum_c__vac_estimate_reltuples.html&quot;, &quot;source&quot;: &quot;source/src/backend/commands/vacuum.c.html#L1335&quot;}, '*');"><code>symbol:src/backend/commands/vacuum.c#vac_estimate_reltuples</code></a>)</li>
+<li>呼び出しサイト: <code>floor</code> at <code>src/backend/commands/vacuum.c:1376:10</code> (unresolved), <code>floor</code> at <code>src/backend/commands/vacuum.c:1387:9</code> (unresolved)</li>
+</ul>
+<h2>関連データ構造</h2>
+<p><code>BlockNumber</code>, <code>c</code>, <code>Relation</code>, <a class="wiki-source-link" href="../../source/src/interfaces/ecpg/preproc/type.h.html#L89" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__interfaces__ecpg__preproc__type_h__when.html&quot;}, '*');"><code>when</code></a></p>
+<h2>ソース抜粋</h2>
+<p>~~~c double <a class="wiki-source-link" href="../../source/src/backend/commands/vacuum.c.html#L1335" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__commands__vacuum_c__vac_estimate_reltuples.html&quot;}, '*');">vac_estimate_reltuples</a>(Relation relation, BlockNumber total_pages, BlockNumber scanned_pages, double scanned_tuples) { BlockNumber old_rel_pages = relation-&gt;rd_rel-&gt;relpages; double		old_rel_tuples = relation-&gt;rd_rel-&gt;reltuples; double		old_density; double		unscanned_pages; double		total_tuples;</p>
+<p>/* If we did scan the whole <a class="wiki-source-link" href="../../source/src/port/pg_localeconv_r.c.html#L63" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/port/pg_localeconv_r.c.html&quot;}, '*');">table</a>, just use the count as-<a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> */ if (scanned_pages &gt;= total_pages) return scanned_tuples;</p>
+<p>/*</p>
+<ul>
+<li>When successive VACUUM commands scan the same few pages again and</li>
+<li>again, without anything from the <a class="wiki-source-link" href="../../source/src/port/pg_localeconv_r.c.html#L63" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/port/pg_localeconv_r.c.html&quot;}, '*');">table</a> really changing, there <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> a risk</li>
+<li>that our beliefs about tuple density will gradually become distorted.</li>
+<li>This might be caused by <a class="wiki-source-link" href="../../source/src/backend/access/heap/vacuumlazy.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/access/heap/vacuumlazy.c.html&quot;}, '*');">vacuumlazy.c</a> implementation details, such as</li>
+<li>its tendency to always scan the last heap page.  Handle that here.</li>
+<p>*</p>
+<li>If the relation <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> _exactly_ the same size according to the existing</li>
+<li>pg_class entry, and only a few of its pages (less than 2%) were</li>
+<li>scanned, keep the existing <a class="wiki-source-link" href="../../source/src/interfaces/ecpg/compatlib/informix.c.html#L687" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/ecpg/compatlib/informix.c.html&quot;}, '*');">value</a> of reltuples.  Also keep the existing</li>
+<li><a class="wiki-source-link" href="../../source/src/interfaces/ecpg/compatlib/informix.c.html#L687" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/ecpg/compatlib/informix.c.html&quot;}, '*');">value</a> <a class="wiki-source-link" href="../../source/src/interfaces/ecpg/preproc/type.h.html#L89" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__interfaces__ecpg__preproc__type_h__when.html&quot;}, '*');">when</a> only a <a class="wiki-source-link" href="../../source/src/backend/regex/regexec.c.html#L703" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__regex__regexec_c__subset.html&quot;}, '*');">subset</a> of rel&#x27;s pages &lt;= a single page were scanned.</li>
+<p>*</p>
+<li>(Note: we might be returning -1 here.)</li>
+<p>*/ if (old_rel_pages == total_pages &amp;&amp; scanned_pages &lt; (double) total_pages * 0.02) return old_rel_tuples; if (scanned_pages &lt;= 1) return old_rel_tuples;</p>
+</ul>
+<p>/*</p>
+<ul>
+<li>If old density <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> unknown, we can&#x27;t do much except <a class="wiki-source-link" href="../../source/src/bin/pgbench/pgbench.c.html#L182" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/bin/pgbench/pgbench.c.html&quot;}, '*');">scale</a> up</li>
+<li>scanned_tuples to match total_pages.</li>
+<p>*/ if (old_rel_tuples &lt; 0 || old_rel_pages == 0) return floor((scanned_tuples / scanned_pages) * total_pages + 0.5);</p>
+</ul>
+<p>/*</p>
+<ul>
+<li>Okay, we&#x27;ve covered the corner cases.  The normal calculation <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> to</li>
+<li><a class="wiki-source-link" href="../../source/src/timezone/zic.c.html#L1993" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__timezone__zic_c__convert.html&quot;}, '*');">convert</a> the old measurement to a density (tuples per page), then</li>
+<li>estimate the number of tuples in the unscanned pages using that figure,</li>
+<li>and finally add on the number of tuples in the scanned pages.</li>
+<p>*/ old_density = old_rel_tuples / old_rel_pages; unscanned_pages = (double) total_pages - (double) scanned_pages; total_tuples = old_density * unscanned_pages + scanned_tuples; return floor(total_tuples + 0.5); } ~~~</p>
+</ul>
+<h2>失敗モードと境界条件</h2>
+<p>まだ解析していません。</p>
+<h2>保守担当者向けメモ</h2>
+<ul>
+<li>後続フェーズで、ソース本文の文脈と caller/callee 情報を使ってこのページを強化する。</li>
+</ul><script>
+(function() {
+  function notifyParent() {
+    if (parent === window) return;
+    parent.postMessage({type: "frame-location", frame: window.name || "", href: window.location.href}, "*");
+  }
+  document.addEventListener("click", function(event) {
+    const link = event.target.closest("a[data-panel]");
+    if (!link || parent === window) return;
+    parent.postMessage({type: "source-link", panel: link.dataset.panel}, "*");
+  });
+  window.addEventListener("load", notifyParent);
+  window.addEventListener("hashchange", notifyParent);
+})();
+</script></body></html>

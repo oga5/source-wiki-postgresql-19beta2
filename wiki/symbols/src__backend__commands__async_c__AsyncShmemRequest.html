@@ -1,0 +1,64 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>symbols/src__backend__commands__async_c__AsyncShmemRequest.md</title><link rel="stylesheet" href="../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../source/src/backend/commands/async.c.html#L797" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__commands__async_c__AsyncShmemRequest.html&quot;}, '*');">AsyncShmemRequest</a></h1>
+<h2>定義</h2>
+<ul>
+<li>種別: <code>function</code></li>
+<li>定義箇所: <code>src/backend/commands/async.c:797</code></li>
+<li>所属モジュール: <a class="wiki-entity-link" href="../modules/src__backend__commands.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/modules/src__backend__commands.html&quot;, &quot;source&quot;: &quot;source/src/backend/commands/aggregatecmds.c.html&quot;}, '*');"><code>module:src/backend/commands</code></a></li>
+</ul>
+<h2>目的</h2>
+<p>静的シンボル索引から生成された初期シンボルページです。</p>
+<h2>シグネチャまたは形状</h2>
+<ul>
+<li>シグネチャ: <code>static void AsyncShmemRequest(void *arg)</code></li>
+</ul>
+<h2>入力と出力</h2>
+<ul>
+<li>引数: <code>void *arg</code></li>
+<li>戻り値: <code>void</code></li>
+</ul>
+<h2>前提条件と不変条件</h2>
+<p>まだ解析していません。</p>
+<h2>アルゴリズムまたは振る舞い</h2>
+<ul>
+<li>複雑度: <code>medium</code> (score 7)</li>
+</ul>
+<p>まだ解析していません。</p>
+<h2>呼び出し元と呼び出し先</h2>
+<ul>
+<li>呼び出し元: なし</li>
+<li>呼び出し先: なし</li>
+<li>呼び出し元サイト: なし</li>
+<li>呼び出しサイト: <code>mul_size</code> at <code>src/backend/commands/async.c:802:9</code> (unresolved, confidence=low), <code>add_size</code> at <code>src/backend/commands/async.c:803:9</code> (unresolved, confidence=low)</li>
+</ul>
+<h2>関連データ構造</h2>
+<p><a class="wiki-source-link" href="../../source/src/backend/commands/async.c.html#L331" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__commands__async_c__AsyncQueueControl.html&quot;}, '*');"><code>AsyncQueueControl</code></a>, <a class="wiki-source-link" href="../../source/src/backend/commands/async.c.html#L287" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__commands__async_c__QueueBackendStatus.html&quot;}, '*');"><code>QueueBackendStatus</code></a>, <code>Size</code></p>
+<h2>ソース抜粋</h2>
+<p>~~~c static void <a class="wiki-source-link" href="../../source/src/backend/commands/async.c.html#L797" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__commands__async_c__AsyncShmemRequest.html&quot;}, '*');">AsyncShmemRequest</a>(void *arg) { Size		size;</p>
+<p>size = mul_size(<a class="wiki-source-link" href="../../source/src/backend/utils/init/globals.c.html#L149" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/utils/init/globals.c.html&quot;}, '*');">MaxBackends</a>, sizeof(<a class="wiki-source-link" href="../../source/src/backend/commands/async.c.html#L287" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__commands__async_c__QueueBackendStatus.html&quot;}, '*');">QueueBackendStatus</a>)); size = add_size(size, offsetof(<a class="wiki-source-link" href="../../source/src/backend/commands/async.c.html#L331" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__commands__async_c__AsyncQueueControl.html&quot;}, '*');">AsyncQueueControl</a>, backend));</p>
+<p><a class="wiki-source-link" href="../../source/src/include/storage/shmem.h.html#L176" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/storage/shmem.h.html&quot;}, '*');">ShmemRequestStruct</a>(.name = &quot;Async Queue Control&quot;, .size = size, .ptr = (void **) &amp;asyncQueueControl, );</p>
+<p><a class="wiki-source-link" href="../../source/src/include/access/slru.h.html#L218" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/access/slru.h.html&quot;}, '*');">SimpleLruRequest</a>(.desc = &amp;<a class="wiki-source-link" href="../../source/src/backend/commands/async.c.html#L375" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/commands/async.c.html&quot;}, '*');">NotifySlruDesc</a>, .name = &quot;notify&quot;, .Dir = &quot;<a class="wiki-source-link" href="../../source/src/backend/commands/async.c.html#L859" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__commands__async_c__pg_notify.html&quot;}, '*');">pg_notify</a>&quot;,</p>
+<p>/* long segment names are used in order to avoid wraparound */ .long_segment_names = <a class="wiki-source-link" href="../../source/src/tools/pg_bsd_indent/indent_globs.h.html#L46" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/tools/pg_bsd_indent/indent_globs.h.html&quot;}, '*');">true</a>,</p>
+<p>.nslots = <a class="wiki-source-link" href="../../source/src/backend/utils/init/globals.c.html#L167" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/utils/init/globals.c.html&quot;}, '*');">notify_buffers</a>,</p>
+<p>.sync_handler = SYNC_HANDLER_NONE, .PagePrecedes = <a class="wiki-source-link" href="../../source/src/backend/commands/async.c.html#L649" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__commands__async_c__asyncQueuePagePrecedes.html&quot;}, '*');">asyncQueuePagePrecedes</a>, .errdetail_for_io_error = <a class="wiki-source-link" href="../../source/src/backend/commands/async.c.html#L626" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__commands__async_c__asyncQueueErrdetailForIoError.html&quot;}, '*');">asyncQueueErrdetailForIoError</a>,</p>
+<p>.buffer_tranche_id = LWTRANCHE_NOTIFY_BUFFER, .bank_tranche_id = LWTRANCHE_NOTIFY_SLRU, ); } ~~~</p>
+<h2>失敗モードと境界条件</h2>
+<p>まだ解析していません。</p>
+<h2>保守担当者向けメモ</h2>
+<ul>
+<li>後続フェーズで、ソース本文の文脈と caller/callee 情報を使ってこのページを強化する。</li>
+</ul><script>
+(function() {
+  function notifyParent() {
+    if (parent === window) return;
+    parent.postMessage({type: "frame-location", frame: window.name || "", href: window.location.href}, "*");
+  }
+  document.addEventListener("click", function(event) {
+    const link = event.target.closest("a[data-panel]");
+    if (!link || parent === window) return;
+    parent.postMessage({type: "source-link", panel: link.dataset.panel}, "*");
+  });
+  window.addEventListener("load", notifyParent);
+  window.addEventListener("hashchange", notifyParent);
+})();
+</script></body></html>

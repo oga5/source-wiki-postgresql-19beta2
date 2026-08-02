@@ -1,0 +1,94 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>symbols/src__backend__storage__smgr__smgr_c__smgrtruncate.md</title><link rel="stylesheet" href="../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../source/src/backend/storage/smgr/smgr.c.html#L874" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__storage__smgr__smgr_c__smgrtruncate.html&quot;}, '*');">smgrtruncate</a></h1>
+<h2>定義</h2>
+<ul>
+<li>種別: <code>function</code></li>
+<li>定義箇所: <code>src/backend/storage/smgr/smgr.c:874</code></li>
+<li>所属モジュール: <a class="wiki-entity-link" href="../modules/src__backend__storage__smgr.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/modules/src__backend__storage__smgr.html&quot;, &quot;source&quot;: &quot;source/src/backend/storage/smgr/bulk_write.c.html&quot;}, '*');"><code>module:src/backend/storage/smgr</code></a></li>
+</ul>
+<h2>目的</h2>
+<p>静的シンボル索引から生成された初期シンボルページです。</p>
+<h2>シグネチャまたは形状</h2>
+<ul>
+<li>シグネチャ: <code>void smgrtruncate(SMgrRelation reln, ForkNumber *forknum, int nforks, BlockNumber *old_nblocks, BlockNumber *nblocks)</code></li>
+</ul>
+<h2>入力と出力</h2>
+<ul>
+<li>引数: <code>SMgrRelation reln</code>, <code>ForkNumber *forknum</code>, <code>int nforks</code>, <code>BlockNumber *old_nblocks</code>, <code>BlockNumber *nblocks</code></li>
+<li>戻り値: <code>void</code></li>
+</ul>
+<h2>前提条件と不変条件</h2>
+<p>まだ解析していません。</p>
+<h2>アルゴリズムまたは振る舞い</h2>
+<ul>
+<li>複雑度: <code>medium</code> (score 7)</li>
+</ul>
+<p>まだ解析していません。</p>
+<h2>呼び出し元と呼び出し先</h2>
+<ul>
+<li>呼び出し元: <a class="wiki-source-link" href="../../source/contrib/pg_visibility/pg_visibility.c.html#L369" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/contrib__pg_visibility__pg_visibility_c__pg_truncate_visibility_map.html&quot;}, '*');"><code>pg_truncate_visibility_map</code></a>, <a class="wiki-source-link" href="../../source/src/backend/catalog/storage.c.html#L288" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__catalog__storage_c__RelationTruncate.html&quot;}, '*');"><code>RelationTruncate</code></a>, <a class="wiki-source-link" href="../../source/src/backend/catalog/storage.c.html#L980" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__catalog__storage_c__smgr_redo.html&quot;}, '*');"><code>smgr_redo</code></a></li>
+<li>呼び出し先: <a class="wiki-source-link" href="../../source/src/backend/utils/cache/inval.c.html#L1751" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__utils__cache__inval_c__CacheInvalidateSmgr.html&quot;}, '*');"><code>CacheInvalidateSmgr</code></a>, <a class="wiki-source-link" href="../../source/src/backend/storage/buffer/bufmgr.c.html#L4787" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__storage__buffer__bufmgr_c__DropRelationBuffers.html&quot;}, '*');"><code>DropRelationBuffers</code></a></li>
+<li>呼び出し元サイト: <a class="wiki-source-link" href="../../source/contrib/pg_visibility/pg_visibility.c.html#L369" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/contrib__pg_visibility__pg_visibility_c__pg_truncate_visibility_map.html&quot;}, '*');"><code>pg_truncate_visibility_map</code></a> at <code>contrib/pg_visibility/pg_visibility.c:417:3</code> (direct, confidence=high, resolved=<a class="wiki-entity-link" href="src__backend__storage__smgr__smgr_c__smgrtruncate.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__storage__smgr__smgr_c__smgrtruncate.html&quot;, &quot;source&quot;: &quot;source/src/backend/storage/smgr/smgr.c.html#L874&quot;}, '*');"><code>symbol:src/backend/storage/smgr/smgr.c#smgrtruncate</code></a>), <a class="wiki-source-link" href="../../source/src/backend/catalog/storage.c.html#L288" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__catalog__storage_c__RelationTruncate.html&quot;}, '*');"><code>RelationTruncate</code></a> at <code>src/backend/catalog/storage.c:422:2</code> (direct, confidence=high, resolved=<a class="wiki-entity-link" href="src__backend__storage__smgr__smgr_c__smgrtruncate.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__storage__smgr__smgr_c__smgrtruncate.html&quot;, &quot;source&quot;: &quot;source/src/backend/storage/smgr/smgr.c.html#L874&quot;}, '*');"><code>symbol:src/backend/storage/smgr/smgr.c#smgrtruncate</code></a>), <a class="wiki-source-link" href="../../source/src/backend/catalog/storage.c.html#L980" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__catalog__storage_c__smgr_redo.html&quot;}, '*');"><code>smgr_redo</code></a> at <code>src/backend/catalog/storage.c:1078:4</code> (direct, confidence=high, resolved=<a class="wiki-entity-link" href="src__backend__storage__smgr__smgr_c__smgrtruncate.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__storage__smgr__smgr_c__smgrtruncate.html&quot;, &quot;source&quot;: &quot;source/src/backend/storage/smgr/smgr.c.html#L874&quot;}, '*');"><code>symbol:src/backend/storage/smgr/smgr.c#smgrtruncate</code></a>)</li>
+<li>呼び出しサイト: <a class="wiki-source-link" href="../../source/src/backend/storage/buffer/bufmgr.c.html#L4787" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__storage__buffer__bufmgr_c__DropRelationBuffers.html&quot;}, '*');"><code>DropRelationBuffers</code></a> at <code>src/backend/storage/smgr/smgr.c:884:2</code> (direct, confidence=high, resolved=<a class="wiki-entity-link" href="src__backend__storage__buffer__bufmgr_c__DropRelationBuffers.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__storage__buffer__bufmgr_c__DropRelationBuffers.html&quot;, &quot;source&quot;: &quot;source/src/backend/storage/buffer/bufmgr.c.html#L4787&quot;}, '*');"><code>symbol:src/backend/storage/buffer/bufmgr.c#DropRelationBuffers</code></a>), <a class="wiki-source-link" href="../../source/src/backend/utils/cache/inval.c.html#L1751" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__utils__cache__inval_c__CacheInvalidateSmgr.html&quot;}, '*');"><code>CacheInvalidateSmgr</code></a> at <code>src/backend/storage/smgr/smgr.c:896:2</code> (direct, confidence=high, resolved=<a class="wiki-entity-link" href="src__backend__utils__cache__inval_c__CacheInvalidateSmgr.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__utils__cache__inval_c__CacheInvalidateSmgr.html&quot;, &quot;source&quot;: &quot;source/src/backend/utils/cache/inval.c.html#L1751&quot;}, '*');"><code>symbol:src/backend/utils/cache/inval.c#CacheInvalidateSmgr</code></a>), <code>smgrsw[reln-&gt;smgr_which].smgr_truncate</code> at <code>src/backend/storage/smgr/smgr.c:904:3</code> (indirect)</li>
+</ul>
+<h2>関連データ構造</h2>
+<p><code>BlockNumber</code>, <a class="wiki-source-link" href="../../source/src/include/common/relpath.h.html#L56" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__common__relpath_h__ForkNumber.html&quot;}, '*');"><code>ForkNumber</code></a>, <code>SMgrRelation</code>, <a class="wiki-source-link" href="../../source/src/interfaces/ecpg/preproc/type.h.html#L89" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__interfaces__ecpg__preproc__type_h__when.html&quot;}, '*');"><code>when</code></a></p>
+<h2>ソース抜粋</h2>
+<p>~~~c void <a class="wiki-source-link" href="../../source/src/backend/storage/smgr/smgr.c.html#L874" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__storage__smgr__smgr_c__smgrtruncate.html&quot;}, '*');">smgrtruncate</a>(SMgrRelation reln, <a class="wiki-source-link" href="../../source/src/include/common/relpath.h.html#L56" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__common__relpath_h__ForkNumber.html&quot;}, '*');">ForkNumber</a> *forknum, int nforks, BlockNumber *old_nblocks, BlockNumber *nblocks) { int			i;</p>
+<p>/*</p>
+<ul>
+<li>Get rid of any buffers for the about-to-be-deleted blocks. bufmgr will</li>
+<li>just drop them without bothering to <a class="wiki-source-link" href="../../source/src/interfaces/libpq/win32.h.html#L14" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq/win32.h.html&quot;}, '*');">write</a> the contents.</li>
+<p>*/ <a class="wiki-source-link" href="../../source/src/backend/storage/buffer/bufmgr.c.html#L4787" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__storage__buffer__bufmgr_c__DropRelationBuffers.html&quot;}, '*');">DropRelationBuffers</a>(reln, forknum, nforks, nblocks);</p>
+</ul>
+<p>/*</p>
+<ul>
+<li>Send a shared-inval message to force other backends to <a class="wiki-source-link" href="../../source/src/interfaces/libpq/win32.h.html#L12" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq/win32.h.html&quot;}, '*');">close</a> any smgr</li>
+<li>references they may have for this rel.  This <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> useful because they</li>
+<li>might have <a class="wiki-source-link" href="../../source/src/include/port.h.html#L366" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/port.h.html&quot;}, '*');">open</a> file pointers to segments that got removed, and/or</li>
+<li>smgr_targblock variables pointing past the new rel end.  (The inval</li>
+<li>message will come back to our backend, too, causing a</li>
+<li>probably-unnecessary local smgr flush.  But we don&#x27;t expect that this</li>
+<li><a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> a performance-critical path.)  As in the unlink code, we want to be</li>
+<li>sure the message <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> sent <a class="wiki-source-link" href="../../source/src/backend/regex/regc_locale.c.html#L487" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__regex__regc_locale_c__before.html&quot;}, '*');">before</a> we start changing things on-disk.</li>
+<p>*/ <a class="wiki-source-link" href="../../source/src/backend/utils/cache/inval.c.html#L1751" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__utils__cache__inval_c__CacheInvalidateSmgr.html&quot;}, '*');">CacheInvalidateSmgr</a>(reln-&gt;smgr_rlocator);</p>
+</ul>
+<p>/* Do the truncation */ for (i = 0; i &lt; nforks; i++) { /* Make the cached size invalid if we encounter an error. */ reln-&gt;smgr_cached_nblocks[forknum[i]] = <a class="wiki-source-link" href="../../source/src/include/storage/block.h.html#L33" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/storage/block.h.html&quot;}, '*');">InvalidBlockNumber</a>;</p>
+<p><a class="wiki-source-link" href="../../source/src/backend/storage/smgr/smgr.c.html#L128" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/storage/smgr/smgr.c.html&quot;}, '*');">smgrsw</a>[reln-&gt;smgr_which].smgr_truncate(reln, forknum[i], old_nblocks[i], nblocks[i]);</p>
+<p>/*</p>
+<ul>
+<li>We might as well update the local smgr_cached_nblocks values. The</li>
+<li>smgr cache inval message that this function sent will cause other</li>
+<li>backends to invalidate their copies of smgr_cached_nblocks, and</li>
+<li>these ones too at the next command boundary. But ensure they aren&#x27;t</li>
+<li>outright wrong until then.</li>
+<p>*</p>
+<li>We can have nblocks &gt; old_nblocks <a class="wiki-source-link" href="../../source/src/interfaces/ecpg/preproc/type.h.html#L89" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__interfaces__ecpg__preproc__type_h__when.html&quot;}, '*');">when</a> a relation was truncated</li>
+<li>multiple <a class="wiki-source-link" href="../../source/src/interfaces/ecpg/test/expected/pgtypeslib-dt_test2.c.html#L60" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/ecpg/test/expected/pgtypeslib-dt_test2.c.html&quot;}, '*');">times</a>, a replica applied all the truncations, and later</li>
+<li>restarts from a restartpoint located <a class="wiki-source-link" href="../../source/src/backend/regex/regc_locale.c.html#L487" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__regex__regc_locale_c__before.html&quot;}, '*');">before</a> the truncations. The</li>
+<li>relation on disk will be the size of the last truncate. When</li>
+<li>replaying the first truncate, we will have nblocks &gt; current size.</li>
+<li>In such cases, smgr_truncate does nothing, so set the cached size</li>
+<li>to the old size rather than the requested size.</li>
+<p>*/ reln-&gt;smgr_cached_nblocks[forknum[i]] = nblocks[i] &gt; old_nblocks[i] ? old_nblocks[i] : nblocks[i]; } } ~~~</p>
+</ul>
+<h2>失敗モードと境界条件</h2>
+<p>まだ解析していません。</p>
+<h2>保守担当者向けメモ</h2>
+<ul>
+<li>後続フェーズで、ソース本文の文脈と caller/callee 情報を使ってこのページを強化する。</li>
+</ul><script>
+(function() {
+  function notifyParent() {
+    if (parent === window) return;
+    parent.postMessage({type: "frame-location", frame: window.name || "", href: window.location.href}, "*");
+  }
+  document.addEventListener("click", function(event) {
+    const link = event.target.closest("a[data-panel]");
+    if (!link || parent === window) return;
+    parent.postMessage({type: "source-link", panel: link.dataset.panel}, "*");
+  });
+  window.addEventListener("load", notifyParent);
+  window.addEventListener("hashchange", notifyParent);
+})();
+</script></body></html>

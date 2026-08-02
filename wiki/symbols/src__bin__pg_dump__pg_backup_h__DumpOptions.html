@@ -1,0 +1,59 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>symbols/src__bin__pg_dump__pg_backup_h__DumpOptions.md</title><link rel="stylesheet" href="../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../source/src/bin/pg_dump/pg_backup.h.html#L171" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__bin__pg_dump__pg_backup_h__DumpOptions.html&quot;}, '*');">DumpOptions</a></h1>
+<h2>定義</h2>
+<ul>
+<li>種別: <code>struct</code></li>
+<li>定義箇所: <code>src/bin/pg_dump/pg_backup.h:171</code></li>
+<li>所属モジュール: <a class="wiki-entity-link" href="../modules/src__bin__pg_dump.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/modules/src__bin__pg_dump.html&quot;, &quot;source&quot;: &quot;source/src/bin/pg_dump/common.c.html&quot;}, '*');"><code>module:src/bin/pg_dump</code></a></li>
+</ul>
+<h2>目的</h2>
+<p>静的シンボル索引から生成された初期シンボルページです。</p>
+<h2>シグネチャまたは形状</h2>
+<ul>
+<li>シグネチャ: <code>typedef struct _dumpOptions</code></li>
+</ul>
+<h2>入力と出力</h2>
+<p>まだ解析していません。</p>
+<h2>前提条件と不変条件</h2>
+<p>まだ解析していません。</p>
+<h2>アルゴリズムまたは振る舞い</h2>
+<p>まだ解析していません。</p>
+<h2>呼び出し元と呼び出し先</h2>
+<ul>
+<li>呼び出し元: なし</li>
+<li>呼び出し先: なし</li>
+<li>呼び出し元サイト: なし</li>
+<li>呼び出しサイト: なし</li>
+</ul>
+<h2>関連データ構造</h2>
+<p><code>ConnParams</code>, <code>options</code></p>
+<h2>ソース抜粋</h2>
+<p>~~~c typedef struct _dumpOptions { ConnParams	cparams;</p>
+<p>int			<a class="wiki-source-link" href="../../source/src/bin/pg_dump/pg_dumpall.c.html#L88" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/bin/pg_dump/pg_dumpall.c.html&quot;}, '*');">binary_upgrade</a>;</p>
+<p>/* various user-settable parameters */ int			dumpSections;	/* bitmask of chosen sections */ bool		aclsSkip; const char *lockWaitTimeout; int			dump_inserts;	/* 0 = COPY, otherwise rows per INSERT */</p>
+<p>/* flags for various command-line long options */ int			<a class="wiki-source-link" href="../../source/src/bin/pg_dump/pg_dumpall.c.html#L90" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/bin/pg_dump/pg_dumpall.c.html&quot;}, '*');">disable_dollar_quoting</a>; int			<a class="wiki-source-link" href="../../source/src/bin/pg_dump/pg_dumpall.c.html#L89" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/bin/pg_dump/pg_dumpall.c.html&quot;}, '*');">column_inserts</a>; int			<a class="wiki-source-link" href="../../source/src/bin/pg_dump/pg_dumpall.c.html#L92" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/bin/pg_dump/pg_dumpall.c.html&quot;}, '*');">if_exists</a>; int			<a class="wiki-source-link" href="../../source/src/bin/pg_dump/pg_dumpall.c.html#L97" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/bin/pg_dump/pg_dumpall.c.html&quot;}, '*');">no_comments</a>; int			<a class="wiki-source-link" href="../../source/src/bin/pg_dump/pg_dumpall.c.html#L98" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/bin/pg_dump/pg_dumpall.c.html&quot;}, '*');">no_policies</a>;	/* Skip row security policies */ int			<a class="wiki-source-link" href="../../source/src/bin/pg_dump/pg_dumpall.c.html#L99" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/bin/pg_dump/pg_dumpall.c.html&quot;}, '*');">no_publications</a>; int			<a class="wiki-source-link" href="../../source/src/bin/pg_dump/pg_dumpall.c.html#L100" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/bin/pg_dump/pg_dumpall.c.html&quot;}, '*');">no_security_labels</a>; int			<a class="wiki-source-link" href="../../source/src/bin/pg_dump/pg_dumpall.c.html#L104" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/bin/pg_dump/pg_dumpall.c.html&quot;}, '*');">no_subscriptions</a>; int			<a class="wiki-source-link" href="../../source/src/bin/pg_dump/pg_dumpall.c.html#L105" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/bin/pg_dump/pg_dumpall.c.html&quot;}, '*');">no_toast_compression</a>; int			<a class="wiki-source-link" href="../../source/src/bin/pg_dump/pg_dumpall.c.html#L106" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/bin/pg_dump/pg_dumpall.c.html&quot;}, '*');">no_unlogged_table_data</a>; int			serializable_deferrable; int			<a class="wiki-source-link" href="../../source/src/bin/pg_dump/pg_dumpall.c.html#L91" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/bin/pg_dump/pg_dumpall.c.html&quot;}, '*');">disable_triggers</a>; int			outputNoTableAm; int			outputNoTablespaces; int			<a class="wiki-source-link" href="../../source/src/bin/pg_dump/pg_dumpall.c.html#L96" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/bin/pg_dump/pg_dumpall.c.html&quot;}, '*');">use_setsessauth</a>; int			enable_row_security; int			<a class="wiki-source-link" href="../../source/src/bin/pg_dump/pg_dumpall.c.html#L110" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/bin/pg_dump/pg_dumpall.c.html&quot;}, '*');">load_via_partition_root</a>;</p>
+<p>/* default, if no &quot;inclusion&quot; switches appear, <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> to <a class="wiki-source-link" href="../../source/src/backend/regex/regcomp.c.html#L2494" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__regex__regcomp_c__dump.html&quot;}, '*');">dump</a> everything */ bool		include_everything;</p>
+<p>int			outputClean; int			outputCreateDB; bool		outputLOs; bool		dontOutputLOs; int			outputNoOwner; char	   *outputSuperuser;</p>
+<p>int			<a class="wiki-source-link" href="../../source/src/bin/pg_dump/pg_dumpall.c.html#L113" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/bin/pg_dump/pg_dumpall.c.html&quot;}, '*');">sequence_data</a>;	/* <a class="wiki-source-link" href="../../source/src/backend/regex/regcomp.c.html#L2494" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__regex__regcomp_c__dump.html&quot;}, '*');">dump</a> sequence data even in schema-only <a class="wiki-source-link" href="../../source/src/bin/pg_checksums/pg_checksums.c.html#L56" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/bin/pg_checksums/pg_checksums.c.html&quot;}, '*');">mode</a> */ int			do_nothing;</p>
+<p>/* flags derived from the user-settable flags */ bool		dumpSchema; bool		dumpData; bool		dumpStatistics;</p>
+<p>char	   *restrict_key; } <a class="wiki-source-link" href="../../source/src/bin/pg_dump/pg_backup.h.html#L171" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__bin__pg_dump__pg_backup_h__DumpOptions.html&quot;}, '*');">DumpOptions</a>; ~~~</p>
+<h2>失敗モードと境界条件</h2>
+<p>まだ解析していません。</p>
+<h2>保守担当者向けメモ</h2>
+<ul>
+<li>後続フェーズで、ソース本文の文脈と caller/callee 情報を使ってこのページを強化する。</li>
+</ul><script>
+(function() {
+  function notifyParent() {
+    if (parent === window) return;
+    parent.postMessage({type: "frame-location", frame: window.name || "", href: window.location.href}, "*");
+  }
+  document.addEventListener("click", function(event) {
+    const link = event.target.closest("a[data-panel]");
+    if (!link || parent === window) return;
+    parent.postMessage({type: "source-link", panel: link.dataset.panel}, "*");
+  });
+  window.addEventListener("load", notifyParent);
+  window.addEventListener("hashchange", notifyParent);
+})();
+</script></body></html>

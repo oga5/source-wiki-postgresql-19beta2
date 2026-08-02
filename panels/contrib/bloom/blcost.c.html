@@ -1,0 +1,16 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>Related: contrib/bloom/blcost.c</title><link rel="stylesheet" href="../../../styles.css"></head><body><h1>Related pages</h1><p>contrib/bloom/blcost.c</p><ul><li><a href="../../../wiki/symbols/contrib__bloom__blcost_c__blcostestimate.html" target="wiki-view">function: blcostestimate</a></li><li><a href="../../../source/src/include/postgres.h.html" target="source-view">Include: postgres.h</a></li><li><a href="../../../source/contrib/bloom/bloom.h.html" target="source-view">Include: bloom.h</a></li><li><a href="../../../source/src/include/utils/selfuncs.h.html" target="source-view">Include: utils/selfuncs.h</a></li></ul><script>
+(function() {
+  function notifyParent() {
+    if (parent === window) return;
+    parent.postMessage({type: "frame-location", frame: window.name || "", href: window.location.href}, "*");
+  }
+  document.addEventListener("click", function(event) {
+    const link = event.target.closest("a[data-panel]");
+    if (!link || parent === window) return;
+    parent.postMessage({type: "source-link", panel: link.dataset.panel}, "*");
+  });
+  window.addEventListener("load", notifyParent);
+  window.addEventListener("hashchange", notifyParent);
+})();
+</script></body></html>

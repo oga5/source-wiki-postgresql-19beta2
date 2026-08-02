@@ -1,0 +1,76 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>symbols/src__backend__access__brin__brin_c__check_null_keys.md</title><link rel="stylesheet" href="../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../source/src/backend/access/brin/brin.c.html#L2314" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__access__brin__brin_c__check_null_keys.html&quot;}, '*');">check_null_keys</a></h1>
+<h2>定義</h2>
+<ul>
+<li>種別: <code>function</code></li>
+<li>定義箇所: <code>src/backend/access/brin/brin.c:2314</code></li>
+<li>所属モジュール: <a class="wiki-entity-link" href="../modules/src__backend__access__brin.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/modules/src__backend__access__brin.html&quot;, &quot;source&quot;: &quot;source/src/backend/access/brin/brin.c.html&quot;}, '*');"><code>module:src/backend/access/brin</code></a></li>
+</ul>
+<h2>目的</h2>
+<p>静的シンボル索引から生成された初期シンボルページです。</p>
+<h2>シグネチャまたは形状</h2>
+<ul>
+<li>シグネチャ: <code>static bool check_null_keys(BrinValues *bval, ScanKey *nullkeys, int nnullkeys)</code></li>
+</ul>
+<h2>入力と出力</h2>
+<ul>
+<li>引数: <code>BrinValues *bval</code>, <code>ScanKey *nullkeys</code>, <code>int nnullkeys</code></li>
+<li>戻り値: <code>bool</code></li>
+</ul>
+<h2>前提条件と不変条件</h2>
+<p>まだ解析していません。</p>
+<h2>アルゴリズムまたは振る舞い</h2>
+<ul>
+<li>複雑度: <code>high</code> (score 17)</li>
+</ul>
+<p>まだ解析していません。</p>
+<h2>呼び出し元と呼び出し先</h2>
+<ul>
+<li>呼び出し元: <a class="wiki-source-link" href="../../source/src/backend/access/brin/brin.c.html#L571" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__access__brin__brin_c__bringetbitmap.html&quot;}, '*');"><code>bringetbitmap</code></a></li>
+<li>呼び出し先: なし</li>
+<li>呼び出し元サイト: <a class="wiki-source-link" href="../../source/src/backend/access/brin/brin.c.html#L571" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__access__brin__brin_c__bringetbitmap.html&quot;}, '*');"><code>bringetbitmap</code></a> at <code>src/backend/access/brin/brin.c:832:8</code> (direct, confidence=high, resolved=<a class="wiki-entity-link" href="src__backend__access__brin__brin_c__check_null_keys.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__access__brin__brin_c__check_null_keys.html&quot;, &quot;source&quot;: &quot;source/src/backend/access/brin/brin.c.html#L2314&quot;}, '*');"><code>symbol:src/backend/access/brin/brin.c#check_null_keys</code></a>)</li>
+<li>呼び出しサイト: <a class="wiki-source-link" href="../../source/src/include/c.h.html#L950" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/c.h.html&quot;}, '*');"><code>Assert</code></a> at <code>src/backend/access/brin/brin.c:2327:3</code> (unresolved)</li>
+</ul>
+<h2>関連データ構造</h2>
+<p><a class="wiki-source-link" href="../../source/src/include/access/brin_tuple.h.html#L29" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__access__brin_tuple_h__BrinValues.html&quot;}, '*');"><code>BrinValues</code></a>, <code>ScanKey</code></p>
+<h2>ソース抜粋</h2>
+<p>~~~c static bool <a class="wiki-source-link" href="../../source/src/backend/access/brin/brin.c.html#L2314" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__access__brin__brin_c__check_null_keys.html&quot;}, '*');">check_null_keys</a>(<a class="wiki-source-link" href="../../source/src/include/access/brin_tuple.h.html#L29" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__access__brin_tuple_h__BrinValues.html&quot;}, '*');">BrinValues</a> *bval, ScanKey *nullkeys, int nnullkeys) { int			keyno;</p>
+<p>/*</p>
+<ul>
+<li>First check if there are any IS [NOT] NULL scan keys, and if we&#x27;re</li>
+<li>violating them.</li>
+<p>*/ for (keyno = 0; keyno &lt; nnullkeys; keyno++) { ScanKey		key = nullkeys[keyno];</p>
+</ul>
+<p><a class="wiki-source-link" href="../../source/src/include/c.h.html#L950" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/c.h.html&quot;}, '*');">Assert</a>(key-&gt;sk_attno == bval-&gt;bv_attno);</p>
+<p>/* Handle only IS NULL/IS NOT NULL tests */ if (!(key-&gt;sk_flags &amp; <a class="wiki-source-link" href="../../source/src/include/access/skey.h.html#L115" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/access/skey.h.html&quot;}, '*');">SK_ISNULL</a>)) continue;</p>
+<p>if (key-&gt;sk_flags &amp; <a class="wiki-source-link" href="../../source/src/include/access/skey.h.html#L121" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/access/skey.h.html&quot;}, '*');">SK_SEARCHNULL</a>) { /* IS NULL scan key, but <a class="wiki-source-link" href="../../source/src/backend/regex/regc_locale.c.html#L411" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__regex__regc_locale_c__range.html&quot;}, '*');">range</a> has no NULLs */ if (!bval-&gt;bv_allnulls &amp;&amp; !bval-&gt;bv_hasnulls) return <a class="wiki-source-link" href="../../source/src/tools/pg_bsd_indent/indent_globs.h.html#L43" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/tools/pg_bsd_indent/indent_globs.h.html&quot;}, '*');">false</a>; } else if (key-&gt;sk_flags &amp; <a class="wiki-source-link" href="../../source/src/include/access/skey.h.html#L122" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/access/skey.h.html&quot;}, '*');">SK_SEARCHNOTNULL</a>) { /*</p>
+<ul>
+<li>For IS NOT NULL, we can only skip ranges that are known to have</li>
+<li>only nulls.</li>
+<p>*/ if (bval-&gt;bv_allnulls) return <a class="wiki-source-link" href="../../source/src/tools/pg_bsd_indent/indent_globs.h.html#L43" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/tools/pg_bsd_indent/indent_globs.h.html&quot;}, '*');">false</a>; } else { /*</p>
+<li>Neither IS NULL nor IS NOT NULL was used; assume all indexable</li>
+<li>operators are strict and thus return <a class="wiki-source-link" href="../../source/src/tools/pg_bsd_indent/indent_globs.h.html#L43" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/tools/pg_bsd_indent/indent_globs.h.html&quot;}, '*');">false</a> with NULL <a class="wiki-source-link" href="../../source/src/interfaces/ecpg/compatlib/informix.c.html#L687" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/ecpg/compatlib/informix.c.html&quot;}, '*');">value</a> in</li>
+<li>the scan key.</li>
+<p>*/ return <a class="wiki-source-link" href="../../source/src/tools/pg_bsd_indent/indent_globs.h.html#L43" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/tools/pg_bsd_indent/indent_globs.h.html&quot;}, '*');">false</a>; } }</p>
+</ul>
+<p>return <a class="wiki-source-link" href="../../source/src/tools/pg_bsd_indent/indent_globs.h.html#L46" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/tools/pg_bsd_indent/indent_globs.h.html&quot;}, '*');">true</a>; } ~~~</p>
+<h2>失敗モードと境界条件</h2>
+<p>まだ解析していません。</p>
+<h2>保守担当者向けメモ</h2>
+<ul>
+<li>後続フェーズで、ソース本文の文脈と caller/callee 情報を使ってこのページを強化する。</li>
+</ul><script>
+(function() {
+  function notifyParent() {
+    if (parent === window) return;
+    parent.postMessage({type: "frame-location", frame: window.name || "", href: window.location.href}, "*");
+  }
+  document.addEventListener("click", function(event) {
+    const link = event.target.closest("a[data-panel]");
+    if (!link || parent === window) return;
+    parent.postMessage({type: "source-link", panel: link.dataset.panel}, "*");
+  });
+  window.addEventListener("load", notifyParent);
+  window.addEventListener("hashchange", notifyParent);
+})();
+</script></body></html>

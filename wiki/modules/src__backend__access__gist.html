@@ -1,0 +1,75 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>modules/src__backend__access__gist.md</title><link rel="stylesheet" href="../../styles.css"></head><body><h1>src/backend/access/gist</h1>
+<h2>システム内での役割</h2>
+<p><code>src/backend/access/gist</code> には 11 個の索引済みソースファイルがあります。この初期モジュールページはディレクトリ境界に基づいています。</p>
+<h2>責務</h2>
+<ul>
+<li>このディレクトリに属するソースファイルを集約する。</li>
+<li>より深い LLM 合成の前段として、モジュール単位の入口を提供する。</li>
+</ul>
+<h2>このモジュールのファイル</h2>
+<ul>
+<li><a class="wiki-source-link" href="../../source/src/backend/access/gist/gist.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/access/gist/gist.c.html&quot;}, '*');"><code>src/backend/access/gist/gist.c</code></a></li>
+<li><a class="wiki-source-link" href="../../source/src/backend/access/gist/gistbuild.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/access/gist/gistbuild.c.html&quot;}, '*');"><code>src/backend/access/gist/gistbuild.c</code></a></li>
+<li><a class="wiki-source-link" href="../../source/src/backend/access/gist/gistbuildbuffers.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/access/gist/gistbuildbuffers.c.html&quot;}, '*');"><code>src/backend/access/gist/gistbuildbuffers.c</code></a></li>
+<li><a class="wiki-source-link" href="../../source/src/backend/access/gist/gistget.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/access/gist/gistget.c.html&quot;}, '*');"><code>src/backend/access/gist/gistget.c</code></a></li>
+<li><a class="wiki-source-link" href="../../source/src/backend/access/gist/gistproc.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/access/gist/gistproc.c.html&quot;}, '*');"><code>src/backend/access/gist/gistproc.c</code></a></li>
+<li><a class="wiki-source-link" href="../../source/src/backend/access/gist/gistscan.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/access/gist/gistscan.c.html&quot;}, '*');"><code>src/backend/access/gist/gistscan.c</code></a></li>
+<li><a class="wiki-source-link" href="../../source/src/backend/access/gist/gistsplit.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/access/gist/gistsplit.c.html&quot;}, '*');"><code>src/backend/access/gist/gistsplit.c</code></a></li>
+<li><a class="wiki-source-link" href="../../source/src/backend/access/gist/gistutil.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/access/gist/gistutil.c.html&quot;}, '*');"><code>src/backend/access/gist/gistutil.c</code></a></li>
+<li><a class="wiki-source-link" href="../../source/src/backend/access/gist/gistvacuum.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/access/gist/gistvacuum.c.html&quot;}, '*');"><code>src/backend/access/gist/gistvacuum.c</code></a></li>
+<li><a class="wiki-source-link" href="../../source/src/backend/access/gist/gistvalidate.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/access/gist/gistvalidate.c.html&quot;}, '*');"><code>src/backend/access/gist/gistvalidate.c</code></a></li>
+<li><a class="wiki-source-link" href="../../source/src/backend/access/gist/gistxlog.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/access/gist/gistxlog.c.html&quot;}, '*');"><code>src/backend/access/gist/gistxlog.c</code></a></li>
+</ul>
+<h2>主要なデータ構造</h2>
+<ul>
+<li><a class="wiki-source-link" href="../../source/src/backend/access/gist/gistbuild.c.html#L67" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__access__gist__gistbuild_c__GistBuildMode.html&quot;}, '*');"><code>GistBuildMode</code></a></li>
+<li><a class="wiki-source-link" href="../../source/src/backend/access/gist/gistbuild.c.html#L82" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__access__gist__gistbuild_c__GISTBuildState.html&quot;}, '*');"><code>GISTBuildState</code></a></li>
+<li><a class="wiki-source-link" href="../../source/src/backend/access/gist/gistbuild.c.html#L123" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__access__gist__gistbuild_c__GistSortedBuildLevelState.html&quot;}, '*');"><code>GistSortedBuildLevelState</code></a></li>
+<li><a class="wiki-source-link" href="../../source/src/backend/access/gist/gistbuild.c.html#L1509" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__access__gist__gistbuild_c__ParentMapEntry.html&quot;}, '*');"><code>ParentMapEntry</code></a></li>
+<li><a class="wiki-source-link" href="../../source/src/backend/access/gist/gistbuildbuffers.c.html#L517" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__access__gist__gistbuildbuffers_c__RelocationBufferInfo.html&quot;}, '*');"><code>RelocationBufferInfo</code></a></li>
+<li><code>CommonEntry</code></li>
+<li><code>ConsiderSplitContext</code></li>
+<li><a class="wiki-source-link" href="../../source/src/backend/access/gist/gistproc.c.html#L306" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__access__gist__gistproc_c__SplitInterval.html&quot;}, '*');"><code>SplitInterval</code></a></li>
+<li><a class="wiki-source-link" href="../../source/src/backend/access/gist/gistsplit.c.html#L31" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__access__gist__gistsplit_c__GistSplitUnion.html&quot;}, '*');"><code>GistSplitUnion</code></a></li>
+<li><a class="wiki-source-link" href="../../source/src/backend/access/gist/gistvacuum.c.html#L29" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__access__gist__gistvacuum_c__GistVacState.html&quot;}, '*');"><code>GistVacState</code></a></li>
+</ul>
+<h2>主なフロー</h2>
+<p>初期モジュールページでは、まだエンドツーエンドのフローを推論しません。</p>
+<h2>外部依存</h2>
+<ul>
+<li><a class="wiki-source-link" href="../../source/src/include/postgres.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/postgres.h.html&quot;}, '*');"><code>postgres.h</code></a></li>
+<li><code>access/gist_private.h</code></li>
+<li><code>utils/rel.h</code></li>
+<li><code>utils/memutils.h</code></li>
+<li><code>access/xloginsert.h</code></li>
+<li><a class="wiki-source-link" href="../../source/src/include/miscadmin.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/miscadmin.h.html&quot;}, '*');"><code>miscadmin.h</code></a></li>
+<li><code>utils/float.h</code></li>
+<li><code>utils/fmgrprotos.h</code></li>
+<li><code>access/genam.h</code></li>
+<li><code>utils/lsyscache.h</code></li>
+</ul>
+<h2>内部構成</h2>
+<ul>
+<li>子モジュール数: 0</li>
+</ul>
+<h2>推奨読書順</h2>
+<p>1. <a class="wiki-source-link" href="../../source/src/backend/access/gist/gistproc.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/access/gist/gistproc.c.html&quot;}, '*');"><code>src/backend/access/gist/gistproc.c</code></a> 2. <a class="wiki-source-link" href="../../source/src/backend/access/gist/gistutil.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/access/gist/gistutil.c.html&quot;}, '*');"><code>src/backend/access/gist/gistutil.c</code></a> 3. <a class="wiki-source-link" href="../../source/src/backend/access/gist/gistbuild.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/access/gist/gistbuild.c.html&quot;}, '*');"><code>src/backend/access/gist/gistbuild.c</code></a> 4. <a class="wiki-source-link" href="../../source/src/backend/access/gist/gist.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/access/gist/gist.c.html&quot;}, '*');"><code>src/backend/access/gist/gist.c</code></a> 5. <a class="wiki-source-link" href="../../source/src/backend/access/gist/gistbuildbuffers.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/access/gist/gistbuildbuffers.c.html&quot;}, '*');"><code>src/backend/access/gist/gistbuildbuffers.c</code></a> 6. <a class="wiki-source-link" href="../../source/src/backend/access/gist/gistxlog.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/access/gist/gistxlog.c.html&quot;}, '*');"><code>src/backend/access/gist/gistxlog.c</code></a> 7. <a class="wiki-source-link" href="../../source/src/backend/access/gist/gistsplit.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/access/gist/gistsplit.c.html&quot;}, '*');"><code>src/backend/access/gist/gistsplit.c</code></a> 8. <a class="wiki-source-link" href="../../source/src/backend/access/gist/gistget.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/access/gist/gistget.c.html&quot;}, '*');"><code>src/backend/access/gist/gistget.c</code></a> 9. <a class="wiki-source-link" href="../../source/src/backend/access/gist/gistvacuum.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/access/gist/gistvacuum.c.html&quot;}, '*');"><code>src/backend/access/gist/gistvacuum.c</code></a> 10. <a class="wiki-source-link" href="../../source/src/backend/access/gist/gistscan.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/access/gist/gistscan.c.html&quot;}, '*');"><code>src/backend/access/gist/gistscan.c</code></a> 11. <a class="wiki-source-link" href="../../source/src/backend/access/gist/gistvalidate.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/access/gist/gistvalidate.c.html&quot;}, '*');"><code>src/backend/access/gist/gistvalidate.c</code></a></p>
+<h2>未解決の問い</h2>
+<ul>
+<li>LLM ベースのモジュール合成を追加した後で、責務とフローを精緻化する。</li>
+</ul><script>
+(function() {
+  function notifyParent() {
+    if (parent === window) return;
+    parent.postMessage({type: "frame-location", frame: window.name || "", href: window.location.href}, "*");
+  }
+  document.addEventListener("click", function(event) {
+    const link = event.target.closest("a[data-panel]");
+    if (!link || parent === window) return;
+    parent.postMessage({type: "source-link", panel: link.dataset.panel}, "*");
+  });
+  window.addEventListener("load", notifyParent);
+  window.addEventListener("hashchange", notifyParent);
+})();
+</script></body></html>

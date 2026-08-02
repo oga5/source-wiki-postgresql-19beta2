@@ -1,0 +1,79 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>modules/src__backend__tsearch.md</title><link rel="stylesheet" href="../../styles.css"></head><body><h1>src/backend/tsearch</h1>
+<h2>システム内での役割</h2>
+<p><code>src/backend/tsearch</code> には 15 個の索引済みソースファイルがあります。この初期モジュールページはディレクトリ境界に基づいています。</p>
+<h2>責務</h2>
+<ul>
+<li>このディレクトリに属するソースファイルを集約する。</li>
+<li>より深い LLM 合成の前段として、モジュール単位の入口を提供する。</li>
+</ul>
+<h2>このモジュールのファイル</h2>
+<ul>
+<li><a class="wiki-source-link" href="../../source/src/backend/tsearch/dict.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/tsearch/dict.c.html&quot;}, '*');"><code>src/backend/tsearch/dict.c</code></a></li>
+<li><a class="wiki-source-link" href="../../source/src/backend/tsearch/dict_ispell.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/tsearch/dict_ispell.c.html&quot;}, '*');"><code>src/backend/tsearch/dict_ispell.c</code></a></li>
+<li><a class="wiki-source-link" href="../../source/src/backend/tsearch/dict_simple.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/tsearch/dict_simple.c.html&quot;}, '*');"><code>src/backend/tsearch/dict_simple.c</code></a></li>
+<li><a class="wiki-source-link" href="../../source/src/backend/tsearch/dict_synonym.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/tsearch/dict_synonym.c.html&quot;}, '*');"><code>src/backend/tsearch/dict_synonym.c</code></a></li>
+<li><a class="wiki-source-link" href="../../source/src/backend/tsearch/dict_thesaurus.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/tsearch/dict_thesaurus.c.html&quot;}, '*');"><code>src/backend/tsearch/dict_thesaurus.c</code></a></li>
+<li><a class="wiki-source-link" href="../../source/src/backend/tsearch/regis.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/tsearch/regis.c.html&quot;}, '*');"><code>src/backend/tsearch/regis.c</code></a></li>
+<li><a class="wiki-source-link" href="../../source/src/backend/tsearch/spell.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/tsearch/spell.c.html&quot;}, '*');"><code>src/backend/tsearch/spell.c</code></a></li>
+<li><a class="wiki-source-link" href="../../source/src/backend/tsearch/to_tsany.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/tsearch/to_tsany.c.html&quot;}, '*');"><code>src/backend/tsearch/to_tsany.c</code></a></li>
+<li><a class="wiki-source-link" href="../../source/src/backend/tsearch/ts_locale.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/tsearch/ts_locale.c.html&quot;}, '*');"><code>src/backend/tsearch/ts_locale.c</code></a></li>
+<li><a class="wiki-source-link" href="../../source/src/backend/tsearch/ts_parse.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/tsearch/ts_parse.c.html&quot;}, '*');"><code>src/backend/tsearch/ts_parse.c</code></a></li>
+<li><a class="wiki-source-link" href="../../source/src/backend/tsearch/ts_selfuncs.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/tsearch/ts_selfuncs.c.html&quot;}, '*');"><code>src/backend/tsearch/ts_selfuncs.c</code></a></li>
+<li><a class="wiki-source-link" href="../../source/src/backend/tsearch/ts_typanalyze.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/tsearch/ts_typanalyze.c.html&quot;}, '*');"><code>src/backend/tsearch/ts_typanalyze.c</code></a></li>
+<li><a class="wiki-source-link" href="../../source/src/backend/tsearch/ts_utils.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/tsearch/ts_utils.c.html&quot;}, '*');"><code>src/backend/tsearch/ts_utils.c</code></a></li>
+<li><a class="wiki-source-link" href="../../source/src/backend/tsearch/wparser.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/tsearch/wparser.c.html&quot;}, '*');"><code>src/backend/tsearch/wparser.c</code></a></li>
+<li><a class="wiki-source-link" href="../../source/src/backend/tsearch/wparser_def.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/tsearch/wparser_def.c.html&quot;}, '*');"><code>src/backend/tsearch/wparser_def.c</code></a></li>
+</ul>
+<h2>主要なデータ構造</h2>
+<ul>
+<li><a class="wiki-source-link" href="../../source/src/backend/tsearch/dict_ispell.c.html#L24" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__tsearch__dict_ispell_c__DictISpell.html&quot;}, '*');"><code>DictISpell</code></a></li>
+<li><a class="wiki-source-link" href="../../source/src/backend/tsearch/dict_simple.c.html#L23" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__tsearch__dict_simple_c__DictSimple.html&quot;}, '*');"><code>DictSimple</code></a></li>
+<li><code>Syn</code></li>
+<li><code>DictSyn</code></li>
+<li><a class="wiki-source-link" href="../../source/src/backend/tsearch/dict_thesaurus.c.html#L30" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__tsearch__dict_thesaurus_c__LexemeInfo.html&quot;}, '*');"><code>LexemeInfo</code></a></li>
+<li><a class="wiki-source-link" href="../../source/src/backend/tsearch/dict_thesaurus.c.html#L39" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__tsearch__dict_thesaurus_c__TheLexeme.html&quot;}, '*');"><code>TheLexeme</code></a></li>
+<li><a class="wiki-source-link" href="../../source/src/backend/tsearch/dict_thesaurus.c.html#L45" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__tsearch__dict_thesaurus_c__TheSubstitute.html&quot;}, '*');"><code>TheSubstitute</code></a></li>
+<li><a class="wiki-source-link" href="../../source/src/backend/tsearch/dict_thesaurus.c.html#L52" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__tsearch__dict_thesaurus_c__DictThesaurus.html&quot;}, '*');"><code>DictThesaurus</code></a></li>
+<li><a class="wiki-source-link" href="../../source/src/backend/tsearch/spell.c.html#L2332" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__tsearch__spell_c__SplitVar.html&quot;}, '*');"><code>SplitVar</code></a></li>
+<li><a class="wiki-source-link" href="../../source/src/backend/tsearch/to_tsany.c.html#L25" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__tsearch__to_tsany_c__MorphOpaque.html&quot;}, '*');"><code>MorphOpaque</code></a></li>
+</ul>
+<h2>主なフロー</h2>
+<p>初期モジュールページでは、まだエンドツーエンドのフローを推論しません。</p>
+<h2>外部依存</h2>
+<ul>
+<li><a class="wiki-source-link" href="../../source/src/include/postgres.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/postgres.h.html&quot;}, '*');"><code>postgres.h</code></a></li>
+<li><code>tsearch/ts_public.h</code></li>
+<li><code>commands/defrem.h</code></li>
+<li><code>utils/fmgrprotos.h</code></li>
+<li><code>tsearch/ts_locale.h</code></li>
+<li><code>tsearch/ts_cache.h</code></li>
+<li><code>utils/builtins.h</code></li>
+<li><code>catalog/pg_collation_d.h</code></li>
+<li><code>utils/formatting.h</code></li>
+<li><a class="wiki-source-link" href="../../source/src/include/miscadmin.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/miscadmin.h.html&quot;}, '*');"><code>miscadmin.h</code></a></li>
+</ul>
+<h2>内部構成</h2>
+<ul>
+<li>子モジュール数: 0</li>
+</ul>
+<h2>推奨読書順</h2>
+<p>1. <a class="wiki-source-link" href="../../source/src/backend/tsearch/wparser_def.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/tsearch/wparser_def.c.html&quot;}, '*');"><code>src/backend/tsearch/wparser_def.c</code></a> 2. <a class="wiki-source-link" href="../../source/src/backend/tsearch/spell.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/tsearch/spell.c.html&quot;}, '*');"><code>src/backend/tsearch/spell.c</code></a> 3. <a class="wiki-source-link" href="../../source/src/backend/tsearch/to_tsany.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/tsearch/to_tsany.c.html&quot;}, '*');"><code>src/backend/tsearch/to_tsany.c</code></a> 4. <a class="wiki-source-link" href="../../source/src/backend/tsearch/dict_thesaurus.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/tsearch/dict_thesaurus.c.html&quot;}, '*');"><code>src/backend/tsearch/dict_thesaurus.c</code></a> 5. <a class="wiki-source-link" href="../../source/src/backend/tsearch/wparser.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/tsearch/wparser.c.html&quot;}, '*');"><code>src/backend/tsearch/wparser.c</code></a> 6. <a class="wiki-source-link" href="../../source/src/backend/tsearch/ts_parse.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/tsearch/ts_parse.c.html&quot;}, '*');"><code>src/backend/tsearch/ts_parse.c</code></a> 7. <a class="wiki-source-link" href="../../source/src/backend/tsearch/regis.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/tsearch/regis.c.html&quot;}, '*');"><code>src/backend/tsearch/regis.c</code></a> 8. <a class="wiki-source-link" href="../../source/src/backend/tsearch/ts_selfuncs.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/tsearch/ts_selfuncs.c.html&quot;}, '*');"><code>src/backend/tsearch/ts_selfuncs.c</code></a> 9. <a class="wiki-source-link" href="../../source/src/backend/tsearch/ts_typanalyze.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/tsearch/ts_typanalyze.c.html&quot;}, '*');"><code>src/backend/tsearch/ts_typanalyze.c</code></a> 10. <a class="wiki-source-link" href="../../source/src/backend/tsearch/dict_synonym.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/tsearch/dict_synonym.c.html&quot;}, '*');"><code>src/backend/tsearch/dict_synonym.c</code></a> 11. <a class="wiki-source-link" href="../../source/src/backend/tsearch/ts_locale.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/tsearch/ts_locale.c.html&quot;}, '*');"><code>src/backend/tsearch/ts_locale.c</code></a> 12. <a class="wiki-source-link" href="../../source/src/backend/tsearch/dict_ispell.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/tsearch/dict_ispell.c.html&quot;}, '*');"><code>src/backend/tsearch/dict_ispell.c</code></a> 13. <a class="wiki-source-link" href="../../source/src/backend/tsearch/dict_simple.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/tsearch/dict_simple.c.html&quot;}, '*');"><code>src/backend/tsearch/dict_simple.c</code></a> 14. <a class="wiki-source-link" href="../../source/src/backend/tsearch/ts_utils.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/tsearch/ts_utils.c.html&quot;}, '*');"><code>src/backend/tsearch/ts_utils.c</code></a> 15. <a class="wiki-source-link" href="../../source/src/backend/tsearch/dict.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/tsearch/dict.c.html&quot;}, '*');"><code>src/backend/tsearch/dict.c</code></a></p>
+<h2>未解決の問い</h2>
+<ul>
+<li>LLM ベースのモジュール合成を追加した後で、責務とフローを精緻化する。</li>
+</ul><script>
+(function() {
+  function notifyParent() {
+    if (parent === window) return;
+    parent.postMessage({type: "frame-location", frame: window.name || "", href: window.location.href}, "*");
+  }
+  document.addEventListener("click", function(event) {
+    const link = event.target.closest("a[data-panel]");
+    if (!link || parent === window) return;
+    parent.postMessage({type: "source-link", panel: link.dataset.panel}, "*");
+  });
+  window.addEventListener("load", notifyParent);
+  window.addEventListener("hashchange", notifyParent);
+})();
+</script></body></html>

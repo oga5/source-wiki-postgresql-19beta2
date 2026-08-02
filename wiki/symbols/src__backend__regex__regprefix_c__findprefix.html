@@ -1,0 +1,84 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>symbols/src__backend__regex__regprefix_c__findprefix.md</title><link rel="stylesheet" href="../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../source/src/backend/regex/regprefix.c.html#L115" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__regex__regprefix_c__findprefix.html&quot;}, '*');">findprefix</a></h1>
+<h2>定義</h2>
+<ul>
+<li>種別: <code>function</code></li>
+<li>定義箇所: <code>src/backend/regex/regprefix.c:115</code></li>
+<li>所属モジュール: <a class="wiki-entity-link" href="../modules/src__backend__regex.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/modules/src__backend__regex.html&quot;, &quot;source&quot;: &quot;source/src/backend/regex/regc_color.c.html&quot;}, '*');"><code>module:src/backend/regex</code></a></li>
+</ul>
+<h2>目的</h2>
+<p>静的シンボル索引から生成された初期シンボルページです。</p>
+<h2>シグネチャまたは形状</h2>
+<ul>
+<li>シグネチャ: <code>static int /* regprefix return code */ findprefix(struct cnfa *cnfa, struct colormap *cm, chr *string, size_t *slength)</code></li>
+</ul>
+<h2>入力と出力</h2>
+<ul>
+<li>引数: <code>struct cnfa *cnfa</code>, <code>struct colormap *cm</code>, <code>chr *string</code>, <code>size_t *slength</code></li>
+<li>戻り値: <code>int /* regprefix return code */</code></li>
+</ul>
+<h2>前提条件と不変条件</h2>
+<p>まだ解析していません。</p>
+<h2>アルゴリズムまたは振る舞い</h2>
+<ul>
+<li>複雑度: <code>high</code> (score 29)</li>
+</ul>
+<p>まだ解析していません。</p>
+<h2>呼び出し元と呼び出し先</h2>
+<ul>
+<li>呼び出し元: <a class="wiki-source-link" href="../../source/src/backend/regex/regprefix.c.html#L45" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__regex__regprefix_c__pg_regprefix.html&quot;}, '*');"><code>pg_regprefix</code></a></li>
+<li>呼び出し先: なし</li>
+<li>呼び出し元サイト: <a class="wiki-source-link" href="../../source/src/backend/regex/regprefix.c.html#L45" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__regex__regprefix_c__pg_regprefix.html&quot;}, '*');"><code>pg_regprefix</code></a> at <code>src/backend/regex/regprefix.c:94:7</code> (direct, confidence=high, resolved=<a class="wiki-entity-link" href="src__backend__regex__regprefix_c__findprefix.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__regex__regprefix_c__findprefix.html&quot;, &quot;source&quot;: &quot;source/src/backend/regex/regprefix.c.html#L115&quot;}, '*');"><code>symbol:src/backend/regex/regprefix.c#findprefix</code></a>)</li>
+<li>呼び出しサイト: <a class="wiki-source-link" href="../../source/src/include/regex/regguts.h.html#L265" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/regex/regguts.h.html&quot;}, '*');"><code>GETCOLOR</code></a> at <code>src/backend/regex/regprefix.c:224:7</code> (macro)</li>
+</ul>
+<h2>関連データ構造</h2>
+<p><code>c</code>, <a class="wiki-source-link" href="../../source/src/include/regex/regguts.h.html#L408" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__regex__regguts_h__carc.html&quot;}, '*');"><code>carc</code></a>, <code>chr</code>, <a class="wiki-source-link" href="../../source/src/include/regex/regguts.h.html#L414" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__regex__regguts_h__cnfa.html&quot;}, '*');"><code>cnfa</code></a>, <a class="wiki-source-link" href="../../source/src/include/regex/regguts.h.html#L163" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/regex/regguts.h.html&quot;}, '*');"><code>color</code></a>, <a class="wiki-source-link" href="../../source/src/include/regex/regguts.h.html#L236" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__regex__regguts_h__colormap.html&quot;}, '*');"><code>colormap</code></a>, <a class="wiki-source-link" href="../../source/src/include/nodes/plannodes.h.html#L538" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__nodes__plannodes_h__Scan.html&quot;}, '*');"><code>Scan</code></a>, <code>state</code>, <code>string</code></p>
+<h2>ソース抜粋</h2>
+<p>~~~c static int						/* regprefix return code */ <a class="wiki-source-link" href="../../source/src/backend/regex/regprefix.c.html#L115" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__regex__regprefix_c__findprefix.html&quot;}, '*');">findprefix</a>(struct <a class="wiki-source-link" href="../../source/src/include/regex/regguts.h.html#L414" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__regex__regguts_h__cnfa.html&quot;}, '*');">cnfa</a> *<a class="wiki-source-link" href="../../source/src/include/regex/regguts.h.html#L414" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__regex__regguts_h__cnfa.html&quot;}, '*');">cnfa</a>, struct <a class="wiki-source-link" href="../../source/src/include/regex/regguts.h.html#L236" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__regex__regguts_h__colormap.html&quot;}, '*');">colormap</a> *cm, chr *string, size_t *slength) { int			st; int			nextst; <a class="wiki-source-link" href="../../source/src/include/regex/regguts.h.html#L163" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/regex/regguts.h.html&quot;}, '*');">color</a>		thiscolor; chr			c; struct <a class="wiki-source-link" href="../../source/src/include/regex/regguts.h.html#L408" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__regex__regguts_h__carc.html&quot;}, '*');">carc</a> *ca;</p>
+<p>/*</p>
+<ul>
+<li>The &quot;pre&quot; state must have only BOS/BOL outarcs, else pattern isn&#x27;t</li>
+<li>anchored left.  If we have both BOS and BOL, they must go to the same</li>
+<li>next state.</li>
+<p>*/ st = <a class="wiki-source-link" href="../../source/src/include/regex/regguts.h.html#L414" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__regex__regguts_h__cnfa.html&quot;}, '*');">cnfa</a>-&gt;pre; nextst = -1; for (ca = <a class="wiki-source-link" href="../../source/src/include/regex/regguts.h.html#L414" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__regex__regguts_h__cnfa.html&quot;}, '*');">cnfa</a>-&gt;states[st]; ca-&gt;co != <a class="wiki-source-link" href="../../source/src/include/regex/regguts.h.html#L166" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/regex/regguts.h.html&quot;}, '*');">COLORLESS</a>; ca++) { if (ca-&gt;co == <a class="wiki-source-link" href="../../source/src/include/regex/regguts.h.html#L414" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__regex__regguts_h__cnfa.html&quot;}, '*');">cnfa</a>-&gt;bos[0] || ca-&gt;co == <a class="wiki-source-link" href="../../source/src/include/regex/regguts.h.html#L414" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__regex__regguts_h__cnfa.html&quot;}, '*');">cnfa</a>-&gt;bos[1]) { if (nextst == -1) nextst = ca-&gt;to; else if (nextst != ca-&gt;to) return <a class="wiki-source-link" href="../../source/src/include/regex/regex.h.html#L218" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/regex/regex.h.html&quot;}, '*');">REG_NOMATCH</a>; } else return <a class="wiki-source-link" href="../../source/src/include/regex/regex.h.html#L218" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/regex/regex.h.html&quot;}, '*');">REG_NOMATCH</a>; } if (nextst == -1) return <a class="wiki-source-link" href="../../source/src/include/regex/regex.h.html#L218" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/regex/regex.h.html&quot;}, '*');">REG_NOMATCH</a>;</p>
+</ul>
+<p>/*</p>
+<ul>
+<li><a class="wiki-source-link" href="../../source/src/include/nodes/plannodes.h.html#L538" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__nodes__plannodes_h__Scan.html&quot;}, '*');">Scan</a> through successive states, stopping as soon as we <a class="wiki-source-link" href="../../source/src/backend/regex/regexec.c.html#L420" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__regex__regexec_c__find.html&quot;}, '*');">find</a> one with</li>
+<li>more than one acceptable transition character (either multiple colors</li>
+<li>on out-arcs, or a <a class="wiki-source-link" href="../../source/src/include/regex/regguts.h.html#L163" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/regex/regguts.h.html&quot;}, '*');">color</a> with more than one member chr).</li>
+<p>*</p>
+<li>We could <a class="wiki-source-link" href="../../source/src/backend/regex/regexec.c.html#L420" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__regex__regexec_c__find.html&quot;}, '*');">find</a> a state with multiple out-arcs that are all labeled with</li>
+<li>the same singleton <a class="wiki-source-link" href="../../source/src/include/regex/regguts.h.html#L163" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/regex/regguts.h.html&quot;}, '*');">color</a>; this comes from patterns like &quot;^ab(cde|cxy)&quot;.</li>
+<li>In that case we add the chr &quot;c&quot; to the <a class="wiki-source-link" href="../../source/src/bin/pg_test_timing/pg_test_timing.c.html#L357" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__bin__pg_test_timing__pg_test_timing_c__output.html&quot;}, '*');">output</a> string but then exit the</li>
+<li>loop with nextst == -1.  This leaves a little <a class="wiki-source-link" href="../../source/src/backend/utils/adt/varbit.c.html#L390" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__utils__adt__varbit_c__bit.html&quot;}, '*');">bit</a> on the table: if the</li>
+<li>pattern <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> like &quot;^ab(cde|cdy)&quot;, we won&#x27;t notice that &quot;d&quot; could be added</li>
+<li>to the prefix.  But chasing multiple parallel state chains doesn&#x27;t seem</li>
+<li>worth the trouble.</li>
+<p>*/ do { st = nextst; nextst = -1; thiscolor = <a class="wiki-source-link" href="../../source/src/include/regex/regguts.h.html#L166" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/regex/regguts.h.html&quot;}, '*');">COLORLESS</a>; for (ca = <a class="wiki-source-link" href="../../source/src/include/regex/regguts.h.html#L414" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__regex__regguts_h__cnfa.html&quot;}, '*');">cnfa</a>-&gt;states[st]; ca-&gt;co != <a class="wiki-source-link" href="../../source/src/include/regex/regguts.h.html#L166" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/regex/regguts.h.html&quot;}, '*');">COLORLESS</a>; ca++) { /* We can ignore BOS/BOL arcs */ if (ca-&gt;co == <a class="wiki-source-link" href="../../source/src/include/regex/regguts.h.html#L414" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__regex__regguts_h__cnfa.html&quot;}, '*');">cnfa</a>-&gt;bos[0] || ca-&gt;co == <a class="wiki-source-link" href="../../source/src/include/regex/regguts.h.html#L414" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__regex__regguts_h__cnfa.html&quot;}, '*');">cnfa</a>-&gt;bos[1]) continue;</p>
+</ul>
+<p>/*</p>
+<ul>
+<li>... but EOS/EOL arcs terminate the search, as do <a class="wiki-source-link" href="../../source/src/include/regex/regguts.h.html#L167" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/regex/regguts.h.html&quot;}, '*');">RAINBOW</a> arcs</li>
+<p>~~~</p>
+</ul>
+<h2>失敗モードと境界条件</h2>
+<p>まだ解析していません。</p>
+<h2>保守担当者向けメモ</h2>
+<ul>
+<li>後続フェーズで、ソース本文の文脈と caller/callee 情報を使ってこのページを強化する。</li>
+</ul><script>
+(function() {
+  function notifyParent() {
+    if (parent === window) return;
+    parent.postMessage({type: "frame-location", frame: window.name || "", href: window.location.href}, "*");
+  }
+  document.addEventListener("click", function(event) {
+    const link = event.target.closest("a[data-panel]");
+    if (!link || parent === window) return;
+    parent.postMessage({type: "source-link", panel: link.dataset.panel}, "*");
+  });
+  window.addEventListener("load", notifyParent);
+  window.addEventListener("hashchange", notifyParent);
+})();
+</script></body></html>

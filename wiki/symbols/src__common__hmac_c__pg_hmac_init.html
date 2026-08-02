@@ -1,0 +1,71 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>symbols/src__common__hmac_c__pg_hmac_init.md</title><link rel="stylesheet" href="../../styles.css"></head><body><h1>pg_hmac_init</h1>
+<h2>定義</h2>
+<ul>
+<li>種別: <code>function</code></li>
+<li>定義箇所: <code>src/common/hmac.c:137</code></li>
+<li>所属モジュール: <a class="wiki-entity-link" href="../modules/src__common.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/modules/src__common.html&quot;, &quot;source&quot;: &quot;source/src/common/archive.c.html&quot;}, '*');"><code>module:src/common</code></a></li>
+</ul>
+<h2>目的</h2>
+<p>静的シンボル索引から生成された初期シンボルページです。</p>
+<h2>シグネチャまたは形状</h2>
+<ul>
+<li>シグネチャ: <code>int pg_hmac_init(pg_hmac_ctx *ctx, const uint8 *key, size_t len)</code></li>
+</ul>
+<h2>入力と出力</h2>
+<ul>
+<li>引数: <code>pg_hmac_ctx *ctx</code>, <code>const uint8 *key</code>, <code>size_t len</code></li>
+<li>戻り値: <code>int</code></li>
+</ul>
+<h2>前提条件と不変条件</h2>
+<p>まだ解析していません。</p>
+<h2>アルゴリズムまたは振る舞い</h2>
+<ul>
+<li>複雑度: <code>high</code> (score 34)</li>
+</ul>
+<p>まだ解析していません。</p>
+<h2>呼び出し元と呼び出し先</h2>
+<ul>
+<li>呼び出し元: なし</li>
+<li>呼び出し先: なし</li>
+<li>呼び出し元サイト: なし</li>
+<li>呼び出しサイト: <code>memset</code> at <code>src/common/hmac.c:151:2</code> (unresolved), <code>memset</code> at <code>src/common/hmac.c:152:2</code> (unresolved), <code>ALLOC</code> at <code>src/common/hmac.c:163:15</code> (macro), <code>memset</code> at <code>src/common/hmac.c:169:3</code> (unresolved), <code>pg_cryptohash_create</code> at <code>src/common/hmac.c:171:14</code> (unresolved, confidence=low), <code>FREE</code> at <code>src/common/hmac.c:175:4</code> (macro), <code>pg_cryptohash_init</code> at <code>src/common/hmac.c:179:7</code> (unresolved, confidence=low), <code>pg_cryptohash_update</code> at <code>src/common/hmac.c:180:4</code> (unresolved, confidence=low), <code>pg_cryptohash_final</code> at <code>src/common/hmac.c:181:4</code> (unresolved, confidence=low), <code>pg_cryptohash_error</code> at <code>src/common/hmac.c:184:21</code> (unresolved, confidence=low), <code>pg_cryptohash_free</code> at <code>src/common/hmac.c:185:4</code> (unresolved, confidence=low), <code>FREE</code> at <code>src/common/hmac.c:186:4</code> (macro), <code>pg_cryptohash_free</code> at <code>src/common/hmac.c:192:3</code> (unresolved, confidence=low), <code>pg_cryptohash_init</code> at <code>src/common/hmac.c:202:6</code> (unresolved, confidence=low), <code>pg_cryptohash_update</code> at <code>src/common/hmac.c:203:3</code> (unresolved, confidence=low), <code>pg_cryptohash_error</code> at <code>src/common/hmac.c:206:20</code> (unresolved, confidence=low), <code>FREE</code> at <code>src/common/hmac.c:208:4</code> (macro), <code>FREE</code> at <code>src/common/hmac.c:213:3</code> (macro)</li>
+</ul>
+<h2>関連データ構造</h2>
+<p><code>pg_cryptohash_ctx</code>, <code>pg_hmac_ctx</code>, <a class="wiki-source-link" href="../../source/src/include/c.h.html#L796" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/c.h.html&quot;}, '*');"><code>text</code></a>, <code>uint8</code></p>
+<h2>ソース抜粋</h2>
+<p>~~~c int pg_hmac_init(pg_hmac_ctx *ctx, const uint8 *key, size_t len) { int			i; int			digest_size; int			<a class="wiki-source-link" href="../../source/src/backend/utils/misc/guc_tables.c.html#L643" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/utils/misc/guc_tables.c.html&quot;}, '*');">block_size</a>; uint8	   *shrinkbuf = NULL;</p>
+<p>if (ctx == NULL) return -1;</p>
+<p>digest_size = ctx-&gt;digest_size; <a class="wiki-source-link" href="../../source/src/backend/utils/misc/guc_tables.c.html#L643" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/utils/misc/guc_tables.c.html&quot;}, '*');">block_size</a> = ctx-&gt;<a class="wiki-source-link" href="../../source/src/backend/utils/misc/guc_tables.c.html#L643" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/utils/misc/guc_tables.c.html&quot;}, '*');">block_size</a>;</p>
+<p>memset(ctx-&gt;k_opad, HMAC_OPAD, ctx-&gt;<a class="wiki-source-link" href="../../source/src/backend/utils/misc/guc_tables.c.html#L643" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/utils/misc/guc_tables.c.html&quot;}, '*');">block_size</a>); memset(ctx-&gt;k_ipad, HMAC_IPAD, ctx-&gt;<a class="wiki-source-link" href="../../source/src/backend/utils/misc/guc_tables.c.html#L643" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/utils/misc/guc_tables.c.html&quot;}, '*');">block_size</a>);</p>
+<p>/*</p>
+<ul>
+<li>If the key <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> longer than the block size, pass it through the <a class="wiki-source-link" href="../../source/src/backend/regex/rege_dfa.c.html#L723" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__regex__rege_dfa_c__hash.html&quot;}, '*');">hash</a> once</li>
+<li>to shrink it down.</li>
+<p>*/ if (len &gt; <a class="wiki-source-link" href="../../source/src/backend/utils/misc/guc_tables.c.html#L643" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/utils/misc/guc_tables.c.html&quot;}, '*');">block_size</a>) { pg_cryptohash_ctx *hash_ctx;</p>
+</ul>
+<p>/* temporary buffer for one-time shrink */ shrinkbuf = ALLOC(digest_size); if (shrinkbuf == NULL) { ctx-&gt;error = PG_HMAC_ERROR_OOM; return -1; } memset(shrinkbuf, 0, digest_size);</p>
+<p>hash_ctx = pg_cryptohash_create(ctx-&gt;type); if (hash_ctx == NULL) { ctx-&gt;error = PG_HMAC_ERROR_OOM; FREE(shrinkbuf); return -1; }</p>
+<p>if (pg_cryptohash_init(hash_ctx) &lt; 0 || pg_cryptohash_update(hash_ctx, key, len) &lt; 0 || pg_cryptohash_final(hash_ctx, shrinkbuf, digest_size) &lt; 0) { ctx-&gt;error = PG_HMAC_ERROR_INTERNAL; ctx-&gt;errreason = pg_cryptohash_error(hash_ctx); pg_cryptohash_free(hash_ctx); FREE(shrinkbuf); return -1; }</p>
+<p>key = shrinkbuf; len = digest_size; pg_cryptohash_free(hash_ctx); }</p>
+<p>for (i = 0; i &lt; len; i++) { ~~~</p>
+<h2>失敗モードと境界条件</h2>
+<p>まだ解析していません。</p>
+<h2>保守担当者向けメモ</h2>
+<ul>
+<li>後続フェーズで、ソース本文の文脈と caller/callee 情報を使ってこのページを強化する。</li>
+</ul><script>
+(function() {
+  function notifyParent() {
+    if (parent === window) return;
+    parent.postMessage({type: "frame-location", frame: window.name || "", href: window.location.href}, "*");
+  }
+  document.addEventListener("click", function(event) {
+    const link = event.target.closest("a[data-panel]");
+    if (!link || parent === window) return;
+    parent.postMessage({type: "source-link", panel: link.dataset.panel}, "*");
+  });
+  window.addEventListener("load", notifyParent);
+  window.addEventListener("hashchange", notifyParent);
+})();
+</script></body></html>

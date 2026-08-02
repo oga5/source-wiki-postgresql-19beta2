@@ -1,0 +1,78 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>symbols/src__backend__executor__execParallel_c__ExecParallelFinish.md</title><link rel="stylesheet" href="../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../source/src/backend/executor/execParallel.c.html#L1220" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__executor__execParallel_c__ExecParallelFinish.html&quot;}, '*');">ExecParallelFinish</a></h1>
+<h2>定義</h2>
+<ul>
+<li>種別: <code>function</code></li>
+<li>定義箇所: <code>src/backend/executor/execParallel.c:1220</code></li>
+<li>所属モジュール: <a class="wiki-entity-link" href="../modules/src__backend__executor.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/modules/src__backend__executor.html&quot;, &quot;source&quot;: &quot;source/src/backend/executor/execAmi.c.html&quot;}, '*');"><code>module:src/backend/executor</code></a></li>
+</ul>
+<h2>目的</h2>
+<p>静的シンボル索引から生成された初期シンボルページです。</p>
+<h2>シグネチャまたは形状</h2>
+<ul>
+<li>シグネチャ: <code>void ExecParallelFinish(ParallelExecutorInfo *pei)</code></li>
+</ul>
+<h2>入力と出力</h2>
+<ul>
+<li>引数: <code>ParallelExecutorInfo *pei</code></li>
+<li>戻り値: <code>void</code></li>
+</ul>
+<h2>前提条件と不変条件</h2>
+<p>まだ解析していません。</p>
+<h2>アルゴリズムまたは振る舞い</h2>
+<ul>
+<li>複雑度: <code>high</code> (score 27)</li>
+</ul>
+<p>まだ解析していません。</p>
+<h2>呼び出し元と呼び出し先</h2>
+<ul>
+<li>呼び出し元: <a class="wiki-source-link" href="../../source/src/backend/executor/nodeGatherMerge.c.html#L323" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__executor__nodeGatherMerge_c__ExecShutdownGatherMergeWorkers.html&quot;}, '*');"><code>ExecShutdownGatherMergeWorkers</code></a>, <a class="wiki-source-link" href="../../source/src/backend/executor/nodeGather.c.html#L400" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__executor__nodeGather_c__ExecShutdownGatherWorkers.html&quot;}, '*');"><code>ExecShutdownGatherWorkers</code></a></li>
+<li>呼び出し先: <a class="wiki-source-link" href="../../source/src/backend/executor/tqueue.c.html#L154" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__executor__tqueue_c__DestroyTupleQueueReader.html&quot;}, '*');"><code>DestroyTupleQueueReader</code></a>, <a class="wiki-source-link" href="../../source/src/backend/executor/instrument.c.html#L296" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__executor__instrument_c__InstrAccumParallelQuery.html&quot;}, '*');"><code>InstrAccumParallelQuery</code></a>, <a class="wiki-source-link" href="../../source/src/backend/storage/ipc/shm_mq.c.html#L844" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__storage__ipc__shm_mq_c__shm_mq_detach.html&quot;}, '*');"><code>shm_mq_detach</code></a>, <a class="wiki-source-link" href="../../source/src/backend/access/transam/parallel.c.html#L804" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__access__transam__parallel_c__WaitForParallelWorkersToFinish.html&quot;}, '*');"><code>WaitForParallelWorkersToFinish</code></a></li>
+<li>呼び出し元サイト: <a class="wiki-source-link" href="../../source/src/backend/executor/nodeGather.c.html#L400" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__executor__nodeGather_c__ExecShutdownGatherWorkers.html&quot;}, '*');"><code>ExecShutdownGatherWorkers</code></a> at <code>src/backend/executor/nodeGather.c:404:3</code> (direct, confidence=high, resolved=<a class="wiki-entity-link" href="src__backend__executor__execParallel_c__ExecParallelFinish.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__executor__execParallel_c__ExecParallelFinish.html&quot;, &quot;source&quot;: &quot;source/src/backend/executor/execParallel.c.html#L1220&quot;}, '*');"><code>symbol:src/backend/executor/execParallel.c#ExecParallelFinish</code></a>), <a class="wiki-source-link" href="../../source/src/backend/executor/nodeGatherMerge.c.html#L323" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__executor__nodeGatherMerge_c__ExecShutdownGatherMergeWorkers.html&quot;}, '*');"><code>ExecShutdownGatherMergeWorkers</code></a> at <code>src/backend/executor/nodeGatherMerge.c:327:3</code> (direct, confidence=high, resolved=<a class="wiki-entity-link" href="src__backend__executor__execParallel_c__ExecParallelFinish.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__executor__execParallel_c__ExecParallelFinish.html&quot;, &quot;source&quot;: &quot;source/src/backend/executor/execParallel.c.html#L1220&quot;}, '*');"><code>symbol:src/backend/executor/execParallel.c#ExecParallelFinish</code></a>)</li>
+<li>呼び出しサイト: <a class="wiki-source-link" href="../../source/src/backend/storage/ipc/shm_mq.c.html#L844" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__storage__ipc__shm_mq_c__shm_mq_detach.html&quot;}, '*');"><code>shm_mq_detach</code></a> at <code>src/backend/executor/execParallel.c:1237:4</code> (direct, confidence=high, resolved=<a class="wiki-entity-link" href="src__backend__storage__ipc__shm_mq_c__shm_mq_detach.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__storage__ipc__shm_mq_c__shm_mq_detach.html&quot;, &quot;source&quot;: &quot;source/src/backend/storage/ipc/shm_mq.c.html#L844&quot;}, '*');"><code>symbol:src/backend/storage/ipc/shm_mq.c#shm_mq_detach</code></a>), <code>pfree</code> at <code>src/backend/executor/execParallel.c:1238:3</code> (unresolved, confidence=low), <a class="wiki-source-link" href="../../source/src/backend/executor/tqueue.c.html#L154" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__executor__tqueue_c__DestroyTupleQueueReader.html&quot;}, '*');"><code>DestroyTupleQueueReader</code></a> at <code>src/backend/executor/execParallel.c:1249:4</code> (direct, confidence=high, resolved=<a class="wiki-entity-link" href="src__backend__executor__tqueue_c__DestroyTupleQueueReader.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__executor__tqueue_c__DestroyTupleQueueReader.html&quot;, &quot;source&quot;: &quot;source/src/backend/executor/tqueue.c.html#L154&quot;}, '*');"><code>symbol:src/backend/executor/tqueue.c#DestroyTupleQueueReader</code></a>), <code>pfree</code> at <code>src/backend/executor/execParallel.c:1250:3</code> (unresolved, confidence=low), <a class="wiki-source-link" href="../../source/src/backend/access/transam/parallel.c.html#L804" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__access__transam__parallel_c__WaitForParallelWorkersToFinish.html&quot;}, '*');"><code>WaitForParallelWorkersToFinish</code></a> at <code>src/backend/executor/execParallel.c:1255:2</code> (direct, confidence=high, resolved=<a class="wiki-entity-link" href="src__backend__access__transam__parallel_c__WaitForParallelWorkersToFinish.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__access__transam__parallel_c__WaitForParallelWorkersToFinish.html&quot;, &quot;source&quot;: &quot;source/src/backend/access/transam/parallel.c.html#L804&quot;}, '*');"><code>symbol:src/backend/access/transam/parallel.c#WaitForParallelWorkersToFinish</code></a>), <a class="wiki-source-link" href="../../source/src/backend/executor/instrument.c.html#L296" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__executor__instrument_c__InstrAccumParallelQuery.html&quot;}, '*');"><code>InstrAccumParallelQuery</code></a> at <code>src/backend/executor/execParallel.c:1262:3</code> (direct, confidence=high, resolved=<a class="wiki-entity-link" href="src__backend__executor__instrument_c__InstrAccumParallelQuery.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__executor__instrument_c__InstrAccumParallelQuery.html&quot;, &quot;source&quot;: &quot;source/src/backend/executor/instrument.c.html#L296&quot;}, '*');"><code>symbol:src/backend/executor/instrument.c#InstrAccumParallelQuery</code></a>)</li>
+</ul>
+<h2>関連データ構造</h2>
+<p><a class="wiki-source-link" href="../../source/src/include/executor/execParallel.h.html#L24" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__executor__execParallel_h__ParallelExecutorInfo.html&quot;}, '*');"><code>ParallelExecutorInfo</code></a></p>
+<h2>ソース抜粋</h2>
+<p>~~~c void <a class="wiki-source-link" href="../../source/src/backend/executor/execParallel.c.html#L1220" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__executor__execParallel_c__ExecParallelFinish.html&quot;}, '*');">ExecParallelFinish</a>(<a class="wiki-source-link" href="../../source/src/include/executor/execParallel.h.html#L24" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__executor__execParallel_h__ParallelExecutorInfo.html&quot;}, '*');">ParallelExecutorInfo</a> *pei) { int			nworkers = pei-&gt;pcxt-&gt;nworkers_launched; int			i;</p>
+<p>/* Make this be a no-op if called twice in a row. */ if (pei-&gt;finished) return;</p>
+<p>/*</p>
+<ul>
+<li>Detach from tuple queues ASAP, so that any still-active workers will</li>
+<li>notice that no further results are wanted.</li>
+<p>*/ if (pei-&gt;tqueue != NULL) { for (i = 0; i &lt; nworkers; i++) <a class="wiki-source-link" href="../../source/src/backend/storage/ipc/shm_mq.c.html#L844" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__storage__ipc__shm_mq_c__shm_mq_detach.html&quot;}, '*');">shm_mq_detach</a>(pei-&gt;tqueue[i]); pfree(pei-&gt;tqueue); pei-&gt;tqueue = NULL; }</p>
+</ul>
+<p>/*</p>
+<ul>
+<li>While we&#x27;re waiting for the workers to finish, let&#x27;s get rid of the</li>
+<li>tuple queue readers.  (Any other local cleanup could be done here too.)</li>
+<p>*/ if (pei-&gt;reader != NULL) { for (i = 0; i &lt; nworkers; i++) <a class="wiki-source-link" href="../../source/src/backend/executor/tqueue.c.html#L154" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__executor__tqueue_c__DestroyTupleQueueReader.html&quot;}, '*');">DestroyTupleQueueReader</a>(pei-&gt;reader[i]); pfree(pei-&gt;reader); pei-&gt;reader = NULL; }</p>
+</ul>
+<p>/* Now wait for the workers to finish. */ <a class="wiki-source-link" href="../../source/src/backend/access/transam/parallel.c.html#L804" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__access__transam__parallel_c__WaitForParallelWorkersToFinish.html&quot;}, '*');">WaitForParallelWorkersToFinish</a>(pei-&gt;pcxt);</p>
+<p>/*</p>
+<ul>
+<li>Next, accumulate buffer/WAL usage.  (This must wait for the workers to</li>
+<li>finish, or we might get incomplete data.)</li>
+<p>*/ for (i = 0; i &lt; nworkers; i++) <a class="wiki-source-link" href="../../source/src/backend/executor/instrument.c.html#L296" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__executor__instrument_c__InstrAccumParallelQuery.html&quot;}, '*');">InstrAccumParallelQuery</a>(&amp;pei-&gt;buffer_usage[i], &amp;pei-&gt;wal_usage[i]);</p>
+</ul>
+<p>pei-&gt;finished = <a class="wiki-source-link" href="../../source/src/tools/pg_bsd_indent/indent_globs.h.html#L46" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/tools/pg_bsd_indent/indent_globs.h.html&quot;}, '*');">true</a>; } ~~~</p>
+<h2>失敗モードと境界条件</h2>
+<p>まだ解析していません。</p>
+<h2>保守担当者向けメモ</h2>
+<ul>
+<li>後続フェーズで、ソース本文の文脈と caller/callee 情報を使ってこのページを強化する。</li>
+</ul><script>
+(function() {
+  function notifyParent() {
+    if (parent === window) return;
+    parent.postMessage({type: "frame-location", frame: window.name || "", href: window.location.href}, "*");
+  }
+  document.addEventListener("click", function(event) {
+    const link = event.target.closest("a[data-panel]");
+    if (!link || parent === window) return;
+    parent.postMessage({type: "source-link", panel: link.dataset.panel}, "*");
+  });
+  window.addEventListener("load", notifyParent);
+  window.addEventListener("hashchange", notifyParent);
+})();
+</script></body></html>

@@ -1,0 +1,76 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>modules/src__bin__pg_basebackup.md</title><link rel="stylesheet" href="../../styles.css"></head><body><h1>src/bin/pg_basebackup</h1>
+<h2>システム内での役割</h2>
+<p><code>src/bin/pg_basebackup</code> には 12 個の索引済みソースファイルがあります。この初期モジュールページはディレクトリ境界に基づいています。</p>
+<h2>責務</h2>
+<ul>
+<li>このディレクトリに属するソースファイルを集約する。</li>
+<li>より深い LLM 合成の前段として、モジュール単位の入口を提供する。</li>
+</ul>
+<h2>このモジュールのファイル</h2>
+<ul>
+<li><a class="wiki-source-link" href="../../source/src/bin/pg_basebackup/astreamer_inject.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/bin/pg_basebackup/astreamer_inject.c.html&quot;}, '*');"><code>src/bin/pg_basebackup/astreamer_inject.c</code></a></li>
+<li><a class="wiki-source-link" href="../../source/src/bin/pg_basebackup/astreamer_inject.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/bin/pg_basebackup/astreamer_inject.h.html&quot;}, '*');"><code>src/bin/pg_basebackup/astreamer_inject.h</code></a></li>
+<li><a class="wiki-source-link" href="../../source/src/bin/pg_basebackup/pg_basebackup.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/bin/pg_basebackup/pg_basebackup.c.html&quot;}, '*');"><code>src/bin/pg_basebackup/pg_basebackup.c</code></a></li>
+<li><a class="wiki-source-link" href="../../source/src/bin/pg_basebackup/pg_createsubscriber.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/bin/pg_basebackup/pg_createsubscriber.c.html&quot;}, '*');"><code>src/bin/pg_basebackup/pg_createsubscriber.c</code></a></li>
+<li><a class="wiki-source-link" href="../../source/src/bin/pg_basebackup/pg_receivewal.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/bin/pg_basebackup/pg_receivewal.c.html&quot;}, '*');"><code>src/bin/pg_basebackup/pg_receivewal.c</code></a></li>
+<li><a class="wiki-source-link" href="../../source/src/bin/pg_basebackup/pg_recvlogical.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/bin/pg_basebackup/pg_recvlogical.c.html&quot;}, '*');"><code>src/bin/pg_basebackup/pg_recvlogical.c</code></a></li>
+<li><a class="wiki-source-link" href="../../source/src/bin/pg_basebackup/receivelog.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/bin/pg_basebackup/receivelog.c.html&quot;}, '*');"><code>src/bin/pg_basebackup/receivelog.c</code></a></li>
+<li><a class="wiki-source-link" href="../../source/src/bin/pg_basebackup/receivelog.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/bin/pg_basebackup/receivelog.h.html&quot;}, '*');"><code>src/bin/pg_basebackup/receivelog.h</code></a></li>
+<li><a class="wiki-source-link" href="../../source/src/bin/pg_basebackup/streamutil.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/bin/pg_basebackup/streamutil.c.html&quot;}, '*');"><code>src/bin/pg_basebackup/streamutil.c</code></a></li>
+<li><a class="wiki-source-link" href="../../source/src/bin/pg_basebackup/streamutil.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/bin/pg_basebackup/streamutil.h.html&quot;}, '*');"><code>src/bin/pg_basebackup/streamutil.h</code></a></li>
+<li><a class="wiki-source-link" href="../../source/src/bin/pg_basebackup/walmethods.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/bin/pg_basebackup/walmethods.c.html&quot;}, '*');"><code>src/bin/pg_basebackup/walmethods.c</code></a></li>
+<li><a class="wiki-source-link" href="../../source/src/bin/pg_basebackup/walmethods.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/bin/pg_basebackup/walmethods.h.html&quot;}, '*');"><code>src/bin/pg_basebackup/walmethods.h</code></a></li>
+</ul>
+<h2>主要なデータ構造</h2>
+<ul>
+<li><a class="wiki-source-link" href="../../source/src/bin/pg_basebackup/astreamer_inject.c.html#L18" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__bin__pg_basebackup__astreamer_inject_c__astreamer_recovery_injector.html&quot;}, '*');"><code>astreamer_recovery_injector</code></a></li>
+<li><a class="wiki-source-link" href="../../source/src/bin/pg_basebackup/pg_basebackup.c.html#L44" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__bin__pg_basebackup__pg_basebackup_c__TablespaceListCell.html&quot;}, '*');"><code>TablespaceListCell</code></a></li>
+<li><a class="wiki-source-link" href="../../source/src/bin/pg_basebackup/pg_basebackup.c.html#L51" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__bin__pg_basebackup__pg_basebackup_c__TablespaceList.html&quot;}, '*');"><code>TablespaceList</code></a></li>
+<li><a class="wiki-source-link" href="../../source/src/bin/pg_basebackup/pg_basebackup.c.html#L57" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__bin__pg_basebackup__pg_basebackup_c__ArchiveStreamState.html&quot;}, '*');"><code>ArchiveStreamState</code></a></li>
+<li><a class="wiki-source-link" href="../../source/src/bin/pg_basebackup/pg_basebackup.c.html#L68" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__bin__pg_basebackup__pg_basebackup_c__WriteTarState.html&quot;}, '*');"><code>WriteTarState</code></a></li>
+<li><a class="wiki-source-link" href="../../source/src/bin/pg_basebackup/pg_basebackup.c.html#L74" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__bin__pg_basebackup__pg_basebackup_c__WriteManifestState.html&quot;}, '*');"><code>WriteManifestState</code></a></li>
+<li><a class="wiki-source-link" href="../../source/src/bin/pg_basebackup/pg_basebackup.c.html#L80" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__bin__pg_basebackup__pg_basebackup_c__WriteDataCallback.html&quot;}, '*');"><code>WriteDataCallback</code></a></li>
+<li><a class="wiki-source-link" href="../../source/src/bin/pg_basebackup/pg_basebackup.c.html#L113" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__bin__pg_basebackup__pg_basebackup_c__IncludeWal.html&quot;}, '*');"><code>IncludeWal</code></a></li>
+<li><a class="wiki-source-link" href="../../source/src/bin/pg_basebackup/pg_basebackup.c.html#L123" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__bin__pg_basebackup__pg_basebackup_c__CompressionLocation.html&quot;}, '*');"><code>CompressionLocation</code></a></li>
+<li><a class="wiki-source-link" href="../../source/src/bin/pg_basebackup/pg_basebackup.c.html#L534" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__bin__pg_basebackup__pg_basebackup_c__logstreamer_param.html&quot;}, '*');"><code>logstreamer_param</code></a></li>
+</ul>
+<h2>主なフロー</h2>
+<p>初期モジュールページでは、まだエンドツーエンドのフローを推論しません。</p>
+<h2>外部依存</h2>
+<ul>
+<li><a class="wiki-source-link" href="../../source/src/include/postgres_fe.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/postgres_fe.h.html&quot;}, '*');"><code>postgres_fe.h</code></a></li>
+<li><code>common/logging.h</code></li>
+<li><code>common/file_perm.h</code></li>
+<li><a class="wiki-source-link" href="../../source/src/bin/pg_basebackup/streamutil.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/bin/pg_basebackup/streamutil.h.html&quot;}, '*');"><code>streamutil.h</code></a></li>
+<li><a class="wiki-source-link" href="../../source/src/interfaces/libpq/libpq-fe.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq/libpq-fe.h.html&quot;}, '*');"><code>libpq-fe.h</code></a></li>
+<li><a class="wiki-source-link" href="../../source/src/interfaces/libpq/pqexpbuffer.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq/pqexpbuffer.h.html&quot;}, '*');"><code>pqexpbuffer.h</code></a></li>
+<li><code>access/xlog_internal.h</code></li>
+<li><a class="wiki-source-link" href="../../source/src/include/getopt_long.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/getopt_long.h.html&quot;}, '*');"><code>getopt_long.h</code></a></li>
+<li><code>common/file_utils.h</code></li>
+<li><code>fe_utils/option_utils.h</code></li>
+</ul>
+<h2>内部構成</h2>
+<ul>
+<li>子モジュール数: 0</li>
+</ul>
+<h2>推奨読書順</h2>
+<p>1. <a class="wiki-source-link" href="../../source/src/bin/pg_basebackup/walmethods.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/bin/pg_basebackup/walmethods.h.html&quot;}, '*');"><code>src/bin/pg_basebackup/walmethods.h</code></a> 2. <a class="wiki-source-link" href="../../source/src/bin/pg_basebackup/receivelog.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/bin/pg_basebackup/receivelog.h.html&quot;}, '*');"><code>src/bin/pg_basebackup/receivelog.h</code></a> 3. <a class="wiki-source-link" href="../../source/src/bin/pg_basebackup/streamutil.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/bin/pg_basebackup/streamutil.h.html&quot;}, '*');"><code>src/bin/pg_basebackup/streamutil.h</code></a> 4. <a class="wiki-source-link" href="../../source/src/bin/pg_basebackup/astreamer_inject.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/bin/pg_basebackup/astreamer_inject.h.html&quot;}, '*');"><code>src/bin/pg_basebackup/astreamer_inject.h</code></a> 5. <a class="wiki-source-link" href="../../source/src/bin/pg_basebackup/pg_basebackup.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/bin/pg_basebackup/pg_basebackup.c.html&quot;}, '*');"><code>src/bin/pg_basebackup/pg_basebackup.c</code></a> 6. <a class="wiki-source-link" href="../../source/src/bin/pg_basebackup/pg_createsubscriber.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/bin/pg_basebackup/pg_createsubscriber.c.html&quot;}, '*');"><code>src/bin/pg_basebackup/pg_createsubscriber.c</code></a> 7. <a class="wiki-source-link" href="../../source/src/bin/pg_basebackup/pg_recvlogical.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/bin/pg_basebackup/pg_recvlogical.c.html&quot;}, '*');"><code>src/bin/pg_basebackup/pg_recvlogical.c</code></a> 8. <a class="wiki-source-link" href="../../source/src/bin/pg_basebackup/walmethods.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/bin/pg_basebackup/walmethods.c.html&quot;}, '*');"><code>src/bin/pg_basebackup/walmethods.c</code></a> 9. <a class="wiki-source-link" href="../../source/src/bin/pg_basebackup/streamutil.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/bin/pg_basebackup/streamutil.c.html&quot;}, '*');"><code>src/bin/pg_basebackup/streamutil.c</code></a> 10. <a class="wiki-source-link" href="../../source/src/bin/pg_basebackup/pg_receivewal.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/bin/pg_basebackup/pg_receivewal.c.html&quot;}, '*');"><code>src/bin/pg_basebackup/pg_receivewal.c</code></a> 11. <a class="wiki-source-link" href="../../source/src/bin/pg_basebackup/receivelog.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/bin/pg_basebackup/receivelog.c.html&quot;}, '*');"><code>src/bin/pg_basebackup/receivelog.c</code></a> 12. <a class="wiki-source-link" href="../../source/src/bin/pg_basebackup/astreamer_inject.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/bin/pg_basebackup/astreamer_inject.c.html&quot;}, '*');"><code>src/bin/pg_basebackup/astreamer_inject.c</code></a></p>
+<h2>未解決の問い</h2>
+<ul>
+<li>LLM ベースのモジュール合成を追加した後で、責務とフローを精緻化する。</li>
+</ul><script>
+(function() {
+  function notifyParent() {
+    if (parent === window) return;
+    parent.postMessage({type: "frame-location", frame: window.name || "", href: window.location.href}, "*");
+  }
+  document.addEventListener("click", function(event) {
+    const link = event.target.closest("a[data-panel]");
+    if (!link || parent === window) return;
+    parent.postMessage({type: "source-link", panel: link.dataset.panel}, "*");
+  });
+  window.addEventListener("load", notifyParent);
+  window.addEventListener("hashchange", notifyParent);
+})();
+</script></body></html>

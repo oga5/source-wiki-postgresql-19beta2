@@ -1,0 +1,75 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>symbols/src__port__pg_popcount_x86_c__pg_popcount_avx512.md</title><link rel="stylesheet" href="../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../source/src/port/pg_popcount_x86.c.html#L120" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__port__pg_popcount_x86_c__pg_popcount_avx512.html&quot;}, '*');">pg_popcount_avx512</a></h1>
+<h2>定義</h2>
+<ul>
+<li>種別: <code>function</code></li>
+<li>定義箇所: <code>src/port/pg_popcount_x86.c:120</code></li>
+<li>所属モジュール: <a class="wiki-entity-link" href="../modules/src__port.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/modules/src__port.html&quot;, &quot;source&quot;: &quot;source/src/port/bsearch_arg.c.html&quot;}, '*');"><code>module:src/port</code></a></li>
+</ul>
+<h2>目的</h2>
+<p>静的シンボル索引から生成された初期シンボルページです。</p>
+<h2>シグネチャまたは形状</h2>
+<ul>
+<li>シグネチャ: <code>static uint64 pg_popcount_avx512(const char *buf, int bytes)</code></li>
+</ul>
+<h2>入力と出力</h2>
+<ul>
+<li>引数: <code>const char *buf</code>, <code>int bytes</code></li>
+<li>戻り値: <code>uint64</code></li>
+</ul>
+<h2>前提条件と不変条件</h2>
+<p>まだ解析していません。</p>
+<h2>アルゴリズムまたは振る舞い</h2>
+<ul>
+<li>複雑度: <code>high</code> (score 12)</li>
+</ul>
+<p>まだ解析していません。</p>
+<h2>呼び出し元と呼び出し先</h2>
+<ul>
+<li>呼び出し元: なし</li>
+<li>呼び出し先: なし</li>
+<li>呼び出し元サイト: なし</li>
+<li>呼び出しサイト: <code>_mm512_setzero_si512</code> at <code>src/port/pg_popcount_x86.c:125:19</code> (unresolved), <a class="wiki-source-link" href="../../source/src/include/c.h.html#L638" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/c.h.html&quot;}, '*');"><code>UINT64CONST</code></a> at <code>src/port/pg_popcount_x86.c:128:20</code> (macro), <a class="wiki-source-link" href="../../source/src/include/c.h.html#L908" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/c.h.html&quot;}, '*');"><code>TYPEALIGN_DOWN</code></a> at <code>src/port/pg_popcount_x86.c:137:25</code> (macro), <a class="wiki-source-link" href="../../source/src/include/c.h.html#L908" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/c.h.html&quot;}, '*');"><code>TYPEALIGN_DOWN</code></a> at <code>src/port/pg_popcount_x86.c:138:23</code> (macro), <code>_mm512_maskz_loadu_epi8</code> at <code>src/port/pg_popcount_x86.c:146:9</code> (unresolved), <code>_mm512_popcnt_epi64</code> at <code>src/port/pg_popcount_x86.c:147:9</code> (unresolved), <code>_mm512_add_epi64</code> at <code>src/port/pg_popcount_x86.c:148:11</code> (unresolved), <a class="wiki-source-link" href="../../source/src/include/c.h.html#L638" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/c.h.html&quot;}, '*');"><code>UINT64CONST</code></a> at <code>src/port/pg_popcount_x86.c:151:11</code> (macro), <code>_mm512_load_si512</code> at <code>src/port/pg_popcount_x86.c:155:10</code> (unresolved), <code>_mm512_popcnt_epi64</code> at <code>src/port/pg_popcount_x86.c:156:10</code> (unresolved), <code>_mm512_add_epi64</code> at <code>src/port/pg_popcount_x86.c:157:12</code> (unresolved), <a class="wiki-source-link" href="../../source/src/include/c.h.html#L638" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/c.h.html&quot;}, '*');"><code>UINT64CONST</code></a> at <code>src/port/pg_popcount_x86.c:162:12</code> (macro), <code>_mm512_maskz_loadu_epi8</code> at <code>src/port/pg_popcount_x86.c:164:8</code> (unresolved), <code>_mm512_popcnt_epi64</code> at <code>src/port/pg_popcount_x86.c:165:8</code> (unresolved), <code>_mm512_add_epi64</code> at <code>src/port/pg_popcount_x86.c:166:10</code> (unresolved), <code>_mm512_reduce_add_epi64</code> at <code>src/port/pg_popcount_x86.c:168:9</code> (unresolved)</li>
+</ul>
+<h2>関連データ構造</h2>
+<p><a class="wiki-source-link" href="../../source/src/interfaces/ecpg/test/expected/preproc-type.c.html#L36" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__interfaces__ecpg__test__expected__preproc-type_c__access.html&quot;}, '*');"><code>access</code></a>, <code>uint64</code></p>
+<h2>ソース抜粋</h2>
+<p>~~~c static uint64 <a class="wiki-source-link" href="../../source/src/port/pg_popcount_x86.c.html#L120" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__port__pg_popcount_x86_c__pg_popcount_avx512.html&quot;}, '*');">pg_popcount_avx512</a>(const char *buf, int bytes) { __m512i		val, cnt; __m512i		accum = _mm512_setzero_si512(); const char *<a class="wiki-source-link" href="../../source/src/common/hashfn.c.html#L116" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/common/hashfn.c.html&quot;}, '*');">final</a>; int			tail_idx; __mmask64	mask = ~<a class="wiki-source-link" href="../../source/src/include/c.h.html#L638" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/c.h.html&quot;}, '*');">UINT64CONST</a>(0);</p>
+<p>/*</p>
+<ul>
+<li>Align buffer down to avoid double load overhead from unaligned <a class="wiki-source-link" href="../../source/src/interfaces/ecpg/test/expected/preproc-type.c.html#L36" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__interfaces__ecpg__test__expected__preproc-type_c__access.html&quot;}, '*');">access</a>.</li>
+<li>Calculate a mask to ignore preceding bytes.  Find start offset of <a class="wiki-source-link" href="../../source/src/common/hashfn.c.html#L116" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/common/hashfn.c.html&quot;}, '*');">final</a></li>
+<li>iteration and ensure it <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> not empty.</li>
+<p>*/ mask &lt;&lt;= ((uintptr_t) buf) % sizeof(__m512i); tail_idx = (((uintptr_t) buf + bytes - 1) % sizeof(__m512i)) + 1; <a class="wiki-source-link" href="../../source/src/common/hashfn.c.html#L116" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/common/hashfn.c.html&quot;}, '*');">final</a> = (const char *) <a class="wiki-source-link" href="../../source/src/include/c.h.html#L908" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/c.h.html&quot;}, '*');">TYPEALIGN_DOWN</a>(sizeof(__m512i), buf + bytes - 1); buf = (const char *) <a class="wiki-source-link" href="../../source/src/include/c.h.html#L908" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/c.h.html&quot;}, '*');">TYPEALIGN_DOWN</a>(sizeof(__m512i), buf);</p>
+</ul>
+<p>/*</p>
+<ul>
+<li>Iterate through all but the <a class="wiki-source-link" href="../../source/src/common/hashfn.c.html#L116" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/common/hashfn.c.html&quot;}, '*');">final</a> iteration.  Starting from the second</li>
+<li>iteration, the mask <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> ignored.</li>
+<p>*/ if (buf &lt; <a class="wiki-source-link" href="../../source/src/common/hashfn.c.html#L116" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/common/hashfn.c.html&quot;}, '*');">final</a>) { val = _mm512_maskz_loadu_epi8(mask, (const __m512i *) buf); cnt = _mm512_popcnt_epi64(val); accum = _mm512_add_epi64(accum, cnt);</p>
+</ul>
+<p>buf += sizeof(__m512i); mask = ~<a class="wiki-source-link" href="../../source/src/include/c.h.html#L638" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/c.h.html&quot;}, '*');">UINT64CONST</a>(0);</p>
+<p>for (; buf &lt; <a class="wiki-source-link" href="../../source/src/common/hashfn.c.html#L116" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/common/hashfn.c.html&quot;}, '*');">final</a>; buf += sizeof(__m512i)) { val = _mm512_load_si512((const __m512i *) buf); cnt = _mm512_popcnt_epi64(val); accum = _mm512_add_epi64(accum, cnt); } }</p>
+<p>/* Final iteration needs to ignore bytes that are not within the length */ mask &amp;= (~<a class="wiki-source-link" href="../../source/src/include/c.h.html#L638" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/c.h.html&quot;}, '*');">UINT64CONST</a>(0) &gt;&gt; (sizeof(__m512i) - tail_idx));</p>
+<p>val = _mm512_maskz_loadu_epi8(mask, (const __m512i *) buf); cnt = _mm512_popcnt_epi64(val); accum = _mm512_add_epi64(accum, cnt);</p>
+<p>return _mm512_reduce_add_epi64(accum); } ~~~</p>
+<h2>失敗モードと境界条件</h2>
+<p>まだ解析していません。</p>
+<h2>保守担当者向けメモ</h2>
+<ul>
+<li>後続フェーズで、ソース本文の文脈と caller/callee 情報を使ってこのページを強化する。</li>
+</ul><script>
+(function() {
+  function notifyParent() {
+    if (parent === window) return;
+    parent.postMessage({type: "frame-location", frame: window.name || "", href: window.location.href}, "*");
+  }
+  document.addEventListener("click", function(event) {
+    const link = event.target.closest("a[data-panel]");
+    if (!link || parent === window) return;
+    parent.postMessage({type: "source-link", panel: link.dataset.panel}, "*");
+  });
+  window.addEventListener("load", notifyParent);
+  window.addEventListener("hashchange", notifyParent);
+})();
+</script></body></html>

@@ -1,0 +1,76 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>symbols/src__common__ip_c__getaddrinfo_unix.md</title><link rel="stylesheet" href="../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../source/src/common/ip.c.html#L155" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__common__ip_c__getaddrinfo_unix.html&quot;}, '*');">getaddrinfo_unix</a></h1>
+<h2>定義</h2>
+<ul>
+<li>種別: <code>function</code></li>
+<li>定義箇所: <code>src/common/ip.c:155</code></li>
+<li>所属モジュール: <a class="wiki-entity-link" href="../modules/src__common.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/modules/src__common.html&quot;, &quot;source&quot;: &quot;source/src/common/archive.c.html&quot;}, '*');"><code>module:src/common</code></a></li>
+</ul>
+<h2>目的</h2>
+<p>静的シンボル索引から生成された初期シンボルページです。</p>
+<h2>シグネチャまたは形状</h2>
+<ul>
+<li>シグネチャ: <code>static int getaddrinfo_unix(const char *path, const struct addrinfo *hintsp, struct addrinfo **result)</code></li>
+</ul>
+<h2>入力と出力</h2>
+<ul>
+<li>引数: <code>const char *path</code>, <code>const struct addrinfo *hintsp</code>, <code>struct addrinfo **result</code></li>
+<li>戻り値: <code>int</code></li>
+</ul>
+<h2>前提条件と不変条件</h2>
+<p>まだ解析していません。</p>
+<h2>アルゴリズムまたは振る舞い</h2>
+<ul>
+<li>複雑度: <code>high</code> (score 29)</li>
+</ul>
+<p>まだ解析していません。</p>
+<h2>呼び出し元と呼び出し先</h2>
+<ul>
+<li>呼び出し元: <a class="wiki-source-link" href="../../source/src/common/ip.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__common__ip_c__pg_getaddrinfo_all.html&quot;}, '*');"><code>pg_getaddrinfo_all</code></a></li>
+<li>呼び出し先: なし</li>
+<li>呼び出し元サイト: <a class="wiki-source-link" href="../../source/src/common/ip.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__common__ip_c__pg_getaddrinfo_all.html&quot;}, '*');"><code>pg_getaddrinfo_all</code></a> at <code>src/common/ip.c:65:10</code> (direct, confidence=high, resolved=<a class="wiki-entity-link" href="src__common__ip_c__getaddrinfo_unix.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__common__ip_c__getaddrinfo_unix.html&quot;, &quot;source&quot;: &quot;source/src/common/ip.c.html#L155&quot;}, '*');"><code>symbol:src/common/ip.c#getaddrinfo_unix</code></a>)</li>
+<li>呼び出しサイト: <code>strlen</code> at <code>src/common/ip.c:165:6</code> (unresolved), <code>memcpy</code> at <code>src/common/ip.c:174:3</code> (unresolved), <a class="wiki-source-link" href="../../source/src/include/snowball/snowball_runtime.h.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/snowball/snowball_runtime.h.html&quot;}, '*');"><code>calloc</code></a> at <code>src/common/ip.c:185:8</code> (unresolved), <a class="wiki-source-link" href="../../source/src/include/snowball/snowball_runtime.h.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/snowball/snowball_runtime.h.html&quot;}, '*');"><code>calloc</code></a> at <code>src/common/ip.c:189:8</code> (unresolved), <a class="wiki-source-link" href="../../source/src/include/snowball/snowball_runtime.h.html#L65" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/snowball/snowball_runtime.h.html&quot;}, '*');"><code>free</code></a> at <code>src/common/ip.c:192:3</code> (unresolved), <code>strcpy</code> at <code>src/common/ip.c:207:2</code> (unresolved), <code>strlen</code> at <code>src/common/ip.c:221:62</code> (unresolved)</li>
+</ul>
+<h2>関連データ構造</h2>
+<p><a class="wiki-source-link" href="../../source/src/include/libpq/ifaddr.h.html#L17" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__libpq__ifaddr_h__sockaddr.html&quot;}, '*');"><code>sockaddr</code></a>, <a class="wiki-source-link" href="../../source/src/include/port/win32/sys/un.h.html#L11" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__port__win32__sys__un_h__sockaddr_un.html&quot;}, '*');"><code>sockaddr_un</code></a>, <code>string</code></p>
+<h2>ソース抜粋</h2>
+<p>~~~c static int <a class="wiki-source-link" href="../../source/src/common/ip.c.html#L155" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__common__ip_c__getaddrinfo_unix.html&quot;}, '*');">getaddrinfo_unix</a>(const char *path, const struct addrinfo *hintsp, struct addrinfo **<a class="wiki-source-link" href="../../source/src/include/storage/checksum_block_internal.h.html#L18" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/storage/checksum_block_internal.h.html&quot;}, '*');">result</a>) { struct addrinfo hints = {0}; struct addrinfo *aip; struct <a class="wiki-source-link" href="../../source/src/include/port/win32/sys/un.h.html#L11" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__port__win32__sys__un_h__sockaddr_un.html&quot;}, '*');">sockaddr_un</a> *unp;</p>
+<p>*<a class="wiki-source-link" href="../../source/src/include/storage/checksum_block_internal.h.html#L18" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/storage/checksum_block_internal.h.html&quot;}, '*');">result</a> = NULL;</p>
+<p>if (strlen(path) &gt;= sizeof(unp-&gt;sun_path)) return EAI_FAIL;</p>
+<p>if (hintsp == NULL) { hints.ai_family = AF_UNIX; hints.ai_socktype = SOCK_STREAM; } else memcpy(&amp;hints, hintsp, sizeof(hints));</p>
+<p>if (hints.ai_socktype == 0) hints.ai_socktype = SOCK_STREAM;</p>
+<p>if (hints.ai_family != AF_UNIX) { /* shouldn&#x27;t have been called */ return EAI_FAIL; }</p>
+<p>aip = <a class="wiki-source-link" href="../../source/src/include/snowball/snowball_runtime.h.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/snowball/snowball_runtime.h.html&quot;}, '*');">calloc</a>(1, sizeof(struct addrinfo)); if (aip == NULL) return EAI_MEMORY;</p>
+<p>unp = <a class="wiki-source-link" href="../../source/src/include/snowball/snowball_runtime.h.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/snowball/snowball_runtime.h.html&quot;}, '*');">calloc</a>(1, sizeof(struct <a class="wiki-source-link" href="../../source/src/include/port/win32/sys/un.h.html#L11" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__port__win32__sys__un_h__sockaddr_un.html&quot;}, '*');">sockaddr_un</a>)); if (unp == NULL) { <a class="wiki-source-link" href="../../source/src/include/snowball/snowball_runtime.h.html#L65" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/snowball/snowball_runtime.h.html&quot;}, '*');">free</a>(aip); return EAI_MEMORY; }</p>
+<p>aip-&gt;ai_family = AF_UNIX; aip-&gt;ai_socktype = hints.ai_socktype; aip-&gt;ai_protocol = hints.ai_protocol; aip-&gt;ai_next = NULL; aip-&gt;ai_canonname = NULL; *<a class="wiki-source-link" href="../../source/src/include/storage/checksum_block_internal.h.html#L18" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/storage/checksum_block_internal.h.html&quot;}, '*');">result</a> = aip;</p>
+<p>unp-&gt;sun_family = AF_UNIX; aip-&gt;ai_addr = (struct <a class="wiki-source-link" href="../../source/src/include/libpq/ifaddr.h.html#L17" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__libpq__ifaddr_h__sockaddr.html&quot;}, '*');">sockaddr</a> *) unp; aip-&gt;ai_addrlen = sizeof(struct <a class="wiki-source-link" href="../../source/src/include/port/win32/sys/un.h.html#L11" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__port__win32__sys__un_h__sockaddr_un.html&quot;}, '*');">sockaddr_un</a>);</p>
+<p>strcpy(unp-&gt;sun_path, path);</p>
+<p>/*</p>
+<ul>
+<li>If the supplied path starts with @, replace that with a zero byte for</li>
+<li>the internal representation.  In that <a class="wiki-source-link" href="../../source/src/bin/pg_checksums/pg_checksums.c.html#L56" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/bin/pg_checksums/pg_checksums.c.html&quot;}, '*');">mode</a>, the entire sun_path <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> the</li>
+<li>address, including trailing zero bytes.  But we set the address length</li>
+<li>to only include the length of the original string.  That way the</li>
+<li>trailing zero bytes won&#x27;t show up in any network or <a class="wiki-source-link" href="../../source/src/include/port/win32_port.h.html#L495" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/port/win32_port.h.html&quot;}, '*');">socket</a> lists of the</li>
+<p>~~~</p>
+</ul>
+<h2>失敗モードと境界条件</h2>
+<p>まだ解析していません。</p>
+<h2>保守担当者向けメモ</h2>
+<ul>
+<li>後続フェーズで、ソース本文の文脈と caller/callee 情報を使ってこのページを強化する。</li>
+</ul><script>
+(function() {
+  function notifyParent() {
+    if (parent === window) return;
+    parent.postMessage({type: "frame-location", frame: window.name || "", href: window.location.href}, "*");
+  }
+  document.addEventListener("click", function(event) {
+    const link = event.target.closest("a[data-panel]");
+    if (!link || parent === window) return;
+    parent.postMessage({type: "source-link", panel: link.dataset.panel}, "*");
+  });
+  window.addEventListener("load", notifyParent);
+  window.addEventListener("hashchange", notifyParent);
+})();
+</script></body></html>

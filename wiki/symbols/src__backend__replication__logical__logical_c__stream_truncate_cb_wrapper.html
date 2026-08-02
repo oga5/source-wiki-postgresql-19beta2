@@ -1,0 +1,73 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>symbols/src__backend__replication__logical__logical_c__stream_truncate_cb_wrapper.md</title><link rel="stylesheet" href="../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../source/src/backend/replication/logical/logical.c.html#L1574" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__replication__logical__logical_c__stream_truncate_cb_wrapper.html&quot;}, '*');">stream_truncate_cb_wrapper</a></h1>
+<h2>定義</h2>
+<ul>
+<li>種別: <code>function</code></li>
+<li>定義箇所: <code>src/backend/replication/logical/logical.c:1574</code></li>
+<li>所属モジュール: <a class="wiki-entity-link" href="../modules/src__backend__replication__logical.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/modules/src__backend__replication__logical.html&quot;, &quot;source&quot;: &quot;source/src/backend/replication/logical/applyparallelworker.c.html&quot;}, '*');"><code>module:src/backend/replication/logical</code></a></li>
+</ul>
+<h2>目的</h2>
+<p>静的シンボル索引から生成された初期シンボルページです。</p>
+<h2>シグネチャまたは形状</h2>
+<ul>
+<li>シグネチャ: <code>static void stream_truncate_cb_wrapper(ReorderBuffer *cache, ReorderBufferTXN *txn, int nrelations, Relation relations[], ReorderBufferChange *change)</code></li>
+</ul>
+<h2>入力と出力</h2>
+<ul>
+<li>引数: <code>ReorderBuffer *cache</code>, <code>ReorderBufferTXN *txn</code>, <code>int nrelations</code>, <code>Relation relations[]</code>, <code>ReorderBufferChange *change</code></li>
+<li>戻り値: <code>void</code></li>
+</ul>
+<h2>前提条件と不変条件</h2>
+<p>まだ解析していません。</p>
+<h2>アルゴリズムまたは振る舞い</h2>
+<ul>
+<li>複雑度: <code>high</code> (score 12)</li>
+</ul>
+<p>まだ解析していません。</p>
+<h2>呼び出し元と呼び出し先</h2>
+<ul>
+<li>呼び出し元: なし</li>
+<li>呼び出し先: なし</li>
+<li>呼び出し元サイト: なし</li>
+<li>呼び出しサイト: <a class="wiki-source-link" href="../../source/src/include/c.h.html#L950" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/c.h.html&quot;}, '*');"><code>Assert</code></a> at <code>src/backend/replication/logical/logical.c:1583:2</code> (unresolved), <a class="wiki-source-link" href="../../source/src/include/c.h.html#L950" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/c.h.html&quot;}, '*');"><code>Assert</code></a> at <code>src/backend/replication/logical/logical.c:1586:2</code> (unresolved), <code>ctx-&gt;callbacks.stream_truncate_cb</code> at <code>src/backend/replication/logical/logical.c:1615:2</code> (indirect)</li>
+</ul>
+<h2>関連データ構造</h2>
+<p><a class="wiki-source-link" href="../../source/src/interfaces/ecpg/include/pgtypes_date.h.html#L9" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__interfaces__ecpg__include__pgtypes_date_h__date.html&quot;}, '*');"><code>date</code></a>, <a class="wiki-source-link" href="../../source/src/include/utils/elog.h.html#L311" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__utils__elog_h__ErrorContextCallback.html&quot;}, '*');"><code>ErrorContextCallback</code></a>, <code>LogicalDecodingContext</code>, <a class="wiki-source-link" href="../../source/src/backend/replication/logical/logical.c.html#L50" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__replication__logical__logical_c__LogicalErrorCallbackState.html&quot;}, '*');"><code>LogicalErrorCallbackState</code></a>, <code>Relation</code>, <code>ReorderBuffer</code>, <code>ReorderBufferChange</code>, <code>ReorderBufferTXN</code>, <code>state</code>, <a class="wiki-source-link" href="../../source/src/interfaces/ecpg/preproc/type.h.html#L89" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__interfaces__ecpg__preproc__type_h__when.html&quot;}, '*');"><code>when</code></a></p>
+<h2>ソース抜粋</h2>
+<p>~~~c static void <a class="wiki-source-link" href="../../source/src/backend/replication/logical/logical.c.html#L1574" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__replication__logical__logical_c__stream_truncate_cb_wrapper.html&quot;}, '*');">stream_truncate_cb_wrapper</a>(ReorderBuffer *cache, ReorderBufferTXN *txn, int nrelations, Relation relations[], ReorderBufferChange *change) { LogicalDecodingContext *ctx = cache-&gt;private_data; <a class="wiki-source-link" href="../../source/src/backend/replication/logical/logical.c.html#L50" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__replication__logical__logical_c__LogicalErrorCallbackState.html&quot;}, '*');">LogicalErrorCallbackState</a> state; <a class="wiki-source-link" href="../../source/src/include/utils/elog.h.html#L311" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__utils__elog_h__ErrorContextCallback.html&quot;}, '*');">ErrorContextCallback</a> errcallback;</p>
+<p><a class="wiki-source-link" href="../../source/src/include/c.h.html#L950" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/c.h.html&quot;}, '*');">Assert</a>(!ctx-&gt;fast_forward);</p>
+<p>/* We&#x27;re only supposed to call this <a class="wiki-source-link" href="../../source/src/interfaces/ecpg/preproc/type.h.html#L89" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__interfaces__ecpg__preproc__type_h__when.html&quot;}, '*');">when</a> streaming <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> supported. */ <a class="wiki-source-link" href="../../source/src/include/c.h.html#L950" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/c.h.html&quot;}, '*');">Assert</a>(ctx-&gt;streaming);</p>
+<p>/* this <a class="wiki-source-link" href="../../source/src/tools/ifaddrs/test_ifaddrs.c.html#L45" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__tools__ifaddrs__test_ifaddrs_c__callback.html&quot;}, '*');">callback</a> <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> optional */ if (!ctx-&gt;callbacks.stream_truncate_cb) return;</p>
+<p>/* Push <a class="wiki-source-link" href="../../source/src/tools/ifaddrs/test_ifaddrs.c.html#L45" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__tools__ifaddrs__test_ifaddrs_c__callback.html&quot;}, '*');">callback</a> + info on the error context stack */ state.ctx = ctx; state.callback_name = &quot;stream_truncate&quot;; state.report_location = change-&gt;lsn; errcallback.callback = <a class="wiki-source-link" href="../../source/src/backend/replication/logical/logical.c.html#L747" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__replication__logical__logical_c__output_plugin_error_callback.html&quot;}, '*');">output_plugin_error_callback</a>; errcallback.arg = &amp;state; errcallback.previous = <a class="wiki-source-link" href="../../source/src/backend/utils/error/elog.c.html#L100" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/utils/error/elog.c.html&quot;}, '*');">error_context_stack</a>; <a class="wiki-source-link" href="../../source/src/backend/utils/error/elog.c.html#L100" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/utils/error/elog.c.html&quot;}, '*');">error_context_stack</a> = &amp;errcallback;</p>
+<p>/* set <a class="wiki-source-link" href="../../source/src/bin/pg_test_timing/pg_test_timing.c.html#L357" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__bin__pg_test_timing__pg_test_timing_c__output.html&quot;}, '*');">output</a> state */ ctx-&gt;accept_writes = <a class="wiki-source-link" href="../../source/src/tools/pg_bsd_indent/indent_globs.h.html#L46" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/tools/pg_bsd_indent/indent_globs.h.html&quot;}, '*');">true</a>; ctx-&gt;write_xid = txn-&gt;xid;</p>
+<p>/*</p>
+<ul>
+<li>Report this change&#x27;s lsn so replies from clients can give an up-to-<a class="wiki-source-link" href="../../source/src/interfaces/ecpg/include/pgtypes_date.h.html#L9" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__interfaces__ecpg__include__pgtypes_date_h__date.html&quot;}, '*');">date</a></li>
+<li>answer. This won&#x27;t ever be enough (and shouldn&#x27;t be!) to confirm</li>
+<li>receipt of this transaction, but it might allow another transaction&#x27;s</li>
+<li>commit to be confirmed with one message.</li>
+<p>*/ ctx-&gt;write_location = change-&gt;lsn;</p>
+</ul>
+<p>ctx-&gt;end_xact = <a class="wiki-source-link" href="../../source/src/tools/pg_bsd_indent/indent_globs.h.html#L43" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/tools/pg_bsd_indent/indent_globs.h.html&quot;}, '*');">false</a>;</p>
+<p>ctx-&gt;callbacks.stream_truncate_cb(ctx, txn, nrelations, relations, change);</p>
+<p>/* Pop the error context stack */ <a class="wiki-source-link" href="../../source/src/backend/utils/error/elog.c.html#L100" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/utils/error/elog.c.html&quot;}, '*');">error_context_stack</a> = errcallback.previous; } ~~~</p>
+<h2>失敗モードと境界条件</h2>
+<p>まだ解析していません。</p>
+<h2>保守担当者向けメモ</h2>
+<ul>
+<li>後続フェーズで、ソース本文の文脈と caller/callee 情報を使ってこのページを強化する。</li>
+</ul><script>
+(function() {
+  function notifyParent() {
+    if (parent === window) return;
+    parent.postMessage({type: "frame-location", frame: window.name || "", href: window.location.href}, "*");
+  }
+  document.addEventListener("click", function(event) {
+    const link = event.target.closest("a[data-panel]");
+    if (!link || parent === window) return;
+    parent.postMessage({type: "source-link", panel: link.dataset.panel}, "*");
+  });
+  window.addEventListener("load", notifyParent);
+  window.addEventListener("hashchange", notifyParent);
+})();
+</script></body></html>

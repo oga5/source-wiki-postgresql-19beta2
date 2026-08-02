@@ -1,0 +1,80 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>symbols/src__fe_utils__archive_c__RestoreArchivedFile.md</title><link rel="stylesheet" href="../../styles.css"></head><body><h1>RestoreArchivedFile</h1>
+<h2>定義</h2>
+<ul>
+<li>種別: <code>function</code></li>
+<li>定義箇所: <code>src/fe_utils/archive.c:38</code></li>
+<li>所属モジュール: <a class="wiki-entity-link" href="../modules/src__fe_utils.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/modules/src__fe_utils.html&quot;, &quot;source&quot;: &quot;source/src/fe_utils/archive.c.html&quot;}, '*');"><code>module:src/fe_utils</code></a></li>
+</ul>
+<h2>目的</h2>
+<p>静的シンボル索引から生成された初期シンボルページです。</p>
+<h2>シグネチャまたは形状</h2>
+<ul>
+<li>シグネチャ: <code>int RestoreArchivedFile(const char *path, const char *xlogfname, off_t expectedSize, const char *restoreCommand)</code></li>
+</ul>
+<h2>入力と出力</h2>
+<ul>
+<li>引数: <code>const char *path</code>, <code>const char *xlogfname</code>, <code>off_t expectedSize</code>, <code>const char *restoreCommand</code></li>
+<li>戻り値: <code>int</code></li>
+</ul>
+<h2>前提条件と不変条件</h2>
+<p>まだ解析していません。</p>
+<h2>アルゴリズムまたは振る舞い</h2>
+<ul>
+<li>複雑度: <code>high</code> (score 23)</li>
+</ul>
+<p>まだ解析していません。</p>
+<h2>呼び出し元と呼び出し先</h2>
+<ul>
+<li>呼び出し元: なし</li>
+<li>呼び出し先: <a class="wiki-source-link" href="../../source/src/common/archive.c.html#L38" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__common__archive_c__BuildRestoreCommand.html&quot;}, '*');"><code>BuildRestoreCommand</code></a>, <code>stat</code>, <a class="wiki-source-link" href="../../source/src/common/wait_error.c.html#L120" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__common__wait_error_c__wait_result_is_any_signal.html&quot;}, '*');"><code>wait_result_is_any_signal</code></a>, <a class="wiki-source-link" href="../../source/src/common/wait_error.c.html#L32" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__common__wait_error_c__wait_result_to_str.html&quot;}, '*');"><code>wait_result_to_str</code></a></li>
+<li>呼び出し元サイト: なし</li>
+<li>呼び出しサイト: <code>snprintf</code> at <code>src/fe_utils/archive.c:47:2</code> (unresolved), <a class="wiki-source-link" href="../../source/src/common/archive.c.html#L38" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__common__archive_c__BuildRestoreCommand.html&quot;}, '*');"><code>BuildRestoreCommand</code></a> at <code>src/fe_utils/archive.c:49:19</code> (direct, confidence=high, resolved=<a class="wiki-entity-link" href="src__common__archive_c__BuildRestoreCommand.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__common__archive_c__BuildRestoreCommand.html&quot;, &quot;source&quot;: &quot;source/src/common/archive.c.html#L38&quot;}, '*');"><code>symbol:src/common/archive.c#BuildRestoreCommand</code></a>), <code>fflush</code> at <code>src/fe_utils/archive.c:56:2</code> (unresolved), <a class="wiki-source-link" href="../../source/src/include/port.h.html#L388" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/port.h.html&quot;}, '*');"><code>system</code></a> at <code>src/fe_utils/archive.c:57:7</code> (unresolved), <code>pfree</code> at <code>src/fe_utils/archive.c:58:2</code> (unresolved, confidence=low), <code>stat</code> at <code>src/fe_utils/archive.c:66:7</code> (direct, confidence=high, resolved=<a class="wiki-entity-link" href="src__backend__utils__adt__pgstatfuncs_c__stat.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__utils__adt__pgstatfuncs_c__stat.html&quot;, &quot;source&quot;: &quot;source/src/backend/utils/adt/pgstatfuncs.c.html#L58&quot;}, '*');"><code>symbol:src/backend/utils/adt/pgstatfuncs.c#stat</code></a>), <code>pg_fatal</code> at <code>src/fe_utils/archive.c:69:5</code> (macro), <a class="wiki-source-link" href="../../source/src/include/port.h.html#L366" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/port.h.html&quot;}, '*');"><code>open</code></a> at <code>src/fe_utils/archive.c:74:20</code> (unresolved), <code>pg_fatal</code> at <code>src/fe_utils/archive.c:77:6</code> (macro), <code>pg_fatal</code> at <code>src/fe_utils/archive.c:86:5</code> (macro), <a class="wiki-source-link" href="../../source/src/common/wait_error.c.html#L120" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__common__wait_error_c__wait_result_is_any_signal.html&quot;}, '*');"><code>wait_result_is_any_signal</code></a> at <code>src/fe_utils/archive.c:97:6</code> (direct, confidence=high, resolved=<a class="wiki-entity-link" href="src__common__wait_error_c__wait_result_is_any_signal.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__common__wait_error_c__wait_result_is_any_signal.html&quot;, &quot;source&quot;: &quot;source/src/common/wait_error.c.html#L120&quot;}, '*');"><code>symbol:src/common/wait_error.c#wait_result_is_any_signal</code></a>), <code>pg_fatal</code> at <code>src/fe_utils/archive.c:98:3</code> (macro), <a class="wiki-source-link" href="../../source/src/common/wait_error.c.html#L32" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__common__wait_error_c__wait_result_to_str.html&quot;}, '*');"><code>wait_result_to_str</code></a> at <code>src/fe_utils/archive.c:99:6</code> (direct, confidence=high, resolved=<a class="wiki-entity-link" href="src__common__wait_error_c__wait_result_to_str.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__common__wait_error_c__wait_result_to_str.html&quot;, &quot;source&quot;: &quot;source/src/common/wait_error.c.html#L32&quot;}, '*');"><code>symbol:src/common/wait_error.c#wait_result_to_str</code></a>), <a class="wiki-source-link" href="../../source/src/include/common/logging.h.html#L108" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/common/logging.h.html&quot;}, '*');"><code>pg_log_error</code></a> at <code>src/fe_utils/archive.c:105:2</code> (macro)</li>
+</ul>
+<h2>関連データ構造</h2>
+<p><a class="wiki-source-link" href="../../source/src/bin/pgbench/pgbench.c.html#L749" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__bin__pgbench__pgbench_c__Command.html&quot;}, '*');"><code>Command</code></a>, <code>stat</code></p>
+<h2>ソース抜粋</h2>
+<p>~~~c int RestoreArchivedFile(const char *path, const char *xlogfname, off_t expectedSize, const char *restoreCommand) { char		xlogpath[<a class="wiki-source-link" href="../../source/src/include/pg_config_manual.h.html#L105" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/pg_config_manual.h.html&quot;}, '*');">MAXPGPATH</a>]; char	   *xlogRestoreCmd; int			rc; struct stat stat_buf;</p>
+<p>snprintf(xlogpath, <a class="wiki-source-link" href="../../source/src/include/pg_config_manual.h.html#L105" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/pg_config_manual.h.html&quot;}, '*');">MAXPGPATH</a>, &quot;%s/&quot; <a class="wiki-source-link" href="../../source/src/include/access/xlog_internal.h.html#L148" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/access/xlog_internal.h.html&quot;}, '*');">XLOGDIR</a> &quot;/%s&quot;, path, xlogfname);</p>
+<p>xlogRestoreCmd = <a class="wiki-source-link" href="../../source/src/common/archive.c.html#L38" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__common__archive_c__BuildRestoreCommand.html&quot;}, '*');">BuildRestoreCommand</a>(restoreCommand, xlogpath, xlogfname, NULL);</p>
+<p>/*</p>
+<ul>
+<li>Execute <a class="wiki-source-link" href="../../source/src/bin/pg_rewind/pg_rewind.c.html#L70" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/bin/pg_rewind/pg_rewind.c.html&quot;}, '*');">restore_command</a>, which should copy the <a class="wiki-source-link" href="../../source/config/missing.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/config/missing.html&quot;}, '*');">missing</a> file from</li>
+<li>archival storage.</li>
+<p>*/ fflush(NULL); rc = <a class="wiki-source-link" href="../../source/src/include/port.h.html#L388" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/port.h.html&quot;}, '*');">system</a>(xlogRestoreCmd); pfree(xlogRestoreCmd);</p>
+</ul>
+<p>if (rc == 0) { /*</p>
+<ul>
+<li><a class="wiki-source-link" href="../../source/src/bin/pgbench/pgbench.c.html#L749" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__bin__pgbench__pgbench_c__Command.html&quot;}, '*');">Command</a> apparently succeeded, but let&#x27;s make sure the file <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a></li>
+<li>really there <a class="wiki-source-link" href="../../source/src/backend/utils/adt/timestamp.c.html#L1612" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__utils__adt__timestamp_c__now.html&quot;}, '*');">now</a> and has the correct size.</li>
+<p>*/ if (stat(xlogpath, &amp;stat_buf) == 0) { if (expectedSize &gt; 0 &amp;&amp; stat_buf.st_size != expectedSize) pg_fatal(&quot;unexpected file size for \&quot;%s\&quot;: %lld instead of %lld&quot;, xlogfname, (long long int) stat_buf.st_size, (long long int) expectedSize); else { int			xlogfd = <a class="wiki-source-link" href="../../source/src/include/port.h.html#L366" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/port.h.html&quot;}, '*');">open</a>(xlogpath, O_RDONLY | <a class="wiki-source-link" href="../../source/src/include/c.h.html#L1391" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/c.h.html&quot;}, '*');">PG_BINARY</a>, 0);</p>
+</ul>
+<p>if (xlogfd &lt; 0) pg_fatal(&quot;could not <a class="wiki-source-link" href="../../source/src/include/port.h.html#L366" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/port.h.html&quot;}, '*');">open</a> file \&quot;%s\&quot; restored from archive: %m&quot;, xlogpath); else return xlogfd; } } else { if (errno != ENOENT) pg_fatal(&quot;could not stat file \&quot;%s\&quot;: %m&quot;, xlogpath); } }</p>
+<p>/*</p>
+<ul>
+<li>If the failure was due to a signal, then it would be misleading to</li>
+<li>return with a failure at restoring the file.  <a class="wiki-source-link" href="../../source/src/common/md5.c.html#L110" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/common/md5.c.html&quot;}, '*');">So</a> just <a class="wiki-source-link" href="../../source/src/test/regress/pg_regress.c.html#L172" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/test/regress/pg_regress.c.html&quot;}, '*');">bail</a> out and</li>
+<li>exit.  Hard shell <a class="wiki-source-link" href="../../source/src/timezone/zic.c.html#L183" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/timezone/zic.c.html&quot;}, '*');">errors</a> such as &quot;command not found&quot; are treated as</li>
+<li>fatal too.</li>
+<p>*/ if (<a class="wiki-source-link" href="../../source/src/common/wait_error.c.html#L120" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__common__wait_error_c__wait_result_is_any_signal.html&quot;}, '*');">wait_result_is_any_signal</a>(rc, <a class="wiki-source-link" href="../../source/src/tools/pg_bsd_indent/indent_globs.h.html#L46" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/tools/pg_bsd_indent/indent_globs.h.html&quot;}, '*');">true</a>)) ~~~</p>
+</ul>
+<h2>失敗モードと境界条件</h2>
+<p>まだ解析していません。</p>
+<h2>保守担当者向けメモ</h2>
+<ul>
+<li>後続フェーズで、ソース本文の文脈と caller/callee 情報を使ってこのページを強化する。</li>
+</ul><script>
+(function() {
+  function notifyParent() {
+    if (parent === window) return;
+    parent.postMessage({type: "frame-location", frame: window.name || "", href: window.location.href}, "*");
+  }
+  document.addEventListener("click", function(event) {
+    const link = event.target.closest("a[data-panel]");
+    if (!link || parent === window) return;
+    parent.postMessage({type: "source-link", panel: link.dataset.panel}, "*");
+  });
+  window.addEventListener("load", notifyParent);
+  window.addEventListener("hashchange", notifyParent);
+})();
+</script></body></html>

@@ -1,0 +1,75 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>symbols/src__bin__pg_dump__pg_backup_custom_c___PrepParallelRestore.md</title><link rel="stylesheet" href="../../styles.css"></head><body><h1>_PrepParallelRestore</h1>
+<h2>定義</h2>
+<ul>
+<li>種別: <code>function</code></li>
+<li>定義箇所: <code>src/bin/pg_dump/pg_backup_custom.c:836</code></li>
+<li>所属モジュール: <a class="wiki-entity-link" href="../modules/src__bin__pg_dump.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/modules/src__bin__pg_dump.html&quot;, &quot;source&quot;: &quot;source/src/bin/pg_dump/common.c.html&quot;}, '*');"><code>module:src/bin/pg_dump</code></a></li>
+</ul>
+<h2>目的</h2>
+<p>静的シンボル索引から生成された初期シンボルページです。</p>
+<h2>シグネチャまたは形状</h2>
+<ul>
+<li>シグネチャ: <code>static void _PrepParallelRestore(ArchiveHandle *AH)</code></li>
+</ul>
+<h2>入力と出力</h2>
+<ul>
+<li>引数: <code>ArchiveHandle *AH</code></li>
+<li>戻り値: <code>void</code></li>
+</ul>
+<h2>前提条件と不変条件</h2>
+<p>まだ解析していません。</p>
+<h2>アルゴリズムまたは振る舞い</h2>
+<ul>
+<li>複雑度: <code>high</code> (score 19)</li>
+</ul>
+<p>まだ解析していません。</p>
+<h2>呼び出し元と呼び出し先</h2>
+<ul>
+<li>呼び出し元: なし</li>
+<li>呼び出し先: <code>pg_fatal</code></li>
+<li>呼び出し元サイト: なし</li>
+<li>呼び出しサイト: <a class="wiki-source-link" href="../../source/src/include/port/win32_port.h.html#L202" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/port/win32_port.h.html&quot;}, '*');"><code>fseeko</code></a> at <code>src/bin/pg_dump/pg_backup_custom.c:877:7</code> (unresolved), <code>pg_fatal</code> at <code>src/bin/pg_dump/pg_backup_custom.c:878:4</code> (direct, confidence=high, resolved=<a class="wiki-entity-link" href="src__bin__pg_upgrade__util_c__pg_fatal.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__bin__pg_upgrade__util_c__pg_fatal.html&quot;, &quot;source&quot;: &quot;source/src/bin/pg_upgrade/util.c.html#L269&quot;}, '*');"><code>symbol:src/bin/pg_upgrade/util.c#pg_fatal</code></a>), <a class="wiki-source-link" href="../../source/src/include/port/win32_port.h.html#L203" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/port/win32_port.h.html&quot;}, '*');"><code>ftello</code></a> at <code>src/bin/pg_dump/pg_backup_custom.c:879:12</code> (unresolved)</li>
+</ul>
+<h2>関連データ構造</h2>
+<p><code>ArchiveHandle</code>, <code>lclContext</code>, <code>lclTocEntry</code>, <code>pgoff_t</code>, <code>TocEntry</code>, <a class="wiki-source-link" href="../../source/src/interfaces/ecpg/preproc/type.h.html#L89" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__interfaces__ecpg__preproc__type_h__when.html&quot;}, '*');"><code>when</code></a></p>
+<h2>ソース抜粋</h2>
+<p>~~~c static void _PrepParallelRestore(ArchiveHandle *AH) { lclContext *ctx = (lclContext *) AH-&gt;formatData; TocEntry   *prev_te = NULL; lclTocEntry *prev_tctx = NULL; TocEntry   *te;</p>
+<p>/*</p>
+<ul>
+<li>Knowing that the data <a class="wiki-source-link" href="../../source/src/test/modules/test_tidstore/test_tidstore.c.html#L48" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/test/modules/test_tidstore/test_tidstore.c.html&quot;}, '*');">items</a> were dumped out in TOC order, we can</li>
+<li>reconstruct the length of each item as the delta to the start offset of</li>
+<li>the next data item.</li>
+<p>*/ for (te = AH-&gt;toc-&gt;next; te != AH-&gt;toc; te = te-&gt;next) { lclTocEntry *tctx = (lclTocEntry *) te-&gt;formatData;</p>
+</ul>
+<p>/*</p>
+<ul>
+<li>Ignore entries without a known data offset; if we were unable to</li>
+<li>seek to rewrite the TOC <a class="wiki-source-link" href="../../source/src/interfaces/ecpg/preproc/type.h.html#L89" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__interfaces__ecpg__preproc__type_h__when.html&quot;}, '*');">when</a> creating the archive, this&#x27;ll be all</li>
+<li>of them, and we&#x27;ll end up with no size estimates.</li>
+<p>*/ if (tctx-&gt;dataState != <a class="wiki-source-link" href="../../source/src/bin/pg_dump/pg_backup_archiver.h.html#L87" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/bin/pg_dump/pg_backup_archiver.h.html&quot;}, '*');">K_OFFSET_POS_SET</a>) continue;</p>
+</ul>
+<p>/* Compute previous data item&#x27;s length */ if (prev_te) { if (tctx-&gt;dataPos &gt; prev_tctx-&gt;dataPos) prev_te-&gt;dataLength = tctx-&gt;dataPos - prev_tctx-&gt;dataPos; }</p>
+<p>prev_te = te; prev_tctx = tctx; }</p>
+<p>/* If OK to seek, we can determine the length of the last item */ if (prev_te &amp;&amp; ctx-&gt;hasSeek) { pgoff_t		endpos;</p>
+<p>if (<a class="wiki-source-link" href="../../source/src/include/port/win32_port.h.html#L202" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/port/win32_port.h.html&quot;}, '*');">fseeko</a>(AH-&gt;FH, 0, SEEK_END) != 0) pg_fatal(&quot;error during file seek: %m&quot;); endpos = <a class="wiki-source-link" href="../../source/src/include/port/win32_port.h.html#L203" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/port/win32_port.h.html&quot;}, '*');">ftello</a>(AH-&gt;FH); if (endpos &gt; prev_tctx-&gt;dataPos) prev_te-&gt;dataLength = endpos - prev_tctx-&gt;dataPos; } } ~~~</p>
+<h2>失敗モードと境界条件</h2>
+<p>まだ解析していません。</p>
+<h2>保守担当者向けメモ</h2>
+<ul>
+<li>後続フェーズで、ソース本文の文脈と caller/callee 情報を使ってこのページを強化する。</li>
+</ul><script>
+(function() {
+  function notifyParent() {
+    if (parent === window) return;
+    parent.postMessage({type: "frame-location", frame: window.name || "", href: window.location.href}, "*");
+  }
+  document.addEventListener("click", function(event) {
+    const link = event.target.closest("a[data-panel]");
+    if (!link || parent === window) return;
+    parent.postMessage({type: "source-link", panel: link.dataset.panel}, "*");
+  });
+  window.addEventListener("load", notifyParent);
+  window.addEventListener("hashchange", notifyParent);
+})();
+</script></body></html>

@@ -1,0 +1,60 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>symbols/src__pl__plpython__plpy_subxactobject_c__PLy_subtransaction_new.md</title><link rel="stylesheet" href="../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../source/src/pl/plpython/plpy_subxactobject.c.html#L66" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__pl__plpython__plpy_subxactobject_c__PLy_subtransaction_new.html&quot;}, '*');">PLy_subtransaction_new</a></h1>
+<h2>定義</h2>
+<ul>
+<li>種別: <code>function</code></li>
+<li>定義箇所: <code>src/pl/plpython/plpy_subxactobject.c:66</code></li>
+<li>所属モジュール: <a class="wiki-entity-link" href="../modules/src__pl__plpython.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/modules/src__pl__plpython.html&quot;, &quot;source&quot;: &quot;source/src/pl/plpython/plpy_cursorobject.c.html&quot;}, '*');"><code>module:src/pl/plpython</code></a></li>
+</ul>
+<h2>目的</h2>
+<p>静的シンボル索引から生成された初期シンボルページです。</p>
+<h2>シグネチャまたは形状</h2>
+<ul>
+<li>シグネチャ: <code>PyObject * PLy_subtransaction_new(PyObject *self, PyObject *unused)</code></li>
+</ul>
+<h2>入力と出力</h2>
+<ul>
+<li>引数: <code>PyObject *self</code>, <code>PyObject *unused</code></li>
+<li>戻り値: <code>PyObject *</code></li>
+</ul>
+<h2>前提条件と不変条件</h2>
+<p>まだ解析していません。</p>
+<h2>アルゴリズムまたは振る舞い</h2>
+<ul>
+<li>複雑度: <code>medium</code> (score 10)</li>
+</ul>
+<p>まだ解析していません。</p>
+<h2>呼び出し元と呼び出し先</h2>
+<ul>
+<li>呼び出し元: なし</li>
+<li>呼び出し先: なし</li>
+<li>呼び出し元サイト: なし</li>
+<li>呼び出しサイト: <code>PyObject_New</code> at <code>src/pl/plpython/plpy_subxactobject.c:71:7</code> (unresolved), <code>Py_INCREF</code> at <code>src/pl/plpython/plpy_subxactobject.c:76:2</code> (unresolved)</li>
+</ul>
+<h2>関連データ構造</h2>
+<p><a class="wiki-source-link" href="../../source/src/pl/plpython/plpy_subxactobject.h.html#L16" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__pl__plpython__plpy_subxactobject_h__PLySubtransactionObject.html&quot;}, '*');"><code>PLySubtransactionObject</code></a>, <code>PyObject</code></p>
+<h2>ソース抜粋</h2>
+<p>~~~c PyObject * <a class="wiki-source-link" href="../../source/src/pl/plpython/plpy_subxactobject.c.html#L66" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__pl__plpython__plpy_subxactobject_c__PLy_subtransaction_new.html&quot;}, '*');">PLy_subtransaction_new</a>(PyObject *self, PyObject *unused) { <a class="wiki-source-link" href="../../source/src/pl/plpython/plpy_subxactobject.h.html#L16" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__pl__plpython__plpy_subxactobject_h__PLySubtransactionObject.html&quot;}, '*');">PLySubtransactionObject</a> *ob;</p>
+<p>ob = PyObject_New(<a class="wiki-source-link" href="../../source/src/pl/plpython/plpy_subxactobject.h.html#L16" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__pl__plpython__plpy_subxactobject_h__PLySubtransactionObject.html&quot;}, '*');">PLySubtransactionObject</a>, PLy_SubtransactionType); if (ob == NULL) return NULL; #if PY_VERSION_HEX &lt; 0x03080000 /* Workaround for Python issue 35810; no longer necessary in Python 3.8 */ Py_INCREF(PLy_SubtransactionType); #endif</p>
+<p>ob-&gt;started = <a class="wiki-source-link" href="../../source/src/tools/pg_bsd_indent/indent_globs.h.html#L43" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/tools/pg_bsd_indent/indent_globs.h.html&quot;}, '*');">false</a>; ob-&gt;exited = <a class="wiki-source-link" href="../../source/src/tools/pg_bsd_indent/indent_globs.h.html#L43" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/tools/pg_bsd_indent/indent_globs.h.html&quot;}, '*');">false</a>;</p>
+<p>return (PyObject *) ob; } ~~~</p>
+<h2>失敗モードと境界条件</h2>
+<p>まだ解析していません。</p>
+<h2>保守担当者向けメモ</h2>
+<ul>
+<li>後続フェーズで、ソース本文の文脈と caller/callee 情報を使ってこのページを強化する。</li>
+</ul><script>
+(function() {
+  function notifyParent() {
+    if (parent === window) return;
+    parent.postMessage({type: "frame-location", frame: window.name || "", href: window.location.href}, "*");
+  }
+  document.addEventListener("click", function(event) {
+    const link = event.target.closest("a[data-panel]");
+    if (!link || parent === window) return;
+    parent.postMessage({type: "source-link", panel: link.dataset.panel}, "*");
+  });
+  window.addEventListener("load", notifyParent);
+  window.addEventListener("hashchange", notifyParent);
+})();
+</script></body></html>

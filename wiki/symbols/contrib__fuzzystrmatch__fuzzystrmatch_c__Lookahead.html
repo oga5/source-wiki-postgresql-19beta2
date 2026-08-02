@@ -1,0 +1,63 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>symbols/contrib__fuzzystrmatch__fuzzystrmatch_c__Lookahead.md</title><link rel="stylesheet" href="../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../source/contrib/fuzzystrmatch/fuzzystrmatch.c.html#L329" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/contrib__fuzzystrmatch__fuzzystrmatch_c__Lookahead.html&quot;}, '*');">Lookahead</a></h1>
+<h2>定義</h2>
+<ul>
+<li>種別: <code>function</code></li>
+<li>定義箇所: <code>contrib/fuzzystrmatch/fuzzystrmatch.c:329</code></li>
+<li>所属モジュール: <a class="wiki-entity-link" href="../modules/contrib__fuzzystrmatch.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/modules/contrib__fuzzystrmatch.html&quot;, &quot;source&quot;: &quot;source/contrib/fuzzystrmatch/daitch_mokotoff.c.html&quot;}, '*');"><code>module:contrib/fuzzystrmatch</code></a></li>
+</ul>
+<h2>目的</h2>
+<p>静的シンボル索引から生成された初期シンボルページです。</p>
+<h2>シグネチャまたは形状</h2>
+<ul>
+<li>シグネチャ: <code>static char Lookahead(char *word, int how_far)</code></li>
+</ul>
+<h2>入力と出力</h2>
+<ul>
+<li>引数: <code>char *word</code>, <code>int how_far</code></li>
+<li>戻り値: <code>char</code></li>
+</ul>
+<h2>前提条件と不変条件</h2>
+<p>まだ解析していません。</p>
+<h2>アルゴリズムまたは振る舞い</h2>
+<ul>
+<li>複雑度: <code>low</code> (score 3)</li>
+</ul>
+<p>まだ解析していません。</p>
+<h2>呼び出し元と呼び出し先</h2>
+<ul>
+<li>呼び出し元: なし</li>
+<li>呼び出し先: なし</li>
+<li>呼び出し元サイト: なし</li>
+<li>呼び出しサイト: なし</li>
+</ul>
+<h2>関連データ構造</h2>
+<p><a class="wiki-source-link" href="../../source/src/include/optimizer/geqo_recombination.h.html#L36" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__optimizer__geqo_recombination_h__Edge.html&quot;}, '*');"><code>Edge</code></a>, <code>string</code></p>
+<h2>ソース抜粋</h2>
+<p>~~~c static char <a class="wiki-source-link" href="../../source/contrib/fuzzystrmatch/fuzzystrmatch.c.html#L329" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/contrib__fuzzystrmatch__fuzzystrmatch_c__Lookahead.html&quot;}, '*');">Lookahead</a>(char *<a class="wiki-source-link" href="../../source/src/backend/regex/regcomp.c.html#L1476" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__regex__regcomp_c__word.html&quot;}, '*');">word</a>, int how_far) { char		letter_ahead = &#x27;\0&#x27;;	/* null by default */ int			<a class="wiki-source-link" href="../../source/contrib/intarray/_int_op.c.html#L262" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/contrib__intarray___int_op_c__idx.html&quot;}, '*');">idx</a>;</p>
+<p>for (<a class="wiki-source-link" href="../../source/contrib/intarray/_int_op.c.html#L262" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/contrib__intarray___int_op_c__idx.html&quot;}, '*');">idx</a> = 0; <a class="wiki-source-link" href="../../source/src/backend/regex/regcomp.c.html#L1476" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__regex__regcomp_c__word.html&quot;}, '*');">word</a>[<a class="wiki-source-link" href="../../source/contrib/intarray/_int_op.c.html#L262" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/contrib__intarray___int_op_c__idx.html&quot;}, '*');">idx</a>] != &#x27;\0&#x27; &amp;&amp; <a class="wiki-source-link" href="../../source/contrib/intarray/_int_op.c.html#L262" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/contrib__intarray___int_op_c__idx.html&quot;}, '*');">idx</a> &lt; how_far; <a class="wiki-source-link" href="../../source/contrib/intarray/_int_op.c.html#L262" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/contrib__intarray___int_op_c__idx.html&quot;}, '*');">idx</a>++); /* <a class="wiki-source-link" href="../../source/src/include/optimizer/geqo_recombination.h.html#L36" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__optimizer__geqo_recombination_h__Edge.html&quot;}, '*');">Edge</a> forward in the string... */</p>
+<p>letter_ahead = <a class="wiki-source-link" href="../../source/src/backend/regex/regcomp.c.html#L1476" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__regex__regcomp_c__word.html&quot;}, '*');">word</a>[<a class="wiki-source-link" href="../../source/contrib/intarray/_int_op.c.html#L262" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/contrib__intarray___int_op_c__idx.html&quot;}, '*');">idx</a>];	/* <a class="wiki-source-link" href="../../source/contrib/intarray/_int_op.c.html#L262" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/contrib__intarray___int_op_c__idx.html&quot;}, '*');">idx</a> will be either == to how_far or at the</p>
+<ul>
+<li>end of the string */</li>
+<p>return letter_ahead; } ~~~</p>
+</ul>
+<h2>失敗モードと境界条件</h2>
+<p>まだ解析していません。</p>
+<h2>保守担当者向けメモ</h2>
+<ul>
+<li>後続フェーズで、ソース本文の文脈と caller/callee 情報を使ってこのページを強化する。</li>
+</ul><script>
+(function() {
+  function notifyParent() {
+    if (parent === window) return;
+    parent.postMessage({type: "frame-location", frame: window.name || "", href: window.location.href}, "*");
+  }
+  document.addEventListener("click", function(event) {
+    const link = event.target.closest("a[data-panel]");
+    if (!link || parent === window) return;
+    parent.postMessage({type: "source-link", panel: link.dataset.panel}, "*");
+  });
+  window.addEventListener("load", notifyParent);
+  window.addEventListener("hashchange", notifyParent);
+})();
+</script></body></html>

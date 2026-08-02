@@ -1,0 +1,61 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>symbols/src__common__md5_c__pg_md5_update.md</title><link rel="stylesheet" href="../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../source/src/common/md5.c.html#L399" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__common__md5_c__pg_md5_update.html&quot;}, '*');">pg_md5_update</a></h1>
+<h2>定義</h2>
+<ul>
+<li>種別: <code>function</code></li>
+<li>定義箇所: <code>src/common/md5.c:399</code></li>
+<li>所属モジュール: <a class="wiki-entity-link" href="../modules/src__common.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/modules/src__common.html&quot;, &quot;source&quot;: &quot;source/src/common/archive.c.html&quot;}, '*');"><code>module:src/common</code></a></li>
+</ul>
+<h2>目的</h2>
+<p>静的シンボル索引から生成された初期シンボルページです。</p>
+<h2>シグネチャまたは形状</h2>
+<ul>
+<li>シグネチャ: <code>void pg_md5_update(pg_md5_ctx *ctx, const uint8 *data, size_t len)</code></li>
+</ul>
+<h2>入力と出力</h2>
+<ul>
+<li>引数: <code>pg_md5_ctx *ctx</code>, <code>const uint8 *data</code>, <code>size_t len</code></li>
+<li>戻り値: <code>void</code></li>
+</ul>
+<h2>前提条件と不変条件</h2>
+<p>まだ解析していません。</p>
+<h2>アルゴリズムまたは振る舞い</h2>
+<ul>
+<li>複雑度: <code>high</code> (score 12)</li>
+</ul>
+<p>まだ解析していません。</p>
+<h2>呼び出し元と呼び出し先</h2>
+<ul>
+<li>呼び出し元: <code>pg_cryptohash_update</code></li>
+<li>呼び出し先: <a class="wiki-source-link" href="../../source/src/common/md5.c.html#L153" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__common__md5_c__md5_calc.html&quot;}, '*');"><code>md5_calc</code></a></li>
+<li>呼び出し元サイト: <code>pg_cryptohash_update</code> at <code>src/common/cryptohash.c:144:4</code> (direct, confidence=high, resolved=<a class="wiki-entity-link" href="src__common__md5_c__pg_md5_update.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__common__md5_c__pg_md5_update.html&quot;, &quot;source&quot;: &quot;source/src/common/md5.c.html#L399&quot;}, '*');"><code>symbol:src/common/md5.c#pg_md5_update</code></a>)</li>
+<li>呼び出しサイト: <code>memmove</code> at <code>src/common/md5.c:410:3</code> (unresolved), <a class="wiki-source-link" href="../../source/src/common/md5.c.html#L153" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__common__md5_c__md5_calc.html&quot;}, '*');"><code>md5_calc</code></a> at <code>src/common/md5.c:411:3</code> (direct, confidence=high, resolved=<a class="wiki-entity-link" href="src__common__md5_c__md5_calc.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__common__md5_c__md5_calc.html&quot;, &quot;source&quot;: &quot;source/src/common/md5.c.html#L153&quot;}, '*');"><code>symbol:src/common/md5.c#md5_calc</code></a>), <a class="wiki-source-link" href="../../source/src/common/md5.c.html#L153" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__common__md5_c__md5_calc.html&quot;}, '*');"><code>md5_calc</code></a> at <code>src/common/md5.c:414:4</code> (direct, confidence=high, resolved=<a class="wiki-entity-link" href="src__common__md5_c__md5_calc.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__common__md5_c__md5_calc.html&quot;, &quot;source&quot;: &quot;source/src/common/md5.c.html#L153&quot;}, '*');"><code>symbol:src/common/md5.c#md5_calc</code></a>), <code>memmove</code> at <code>src/common/md5.c:417:3</code> (unresolved), <code>memmove</code> at <code>src/common/md5.c:421:3</code> (unresolved)</li>
+</ul>
+<h2>関連データ構造</h2>
+<p><a class="wiki-source-link" href="../../source/src/common/md5_int.h.html#L54" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__common__md5_int_h__pg_md5_ctx.html&quot;}, '*');"><code>pg_md5_ctx</code></a>, <code>uint8</code></p>
+<h2>ソース抜粋</h2>
+<p>~~~c void <a class="wiki-source-link" href="../../source/src/common/md5.c.html#L399" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__common__md5_c__pg_md5_update.html&quot;}, '*');">pg_md5_update</a>(<a class="wiki-source-link" href="../../source/src/common/md5_int.h.html#L54" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__common__md5_int_h__pg_md5_ctx.html&quot;}, '*');">pg_md5_ctx</a> *ctx, const uint8 *data, size_t len) { unsigned int gap, i;</p>
+<p>ctx-&gt;<a class="wiki-source-link" href="../../source/src/common/md5_int.h.html#L73" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/common/md5_int.h.html&quot;}, '*');">md5_n</a> += len * 8;		/* byte to <a class="wiki-source-link" href="../../source/src/backend/utils/adt/varbit.c.html#L390" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__utils__adt__varbit_c__bit.html&quot;}, '*');">bit</a> */ gap = <a class="wiki-source-link" href="../../source/src/common/md5_int.h.html#L51" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/common/md5_int.h.html&quot;}, '*');">MD5_BUFLEN</a> - ctx-&gt;md5_i;</p>
+<p>if (len &gt;= gap) { memmove(ctx-&gt;md5_buf + ctx-&gt;md5_i, data, gap); <a class="wiki-source-link" href="../../source/src/common/md5.c.html#L153" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__common__md5_c__md5_calc.html&quot;}, '*');">md5_calc</a>(ctx-&gt;md5_buf, ctx);</p>
+<p>for (i = gap; i + <a class="wiki-source-link" href="../../source/src/common/md5_int.h.html#L51" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/common/md5_int.h.html&quot;}, '*');">MD5_BUFLEN</a> &lt;= len; i += <a class="wiki-source-link" href="../../source/src/common/md5_int.h.html#L51" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/common/md5_int.h.html&quot;}, '*');">MD5_BUFLEN</a>) <a class="wiki-source-link" href="../../source/src/common/md5.c.html#L153" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__common__md5_c__md5_calc.html&quot;}, '*');">md5_calc</a>(data + i, ctx);</p>
+<p>ctx-&gt;md5_i = len - i; memmove(ctx-&gt;md5_buf, data + i, ctx-&gt;md5_i); } else { memmove(ctx-&gt;md5_buf + ctx-&gt;md5_i, data, len); ctx-&gt;md5_i += len; } } ~~~</p>
+<h2>失敗モードと境界条件</h2>
+<p>まだ解析していません。</p>
+<h2>保守担当者向けメモ</h2>
+<ul>
+<li>後続フェーズで、ソース本文の文脈と caller/callee 情報を使ってこのページを強化する。</li>
+</ul><script>
+(function() {
+  function notifyParent() {
+    if (parent === window) return;
+    parent.postMessage({type: "frame-location", frame: window.name || "", href: window.location.href}, "*");
+  }
+  document.addEventListener("click", function(event) {
+    const link = event.target.closest("a[data-panel]");
+    if (!link || parent === window) return;
+    parent.postMessage({type: "source-link", panel: link.dataset.panel}, "*");
+  });
+  window.addEventListener("load", notifyParent);
+  window.addEventListener("hashchange", notifyParent);
+})();
+</script></body></html>

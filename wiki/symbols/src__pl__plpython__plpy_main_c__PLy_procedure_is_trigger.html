@@ -1,0 +1,59 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>symbols/src__pl__plpython__plpy_main_c__PLy_procedure_is_trigger.md</title><link rel="stylesheet" href="../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../source/src/pl/plpython/plpy_main.c.html#L339" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__pl__plpython__plpy_main_c__PLy_procedure_is_trigger.html&quot;}, '*');">PLy_procedure_is_trigger</a></h1>
+<h2>定義</h2>
+<ul>
+<li>種別: <code>function</code></li>
+<li>定義箇所: <code>src/pl/plpython/plpy_main.c:339</code></li>
+<li>所属モジュール: <a class="wiki-entity-link" href="../modules/src__pl__plpython.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/modules/src__pl__plpython.html&quot;, &quot;source&quot;: &quot;source/src/pl/plpython/plpy_cursorobject.c.html&quot;}, '*');"><code>module:src/pl/plpython</code></a></li>
+</ul>
+<h2>目的</h2>
+<p>静的シンボル索引から生成された初期シンボルページです。</p>
+<h2>シグネチャまたは形状</h2>
+<ul>
+<li>シグネチャ: <code>static PLyTrigType PLy_procedure_is_trigger(Form_pg_proc procStruct)</code></li>
+</ul>
+<h2>入力と出力</h2>
+<ul>
+<li>引数: <code>Form_pg_proc procStruct</code></li>
+<li>戻り値: <a class="wiki-source-link" href="../../source/src/pl/plpython/plpy_procedure.h.html#L15" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__pl__plpython__plpy_procedure_h__PLyTrigType.html&quot;}, '*');"><code>PLyTrigType</code></a></li>
+</ul>
+<h2>前提条件と不変条件</h2>
+<p>まだ解析していません。</p>
+<h2>アルゴリズムまたは振る舞い</h2>
+<ul>
+<li>複雑度: <code>medium</code> (score 5)</li>
+</ul>
+<p>まだ解析していません。</p>
+<h2>呼び出し元と呼び出し先</h2>
+<ul>
+<li>呼び出し元: <a class="wiki-source-link" href="../../source/src/pl/plpython/plpy_main.c.html#L107" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__pl__plpython__plpy_main_c__plpython3_validator.html&quot;}, '*');"><code>plpython3_validator</code></a></li>
+<li>呼び出し先: なし</li>
+<li>呼び出し元サイト: <a class="wiki-source-link" href="../../source/src/pl/plpython/plpy_main.c.html#L107" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__pl__plpython__plpy_main_c__plpython3_validator.html&quot;}, '*');"><code>plpython3_validator</code></a> at <code>src/pl/plpython/plpy_main.c:132:15</code> (direct, confidence=high, resolved=<a class="wiki-entity-link" href="src__pl__plpython__plpy_main_c__PLy_procedure_is_trigger.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__pl__plpython__plpy_main_c__PLy_procedure_is_trigger.html&quot;, &quot;source&quot;: &quot;source/src/pl/plpython/plpy_main.c.html#L339&quot;}, '*');"><code>symbol:src/pl/plpython/plpy_main.c#PLy_procedure_is_trigger</code></a>)</li>
+<li>呼び出しサイト: なし</li>
+</ul>
+<h2>関連データ構造</h2>
+<p><a class="wiki-source-link" href="../../source/src/pl/plpython/plpy_procedure.h.html#L15" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__pl__plpython__plpy_procedure_h__PLyTrigType.html&quot;}, '*');"><code>PLyTrigType</code></a></p>
+<h2>ソース抜粋</h2>
+<p>~~~c static <a class="wiki-source-link" href="../../source/src/pl/plpython/plpy_procedure.h.html#L15" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__pl__plpython__plpy_procedure_h__PLyTrigType.html&quot;}, '*');">PLyTrigType</a> <a class="wiki-source-link" href="../../source/src/pl/plpython/plpy_main.c.html#L339" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__pl__plpython__plpy_main_c__PLy_procedure_is_trigger.html&quot;}, '*');">PLy_procedure_is_trigger</a>(Form_pg_proc procStruct) { <a class="wiki-source-link" href="../../source/src/pl/plpython/plpy_procedure.h.html#L15" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__pl__plpython__plpy_procedure_h__PLyTrigType.html&quot;}, '*');">PLyTrigType</a> ret;</p>
+<p>switch (procStruct-&gt;prorettype) { case TRIGGEROID: ret = PLPY_TRIGGER; break; case EVENT_TRIGGEROID: ret = PLPY_EVENT_TRIGGER; break; default: ret = PLPY_NOT_TRIGGER; break; }</p>
+<p>return ret; } ~~~</p>
+<h2>失敗モードと境界条件</h2>
+<p>まだ解析していません。</p>
+<h2>保守担当者向けメモ</h2>
+<ul>
+<li>後続フェーズで、ソース本文の文脈と caller/callee 情報を使ってこのページを強化する。</li>
+</ul><script>
+(function() {
+  function notifyParent() {
+    if (parent === window) return;
+    parent.postMessage({type: "frame-location", frame: window.name || "", href: window.location.href}, "*");
+  }
+  document.addEventListener("click", function(event) {
+    const link = event.target.closest("a[data-panel]");
+    if (!link || parent === window) return;
+    parent.postMessage({type: "source-link", panel: link.dataset.panel}, "*");
+  });
+  window.addEventListener("load", notifyParent);
+  window.addEventListener("hashchange", notifyParent);
+})();
+</script></body></html>

@@ -1,0 +1,62 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>symbols/src__interfaces__libpq-oauth__oauth-utils_c__pq_reset_sigpipe.md</title><link rel="stylesheet" href="../../styles.css"></head><body><h1>pq_reset_sigpipe</h1>
+<h2>定義</h2>
+<ul>
+<li>種別: <code>function</code></li>
+<li>定義箇所: <code>src/interfaces/libpq-oauth/oauth-utils.c:129</code></li>
+<li>所属モジュール: <a class="wiki-entity-link" href="../modules/src__interfaces__libpq-oauth.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/modules/src__interfaces__libpq-oauth.html&quot;, &quot;source&quot;: &quot;source/src/interfaces/libpq-oauth/oauth-curl.c.html&quot;}, '*');"><code>module:src/interfaces/libpq-oauth</code></a></li>
+</ul>
+<h2>目的</h2>
+<p>静的シンボル索引から生成された初期シンボルページです。</p>
+<h2>シグネチャまたは形状</h2>
+<ul>
+<li>シグネチャ: <code>void pq_reset_sigpipe(sigset_t *osigset, bool sigpipe_pending, bool got_epipe)</code></li>
+</ul>
+<h2>入力と出力</h2>
+<ul>
+<li>引数: <code>sigset_t *osigset</code>, <code>bool sigpipe_pending</code>, <code>bool got_epipe</code></li>
+<li>戻り値: <code>void</code></li>
+</ul>
+<h2>前提条件と不変条件</h2>
+<p>まだ解析していません。</p>
+<h2>アルゴリズムまたは振る舞い</h2>
+<ul>
+<li>複雑度: <code>medium</code> (score 8)</li>
+</ul>
+<p>まだ解析していません。</p>
+<h2>呼び出し元と呼び出し先</h2>
+<ul>
+<li>呼び出し元: なし</li>
+<li>呼び出し先: なし</li>
+<li>呼び出し元サイト: なし</li>
+<li>呼び出しサイト: <code>sigpending</code> at <code>src/interfaces/libpq-oauth/oauth-utils.c:139:7</code> (unresolved), <code>sigismember</code> at <code>src/interfaces/libpq-oauth/oauth-utils.c:140:4</code> (unresolved), <a class="wiki-source-link" href="../../source/src/include/libpq/pqsignal.h.html#L42" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/libpq/pqsignal.h.html&quot;}, '*');"><code>sigemptyset</code></a> at <code>src/interfaces/libpq-oauth/oauth-utils.c:144:4</code> (unresolved), <a class="wiki-source-link" href="../../source/src/include/libpq/pqsignal.h.html#L44" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/libpq/pqsignal.h.html&quot;}, '*');"><code>sigaddset</code></a> at <code>src/interfaces/libpq-oauth/oauth-utils.c:145:4</code> (unresolved), <code>sigwait</code> at <code>src/interfaces/libpq-oauth/oauth-utils.c:147:4</code> (unresolved), <code>pthread_sigmask</code> at <code>src/interfaces/libpq-oauth/oauth-utils.c:152:2</code> (unresolved), <code>SOCK_ERRNO_SET</code> at <code>src/interfaces/libpq-oauth/oauth-utils.c:154:2</code> (macro)</li>
+</ul>
+<h2>関連データ構造</h2>
+<p><a class="wiki-source-link" href="../../source/src/include/libpq/pqsignal.h.html#L20" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__libpq__pqsignal_h__sigset_t.html&quot;}, '*');"><code>sigset_t</code></a></p>
+<h2>ソース抜粋</h2>
+<p>~~~c void pq_reset_sigpipe(<a class="wiki-source-link" href="../../source/src/include/libpq/pqsignal.h.html#L20" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__libpq__pqsignal_h__sigset_t.html&quot;}, '*');">sigset_t</a> *osigset, bool sigpipe_pending, bool got_epipe) { int			save_errno = SOCK_ERRNO; int			signo; <a class="wiki-source-link" href="../../source/src/include/libpq/pqsignal.h.html#L20" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__libpq__pqsignal_h__sigset_t.html&quot;}, '*');">sigset_t</a>	sigset;</p>
+<p>/* Clear <a class="wiki-source-link" href="../../source/src/include/port/win32_port.h.html#L163" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/port/win32_port.h.html&quot;}, '*');">SIGPIPE</a> only if <a class="wiki-source-link" href="../../source/src/backend/optimizer/util/predtest.c.html#L1672" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/optimizer/util/predtest.c.html&quot;}, '*');">none</a> was pending */ if (got_epipe &amp;&amp; !sigpipe_pending) { if (sigpending(&amp;sigset) == 0 &amp;&amp; sigismember(&amp;sigset, <a class="wiki-source-link" href="../../source/src/include/port/win32_port.h.html#L163" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/port/win32_port.h.html&quot;}, '*');">SIGPIPE</a>)) { <a class="wiki-source-link" href="../../source/src/include/libpq/pqsignal.h.html#L20" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__libpq__pqsignal_h__sigset_t.html&quot;}, '*');">sigset_t</a>	sigpipe_sigset;</p>
+<p><a class="wiki-source-link" href="../../source/src/include/libpq/pqsignal.h.html#L42" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/libpq/pqsignal.h.html&quot;}, '*');">sigemptyset</a>(&amp;sigpipe_sigset); <a class="wiki-source-link" href="../../source/src/include/libpq/pqsignal.h.html#L44" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/libpq/pqsignal.h.html&quot;}, '*');">sigaddset</a>(&amp;sigpipe_sigset, <a class="wiki-source-link" href="../../source/src/include/port/win32_port.h.html#L163" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/port/win32_port.h.html&quot;}, '*');">SIGPIPE</a>);</p>
+<p>sigwait(&amp;sigpipe_sigset, &amp;signo); } }</p>
+<p>/* Restore saved block mask */ pthread_sigmask(<a class="wiki-source-link" href="../../source/src/include/libpq/pqsignal.h.html#L39" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/libpq/pqsignal.h.html&quot;}, '*');">SIG_SETMASK</a>, osigset, NULL);</p>
+<p>SOCK_ERRNO_SET(save_errno); } ~~~</p>
+<h2>失敗モードと境界条件</h2>
+<p>まだ解析していません。</p>
+<h2>保守担当者向けメモ</h2>
+<ul>
+<li>後続フェーズで、ソース本文の文脈と caller/callee 情報を使ってこのページを強化する。</li>
+</ul><script>
+(function() {
+  function notifyParent() {
+    if (parent === window) return;
+    parent.postMessage({type: "frame-location", frame: window.name || "", href: window.location.href}, "*");
+  }
+  document.addEventListener("click", function(event) {
+    const link = event.target.closest("a[data-panel]");
+    if (!link || parent === window) return;
+    parent.postMessage({type: "source-link", panel: link.dataset.panel}, "*");
+  });
+  window.addEventListener("load", notifyParent);
+  window.addEventListener("hashchange", notifyParent);
+})();
+</script></body></html>

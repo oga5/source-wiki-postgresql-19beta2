@@ -1,0 +1,60 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>symbols/src__backend__utils__activity__pgstat_c__pgstat_get_stat_snapshot_timestamp.md</title><link rel="stylesheet" href="../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../source/src/backend/utils/activity/pgstat.c.html#L1071" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__utils__activity__pgstat_c__pgstat_get_stat_snapshot_timestamp.html&quot;}, '*');">pgstat_get_stat_snapshot_timestamp</a></h1>
+<h2>定義</h2>
+<ul>
+<li>種別: <code>function</code></li>
+<li>定義箇所: <code>src/backend/utils/activity/pgstat.c:1071</code></li>
+<li>所属モジュール: <a class="wiki-entity-link" href="../modules/src__backend__utils__activity.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/modules/src__backend__utils__activity.html&quot;, &quot;source&quot;: &quot;source/src/backend/utils/activity/backend_progress.c.html&quot;}, '*');"><code>module:src/backend/utils/activity</code></a></li>
+</ul>
+<h2>目的</h2>
+<p>静的シンボル索引から生成された初期シンボルページです。</p>
+<h2>シグネチャまたは形状</h2>
+<ul>
+<li>シグネチャ: <code>TimestampTz pgstat_get_stat_snapshot_timestamp(bool *have_snapshot)</code></li>
+</ul>
+<h2>入力と出力</h2>
+<ul>
+<li>引数: <code>bool *have_snapshot</code></li>
+<li>戻り値: <code>TimestampTz</code></li>
+</ul>
+<h2>前提条件と不変条件</h2>
+<p>まだ解析していません。</p>
+<h2>アルゴリズムまたは振る舞い</h2>
+<ul>
+<li>複雑度: <code>medium</code> (score 6)</li>
+</ul>
+<p>まだ解析していません。</p>
+<h2>呼び出し元と呼び出し先</h2>
+<ul>
+<li>呼び出し元: <a class="wiki-source-link" href="../../source/src/backend/utils/adt/pgstatfuncs.c.html#L1893" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__utils__adt__pgstatfuncs_c__PG_STAT_GET_XACT_FUNCENTRY_FLOAT8_MS.html&quot;}, '*');"><code>PG_STAT_GET_XACT_FUNCENTRY_FLOAT8_MS</code></a></li>
+<li>呼び出し先: <a class="wiki-source-link" href="../../source/src/backend/utils/activity/pgstat.c.html#L930" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__utils__activity__pgstat_c__pgstat_clear_snapshot.html&quot;}, '*');"><code>pgstat_clear_snapshot</code></a></li>
+<li>呼び出し元サイト: <a class="wiki-source-link" href="../../source/src/backend/utils/adt/pgstatfuncs.c.html#L1893" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__utils__adt__pgstatfuncs_c__PG_STAT_GET_XACT_FUNCENTRY_FLOAT8_MS.html&quot;}, '*');"><code>PG_STAT_GET_XACT_FUNCENTRY_FLOAT8_MS</code></a> at <code>src/backend/utils/adt/pgstatfuncs.c:1905:7</code> (direct, confidence=high, resolved=<a class="wiki-entity-link" href="src__backend__utils__activity__pgstat_c__pgstat_get_stat_snapshot_timestamp.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__utils__activity__pgstat_c__pgstat_get_stat_snapshot_timestamp.html&quot;, &quot;source&quot;: &quot;source/src/backend/utils/activity/pgstat.c.html#L1071&quot;}, '*');"><code>symbol:src/backend/utils/activity/pgstat.c#pgstat_get_stat_snapshot_timestamp</code></a>)</li>
+<li>呼び出しサイト: <a class="wiki-source-link" href="../../source/src/backend/utils/activity/pgstat.c.html#L930" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__utils__activity__pgstat_c__pgstat_clear_snapshot.html&quot;}, '*');"><code>pgstat_clear_snapshot</code></a> at <code>src/backend/utils/activity/pgstat.c:1075:3</code> (direct, confidence=high, resolved=<a class="wiki-entity-link" href="src__backend__utils__activity__pgstat_c__pgstat_clear_snapshot.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__utils__activity__pgstat_c__pgstat_clear_snapshot.html&quot;, &quot;source&quot;: &quot;source/src/backend/utils/activity/pgstat.c.html#L930&quot;}, '*');"><code>symbol:src/backend/utils/activity/pgstat.c#pgstat_clear_snapshot</code></a>)</li>
+</ul>
+<h2>関連データ構造</h2>
+<p><code>TimestampTz</code></p>
+<h2>ソース抜粋</h2>
+<p>~~~c TimestampTz <a class="wiki-source-link" href="../../source/src/backend/utils/activity/pgstat.c.html#L1071" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__utils__activity__pgstat_c__pgstat_get_stat_snapshot_timestamp.html&quot;}, '*');">pgstat_get_stat_snapshot_timestamp</a>(bool *have_snapshot) { if (<a class="wiki-source-link" href="../../source/src/backend/utils/activity/pgstat.c.html#L257" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/utils/activity/pgstat.c.html&quot;}, '*');">force_stats_snapshot_clear</a>) <a class="wiki-source-link" href="../../source/src/backend/utils/activity/pgstat.c.html#L930" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__utils__activity__pgstat_c__pgstat_clear_snapshot.html&quot;}, '*');">pgstat_clear_snapshot</a>();</p>
+<p>if (pgStatLocal.snapshot.mode == PGSTAT_FETCH_CONSISTENCY_SNAPSHOT) { *have_snapshot = <a class="wiki-source-link" href="../../source/src/tools/pg_bsd_indent/indent_globs.h.html#L46" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/tools/pg_bsd_indent/indent_globs.h.html&quot;}, '*');">true</a>; return pgStatLocal.snapshot.snapshot_timestamp; }</p>
+<p>*have_snapshot = <a class="wiki-source-link" href="../../source/src/tools/pg_bsd_indent/indent_globs.h.html#L43" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/tools/pg_bsd_indent/indent_globs.h.html&quot;}, '*');">false</a>;</p>
+<p>return 0; } ~~~</p>
+<h2>失敗モードと境界条件</h2>
+<p>まだ解析していません。</p>
+<h2>保守担当者向けメモ</h2>
+<ul>
+<li>後続フェーズで、ソース本文の文脈と caller/callee 情報を使ってこのページを強化する。</li>
+</ul><script>
+(function() {
+  function notifyParent() {
+    if (parent === window) return;
+    parent.postMessage({type: "frame-location", frame: window.name || "", href: window.location.href}, "*");
+  }
+  document.addEventListener("click", function(event) {
+    const link = event.target.closest("a[data-panel]");
+    if (!link || parent === window) return;
+    parent.postMessage({type: "source-link", panel: link.dataset.panel}, "*");
+  });
+  window.addEventListener("load", notifyParent);
+  window.addEventListener("hashchange", notifyParent);
+})();
+</script></body></html>

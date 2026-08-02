@@ -1,0 +1,67 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>symbols/contrib__pgcrypto__pgp-armor_c__pg_base64_decode.md</title><link rel="stylesheet" href="../../styles.css"></head><body><h1>pg_base64_decode</h1>
+<h2>定義</h2>
+<ul>
+<li>種別: <code>function</code></li>
+<li>定義箇所: <code>contrib/pgcrypto/pgp-armor.c:94</code></li>
+<li>所属モジュール: <a class="wiki-entity-link" href="../modules/contrib__pgcrypto.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/modules/contrib__pgcrypto.html&quot;, &quot;source&quot;: &quot;source/contrib/pgcrypto/crypt-blowfish.c.html&quot;}, '*');"><code>module:contrib/pgcrypto</code></a></li>
+</ul>
+<h2>目的</h2>
+<p>静的シンボル索引から生成された初期シンボルページです。</p>
+<h2>シグネチャまたは形状</h2>
+<ul>
+<li>シグネチャ: <code>static int pg_base64_decode(const uint8 *src, unsigned len, uint8 *dst)</code></li>
+</ul>
+<h2>入力と出力</h2>
+<ul>
+<li>引数: <code>const uint8 *src</code>, <code>unsigned len</code>, <code>uint8 *dst</code></li>
+<li>戻り値: <code>int</code></li>
+</ul>
+<h2>前提条件と不変条件</h2>
+<p>まだ解析していません。</p>
+<h2>アルゴリズムまたは振る舞い</h2>
+<ul>
+<li>複雑度: <code>high</code> (score 23)</li>
+</ul>
+<p>まだ解析していません。</p>
+<h2>呼び出し元と呼び出し先</h2>
+<ul>
+<li>呼び出し元: <a class="wiki-source-link" href="../../source/contrib/pgcrypto/pgp-armor.c.html#L313" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/contrib__pgcrypto__pgp-armor_c__pgp_armor_decode.html&quot;}, '*');"><code>pgp_armor_decode</code></a></li>
+<li>呼び出し先: なし</li>
+<li>呼び出し元サイト: <a class="wiki-source-link" href="../../source/contrib/pgcrypto/pgp-armor.c.html#L313" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/contrib__pgcrypto__pgp-armor_c__pgp_armor_decode.html&quot;}, '*');"><code>pgp_armor_decode</code></a> at <code>contrib/pgcrypto/pgp-armor.c:361:6</code> (direct, confidence=high, resolved=<a class="wiki-entity-link" href="contrib__pgcrypto__pgp-armor_c__pg_base64_decode.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/contrib__pgcrypto__pgp-armor_c__pg_base64_decode.html&quot;, &quot;source&quot;: &quot;source/contrib/pgcrypto/pgp-armor.c.html#L94&quot;}, '*');"><code>symbol:contrib/pgcrypto/pgp-armor.c#pg_base64_decode</code></a>), <a class="wiki-source-link" href="../../source/contrib/pgcrypto/pgp-armor.c.html#L313" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/contrib__pgcrypto__pgp-armor_c__pgp_armor_decode.html&quot;}, '*');"><code>pgp_armor_decode</code></a> at <code>contrib/pgcrypto/pgp-armor.c:368:8</code> (direct, confidence=high, resolved=<a class="wiki-entity-link" href="contrib__pgcrypto__pgp-armor_c__pg_base64_decode.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/contrib__pgcrypto__pgp-armor_c__pg_base64_decode.html&quot;, &quot;source&quot;: &quot;source/contrib/pgcrypto/pgp-armor.c.html#L94&quot;}, '*');"><code>symbol:contrib/pgcrypto/pgp-armor.c#pg_base64_decode</code></a>)</li>
+<li>呼び出しサイト: なし</li>
+</ul>
+<h2>関連データ構造</h2>
+<p><code>c</code>, <code>uint8</code></p>
+<h2>ソース抜粋</h2>
+<p>~~~c static int pg_base64_decode(const uint8 *src, unsigned len, uint8 *dst) { const uint8 *srcend = src + len, *s = src; uint8	   *p = dst; char		c; unsigned	b = 0; unsigned long buf = 0; int			pos = 0, end = 0;</p>
+<p>while (s &lt; srcend) { c = *s++; if (c &gt;= &#x27;A&#x27; &amp;&amp; c &lt;= &#x27;Z&#x27;) b = c - &#x27;A&#x27;; else if (c &gt;= &#x27;a&#x27; &amp;&amp; c &lt;= &#x27;z&#x27;) b = c - &#x27;a&#x27; + 26; else if (c &gt;= &#x27;0&#x27; &amp;&amp; c &lt;= &#x27;9&#x27;) b = c - &#x27;0&#x27; + 52; else if (c == &#x27;+&#x27;) b = 62; else if (c == &#x27;/&#x27;) b = 63; else if (c == &#x27;=&#x27;) { /*</p>
+<ul>
+<li>end sequence</li>
+<p>*/ if (!end) { if (pos == 2) end = 1; else if (pos == 3) end = 2; else return <a class="wiki-source-link" href="../../source/contrib/pgcrypto/px.h.html#L68" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/contrib/pgcrypto/px.h.html&quot;}, '*');">PXE_PGP_CORRUPT_ARMOR</a>; } b = 0; } else if (c == &#x27; &#x27; || c == &#x27;\t&#x27; || c == &#x27;\n&#x27; || c == &#x27;\r&#x27;) continue; else return <a class="wiki-source-link" href="../../source/contrib/pgcrypto/px.h.html#L68" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/contrib/pgcrypto/px.h.html&quot;}, '*');">PXE_PGP_CORRUPT_ARMOR</a>;</p>
+</ul>
+<p>/*</p>
+<ul>
+<li>add it to buffer</li>
+<p>*/ buf = (buf &lt;&lt; 6) + b; pos++; if (pos == 4) { *p++ = (buf &gt;&gt; 16) &amp; 255; if (end == 0 || end &gt; 1) *p++ = (buf &gt;&gt; 8) &amp; 255; if (end == 0 || end &gt; 2) *p++ = buf &amp; 255; buf = 0; pos = 0; ~~~</p>
+</ul>
+<h2>失敗モードと境界条件</h2>
+<p>まだ解析していません。</p>
+<h2>保守担当者向けメモ</h2>
+<ul>
+<li>後続フェーズで、ソース本文の文脈と caller/callee 情報を使ってこのページを強化する。</li>
+</ul><script>
+(function() {
+  function notifyParent() {
+    if (parent === window) return;
+    parent.postMessage({type: "frame-location", frame: window.name || "", href: window.location.href}, "*");
+  }
+  document.addEventListener("click", function(event) {
+    const link = event.target.closest("a[data-panel]");
+    if (!link || parent === window) return;
+    parent.postMessage({type: "source-link", panel: link.dataset.panel}, "*");
+  });
+  window.addEventListener("load", notifyParent);
+  window.addEventListener("hashchange", notifyParent);
+})();
+</script></body></html>

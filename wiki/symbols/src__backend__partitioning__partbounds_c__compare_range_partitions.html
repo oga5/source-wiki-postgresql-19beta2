@@ -1,0 +1,69 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>symbols/src__backend__partitioning__partbounds_c__compare_range_partitions.md</title><link rel="stylesheet" href="../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../source/src/backend/partitioning/partbounds.c.html#L2654" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__partitioning__partbounds_c__compare_range_partitions.html&quot;}, '*');">compare_range_partitions</a></h1>
+<h2>定義</h2>
+<ul>
+<li>種別: <code>function</code></li>
+<li>定義箇所: <code>src/backend/partitioning/partbounds.c:2654</code></li>
+<li>所属モジュール: <a class="wiki-entity-link" href="../modules/src__backend__partitioning.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/modules/src__backend__partitioning.html&quot;, &quot;source&quot;: &quot;source/src/backend/partitioning/partbounds.c.html&quot;}, '*');"><code>module:src/backend/partitioning</code></a></li>
+</ul>
+<h2>目的</h2>
+<p>静的シンボル索引から生成された初期シンボルページです。</p>
+<h2>シグネチャまたは形状</h2>
+<ul>
+<li>シグネチャ: <code>static bool compare_range_partitions(int partnatts, FmgrInfo *partsupfuncs, Oid *partcollations, PartitionRangeBound *outer_lb, PartitionRangeBound *outer_ub, PartitionRangeBound *inner_lb, PartitionRangeBound *inner_ub, int *lb_cmpval, int *ub_cmpval)</code></li>
+</ul>
+<h2>入力と出力</h2>
+<ul>
+<li>引数: <code>int partnatts</code>, <code>FmgrInfo *partsupfuncs</code>, <code>Oid *partcollations</code>, <code>PartitionRangeBound *outer_lb</code>, <code>PartitionRangeBound *outer_ub</code>, <code>PartitionRangeBound *inner_lb</code>, <code>PartitionRangeBound *inner_ub</code>, <code>int *lb_cmpval</code>, <code>int *ub_cmpval</code></li>
+<li>戻り値: <code>bool</code></li>
+</ul>
+<h2>前提条件と不変条件</h2>
+<p>まだ解析していません。</p>
+<h2>アルゴリズムまたは振る舞い</h2>
+<ul>
+<li>複雑度: <code>high</code> (score 13)</li>
+</ul>
+<p>まだ解析していません。</p>
+<h2>呼び出し元と呼び出し先</h2>
+<ul>
+<li>呼び出し元: <a class="wiki-source-link" href="../../source/src/backend/partitioning/partbounds.c.html#L1499" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__partitioning__partbounds_c__merge_range_bounds.html&quot;}, '*');"><code>merge_range_bounds</code></a></li>
+<li>呼び出し先: なし</li>
+<li>呼び出し元サイト: <a class="wiki-source-link" href="../../source/src/backend/partitioning/partbounds.c.html#L1499" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__partitioning__partbounds_c__merge_range_bounds.html&quot;}, '*');"><code>merge_range_bounds</code></a> at <code>src/backend/partitioning/partbounds.c:1591:14</code> (direct, confidence=high, resolved=<a class="wiki-entity-link" href="src__backend__partitioning__partbounds_c__compare_range_partitions.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__partitioning__partbounds_c__compare_range_partitions.html&quot;, &quot;source&quot;: &quot;source/src/backend/partitioning/partbounds.c.html#L2654&quot;}, '*');"><code>symbol:src/backend/partitioning/partbounds.c#compare_range_partitions</code></a>)</li>
+<li>呼び出しサイト: <a class="wiki-source-link" href="../../source/src/backend/partitioning/partbounds.c.html#L89" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/partitioning/partbounds.c.html&quot;}, '*');"><code>compare_range_bounds</code></a> at <code>src/backend/partitioning/partbounds.c:2667:6</code> (macro), <a class="wiki-source-link" href="../../source/src/backend/partitioning/partbounds.c.html#L89" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/partitioning/partbounds.c.html&quot;}, '*');"><code>compare_range_bounds</code></a> at <code>src/backend/partitioning/partbounds.c:2679:6</code> (macro), <a class="wiki-source-link" href="../../source/src/backend/partitioning/partbounds.c.html#L89" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/partitioning/partbounds.c.html&quot;}, '*');"><code>compare_range_bounds</code></a> at <code>src/backend/partitioning/partbounds.c:2688:15</code> (macro), <a class="wiki-source-link" href="../../source/src/backend/partitioning/partbounds.c.html#L89" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/partitioning/partbounds.c.html&quot;}, '*');"><code>compare_range_bounds</code></a> at <code>src/backend/partitioning/partbounds.c:2690:15</code> (macro)</li>
+</ul>
+<h2>関連データ構造</h2>
+<p><code>FmgrInfo</code>, <code>Oid</code>, <a class="wiki-source-link" href="../../source/src/backend/partitioning/partbounds.c.html#L65" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__partitioning__partbounds_c__PartitionRangeBound.html&quot;}, '*');"><code>PartitionRangeBound</code></a></p>
+<h2>ソース抜粋</h2>
+<p>~~~c static bool <a class="wiki-source-link" href="../../source/src/backend/partitioning/partbounds.c.html#L2654" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__partitioning__partbounds_c__compare_range_partitions.html&quot;}, '*');">compare_range_partitions</a>(int partnatts, FmgrInfo *partsupfuncs, Oid *partcollations, <a class="wiki-source-link" href="../../source/src/backend/partitioning/partbounds.c.html#L65" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__partitioning__partbounds_c__PartitionRangeBound.html&quot;}, '*');">PartitionRangeBound</a> *outer_lb, <a class="wiki-source-link" href="../../source/src/backend/partitioning/partbounds.c.html#L65" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__partitioning__partbounds_c__PartitionRangeBound.html&quot;}, '*');">PartitionRangeBound</a> *outer_ub, <a class="wiki-source-link" href="../../source/src/backend/partitioning/partbounds.c.html#L65" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__partitioning__partbounds_c__PartitionRangeBound.html&quot;}, '*');">PartitionRangeBound</a> *inner_lb, <a class="wiki-source-link" href="../../source/src/backend/partitioning/partbounds.c.html#L65" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__partitioning__partbounds_c__PartitionRangeBound.html&quot;}, '*');">PartitionRangeBound</a> *inner_ub, int *lb_cmpval, int *ub_cmpval) { /*</p>
+<ul>
+<li>Check if the outer partition&#x27;s <a class="wiki-source-link" href="../../source/src/backend/utils/adt/oracle_compat.c.html#L79" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__utils__adt__oracle_compat_c__upper.html&quot;}, '*');">upper</a> bound <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> <a class="wiki-source-link" href="../../source/src/backend/utils/adt/oracle_compat.c.html#L48" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__utils__adt__oracle_compat_c__lower.html&quot;}, '*');">lower</a> than the inner</li>
+<li>partition&#x27;s <a class="wiki-source-link" href="../../source/src/backend/utils/adt/oracle_compat.c.html#L48" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__utils__adt__oracle_compat_c__lower.html&quot;}, '*');">lower</a> bound; if so the <a class="wiki-source-link" href="../../source/src/bin/pgbench/pgbench.c.html#L224" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/bin/pgbench/pgbench.c.html&quot;}, '*');">partitions</a> aren&#x27;t overlapping.</li>
+<p>*/ if (<a class="wiki-source-link" href="../../source/src/backend/partitioning/partbounds.c.html#L89" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/partitioning/partbounds.c.html&quot;}, '*');">compare_range_bounds</a>(partnatts, partsupfuncs, partcollations, outer_ub, inner_lb) &lt; 0) { *lb_cmpval = -1; *ub_cmpval = -1; return <a class="wiki-source-link" href="../../source/src/tools/pg_bsd_indent/indent_globs.h.html#L43" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/tools/pg_bsd_indent/indent_globs.h.html&quot;}, '*');">false</a>; }</p>
+</ul>
+<p>/*</p>
+<ul>
+<li>Check if the outer partition&#x27;s <a class="wiki-source-link" href="../../source/src/backend/utils/adt/oracle_compat.c.html#L48" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__utils__adt__oracle_compat_c__lower.html&quot;}, '*');">lower</a> bound <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> higher than the inner</li>
+<li>partition&#x27;s <a class="wiki-source-link" href="../../source/src/backend/utils/adt/oracle_compat.c.html#L79" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__utils__adt__oracle_compat_c__upper.html&quot;}, '*');">upper</a> bound; if so the <a class="wiki-source-link" href="../../source/src/bin/pgbench/pgbench.c.html#L224" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/bin/pgbench/pgbench.c.html&quot;}, '*');">partitions</a> aren&#x27;t overlapping.</li>
+<p>*/ if (<a class="wiki-source-link" href="../../source/src/backend/partitioning/partbounds.c.html#L89" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/partitioning/partbounds.c.html&quot;}, '*');">compare_range_bounds</a>(partnatts, partsupfuncs, partcollations, outer_lb, inner_ub) &gt; 0) { *lb_cmpval = 1; *ub_cmpval = 1; return <a class="wiki-source-link" href="../../source/src/tools/pg_bsd_indent/indent_globs.h.html#L43" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/tools/pg_bsd_indent/indent_globs.h.html&quot;}, '*');">false</a>; }</p>
+</ul>
+<p>/* All other cases indicate overlapping <a class="wiki-source-link" href="../../source/src/bin/pgbench/pgbench.c.html#L224" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/bin/pgbench/pgbench.c.html&quot;}, '*');">partitions</a>. */ *lb_cmpval = <a class="wiki-source-link" href="../../source/src/backend/partitioning/partbounds.c.html#L89" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/partitioning/partbounds.c.html&quot;}, '*');">compare_range_bounds</a>(partnatts, partsupfuncs, partcollations, outer_lb, inner_lb); *ub_cmpval = <a class="wiki-source-link" href="../../source/src/backend/partitioning/partbounds.c.html#L89" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/partitioning/partbounds.c.html&quot;}, '*');">compare_range_bounds</a>(partnatts, partsupfuncs, partcollations, outer_ub, inner_ub); return <a class="wiki-source-link" href="../../source/src/tools/pg_bsd_indent/indent_globs.h.html#L46" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/tools/pg_bsd_indent/indent_globs.h.html&quot;}, '*');">true</a>; } ~~~</p>
+<h2>失敗モードと境界条件</h2>
+<p>まだ解析していません。</p>
+<h2>保守担当者向けメモ</h2>
+<ul>
+<li>後続フェーズで、ソース本文の文脈と caller/callee 情報を使ってこのページを強化する。</li>
+</ul><script>
+(function() {
+  function notifyParent() {
+    if (parent === window) return;
+    parent.postMessage({type: "frame-location", frame: window.name || "", href: window.location.href}, "*");
+  }
+  document.addEventListener("click", function(event) {
+    const link = event.target.closest("a[data-panel]");
+    if (!link || parent === window) return;
+    parent.postMessage({type: "source-link", panel: link.dataset.panel}, "*");
+  });
+  window.addEventListener("load", notifyParent);
+  window.addEventListener("hashchange", notifyParent);
+})();
+</script></body></html>

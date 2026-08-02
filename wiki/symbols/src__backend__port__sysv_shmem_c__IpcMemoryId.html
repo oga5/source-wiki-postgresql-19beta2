@@ -1,0 +1,64 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>symbols/src__backend__port__sysv_shmem_c__IpcMemoryId.md</title><link rel="stylesheet" href="../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../source/src/backend/port/sysv_shmem.c.html#L72" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__port__sysv_shmem_c__IpcMemoryId.html&quot;}, '*');">IpcMemoryId</a></h1>
+<h2>定義</h2>
+<ul>
+<li>種別: <code>typedef</code></li>
+<li>定義箇所: <code>src/backend/port/sysv_shmem.c:72</code></li>
+<li>所属モジュール: <a class="wiki-entity-link" href="../modules/src__backend__port.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/modules/src__backend__port.html&quot;, &quot;source&quot;: &quot;source/src/backend/port/atomics.c.html&quot;}, '*');"><code>module:src/backend/port</code></a></li>
+</ul>
+<h2>目的</h2>
+<p>静的シンボル索引から生成された初期シンボルページです。</p>
+<h2>シグネチャまたは形状</h2>
+<ul>
+<li>シグネチャ: <code>typedef int IpcMemoryId;		/* shared memory ID returned by shmget(2) */</code></li>
+</ul>
+<h2>入力と出力</h2>
+<p>まだ解析していません。</p>
+<h2>前提条件と不変条件</h2>
+<p>まだ解析していません。</p>
+<h2>アルゴリズムまたは振る舞い</h2>
+<p>まだ解析していません。</p>
+<h2>呼び出し元と呼び出し先</h2>
+<ul>
+<li>呼び出し元: なし</li>
+<li>呼び出し先: なし</li>
+<li>呼び出し元サイト: なし</li>
+<li>呼び出しサイト: なし</li>
+</ul>
+<h2>関連データ構造</h2>
+<p><a class="wiki-source-link" href="../../source/src/backend/port/sysv_shmem.c.html#L85" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__port__sysv_shmem_c__IpcMemoryState.html&quot;}, '*');"><code>IpcMemoryState</code></a></p>
+<h2>ソース抜粋</h2>
+<p>~~~c typedef int <a class="wiki-source-link" href="../../source/src/backend/port/sysv_shmem.c.html#L72" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__port__sysv_shmem_c__IpcMemoryId.html&quot;}, '*');">IpcMemoryId</a>;		/* shared memory ID returned by shmget(2) */</p>
+<p>/*</p>
+<ul>
+<li>How does a given <a class="wiki-source-link" href="../../source/src/backend/port/sysv_shmem.c.html#L72" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__port__sysv_shmem_c__IpcMemoryId.html&quot;}, '*');">IpcMemoryId</a> relate to this PostgreSQL process?</li>
+<p>*</p>
+<li>One could recycle unattached segments of different data directories if we</li>
+<li>distinguished that case from other SHMSTATE_FOREIGN cases.  Doing so would</li>
+<li>cause us to visit less of the key space, making us less <a class="wiki-source-link" href="../../source/src/include/c.h.html#L441" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/c.h.html&quot;}, '*');">likely</a> to detect a</li>
+<li>SHMSTATE_ATTACHED key.  It would also complicate the concurrency analysis,</li>
+<li>in that postmasters of different data directories could simultaneously</li>
+<li>attempt to recycle a given key.  We&#x27;ll waste keys longer in some cases, but</li>
+<li>avoiding the problems of the alternative justifies that loss.</li>
+<p>*/ typedef enum { SHMSTATE_ANALYSIS_FAILURE,	/* unexpected failure to <a class="wiki-source-link" href="../../source/src/backend/regex/regc_nfa.c.html#L3050" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__regex__regc_nfa_c__analyze.html&quot;}, '*');">analyze</a> the ID */ SHMSTATE_ATTACHED,			/* pertinent to <a class="wiki-source-link" href="../../source/src/backend/utils/init/globals.c.html#L73" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/utils/init/globals.c.html&quot;}, '*');">DataDir</a>, has attached PIDs */ SHMSTATE_ENOENT,			/* no segment of that ID */ SHMSTATE_FOREIGN,			/* exists, but not pertinent to <a class="wiki-source-link" href="../../source/src/backend/utils/init/globals.c.html#L73" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/utils/init/globals.c.html&quot;}, '*');">DataDir</a> */ SHMSTATE_UNATTACHED,		/* pertinent to <a class="wiki-source-link" href="../../source/src/backend/utils/init/globals.c.html#L73" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/utils/init/globals.c.html&quot;}, '*');">DataDir</a>, no attached PIDs */ } <a class="wiki-source-link" href="../../source/src/backend/port/sysv_shmem.c.html#L85" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__port__sysv_shmem_c__IpcMemoryState.html&quot;}, '*');">IpcMemoryState</a>; ~~~</p>
+</ul>
+<h2>失敗モードと境界条件</h2>
+<p>まだ解析していません。</p>
+<h2>保守担当者向けメモ</h2>
+<ul>
+<li>後続フェーズで、ソース本文の文脈と caller/callee 情報を使ってこのページを強化する。</li>
+</ul><script>
+(function() {
+  function notifyParent() {
+    if (parent === window) return;
+    parent.postMessage({type: "frame-location", frame: window.name || "", href: window.location.href}, "*");
+  }
+  document.addEventListener("click", function(event) {
+    const link = event.target.closest("a[data-panel]");
+    if (!link || parent === window) return;
+    parent.postMessage({type: "source-link", panel: link.dataset.panel}, "*");
+  });
+  window.addEventListener("load", notifyParent);
+  window.addEventListener("hashchange", notifyParent);
+})();
+</script></body></html>

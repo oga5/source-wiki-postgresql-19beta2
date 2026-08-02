@@ -1,0 +1,69 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>symbols/src__common__file_utils_c__pg_pwritev_with_retry.md</title><link rel="stylesheet" href="../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../source/src/common/file_utils.c.html#L658" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__common__file_utils_c__pg_pwritev_with_retry.html&quot;}, '*');">pg_pwritev_with_retry</a></h1>
+<h2>定義</h2>
+<ul>
+<li>種別: <code>function</code></li>
+<li>定義箇所: <code>src/common/file_utils.c:658</code></li>
+<li>所属モジュール: <a class="wiki-entity-link" href="../modules/src__common.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/modules/src__common.html&quot;, &quot;source&quot;: &quot;source/src/common/archive.c.html&quot;}, '*');"><code>module:src/common</code></a></li>
+</ul>
+<h2>目的</h2>
+<p>静的シンボル索引から生成された初期シンボルページです。</p>
+<h2>シグネチャまたは形状</h2>
+<ul>
+<li>シグネチャ: <code>ssize_t pg_pwritev_with_retry(int fd, const struct iovec *iov, int iovcnt, pgoff_t offset)</code></li>
+</ul>
+<h2>入力と出力</h2>
+<ul>
+<li>引数: <code>int fd</code>, <code>const struct iovec *iov</code>, <code>int iovcnt</code>, <code>pgoff_t offset</code></li>
+<li>戻り値: <code>ssize_t</code></li>
+</ul>
+<h2>前提条件と不変条件</h2>
+<p>まだ解析していません。</p>
+<h2>アルゴリズムまたは振る舞い</h2>
+<ul>
+<li>複雑度: <code>high</code> (score 13)</li>
+</ul>
+<p>まだ解析していません。</p>
+<h2>呼び出し元と呼び出し先</h2>
+<ul>
+<li>呼び出し元: <a class="wiki-source-link" href="../../source/src/common/file_utils.c.html#L708" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__common__file_utils_c__pg_pwrite_zeros.html&quot;}, '*');"><code>pg_pwrite_zeros</code></a>, <a class="wiki-source-link" href="../../source/src/bin/pg_upgrade/slru_io.c.html#L238" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__bin__pg_upgrade__slru_io_c__SlruFlush.html&quot;}, '*');"><code>SlruFlush</code></a></li>
+<li>呼び出し先: <a class="wiki-source-link" href="../../source/src/common/file_utils.c.html#L613" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__common__file_utils_c__compute_remaining_iovec.html&quot;}, '*');"><code>compute_remaining_iovec</code></a></li>
+<li>呼び出し元サイト: <a class="wiki-source-link" href="../../source/src/bin/pg_upgrade/slru_io.c.html#L238" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__bin__pg_upgrade__slru_io_c__SlruFlush.html&quot;}, '*');"><code>SlruFlush</code></a> at <code>src/bin/pg_upgrade/slru_io.c:252:6</code> (direct, confidence=high, resolved=<a class="wiki-entity-link" href="src__common__file_utils_c__pg_pwritev_with_retry.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__common__file_utils_c__pg_pwritev_with_retry.html&quot;, &quot;source&quot;: &quot;source/src/common/file_utils.c.html#L658&quot;}, '*');"><code>symbol:src/common/file_utils.c#pg_pwritev_with_retry</code></a>), <a class="wiki-source-link" href="../../source/src/common/file_utils.c.html#L708" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__common__file_utils_c__pg_pwrite_zeros.html&quot;}, '*');"><code>pg_pwrite_zeros</code></a> at <code>src/common/file_utils.c:738:13</code> (direct, confidence=high, resolved=<a class="wiki-entity-link" href="src__common__file_utils_c__pg_pwritev_with_retry.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__common__file_utils_c__pg_pwritev_with_retry.html&quot;, &quot;source&quot;: &quot;source/src/common/file_utils.c.html#L658&quot;}, '*');"><code>symbol:src/common/file_utils.c#pg_pwritev_with_retry</code></a>)</li>
+<li>呼び出しサイト: <a class="wiki-source-link" href="../../source/src/include/port/pg_iovec.h.html#L92" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__port__pg_iovec_h__pg_pwritev.html&quot;}, '*');"><code>pg_pwritev</code></a> at <code>src/common/file_utils.c:675:10</code> (unresolved), <code>Min</code> at <code>src/common/file_utils.c:680:10</code> (unresolved), <a class="wiki-source-link" href="../../source/src/common/file_utils.c.html#L613" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__common__file_utils_c__compute_remaining_iovec.html&quot;}, '*');"><code>compute_remaining_iovec</code></a> at <code>src/common/file_utils.c:692:12</code> (direct, confidence=high, resolved=<a class="wiki-entity-link" href="src__common__file_utils_c__compute_remaining_iovec.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__common__file_utils_c__compute_remaining_iovec.html&quot;, &quot;source&quot;: &quot;source/src/common/file_utils.c.html#L613&quot;}, '*');"><code>symbol:src/common/file_utils.c#compute_remaining_iovec</code></a>)</li>
+</ul>
+<h2>関連データ構造</h2>
+<p><a class="wiki-source-link" href="../../source/src/include/port/pg_iovec.h.html#L25" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__port__pg_iovec_h__iovec.html&quot;}, '*');"><code>iovec</code></a>, <code>pgoff_t</code></p>
+<h2>ソース抜粋</h2>
+<p>~~~c ssize_t <a class="wiki-source-link" href="../../source/src/common/file_utils.c.html#L658" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__common__file_utils_c__pg_pwritev_with_retry.html&quot;}, '*');">pg_pwritev_with_retry</a>(int <a class="wiki-source-link" href="../../source/src/interfaces/ecpg/test/expected/preproc-init.c.html#L105" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__interfaces__ecpg__test__expected__preproc-init_c__fd.html&quot;}, '*');">fd</a>, const struct <a class="wiki-source-link" href="../../source/src/include/port/pg_iovec.h.html#L25" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__port__pg_iovec_h__iovec.html&quot;}, '*');">iovec</a> *iov, int iovcnt, pgoff_t offset) { struct <a class="wiki-source-link" href="../../source/src/include/port/pg_iovec.h.html#L25" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__port__pg_iovec_h__iovec.html&quot;}, '*');">iovec</a> iov_copy[<a class="wiki-source-link" href="../../source/src/include/port/pg_iovec.h.html#L47" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/port/pg_iovec.h.html&quot;}, '*');">PG_IOV_MAX</a>]; ssize_t		sum = 0; ssize_t		part;</p>
+<p>/* We&#x27;d better have space to make a copy, in case we need to retry. */ if (iovcnt &gt; <a class="wiki-source-link" href="../../source/src/include/port/pg_iovec.h.html#L47" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/port/pg_iovec.h.html&quot;}, '*');">PG_IOV_MAX</a>) { errno = EINVAL; return -1; }</p>
+<p>do { /* Write as much as we can. */ part = <a class="wiki-source-link" href="../../source/src/include/port/pg_iovec.h.html#L92" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__port__pg_iovec_h__pg_pwritev.html&quot;}, '*');">pg_pwritev</a>(<a class="wiki-source-link" href="../../source/src/interfaces/ecpg/test/expected/preproc-init.c.html#L105" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__interfaces__ecpg__test__expected__preproc-init_c__fd.html&quot;}, '*');">fd</a>, iov, iovcnt, offset); if (part &lt; 0) return -1;</p>
+<p>#ifdef SIMULATE_SHORT_WRITE part = Min(part, 4096); #endif</p>
+<p>/* Count our progress. */ sum += part; offset += part;</p>
+<p>/*</p>
+<ul>
+<li>See what <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> left.  On the first loop we used the caller&#x27;s array,</li>
+<li>but in later loops we&#x27;ll use our local copy that we are allowed to</li>
+<li>mutate.</li>
+<p>*/ iovcnt = <a class="wiki-source-link" href="../../source/src/common/file_utils.c.html#L613" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__common__file_utils_c__compute_remaining_iovec.html&quot;}, '*');">compute_remaining_iovec</a>(iov_copy, iov, iovcnt, part); iov = iov_copy; } while (iovcnt &gt; 0);</p>
+</ul>
+<p>return sum; } ~~~</p>
+<h2>失敗モードと境界条件</h2>
+<p>まだ解析していません。</p>
+<h2>保守担当者向けメモ</h2>
+<ul>
+<li>後続フェーズで、ソース本文の文脈と caller/callee 情報を使ってこのページを強化する。</li>
+</ul><script>
+(function() {
+  function notifyParent() {
+    if (parent === window) return;
+    parent.postMessage({type: "frame-location", frame: window.name || "", href: window.location.href}, "*");
+  }
+  document.addEventListener("click", function(event) {
+    const link = event.target.closest("a[data-panel]");
+    if (!link || parent === window) return;
+    parent.postMessage({type: "source-link", panel: link.dataset.panel}, "*");
+  });
+  window.addEventListener("load", notifyParent);
+  window.addEventListener("hashchange", notifyParent);
+})();
+</script></body></html>

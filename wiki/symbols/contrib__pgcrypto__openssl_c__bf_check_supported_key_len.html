@@ -1,0 +1,65 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>symbols/contrib__pgcrypto__openssl_c__bf_check_supported_key_len.md</title><link rel="stylesheet" href="../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../source/contrib/pgcrypto/openssl.c.html#L404" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/contrib__pgcrypto__openssl_c__bf_check_supported_key_len.html&quot;}, '*');">bf_check_supported_key_len</a></h1>
+<h2>定義</h2>
+<ul>
+<li>種別: <code>function</code></li>
+<li>定義箇所: <code>contrib/pgcrypto/openssl.c:404</code></li>
+<li>所属モジュール: <a class="wiki-entity-link" href="../modules/contrib__pgcrypto.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/modules/contrib__pgcrypto.html&quot;, &quot;source&quot;: &quot;source/contrib/pgcrypto/crypt-blowfish.c.html&quot;}, '*');"><code>module:contrib/pgcrypto</code></a></li>
+</ul>
+<h2>目的</h2>
+<p>静的シンボル索引から生成された初期シンボルページです。</p>
+<h2>シグネチャまたは形状</h2>
+<ul>
+<li>シグネチャ: <code>static int bf_check_supported_key_len(void)</code></li>
+</ul>
+<h2>入力と出力</h2>
+<ul>
+<li>戻り値: <code>int</code></li>
+</ul>
+<h2>前提条件と不変条件</h2>
+<p>まだ解析していません。</p>
+<h2>アルゴリズムまたは振る舞い</h2>
+<ul>
+<li>複雑度: <code>high</code> (score 16)</li>
+</ul>
+<p>まだ解析していません。</p>
+<h2>呼び出し元と呼び出し先</h2>
+<ul>
+<li>呼び出し元: <a class="wiki-source-link" href="../../source/contrib/pgcrypto/openssl.c.html#L447" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/contrib__pgcrypto__openssl_c__bf_init.html&quot;}, '*');"><code>bf_init</code></a></li>
+<li>呼び出し先: なし</li>
+<li>呼び出し元サイト: <a class="wiki-source-link" href="../../source/contrib/pgcrypto/openssl.c.html#L447" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/contrib__pgcrypto__openssl_c__bf_init.html&quot;}, '*');"><code>bf_init</code></a> at <code>contrib/pgcrypto/openssl.c:461:18</code> (direct, confidence=high, resolved=<a class="wiki-entity-link" href="contrib__pgcrypto__openssl_c__bf_check_supported_key_len.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/contrib__pgcrypto__openssl_c__bf_check_supported_key_len.html&quot;, &quot;source&quot;: &quot;source/contrib/pgcrypto/openssl.c.html#L404&quot;}, '*');"><code>symbol:contrib/pgcrypto/openssl.c#bf_check_supported_key_len</code></a>)</li>
+<li>呼び出しサイト: <code>EVP_CIPHER_CTX_new</code> at <code>contrib/pgcrypto/openssl.c:424:12</code> (unresolved), <code>EVP_EncryptInit_ex</code> at <code>contrib/pgcrypto/openssl.c:427:7</code> (unresolved), <code>EVP_bf_ecb</code> at <code>contrib/pgcrypto/openssl.c:427:35</code> (unresolved), <code>EVP_CIPHER_CTX_set_key_length</code> at <code>contrib/pgcrypto/openssl.c:429:7</code> (unresolved), <code>EVP_EncryptInit_ex</code> at <code>contrib/pgcrypto/openssl.c:431:7</code> (unresolved), <code>EVP_EncryptUpdate</code> at <code>contrib/pgcrypto/openssl.c:434:7</code> (unresolved), <code>memcmp</code> at <code>contrib/pgcrypto/openssl.c:437:6</code> (unresolved), <code>EVP_CIPHER_CTX_free</code> at <code>contrib/pgcrypto/openssl.c:443:2</code> (unresolved)</li>
+</ul>
+<h2>関連データ構造</h2>
+<p><code>uint8</code></p>
+<h2>ソース抜粋</h2>
+<p>~~~c static int <a class="wiki-source-link" href="../../source/contrib/pgcrypto/openssl.c.html#L404" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/contrib__pgcrypto__openssl_c__bf_check_supported_key_len.html&quot;}, '*');">bf_check_supported_key_len</a>(void) { static const uint8 key[56] = { 0xf0, 0xe1, 0xd2, 0xc3, 0xb4, 0xa5, 0x96, 0x87, 0x78, 0x69, 0x5a, 0x4b, 0x3c, 0x2d, 0x1e, 0x0f, 0x00, 0x11, 0x22, 0x33, 0x44, 0x55, 0x66, 0x77, 0x04, 0x68, 0x91, 0x04, 0xc2, 0xfd, 0x3b, 0x2f, 0x58, 0x40, 0x23, 0x64, 0x1a, 0xba, 0x61, 0x76, 0x1f, 0x1f, 0x1f, 0x1f, 0x0e, 0x0e, 0x0e, 0x0e, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff };</p>
+<p>static const uint8 data[8] = {0xfe, 0xdc, 0xba, 0x98, 0x76, 0x54, 0x32, 0x10}; static const uint8 res[8] = {0xc0, 0x45, 0x04, 0x01, 0x2e, 0x4e, 0x1f, 0x53}; uint8		out[8]; EVP_CIPHER_CTX *evp_ctx; int			outlen; int			status = 0;</p>
+<p>/* encrypt with 448bits key and verify <a class="wiki-source-link" href="../../source/src/bin/pg_test_timing/pg_test_timing.c.html#L357" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__bin__pg_test_timing__pg_test_timing_c__output.html&quot;}, '*');">output</a> */ evp_ctx = EVP_CIPHER_CTX_new(); if (!evp_ctx) return 0; if (!EVP_EncryptInit_ex(evp_ctx, EVP_bf_ecb(), NULL, NULL, NULL)) goto leave; if (!EVP_CIPHER_CTX_set_key_length(evp_ctx, 56)) goto leave; if (!EVP_EncryptInit_ex(evp_ctx, NULL, NULL, key, NULL)) goto leave;</p>
+<p>if (!EVP_EncryptUpdate(evp_ctx, out, &amp;outlen, data, 8)) goto leave;</p>
+<p>if (memcmp(out, res, 8) != 0) goto leave;				/* Output does not match -&gt; strong cipher <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a></p>
+<ul>
+<li>not supported */</li>
+<p>status = 1;</p>
+</ul>
+<p>leave: EVP_CIPHER_CTX_free(evp_ctx); return status; } ~~~</p>
+<h2>失敗モードと境界条件</h2>
+<p>まだ解析していません。</p>
+<h2>保守担当者向けメモ</h2>
+<ul>
+<li>後続フェーズで、ソース本文の文脈と caller/callee 情報を使ってこのページを強化する。</li>
+</ul><script>
+(function() {
+  function notifyParent() {
+    if (parent === window) return;
+    parent.postMessage({type: "frame-location", frame: window.name || "", href: window.location.href}, "*");
+  }
+  document.addEventListener("click", function(event) {
+    const link = event.target.closest("a[data-panel]");
+    if (!link || parent === window) return;
+    parent.postMessage({type: "source-link", panel: link.dataset.panel}, "*");
+  });
+  window.addEventListener("load", notifyParent);
+  window.addEventListener("hashchange", notifyParent);
+})();
+</script></body></html>

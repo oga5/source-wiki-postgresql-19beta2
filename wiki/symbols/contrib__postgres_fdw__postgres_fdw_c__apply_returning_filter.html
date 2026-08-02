@@ -1,0 +1,89 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>symbols/contrib__postgres_fdw__postgres_fdw_c__apply_returning_filter.md</title><link rel="stylesheet" href="../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../source/contrib/postgres_fdw/postgres_fdw.c.html#L4798" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/contrib__postgres_fdw__postgres_fdw_c__apply_returning_filter.html&quot;}, '*');">apply_returning_filter</a></h1>
+<h2>定義</h2>
+<ul>
+<li>種別: <code>function</code></li>
+<li>定義箇所: <code>contrib/postgres_fdw/postgres_fdw.c:4798</code></li>
+<li>所属モジュール: <a class="wiki-entity-link" href="../modules/contrib__postgres_fdw.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/modules/contrib__postgres_fdw.html&quot;, &quot;source&quot;: &quot;source/contrib/postgres_fdw/connection.c.html&quot;}, '*');"><code>module:contrib/postgres_fdw</code></a></li>
+</ul>
+<h2>目的</h2>
+<p>静的シンボル索引から生成された初期シンボルページです。</p>
+<h2>シグネチャまたは形状</h2>
+<ul>
+<li>シグネチャ: <code>static TupleTableSlot * apply_returning_filter(PgFdwDirectModifyState *dmstate, ResultRelInfo *resultRelInfo, TupleTableSlot *slot, EState *estate)</code></li>
+</ul>
+<h2>入力と出力</h2>
+<ul>
+<li>引数: <code>PgFdwDirectModifyState *dmstate</code>, <code>ResultRelInfo *resultRelInfo</code>, <code>TupleTableSlot *slot</code>, <code>EState *estate</code></li>
+<li>戻り値: <code>TupleTableSlot *</code></li>
+</ul>
+<h2>前提条件と不変条件</h2>
+<p>まだ解析していません。</p>
+<h2>アルゴリズムまたは振る舞い</h2>
+<ul>
+<li>複雑度: <code>high</code> (score 21)</li>
+</ul>
+<p>まだ解析していません。</p>
+<h2>呼び出し元と呼び出し先</h2>
+<ul>
+<li>呼び出し元: <a class="wiki-source-link" href="../../source/contrib/postgres_fdw/postgres_fdw.c.html#L4666" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/contrib__postgres_fdw__postgres_fdw_c__get_returning_data.html&quot;}, '*');"><code>get_returning_data</code></a></li>
+<li>呼び出し先: <a class="wiki-source-link" href="../../source/src/backend/executor/execTuples.c.html#L1915" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__executor__execTuples_c__ExecFetchSlotHeapTuple.html&quot;}, '*');"><code>ExecFetchSlotHeapTuple</code></a>, <a class="wiki-source-link" href="../../source/src/backend/executor/execUtils.c.html#L1273" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__executor__execUtils_c__ExecGetReturningSlot.html&quot;}, '*');"><code>ExecGetReturningSlot</code></a>, <a class="wiki-source-link" href="../../source/src/backend/executor/execTuples.c.html#L1823" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__executor__execTuples_c__ExecStoreVirtualTuple.html&quot;}, '*');"><code>ExecStoreVirtualTuple</code></a></li>
+<li>呼び出し元サイト: <a class="wiki-source-link" href="../../source/contrib/postgres_fdw/postgres_fdw.c.html#L4666" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/contrib__postgres_fdw__postgres_fdw_c__get_returning_data.html&quot;}, '*');"><code>get_returning_data</code></a> at <code>contrib/postgres_fdw/postgres_fdw.c:4711:17</code> (direct, confidence=high, resolved=<a class="wiki-entity-link" href="contrib__postgres_fdw__postgres_fdw_c__apply_returning_filter.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/contrib__postgres_fdw__postgres_fdw_c__apply_returning_filter.html&quot;, &quot;source&quot;: &quot;source/contrib/postgres_fdw/postgres_fdw.c.html#L4798&quot;}, '*');"><code>symbol:contrib/postgres_fdw/postgres_fdw.c#apply_returning_filter</code></a>)</li>
+<li>呼び出しサイト: <a class="wiki-source-link" href="../../source/src/include/utils/rel.h.html#L542" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/utils/rel.h.html&quot;}, '*');"><code>RelationGetDescr</code></a> at <code>contrib/postgres_fdw/postgres_fdw.c:4804:28</code> (macro), <a class="wiki-source-link" href="../../source/src/backend/executor/execUtils.c.html#L1273" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__executor__execUtils_c__ExecGetReturningSlot.html&quot;}, '*');"><code>ExecGetReturningSlot</code></a> at <code>contrib/postgres_fdw/postgres_fdw.c:4815:15</code> (direct, confidence=high, resolved=<a class="wiki-entity-link" href="src__backend__executor__execUtils_c__ExecGetReturningSlot.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__executor__execUtils_c__ExecGetReturningSlot.html&quot;, &quot;source&quot;: &quot;source/src/backend/executor/execUtils.c.html#L1273&quot;}, '*');"><code>symbol:src/backend/executor/execUtils.c#ExecGetReturningSlot</code></a>), <a class="wiki-source-link" href="../../source/src/include/executor/tuptable.h.html#L389" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__executor__tuptable_h__slot_getallattrs.html&quot;}, '*');"><code>slot_getallattrs</code></a> at <code>contrib/postgres_fdw/postgres_fdw.c:4820:2</code> (unresolved), <a class="wiki-source-link" href="../../source/src/include/executor/tuptable.h.html#L475" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__executor__tuptable_h__ExecClearTuple.html&quot;}, '*');"><code>ExecClearTuple</code></a> at <code>contrib/postgres_fdw/postgres_fdw.c:4827:2</code> (unresolved), <a class="wiki-source-link" href="../../source/src/backend/executor/execTuples.c.html#L1823" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__executor__execTuples_c__ExecStoreVirtualTuple.html&quot;}, '*');"><code>ExecStoreVirtualTuple</code></a> at <code>contrib/postgres_fdw/postgres_fdw.c:4853:2</code> (direct, confidence=high, resolved=<a class="wiki-entity-link" href="src__backend__executor__execTuples_c__ExecStoreVirtualTuple.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__executor__execTuples_c__ExecStoreVirtualTuple.html&quot;, &quot;source&quot;: &quot;source/src/backend/executor/execTuples.c.html#L1823&quot;}, '*');"><code>symbol:src/backend/executor/execTuples.c#ExecStoreVirtualTuple</code></a>), <a class="wiki-source-link" href="../../source/src/backend/executor/execTuples.c.html#L1915" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__executor__execTuples_c__ExecFetchSlotHeapTuple.html&quot;}, '*');"><code>ExecFetchSlotHeapTuple</code></a> at <code>contrib/postgres_fdw/postgres_fdw.c:4862:25</code> (direct, confidence=high, resolved=<a class="wiki-entity-link" href="src__backend__executor__execTuples_c__ExecFetchSlotHeapTuple.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__executor__execTuples_c__ExecFetchSlotHeapTuple.html&quot;, &quot;source&quot;: &quot;source/src/backend/executor/execTuples.c.html#L1915&quot;}, '*');"><code>symbol:src/backend/executor/execTuples.c#ExecFetchSlotHeapTuple</code></a>), <a class="wiki-source-link" href="../../source/src/include/postgres.h.html#L331" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__postgres_h__DatumGetPointer.html&quot;}, '*');"><code>DatumGetPointer</code></a> at <code>contrib/postgres_fdw/postgres_fdw.c:4869:25</code> (unresolved), <a class="wiki-source-link" href="../../source/src/include/access/htup_details.h.html#L335" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__access__htup_details_h__HeapTupleHeaderSetXmin.html&quot;}, '*');"><code>HeapTupleHeaderSetXmin</code></a> at <code>contrib/postgres_fdw/postgres_fdw.c:4883:3</code> (unresolved), <a class="wiki-source-link" href="../../source/src/include/access/htup_details.h.html#L373" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__access__htup_details_h__HeapTupleHeaderSetXmax.html&quot;}, '*');"><code>HeapTupleHeaderSetXmax</code></a> at <code>contrib/postgres_fdw/postgres_fdw.c:4884:3</code> (unresolved), <a class="wiki-source-link" href="../../source/src/include/access/htup_details.h.html#L412" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__access__htup_details_h__HeapTupleHeaderSetCmin.html&quot;}, '*');"><code>HeapTupleHeaderSetCmin</code></a> at <code>contrib/postgres_fdw/postgres_fdw.c:4885:3</code> (unresolved)</li>
+</ul>
+<h2>関連データ構造</h2>
+<p><code>Datum</code>, <code>EState</code>, <code>HeapTuple</code>, <code>ItemPointer</code>, <a class="wiki-source-link" href="../../source/contrib/postgres_fdw/postgres_fdw.c.html#L226" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/contrib__postgres_fdw__postgres_fdw_c__PgFdwDirectModifyState.html&quot;}, '*');"><code>PgFdwDirectModifyState</code></a>, <code>ResultRelInfo</code>, <code>TupleDesc</code>, <code>TupleTableSlot</code></p>
+<h2>ソース抜粋</h2>
+<p>~~~c static TupleTableSlot * <a class="wiki-source-link" href="../../source/contrib/postgres_fdw/postgres_fdw.c.html#L4798" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/contrib__postgres_fdw__postgres_fdw_c__apply_returning_filter.html&quot;}, '*');">apply_returning_filter</a>(<a class="wiki-source-link" href="../../source/contrib/postgres_fdw/postgres_fdw.c.html#L226" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/contrib__postgres_fdw__postgres_fdw_c__PgFdwDirectModifyState.html&quot;}, '*');">PgFdwDirectModifyState</a> *dmstate, ResultRelInfo *resultRelInfo, TupleTableSlot *slot, EState *estate) { TupleDesc	resultTupType = <a class="wiki-source-link" href="../../source/src/include/utils/rel.h.html#L542" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/utils/rel.h.html&quot;}, '*');">RelationGetDescr</a>(dmstate-&gt;resultRel); TupleTableSlot *resultSlot; Datum	   *values; bool	   *isnull; Datum	   *old_values; bool	   *old_isnull; int			i;</p>
+<p>/*</p>
+<ul>
+<li>Use the return tuple slot as a place to store the <a class="wiki-source-link" href="../../source/src/include/storage/checksum_block_internal.h.html#L18" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/storage/checksum_block_internal.h.html&quot;}, '*');">result</a> tuple.</li>
+<p>*/ resultSlot = <a class="wiki-source-link" href="../../source/src/backend/executor/execUtils.c.html#L1273" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__executor__execUtils_c__ExecGetReturningSlot.html&quot;}, '*');">ExecGetReturningSlot</a>(estate, resultRelInfo);</p>
+</ul>
+<p>/*</p>
+<ul>
+<li>Extract all the values of the scan tuple.</li>
+<p>*/ <a class="wiki-source-link" href="../../source/src/include/executor/tuptable.h.html#L389" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__executor__tuptable_h__slot_getallattrs.html&quot;}, '*');">slot_getallattrs</a>(slot); old_values = slot-&gt;tts_values; old_isnull = slot-&gt;tts_isnull;</p>
+</ul>
+<p>/*</p>
+<ul>
+<li>Prepare to build the <a class="wiki-source-link" href="../../source/src/include/storage/checksum_block_internal.h.html#L18" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/storage/checksum_block_internal.h.html&quot;}, '*');">result</a> tuple.</li>
+<p>*/ <a class="wiki-source-link" href="../../source/src/include/executor/tuptable.h.html#L475" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__executor__tuptable_h__ExecClearTuple.html&quot;}, '*');">ExecClearTuple</a>(resultSlot); values = resultSlot-&gt;tts_values; isnull = resultSlot-&gt;tts_isnull;</p>
+</ul>
+<p>/*</p>
+<ul>
+<li>Transpose data into proper fields of the <a class="wiki-source-link" href="../../source/src/include/storage/checksum_block_internal.h.html#L18" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/storage/checksum_block_internal.h.html&quot;}, '*');">result</a> tuple.</li>
+<p>*/ for (i = 0; i &lt; resultTupType-&gt;natts; i++) { int			j = dmstate-&gt;attnoMap[i];</p>
+</ul>
+<p>if (j == 0) { values[i] = (Datum) 0; isnull[i] = <a class="wiki-source-link" href="../../source/src/tools/pg_bsd_indent/indent_globs.h.html#L46" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/tools/pg_bsd_indent/indent_globs.h.html&quot;}, '*');">true</a>; } else { values[i] = old_values[j - 1]; isnull[i] = old_isnull[j - 1]; } }</p>
+<p>/*</p>
+<ul>
+<li>Build the virtual tuple.</li>
+<p>*/ <a class="wiki-source-link" href="../../source/src/backend/executor/execTuples.c.html#L1823" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__executor__execTuples_c__ExecStoreVirtualTuple.html&quot;}, '*');">ExecStoreVirtualTuple</a>(resultSlot);</p>
+</ul>
+<p>/*</p>
+<ul>
+<li>If we have any <a class="wiki-source-link" href="../../source/src/include/port.h.html#L388" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/port.h.html&quot;}, '*');">system</a> columns to return, materialize a heap tuple in</li>
+<li>the slot from column values set above and install <a class="wiki-source-link" href="../../source/src/include/port.h.html#L388" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/port.h.html&quot;}, '*');">system</a> columns in</li>
+<p>~~~</p>
+</ul>
+<h2>失敗モードと境界条件</h2>
+<p>まだ解析していません。</p>
+<h2>保守担当者向けメモ</h2>
+<ul>
+<li>後続フェーズで、ソース本文の文脈と caller/callee 情報を使ってこのページを強化する。</li>
+</ul><script>
+(function() {
+  function notifyParent() {
+    if (parent === window) return;
+    parent.postMessage({type: "frame-location", frame: window.name || "", href: window.location.href}, "*");
+  }
+  document.addEventListener("click", function(event) {
+    const link = event.target.closest("a[data-panel]");
+    if (!link || parent === window) return;
+    parent.postMessage({type: "source-link", panel: link.dataset.panel}, "*");
+  });
+  window.addEventListener("load", notifyParent);
+  window.addEventListener("hashchange", notifyParent);
+})();
+</script></body></html>

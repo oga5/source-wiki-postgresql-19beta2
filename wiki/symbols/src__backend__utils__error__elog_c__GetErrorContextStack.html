@@ -1,0 +1,92 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>symbols/src__backend__utils__error__elog_c__GetErrorContextStack.md</title><link rel="stylesheet" href="../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../source/src/backend/utils/error/elog.c.html#L2254" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__utils__error__elog_c__GetErrorContextStack.html&quot;}, '*');">GetErrorContextStack</a></h1>
+<h2>定義</h2>
+<ul>
+<li>種別: <code>function</code></li>
+<li>定義箇所: <code>src/backend/utils/error/elog.c:2254</code></li>
+<li>所属モジュール: <a class="wiki-entity-link" href="../modules/src__backend__utils__error.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/modules/src__backend__utils__error.html&quot;, &quot;source&quot;: &quot;source/src/backend/utils/error/assert.c.html&quot;}, '*');"><code>module:src/backend/utils/error</code></a></li>
+</ul>
+<h2>目的</h2>
+<p>静的シンボル索引から生成された初期シンボルページです。</p>
+<h2>シグネチャまたは形状</h2>
+<ul>
+<li>シグネチャ: <code>char * GetErrorContextStack(void)</code></li>
+</ul>
+<h2>入力と出力</h2>
+<ul>
+<li>戻り値: <code>char *</code></li>
+</ul>
+<h2>前提条件と不変条件</h2>
+<p>まだ解析していません。</p>
+<h2>アルゴリズムまたは振る舞い</h2>
+<ul>
+<li>複雑度: <code>medium</code> (score 9)</li>
+</ul>
+<p>まだ解析していません。</p>
+<h2>呼び出し元と呼び出し先</h2>
+<ul>
+<li>呼び出し元: <a class="wiki-source-link" href="../../source/src/pl/plpgsql/src/pl_exec.c.html#L2440" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__pl__plpgsql__src__pl_exec_c__exec_stmt_getdiag.html&quot;}, '*');"><code>exec_stmt_getdiag</code></a></li>
+<li>呼び出し先: <a class="wiki-source-link" href="../../source/src/backend/utils/error/elog.c.html#L772" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__utils__error__elog_c__get_error_stack_entry.html&quot;}, '*');"><code>get_error_stack_entry</code></a></li>
+<li>呼び出し元サイト: <a class="wiki-source-link" href="../../source/src/pl/plpgsql/src/pl_exec.c.html#L2440" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__pl__plpgsql__src__pl_exec_c__exec_stmt_getdiag.html&quot;}, '*');"><code>exec_stmt_getdiag</code></a> at <code>src/pl/plpgsql/src/pl_exec.c:2532:24</code> (direct, confidence=high, resolved=<a class="wiki-entity-link" href="src__backend__utils__error__elog_c__GetErrorContextStack.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__utils__error__elog_c__GetErrorContextStack.html&quot;, &quot;source&quot;: &quot;source/src/backend/utils/error/elog.c.html#L2254&quot;}, '*');"><code>symbol:src/backend/utils/error/elog.c#GetErrorContextStack</code></a>)</li>
+<li>呼び出しサイト: <a class="wiki-source-link" href="../../source/src/backend/utils/error/elog.c.html#L772" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__utils__error__elog_c__get_error_stack_entry.html&quot;}, '*');"><code>get_error_stack_entry</code></a> at <code>src/backend/utils/error/elog.c:2265:10</code> (direct, confidence=high, resolved=<a class="wiki-entity-link" href="src__backend__utils__error__elog_c__get_error_stack_entry.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__utils__error__elog_c__get_error_stack_entry.html&quot;, &quot;source&quot;: &quot;source/src/backend/utils/error/elog.c.html#L772&quot;}, '*');"><code>symbol:src/backend/utils/error/elog.c#get_error_stack_entry</code></a>), <code>econtext-&gt;callback</code> at <code>src/backend/utils/error/elog.c:2284:3</code> (indirect)</li>
+</ul>
+<h2>関連データ構造</h2>
+<p><a class="wiki-source-link" href="../../source/src/include/utils/elog.h.html#L311" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__utils__elog_h__ErrorContextCallback.html&quot;}, '*');"><code>ErrorContextCallback</code></a>, <a class="wiki-source-link" href="../../source/src/include/utils/elog.h.html#L435" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__utils__elog_h__ErrorData.html&quot;}, '*');"><code>ErrorData</code></a>, <code>string</code></p>
+<h2>ソース抜粋</h2>
+<p>~~~c char * <a class="wiki-source-link" href="../../source/src/backend/utils/error/elog.c.html#L2254" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__utils__error__elog_c__GetErrorContextStack.html&quot;}, '*');">GetErrorContextStack</a>(void) { <a class="wiki-source-link" href="../../source/src/include/utils/elog.h.html#L435" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__utils__elog_h__ErrorData.html&quot;}, '*');">ErrorData</a>  *edata; <a class="wiki-source-link" href="../../source/src/include/utils/elog.h.html#L311" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__utils__elog_h__ErrorContextCallback.html&quot;}, '*');">ErrorContextCallback</a> *econtext;</p>
+<p>/*</p>
+<ul>
+<li>Crank up a stack entry to store the info in.</li>
+<p>*/ <a class="wiki-source-link" href="../../source/src/backend/utils/error/elog.c.html#L160" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/utils/error/elog.c.html&quot;}, '*');">recursion_depth</a>++;</p>
+</ul>
+<p>edata = <a class="wiki-source-link" href="../../source/src/backend/utils/error/elog.c.html#L772" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__utils__error__elog_c__get_error_stack_entry.html&quot;}, '*');">get_error_stack_entry</a>();</p>
+<p>/*</p>
+<ul>
+<li>Set up assoc_context to be the caller&#x27;s context, so any allocations</li>
+<li>done (which will include edata-&gt;context) will use their context.</li>
+<p>*/ edata-&gt;assoc_context = <a class="wiki-source-link" href="../../source/src/backend/utils/mmgr/mcxt.c.html#L161" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/utils/mmgr/mcxt.c.html&quot;}, '*');">CurrentMemoryContext</a>;</p>
+</ul>
+<p>/*</p>
+<ul>
+<li>Call any context <a class="wiki-source-link" href="../../source/src/tools/ifaddrs/test_ifaddrs.c.html#L45" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__tools__ifaddrs__test_ifaddrs_c__callback.html&quot;}, '*');">callback</a> <a class="wiki-source-link" href="../../source/src/backend/regex/regcomp.c.html#L358" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/regex/regcomp.c.html&quot;}, '*');">functions</a> to collect the context information</li>
+<li>into edata-&gt;context.</li>
+<p>*</p>
+<li>Errors occurring in <a class="wiki-source-link" href="../../source/src/tools/ifaddrs/test_ifaddrs.c.html#L45" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__tools__ifaddrs__test_ifaddrs_c__callback.html&quot;}, '*');">callback</a> <a class="wiki-source-link" href="../../source/src/backend/regex/regcomp.c.html#L358" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/regex/regcomp.c.html&quot;}, '*');">functions</a> should go through the regular</li>
+<li>error handling code which should handle any recursive <a class="wiki-source-link" href="../../source/src/timezone/zic.c.html#L183" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/timezone/zic.c.html&quot;}, '*');">errors</a>, though we</li>
+<li>double-check above, just in case.</li>
+<p>*/ for (econtext = <a class="wiki-source-link" href="../../source/src/backend/utils/error/elog.c.html#L100" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/utils/error/elog.c.html&quot;}, '*');">error_context_stack</a>; econtext != NULL; econtext = econtext-&gt;previous) econtext-&gt;<a class="wiki-source-link" href="../../source/src/tools/ifaddrs/test_ifaddrs.c.html#L45" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__tools__ifaddrs__test_ifaddrs_c__callback.html&quot;}, '*');">callback</a>(econtext-&gt;arg);</p>
+</ul>
+<p>/*</p>
+<ul>
+<li>Clean ourselves off the stack, any allocations done should have been</li>
+<li>using edata-&gt;assoc_context, which we set up earlier to be the caller&#x27;s</li>
+<li>context, so we&#x27;re <a class="wiki-source-link" href="../../source/src/include/snowball/snowball_runtime.h.html#L65" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/snowball/snowball_runtime.h.html&quot;}, '*');">free</a> to just remove our entry off the stack and</li>
+<li>decrement recursion depth and exit.</li>
+<p>*/ errordata_stack_depth--; <a class="wiki-source-link" href="../../source/src/backend/utils/error/elog.c.html#L160" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/utils/error/elog.c.html&quot;}, '*');">recursion_depth</a>--;</p>
+</ul>
+<p>/*</p>
+<ul>
+<li>Return a pointer to the string the caller asked for, which should have</li>
+<li>been allocated in their context.</li>
+<p>*/ return edata-&gt;context; } ~~~</p>
+</ul>
+<h2>失敗モードと境界条件</h2>
+<p>まだ解析していません。</p>
+<h2>保守担当者向けメモ</h2>
+<ul>
+<li>後続フェーズで、ソース本文の文脈と caller/callee 情報を使ってこのページを強化する。</li>
+</ul><script>
+(function() {
+  function notifyParent() {
+    if (parent === window) return;
+    parent.postMessage({type: "frame-location", frame: window.name || "", href: window.location.href}, "*");
+  }
+  document.addEventListener("click", function(event) {
+    const link = event.target.closest("a[data-panel]");
+    if (!link || parent === window) return;
+    parent.postMessage({type: "source-link", panel: link.dataset.panel}, "*");
+  });
+  window.addEventListener("load", notifyParent);
+  window.addEventListener("hashchange", notifyParent);
+})();
+</script></body></html>

@@ -1,0 +1,101 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>symbols/src__include__storage__aio_internal_h__IoMethodOps.md</title><link rel="stylesheet" href="../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../source/src/include/storage/aio_internal.h.html#L262" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__storage__aio_internal_h__IoMethodOps.html&quot;}, '*');">IoMethodOps</a></h1>
+<h2>定義</h2>
+<ul>
+<li>種別: <code>struct</code></li>
+<li>定義箇所: <code>src/include/storage/aio_internal.h:262</code></li>
+<li>所属モジュール: <a class="wiki-entity-link" href="../modules/src__include__storage.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/modules/src__include__storage.html&quot;, &quot;source&quot;: &quot;source/src/include/storage/aio.h.html&quot;}, '*');"><code>module:src/include/storage</code></a></li>
+</ul>
+<h2>目的</h2>
+<p>静的シンボル索引から生成された初期シンボルページです。</p>
+<h2>シグネチャまたは形状</h2>
+<ul>
+<li>シグネチャ: <code>typedef struct IoMethodOps</code></li>
+</ul>
+<h2>入力と出力</h2>
+<p>まだ解析していません。</p>
+<h2>前提条件と不変条件</h2>
+<p>まだ解析していません。</p>
+<h2>アルゴリズムまたは振る舞い</h2>
+<p>まだ解析していません。</p>
+<h2>呼び出し元と呼び出し先</h2>
+<ul>
+<li>呼び出し元: なし</li>
+<li>呼び出し先: なし</li>
+<li>呼び出し元サイト: なし</li>
+<li>呼び出しサイト: なし</li>
+</ul>
+<h2>関連データ構造</h2>
+<p><code>PgAioHandle</code>, <a class="wiki-source-link" href="../../source/src/include/storage/shmem.h.html#L122" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__storage__shmem_h__ShmemCallbacks.html&quot;}, '*');"><code>ShmemCallbacks</code></a>, <code>state</code>, <code>uint16</code>, <code>uint64</code></p>
+<h2>ソース抜粋</h2>
+<p>~~~c typedef struct <a class="wiki-source-link" href="../../source/src/include/storage/aio_internal.h.html#L262" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__storage__aio_internal_h__IoMethodOps.html&quot;}, '*');">IoMethodOps</a> { /* properties */</p>
+<p>/*</p>
+<ul>
+<li>If an FD <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> about to be closed, do we need to wait for all in-flight</li>
+<li>IOs referencing that FD?</li>
+<p>*/ bool		wait_on_fd_before_close;</p>
+</ul>
+<p>/* global initialization */ <a class="wiki-source-link" href="../../source/src/include/storage/shmem.h.html#L122" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__storage__shmem_h__ShmemCallbacks.html&quot;}, '*');">ShmemCallbacks</a> shmem_callbacks;</p>
+<p>/*</p>
+<ul>
+<li>Per-backend initialization. Optional.</li>
+<p>*/ void		(*init_backend) (void);</p>
+</ul>
+<p>/* handling of IOs */</p>
+<p>/* optional */ bool		(*needs_synchronous_execution) (PgAioHandle *ioh);</p>
+<p>/*</p>
+<ul>
+<li>Start executing passed in IOs.</li>
+<p>*</p>
+<li>Shall advance state to at least PGAIO_HS_SUBMITTED.  (By the time this</li>
+<li>returns, other backends might have advanced the state further.)</li>
+<p>*</p>
+<li>Will not be called if -&gt;needs_synchronous_execution() returned true.</li>
+<p>*</p>
+<li>num_staged_ios <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> &lt;= PGAIO_SUBMIT_BATCH_SIZE.</li>
+<p>*</p>
+<li>Always called in a critical section.</li>
+<p>*/ int			(*submit) (uint16 num_staged_ios, PgAioHandle **staged_ios);</p>
+</ul>
+<p>/* ---</p>
+<ul>
+<li>Wait for the IO to complete. Optional.</li>
+<p>*</p>
+<li>On return, state shall be on of</li>
+<li>- PGAIO_HS_COMPLETED_IO</li>
+<li>- PGAIO_HS_COMPLETED_SHARED</li>
+<li>- PGAIO_HS_COMPLETED_LOCAL</li>
+<p>*</p>
+<li>The <a class="wiki-source-link" href="../../source/src/tools/ifaddrs/test_ifaddrs.c.html#L45" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__tools__ifaddrs__test_ifaddrs_c__callback.html&quot;}, '*');">callback</a> must not block if the handle <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> already in one of those</li>
+<li>states, or has been reused (see <a class="wiki-source-link" href="../../source/src/backend/storage/aio/aio.c.html#L558" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__storage__aio__aio_c__pgaio_io_was_recycled.html&quot;}, '*');">pgaio_io_was_recycled</a>()).  If, on</li>
+<li>return, the state <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> PGAIO_HS_COMPLETED_IO, state will reach</li>
+<li>PGAIO_HS_COMPLETED_SHARED without further intervention by the IO</li>
+<li>method.</li>
+<p>*</p>
+<li>If not provided, it needs to be guaranteed that the IO method calls</li>
+<li><a class="wiki-source-link" href="../../source/src/backend/storage/aio/aio.c.html#L527" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__storage__aio__aio_c__pgaio_io_process_completion.html&quot;}, '*');">pgaio_io_process_completion</a>() without further interaction by the</li>
+<li>issuing backend.</li>
+<li>---</li>
+<p>*/ void		(*wait_one) (PgAioHandle *ioh, uint64 ref_generation);</p>
+</ul>
+<p>~~~</p>
+<h2>失敗モードと境界条件</h2>
+<p>まだ解析していません。</p>
+<h2>保守担当者向けメモ</h2>
+<ul>
+<li>後続フェーズで、ソース本文の文脈と caller/callee 情報を使ってこのページを強化する。</li>
+</ul><script>
+(function() {
+  function notifyParent() {
+    if (parent === window) return;
+    parent.postMessage({type: "frame-location", frame: window.name || "", href: window.location.href}, "*");
+  }
+  document.addEventListener("click", function(event) {
+    const link = event.target.closest("a[data-panel]");
+    if (!link || parent === window) return;
+    parent.postMessage({type: "source-link", panel: link.dataset.panel}, "*");
+  });
+  window.addEventListener("load", notifyParent);
+  window.addEventListener("hashchange", notifyParent);
+})();
+</script></body></html>

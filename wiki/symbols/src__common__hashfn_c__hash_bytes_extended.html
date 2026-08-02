@@ -1,0 +1,68 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>symbols/src__common__hashfn_c__hash_bytes_extended.md</title><link rel="stylesheet" href="../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../source/src/common/hashfn.c.html#L371" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__common__hashfn_c__hash_bytes_extended.html&quot;}, '*');">hash_bytes_extended</a></h1>
+<h2>定義</h2>
+<ul>
+<li>種別: <code>function</code></li>
+<li>定義箇所: <code>src/common/hashfn.c:371</code></li>
+<li>所属モジュール: <a class="wiki-entity-link" href="../modules/src__common.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/modules/src__common.html&quot;, &quot;source&quot;: &quot;source/src/common/archive.c.html&quot;}, '*');"><code>module:src/common</code></a></li>
+</ul>
+<h2>目的</h2>
+<p>静的シンボル索引から生成された初期シンボルページです。</p>
+<h2>シグネチャまたは形状</h2>
+<ul>
+<li>シグネチャ: <code>uint64 hash_bytes_extended(const unsigned char *k, int keylen, uint64 seed)</code></li>
+</ul>
+<h2>入力と出力</h2>
+<ul>
+<li>引数: <code>const unsigned char *k</code>, <code>int keylen</code>, <code>uint64 seed</code></li>
+<li>戻り値: <code>uint64</code></li>
+</ul>
+<h2>前提条件と不変条件</h2>
+<p>まだ解析していません。</p>
+<h2>アルゴリズムまたは振る舞い</h2>
+<ul>
+<li>複雑度: <code>high</code> (score 22)</li>
+</ul>
+<p>まだ解析していません。</p>
+<h2>呼び出し元と呼び出し先</h2>
+<ul>
+<li>呼び出し元: <a class="wiki-source-link" href="../../source/src/include/common/hashfn.h.html#L36" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__common__hashfn_h__hash_any_extended.html&quot;}, '*');"><code>hash_any_extended</code></a></li>
+<li>呼び出し先: なし</li>
+<li>呼び出し元サイト: <a class="wiki-source-link" href="../../source/src/include/common/hashfn.h.html#L36" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__common__hashfn_h__hash_any_extended.html&quot;}, '*');"><code>hash_any_extended</code></a> at <code>src/include/common/hashfn.h:39:24</code> (direct, confidence=high, resolved=<a class="wiki-entity-link" href="src__common__hashfn_c__hash_bytes_extended.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__common__hashfn_c__hash_bytes_extended.html&quot;, &quot;source&quot;: &quot;source/src/common/hashfn.c.html#L371&quot;}, '*');"><code>symbol:src/common/hashfn.c#hash_bytes_extended</code></a>)</li>
+<li>呼び出しサイト: <code>(uint32)</code> at <code>src/common/hashfn.c:391:8</code> (indirect), <a class="wiki-source-link" href="../../source/src/common/hashfn.c.html#L82" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/common/hashfn.c.html&quot;}, '*');"><code>mix</code></a> at <code>src/common/hashfn.c:393:3</code> (macro), <a class="wiki-source-link" href="../../source/src/common/hashfn.c.html#L82" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/common/hashfn.c.html&quot;}, '*');"><code>mix</code></a> at <code>src/common/hashfn.c:408:4</code> (macro), <a class="wiki-source-link" href="../../source/src/common/hashfn.c.html#L82" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/common/hashfn.c.html&quot;}, '*');"><code>mix</code></a> at <code>src/common/hashfn.c:511:4</code> (macro), <a class="wiki-source-link" href="../../source/src/common/hashfn.c.html#L116" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/common/hashfn.c.html&quot;}, '*');"><code>final</code></a> at <code>src/common/hashfn.c:596:2</code> (macro)</li>
+</ul>
+<h2>関連データ構造</h2>
+<p><code>c</code>, <code>state</code>, <code>uint32</code>, <code>uint64</code></p>
+<h2>ソース抜粋</h2>
+<p>~~~c uint64 <a class="wiki-source-link" href="../../source/src/common/hashfn.c.html#L371" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__common__hashfn_c__hash_bytes_extended.html&quot;}, '*');">hash_bytes_extended</a>(const unsigned char *k, int keylen, uint64 seed) { uint32		a, b, c, len;</p>
+<p>/* Set up the internal state */ len = keylen; a = b = c = 0x9e3779b9 + len + 3923095;</p>
+<p>/* If the seed <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> non-zero, use it to perturb the internal state. */ if (seed != 0) { /*</p>
+<ul>
+<li>In essence, the seed <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> treated as part of the data being hashed,</li>
+<li>but for simplicity, we pretend that it&#x27;s padded with four bytes of</li>
+<li>zeroes so that the seed constitutes a 12-byte chunk.</li>
+<p>*/ a += (uint32) (seed &gt;&gt; 32); b += (uint32) seed; <a class="wiki-source-link" href="../../source/src/common/hashfn.c.html#L82" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/common/hashfn.c.html&quot;}, '*');">mix</a>(a, b, c); }</p>
+</ul>
+<p>/* If the source pointer <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> word-aligned, we use word-wide fetches */ if (((uintptr_t) k &amp; <a class="wiki-source-link" href="../../source/src/common/hashfn.c.html#L46" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/common/hashfn.c.html&quot;}, '*');">UINT32_ALIGN_MASK</a>) == 0) { /* Code path for aligned source data */ const uint32 *ka = (const uint32 *) k;</p>
+<p>/* handle most of the key */ while (len &gt;= 12) { a += ka[0]; b += ka[1]; c += ka[2]; <a class="wiki-source-link" href="../../source/src/common/hashfn.c.html#L82" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/common/hashfn.c.html&quot;}, '*');">mix</a>(a, b, c); ka += 3; len -= 12; }</p>
+<p>/* handle the last 11 bytes */ k = (const unsigned char *) ka; #ifdef WORDS_BIGENDIAN switch (len) { case 11: c += ((uint32) k[10] &lt;&lt; 8); <a class="wiki-source-link" href="../../source/src/include/c.h.html#L157" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/c.h.html&quot;}, '*');">pg_fallthrough</a>; case 10: c += ((uint32) k[9] &lt;&lt; 16); <a class="wiki-source-link" href="../../source/src/include/c.h.html#L157" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/c.h.html&quot;}, '*');">pg_fallthrough</a>; case 9: c += ((uint32) k[8] &lt;&lt; 24); <a class="wiki-source-link" href="../../source/src/include/c.h.html#L157" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/c.h.html&quot;}, '*');">pg_fallthrough</a>; case 8: /* the lowest byte of c <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> reserved for the length */ b += ka[1]; a += ka[0]; ~~~</p>
+<h2>失敗モードと境界条件</h2>
+<p>まだ解析していません。</p>
+<h2>保守担当者向けメモ</h2>
+<ul>
+<li>後続フェーズで、ソース本文の文脈と caller/callee 情報を使ってこのページを強化する。</li>
+</ul><script>
+(function() {
+  function notifyParent() {
+    if (parent === window) return;
+    parent.postMessage({type: "frame-location", frame: window.name || "", href: window.location.href}, "*");
+  }
+  document.addEventListener("click", function(event) {
+    const link = event.target.closest("a[data-panel]");
+    if (!link || parent === window) return;
+    parent.postMessage({type: "source-link", panel: link.dataset.panel}, "*");
+  });
+  window.addEventListener("load", notifyParent);
+  window.addEventListener("hashchange", notifyParent);
+})();
+</script></body></html>

@@ -1,0 +1,64 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>modules/src__pl__tcl.md</title><link rel="stylesheet" href="../../styles.css"></head><body><h1>src/pl/tcl</h1>
+<h2>システム内での役割</h2>
+<p><code>src/pl/tcl</code> には 1 個の索引済みソースファイルがあります。この初期モジュールページはディレクトリ境界に基づいています。</p>
+<h2>責務</h2>
+<ul>
+<li>このディレクトリに属するソースファイルを集約する。</li>
+<li>より深い LLM 合成の前段として、モジュール単位の入口を提供する。</li>
+</ul>
+<h2>このモジュールのファイル</h2>
+<ul>
+<li><a class="wiki-source-link" href="../../source/src/pl/tcl/pltcl.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/pl/tcl/pltcl.c.html&quot;}, '*');"><code>src/pl/tcl/pltcl.c</code></a></li>
+</ul>
+<h2>主要なデータ構造</h2>
+<ul>
+<li><a class="wiki-source-link" href="../../source/src/pl/tcl/pltcl.c.html#L64" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__pl__tcl__pltcl_c__Tcl_Size.html&quot;}, '*');"><code>Tcl_Size</code></a></li>
+<li><a class="wiki-source-link" href="../../source/src/pl/tcl/pltcl.c.html#L121" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__pl__tcl__pltcl_c__pltcl_interp_desc.html&quot;}, '*');"><code>pltcl_interp_desc</code></a></li>
+<li><a class="wiki-source-link" href="../../source/src/pl/tcl/pltcl.c.html#L146" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__pl__tcl__pltcl_c__pltcl_proc_desc.html&quot;}, '*');"><code>pltcl_proc_desc</code></a></li>
+<li><a class="wiki-source-link" href="../../source/src/pl/tcl/pltcl.c.html#L174" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__pl__tcl__pltcl_c__pltcl_query_desc.html&quot;}, '*');"><code>pltcl_query_desc</code></a></li>
+<li><a class="wiki-source-link" href="../../source/src/pl/tcl/pltcl.c.html#L196" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__pl__tcl__pltcl_c__pltcl_proc_key.html&quot;}, '*');"><code>pltcl_proc_key</code></a></li>
+<li><a class="wiki-source-link" href="../../source/src/pl/tcl/pltcl.c.html#L208" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__pl__tcl__pltcl_c__pltcl_proc_ptr.html&quot;}, '*');"><code>pltcl_proc_ptr</code></a></li>
+<li><a class="wiki-source-link" href="../../source/src/pl/tcl/pltcl.c.html#L218" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__pl__tcl__pltcl_c__pltcl_call_state.html&quot;}, '*');"><code>pltcl_call_state</code></a></li>
+<li><a class="wiki-source-link" href="../../source/src/pl/tcl/pltcl.c.html#L260" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__pl__tcl__pltcl_c__TclExceptionNameMap.html&quot;}, '*');"><code>TclExceptionNameMap</code></a></li>
+<li><code>options</code></li>
+</ul>
+<h2>主なフロー</h2>
+<p>初期モジュールページでは、まだエンドツーエンドのフローを推論しません。</p>
+<h2>外部依存</h2>
+<ul>
+<li><a class="wiki-source-link" href="../../source/src/include/postgres.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/postgres.h.html&quot;}, '*');"><code>postgres.h</code></a></li>
+<li><code>access/htup_details.h</code></li>
+<li><code>access/xact.h</code></li>
+<li><code>catalog/objectaccess.h</code></li>
+<li><code>catalog/pg_proc.h</code></li>
+<li><code>catalog/pg_type.h</code></li>
+<li><code>commands/event_trigger.h</code></li>
+<li><code>commands/trigger.h</code></li>
+<li><code>executor/spi.h</code></li>
+<li><a class="wiki-source-link" href="../../source/src/include/fmgr.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/fmgr.h.html&quot;}, '*');"><code>fmgr.h</code></a></li>
+</ul>
+<h2>内部構成</h2>
+<ul>
+<li>子モジュール数: 0</li>
+</ul>
+<h2>推奨読書順</h2>
+<p>1. <a class="wiki-source-link" href="../../source/src/pl/tcl/pltcl.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/pl/tcl/pltcl.c.html&quot;}, '*');"><code>src/pl/tcl/pltcl.c</code></a></p>
+<h2>未解決の問い</h2>
+<ul>
+<li>LLM ベースのモジュール合成を追加した後で、責務とフローを精緻化する。</li>
+</ul><script>
+(function() {
+  function notifyParent() {
+    if (parent === window) return;
+    parent.postMessage({type: "frame-location", frame: window.name || "", href: window.location.href}, "*");
+  }
+  document.addEventListener("click", function(event) {
+    const link = event.target.closest("a[data-panel]");
+    if (!link || parent === window) return;
+    parent.postMessage({type: "source-link", panel: link.dataset.panel}, "*");
+  });
+  window.addEventListener("load", notifyParent);
+  window.addEventListener("hashchange", notifyParent);
+})();
+</script></body></html>

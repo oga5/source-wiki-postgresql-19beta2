@@ -1,0 +1,79 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>modules/src__backend__utils__cache.md</title><link rel="stylesheet" href="../../styles.css"></head><body><h1>src/backend/utils/cache</h1>
+<h2>システム内での役割</h2>
+<p><code>src/backend/utils/cache</code> には 15 個の索引済みソースファイルがあります。この初期モジュールページはディレクトリ境界に基づいています。</p>
+<h2>責務</h2>
+<ul>
+<li>このディレクトリに属するソースファイルを集約する。</li>
+<li>より深い LLM 合成の前段として、モジュール単位の入口を提供する。</li>
+</ul>
+<h2>このモジュールのファイル</h2>
+<ul>
+<li><a class="wiki-source-link" href="../../source/src/backend/utils/cache/attoptcache.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/utils/cache/attoptcache.c.html&quot;}, '*');"><code>src/backend/utils/cache/attoptcache.c</code></a></li>
+<li><a class="wiki-source-link" href="../../source/src/backend/utils/cache/catcache.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/utils/cache/catcache.c.html&quot;}, '*');"><code>src/backend/utils/cache/catcache.c</code></a></li>
+<li><a class="wiki-source-link" href="../../source/src/backend/utils/cache/evtcache.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/utils/cache/evtcache.c.html&quot;}, '*');"><code>src/backend/utils/cache/evtcache.c</code></a></li>
+<li><a class="wiki-source-link" href="../../source/src/backend/utils/cache/funccache.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/utils/cache/funccache.c.html&quot;}, '*');"><code>src/backend/utils/cache/funccache.c</code></a></li>
+<li><a class="wiki-source-link" href="../../source/src/backend/utils/cache/inval.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/utils/cache/inval.c.html&quot;}, '*');"><code>src/backend/utils/cache/inval.c</code></a></li>
+<li><a class="wiki-source-link" href="../../source/src/backend/utils/cache/lsyscache.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/utils/cache/lsyscache.c.html&quot;}, '*');"><code>src/backend/utils/cache/lsyscache.c</code></a></li>
+<li><a class="wiki-source-link" href="../../source/src/backend/utils/cache/partcache.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/utils/cache/partcache.c.html&quot;}, '*');"><code>src/backend/utils/cache/partcache.c</code></a></li>
+<li><a class="wiki-source-link" href="../../source/src/backend/utils/cache/plancache.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/utils/cache/plancache.c.html&quot;}, '*');"><code>src/backend/utils/cache/plancache.c</code></a></li>
+<li><a class="wiki-source-link" href="../../source/src/backend/utils/cache/relcache.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/utils/cache/relcache.c.html&quot;}, '*');"><code>src/backend/utils/cache/relcache.c</code></a></li>
+<li><a class="wiki-source-link" href="../../source/src/backend/utils/cache/relfilenumbermap.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/utils/cache/relfilenumbermap.c.html&quot;}, '*');"><code>src/backend/utils/cache/relfilenumbermap.c</code></a></li>
+<li><a class="wiki-source-link" href="../../source/src/backend/utils/cache/relmapper.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/utils/cache/relmapper.c.html&quot;}, '*');"><code>src/backend/utils/cache/relmapper.c</code></a></li>
+<li><a class="wiki-source-link" href="../../source/src/backend/utils/cache/spccache.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/utils/cache/spccache.c.html&quot;}, '*');"><code>src/backend/utils/cache/spccache.c</code></a></li>
+<li><a class="wiki-source-link" href="../../source/src/backend/utils/cache/syscache.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/utils/cache/syscache.c.html&quot;}, '*');"><code>src/backend/utils/cache/syscache.c</code></a></li>
+<li><a class="wiki-source-link" href="../../source/src/backend/utils/cache/ts_cache.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/utils/cache/ts_cache.c.html&quot;}, '*');"><code>src/backend/utils/cache/ts_cache.c</code></a></li>
+<li><a class="wiki-source-link" href="../../source/src/backend/utils/cache/typcache.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/utils/cache/typcache.c.html&quot;}, '*');"><code>src/backend/utils/cache/typcache.c</code></a></li>
+</ul>
+<h2>主要なデータ構造</h2>
+<ul>
+<li><a class="wiki-source-link" href="../../source/src/backend/utils/cache/attoptcache.c.html#L32" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__utils__cache__attoptcache_c__AttoptCacheKey.html&quot;}, '*');"><code>AttoptCacheKey</code></a></li>
+<li><a class="wiki-source-link" href="../../source/src/backend/utils/cache/attoptcache.c.html#L38" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__utils__cache__attoptcache_c__AttoptCacheEntry.html&quot;}, '*');"><code>AttoptCacheEntry</code></a></li>
+<li><a class="wiki-source-link" href="../../source/src/backend/utils/cache/catcache.c.html#L52" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__utils__cache__catcache_c__CatCInProgress.html&quot;}, '*');"><code>CatCInProgress</code></a></li>
+<li><a class="wiki-source-link" href="../../source/src/backend/utils/cache/evtcache.c.html#L33" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__utils__cache__evtcache_c__EventTriggerCacheStateType.html&quot;}, '*');"><code>EventTriggerCacheStateType</code></a></li>
+<li><a class="wiki-source-link" href="../../source/src/backend/utils/cache/evtcache.c.html#L40" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__utils__cache__evtcache_c__EventTriggerCacheEntry.html&quot;}, '*');"><code>EventTriggerCacheEntry</code></a></li>
+<li><a class="wiki-source-link" href="../../source/src/backend/utils/cache/funccache.c.html#L41" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__utils__cache__funccache_c__CachedFunctionHashEntry.html&quot;}, '*');"><code>CachedFunctionHashEntry</code></a></li>
+<li><a class="wiki-source-link" href="../../source/src/backend/utils/cache/inval.c.html#L175" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__utils__cache__inval_c__InvalMessageArray.html&quot;}, '*');"><code>InvalMessageArray</code></a></li>
+<li><a class="wiki-source-link" href="../../source/src/backend/utils/cache/inval.c.html#L184" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__utils__cache__inval_c__InvalidationMsgsGroup.html&quot;}, '*');"><code>InvalidationMsgsGroup</code></a></li>
+<li><a class="wiki-source-link" href="../../source/src/backend/utils/cache/inval.c.html#L230" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__utils__cache__inval_c__InvalidationInfo.html&quot;}, '*');"><code>InvalidationInfo</code></a></li>
+<li><a class="wiki-source-link" href="../../source/src/backend/utils/cache/inval.c.html#L240" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__utils__cache__inval_c__TransInvalidationInfo.html&quot;}, '*');"><code>TransInvalidationInfo</code></a></li>
+</ul>
+<h2>主なフロー</h2>
+<p>初期モジュールページでは、まだエンドツーエンドのフローを推論しません。</p>
+<h2>外部依存</h2>
+<ul>
+<li><a class="wiki-source-link" href="../../source/src/include/postgres.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/postgres.h.html&quot;}, '*');"><code>postgres.h</code></a></li>
+<li><code>utils/syscache.h</code></li>
+<li><code>utils/inval.h</code></li>
+<li><code>utils/catcache.h</code></li>
+<li><a class="wiki-source-link" href="../../source/src/include/miscadmin.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/miscadmin.h.html&quot;}, '*');"><code>miscadmin.h</code></a></li>
+<li><code>access/htup_details.h</code></li>
+<li><code>utils/memutils.h</code></li>
+<li><code>utils/builtins.h</code></li>
+<li><code>utils/hsearch.h</code></li>
+<li><code>utils/fmgroids.h</code></li>
+</ul>
+<h2>内部構成</h2>
+<ul>
+<li>子モジュール数: 0</li>
+</ul>
+<h2>推奨読書順</h2>
+<p>1. <a class="wiki-source-link" href="../../source/src/backend/utils/cache/lsyscache.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/utils/cache/lsyscache.c.html&quot;}, '*');"><code>src/backend/utils/cache/lsyscache.c</code></a> 2. <a class="wiki-source-link" href="../../source/src/backend/utils/cache/relcache.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/utils/cache/relcache.c.html&quot;}, '*');"><code>src/backend/utils/cache/relcache.c</code></a> 3. <a class="wiki-source-link" href="../../source/src/backend/utils/cache/typcache.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/utils/cache/typcache.c.html&quot;}, '*');"><code>src/backend/utils/cache/typcache.c</code></a> 4. <a class="wiki-source-link" href="../../source/src/backend/utils/cache/inval.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/utils/cache/inval.c.html&quot;}, '*');"><code>src/backend/utils/cache/inval.c</code></a> 5. <a class="wiki-source-link" href="../../source/src/backend/utils/cache/catcache.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/utils/cache/catcache.c.html&quot;}, '*');"><code>src/backend/utils/cache/catcache.c</code></a> 6. <a class="wiki-source-link" href="../../source/src/backend/utils/cache/plancache.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/utils/cache/plancache.c.html&quot;}, '*');"><code>src/backend/utils/cache/plancache.c</code></a> 7. <a class="wiki-source-link" href="../../source/src/backend/utils/cache/relmapper.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/utils/cache/relmapper.c.html&quot;}, '*');"><code>src/backend/utils/cache/relmapper.c</code></a> 8. <a class="wiki-source-link" href="../../source/src/backend/utils/cache/syscache.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/utils/cache/syscache.c.html&quot;}, '*');"><code>src/backend/utils/cache/syscache.c</code></a> 9. <a class="wiki-source-link" href="../../source/src/backend/utils/cache/ts_cache.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/utils/cache/ts_cache.c.html&quot;}, '*');"><code>src/backend/utils/cache/ts_cache.c</code></a> 10. <a class="wiki-source-link" href="../../source/src/backend/utils/cache/funccache.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/utils/cache/funccache.c.html&quot;}, '*');"><code>src/backend/utils/cache/funccache.c</code></a> 11. <a class="wiki-source-link" href="../../source/src/backend/utils/cache/evtcache.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/utils/cache/evtcache.c.html&quot;}, '*');"><code>src/backend/utils/cache/evtcache.c</code></a> 12. <a class="wiki-source-link" href="../../source/src/backend/utils/cache/spccache.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/utils/cache/spccache.c.html&quot;}, '*');"><code>src/backend/utils/cache/spccache.c</code></a> 13. <a class="wiki-source-link" href="../../source/src/backend/utils/cache/attoptcache.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/utils/cache/attoptcache.c.html&quot;}, '*');"><code>src/backend/utils/cache/attoptcache.c</code></a> 14. <a class="wiki-source-link" href="../../source/src/backend/utils/cache/relfilenumbermap.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/utils/cache/relfilenumbermap.c.html&quot;}, '*');"><code>src/backend/utils/cache/relfilenumbermap.c</code></a> 15. <a class="wiki-source-link" href="../../source/src/backend/utils/cache/partcache.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/utils/cache/partcache.c.html&quot;}, '*');"><code>src/backend/utils/cache/partcache.c</code></a></p>
+<h2>未解決の問い</h2>
+<ul>
+<li>LLM ベースのモジュール合成を追加した後で、責務とフローを精緻化する。</li>
+</ul><script>
+(function() {
+  function notifyParent() {
+    if (parent === window) return;
+    parent.postMessage({type: "frame-location", frame: window.name || "", href: window.location.href}, "*");
+  }
+  document.addEventListener("click", function(event) {
+    const link = event.target.closest("a[data-panel]");
+    if (!link || parent === window) return;
+    parent.postMessage({type: "source-link", panel: link.dataset.panel}, "*");
+  });
+  window.addEventListener("load", notifyParent);
+  window.addEventListener("hashchange", notifyParent);
+})();
+</script></body></html>

@@ -1,0 +1,58 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>symbols/src__backend__access__transam__parallel_c__ParallelWorkerReportLastRecEnd.md</title><link rel="stylesheet" href="../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../source/src/backend/access/transam/parallel.c.html#L1593" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__access__transam__parallel_c__ParallelWorkerReportLastRecEnd.html&quot;}, '*');">ParallelWorkerReportLastRecEnd</a></h1>
+<h2>定義</h2>
+<ul>
+<li>種別: <code>function</code></li>
+<li>定義箇所: <code>src/backend/access/transam/parallel.c:1593</code></li>
+<li>所属モジュール: <a class="wiki-entity-link" href="../modules/src__backend__access__transam.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/modules/src__backend__access__transam.html&quot;, &quot;source&quot;: &quot;source/src/backend/access/transam/clog.c.html&quot;}, '*');"><code>module:src/backend/access/transam</code></a></li>
+</ul>
+<h2>目的</h2>
+<p>静的シンボル索引から生成された初期シンボルページです。</p>
+<h2>シグネチャまたは形状</h2>
+<ul>
+<li>シグネチャ: <code>void ParallelWorkerReportLastRecEnd(XLogRecPtr last_xlog_end)</code></li>
+</ul>
+<h2>入力と出力</h2>
+<ul>
+<li>引数: <code>XLogRecPtr last_xlog_end</code></li>
+<li>戻り値: <code>void</code></li>
+</ul>
+<h2>前提条件と不変条件</h2>
+<p>まだ解析していません。</p>
+<h2>アルゴリズムまたは振る舞い</h2>
+<ul>
+<li>複雑度: <code>medium</code> (score 11)</li>
+</ul>
+<p>まだ解析していません。</p>
+<h2>呼び出し元と呼び出し先</h2>
+<ul>
+<li>呼び出し元: <code>CommitTransaction</code></li>
+<li>呼び出し先: なし</li>
+<li>呼び出し元サイト: <code>CommitTransaction</code> at <code>src/backend/access/transam/xact.c:2421:3</code> (direct, confidence=high, resolved=<a class="wiki-entity-link" href="src__backend__access__transam__parallel_c__ParallelWorkerReportLastRecEnd.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__access__transam__parallel_c__ParallelWorkerReportLastRecEnd.html&quot;, &quot;source&quot;: &quot;source/src/backend/access/transam/parallel.c.html#L1593&quot;}, '*');"><code>symbol:src/backend/access/transam/parallel.c#ParallelWorkerReportLastRecEnd</code></a>)</li>
+<li>呼び出しサイト: <a class="wiki-source-link" href="../../source/src/include/c.h.html#L950" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/c.h.html&quot;}, '*');"><code>Assert</code></a> at <code>src/backend/access/transam/parallel.c:1598:2</code> (unresolved), <a class="wiki-source-link" href="../../source/src/include/storage/spin.h.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__storage__spin_h__SpinLockAcquire.html&quot;}, '*');"><code>SpinLockAcquire</code></a> at <code>src/backend/access/transam/parallel.c:1599:2</code> (unresolved), <a class="wiki-source-link" href="../../source/src/include/storage/spin.h.html#L61" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__storage__spin_h__SpinLockRelease.html&quot;}, '*');"><code>SpinLockRelease</code></a> at <code>src/backend/access/transam/parallel.c:1602:2</code> (unresolved)</li>
+</ul>
+<h2>関連データ構造</h2>
+<p><a class="wiki-source-link" href="../../source/src/backend/access/transam/parallel.c.html#L84" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__access__transam__parallel_c__FixedParallelState.html&quot;}, '*');"><code>FixedParallelState</code></a>, <code>XLogRecPtr</code></p>
+<h2>ソース抜粋</h2>
+<p>~~~c void <a class="wiki-source-link" href="../../source/src/backend/access/transam/parallel.c.html#L1593" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__access__transam__parallel_c__ParallelWorkerReportLastRecEnd.html&quot;}, '*');">ParallelWorkerReportLastRecEnd</a>(XLogRecPtr last_xlog_end) { <a class="wiki-source-link" href="../../source/src/backend/access/transam/parallel.c.html#L84" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__access__transam__parallel_c__FixedParallelState.html&quot;}, '*');">FixedParallelState</a> *fps = MyFixedParallelState;</p>
+<p><a class="wiki-source-link" href="../../source/src/include/c.h.html#L950" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/c.h.html&quot;}, '*');">Assert</a>(fps != NULL); <a class="wiki-source-link" href="../../source/src/include/storage/spin.h.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__storage__spin_h__SpinLockAcquire.html&quot;}, '*');">SpinLockAcquire</a>(&amp;fps-&gt;mutex); if (fps-&gt;last_xlog_end &lt; last_xlog_end) fps-&gt;last_xlog_end = last_xlog_end; <a class="wiki-source-link" href="../../source/src/include/storage/spin.h.html#L61" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__storage__spin_h__SpinLockRelease.html&quot;}, '*');">SpinLockRelease</a>(&amp;fps-&gt;mutex); } ~~~</p>
+<h2>失敗モードと境界条件</h2>
+<p>まだ解析していません。</p>
+<h2>保守担当者向けメモ</h2>
+<ul>
+<li>後続フェーズで、ソース本文の文脈と caller/callee 情報を使ってこのページを強化する。</li>
+</ul><script>
+(function() {
+  function notifyParent() {
+    if (parent === window) return;
+    parent.postMessage({type: "frame-location", frame: window.name || "", href: window.location.href}, "*");
+  }
+  document.addEventListener("click", function(event) {
+    const link = event.target.closest("a[data-panel]");
+    if (!link || parent === window) return;
+    parent.postMessage({type: "source-link", panel: link.dataset.panel}, "*");
+  });
+  window.addEventListener("load", notifyParent);
+  window.addEventListener("hashchange", notifyParent);
+})();
+</script></body></html>

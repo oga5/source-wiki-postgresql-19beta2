@@ -1,0 +1,61 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>symbols/src__pl__plpgsql__src__plpgsql_h__PLpgSQL_rec.md</title><link rel="stylesheet" href="../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../source/src/pl/plpgsql/src/plpgsql.h.html#L412" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__pl__plpgsql__src__plpgsql_h__PLpgSQL_rec.html&quot;}, '*');">PLpgSQL_rec</a></h1>
+<h2>定義</h2>
+<ul>
+<li>種別: <code>struct</code></li>
+<li>定義箇所: <code>src/pl/plpgsql/src/plpgsql.h:412</code></li>
+<li>所属モジュール: <a class="wiki-entity-link" href="../modules/src__pl__plpgsql__src.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/modules/src__pl__plpgsql__src.html&quot;, &quot;source&quot;: &quot;source/src/pl/plpgsql/src/pl_comp.c.html&quot;}, '*');"><code>module:src/pl/plpgsql/src</code></a></li>
+</ul>
+<h2>目的</h2>
+<p>静的シンボル索引から生成された初期シンボルページです。</p>
+<h2>シグネチャまたは形状</h2>
+<ul>
+<li>シグネチャ: <code>typedef struct PLpgSQL_rec</code></li>
+</ul>
+<h2>入力と出力</h2>
+<p>まだ解析していません。</p>
+<h2>前提条件と不変条件</h2>
+<p>まだ解析していません。</p>
+<h2>アルゴリズムまたは振る舞い</h2>
+<p>まだ解析していません。</p>
+<h2>呼び出し元と呼び出し先</h2>
+<ul>
+<li>呼び出し元: なし</li>
+<li>呼び出し先: なし</li>
+<li>呼び出し元サイト: なし</li>
+<li>呼び出しサイト: なし</li>
+</ul>
+<h2>関連データ構造</h2>
+<p><a class="wiki-source-link" href="../../source/src/interfaces/ecpg/test/expected/preproc-type.c.html#L36" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__interfaces__ecpg__test__expected__preproc-type_c__access.html&quot;}, '*');"><code>access</code></a>, <a class="wiki-source-link" href="../../source/src/include/utils/expandedrecord.h.html#L42" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__utils__expandedrecord_h__ExpandedRecordHeader.html&quot;}, '*');"><code>ExpandedRecordHeader</code></a>, <code>Oid</code>, <a class="wiki-source-link" href="../../source/src/pl/plpgsql/src/plpgsql.h.html#L62" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/pl/plpgsql/src/plpgsql.h.html&quot;}, '*');"><code>PLpgSQL_datum_type</code></a>, <code>PLpgSQL_expr</code>, <a class="wiki-source-link" href="../../source/src/pl/plpgsql/src/plpgsql.h.html#L210" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__pl__plpgsql__src__plpgsql_h__PLpgSQL_type.html&quot;}, '*');"><code>PLpgSQL_type</code></a>, <a class="wiki-source-link" href="../../source/src/pl/plpgsql/src/plpgsql.h.html#L310" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__pl__plpgsql__src__plpgsql_h__PLpgSQL_variable.html&quot;}, '*');"><code>PLpgSQL_variable</code></a>, <code>variable</code></p>
+<h2>ソース抜粋</h2>
+<p>~~~c typedef struct <a class="wiki-source-link" href="../../source/src/pl/plpgsql/src/plpgsql.h.html#L412" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__pl__plpgsql__src__plpgsql_h__PLpgSQL_rec.html&quot;}, '*');">PLpgSQL_rec</a> { <a class="wiki-source-link" href="../../source/src/pl/plpgsql/src/plpgsql.h.html#L62" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/pl/plpgsql/src/plpgsql.h.html&quot;}, '*');">PLpgSQL_datum_type</a> dtype; int			dno; char	   *refname; int			lineno; bool		isconst; bool		notnull; PLpgSQL_expr *default_val; /* end of <a class="wiki-source-link" href="../../source/src/pl/plpgsql/src/plpgsql.h.html#L310" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__pl__plpgsql__src__plpgsql_h__PLpgSQL_variable.html&quot;}, '*');">PLpgSQL_variable</a> fields */</p>
+<p>/*</p>
+<ul>
+<li>Note: for non-RECORD cases, we may from time to time re-look-up the</li>
+<li>composite type, using datatype-&gt;origtypname.  That can <a class="wiki-source-link" href="../../source/src/include/storage/checksum_block_internal.h.html#L18" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/storage/checksum_block_internal.h.html&quot;}, '*');">result</a> in</li>
+<li>changing rectypeid.</li>
+<p>*/</p>
+</ul>
+<p><a class="wiki-source-link" href="../../source/src/pl/plpgsql/src/plpgsql.h.html#L210" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__pl__plpgsql__src__plpgsql_h__PLpgSQL_type.html&quot;}, '*');">PLpgSQL_type</a> *datatype;		/* can be NULL, if rectypeid <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> RECORDOID */ Oid			rectypeid;		/* declared type of variable */ /* RECFIELDs for this record are chained together for easy <a class="wiki-source-link" href="../../source/src/interfaces/ecpg/test/expected/preproc-type.c.html#L36" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__interfaces__ecpg__test__expected__preproc-type_c__access.html&quot;}, '*');">access</a> */ int			firstfield;		/* dno of first RECFIELD, or -1 if <a class="wiki-source-link" href="../../source/src/backend/optimizer/util/predtest.c.html#L1672" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/optimizer/util/predtest.c.html&quot;}, '*');">none</a> */</p>
+<p>/* Fields below here can change at runtime */</p>
+<p>/* We always store record variables as &quot;expanded&quot; <a class="wiki-source-link" href="../../source/src/backend/access/transam/twophase.c.html#L1011" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/access/transam/twophase.c.html&quot;}, '*');">records</a> */ <a class="wiki-source-link" href="../../source/src/include/utils/expandedrecord.h.html#L42" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__utils__expandedrecord_h__ExpandedRecordHeader.html&quot;}, '*');">ExpandedRecordHeader</a> *erh; } <a class="wiki-source-link" href="../../source/src/pl/plpgsql/src/plpgsql.h.html#L412" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__pl__plpgsql__src__plpgsql_h__PLpgSQL_rec.html&quot;}, '*');">PLpgSQL_rec</a>; ~~~</p>
+<h2>失敗モードと境界条件</h2>
+<p>まだ解析していません。</p>
+<h2>保守担当者向けメモ</h2>
+<ul>
+<li>後続フェーズで、ソース本文の文脈と caller/callee 情報を使ってこのページを強化する。</li>
+</ul><script>
+(function() {
+  function notifyParent() {
+    if (parent === window) return;
+    parent.postMessage({type: "frame-location", frame: window.name || "", href: window.location.href}, "*");
+  }
+  document.addEventListener("click", function(event) {
+    const link = event.target.closest("a[data-panel]");
+    if (!link || parent === window) return;
+    parent.postMessage({type: "source-link", panel: link.dataset.panel}, "*");
+  });
+  window.addEventListener("load", notifyParent);
+  window.addEventListener("hashchange", notifyParent);
+})();
+</script></body></html>

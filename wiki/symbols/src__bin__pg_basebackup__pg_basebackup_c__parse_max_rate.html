@@ -1,0 +1,79 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>symbols/src__bin__pg_basebackup__pg_basebackup_c__parse_max_rate.md</title><link rel="stylesheet" href="../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../source/src/bin/pg_basebackup/pg_basebackup.c.html#L902" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__bin__pg_basebackup__pg_basebackup_c__parse_max_rate.html&quot;}, '*');">parse_max_rate</a></h1>
+<h2>定義</h2>
+<ul>
+<li>種別: <code>function</code></li>
+<li>定義箇所: <code>src/bin/pg_basebackup/pg_basebackup.c:902</code></li>
+<li>所属モジュール: <a class="wiki-entity-link" href="../modules/src__bin__pg_basebackup.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/modules/src__bin__pg_basebackup.html&quot;, &quot;source&quot;: &quot;source/src/bin/pg_basebackup/astreamer_inject.c.html&quot;}, '*');"><code>module:src/bin/pg_basebackup</code></a></li>
+</ul>
+<h2>目的</h2>
+<p>静的シンボル索引から生成された初期シンボルページです。</p>
+<h2>シグネチャまたは形状</h2>
+<ul>
+<li>シグネチャ: <code>static int32 parse_max_rate(char *src)</code></li>
+</ul>
+<h2>入力と出力</h2>
+<ul>
+<li>引数: <code>char *src</code></li>
+<li>戻り値: <code>int32</code></li>
+</ul>
+<h2>前提条件と不変条件</h2>
+<p>まだ解析していません。</p>
+<h2>アルゴリズムまたは振る舞い</h2>
+<ul>
+<li>複雑度: <code>high</code> (score 27)</li>
+</ul>
+<p>まだ解析していません。</p>
+<h2>呼び出し元と呼び出し先</h2>
+<ul>
+<li>呼び出し元: <code>main</code></li>
+<li>呼び出し先: なし</li>
+<li>呼び出し元サイト: <code>main</code> at <code>src/bin/pg_basebackup/pg_basebackup.c:2467:15</code> (direct, confidence=high, resolved=<a class="wiki-entity-link" href="src__bin__pg_basebackup__pg_basebackup_c__parse_max_rate.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__bin__pg_basebackup__pg_basebackup_c__parse_max_rate.html&quot;, &quot;source&quot;: &quot;source/src/bin/pg_basebackup/pg_basebackup.c.html#L902&quot;}, '*');"><code>symbol:src/bin/pg_basebackup/pg_basebackup.c#parse_max_rate</code></a>)</li>
+<li>呼び出しサイト: <code>strtod</code> at <code>src/bin/pg_basebackup/pg_basebackup.c:910:11</code> (unresolved), <code>pg_fatal</code> at <code>src/bin/pg_basebackup/pg_basebackup.c:912:3</code> (macro), <code>pg_fatal</code> at <code>src/bin/pg_basebackup/pg_basebackup.c:914:3</code> (macro), <code>pg_fatal</code> at <code>src/bin/pg_basebackup/pg_basebackup.c:921:3</code> (macro), <code>isspace</code> at <code>src/bin/pg_basebackup/pg_basebackup.c:928:31</code> (unresolved), <code>isspace</code> at <code>src/bin/pg_basebackup/pg_basebackup.c:947:31</code> (unresolved), <code>pg_fatal</code> at <code>src/bin/pg_basebackup/pg_basebackup.c:951:3</code> (macro), <code>(uint64)</code> at <code>src/bin/pg_basebackup/pg_basebackup.c:954:25</code> (indirect), <code>pg_fatal</code> at <code>src/bin/pg_basebackup/pg_basebackup.c:955:3</code> (macro), <code>pg_fatal</code> at <code>src/bin/pg_basebackup/pg_basebackup.c:962:3</code> (macro)</li>
+</ul>
+<h2>関連データ構造</h2>
+<p><a class="wiki-source-link" href="../../source/src/interfaces/ecpg/ecpglib/ecpglib_extern.h.html#L101" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__interfaces__ecpg__ecpglib__ecpglib_extern_h__connection.html&quot;}, '*');"><code>connection</code></a>, <code>int32</code>, <code>uint32</code>, <code>uint64</code></p>
+<h2>ソース抜粋</h2>
+<p>~~~c static int32 <a class="wiki-source-link" href="../../source/src/bin/pg_basebackup/pg_basebackup.c.html#L902" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__bin__pg_basebackup__pg_basebackup_c__parse_max_rate.html&quot;}, '*');">parse_max_rate</a>(char *src) { double		<a class="wiki-source-link" href="../../source/src/include/storage/checksum_block_internal.h.html#L18" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/storage/checksum_block_internal.h.html&quot;}, '*');">result</a>; char	   *after_num; char	   *suffix = NULL;</p>
+<p>errno = 0; <a class="wiki-source-link" href="../../source/src/include/storage/checksum_block_internal.h.html#L18" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/storage/checksum_block_internal.h.html&quot;}, '*');">result</a> = strtod(src, &amp;after_num); if (src == after_num) pg_fatal(&quot;transfer rate \&quot;%s\&quot; <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> not a valid <a class="wiki-source-link" href="../../source/src/interfaces/ecpg/compatlib/informix.c.html#L687" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/ecpg/compatlib/informix.c.html&quot;}, '*');">value</a>&quot;, src); if (errno != 0) pg_fatal(&quot;invalid transfer rate \&quot;%s\&quot;: %m&quot;, src);</p>
+<p>if (<a class="wiki-source-link" href="../../source/src/include/storage/checksum_block_internal.h.html#L18" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/storage/checksum_block_internal.h.html&quot;}, '*');">result</a> &lt;= 0) { /*</p>
+<ul>
+<li>Reject obviously wrong values here.</li>
+<p>*/ pg_fatal(&quot;transfer rate must be greater than zero&quot;); }</p>
+</ul>
+<p>/*</p>
+<ul>
+<li>Evaluate suffix, after skipping over possible whitespace. Lack of</li>
+<li>suffix means kilobytes.</li>
+<p>*/ while (*after_num != &#x27;\0&#x27; &amp;&amp; isspace((unsigned char) *after_num)) after_num++;</p>
+</ul>
+<p>if (*after_num != &#x27;\0&#x27;) { suffix = after_num; if (*after_num == &#x27;k&#x27;) { /* kilobyte <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> the expected unit. */ after_num++; } else if (*after_num == &#x27;M&#x27;) { after_num++; <a class="wiki-source-link" href="../../source/src/include/storage/checksum_block_internal.h.html#L18" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/storage/checksum_block_internal.h.html&quot;}, '*');">result</a> *= 1024.0; } }</p>
+<p>/* The rest can only consist of white space. */ while (*after_num != &#x27;\0&#x27; &amp;&amp; isspace((unsigned char) *after_num)) after_num++;</p>
+<p>if (*after_num != &#x27;\0&#x27;) pg_fatal(&quot;invalid --max-rate unit: \&quot;%s\&quot;&quot;, suffix);</p>
+<p>/* Valid integer? */ if ((uint64) <a class="wiki-source-link" href="../../source/src/include/storage/checksum_block_internal.h.html#L18" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/storage/checksum_block_internal.h.html&quot;}, '*');">result</a> != (uint64) ((uint32) <a class="wiki-source-link" href="../../source/src/include/storage/checksum_block_internal.h.html#L18" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/storage/checksum_block_internal.h.html&quot;}, '*');">result</a>)) pg_fatal(&quot;transfer rate \&quot;%s\&quot; exceeds integer <a class="wiki-source-link" href="../../source/src/backend/regex/regc_locale.c.html#L411" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__regex__regc_locale_c__range.html&quot;}, '*');">range</a>&quot;, src);</p>
+<p>/*</p>
+<ul>
+<li>The <a class="wiki-source-link" href="../../source/src/backend/regex/regc_locale.c.html#L411" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__regex__regc_locale_c__range.html&quot;}, '*');">range</a> <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> checked on the server side too, but avoid the server</li>
+<li><a class="wiki-source-link" href="../../source/src/interfaces/ecpg/ecpglib/ecpglib_extern.h.html#L101" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__interfaces__ecpg__ecpglib__ecpglib_extern_h__connection.html&quot;}, '*');">connection</a> if a nonsensical <a class="wiki-source-link" href="../../source/src/interfaces/ecpg/compatlib/informix.c.html#L687" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/ecpg/compatlib/informix.c.html&quot;}, '*');">value</a> was passed.</li>
+<p>*/ if (<a class="wiki-source-link" href="../../source/src/include/storage/checksum_block_internal.h.html#L18" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/storage/checksum_block_internal.h.html&quot;}, '*');">result</a> &lt; <a class="wiki-source-link" href="../../source/src/include/backup/basebackup.h.html#L20" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/backup/basebackup.h.html&quot;}, '*');">MAX_RATE_LOWER</a> || <a class="wiki-source-link" href="../../source/src/include/storage/checksum_block_internal.h.html#L18" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/storage/checksum_block_internal.h.html&quot;}, '*');">result</a> &gt; <a class="wiki-source-link" href="../../source/src/include/backup/basebackup.h.html#L21" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/backup/basebackup.h.html&quot;}, '*');">MAX_RATE_UPPER</a>) ~~~</p>
+</ul>
+<h2>失敗モードと境界条件</h2>
+<p>まだ解析していません。</p>
+<h2>保守担当者向けメモ</h2>
+<ul>
+<li>後続フェーズで、ソース本文の文脈と caller/callee 情報を使ってこのページを強化する。</li>
+</ul><script>
+(function() {
+  function notifyParent() {
+    if (parent === window) return;
+    parent.postMessage({type: "frame-location", frame: window.name || "", href: window.location.href}, "*");
+  }
+  document.addEventListener("click", function(event) {
+    const link = event.target.closest("a[data-panel]");
+    if (!link || parent === window) return;
+    parent.postMessage({type: "source-link", panel: link.dataset.panel}, "*");
+  });
+  window.addEventListener("load", notifyParent);
+  window.addEventListener("hashchange", notifyParent);
+})();
+</script></body></html>

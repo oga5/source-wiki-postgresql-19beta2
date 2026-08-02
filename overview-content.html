@@ -1,0 +1,43 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>Project overview</title><link rel="stylesheet" href="styles.css"></head><body>
+<main class="overview-page">
+  <header class="overview-hero">
+    <p class="overview-kicker">Project overview</p>
+    <h1>postgresql-19beta2</h1>
+    <p>Static source statistics with LLM overview pending.</p>
+  </header>
+  <section class="overview-section overview-summary">
+    <h2>Overview</h2>
+    <p>LLM-generated project overview is not available yet. Run the source-wiki analysis cycle to generate one.</p>
+  </section>
+  <section class="overview-stats" aria-label="Source statistics">
+    <div><strong>2575</strong><span>Files</span></div>
+    <div><strong>1805674</strong><span>Lines</span></div>
+    <div><strong>46347</strong><span>Symbols</span></div>
+    <div><strong>27043</strong><span>Functions</span></div>
+    <div><strong>4774</strong><span>Types</span></div>
+    <div><strong>310</strong><span>Modules</span></div>
+  </section>
+  <section class="overview-section">
+    <h2>File Mix</h2>
+    <table class="overview-table"><thead><tr><th>Extension</th><th>Files</th></tr></thead><tbody><tr><td>.c</td><td>1544</td></tr><tr><td>.h</td><td>1020</td></tr><tr><td>.py</td><td>6</td></tr><tr><td>.cpp</td><td>5</td></tr></tbody></table>
+  </section>
+  <section class="overview-section">
+    <h2>Topics</h2>
+    <ol class="call-flow-list"><li><a href="source/src/bin/pg_dump/pg_dump.c.html#L417" target="source-view" onclick="if (parent !== window) { parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;source&quot;: &quot;source/src/bin/pg_dump/pg_dump.c.html#L417&quot;}, '*'); return false; }">main</a><span>Source representative · src/bin/pg_dump/pg_dump.c:417</span><code>main -> BuildArchiveDependencies -> CloseArchive -> ConnectDatabaseAhx -> CreateArchive -> InitDumpOptions -> NewRestoreOptions -> ...</code></li><li><a href="source/src/backend/postmaster/postmaster.c.html#L496" target="source-view" onclick="if (parent !== window) { parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;source&quot;: &quot;source/src/backend/postmaster/postmaster.c.html#L496&quot;}, '*'); return false; }">PostmasterMain</a><span>Source representative · src/backend/postmaster/postmaster.c:496</span><code>PostmasterMain -> AddToDataDirLockFile -> ApplyLauncherRegister -> ChangeToDataDir -> CheckDateTokenTables -> CreateDataDirLockFile -> CreateOptsFile -> ...</code></li><li><a href="source/src/backend/tcop/postgres.c.html#L4273" target="source-view" onclick="if (parent !== window) { parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;source&quot;: &quot;source/src/backend/tcop/postgres.c.html#L4273&quot;}, '*'); return false; }">PostgresMain</a><span>Source representative · src/backend/tcop/postgres.c:4273</span><code>PostgresMain -> AbortCurrentTransaction -> AbortTransaction -> BaseInit -> BeginReportingGUCOptions -> DropPreparedStatement -> EmitErrorReport -> ...</code></li><li><a href="source/src/backend/access/transam/parallel.c.html#L1300" target="source-view" onclick="if (parent !== window) { parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;source&quot;: &quot;source/src/backend/access/transam/parallel.c.html#L1300&quot;}, '*'); return false; }">ParallelWorkerMain</a><span>Source representative · src/backend/access/transam/parallel.c:1300</span><code>ParallelWorkerMain -> AttachSerializableXact -> AttachSession -> BackgroundWorkerInitializeConnectionByOid -> BackgroundWorkerUnblockSignals -> BecomeLockGroupMember -> CommitTransactionCommand -> ...</code></li></ol>
+  </section>
+</main><script>
+(function() {
+  function notifyParent() {
+    if (parent === window) return;
+    parent.postMessage({type: "frame-location", frame: window.name || "", href: window.location.href}, "*");
+  }
+  document.addEventListener("click", function(event) {
+    const link = event.target.closest("a[data-panel]");
+    if (!link || parent === window) return;
+    parent.postMessage({type: "source-link", panel: link.dataset.panel}, "*");
+  });
+  window.addEventListener("load", notifyParent);
+  window.addEventListener("hashchange", notifyParent);
+})();
+</script></body></html>

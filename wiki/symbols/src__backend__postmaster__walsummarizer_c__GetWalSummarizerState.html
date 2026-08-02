@@ -1,0 +1,75 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>symbols/src__backend__postmaster__walsummarizer_c__GetWalSummarizerState.md</title><link rel="stylesheet" href="../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../source/src/backend/postmaster/walsummarizer.c.html#L446" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__postmaster__walsummarizer_c__GetWalSummarizerState.html&quot;}, '*');">GetWalSummarizerState</a></h1>
+<h2>定義</h2>
+<ul>
+<li>種別: <code>function</code></li>
+<li>定義箇所: <code>src/backend/postmaster/walsummarizer.c:446</code></li>
+<li>所属モジュール: <a class="wiki-entity-link" href="../modules/src__backend__postmaster.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/modules/src__backend__postmaster.html&quot;, &quot;source&quot;: &quot;source/src/backend/postmaster/autovacuum.c.html&quot;}, '*');"><code>module:src/backend/postmaster</code></a></li>
+</ul>
+<h2>目的</h2>
+<p>静的シンボル索引から生成された初期シンボルページです。</p>
+<h2>シグネチャまたは形状</h2>
+<ul>
+<li>シグネチャ: <code>void GetWalSummarizerState(TimeLineID *summarized_tli, XLogRecPtr *summarized_lsn, XLogRecPtr *pending_lsn, int *summarizer_pid)</code></li>
+</ul>
+<h2>入力と出力</h2>
+<ul>
+<li>引数: <code>TimeLineID *summarized_tli</code>, <code>XLogRecPtr *summarized_lsn</code>, <code>XLogRecPtr *pending_lsn</code>, <code>int *summarizer_pid</code></li>
+<li>戻り値: <code>void</code></li>
+</ul>
+<h2>前提条件と不変条件</h2>
+<p>まだ解析していません。</p>
+<h2>アルゴリズムまたは振る舞い</h2>
+<ul>
+<li>複雑度: <code>high</code> (score 12)</li>
+</ul>
+<p>まだ解析していません。</p>
+<h2>呼び出し元と呼び出し先</h2>
+<ul>
+<li>呼び出し元: <a class="wiki-source-link" href="../../source/src/backend/backup/walsummaryfuncs.c.html#L178" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__backup__walsummaryfuncs_c__pg_get_wal_summarizer_state.html&quot;}, '*');"><code>pg_get_wal_summarizer_state</code></a></li>
+<li>呼び出し先: <a class="wiki-source-link" href="../../source/src/backend/storage/lmgr/lwlock.c.html#L1149" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__storage__lmgr__lwlock_c__LWLockAcquire.html&quot;}, '*');"><code>LWLockAcquire</code></a>, <a class="wiki-source-link" href="../../source/src/backend/storage/lmgr/lwlock.c.html#L1766" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__storage__lmgr__lwlock_c__LWLockRelease.html&quot;}, '*');"><code>LWLockRelease</code></a></li>
+<li>呼び出し元サイト: <a class="wiki-source-link" href="../../source/src/backend/backup/walsummaryfuncs.c.html#L178" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__backup__walsummaryfuncs_c__pg_get_wal_summarizer_state.html&quot;}, '*');"><code>pg_get_wal_summarizer_state</code></a> at <code>src/backend/backup/walsummaryfuncs.c:190:2</code> (direct, confidence=high, resolved=<a class="wiki-entity-link" href="src__backend__postmaster__walsummarizer_c__GetWalSummarizerState.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__postmaster__walsummarizer_c__GetWalSummarizerState.html&quot;, &quot;source&quot;: &quot;source/src/backend/postmaster/walsummarizer.c.html#L446&quot;}, '*');"><code>symbol:src/backend/postmaster/walsummarizer.c#GetWalSummarizerState</code></a>)</li>
+<li>呼び出しサイト: <a class="wiki-source-link" href="../../source/src/backend/storage/lmgr/lwlock.c.html#L1149" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__storage__lmgr__lwlock_c__LWLockAcquire.html&quot;}, '*');"><code>LWLockAcquire</code></a> at <code>src/backend/postmaster/walsummarizer.c:450:2</code> (direct, confidence=high, resolved=<a class="wiki-entity-link" href="src__backend__storage__lmgr__lwlock_c__LWLockAcquire.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__storage__lmgr__lwlock_c__LWLockAcquire.html&quot;, &quot;source&quot;: &quot;source/src/backend/storage/lmgr/lwlock.c.html#L1149&quot;}, '*');"><code>symbol:src/backend/storage/lmgr/lwlock.c#LWLockAcquire</code></a>), <a class="wiki-source-link" href="../../source/src/include/storage/proc.h.html#L510" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/storage/proc.h.html&quot;}, '*');"><code>GetPGProcByNumber</code></a> at <code>src/backend/postmaster/walsummarizer.c:486:22</code> (macro), <a class="wiki-source-link" href="../../source/src/backend/storage/lmgr/lwlock.c.html#L1766" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__storage__lmgr__lwlock_c__LWLockRelease.html&quot;}, '*');"><code>LWLockRelease</code></a> at <code>src/backend/postmaster/walsummarizer.c:491:2</code> (direct, confidence=high, resolved=<a class="wiki-entity-link" href="src__backend__storage__lmgr__lwlock_c__LWLockRelease.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__storage__lmgr__lwlock_c__LWLockRelease.html&quot;, &quot;source&quot;: &quot;source/src/backend/storage/lmgr/lwlock.c.html#L1766&quot;}, '*');"><code>symbol:src/backend/storage/lmgr/lwlock.c#LWLockRelease</code></a>)</li>
+</ul>
+<h2>関連データ構造</h2>
+<p><code>TimeLineID</code>, <code>XLogRecPtr</code></p>
+<h2>ソース抜粋</h2>
+<p>~~~c void <a class="wiki-source-link" href="../../source/src/backend/postmaster/walsummarizer.c.html#L446" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__postmaster__walsummarizer_c__GetWalSummarizerState.html&quot;}, '*');">GetWalSummarizerState</a>(TimeLineID *summarized_tli, XLogRecPtr *summarized_lsn, XLogRecPtr *pending_lsn, int *summarizer_pid) { <a class="wiki-source-link" href="../../source/src/backend/storage/lmgr/lwlock.c.html#L1149" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__storage__lmgr__lwlock_c__LWLockAcquire.html&quot;}, '*');">LWLockAcquire</a>(WALSummarizerLock, LW_SHARED); if (!WalSummarizerCtl-&gt;<a class="wiki-source-link" href="../../source/src/port/win32ntdll.c.html#L36" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/port/win32ntdll.c.html&quot;}, '*');">initialized</a>) { /*</p>
+<ul>
+<li>If <a class="wiki-source-link" href="../../source/src/port/win32ntdll.c.html#L36" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/port/win32ntdll.c.html&quot;}, '*');">initialized</a> <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> <a class="wiki-source-link" href="../../source/src/tools/pg_bsd_indent/indent_globs.h.html#L43" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/tools/pg_bsd_indent/indent_globs.h.html&quot;}, '*');">false</a>, the rest of the <a class="wiki-source-link" href="../../source/src/tools/pg_bsd_indent/indent_codes.h.html#L71" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/tools/pg_bsd_indent/indent_codes.h.html&quot;}, '*');">structure</a> contents are</li>
+<li>undefined.</li>
+<p>*/ *summarized_tli = 0; *summarized_lsn = <a class="wiki-source-link" href="../../source/src/include/access/xlogdefs.h.html#L28" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/access/xlogdefs.h.html&quot;}, '*');">InvalidXLogRecPtr</a>; *pending_lsn = <a class="wiki-source-link" href="../../source/src/include/access/xlogdefs.h.html#L28" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/access/xlogdefs.h.html&quot;}, '*');">InvalidXLogRecPtr</a>; *summarizer_pid = -1; } else { int			summarizer_pgprocno = WalSummarizerCtl-&gt;summarizer_pgprocno;</p>
+</ul>
+<p>*summarized_tli = WalSummarizerCtl-&gt;summarized_tli; *summarized_lsn = WalSummarizerCtl-&gt;summarized_lsn; if (summarizer_pgprocno == <a class="wiki-source-link" href="../../source/src/include/storage/procnumber.h.html#L26" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/storage/procnumber.h.html&quot;}, '*');">INVALID_PROC_NUMBER</a>) { /*</p>
+<ul>
+<li>If the summarizer has exited, the fact that it had processed</li>
+<li>beyond summarized_lsn <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> irrelevant now.</li>
+<p>*/ *pending_lsn = WalSummarizerCtl-&gt;summarized_lsn; *summarizer_pid = -1; } else { *pending_lsn = WalSummarizerCtl-&gt;pending_lsn;</p>
+</ul>
+<p>/*</p>
+<ul>
+<li>We&#x27;re not fussed about inexact answers here, since they could</li>
+<li>become stale instantly, so we don&#x27;t bother taking the lock, but</li>
+<li>make sure that invalid PID values are normalized to -1.</li>
+<p>*/ *summarizer_pid = <a class="wiki-source-link" href="../../source/src/include/storage/proc.h.html#L510" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/storage/proc.h.html&quot;}, '*');">GetPGProcByNumber</a>(summarizer_pgprocno)-&gt;pid; if (*summarizer_pid &lt;= 0) *summarizer_pid = -1; } } <a class="wiki-source-link" href="../../source/src/backend/storage/lmgr/lwlock.c.html#L1766" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__storage__lmgr__lwlock_c__LWLockRelease.html&quot;}, '*');">LWLockRelease</a>(WALSummarizerLock); } ~~~</p>
+</ul>
+<h2>失敗モードと境界条件</h2>
+<p>まだ解析していません。</p>
+<h2>保守担当者向けメモ</h2>
+<ul>
+<li>後続フェーズで、ソース本文の文脈と caller/callee 情報を使ってこのページを強化する。</li>
+</ul><script>
+(function() {
+  function notifyParent() {
+    if (parent === window) return;
+    parent.postMessage({type: "frame-location", frame: window.name || "", href: window.location.href}, "*");
+  }
+  document.addEventListener("click", function(event) {
+    const link = event.target.closest("a[data-panel]");
+    if (!link || parent === window) return;
+    parent.postMessage({type: "source-link", panel: link.dataset.panel}, "*");
+  });
+  window.addEventListener("load", notifyParent);
+  window.addEventListener("hashchange", notifyParent);
+})();
+</script></body></html>

@@ -1,0 +1,59 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>symbols/src__backend__storage__aio__aio_init_c__AioChooseMaxConcurrency.md</title><link rel="stylesheet" href="../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../source/src/backend/storage/aio/aio_init.c.html#L104" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__storage__aio__aio_init_c__AioChooseMaxConcurrency.html&quot;}, '*');">AioChooseMaxConcurrency</a></h1>
+<h2>定義</h2>
+<ul>
+<li>種別: <code>function</code></li>
+<li>定義箇所: <code>src/backend/storage/aio/aio_init.c:104</code></li>
+<li>所属モジュール: <a class="wiki-entity-link" href="../modules/src__backend__storage__aio.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/modules/src__backend__storage__aio.html&quot;, &quot;source&quot;: &quot;source/src/backend/storage/aio/aio.c.html&quot;}, '*');"><code>module:src/backend/storage/aio</code></a></li>
+</ul>
+<h2>目的</h2>
+<p>静的シンボル索引から生成された初期シンボルページです。</p>
+<h2>シグネチャまたは形状</h2>
+<ul>
+<li>シグネチャ: <code>static int AioChooseMaxConcurrency(void)</code></li>
+</ul>
+<h2>入力と出力</h2>
+<ul>
+<li>戻り値: <code>int</code></li>
+</ul>
+<h2>前提条件と不変条件</h2>
+<p>まだ解析していません。</p>
+<h2>アルゴリズムまたは振る舞い</h2>
+<ul>
+<li>複雑度: <code>low</code> (score 3)</li>
+</ul>
+<p>まだ解析していません。</p>
+<h2>呼び出し元と呼び出し先</h2>
+<ul>
+<li>呼び出し元: <a class="wiki-source-link" href="../../source/src/backend/storage/aio/aio_init.c.html#L123" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__storage__aio__aio_init_c__AioShmemRequest.html&quot;}, '*');"><code>AioShmemRequest</code></a></li>
+<li>呼び出し先: なし</li>
+<li>呼び出し元サイト: <a class="wiki-source-link" href="../../source/src/backend/storage/aio/aio_init.c.html#L123" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__storage__aio__aio_init_c__AioShmemRequest.html&quot;}, '*');"><code>AioShmemRequest</code></a> at <code>src/backend/storage/aio/aio_init.c:138:36</code> (direct, confidence=high, resolved=<a class="wiki-entity-link" href="src__backend__storage__aio__aio_init_c__AioChooseMaxConcurrency.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__storage__aio__aio_init_c__AioChooseMaxConcurrency.html&quot;, &quot;source&quot;: &quot;source/src/backend/storage/aio/aio_init.c.html#L104&quot;}, '*');"><code>symbol:src/backend/storage/aio/aio_init.c#AioChooseMaxConcurrency</code></a>)</li>
+<li>呼び出しサイト: <code>Max</code> at <code>src/backend/storage/aio/aio_init.c:114:26</code> (unresolved), <code>Min</code> at <code>src/backend/storage/aio/aio_init.c:117:9</code> (unresolved)</li>
+</ul>
+<h2>関連データ構造</h2>
+<p><code>uint32</code></p>
+<h2>ソース抜粋</h2>
+<p>~~~c static int <a class="wiki-source-link" href="../../source/src/backend/storage/aio/aio_init.c.html#L104" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__storage__aio__aio_init_c__AioChooseMaxConcurrency.html&quot;}, '*');">AioChooseMaxConcurrency</a>(void) { uint32		max_backends; int			max_proportional_pins;</p>
+<p>/* Similar logic to <a class="wiki-source-link" href="../../source/src/backend/storage/buffer/bufmgr.c.html#L2732" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__storage__buffer__bufmgr_c__LimitAdditionalPins.html&quot;}, '*');">LimitAdditionalPins</a>() */ max_backends = <a class="wiki-source-link" href="../../source/src/backend/utils/init/globals.c.html#L149" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/utils/init/globals.c.html&quot;}, '*');">MaxBackends</a> + <a class="wiki-source-link" href="../../source/src/include/storage/proc.h.html#L533" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/storage/proc.h.html&quot;}, '*');">NUM_AUXILIARY_PROCS</a>; max_proportional_pins = <a class="wiki-source-link" href="../../source/src/backend/utils/init/globals.c.html#L144" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/utils/init/globals.c.html&quot;}, '*');">NBuffers</a> / max_backends;</p>
+<p>max_proportional_pins = Max(max_proportional_pins, 1);</p>
+<p>/* apply <a class="wiki-source-link" href="../../source/src/backend/utils/adt/oracle_compat.c.html#L79" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__utils__adt__oracle_compat_c__upper.html&quot;}, '*');">upper</a> limit */ return Min(max_proportional_pins, 64); } ~~~</p>
+<h2>失敗モードと境界条件</h2>
+<p>まだ解析していません。</p>
+<h2>保守担当者向けメモ</h2>
+<ul>
+<li>後続フェーズで、ソース本文の文脈と caller/callee 情報を使ってこのページを強化する。</li>
+</ul><script>
+(function() {
+  function notifyParent() {
+    if (parent === window) return;
+    parent.postMessage({type: "frame-location", frame: window.name || "", href: window.location.href}, "*");
+  }
+  document.addEventListener("click", function(event) {
+    const link = event.target.closest("a[data-panel]");
+    if (!link || parent === window) return;
+    parent.postMessage({type: "source-link", panel: link.dataset.panel}, "*");
+  });
+  window.addEventListener("load", notifyParent);
+  window.addEventListener("hashchange", notifyParent);
+})();
+</script></body></html>

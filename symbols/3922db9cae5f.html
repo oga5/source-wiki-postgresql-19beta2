@@ -1,0 +1,16 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>XLogRecPtr</title><link rel="stylesheet" href="../styles.css"></head><body><h1>Multiple definitions: <code>XLogRecPtr</code></h1><ul><li><a href="../source/src/backend/access/transam/xlogprefetcher.c.html#L116" target="source-view">src/backend/access/transam/xlogprefetcher.c:116 (struct)</a></li><li><a href="../source/src/backend/replication/walreceiver.c.html#L111" target="source-view">src/backend/replication/walreceiver.c:111 (struct)</a></li><li><a href="../source/src/include/access/xlogdefs.h.html#L21" target="source-view">src/include/access/xlogdefs.h:21 (typedef)</a></li><li><a href="../source/src/include/access/xlogreader.h.html#L62" target="source-view">src/include/access/xlogreader.h:62 (typedef)</a></li><li><a href="../source/src/include/common/parse_manifest.h.html#L33" target="source-view">src/include/common/parse_manifest.h:33 (typedef)</a></li><li><a href="../source/src/include/replication/output_plugin.h.html#L78" target="source-view">src/include/replication/output_plugin.h:78 (struct)</a></li><li><a href="../source/src/include/replication/reorderbuffer.h.html#L491" target="source-view">src/include/replication/reorderbuffer.h:491 (typedef)</a></li><li><a href="../source/src/include/replication/walreceiver.h.html#L366" target="source-view">src/include/replication/walreceiver.h:366 (typedef)</a></li></ul><script>
+(function() {
+  function notifyParent() {
+    if (parent === window) return;
+    parent.postMessage({type: "frame-location", frame: window.name || "", href: window.location.href}, "*");
+  }
+  document.addEventListener("click", function(event) {
+    const link = event.target.closest("a[data-panel]");
+    if (!link || parent === window) return;
+    parent.postMessage({type: "source-link", panel: link.dataset.panel}, "*");
+  });
+  window.addEventListener("load", notifyParent);
+  window.addEventListener("hashchange", notifyParent);
+})();
+</script></body></html>

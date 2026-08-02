@@ -1,0 +1,93 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>symbols/src__backend__libpq__be-secure-gssapi_c__be_gssapi_write.md</title><link rel="stylesheet" href="../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../source/src/backend/libpq/be-secure-gssapi.c.html#L104" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__libpq__be-secure-gssapi_c__be_gssapi_write.html&quot;}, '*');">be_gssapi_write</a></h1>
+<h2>定義</h2>
+<ul>
+<li>種別: <code>function</code></li>
+<li>定義箇所: <code>src/backend/libpq/be-secure-gssapi.c:104</code></li>
+<li>所属モジュール: <a class="wiki-entity-link" href="../modules/src__backend__libpq.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/modules/src__backend__libpq.html&quot;, &quot;source&quot;: &quot;source/src/backend/libpq/auth-oauth.c.html&quot;}, '*');"><code>module:src/backend/libpq</code></a></li>
+</ul>
+<h2>目的</h2>
+<p>静的シンボル索引から生成された初期シンボルページです。</p>
+<h2>シグネチャまたは形状</h2>
+<ul>
+<li>シグネチャ: <code>ssize_t be_gssapi_write(Port *port, const void *ptr, size_t len)</code></li>
+</ul>
+<h2>入力と出力</h2>
+<ul>
+<li>引数: <code>Port *port</code>, <code>const void *ptr</code>, <code>size_t len</code></li>
+<li>戻り値: <code>ssize_t</code></li>
+</ul>
+<h2>前提条件と不変条件</h2>
+<p>まだ解析していません。</p>
+<h2>アルゴリズムまたは振る舞い</h2>
+<ul>
+<li>複雑度: <code>high</code> (score 30)</li>
+</ul>
+<p>まだ解析していません。</p>
+<h2>呼び出し元と呼び出し先</h2>
+<ul>
+<li>呼び出し元: <a class="wiki-source-link" href="../../source/src/backend/libpq/be-secure.c.html#L308" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__libpq__be-secure_c__secure_write.html&quot;}, '*');"><code>secure_write</code></a></li>
+<li>呼び出し先: <code>errmsg</code>, <a class="wiki-source-link" href="../../source/src/backend/libpq/be-secure.c.html#L380" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__libpq__be-secure_c__secure_raw_write.html&quot;}, '*');"><code>secure_raw_write</code></a></li>
+<li>呼び出し元サイト: <a class="wiki-source-link" href="../../source/src/backend/libpq/be-secure.c.html#L308" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__libpq__be-secure_c__secure_write.html&quot;}, '*');"><code>secure_write</code></a> at <code>src/backend/libpq/be-secure.c:329:7</code> (direct, confidence=high, resolved=<a class="wiki-entity-link" href="src__backend__libpq__be-secure-gssapi_c__be_gssapi_write.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__libpq__be-secure-gssapi_c__be_gssapi_write.html&quot;, &quot;source&quot;: &quot;source/src/backend/libpq/be-secure-gssapi.c.html#L104&quot;}, '*');"><code>symbol:src/backend/libpq/be-secure-gssapi.c#be_gssapi_write</code></a>)</li>
+<li>呼び出しサイト: <a class="wiki-source-link" href="../../source/src/include/utils/elog.h.html#L242" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/utils/elog.h.html&quot;}, '*');"><code>elog</code></a> at <code>src/backend/libpq/be-secure-gssapi.c:133:3</code> (unresolved), <a class="wiki-source-link" href="../../source/src/backend/libpq/be-secure.c.html#L380" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__libpq__be-secure_c__secure_raw_write.html&quot;}, '*');"><code>secure_raw_write</code></a> at <code>src/backend/libpq/be-secure-gssapi.c:164:10</code> (direct, confidence=high, resolved=<a class="wiki-entity-link" href="src__backend__libpq__be-secure_c__secure_raw_write.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__libpq__be-secure_c__secure_raw_write.html&quot;, &quot;source&quot;: &quot;source/src/backend/libpq/be-secure.c.html#L380&quot;}, '*');"><code>symbol:src/backend/libpq/be-secure.c#secure_raw_write</code></a>), <code>gss_wrap</code> at <code>src/backend/libpq/be-secure-gssapi.c:207:11</code> (unresolved), <code>pg_GSS_error</code> at <code>src/backend/libpq/be-secure-gssapi.c:211:4</code> (unresolved, confidence=low), <code>_</code> at <code>src/backend/libpq/be-secure-gssapi.c:211:17</code> (unresolved), <a class="wiki-source-link" href="../../source/src/include/utils/elog.h.html#L166" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/utils/elog.h.html&quot;}, '*');"><code>ereport</code></a> at <code>src/backend/libpq/be-secure-gssapi.c:217:4</code> (unresolved), <code>errmsg</code> at <code>src/backend/libpq/be-secure-gssapi.c:218:7</code> (direct, confidence=high, resolved=<a class="wiki-entity-link" href="src__backend__utils__error__elog_c__errmsg.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__utils__error__elog_c__errmsg.html&quot;, &quot;source&quot;: &quot;source/src/backend/utils/error/elog.c.html#L1093&quot;}, '*');"><code>symbol:src/backend/utils/error/elog.c#errmsg</code></a>), <a class="wiki-source-link" href="../../source/src/include/utils/elog.h.html#L166" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/utils/elog.h.html&quot;}, '*');"><code>ereport</code></a> at <code>src/backend/libpq/be-secure-gssapi.c:224:4</code> (unresolved), <code>errmsg</code> at <code>src/backend/libpq/be-secure-gssapi.c:225:7</code> (direct, confidence=high, resolved=<a class="wiki-entity-link" href="src__backend__utils__error__elog_c__errmsg.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__utils__error__elog_c__errmsg.html&quot;, &quot;source&quot;: &quot;source/src/backend/utils/error/elog.c.html#L1093&quot;}, '*');"><code>symbol:src/backend/utils/error/elog.c#errmsg</code></a>), <a class="wiki-source-link" href="../../source/src/include/port/pg_bswap.h.html#L111" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/port/pg_bswap.h.html&quot;}, '*');"><code>pg_hton32</code></a> at <code>src/backend/libpq/be-secure-gssapi.c:237:12</code> (macro), <code>memcpy</code> at <code>src/backend/libpq/be-secure-gssapi.c:238:3</code> (unresolved), <code>memcpy</code> at <code>src/backend/libpq/be-secure-gssapi.c:241:3</code> (unresolved), <code>gss_release_buffer</code> at <code>src/backend/libpq/be-secure-gssapi.c:245:3</code> (unresolved), <a class="wiki-source-link" href="../../source/src/include/c.h.html#L950" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/c.h.html&quot;}, '*');"><code>Assert</code></a> at <code>src/backend/libpq/be-secure-gssapi.c:249:2</code> (unresolved), <a class="wiki-source-link" href="../../source/src/include/c.h.html#L950" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/c.h.html&quot;}, '*');"><code>Assert</code></a> at <code>src/backend/libpq/be-secure-gssapi.c:250:2</code> (unresolved)</li>
+</ul>
+<h2>関連データ構造</h2>
+<p><code>gss_buffer_desc</code>, <code>Port</code>, <code>state</code>, <code>uint32</code></p>
+<h2>ソース抜粋</h2>
+<p>~~~c ssize_t <a class="wiki-source-link" href="../../source/src/backend/libpq/be-secure-gssapi.c.html#L104" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__libpq__be-secure-gssapi_c__be_gssapi_write.html&quot;}, '*');">be_gssapi_write</a>(Port *<a class="wiki-source-link" href="../../source/src/test/regress/pg_regress.c.html#L117" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/test/regress/pg_regress.c.html&quot;}, '*');">port</a>, const void *ptr, size_t len) { OM_uint32	major, minor; gss_buffer_desc input, <a class="wiki-source-link" href="../../source/src/bin/pg_test_timing/pg_test_timing.c.html#L357" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__bin__pg_test_timing__pg_test_timing_c__output.html&quot;}, '*');">output</a>; size_t		bytes_to_encrypt; size_t		bytes_encrypted; gss_ctx_id_t gctx = <a class="wiki-source-link" href="../../source/src/test/regress/pg_regress.c.html#L117" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/test/regress/pg_regress.c.html&quot;}, '*');">port</a>-&gt;gss-&gt;ctx;</p>
+<p>/*</p>
+<ul>
+<li>When we get a retryable failure, we must not tell the caller we have</li>
+<li>successfully transmitted everything, else it won&#x27;t retry.  For</li>
+<li>simplicity, we claim we haven&#x27;t transmitted anything until we have</li>
+<li>successfully transmitted all &quot;len&quot; bytes.  Between calls, the amount of</li>
+<li>the current input data that&#x27;s already been encrypted and placed into</li>
+<li><a class="wiki-source-link" href="../../source/src/interfaces/libpq/fe-secure-gssapi.c.html#L68" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq/fe-secure-gssapi.c.html&quot;}, '*');">PqGSSSendBuffer</a> (and perhaps transmitted) <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> remembered in</li>
+<li>PqGSSSendConsumed.  On a retry, the caller *must* be sending that data</li>
+<li>again, so if it offers a len less than that, something <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> wrong.</li>
+<p>*</p>
+<li>Note: it may seem attractive to report partial <a class="wiki-source-link" href="../../source/src/interfaces/libpq/win32.h.html#L14" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq/win32.h.html&quot;}, '*');">write</a> completion once</li>
+<li>we&#x27;ve successfully sent any encrypted packets.  However, doing that</li>
+<li>expands the state space of this processing and has been responsible for</li>
+<li>bugs in the past (cf. commit d053a879b).  We won&#x27;t save much,</li>
+<li>typically, by letting callers discard data early, so don&#x27;t risk it.</li>
+<p>*/ if (len &lt; PqGSSSendConsumed) { <a class="wiki-source-link" href="../../source/src/include/utils/elog.h.html#L242" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/utils/elog.h.html&quot;}, '*');">elog</a>(<a class="wiki-source-link" href="../../source/src/include/utils/elog.h.html#L37" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/utils/elog.h.html&quot;}, '*');">COMMERROR</a>, &quot;GSSAPI caller failed to retransmit all data needing to be retried&quot;); errno = <a class="wiki-source-link" href="../../source/src/include/port/win32_port.h.html#L371" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/port/win32_port.h.html&quot;}, '*');">ECONNRESET</a>; return -1; }</p>
+</ul>
+<p>/* Discount whatever source data we already encrypted. */ bytes_to_encrypt = len - PqGSSSendConsumed; bytes_encrypted = PqGSSSendConsumed;</p>
+<p>/*</p>
+<ul>
+<li>Loop through encrypting data and sending it out until it&#x27;s all done or</li>
+<li><a class="wiki-source-link" href="../../source/src/backend/libpq/be-secure.c.html#L380" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__libpq__be-secure_c__secure_raw_write.html&quot;}, '*');">secure_raw_write</a>() complains (which would <a class="wiki-source-link" href="../../source/src/include/c.h.html#L441" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/c.h.html&quot;}, '*');">likely</a> mean that the <a class="wiki-source-link" href="../../source/src/include/port/win32_port.h.html#L495" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/port/win32_port.h.html&quot;}, '*');">socket</a></li>
+<li><a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> non-blocking and the requested <a class="wiki-source-link" href="../../source/src/include/port/win32_port.h.html#L502" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/port/win32_port.h.html&quot;}, '*');">send</a>() would block, or there was some</li>
+<li>kind of actual error).</li>
+<p>*/ while (bytes_to_encrypt || PqGSSSendLength) { int			conf_state = 0; uint32		netlen;</p>
+</ul>
+<p>/*</p>
+<ul>
+<li>Check if we have data in the encrypted <a class="wiki-source-link" href="../../source/src/bin/pg_test_timing/pg_test_timing.c.html#L357" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__bin__pg_test_timing__pg_test_timing_c__output.html&quot;}, '*');">output</a> buffer that needs to</li>
+<li>be sent (possibly left over from a previous call), and if so, try</li>
+<li>to <a class="wiki-source-link" href="../../source/src/include/port/win32_port.h.html#L502" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/port/win32_port.h.html&quot;}, '*');">send</a> it.  If we aren&#x27;t able to, return that fact back up to the</li>
+<li>caller.</li>
+<p>*/ if (PqGSSSendLength) { ssize_t		ret; ssize_t		amount = PqGSSSendLength - PqGSSSendNext;</p>
+</ul>
+<p>~~~</p>
+<h2>失敗モードと境界条件</h2>
+<p>まだ解析していません。</p>
+<h2>保守担当者向けメモ</h2>
+<ul>
+<li>後続フェーズで、ソース本文の文脈と caller/callee 情報を使ってこのページを強化する。</li>
+</ul><script>
+(function() {
+  function notifyParent() {
+    if (parent === window) return;
+    parent.postMessage({type: "frame-location", frame: window.name || "", href: window.location.href}, "*");
+  }
+  document.addEventListener("click", function(event) {
+    const link = event.target.closest("a[data-panel]");
+    if (!link || parent === window) return;
+    parent.postMessage({type: "source-link", panel: link.dataset.panel}, "*");
+  });
+  window.addEventListener("load", notifyParent);
+  window.addEventListener("hashchange", notifyParent);
+})();
+</script></body></html>

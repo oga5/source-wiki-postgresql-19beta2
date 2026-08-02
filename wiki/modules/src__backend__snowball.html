@@ -1,0 +1,57 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>modules/src__backend__snowball.md</title><link rel="stylesheet" href="../../styles.css"></head><body><h1>src/backend/snowball</h1>
+<h2>システム内での役割</h2>
+<p><code>src/backend/snowball</code> には 1 個の索引済みソースファイルがあります。この初期モジュールページはディレクトリ境界に基づいています。</p>
+<h2>責務</h2>
+<ul>
+<li>このディレクトリに属するソースファイルを集約する。</li>
+<li>より深い LLM 合成の前段として、モジュール単位の入口を提供する。</li>
+</ul>
+<h2>このモジュールのファイル</h2>
+<ul>
+<li><a class="wiki-source-link" href="../../source/src/backend/snowball/dict_snowball.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/snowball/dict_snowball.c.html&quot;}, '*');"><code>src/backend/snowball/dict_snowball.c</code></a></li>
+</ul>
+<h2>主要なデータ構造</h2>
+<ul>
+<li><a class="wiki-source-link" href="../../source/src/backend/snowball/dict_snowball.c.html#L95" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__snowball__dict_snowball_c__stemmer_module.html&quot;}, '*');"><code>stemmer_module</code></a></li>
+<li><a class="wiki-source-link" href="../../source/src/backend/snowball/dict_snowball.c.html#L177" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__snowball__dict_snowball_c__DictSnowball.html&quot;}, '*');"><code>DictSnowball</code></a></li>
+</ul>
+<h2>主なフロー</h2>
+<p>初期モジュールページでは、まだエンドツーエンドのフローを推論しません。</p>
+<h2>外部依存</h2>
+<ul>
+<li><a class="wiki-source-link" href="../../source/src/include/postgres.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/postgres.h.html&quot;}, '*');"><code>postgres.h</code></a></li>
+<li><code>catalog/pg_collation_d.h</code></li>
+<li><code>commands/defrem.h</code></li>
+<li><code>mb/pg_wchar.h</code></li>
+<li><code>tsearch/ts_public.h</code></li>
+<li><code>utils/formatting.h</code></li>
+<li><code>snowball/libstemmer/snowball_runtime.h</code></li>
+<li><code>snowball/libstemmer/stem_ISO_8859_1_basque.h</code></li>
+<li><code>snowball/libstemmer/stem_ISO_8859_1_catalan.h</code></li>
+<li><code>snowball/libstemmer/stem_ISO_8859_1_danish.h</code></li>
+</ul>
+<h2>内部構成</h2>
+<ul>
+<li>子モジュール数: 1</li>
+</ul>
+<h2>推奨読書順</h2>
+<p>1. <a class="wiki-source-link" href="../../source/src/backend/snowball/dict_snowball.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/snowball/dict_snowball.c.html&quot;}, '*');"><code>src/backend/snowball/dict_snowball.c</code></a></p>
+<h2>未解決の問い</h2>
+<ul>
+<li>LLM ベースのモジュール合成を追加した後で、責務とフローを精緻化する。</li>
+</ul><script>
+(function() {
+  function notifyParent() {
+    if (parent === window) return;
+    parent.postMessage({type: "frame-location", frame: window.name || "", href: window.location.href}, "*");
+  }
+  document.addEventListener("click", function(event) {
+    const link = event.target.closest("a[data-panel]");
+    if (!link || parent === window) return;
+    parent.postMessage({type: "source-link", panel: link.dataset.panel}, "*");
+  });
+  window.addEventListener("load", notifyParent);
+  window.addEventListener("hashchange", notifyParent);
+})();
+</script></body></html>
