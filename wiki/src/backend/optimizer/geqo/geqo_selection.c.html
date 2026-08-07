@@ -1,0 +1,74 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>src/backend/optimizer/geqo/geqo_selection.c.md</title><link rel="stylesheet" href="../../../../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/geqo/geqo_selection.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/backend/optimizer/geqo/geqo_selection.c.html&quot;}, '*');">src/backend/optimizer/geqo/geqo_selection.c</a></h1>
+<h2>概要</h2>
+<p><a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/geqo/geqo_selection.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/backend/optimizer/geqo/geqo_selection.c.html&quot;}, '*');"><code>src/backend/optimizer/geqo/geqo_selection.c</code></a> は、PostgreSQLの遺伝的クエリ最適化（GEQO）モジュールにおいて、遺伝子プールから親世代となる個体を選択する**線形選択スキーム（Linear Selection Scheme）**を実装しています。この実装は、D. Whitley氏の「Genitor」アルゴリズムをベースにしています。</p>
+<h2>モジュール内での役割</h2>
+<p>GEQOサブシステムにおいて、探索の収束性と多様性のバランスを保つための「親選択」フェーズを担います。</p>
+<ul>
+<li>評価済みの遺伝子プールから、適応度（クエリコスト）に基づくバイアスを適用して親個体（<a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/geqo/geqo_selection.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__geqo__geqo_selection_c__momma.html&quot;}, '*');"><code>momma</code></a> と <a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/geqo/geqo_selection.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__geqo__geqo_selection_c__daddy.html&quot;}, '*');"><code>daddy</code></a>）を選び出します。</li>
+<li>選択された親個体は、その後の交叉（Crossover）や変異（Mutation）ステップへと引き渡されます。</li>
+</ul>
+<h2>責務</h2>
+<ul>
+<li>**バイアス付き確率選択**: 単なる一様ランダムではなく、適応度の高い（プール内で上位に位置する）個体が優先的に選ばれるように線形確率分布を用いてインデックスを決定します。</li>
+<li>**重複選択の防止**: プールサイズが2以上の場合、同一の個体が「父親」と「母親」に重複して選ばれないように制御します。</li>
+<li>**染色体データの抽出**: 選択されたインデックスに対応する染色体データを、出力用の構造体へ安全にコピーします。</li>
+</ul>
+<h2>重要なシンボル</h2>
+<ul>
+<li>**<a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/geqo/geqo_selection.c.html#L54" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__geqo__geqo_selection_c__geqo_selection.html&quot;}, '*');"><code>geqo_selection</code></a> (関数)**: 外部に公開されているメインAPI。プールから異なる2つの親個体を選択し、<a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/geqo/geqo_selection.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__geqo__geqo_selection_c__momma.html&quot;}, '*');"><code>momma</code></a> および <a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/geqo/geqo_selection.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__geqo__geqo_selection_c__daddy.html&quot;}, '*');"><code>daddy</code></a> にデータをコピーします。</li>
+<li>**<a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/geqo/geqo_selection.c.html#L88" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__geqo__geqo_selection_c__linear_rand.html&quot;}, '*');"><code>linear_rand</code></a> (静的関数)**: 与えられたバイアス値（<a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/geqo/geqo_selection.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__geqo__geqo_selection_c__bias.html&quot;}, '*');"><code>bias</code></a>）に基づき、<code>0</code> から <code>pool_size - 1</code> の範囲で線形分布に従うランダムなインデックスを算出するヘルパー関数です。</li>
+</ul>
+<h2>制御フローとデータフロー</h2>
+<p>1. **親選択の開始**: <a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/geqo/geqo_main.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/backend/optimizer/geqo/geqo_main.c.html&quot;}, '*');"><code>geqo_main.c</code></a> 等から <a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/geqo/geqo_selection.c.html#L54" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__geqo__geqo_selection_c__geqo_selection.html&quot;}, '*');"><code>geqo_selection</code></a> が呼び出されます。 2. **インデックスの生成**:</p>
+<ul>
+<li><a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/geqo/geqo_selection.c.html#L88" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__geqo__geqo_selection_c__linear_rand.html&quot;}, '*');"><code>linear_rand</code></a> を呼び出して1つ目のインデックス（<code>first</code>）を決定します。</li>
+<li>続いて2つ目のインデックス（<code>second</code>）を決定します。</li>
+<p>3. **重複排除**: プールサイズが1より大きい場合、<code>first == second</code> である限り <a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/geqo/geqo_selection.c.html#L88" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__geqo__geqo_selection_c__linear_rand.html&quot;}, '*');"><code>linear_rand</code></a> を再実行して異なるインデックスになるまでループします。 4. **データコピー**: 決定されたインデックスを用いて、<code>pool-&gt;data</code> から <a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/geqo/geqo_selection.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__geqo__geqo_selection_c__momma.html&quot;}, '*');"><code>momma</code></a> および <a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/geqo/geqo_selection.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__geqo__geqo_selection_c__daddy.html&quot;}, '*');"><code>daddy</code></a> へ <a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/geqo/geqo_copy.c.html#L46" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__geqo__geqo_copy_c__geqo_copy.html&quot;}, '*');"><code>geqo_copy</code></a> を用いて染色体データをコピーします。</p>
+</ul>
+<pre><code>[geqo_selection]
+       │
+       ├─► [linear_rand] ──► (1つ目のインデックス決定)
+       ├─► [linear_rand] ──► (2つ目のインデックス決定)
+       │         │
+       │         └─► (重複していれば再試行)
+       │
+       └─► [geqo_copy] ──► pool-&gt;data から momma/daddy へコピー</code></pre>
+<h2>直接依存</h2>
+<ul>
+<li><a class="wiki-source-link" href="../../../../../source/src/include/postgres.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/postgres.h.html&quot;}, '*');"><code>postgres.h</code></a>: PostgreSQLの基本システム定義。</li>
+<li><code>&lt;math.h&gt;</code>: <code>sqrt()</code> などの数学関数（<a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/geqo/geqo_selection.c.html#L88" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__geqo__geqo_selection_c__linear_rand.html&quot;}, '*');"><code>linear_rand</code></a> での確率分布計算に使用）。</li>
+<li><code>&quot;optimizer/geqo_copy.h&quot;</code>: 染色体データをコピーする <a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/geqo/geqo_copy.c.html#L46" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__geqo__geqo_copy_c__geqo_copy.html&quot;}, '*');"><code>geqo_copy</code></a> の提供。</li>
+<li><code>&quot;optimizer/geqo_random.h&quot;</code>: 乱数生成器 <a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/geqo/geqo_random.c.html#L26" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__geqo__geqo_random_c__geqo_rand.html&quot;}, '*');"><code>geqo_rand</code></a> の提供。</li>
+<li><code>&quot;optimizer/geqo_selection.h&quot;</code>: 自身の関数プロトタイプ宣言。</li>
+</ul>
+<h2>関連コード</h2>
+<ul>
+<li><a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/geqo/geqo_main.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/backend/optimizer/geqo/geqo_main.c.html&quot;}, '*');"><code>src/backend/optimizer/geqo/geqo_main.c</code></a>: GEQOのメインアルゴリズムループを管理し、本モジュールを呼び出す起点。</li>
+<li><a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/geqo/geqo_pool.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/backend/optimizer/geqo/geqo_pool.c.html&quot;}, '*');"><code>src/backend/optimizer/geqo/geqo_pool.c</code></a>: 選択元となる遺伝子プール（<code>Pool</code> 構造体）のソートや管理。</li>
+<li><a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/geqo/geqo_recombination.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/backend/optimizer/geqo/geqo_recombination.c.html&quot;}, '*');"><code>src/backend/optimizer/geqo/geqo_recombination.c</code></a>: 選択された親個体（<a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/geqo/geqo_selection.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__geqo__geqo_selection_c__momma.html&quot;}, '*');"><code>momma</code></a>, <a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/geqo/geqo_selection.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__geqo__geqo_selection_c__daddy.html&quot;}, '*');"><code>daddy</code></a>）を用いて交叉を行う。</li>
+</ul>
+<h2>読者向けメモ</h2>
+<ul>
+<li>**丸め誤差への配慮**: <a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/geqo/geqo_selection.c.html#L88" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__geqo__geqo_selection_c__linear_rand.html&quot;}, '*');"><code>linear_rand</code></a> 内の <code>do-while</code> ループは、<code>geqo_rand()</code> が極稀に <code>1.0</code> を返した場合や、浮動小数点の丸め誤差によって算出されたインデックスが有効範囲（<code>0 &lt;= index &lt; max</code>）を外れた場合に、安全に再試行するためのガードレールとして機能しています。</li>
+<li>**バイアス値の意味**: <a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/geqo/geqo_selection.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__geqo__geqo_selection_c__bias.html&quot;}, '*');"><code>bias</code></a> は線形分布の傾きを制御するパラメータであり、優秀な個体が選択される確率の偏り具合を決定します。</li>
+</ul>
+<h2>シンボルページ</h2>
+<ul>
+<li><a href="../../../../symbols/src__backend__optimizer__geqo__geqo_selection_c__geqo_selection.html" target="wiki-view"><code>geqo_selection</code></a></li>
+<li><a href="../../../../symbols/src__backend__optimizer__geqo__geqo_selection_c__linear_rand.html" target="wiki-view"><code>linear_rand</code></a></li>
+</ul><script>
+(function() {
+  function notifyParent() {
+    if (parent === window) return;
+    parent.postMessage({type: "frame-location", frame: window.name || "", href: window.location.href}, "*");
+  }
+  document.addEventListener("click", function(event) {
+    const link = event.target.closest("a[data-panel]");
+    if (!link || parent === window) return;
+    parent.postMessage({type: "source-link", panel: link.dataset.panel}, "*");
+  });
+  window.addEventListener("load", notifyParent);
+  window.addEventListener("hashchange", notifyParent);
+})();
+</script></body></html>

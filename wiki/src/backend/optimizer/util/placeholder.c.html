@@ -1,0 +1,92 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>src/backend/optimizer/util/placeholder.c.md</title><link rel="stylesheet" href="../../../../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/util/placeholder.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/backend/optimizer/util/placeholder.c.html&quot;}, '*');">src/backend/optimizer/util/placeholder.c</a></h1>
+<h2>概要</h2>
+<p><a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/util/placeholder.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/backend/optimizer/util/placeholder.c.html&quot;}, '*');"><code>src/backend/optimizer/util/placeholder.c</code></a> は、PostgreSQLオプティマイザにおけるプレースホルダ（<code>PlaceHolderVar</code> および <code>PlaceHolderInfo</code>）の生成、検索、ジョイントリーからの検出、評価レベルの調整、および不要なプレースホルダの除去を管理するソースファイルです。サブクエリの引き上げ（pullup）や外部結合の最適化に伴う式評価の位置決定を支えています。</p>
+<h2>モジュール内での役割</h2>
+<p><code>src/backend/optimizer/util</code> ディレクトリ配下に位置し、クエリツリー内の複雑な式やサブクエリ境界をまたぐ式評価のスコープをオプティマイザが追跡できるようにします。式操作 (<a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/util/clauses.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/backend/optimizer/util/clauses.c.html&quot;}, '*');"><code>clauses.c</code></a>) やリレーション管理 (<a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/util/relnode.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/backend/optimizer/util/relnode.c.html&quot;}, '*');"><code>relnode.c</code></a>) と連携して、プレースホルダが必要とされる評価レベル (<code>ph_eval_at</code>) や依存関係 (<code>ph_lateral</code>) を計算します。</p>
+<h2>責務</h2>
+<ul>
+<li>**プレースホルダ式生成**: <code>PlaceHolderVar</code> ノードを生成し、一意なプレースホルダID（<code>phid</code>）を割り振る。</li>
+<li>**メタデータ管理 (<code>PlaceHolderInfo</code>)**: クエリプランナ開始後に <code>PlaceHolderInfo</code> を作成・キャッシュし、評価可能なリレーション集合 (<code>ph_eval_at</code>) やラテラル参照 (<code>ph_lateral</code>) を算出する。</li>
+<li>**ジョイントリー解析**: ジョイントリー（<code>FromExpr</code> / <code>JoinExpr</code>）を再帰的に走査し、含まれるすべての <code>PlaceHolderVar</code> を収集・登録する。</li>
+<li>**入力依存レベルの調整**: プレースホルダの評価に必要な変数や他のプレースホルダが、その評価レベルで確実に利用可能になるようターゲットリストや属性必要度を更新する。</li>
+<li>**ベースリレー・結合リレへの組込**: プレースホルダを計算可能なベースリレルや結合リルのターゲットリスト (<a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/util/appendinfo.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__appendinfo_c__reltarget.html&quot;}, '*');"><code>reltarget</code></a>) に追加し、コストや幅を見積もる。</li>
+<li>**不要プレースホルダの除去**: 外部結合などで無効化されない（<a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/util/placeholder.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__placeholder_c__phnullingrels.html&quot;}, '*');"><code>phnullingrels</code></a> が空の）不要な <code>PlaceHolderVar</code> をスキャンレベルの式から剥がし、インデックスやパーティションキーとのマッチングを容易にする。</li>
+</ul>
+<h2>重要なシンボル</h2>
+<h3>ライフサイクル・生成</h3>
+<ul>
+<li>**<code>make_placeholder_expr(PlannerInfo *root, Expr *expr, Relids phrels)</code>**: 与えられた式と構文上の位置（<a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/util/placeholder.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__placeholder_c__phrels.html&quot;}, '*');"><code>phrels</code></a>）から新しい <code>PlaceHolderVar</code> ノードを生成する。</li>
+<li>**<code>find_placeholder_info(PlannerInfo *root, PlaceHolderVar *phv)</code>**: <a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/util/placeholder.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__placeholder_c__phv.html&quot;}, '*');"><code>phv</code></a> に対応する <code>PlaceHolderInfo</code> を取得する。存在しない場合は、プレースホルダ集合が凍結されていなければ新規作成し、<code>placeholder_list</code> と <a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/util/placeholder.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__placeholder_c__placeholder_array.html&quot;}, '*');"><code>placeholder_array</code></a> の両方に登録する。</li>
+</ul>
+<h3>走査・検出</h3>
+<ul>
+<li>**<code>find_placeholders_in_jointree(PlannerInfo *root)</code>**: クエリのジョイントリーからプレースホルダの探索を開始するエントリーポイント。</li>
+<li>**<code>find_placeholders_recurse(PlannerInfo *root, Node *jtnode)</code>**: <code>FromExpr</code> や <code>JoinExpr</code> を再帰的にたどり、各修飾節（quals）内のプレースホルダを検出する。</li>
+<li>**<code>find_placeholders_in_expr(PlannerInfo *root, Node *expr)</code>**: 式から変数を抽出し、含まれる <code>PlaceHolderVar</code> ごとに <code>PlaceHolderInfo</code> を作成する。</li>
+</ul>
+<h3>レベル調整・リレーション統合</h3>
+<ul>
+<li>**<code>fix_placeholder_input_needed_levels(PlannerInfo *root)</code>**: プレースホルダの評価に必要な入力を、評価位置（<code>ph_eval_at</code>）で必要とマークする。</li>
+<li>**<code>rebuild_placeholder_attr_needed(PlannerInfo *root)</code>**: 不要な外部結合の除去後、属性の必要度セットを再構築する。</li>
+<li>**<code>add_placeholders_to_base_rels(PlannerInfo *root)</code>**: ベースリレルで計算可能なプレースホルダをそのターゲットリストに追加する。</li>
+<li>**<code>add_placeholders_to_joinrel(...)</code>**: 結合リレルで新たに計算可能になったプレースホルダをターゲットリストに追加し、コスト計算や <a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/util/placeholder.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__placeholder_c__direct_lateral_relids.html&quot;}, '*');"><code>direct_lateral_relids</code></a> の更新を行う。</li>
+</ul>
+<h3>ユーティリティ・検証</h3>
+<ul>
+<li>**<code>contain_placeholder_references_to(PlannerInfo *root, Node *clause, int relid)</code>**: 指定した式に含まれる <code>PlaceHolderVar</code> が特定のリレルを参照しているかを判定する。</li>
+<li>**<code>get_placeholder_nulling_relids(PlannerInfo *root, PlaceHolderInfo *phinfo)</code>**: プレースホルダをヌル化（nulling）する外部結合リレルの集合を計算する。</li>
+<li>**<code>strip_noop_phvs(Node *node)</code>**: スキャンレベルの式から、ヌル化されない（<a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/util/placeholder.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__placeholder_c__phnullingrels.html&quot;}, '*');"><code>phnullingrels</code></a> が空の）無効な <code>PlaceHolderVar</code> を再帰的に剥がす。</li>
+</ul>
+<h2>制御フローとデータフロー</h2>
+<p>1. **初期検出**: クエリの最適化初期段階において、<a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/util/placeholder.c.html#L186" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__placeholder_c__find_placeholders_in_jointree.html&quot;}, '*');"><code>find_placeholders_in_jointree</code></a> がジョイントリーを再帰走査 (<a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/util/placeholder.c.html#L208" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__placeholder_c__find_placeholders_recurse.html&quot;}, '*');"><code>find_placeholders_recurse</code></a>) し、修飾節内の式からプレースホルダを特定する。 2. **情報のキャッシュ**: 見つかった各 <code>PlaceHolderVar</code> に対して <a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/util/placeholder.c.html#L84" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__placeholder_c__find_placeholder_info.html&quot;}, '*');"><code>find_placeholder_info</code></a> が呼ばれ、<code>root-&gt;placeholder_array</code> および <code>root-&gt;placeholder_list</code> に <code>PlaceHolderInfo</code> が格納される。この際、<code>ph_eval_at</code>（評価位置）や <code>ph_lateral</code>（ラテラル参照）が算出される。 3. **評価レベル・ターゲットリストへの統合**:</p>
+<ul>
+<li><a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/util/placeholder.c.html#L301" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__placeholder_c__fix_placeholder_input_needed_levels.html&quot;}, '*');"><code>fix_placeholder_input_needed_levels</code></a> により、評価に必要な変数がスキャン/結合レベルで利用可能になるよう保証される。</li>
+<li><a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/util/placeholder.c.html#L357" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__placeholder_c__add_placeholders_to_base_rels.html&quot;}, '*');"><code>add_placeholders_to_base_rels</code></a> や <a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/util/placeholder.c.html#L401" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__placeholder_c__add_placeholders_to_joinrel.html&quot;}, '*');"><code>add_placeholders_to_joinrel</code></a> によって、条件を満たすリレルの <code>reltarget-&gt;exprs</code> にプレースホルダ式が追加され、コストと幅が累積される。</li>
+<p>4. **最適化・クリーンアップ**: 不要な外部結合が削除された場合は <a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/util/placeholder.c.html#L328" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__placeholder_c__rebuild_placeholder_attr_needed.html&quot;}, '*');"><code>rebuild_placeholder_attr_needed</code></a> で属性必要度が再計算され、式マッチング時には <a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/util/placeholder.c.html#L613" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__placeholder_c__strip_noop_phvs.html&quot;}, '*');"><code>strip_noop_phvs</code></a> が軽量ウォーカー（<a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/util/placeholder.c.html#L631" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__placeholder_c__contain_noop_phv_walker.html&quot;}, '*');"><code>contain_noop_phv_walker</code></a>）とミューータ（<a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/util/placeholder.c.html#L656" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__placeholder_c__strip_noop_phvs_mutator.html&quot;}, '*');"><code>strip_noop_phvs_mutator</code></a>）を用いて不要な <code>PlaceHolderVar</code> を透過的に除去する。</p>
+</ul>
+<h2>直接依存</h2>
+<ul>
+<li><a class="wiki-source-link" href="../../../../../source/src/include/postgres.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/postgres.h.html&quot;}, '*');"><code>postgres.h</code></a></li>
+<li><code>nodes/nodeFuncs.h</code></li>
+<li><code>optimizer/cost.h</code></li>
+<li><code>optimizer/optimizer.h</code></li>
+<li><code>optimizer/pathnode.h</code></li>
+<li><code>optimizer/placeholder.h</code></li>
+<li><code>optimizer/planmain.h</code></li>
+<li><code>utils/lsyscache.h</code></li>
+</ul>
+<h2>読者向けメモ</h2>
+<ul>
+<li>**メモリ管理と重複格納**: <code>PlaceHolderInfo</code> は <code>root-&gt;placeholder_list</code>（リスト）と <code>root-&gt;placeholder_array</code>（動的配列）の両方にポインタが格納されます。そのため、このリストを直接 <code>expression_tree_mutator</code> 等で走査・変更することは安全ではなく、配列側の再構築が必要になる点に注意してください。</li>
+<li>**不変条件 (Invariants)**: <a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/util/placeholder.c.html#L84" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__placeholder_c__find_placeholder_info.html&quot;}, '*');"><code>find_placeholder_info</code></a> の呼び出し時、プレースホルダ集合が凍結されている状態（<code>root-&gt;placeholdersFrozen == true</code>）で新規作成を行うと <code>elog(ERROR)</code> が発生します。また、ベースリレル追加時や結合リレル追加時、初期状態の <a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/util/placeholder.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__placeholder_c__phnullingrels.html&quot;}, '*');"><code>phnullingrels</code></a> は空（<code>NULL</code>）であることが前提となっています。</li>
+</ul>
+<h2>シンボルページ</h2>
+<ul>
+<li><a href="../../../../symbols/src__backend__optimizer__util__placeholder_c__contain_placeholder_references_context.html" target="wiki-view"><code>contain_placeholder_references_context</code></a></li>
+<li><a href="../../../../symbols/src__backend__optimizer__util__placeholder_c__make_placeholder_expr.html" target="wiki-view"><code>make_placeholder_expr</code></a></li>
+<li><a href="../../../../symbols/src__backend__optimizer__util__placeholder_c__find_placeholder_info.html" target="wiki-view"><code>find_placeholder_info</code></a></li>
+<li><a href="../../../../symbols/src__backend__optimizer__util__placeholder_c__find_placeholders_in_jointree.html" target="wiki-view"><code>find_placeholders_in_jointree</code></a></li>
+<li><a href="../../../../symbols/src__backend__optimizer__util__placeholder_c__find_placeholders_recurse.html" target="wiki-view"><code>find_placeholders_recurse</code></a></li>
+<li><a href="../../../../symbols/src__backend__optimizer__util__placeholder_c__find_placeholders_in_expr.html" target="wiki-view"><code>find_placeholders_in_expr</code></a></li>
+<li><a href="../../../../symbols/src__backend__optimizer__util__placeholder_c__fix_placeholder_input_needed_levels.html" target="wiki-view"><code>fix_placeholder_input_needed_levels</code></a></li>
+<li><a href="../../../../symbols/src__backend__optimizer__util__placeholder_c__rebuild_placeholder_attr_needed.html" target="wiki-view"><code>rebuild_placeholder_attr_needed</code></a></li>
+<li><a href="../../../../symbols/src__backend__optimizer__util__placeholder_c__add_placeholders_to_base_rels.html" target="wiki-view"><code>add_placeholders_to_base_rels</code></a></li>
+<li><a href="../../../../symbols/src__backend__optimizer__util__placeholder_c__add_placeholders_to_joinrel.html" target="wiki-view"><code>add_placeholders_to_joinrel</code></a></li>
+<li><a href="../../../../symbols/src__backend__optimizer__util__placeholder_c__contain_placeholder_references_to.html" target="wiki-view"><code>contain_placeholder_references_to</code></a></li>
+<li><a href="../../../../symbols/src__backend__optimizer__util__placeholder_c__contain_placeholder_references_walker.html" target="wiki-view"><code>contain_placeholder_references_walker</code></a></li>
+</ul><script>
+(function() {
+  function notifyParent() {
+    if (parent === window) return;
+    parent.postMessage({type: "frame-location", frame: window.name || "", href: window.location.href}, "*");
+  }
+  document.addEventListener("click", function(event) {
+    const link = event.target.closest("a[data-panel]");
+    if (!link || parent === window) return;
+    parent.postMessage({type: "source-link", panel: link.dataset.panel}, "*");
+  });
+  window.addEventListener("load", notifyParent);
+  window.addEventListener("hashchange", notifyParent);
+})();
+</script></body></html>

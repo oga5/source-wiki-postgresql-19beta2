@@ -1,0 +1,56 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>src/backend/optimizer/geqo/geqo_copy.c.md</title><link rel="stylesheet" href="../../../../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/geqo/geqo_copy.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/backend/optimizer/geqo/geqo_copy.c.html&quot;}, '*');">src/backend/optimizer/geqo/geqo_copy.c</a></h1>
+<h2>概要</h2>
+<ul>
+<li>PostgreSQLの遺伝的クエリ最適化（GEQO）モジュールにおいて、個体（染色体）のデータを別の個体へ複製するためのユーティリティ関数を提供するソースファイルです。</li>
+<li>D. Whitley氏の「Genitor」アルゴリズムの実装をベースにしています。</li>
+</ul>
+<h2>モジュール内での役割</h2>
+<ul>
+<li>GEQOサブシステム（<code>src/backend/optimizer/geqo</code>）において、遺伝的アルゴリズムの世代交代や選択、交叉（Recombination）処理の過程で、個体（<code>Chromosome</code>）のデータを退避・複製する共通ユーティリティとして機能します。</li>
+<li>複雑な最適化ロジックからデータコピーの低レベルな配列操作を分離し、モジュール全体のコードの可読性を高める役割を持っています。</li>
+</ul>
+<h2>責務</h2>
+<ul>
+<li>**遺伝子配列の複製**: 指定された長さ（<code>string_length</code>）に基づき、コピー元（<code>chromo2</code>）からコピー先（<code>chromo1</code>）へ遺伝子配列（<a class="wiki-source-link" href="../../../../../source/src/include/optimizer/geqo_gene.h.html#L33" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__optimizer__geqo_gene_h__Gene.html&quot;}, '*');"><code>Gene</code></a>の配列）を正確にコピーします。</li>
+<li>**評価値（適応度）の同期**: 遺伝子配列のコピーに伴い、その個体の評価値（<a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/geqo/geqo_pool.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__geqo__geqo_pool_c__worth.html&quot;}, '*');"><code>worth</code></a>）も同時にコピー先に同期します。</li>
+</ul>
+<h2>重要なシンボル</h2>
+<ul>
+<li>**<a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/geqo/geqo_copy.c.html#L46" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__geqo__geqo_copy_c__geqo_copy.html&quot;}, '*');"><code>geqo_copy</code></a> (関数)**: 本ファイルが提供する唯一の公開関数です。<code>PlannerInfo</code>、コピー先およびコピー元の <code>Chromosome</code> 構造体へのポインタ、および遺伝子長を受け取り、インプレースでデータを複製します。</li>
+</ul>
+<h2>制御フローとデータフロー</h2>
+<p>1. **入力**: コピー先ポインタ（<code>chromo1</code>）、コピー元ポインタ（<code>chromo2</code>）、およびコピー対象の遺伝子長（<code>string_length</code>）を受け取ります。 2. **ループ処理**: <code>0</code> から <code>string_length - 1</code> までのループを回し、<code>chromo2-&gt;string[i]</code> の値を <code>chromo1-&gt;string[i]</code> に代入します。 3. **評価値のコピー**: <code>chromo2-&gt;worth</code> の値を <code>chromo1-&gt;worth</code> に代入します。 4. **データフローの境界**: 本関数は呼び出し元のメモリ領域（通常はGEQOプール内の個体領域）を直接書き換えます。</p>
+<h2>直接依存</h2>
+<ul>
+<li>**<a class="wiki-source-link" href="../../../../../source/src/include/postgres.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/postgres.h.html&quot;}, '*');"><code>postgres.h</code></a>**: PostgreSQLの基本データ型やシステム定義。</li>
+<li>**<code>optimizer/geqo_copy.h</code>**: 本関数のプロトタイプ宣言を提供するヘッダーファイル。間接的に <code>optimizer/geqo.h</code>（<code>Chromosome</code> 構造体の定義を含む）に依存しています。</li>
+</ul>
+<h2>関連コード</h2>
+<ul>
+<li>**<a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/geqo/geqo_pool.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/backend/optimizer/geqo/geqo_pool.c.html&quot;}, '*');"><code>src/backend/optimizer/geqo/geqo_pool.c</code></a>**: 染色体プール（個体群）を管理するモジュール。個体のソートや入れ替え時に <a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/geqo/geqo_copy.c.html#L46" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__geqo__geqo_copy_c__geqo_copy.html&quot;}, '*');"><code>geqo_copy</code></a> を頻繁に呼び出します。</li>
+<li>**<a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/geqo/geqo_main.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/backend/optimizer/geqo/geqo_main.c.html&quot;}, '*');"><code>src/backend/optimizer/geqo/geqo_main.c</code></a>**: GEQOのメインループを制御し、世代交代処理の中で本関数を利用します。</li>
+</ul>
+<h2>読者向けメモ</h2>
+<ul>
+<li>本ファイルは非常にシンプルであり、メモリの新規確保（<code>palloc</code>など）は行いません。呼び出し側が事前に <code>chromo1</code> の <code>string</code> 配列に対して十分なメモリ領域を確保していることを前提としています。</li>
+<li>引数として <code>PlannerInfo *root</code> を受け取りますが、現在の実装では関数内部でこの変数は使用されていません。将来的な拡張や他のGEQOインターフェースとの整合性のために引数として維持されています。</li>
+</ul>
+<h2>シンボルページ</h2>
+<ul>
+<li><a href="../../../../symbols/src__backend__optimizer__geqo__geqo_copy_c__geqo_copy.html" target="wiki-view"><code>geqo_copy</code></a></li>
+</ul><script>
+(function() {
+  function notifyParent() {
+    if (parent === window) return;
+    parent.postMessage({type: "frame-location", frame: window.name || "", href: window.location.href}, "*");
+  }
+  document.addEventListener("click", function(event) {
+    const link = event.target.closest("a[data-panel]");
+    if (!link || parent === window) return;
+    parent.postMessage({type: "source-link", panel: link.dataset.panel}, "*");
+  });
+  window.addEventListener("load", notifyParent);
+  window.addEventListener("hashchange", notifyParent);
+})();
+</script></body></html>

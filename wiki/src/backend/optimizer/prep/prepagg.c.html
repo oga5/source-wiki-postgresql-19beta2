@@ -1,0 +1,95 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>src/backend/optimizer/prep/prepagg.c.md</title><link rel="stylesheet" href="../../../../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/prep/prepagg.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/backend/optimizer/prep/prepagg.c.html&quot;}, '*');">src/backend/optimizer/prep/prepagg.c</a></h1>
+<h2>概要</h2>
+<p><a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/prep/prepagg.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/backend/optimizer/prep/prepagg.c.html&quot;}, '*');"><code>src/backend/optimizer/prep/prepagg.c</code></a> は、クエリ内の集約関数呼び出し（<code>Aggref</code>）の前処理を行い、同一の集約や状態を共有できる遷移状態（Transition State）を検出・まとめ上げる機能を提供する。計画ツリー構築の初期段階において、<code>root-&gt;agginfos</code> および <code>root-&gt;aggtransinfos</code> に情報を収集し、個々の <code>Aggref</code> ノードへ一意な識別子（<code>aggno</code>, <code>aggtransno</code>）をインプレースで割り当てることで、無駄な再計算を削減する。</p>
+<h2>モジュール内での役割</h2>
+<p><code>src/backend/optimizer/prep</code> モジュールの一部として、クエリ最適化のプリプロセスフェーズに属する。ジョイントリーやクオリティ、ターゲットリストの変形と並行して、集約演算のコスト見積もりや重複排除の基盤データ構造を構築する役割を担う。</p>
+<h2>責務</h2>
+<ul>
+<li>**集約の重複排除と状態共有**: 同一の集約関数呼び出しや、同じ引数・遷移関数・初期値を持つ異なる集約の間で、計算結果や遷移状態（<code>transno</code>）を共有させる。</li>
+<li>**型解決**: 多態性（Polymorphic）を持つ集約の遷移型（<code>aggtranstype</code>）を実際のデータ型へ解決する。</li>
+<li>**部分集約（Partial Aggregation）の可否判定**: <code>combinefn</code> や <code>serialfn</code>/<code>deserialfn</code> の有無、あるいは順序付き集約の存在を検査し、部分集約やシリアライゼーションの制約フラグを <code>PlannerInfo</code> に設定する。</li>
+<li>**集約コストの計算**: <a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/prep/prepagg.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__prep__prepagg_c__agginfos.html&quot;}, '*');"><code>agginfos</code></a> と <a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/prep/prepagg.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__prep__prepagg_c__aggtransinfos.html&quot;}, '*');"><code>aggtransinfos</code></a> を走査し、遷移関数・結合関数・最終関数・引数評価・フィルタ評価のコストや、ハッシュ集約用のメモリ空間見積もりを算出する。</li>
+</ul>
+<h2>重要なシンボル</h2>
+<h3>集約前処理のエントリポイント</h3>
+<ul>
+<li><code>preprocess_aggrefs(PlannerInfo *root, Node *clause)</code>: クエリ内の集約参照を再帰的に走査し、前処理を実行する公開関数。</li>
+</ul>
+<h3>解析・Walkerヘルパー</h3>
+<ul>
+<li><code>preprocess_aggrefs_walker(Node *node, PlannerInfo *root)</code>: 式ツリーを走査し、<code>Aggref</code> ノードを発見して個別処理へディスパッチする。</li>
+<li><code>preprocess_aggref(Aggref *aggref, PlannerInfo *root)</code>: 単一の <code>Aggref</code> に対してシステムカタログ（<code>pg_aggregate</code>）から情報を取得し、型解決、重複・共有判定を行って <a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/prep/prepagg.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__prep__prepagg_c__agginfos.html&quot;}, '*');"><code>agginfos</code></a>/<a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/prep/prepagg.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__prep__prepagg_c__aggtransinfos.html&quot;}, '*');"><code>aggtransinfos</code></a> に登録する。</li>
+</ul>
+<h3>適合性検索</h3>
+<ul>
+<li><code>find_compatible_agg(PlannerInfo *root, Aggref *newagg, List **same_input_transnos)</code>: 既存の <code>AggInfo</code> リストから完全に同一の集約呼び出しを検索する。一致しない場合でも、同じ入力を持つ共有可能な遷移状態のリストを収集する。</li>
+<li><code>find_compatible_trans(PlannerInfo *root, Aggref *newagg, bool shareable, Oid aggtransfn, Oid aggtranstype, int transtypeLen, bool transtypeByVal, Oid aggcombinefn, Oid aggserialfn, Oid aggdeserialfn, Datum initValue, bool initValueIsNull, List *transnos)</code>: 入力が一致する既存の遷移状態の中から、遷移関数、シリアライズ関数、結合関数、初期値が一致するものを探して再利用する。</li>
+</ul>
+<h3>値取得・コスト見積もり</h3>
+<ul>
+<li><code>GetAggInitVal(Datum textInitVal, Oid transtype)</code>: テキスト形式の初期値表現を、指定された遷移型の <code>Datum</code> に変換する。</li>
+<li><code>get_agg_clause_costs(PlannerInfo *root, AggSplit aggsplit, AggClauseCosts *costs)</code>: <a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/prep/prepagg.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__prep__prepagg_c__aggtransinfos.html&quot;}, '*');"><code>aggtransinfos</code></a> と <a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/prep/prepagg.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__prep__prepagg_c__agginfos.html&quot;}, '*');"><code>agginfos</code></a> の内容を元に、遷移コスト・結合コスト・最終関数コスト・メモリ見積もり（<a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/prep/prepagg.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__prep__prepagg_c__transitionSpace.html&quot;}, '*');"><code>transitionSpace</code></a>）を累積する。</li>
+</ul>
+<h2>制御フローとデータフロー</h2>
+<p>1. **走査開始**: <a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/prep/prepagg.c.html#L109" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__prep__prepagg_c__preprocess_aggrefs.html&quot;}, '*');"><code>preprocess_aggrefs</code></a> が <a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/prep/prepagg.c.html#L343" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__prep__prepagg_c__preprocess_aggrefs_walker.html&quot;}, '*');"><code>preprocess_aggrefs_walker</code></a> を呼び出し、クエリ内の式ツリーから <code>Aggref</code> を探索する。 2. **カタログ参照**: <a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/prep/prepagg.c.html#L115" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__prep__prepagg_c__preprocess_aggref.html&quot;}, '*');"><code>preprocess_aggref</code></a> が <code>AGGFNOID</code> システムキャッシュを引いて <code>pg_aggregate</code> の関数群（trans, <a class="wiki-source-link" href="../../../../../source/src/common/hashfn.c.html#L116" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/common/hashfn.c.html&quot;}, '*');">final</a>, <a class="wiki-source-link" href="../../../../../source/src/backend/regex/regc_nfa.c.html#L1986" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__regex__regc_nfa_c__combine.html&quot;}, '*');">combine</a>等）や初期値、型情報を取得する。 3. **型解決**: <a class="wiki-source-link" href="../../../../../source/src/backend/parser/parse_agg.c.html#L2121" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__parser__parse_agg_c__get_aggregate_argtypes.html&quot;}, '*');"><code>get_aggregate_argtypes</code></a> と <a class="wiki-source-link" href="../../../../../source/src/backend/parser/parse_agg.c.html#L2147" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__parser__parse_agg_c__resolve_aggregate_transtype.html&quot;}, '*');"><code>resolve_aggregate_transtype</code></a> により、多態的トランジション型を具体化する。 4. **重複・共有判定**:</p>
+<ul>
+<li><a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/prep/prepagg.c.html#L378" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__prep__prepagg_c__find_compatible_agg.html&quot;}, '*');"><code>find_compatible_agg</code></a> で完全一致する <code>Aggref</code> があれば、既存の <code>aggno</code> を流用する。</li>
+<li>一致しない場合、<a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/prep/prepagg.c.html#L456" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__prep__prepagg_c__find_compatible_trans.html&quot;}, '*');"><code>find_compatible_trans</code></a> で同じ入力パラメータを持ちつつ状態共有が可能な <code>transno</code> を探す。見つからなければ新規に <a class="wiki-source-link" href="../../../../../source/src/include/nodes/pathnodes.h.html#L3789" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__nodes__pathnodes_h__AggTransInfo.html&quot;}, '*');"><code>AggTransInfo</code></a> を作成して <code>root-&gt;aggtransinfos</code> に追加する。</li>
+<p>5. **インプレース更新**: 決定された <code>aggno</code> と <code>aggtransno</code> を <code>Aggref</code> 構造体に書き込む。 6. **コスト集計**: 後続のプラン作成フェーズにおいて <a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/prep/prepagg.c.html#L558" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__prep__prepagg_c__get_agg_clause_costs.html&quot;}, '*');"><code>get_agg_clause_costs</code></a> が呼ばれ、各種関数の実行コストやハッシュテーブル用のメモリ所要量が計算される。</p>
+</ul>
+<h2>直接依存</h2>
+<ul>
+<li><a class="wiki-source-link" href="../../../../../source/src/include/postgres.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/postgres.h.html&quot;}, '*');"><code>postgres.h</code></a></li>
+<li><code>access/htup_details.h</code></li>
+<li><code>catalog/pg_aggregate.h</code></li>
+<li><code>catalog/pg_type.h</code></li>
+<li><code>nodes/nodeFuncs.h</code></li>
+<li><code>nodes/pathnodes.h</code></li>
+<li><code>optimizer/cost.h</code></li>
+<li><code>optimizer/optimizer.h</code></li>
+<li><code>optimizer/plancat.h</code></li>
+<li><code>optimizer/prep.h</code></li>
+<li><code>parser/parse_agg.h</code></li>
+<li><code>utils/builtins.h</code></li>
+<li><code>utils/datum.h</code></li>
+<li><code>utils/fmgroids.h</code></li>
+<li><code>utils/lsyscache.h</code></li>
+<li><code>utils/memutils.h</code></li>
+<li><code>utils/syscache.h</code></li>
+</ul>
+<h2>関連コード</h2>
+<ul>
+<li><a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/prep/prepjointree.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/backend/optimizer/prep/prepjointree.c.html&quot;}, '*');"><code>src/backend/optimizer/prep/prepjointree.c</code></a>, <a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/prep/prepqual.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/backend/optimizer/prep/prepqual.c.html&quot;}, '*');"><code>prepqual.c</code></a>, <a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/prep/preptlist.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/backend/optimizer/prep/preptlist.c.html&quot;}, '*');"><code>preptlist.c</code></a>, <a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/prep/prepunion.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/backend/optimizer/prep/prepunion.c.html&quot;}, '*');"><code>prepunion.c</code></a> (同モジュールの他の前処理ファイル)</li>
+<li><a class="wiki-source-link" href="../../../../../source/src/backend/parser/parse_agg.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/parser/parse_agg.c.html&quot;}, '*');"><code>src/backend/parser/parse_agg.c</code></a> (パーサ側の集約解析)</li>
+</ul>
+<h2>読者向けメモ</h2>
+<ul>
+<li>**インプレース書き換え**: 本ファイルでの処理は入力された <code>Aggref</code> ツリーのフィールド（<code>aggno</code>, <code>aggtransno</code>, <code>aggtranstype</code>）を直接書き換える。</li>
+<li>**ライフサイクル**:ここで生成される <code>AggInfo</code> および <a class="wiki-source-link" href="../../../../../source/src/include/nodes/pathnodes.h.html#L3789" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__nodes__pathnodes_h__AggTransInfo.html&quot;}, '*');"><code>AggTransInfo</code></a> 構造体は、クエリの計画フェーズの生存期間のみ有効であり、エグゼキュータ起動時には破棄される（エグゼキュータは独自に初期値や関数ルックアップを行う設計になっている）。</li>
+<li>**メモリ・空間の推計**: <code>INTERNAL</code> 型や非パスバイバリュー（Pass-by-reference）の遷移型については、<code>aggtransspace</code> やデフォルトの割り当てサイズ（<a class="wiki-source-link" href="../../../../../source/src/include/utils/memutils.h.html#L168" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/utils/memutils.h.html&quot;}, '*');"><code>ALLOCSET_SMALL_INITSIZE</code></a>, <a class="wiki-source-link" href="../../../../../source/src/include/utils/memutils.h.html#L158" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/utils/memutils.h.html&quot;}, '*');"><code>ALLOCSET_DEFAULT_INITSIZE</code></a>）を用いてハッシュ集約等のメモリ見積もりを行っている。</li>
+</ul>
+<h2>シンボルページ</h2>
+<ul>
+<li><a href="../../../../symbols/src__backend__optimizer__prep__prepagg_c__preprocess_aggrefs.html" target="wiki-view"><code>preprocess_aggrefs</code></a></li>
+<li><a href="../../../../symbols/src__backend__optimizer__prep__prepagg_c__preprocess_aggref.html" target="wiki-view"><code>preprocess_aggref</code></a></li>
+<li><a href="../../../../symbols/src__backend__optimizer__prep__prepagg_c__preprocess_aggrefs_walker.html" target="wiki-view"><code>preprocess_aggrefs_walker</code></a></li>
+<li><a href="../../../../symbols/src__backend__optimizer__prep__prepagg_c__find_compatible_agg.html" target="wiki-view"><code>find_compatible_agg</code></a></li>
+<li><a href="../../../../symbols/src__backend__optimizer__prep__prepagg_c__find_compatible_trans.html" target="wiki-view"><code>find_compatible_trans</code></a></li>
+<li><a href="../../../../symbols/src__backend__optimizer__prep__prepagg_c__GetAggInitVal.html" target="wiki-view"><code>GetAggInitVal</code></a></li>
+<li><a href="../../../../symbols/src__backend__optimizer__prep__prepagg_c__get_agg_clause_costs.html" target="wiki-view"><code>get_agg_clause_costs</code></a></li>
+</ul><script>
+(function() {
+  function notifyParent() {
+    if (parent === window) return;
+    parent.postMessage({type: "frame-location", frame: window.name || "", href: window.location.href}, "*");
+  }
+  document.addEventListener("click", function(event) {
+    const link = event.target.closest("a[data-panel]");
+    if (!link || parent === window) return;
+    parent.postMessage({type: "source-link", panel: link.dataset.panel}, "*");
+  });
+  window.addEventListener("load", notifyParent);
+  window.addEventListener("hashchange", notifyParent);
+})();
+</script></body></html>

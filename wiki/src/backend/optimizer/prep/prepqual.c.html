@@ -1,0 +1,86 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>src/backend/optimizer/prep/prepqual.c.md</title><link rel="stylesheet" href="../../../../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/prep/prepqual.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/backend/optimizer/prep/prepqual.c.html&quot;}, '*');">src/backend/optimizer/prep/prepqual.c</a></h1>
+<h2>概要</h2>
+<p><a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/prep/prepqual.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/backend/optimizer/prep/prepqual.c.html&quot;}, '*');"><code>src/backend/optimizer/prep/prepqual.c</code></a> は、PostgreSQLのクエリ最適化フェーズにおいて、検索条件（ qualification expression: <a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/path/allpaths.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__path__allpaths_c__WHERE.html&quot;}, '*');"><code>WHERE</code></a> 句や <code>JOIN/ON</code> 句、<code>CHECK</code> 制約など）の前処理と論理的単純化を担当するファイルです。主として、論理式の否定化（DeMorgan の法則等の適用）、AND/OR ツリーのフラット構造の維持、および逆 OR 分配律を用いた冗長な共通項の抽出を行います。</p>
+<h2>モジュール内での役割</h2>
+<p><code>src/backend/optimizer/prep</code> モジュール群の一部として、プランナがクエリツリーを最適化する前の準備段階を支えます。従来はこのファイル内で式の全面的なフラット化を行っていましたが、現在はより効率的な <a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/util/clauses.c.html#L2515" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__clauses_c__eval_const_expressions.html&quot;}, '*');"><code>eval_const_expressions</code></a> にその責務が委ねられており、このファイルは局所的な変形時における AND/OR のフラットネス維持、否定句の簡約化、および共通因数の括り出しに特化しています。</p>
+<h2>責務</h2>
+<ul>
+<li>**ブール式の否定化 (<a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/prep/prepqual.c.html#L72" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__prep__prepqual_c__negate_clause.html&quot;}, '*');"><code>negate_clause</code></a>)**:</li>
+<li><code>NOT</code> 演算子の直下に現れる各種式（定数、演算子、ScalarArrayOpExpr、BoolExpr、NullTest、<a class="wiki-source-link" href="../../../../../source/src/include/nodes/primnodes.h.html#L2000" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__nodes__primnodes_h__BooleanTest.html&quot;}, '*');">BooleanTest</a>）を論理的に簡約化・反転させる。</li>
+<li>DeMorgan の法則を適用し、不要な <code>NOT</code> ノードの除去や <code>AND</code>/<code>OR</code> の反転を行う。</li>
+<li>**修飾式の標準化・定数簡約 (<a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/prep/prepqual.c.html#L292" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__prep__prepqual_c__canonicalize_qual.html&quot;}, '*');"><code>canonicalize_qual</code></a>, <a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/prep/prepqual.c.html#L405" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__prep__prepqual_c__find_duplicate_ors.html&quot;}, '*');"><code>find_duplicate_ors</code></a>)**:</li>
+<li>トップレベルの <a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/path/allpaths.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__path__allpaths_c__WHERE.html&quot;}, '*');"><code>WHERE</code></a> / <code>JOIN</code> / <code>CHECK</code> 条件を受け取り、論理構造の最適化を行う。</li>
+<li><code>is_check</code> フラグの有無に応じて、<code>CHECK</code> 制約と一般 <a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/path/allpaths.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__path__allpaths_c__WHERE.html&quot;}, '*');"><code>WHERE</code></a> 句で異なる定数（<code>NULL</code> や <code>TRUE</code> / <code>FALSE</code>）の縮退処理ルールを切り替える。</li>
+<li>**AND/OR ツリーのフラット化維持 (<a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/prep/prepqual.c.html#L322" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__prep__prepqual_c__pull_ands.html&quot;}, '*');"><code>pull_ands</code></a>, <a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/prep/prepqual.c.html#L348" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__prep__prepqual_c__pull_ors.html&quot;}, '*');"><code>pull_ors</code></a>)**:</li>
+<li>ネストした <code>AND</code> 下の <code>AND</code>、あるいは <code>OR</code> 下の <code>OR</code> を再帰的に平坦化し、プランナが期待する一貫した構造を保つ。</li>
+<li>**逆 OR 分配律の適用 (<a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/prep/prepqual.c.html#L516" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__prep__prepqual_c__process_duplicate_ors.html&quot;}, '*');"><code>process_duplicate_ors</code></a>)**:</li>
+<li><code>((A AND B) OR (A AND C))</code> のような構造から共通項 <code>A</code> をくくり出し、<code>(A AND (B OR C))</code> へ変換する。</li>
+</ul>
+<h2>重要なシンボル</h2>
+<ul>
+<li>公開（グローバル）関数:</li>
+<li><code>Node *negate_clause(Node *node)</code>: 与えられたブール式を否定した等価な式を返す。</li>
+<li><code>Expr *canonicalize_qual(Expr *qual, bool is_check)</code>: 修飾式全体の最適化・前処理を行うエントリーポイント。</li>
+<li>内部（static）ヘルパー関数:</li>
+<li><code>List *pull_ands(List *andlist)</code>: ネストした <code>AND</code> リストをフラット化する。</li>
+<li><code>List *pull_ors(List *orlist)</code>: ネストした <code>OR</code> リストをフラット化する。</li>
+<li><code>Expr *find_duplicate_ors(Expr *qual, bool is_check)</code>: トップレベルの AND/OR 構造を走査し、定数畳み込みと重複 OR の探索を行う。</li>
+<li><code>Expr *process_duplicate_ors(List *orlist)</code>: <code>OR</code> リストの要素から共通部分（最短の AND 参照リストベース）を検出し、逆分配律を適用する。</li>
+</ul>
+<h2>制御フローとデータフロー</h2>
+<p>1. **エントリーポイント (<a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/prep/prepqual.c.html#L292" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__prep__prepqual_c__canonicalize_qual.html&quot;}, '*');"><code>canonicalize_qual</code></a>)**:</p>
+<ul>
+<li><code>qual</code> が <code>NULL</code> の場合はそのまま <code>NULL</code> を返す。リスト（暗黙的 AND）形式でないことを <a class="wiki-source-link" href="../../../../../source/src/include/c.h.html#L950" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/c.h.html&quot;}, '*');"><code>Assert</code></a> で確認する。</li>
+<li><code>find_duplicate_ors(qual, is_check)</code> を呼び出して実処理を開始する。</li>
+<p>2. **再帰的走査と定数処理 (<a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/prep/prepqual.c.html#L405" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__prep__prepqual_c__find_duplicate_ors.html&quot;}, '*');"><code>find_duplicate_ors</code></a>)**:</p>
+<li><code>OR</code> 節の場合: 引数を再帰的に処理し、<code>Const</code> ノードに遭遇した際は <code>is_check</code> に応じて枝刈りや定数評価（<code>TRUE</code>/<code>FALSE</code>/<code>NULL</code> の扱い）を行う。その後 <a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/prep/prepqual.c.html#L348" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__prep__prepqual_c__pull_ors.html&quot;}, '*');"><code>pull_ors</code></a> でフラット化し、<a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/prep/prepqual.c.html#L516" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__prep__prepqual_c__process_duplicate_ors.html&quot;}, '*');"><code>process_duplicate_ors</code></a> へ渡す。</li>
+<li><code>AND</code> 節の場合: 同様に再帰処理と定数除去を行い、<a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/prep/prepqual.c.html#L322" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__prep__prepqual_c__pull_ands.html&quot;}, '*');"><code>pull_ands</code></a> でフラット化。空リストは <code>TRUE</code>、単一要素はそのまま返す。</li>
+<p>3. **逆分配律の適用 (<a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/prep/prepqual.c.html#L516" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__prep__prepqual_c__process_duplicate_ors.html&quot;}, '*');"><code>process_duplicate_ors</code></a>)**:</p>
+<li><code>orlist</code> から最短の <code>AND</code> 節（または単一要素）を <code>reference</code> リストとして選出する。</li>
+<li><code>reference</code> 内の各項がすべての <code>OR</code> 構成要素に含まれているか検証し、共通する「勝者 (<code>winners</code>)」を決定する。</li>
+<li>共通項を抽出した残りのサブ句から新しい <code>OR</code>/<code>AND</code> 構造を再構築し、フラット化関数 (<a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/prep/prepqual.c.html#L322" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__prep__prepqual_c__pull_ands.html&quot;}, '*');"><code>pull_ands</code></a>/<a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/prep/prepqual.c.html#L348" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__prep__prepqual_c__pull_ors.html&quot;}, '*');"><code>pull_ors</code></a>) を通して返す。</li>
+<p>4. **否定処理 (<a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/prep/prepqual.c.html#L72" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__prep__prepqual_c__negate_clause.html&quot;}, '*');"><code>negate_clause</code></a>)**:</p>
+<li>ノードタグ（<code>T_Const</code>, <code>T_OpExpr</code>, <code>T_ScalarArrayOpExpr</code>, <code>T_BoolExpr</code>, <code>T_NullTest</code>, <code>T_BooleanTest</code>）を分岐し、否定演算子（<a class="wiki-source-link" href="../../../../../source/src/backend/utils/cache/lsyscache.c.html#L1846" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__utils__cache__lsyscache_c__get_negator.html&quot;}, '*');"><code>get_negator</code></a>）や DeMorgan の法則を適用。簡約化できない場合は通常の <a class="wiki-source-link" href="../../../../../source/src/backend/nodes/makefuncs.c.html#L758" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__nodes__makefuncs_c__make_notclause.html&quot;}, '*');"><code>make_notclause</code></a> をラップして返す。</li>
+</ul>
+<h2>直接依存</h2>
+<ul>
+<li><a class="wiki-source-link" href="../../../../../source/src/include/postgres.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/postgres.h.html&quot;}, '*');"><code>postgres.h</code></a>: PostgreSQL の基本型およびマクロ定義。</li>
+<li><code>nodes/makefuncs.h</code>: <a class="wiki-source-link" href="../../../../../source/src/backend/nodes/makefuncs.c.html#L726" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__nodes__makefuncs_c__make_andclause.html&quot;}, '*');"><code>make_andclause</code></a>, <a class="wiki-source-link" href="../../../../../source/src/backend/nodes/makefuncs.c.html#L742" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__nodes__makefuncs_c__make_orclause.html&quot;}, '*');"><code>make_orclause</code></a>, <code>makeBoolConst</code> などの構文木構築関数。</li>
+<li><code>nodes/nodeFuncs.h</code>: <a class="wiki-source-link" href="../../../../../source/src/include/nodes/nodeFuncs.h.html#L108" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__nodes__nodeFuncs_h__is_andclause.html&quot;}, '*');"><code>is_andclause</code></a>, <a class="wiki-source-link" href="../../../../../source/src/include/nodes/nodeFuncs.h.html#L117" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__nodes__nodeFuncs_h__is_orclause.html&quot;}, '*');"><code>is_orclause</code></a> などのノード判定マクロ。</li>
+<li><code>optimizer/optimizer.h</code>: オプティマイザ関連の共通宣言。</li>
+<li><code>utils/lsyscache.h</code>: <a class="wiki-source-link" href="../../../../../source/src/backend/utils/cache/lsyscache.c.html#L1846" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__utils__cache__lsyscache_c__get_negator.html&quot;}, '*');"><code>get_negator</code></a> などのシステムカタログキャッシュ参照関数。</li>
+</ul>
+<h2>関連コード</h2>
+<ul>
+<li><a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/prep/prepjointree.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/backend/optimizer/prep/prepjointree.c.html&quot;}, '*');"><code>src/backend/optimizer/prep/prepjointree.c</code></a>: ジョイントリーの前処理。</li>
+<li><code>src/backend/utils/adt/</code> または式評価関連モジュール: <a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/util/clauses.c.html#L2515" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__clauses_c__eval_const_expressions.html&quot;}, '*');"><code>eval_const_expressions</code></a>（定数式の評価と全体のフラット化を行う上位の親戚筋）。</li>
+</ul>
+<h2>読者向けメモ</h2>
+<ul>
+<li>**メモリ管理**: PostgreSQL の <code>palloc</code> / <code>pfree</code> メモリコンテキスト（通常は Executor / Planner コンテキスト）に依存しており、リスト操作やノード複製は既存のメモリ管理方針に従う。元リスト構造そのものは破壊せず、新しく必要なリスト構造を構築する設計になっている。</li>
+<li>**不変条件 (Invariants)**: 入力される修飾式はすでに <a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/util/clauses.c.html#L2515" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__clauses_c__eval_const_expressions.html&quot;}, '*');"><code>eval_const_expressions</code></a> を経由しているため AND/OR のフラットネスが保持されているという前提のもとで動作する。</li>
+</ul>
+<h2>シンボルページ</h2>
+<ul>
+<li><a href="../../../../symbols/src__backend__optimizer__prep__prepqual_c__negate_clause.html" target="wiki-view"><code>negate_clause</code></a></li>
+<li><a href="../../../../symbols/src__backend__optimizer__prep__prepqual_c__canonicalize_qual.html" target="wiki-view"><code>canonicalize_qual</code></a></li>
+<li><a href="../../../../symbols/src__backend__optimizer__prep__prepqual_c__pull_ands.html" target="wiki-view"><code>pull_ands</code></a></li>
+<li><a href="../../../../symbols/src__backend__optimizer__prep__prepqual_c__pull_ors.html" target="wiki-view"><code>pull_ors</code></a></li>
+<li><a href="../../../../symbols/src__backend__optimizer__prep__prepqual_c__find_duplicate_ors.html" target="wiki-view"><code>find_duplicate_ors</code></a></li>
+<li><a href="../../../../symbols/src__backend__optimizer__prep__prepqual_c__process_duplicate_ors.html" target="wiki-view"><code>process_duplicate_ors</code></a></li>
+</ul><script>
+(function() {
+  function notifyParent() {
+    if (parent === window) return;
+    parent.postMessage({type: "frame-location", frame: window.name || "", href: window.location.href}, "*");
+  }
+  document.addEventListener("click", function(event) {
+    const link = event.target.closest("a[data-panel]");
+    if (!link || parent === window) return;
+    parent.postMessage({type: "source-link", panel: link.dataset.panel}, "*");
+  });
+  window.addEventListener("load", notifyParent);
+  window.addEventListener("hashchange", notifyParent);
+})();
+</script></body></html>

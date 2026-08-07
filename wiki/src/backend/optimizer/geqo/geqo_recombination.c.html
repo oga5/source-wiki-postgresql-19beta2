@@ -1,0 +1,56 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>src/backend/optimizer/geqo/geqo_recombination.c.md</title><link rel="stylesheet" href="../../../../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/geqo/geqo_recombination.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/backend/optimizer/geqo/geqo_recombination.c.html&quot;}, '*');">src/backend/optimizer/geqo/geqo_recombination.c</a></h1>
+<h2>概要</h2>
+<p><a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/geqo/geqo_recombination.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/backend/optimizer/geqo/geqo_recombination.c.html&quot;}, '*');"><code>src/backend/optimizer/geqo/geqo_recombination.c</code></a> は、遺伝的クエリ最適化（GEQO）における遺伝子プール初期化および、各種交叉（recombination）アルゴリズムで共通して利用される補助的なメモリ管理・データ構造操作を提供するファイルです。</p>
+<h2>モジュール内での役割</h2>
+<p>GEQO モジュール内において、個体（ツアー）の初期生成と、部分一致交叉（PMX）、順序交叉（OX1/OX2）、位置交叉（PX）、サイクル交叉（CX）などで使用される <code>City</code> テーブルのライフサイクル管理を担当します。実際の交叉ロジックを実装する各 <code>geqo_*.c</code> ファイルを補完する共通基盤として機能します。</p>
+<h2>責務</h2>
+<ul>
+<li>Fisher-Yates の「インサイドアウト」シャッフルアルゴリズムを用いた、ランダムかつ一意な巡回セールスマン問題（TSP）の初期ツアー生成 (<code>init_tour</code>)。</li>
+<li>交叉アルゴリズムで都市の位置や状態を追跡するための <code>City</code> 構造体用メモリの割り当て (<a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/geqo/geqo_recombination.c.html#L70" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__geqo__geqo_recombination_c__alloc_city_table.html&quot;}, '*');"><code>alloc_city_table</code></a>) と解放 (<a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/geqo/geqo_recombination.c.html#L89" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__geqo__geqo_recombination_c__free_city_table.html&quot;}, '*');"><code>free_city_table</code></a>)。</li>
+</ul>
+<h2>重要なシンボル</h2>
+<ul>
+<li><code>init_tour</code>: <code>1</code> から <code>num_gene</code> までの遺伝子をランダムに並べ替えた有効なツアーを生成する。</li>
+<li><a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/geqo/geqo_recombination.c.html#L70" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__geqo__geqo_recombination_c__alloc_city_table.html&quot;}, '*');"><code>alloc_city_table</code></a>: 1-based インデックスでアクセスできるよう <code>num_gene + 1</code> サイズの <code>City</code> 配列を割り当てる。</li>
+<li><a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/geqo/geqo_recombination.c.html#L89" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__geqo__geqo_recombination_c__free_city_table.html&quot;}, '*');"><code>free_city_table</code></a>: 割り当てられた <code>City</code> テーブルのメモリを解放する。</li>
+</ul>
+<h2>制御フローとデータフロー</h2>
+<p>1. クエリ最適化の初期段階で <code>init_tour</code> が呼び出され、<a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/geqo/geqo_random.c.html#L34" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__geqo__geqo_random_c__geqo_randint.html&quot;}, '*');"><code>geqo_randint</code></a> を用いて乱数を生成しながら <a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/geqo/geqo_mutation.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__geqo__geqo_mutation_c__tour.html&quot;}, '*');"><code>tour</code></a> 配列をランダムな順序で満たします。 2. 交叉演算の実行時、必要に応じて <a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/geqo/geqo_recombination.c.html#L70" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__geqo__geqo_recombination_c__alloc_city_table.html&quot;}, '*');"><code>alloc_city_table</code></a> が呼び出され、親個体の位置関係や使用状態を管理するための構造体が初期化されます。 3. 演算終了後、<a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/geqo/geqo_recombination.c.html#L89" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__geqo__geqo_recombination_c__free_city_table.html&quot;}, '*');"><code>free_city_table</code></a> を介してメモリが解放されます。</p>
+<h2>直接依存</h2>
+<ul>
+<li><a class="wiki-source-link" href="../../../../../source/src/include/postgres.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/postgres.h.html&quot;}, '*');"><code>postgres.h</code></a>: PostgreSQL の基本型やメモリ管理マクロ (<code>palloc_array</code>, <code>pfree</code>)。</li>
+<li><code>optimizer/geqo_random.h</code>: 乱数生成関数 (<a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/geqo/geqo_random.c.html#L34" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__geqo__geqo_random_c__geqo_randint.html&quot;}, '*');"><code>geqo_randint</code></a>)。</li>
+<li><code>optimizer/geqo_recombination.h</code>: ペアとなるヘッダーファイル（<code>City</code> 構造体および関数のプロトタイプ宣言）。</li>
+</ul>
+<h2>関連コード</h2>
+<ul>
+<li><a class="wiki-source-link" href="../../../../../source/src/include/optimizer/geqo_recombination.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/optimizer/geqo_recombination.h.html&quot;}, '*');"><code>src/include/optimizer/geqo_recombination.h</code></a>: 定義された構造体や関数プロトタイプの宣言元。</li>
+<li><a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/geqo/geqo_cx.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/backend/optimizer/geqo/geqo_cx.c.html&quot;}, '*');"><code>src/backend/optimizer/geqo/geqo_cx.c</code></a>, <a class="wiki-source-link" href="../../../../../source/contrib/pgcrypto/px.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/contrib/pgcrypto/px.c.html&quot;}, '*');"><code>px.c</code></a>, <code>ox1.c</code>, <code>ox2.c</code>: <code>City</code> テーブルを利用する個別の交叉アルゴリズム実装ファイル。</li>
+<li><a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/geqo/geqo_main.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/backend/optimizer/geqo/geqo_main.c.html&quot;}, '*');"><code>src/backend/optimizer/geqo/geqo_main.c</code></a>: GEQO のメイン処理フロー。</li>
+</ul>
+<h2>読者向けメモ</h2>
+<ul>
+<li><code>init_tour</code> のシャッフル処理では、未初期化要素へのアクセスを防ぐための <code>i != j</code> チェックが含まれています。</li>
+<li><code>City</code> テーブル関連の関数は、対応するマクロ定義が有効な場合にのみコンパイルされる条件付きコンパイル構造になっています。</li>
+</ul>
+<h2>シンボルページ</h2>
+<ul>
+<li><a href="../../../../symbols/src__backend__optimizer__geqo__geqo_recombination_c__init_tour.html" target="wiki-view"><code>init_tour</code></a></li>
+<li><a href="../../../../symbols/src__backend__optimizer__geqo__geqo_recombination_c__alloc_city_table.html" target="wiki-view"><code>alloc_city_table</code></a></li>
+<li><a href="../../../../symbols/src__backend__optimizer__geqo__geqo_recombination_c__free_city_table.html" target="wiki-view"><code>free_city_table</code></a></li>
+</ul><script>
+(function() {
+  function notifyParent() {
+    if (parent === window) return;
+    parent.postMessage({type: "frame-location", frame: window.name || "", href: window.location.href}, "*");
+  }
+  document.addEventListener("click", function(event) {
+    const link = event.target.closest("a[data-panel]");
+    if (!link || parent === window) return;
+    parent.postMessage({type: "source-link", panel: link.dataset.panel}, "*");
+  });
+  window.addEventListener("load", notifyParent);
+  window.addEventListener("hashchange", notifyParent);
+})();
+</script></body></html>

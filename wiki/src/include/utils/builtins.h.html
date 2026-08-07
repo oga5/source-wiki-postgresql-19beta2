@@ -1,0 +1,53 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>src/include/utils/builtins.h.md</title><link rel="stylesheet" href="../../../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../../../source/src/include/utils/builtins.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/utils/builtins.h.html&quot;}, '*');">src/include/utils/builtins.h</a></h1>
+<h2>概要</h2>
+<p>PostgreSQLの組み込みデータ型および関数群に対する操作関数やマクロの宣言を集約したヘッダーファイルです。</p>
+<h2>モジュール内での役割</h2>
+<p><code>src/include/utils/</code> ディレクトリに位置し、ブール値、整数、OID、文字列、ネットワーク、型フォーマットなど、PostgreSQLのコア処理で多用される基本的なC言語関数インターフェースを他のサブシステムへ提供します。</p>
+<h2>責務</h2>
+<ul>
+<li>各種組み込み型（bool, int16/32/64, Oid, text, ネットワーク型等）の変換・操作関数のプロトタイプ宣言。</li>
+<li>C文字列とPostgreSQL内部のテキストデータム間を変換するマクロ（<a class="wiki-source-link" href="../../../../source/src/include/utils/builtins.h.html#L98" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/utils/builtins.h.html&quot;}, '*');"><code>CStringGetTextDatum</code></a>, <a class="wiki-source-link" href="../../../../source/src/include/utils/builtins.h.html#L99" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/utils/builtins.h.html&quot;}, '*');"><code>TextDatumGetCString</code></a>）の提供。</li>
+<li>型名フォーマット関数（<code>format_type_extended</code> 等）や識別子クォーティング関数の定義。</li>
+</ul>
+<h2>重要なシンボル</h2>
+<ul>
+<li><code>MAXINT8LEN</code>: 8バイト整数を表現する最大文字数（20）。</li>
+<li><a class="wiki-source-link" href="../../../../source/src/include/utils/builtins.h.html#L98" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/utils/builtins.h.html&quot;}, '*');"><code>CStringGetTextDatum</code></a> / <a class="wiki-source-link" href="../../../../source/src/include/utils/builtins.h.html#L99" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/utils/builtins.h.html&quot;}, '*');"><code>TextDatumGetCString</code></a>: Cの文字列とPostgreSQLの <code>text</code> データム間の相互変換マクロ。</li>
+<li><code>format_type_extended</code>: 型OIDや修飾子、フラグを指定してSQL型の文字列表現を取得する関数。</li>
+<li><code>pg_strtoint16</code> / <code>pg_strtoint32</code> / <code>pg_strtoint64</code>: 文字列から各サイズの整数への安全な変換関数群。</li>
+</ul>
+<h2>制御フローとデータフロー</h2>
+<ul>
+<li>ヘッダーファイルであるため直接的な制御フローは持たず、各組み込み関数を呼び出すバックエンドのパーサー、エグゼキューター、型キャスト処理などに型変換や文字列表現のAPIを供給します。</li>
+<li>データムとC言語ネイティブ型の間を行き来する変換ルーチンの境界として機能します。</li>
+</ul>
+<h2>直接依存</h2>
+<ul>
+<li><a class="wiki-source-link" href="../../../../source/src/include/fmgr.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/fmgr.h.html&quot;}, '*');"><code>fmgr.h</code></a></li>
+<li><code>nodes/nodes.h</code></li>
+<li><code>utils/fmgrprotos.h</code></li>
+</ul>
+<h2>関連コード</h2>
+<ul>
+<li><code>src/backend/utils/adt/</code>: 本ファイルで宣言されている関数群の実装が含まれるディレクトリ。</li>
+<li><code>src/include/utils/fmgrprotos.h</code>: 関数マネージャーに関連するプロトコル定義。</li>
+</ul>
+<h2>読者向けメモ</h2>
+<ul>
+<li>本ファイルは多岐にわたる組み込み型のユーティリティ宣言のハブとなっているため、特定の型（数値やテキストなど）に特化した詳細な実装を追う前段階の参照先として利用してください。</li>
+</ul><script>
+(function() {
+  function notifyParent() {
+    if (parent === window) return;
+    parent.postMessage({type: "frame-location", frame: window.name || "", href: window.location.href}, "*");
+  }
+  document.addEventListener("click", function(event) {
+    const link = event.target.closest("a[data-panel]");
+    if (!link || parent === window) return;
+    parent.postMessage({type: "source-link", panel: link.dataset.panel}, "*");
+  });
+  window.addEventListener("load", notifyParent);
+  window.addEventListener("hashchange", notifyParent);
+})();
+</script></body></html>

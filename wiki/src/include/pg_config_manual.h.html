@@ -1,0 +1,64 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>src/include/pg_config_manual.h.md</title><link rel="stylesheet" href="../../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../../source/src/include/pg_config_manual.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/pg_config_manual.h.html&quot;}, '*');">src/include/pg_config_manual.h</a></h1>
+<h2>概要</h2>
+<p>PostgreSQLの手動設定設定およびコンパイル時定数を定義するヘッダーファイルです。WALセグメントサイズ、識別子の最大長、関数引数の上限、ストレージ・バッファのアライメント、およびデバッグやメモリ検査に関する各種フラグを包含しています。</p>
+<h2>モジュール内での役割</h2>
+<p><code>src/include</code> モジュールの一部として、PostgreSQLソースコード全体で使用される静的な上限値や、開発者向け・環境依存のコンパイル時オプションを集約します。多くの設定変更には <code>initdb</code> やフルビルドを要求し、コアサブシステム全体に影響を与えます。</p>
+<h2>責務</h2>
+<ul>
+<li>**コアリソースと制限値の定義**: WALセグメント、SLRUページ数、識別子長 (<code>NAMEDATALEN</code>)、関数引数数 (<a class="wiki-source-link" href="../../../source/src/include/pg_config_manual.h.html#L53" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/pg_config_manual.h.html&quot;}, '*');"><code>FUNC_MAX_ARGS</code></a>)、インデックスキー数などの上限を規定する。</li>
+<li>**プラットフォーム・I/O設定**: パス長 (<a class="wiki-source-link" href="../../../source/src/include/pg_config_manual.h.html#L105" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/pg_config_manual.h.html&quot;}, '*');"><code>MAXPGPATH</code></a>)、バッファアライメント (<a class="wiki-source-link" href="../../../source/src/include/pg_config_manual.h.html#L119" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/pg_config_manual.h.html&quot;}, '*');"><code>ALIGNOF_BUFFER</code></a>)、プロセス起動方式 (<a class="wiki-source-link" href="../../../source/src/include/pg_config_manual.h.html#L131" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/pg_config_manual.h.html&quot;}, '*');"><code>EXEC_BACKEND</code></a>)、ソケットディレクトリなどのシステム依存定数を定義する。</li>
+<li>**デバッグおよびメモリ検査フラグの制御**: Valgrind統合、メモリコンテキスト検査、解放済みメモリの即座クリア (<a class="wiki-source-link" href="../../../source/src/include/pg_config_manual.h.html#L269" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/pg_config_manual.h.html&quot;}, '*');"><code>CLOBBER_FREED_MEMORY</code></a>)、キャッシュ無効化デバッグ (<a class="wiki-source-link" href="../../../source/src/include/pg_config_manual.h.html#L303" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/pg_config_manual.h.html&quot;}, '*');"><code>DISCARD_CACHES_ENABLED</code></a>) などの有効化マクロを提供する。</li>
+</ul>
+<h2>重要なシンボル</h2>
+<ul>
+<li>**ストレージ・リソース上限**</li>
+<li><a class="wiki-source-link" href="../../../source/src/include/pg_config_manual.h.html#L20" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/pg_config_manual.h.html&quot;}, '*');"><code>DEFAULT_XLOG_SEG_SIZE</code></a>: デフォルトのWALセグメントサイズ（通常 16MB）。</li>
+<li><a class="wiki-source-link" href="../../../source/src/include/pg_config_manual.h.html#L30" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/pg_config_manual.h.html&quot;}, '*');"><code>SLRU_PAGES_PER_SEGMENT</code></a>: SLRUセグメントあたりのページ数（通常 32ページ、256KB）。</li>
+<li><code>NAMEDATALEN</code>: 識別子の最大長（終端ヌル文字を含む 64 バイト）。</li>
+<li><a class="wiki-source-link" href="../../../source/src/include/pg_config_manual.h.html#L53" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/pg_config_manual.h.html&quot;}, '*');"><code>FUNC_MAX_ARGS</code></a>: 関数に渡せる最大引数数（100）。変更にはバックエンドの再コンパイルが必要。</li>
+<li><code>INDEX_MAX_KEYS</code> / <a class="wiki-source-link" href="../../../source/src/include/pg_config_manual.h.html#L84" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/pg_config_manual.h.html&quot;}, '*');"><code>PARTITION_MAX_KEYS</code></a>: インデックスおよびパーティションキーの最大列数（32）。</li>
+<li>**システム・パス・アライメント**</li>
+<li><a class="wiki-source-link" href="../../../source/src/include/pg_config_manual.h.html#L105" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/pg_config_manual.h.html&quot;}, '*');"><code>MAXPGPATH</code></a>: パス名バッファの標準サイズ（1024）。</li>
+<li><a class="wiki-source-link" href="../../../source/src/include/pg_config_manual.h.html#L119" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/pg_config_manual.h.html&quot;}, '*');"><code>ALIGNOF_BUFFER</code></a>: ディスクI/Oバッファの好ましいアライメント境界（32）。</li>
+<li><a class="wiki-source-link" href="../../../source/src/include/pg_config_manual.h.html#L217" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/pg_config_manual.h.html&quot;}, '*');"><code>PG_CACHE_LINE_SIZE</code></a>: キャッシュラインサイズ（128）。</li>
+<li><a class="wiki-source-link" href="../../../source/src/include/pg_config_manual.h.html#L223" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/pg_config_manual.h.html&quot;}, '*');"><code>PG_IO_ALIGN_SIZE</code></a>: ダイレクトI/Oの想定アライメント（4096）。</li>
+<li><a class="wiki-source-link" href="../../../source/src/include/pg_config_manual.h.html#L198" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/pg_config_manual.h.html&quot;}, '*');"><code>DEFAULT_PGSOCKET_DIR</code></a>: UNIXドメインソケットのデフォルトディレクトリ（非Windowsでは <code>/tmp</code>）。</li>
+<li>**デバッグ・検査マクロ**</li>
+<li><a class="wiki-source-link" href="../../../source/src/include/pg_config_manual.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__pg_config_manual_h__USE_VALGRIND.html&quot;}, '*');"><code>USE_VALGRIND</code></a>: Valgrindクライアントリクエスト統合の有効化。</li>
+<li><a class="wiki-source-link" href="../../../source/src/include/pg_config_manual.h.html#L269" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/pg_config_manual.h.html&quot;}, '*');"><code>CLOBBER_FREED_MEMORY</code></a>: <code>pfree()</code> されたメモリを即座に上書きしてダングリングポインタを検出（<a class="wiki-source-link" href="../../../source/src/include/pg_config_manual.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__pg_config_manual_h__USE_ASSERT_CHECKING.html&quot;}, '*');"><code>USE_ASSERT_CHECKING</code></a> で自動有効化）。</li>
+<li><a class="wiki-source-link" href="../../../source/src/include/pg_config_manual.h.html#L278" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/pg_config_manual.h.html&quot;}, '*');"><code>MEMORY_CONTEXT_CHECKING</code></a>: メモリ割り当てオーバーランの検査（アセサートまたはValgrindで有効化）。</li>
+<li><a class="wiki-source-link" href="../../../source/src/include/pg_config_manual.h.html#L303" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/pg_config_manual.h.html&quot;}, '*');"><code>DISCARD_CACHES_ENABLED</code></a>: <code>debug_discard_caches</code> GUCによる積極的なキャッシュフラッシュを有効化（アセサートビルドでデフォルト有効）。</li>
+</ul>
+<h2>制御フローとデータフロー</h2>
+<p>本ファイルはプリプロセッサのマクロ定義のみで構成されており、関数や実行時制御フローを持ちません。ここで定義された定数や条件付きコンパイルフラグ（<code>#define</code> / <code>#ifdef</code>）は、ストレージマネージャ、バッファプール、メモリーコンテキスト、およびキャッシュ機構などの各サブシステムにおいて、静的なバッファサイズ確保やデバッグコードの分岐として直接参照されます。</p>
+<h2>直接依存</h2>
+<ul>
+<li>なし（純粋なプリプロセッサ定義の集合であり、明示的な <code>#include</code> 文を含まない）。</li>
+</ul>
+<h2>関連コード</h2>
+<ul>
+<li><a class="wiki-source-link" href="../../../source/src/include/postgres.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/postgres.h.html&quot;}, '*');"><code>src/include/postgres.h</code></a>: 基本的な型やマクロの定義元。</li>
+<li><code>src/include/pg_config.h</code>: 自動設定（<a class="wiki-source-link" href="../../../source/configure.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/configure.html&quot;}, '*');">configure</a>）スクリプトによって生成される構成ヘッダー。</li>
+<li><code>src/backend/utils/mmalloc/</code>: メモリコンテキストと Valgrind 統合の消費者。</li>
+<li><code>src/backend/access/</code>: WAL、SLRU、インデックス管理などの定数消費者。</li>
+</ul>
+<h2>読者向けメモ</h2>
+<ul>
+<li>**変更の影響**: <code>NAMEDATALEN</code>, <code>INDEX_MAX_KEYS</code>, <a class="wiki-source-link" href="../../../source/src/include/pg_config_manual.h.html#L30" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/pg_config_manual.h.html&quot;}, '*');"><code>SLRU_PAGES_PER_SEGMENT</code></a>, <a class="wiki-source-link" href="../../../source/src/include/pg_config_manual.h.html#L20" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/pg_config_manual.h.html&quot;}, '*');"><code>DEFAULT_XLOG_SEG_SIZE</code></a> などの変更はディスク上のレイアウトやシステムカタログに影響するため、<code>initdb</code> が必須となります。</li>
+<li>**デバッグフラグ**: <a class="wiki-source-link" href="../../../source/src/include/pg_config_manual.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__pg_config_manual_h__USE_VALGRIND.html&quot;}, '*');"><code>USE_VALGRIND</code></a> や <code>RANDOMIZE_ALLOCATED_MEMORY</code> などの開発者向けフラグは実行性能を大きく低下させるため、本番環境での有効化は想定されていません。</li>
+</ul><script>
+(function() {
+  function notifyParent() {
+    if (parent === window) return;
+    parent.postMessage({type: "frame-location", frame: window.name || "", href: window.location.href}, "*");
+  }
+  document.addEventListener("click", function(event) {
+    const link = event.target.closest("a[data-panel]");
+    if (!link || parent === window) return;
+    parent.postMessage({type: "source-link", panel: link.dataset.panel}, "*");
+  });
+  window.addEventListener("load", notifyParent);
+  window.addEventListener("hashchange", notifyParent);
+})();
+</script></body></html>

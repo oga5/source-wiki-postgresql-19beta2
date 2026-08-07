@@ -1,0 +1,156 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>src/backend/optimizer/util/var.c.md</title><link rel="stylesheet" href="../../../../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/util/var.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/backend/optimizer/util/var.c.html&quot;}, '*');">src/backend/optimizer/util/var.c</a></h1>
+<h2>概要</h2>
+<p><a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/util/var.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/backend/optimizer/util/var.c.html&quot;}, '*');"><code>src/backend/optimizer/util/var.c</code></a> は、PostgreSQLのオプティマイザにおいて、式木（Expression Trees）やクエリツリー（Query Trees）に含まれる <code>Var</code>（変数）ノード、<code>PlaceHolderVar</code>（プレースホルダ変数）ノード、および <code>CurrentOfExpr</code> などの変数参照ノードを走査、抽出、検査、および置換（フラット化）するためのユーティリティ関数群を提供するファイルである。</p>
+<h2>モジュール内での役割</h2>
+<p><code>src/backend/optimizer/util</code> サブシステムに属し、プランナやオプティマイザの各フェーズ（特に式の正規化、プッシュダウン、結合やグループ化の最適化）において、式木からどのリレーションや属性が参照されているかを特定するための低水準な基盤を提供する。また、パーサやリライタが生成した結合エイリアスやグループ化出力を、プラン作成前に元のベースリレーションや式へと展開する役割を担う。</p>
+<h2>責務</h2>
+<p>本ファイルの責務は、以下の3つの役割グループに大別される。</p>
+<h3>1. 変数・リレーション情報の抽出 (Extraction &amp; Collection)</h3>
+<ul>
+<li>式木やクエリツリーから、参照されているリレーションID（<code>varno</code>）の集合（<code>Relids</code> ビットマップ）を収集する。</li>
+<li>特定の <code>varno</code> に対する属性番号（<a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/util/tlist.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__tlist_c__varattno.html&quot;}, '*');"><code>varattno</code></a>）の集合（<a class="wiki-source-link" href="../../../../../source/src/include/nodes/bitmapset.h.html#L49" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__nodes__bitmapset_h__Bitmapset.html&quot;}, '*');"><code>Bitmapset</code></a>）を収集する。システム属性（OIDなど）を処理するため、属性番号は <a class="wiki-source-link" href="../../../../../source/src/include/access/sysattr.h.html#L27" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/access/sysattr.h.html&quot;}, '*');"><code>FirstLowInvalidHeapAttributeNumber</code></a> でオフセットされる。</li>
+<li>指定されたクエリ階層レベル（<a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/util/var.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__var_c__sublevels_up.html&quot;}, '*');"><code>sublevels_up</code></a>）に合致する <code>Var</code> や <code>PlaceHolderVar</code> のポインタリストを構築する。</li>
+</ul>
+<h3>2. 存在検査と位置特定 (Inspection &amp; Location)</h3>
+<ul>
+<li>式木内に特定のクエリレベルの変数が含まれているかを高速に判定する。</li>
+<li>エラー報告などのために、指定されたレベルの変数がパースされたソースコード上の位置（<a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/util/var.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__var_c__location.html&quot;}, '*');"><code>location</code></a>）を探索する。</li>
+<li><code>VAR_RETURNING_OLD</code> や <code>VAR_RETURNING_NEW</code> などの特殊な返却型を持つ変数の存在を検出する。</li>
+</ul>
+<h3>3. 結合エイリアスおよびグループ化式のフラット化 (Flattening &amp; Substitution)</h3>
+<ul>
+<li><code>RTE_JOIN</code>（結合）の出力を参照する <code>Var</code> ノードを、元のベースリレーションの変数や <code>RowExpr</code>（全体行参照の場合）へと再帰的に置換する。</li>
+<li><code>RTE_GROUP</code>（グループ化）の出力を参照する <code>Var</code> ノードを、元のグループ化式へと置換する。</li>
+<li>置換の際、外部結合やグループ化セットによって生じるヌル化情報（<code>varnullingrels</code>）を適切に維持・伝播させる。</li>
+</ul>
+<h2>重要なシンボル</h2>
+<h3>コンテキスト構造体</h3>
+<ul>
+<li><code>struct pull_varnos_context</code>: <a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/util/var.c.html#L113" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__var_c__pull_varnos.html&quot;}, '*');"><code>pull_varnos</code></a> 走査時に、収集した <a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/util/var.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__var_c__varnos.html&quot;}, '*');"><code>varnos</code></a>、プランナ情報 <a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/util/var.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__var_c__root.html&quot;}, '*');"><code>root</code></a>、および現在の相対クエリレベル <a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/util/var.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__var_c__sublevels_up.html&quot;}, '*');"><code>sublevels_up</code></a> を保持する。</li>
+<li><code>struct pull_varattnos_context</code>: <a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/util/var.c.html#L295" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__var_c__pull_varattnos.html&quot;}, '*');"><code>pull_varattnos</code></a> 走査時に、対象の <code>varno</code> と収集した属性番号のビットマップ <a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/util/var.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__var_c__varattnos.html&quot;}, '*');"><code>varattnos</code></a> を保持する。</li>
+<li><code>struct pull_vars_context</code>: <a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/util/var.c.html#L338" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__var_c__pull_vars_of_level.html&quot;}, '*');"><code>pull_vars_of_level</code></a> 走査時に、合致した <code>Var</code> / <code>PlaceHolderVar</code> のリストを保持する。</li>
+<li><code>struct pull_var_clause_context</code>: <a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/util/var.c.html#L652" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__var_c__pull_var_clause.html&quot;}, '*');"><code>pull_var_clause</code></a> 走査時に、抽出フラグ（<a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/util/var.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__var_c__flags.html&quot;}, '*');"><code>flags</code></a>）と抽出されたノードリスト（<a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/util/var.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__var_c__varlist.html&quot;}, '*');"><code>varlist</code></a>）を保持する。</li>
+<li><code>struct flatten_join_alias_vars_context</code>: 結合エイリアスやグループ化式の置換処理において、プランナ情報、クエリツリー、相対クエリレベル、およびサブリンクの有無を追跡する。</li>
+</ul>
+<h3>抽出・検査関数 (API)</h3>
+<ul>
+<li><code>pull_varnos(PlannerInfo *root, Node *node)</code> / <code>pull_varnos_of_level(PlannerInfo *root, Node *node, int levelsup)</code>: 式木から重複のないリレーションIDのビットマップセット（<code>Relids</code>）を生成する。<code>PlaceHolderVar</code> の評価位置（<code>ph_eval_at</code>）も考慮する。</li>
+<li><code>pull_varattnos(Node *node, Index varno, Bitmapset **varattnos)</code>: 指定された <code>varno</code> に対応する属性番号をビットマップに蓄積する。</li>
+<li><code>pull_vars_of_level(Node *node, int levelsup)</code>: 指定されたクエリレベルの <code>Var</code> および <code>PlaceHolderVar</code> のリストを返す。</li>
+<li><code>contain_var_clause(Node *node)</code> / <code>contain_vars_of_level(Node *node, int levelsup)</code>: 指定レベルの変数が含まれるかを判定する。</li>
+<li><code>locate_var_of_level(Node *node, int levelsup)</code>: 指定レベルの変数のパース位置（<a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/util/var.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__var_c__location.html&quot;}, '*');"><code>location</code></a>）を返す。</li>
+<li><code>pull_var_clause(Node *node, int flags)</code>: <code>PVC_INCLUDE_...</code> などのフラグ制御に基づき、式木から変数、集約関数、ウィンドウ関数、プレースホルダを抽出する。</li>
+</ul>
+<h3>置換・フラット化関数 (API)</h3>
+<ul>
+<li><code>flatten_join_alias_vars(PlannerInfo *root, Query *query, Node *node)</code>: 結合出力を参照する <code>Var</code> を元のベースリレーション変数や <code>RowExpr</code> に置換する。</li>
+<li><code>flatten_join_alias_for_parser(Query *query, Node *node, int sublevels_up)</code>: パーサ段階で結合エイリアスを展開するための <a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/util/var.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__var_c__root.html&quot;}, '*');"><code>root</code></a> を持たないバリアント。</li>
+<li><code>flatten_group_exprs(PlannerInfo *root, Query *query, Node *node)</code>: グループ化出力を参照する <code>Var</code> を元のグループ化式に置換する。</li>
+<li><code>add_nullingrels_if_needed(PlannerInfo *root, Node *newnode, Var *oldvar)</code> / <code>mark_nullable_by_grouping(PlannerInfo *root, Node *newnode, Var *oldvar)</code>: 置換後の式に対して、元の <code>Var</code> が持っていた <code>varnullingrels</code> をマージするか、必要に応じて <code>PlaceHolderVar</code> でラップしてヌル化情報を付与する。</li>
+</ul>
+<h2>制御フローとデータフロー</h2>
+<h3>1. ウォーカーパターンによる再帰走査 (Walker Pattern)</h3>
+<p><a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/util/var.c.html#L160" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__var_c__pull_varnos_walker.html&quot;}, '*');"><code>pull_varnos_walker</code></a> や <a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/util/var.c.html#L358" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__var_c__pull_vars_walker.html&quot;}, '*');"><code>pull_vars_walker</code></a> などの内部ヘルパー関数は、<a class="wiki-source-link" href="../../../../../source/src/include/nodes/nodeFuncs.h.html#L173" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/nodes/nodeFuncs.h.html&quot;}, '*');"><code>query_or_expression_tree_walker</code></a> または <a class="wiki-source-link" href="../../../../../source/src/include/nodes/nodeFuncs.h.html#L155" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/nodes/nodeFuncs.h.html&quot;}, '*');"><code>expression_tree_walker</code></a> を用いて、式木を深さ優先で再帰走査する。</p>
+<pre><code>[API: pull_varnos]
+       │
+       ▼
+[query_or_expression_tree_walker] ──(再帰走査)──► [pull_varnos_walker]
+                                                        │
+       ┌────────────────────────────────────────────────┴────────────────────────┐
+       ▼ (Varノード)                                    ▼ (Queryノード: サブクエリ)
+  対象レベルなら                                       sublevels_up をインクリメント
+  varno と varnullingrels を                           [query_tree_walker] で再帰
+  context-&gt;varnos に追加                               sublevels_up をデクリメント</code></pre>
+<h3>2. ミューテーターパターンによる木構造の書き換え (Mutator Pattern)</h3>
+<p><a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/util/var.c.html#L841" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__var_c__flatten_join_alias_vars_mutator.html&quot;}, '*');"><code>flatten_join_alias_vars_mutator</code></a> および <a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/util/var.c.html#L1021" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__var_c__flatten_group_exprs_mutator.html&quot;}, '*');"><code>flatten_group_exprs_mutator</code></a> は <code>expression_tree_mutator</code> / <a class="wiki-source-link" href="../../../../../source/src/include/nodes/nodeFuncs.h.html#L162" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/nodes/nodeFuncs.h.html&quot;}, '*');"><code>query_tree_mutator</code></a> を用いて、式木を走査しながら書き換える。</p>
+<pre><code>[API: flatten_join_alias_vars]
+       │
+       ▼
+[flatten_join_alias_vars_mutator]
+       │
+       ├─► [Varノードかつ対象レベルかつRTE_JOINの場合]
+       │         │
+       │         ├─► [InvalidAttrNumber (全体行参照) の場合]
+       │         │         RTEの joinaliasvars を走査し、各要素をコピーして再帰的にフラット化
+       │         │         非ドロップ列から RowExpr を構築
+       │         │
+       │         └─► [通常の属性参照の場合]
+       │                   RTEの joinaliasvars から対応する式を取得し、copyObject で複製
+       │                   必要に応じて IncrementVarSublevelsUp でレベル調整し、再帰的にフラット化
+       │
+       └─► [add_nullingrels_if_needed] によるヌル化情報の付与</code></pre>
+<h3>3. ヌル化情報の伝播フロー (Nullingrels Propagation)</h3>
+<p>結合やグループ化のフラット化において、元の <code>Var</code> が持っていた <code>varnullingrels</code>（ヌル化情報）を置換後の式に伝播させる。</p>
+<pre><code>[add_nullingrels_if_needed]
+       │
+       ├─► [is_standard_join_alias_expression] が真の場合
+       │         │ (Var, PlaceHolderVar, 暗黙キャスト, CoalesceExpr など)
+       │         ▼
+       │   [adjust_standard_join_alias_expression]
+       │         末端の Var や PlaceHolderVar の nullingrels フィールドに直接マージ
+       │
+       └─► 偽の場合 (変数を含まない定数式などの場合)
+                 ▼
+           [make_placeholder_expr]
+                 式を新しい PlaceHolderVar でラップし、そこにヌル化情報を付与</code></pre>
+<h2>直接依存</h2>
+<ul>
+<li><a class="wiki-source-link" href="../../../../../source/src/include/postgres.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/postgres.h.html&quot;}, '*');"><code>postgres.h</code></a></li>
+<li><code>access/sysattr.h</code>: <a class="wiki-source-link" href="../../../../../source/src/include/access/sysattr.h.html#L27" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/access/sysattr.h.html&quot;}, '*');"><code>FirstLowInvalidHeapAttributeNumber</code></a> などのシステム属性オフセットの定義。</li>
+<li><code>nodes/nodeFuncs.h</code>: <a class="wiki-source-link" href="../../../../../source/src/include/nodes/nodeFuncs.h.html#L155" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/nodes/nodeFuncs.h.html&quot;}, '*');"><code>expression_tree_walker</code></a>, <code>expression_tree_mutator</code>, <a class="wiki-source-link" href="../../../../../source/src/include/nodes/nodeFuncs.h.html#L173" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/nodes/nodeFuncs.h.html&quot;}, '*');"><code>query_or_expression_tree_walker</code></a> などの構文木操作関数。</li>
+<li><code>optimizer/clauses.h</code>: <a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/util/clauses.c.html#L209" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__clauses_c__contain_agg_clause.html&quot;}, '*');"><code>contain_agg_clause</code></a>, <a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/util/clauses.c.html#L246" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__clauses_c__contain_window_function.html&quot;}, '*');"><code>contain_window_function</code></a> などの式検査関数。</li>
+<li><code>optimizer/optimizer.h</code></li>
+<li><code>optimizer/placeholder.h</code>: <a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/util/placeholder.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__placeholder_c__make_placeholder_expr.html&quot;}, '*');"><code>make_placeholder_expr</code></a> などのプレースホルダ生成関数。</li>
+<li><code>optimizer/prep.h</code></li>
+<li><code>parser/parsetree.h</code>: <a class="wiki-source-link" href="../../../../../source/src/include/parser/parsetree.h.html#L31" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/parser/parsetree.h.html&quot;}, '*');"><code>rt_fetch</code></a> などのレンジテーブル操作。</li>
+<li><code>rewrite/rewriteManip.h</code>: <a class="wiki-source-link" href="../../../../../source/src/backend/rewrite/rewriteManip.c.html#L892" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__rewrite__rewriteManip_c__IncrementVarSublevelsUp.html&quot;}, '*');"><code>IncrementVarSublevelsUp</code></a> などの変数レベル調整関数。</li>
+</ul>
+<h2>関連コード</h2>
+<ul>
+<li><a class="wiki-source-link" href="../../../../../source/src/backend/nodes/nodeFuncs.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/nodes/nodeFuncs.c.html&quot;}, '*');"><code>src/backend/nodes/nodeFuncs.c</code></a>: 構文木走査・書き換えのコアロジック（<a class="wiki-source-link" href="../../../../../source/src/include/nodes/nodeFuncs.h.html#L155" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/nodes/nodeFuncs.h.html&quot;}, '*');"><code>expression_tree_walker</code></a> / <code>mutator</code>）。</li>
+<li><a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/plan/planner.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/backend/optimizer/plan/planner.c.html&quot;}, '*');"><code>src/backend/optimizer/plan/planner.c</code></a> / <a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/prep/prepjointree.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/backend/optimizer/prep/prepjointree.c.html&quot;}, '*');"><code>prepjointree.c</code></a>: 結合やサブクエリの最適化、プラン生成時に本ファイルのフラット化関数を呼び出す。</li>
+</ul>
+<h2>読者向けメモ</h2>
+<h3>メモリ所有権と生存期間</h3>
+<ul>
+<li><a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/util/var.c.html#L338" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__var_c__pull_vars_of_level.html&quot;}, '*');"><code>pull_vars_of_level</code></a> や <a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/util/var.c.html#L652" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__var_c__pull_var_clause.html&quot;}, '*');"><code>pull_var_clause</code></a> などの抽出関数は、ノードの複製（ディープコピー）を行わず、**元のツリー内のノードへのポインタを直接リストに格納して返す**。そのため、呼び出し側でこれらのノードを破壊的に変更すると、元の式木が破損する。</li>
+<li>一方、<a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/util/var.c.html#L780" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__var_c__flatten_join_alias_vars.html&quot;}, '*');"><code>flatten_join_alias_vars</code></a> や <a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/util/var.c.html#L998" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__var_c__flatten_group_exprs.html&quot;}, '*');"><code>flatten_group_exprs</code></a> などの置換関数は、置換対象の式を <a class="wiki-source-link" href="../../../../../source/src/include/nodes/nodes.h.html#L228" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/nodes/nodes.h.html&quot;}, '*');"><code>copyObject</code></a> で複製した上で書き換えを行うため、呼び出し側は安全に結果を変更できる。</li>
+</ul>
+<h3>不変条件とエラーパス</h3>
+<ul>
+<li><a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/util/var.c.html#L652" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__var_c__pull_var_clause.html&quot;}, '*');"><code>pull_var_clause</code></a> は、サブリンクがサブプランに削減された**後**の式に対して使用されることを想定している。そのため、走査中に想定外の階層レベル（<code>varlevelsup &gt; 0</code>）の <code>Var</code> や <code>Aggref</code>、<code>PlaceHolderVar</code> に遭遇した場合は <code>elog(ERROR)</code> をスローする。</li>
+</ul>
+<h3>PlaceHolderVar の評価位置（<code>ph_eval_at</code>）の解決</h3>
+<ul>
+<li><a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/util/var.c.html#L113" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__var_c__pull_varnos.html&quot;}, '*');"><code>pull_varnos</code></a> はプラン生成前の式に対しても呼び出される。この時点では <code>PlaceHolderInfo</code> がまだ構築されていない場合があり、その場合は <code>phv-&gt;phrels</code> を代替として使用する。また、アペンドリレーション（継承テーブルなど）の子テーブル用に翻訳された <code>PlaceHolderVar</code> の場合は、親と子のリレーションIDの差分を計算して評価位置を動的に翻訳する複雑なエッジケース処理が含まれている。</li>
+</ul>
+<h2>シンボルページ</h2>
+<ul>
+<li><a href="../../../../symbols/src__backend__optimizer__util__var_c__pull_varnos_context.html" target="wiki-view"><code>pull_varnos_context</code></a></li>
+<li><a href="../../../../symbols/src__backend__optimizer__util__var_c__pull_varattnos_context.html" target="wiki-view"><code>pull_varattnos_context</code></a></li>
+<li><a href="../../../../symbols/src__backend__optimizer__util__var_c__pull_vars_context.html" target="wiki-view"><code>pull_vars_context</code></a></li>
+<li><a href="../../../../symbols/src__backend__optimizer__util__var_c__locate_var_of_level_context.html" target="wiki-view"><code>locate_var_of_level_context</code></a></li>
+<li><a href="../../../../symbols/src__backend__optimizer__util__var_c__pull_var_clause_context.html" target="wiki-view"><code>pull_var_clause_context</code></a></li>
+<li><a href="../../../../symbols/src__backend__optimizer__util__var_c__flatten_join_alias_vars_context.html" target="wiki-view"><code>flatten_join_alias_vars_context</code></a></li>
+<li><a href="../../../../symbols/src__backend__optimizer__util__var_c__pull_varnos.html" target="wiki-view"><code>pull_varnos</code></a></li>
+<li><a href="../../../../symbols/src__backend__optimizer__util__var_c__pull_varnos_of_level.html" target="wiki-view"><code>pull_varnos_of_level</code></a></li>
+<li><a href="../../../../symbols/src__backend__optimizer__util__var_c__pull_varnos_walker.html" target="wiki-view"><code>pull_varnos_walker</code></a></li>
+<li><a href="../../../../symbols/src__backend__optimizer__util__var_c__pull_varattnos.html" target="wiki-view"><code>pull_varattnos</code></a></li>
+<li><a href="../../../../symbols/src__backend__optimizer__util__var_c__pull_varattnos_walker.html" target="wiki-view"><code>pull_varattnos_walker</code></a></li>
+<li><a href="../../../../symbols/src__backend__optimizer__util__var_c__pull_vars_of_level.html" target="wiki-view"><code>pull_vars_of_level</code></a></li>
+</ul><script>
+(function() {
+  function notifyParent() {
+    if (parent === window) return;
+    parent.postMessage({type: "frame-location", frame: window.name || "", href: window.location.href}, "*");
+  }
+  document.addEventListener("click", function(event) {
+    const link = event.target.closest("a[data-panel]");
+    if (!link || parent === window) return;
+    parent.postMessage({type: "source-link", panel: link.dataset.panel}, "*");
+  });
+  window.addEventListener("load", notifyParent);
+  window.addEventListener("hashchange", notifyParent);
+})();
+</script></body></html>

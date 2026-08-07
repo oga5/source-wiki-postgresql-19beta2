@@ -26,23 +26,23 @@
 <li>呼び出しサイト: なし</li>
 </ul>
 <h2>関連データ構造</h2>
-<p><a class="wiki-source-link" href="../../source/src/include/c.h.html#L625" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/c.h.html&quot;}, '*');"><code>int8</code></a>, <code>OffsetNumber</code>, <a class="wiki-source-link" href="../../source/src/interfaces/ecpg/preproc/type.h.html#L89" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__interfaces__ecpg__preproc__type_h__when.html&quot;}, '*');"><code>when</code></a></p>
+<p><a class="wiki-source-link" href="../../source/src/include/c.h.html#L625" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/c.h.html&quot;}, '*');"><code>int8</code></a>, <code>OffsetNumber</code>, <a class="wiki-source-link" href="../../source/src/interfaces/ecpg/preproc/type.h.html#L89" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__interfaces__ecpg__preproc__type_h__when.html&quot;}, '*');"><code>when</code></a></p>
 <h2>ソース抜粋</h2>
 <p>~~~c struct { #ifndef WORDS_BIGENDIAN /*</p>
 <ul>
 <li>We need to position this member to reserve space for the backing</li>
 <li>radix tree to tag the lowest <a class="wiki-source-link" href="../../source/src/backend/utils/adt/varbit.c.html#L390" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__utils__adt__varbit_c__bit.html&quot;}, '*');">bit</a> <a class="wiki-source-link" href="../../source/src/interfaces/ecpg/preproc/type.h.html#L89" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__interfaces__ecpg__preproc__type_h__when.html&quot;}, '*');">when</a> struct &#x27;header&#x27; <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> stored</li>
 <li>inside a pointer or DSA pointer.</li>
-<p>*/ uint8		flags;</p>
+<p>*/ uint8		<a class="wiki-source-link" href="../../source/src/backend/optimizer/util/var.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__var_c__flags.html&quot;}, '*');">flags</a>;</p>
 </ul>
-<p><a class="wiki-source-link" href="../../source/src/include/c.h.html#L625" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/c.h.html&quot;}, '*');">int8</a>		nwords; #endif</p>
+<p><a class="wiki-source-link" href="../../source/src/include/c.h.html#L625" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/c.h.html&quot;}, '*');">int8</a>		nwords; #endif</p>
 <p>/*</p>
 <ul>
 <li>We can store a small number of offsets here to avoid wasting space</li>
 <li>with a sparse bitmap.</li>
 <p>*/ OffsetNumber full_offsets[<a class="wiki-source-link" href="../../source/src/backend/access/common/tidstore.c.html#L38" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/access/common/tidstore.c.html&quot;}, '*');">NUM_FULL_OFFSETS</a>];</p>
 </ul>
-<p>#ifdef WORDS_BIGENDIAN <a class="wiki-source-link" href="../../source/src/include/c.h.html#L625" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/c.h.html&quot;}, '*');">int8</a>		nwords; uint8		flags; #endif }			header; ~~~</p>
+<p>#ifdef WORDS_BIGENDIAN <a class="wiki-source-link" href="../../source/src/include/c.h.html#L625" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/c.h.html&quot;}, '*');">int8</a>		nwords; uint8		<a class="wiki-source-link" href="../../source/src/backend/optimizer/util/var.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__var_c__flags.html&quot;}, '*');">flags</a>; #endif }			header; ~~~</p>
 <h2>失敗モードと境界条件</h2>
 <p>まだ解析していません。</p>
 <h2>保守担当者向けメモ</h2>

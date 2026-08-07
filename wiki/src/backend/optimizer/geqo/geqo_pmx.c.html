@@ -1,0 +1,64 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>src/backend/optimizer/geqo/geqo_pmx.c.md</title><link rel="stylesheet" href="../../../../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/geqo/geqo_pmx.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/backend/optimizer/geqo/geqo_pmx.c.html&quot;}, '*');">src/backend/optimizer/geqo/geqo_pmx.c</a></h1>
+<h2>概要</h2>
+<p><a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/geqo/geqo_pmx.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/backend/optimizer/geqo/geqo_pmx.c.html&quot;}, '*');"><code>src/backend/optimizer/geqo/geqo_pmx.c</code></a> は、遺伝的クエリ最適化（GEQO）における部分一致交叉（PMX: Partially Matched Crossover）アルゴリズムを実装するソースファイルです。Goldberg &amp; Lingle の手法および Genitor パッケージに基づいています。</p>
+<h2>モジュール内での役割</h2>
+<p>GEQO モジュール内において、順序表現された解（ツアープラン）の探索空間を探索するための交叉（recombination）オペレータの一つとして位置づけられます。ただし、コード全体が <code>#if defined(PMX)</code> で囲われており、条件付きで有効化される実装となっています。</p>
+<h2>責務</h2>
+<ul>
+<li>2つの親ツアープラン（<a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/geqo/geqo_ox1.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__geqo__geqo_ox1_c__tour1.html&quot;}, '*');"><code>tour1</code></a>, <a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/geqo/geqo_ox1.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__geqo__geqo_ox1_c__tour2.html&quot;}, '*');"><code>tour2</code></a>）を受け取り、部分一致交叉を用いて子プラン（<a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/geqo/geqo_ox1.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__geqo__geqo_ox1_c__offspring.html&quot;}, '*');"><code>offspring</code></a>）を生成する。</li>
+<li>交叉領域の設定、マッピングに基づく遺伝子の置換、および重複・欠損遺伝子の調整を行う。</li>
+<li>処理に必要な一時メモリの割り当てと解放（<code>palloc_array</code> および <code>pfree</code>）を管理する。</li>
+</ul>
+<h2>重要なシンボル</h2>
+<ul>
+<li><a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/geqo/geqo_pmx.c.html#L50" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__geqo__geqo_pmx_c__pmx.html&quot;}, '*');"><code>pmx</code></a>: 外部から呼び出される（あるいは交叉セレクタから参照される）唯一の主要関数であり、PMXアルゴリズムの全ステップを実行します。</li>
+</ul>
+<h2>制御フローとデータフロー</h2>
+<p>1. **初期化**:</p>
+<ul>
+<li><code>failed</code>、<code>from</code>、<code>indx</code>、<code>check_list</code> の各作業用配列を <code>num_gene</code> サイズで確保・初期化します。</li>
+<p>2. **交叉ポイントの決定とコピー**:</p>
+<li><a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/geqo/geqo_random.c.html#L34" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__geqo__geqo_random_c__geqo_randint.html&quot;}, '*');"><code>geqo_randint</code></a> を用いて交叉区間の境界（<code>left</code>, <code>right</code>）を決定します。</li>
+<li><a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/geqo/geqo_ox1.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__geqo__geqo_ox1_c__tour2.html&quot;}, '*');"><code>tour2</code></a> を <a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/geqo/geqo_ox1.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__geqo__geqo_ox1_c__offspring.html&quot;}, '*');"><code>offspring</code></a> のベースとしてコピーし、その後 <code>left</code> から <code>right</code> の区間を <a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/geqo/geqo_ox1.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__geqo__geqo_ox1_c__tour1.html&quot;}, '*');"><code>tour1</code></a> の遺伝子で上書きします。</li>
+<p>3. **PMX メイン処理 (<a class="wiki-source-link" href="../../../../../source/contrib/pgcrypto/mbuf.c.html#L37" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/contrib/pgcrypto/mbuf.c.html&quot;}, '*');">STEP</a> 1 &amp; 2)**:</p>
+<li>区間外のマッピング競合を解決するため、<a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/geqo/geqo_ox1.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__geqo__geqo_ox1_c__tour1.html&quot;}, '*');"><code>tour1</code></a> と <a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/geqo/geqo_ox1.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__geqo__geqo_ox1_c__tour2.html&quot;}, '*');"><code>tour2</code></a> の対応関係を辿って <a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/geqo/geqo_ox1.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__geqo__geqo_ox1_c__offspring.html&quot;}, '*');"><code>offspring</code></a> 内の該当遺伝子を置換します。置換に失敗した要素は <code>failed</code> リストに記録し、後続のステップで処理します。</li>
+<p>4. **修正フェーズ (<a class="wiki-source-link" href="../../../../../source/contrib/pgcrypto/mbuf.c.html#L37" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/contrib/pgcrypto/mbuf.c.html&quot;}, '*');">STEP</a> 3)**:</p>
+<li><code>check_list</code> を走査して重複している遺伝子を検出し、未使用の遺伝子（欠損値）と置き換えることで、すべての遺伝子が過不足なく含まれる有効な順序表現を保証します。</li>
+<p>5. **クリーンアップ**:</p>
+<li>確保したメモリを解放して終了します。</li>
+</ul>
+<h2>直接依存</h2>
+<ul>
+<li><a class="wiki-source-link" href="../../../../../source/src/include/postgres.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/postgres.h.html&quot;}, '*');"><code>postgres.h</code></a></li>
+<li><code>optimizer/geqo.h</code></li>
+<li><code>optimizer/geqo_random.h</code></li>
+<li><code>optimizer/geqo_recombination.h</code></li>
+</ul>
+<h2>関連コード</h2>
+<ul>
+<li><a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/geqo/geqo_recombination.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/backend/optimizer/geqo/geqo_recombination.c.html&quot;}, '*');"><code>src/backend/optimizer/geqo/geqo_recombination.c</code></a>: 他の交叉アルゴリズム（CX, OX1, OX2, <a class="wiki-source-link" href="../../../../../source/src/include/optimizer/geqo.h.html#L46" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/optimizer/geqo.h.html&quot;}, '*');">ERX</a>など）との共通インターフェースや結合点。</li>
+<li><code>src/backend/optimizer/geqo/geqo_random.h</code>: 乱数生成 (<a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/geqo/geqo_random.c.html#L34" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__geqo__geqo_random_c__geqo_randint.html&quot;}, '*');"><code>geqo_randint</code></a>)。</li>
+</ul>
+<h2>読者向けメモ</h2>
+<ul>
+<li>本ファイルの実装は <code>#if defined(PMX)</code> マクロでガードされているため、デフォルトのビルド構成によってはコンパイル対象外となる場合があります。</li>
+</ul>
+<h2>シンボルページ</h2>
+<ul>
+<li><a href="../../../../symbols/src__backend__optimizer__geqo__geqo_pmx_c__pmx.html" target="wiki-view"><code>pmx</code></a></li>
+</ul><script>
+(function() {
+  function notifyParent() {
+    if (parent === window) return;
+    parent.postMessage({type: "frame-location", frame: window.name || "", href: window.location.href}, "*");
+  }
+  document.addEventListener("click", function(event) {
+    const link = event.target.closest("a[data-panel]");
+    if (!link || parent === window) return;
+    parent.postMessage({type: "source-link", panel: link.dataset.panel}, "*");
+  });
+  window.addEventListener("load", notifyParent);
+  window.addEventListener("hashchange", notifyParent);
+})();
+</script></body></html>

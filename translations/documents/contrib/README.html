@@ -1,0 +1,22 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>contrib/README</title><link rel="stylesheet" href="../../../styles.css"></head><body><h1>Japanese translation</h1><p><code>contrib/README</code></p><p><a href="../../../source/contrib/README.html" target="source-view">View original document</a></p><p class="document-translation-progress document-translation-complete">Translation complete.</p><div class="document-translation-body"><section class="document-translation-chunk translated" data-chunk-order="0"><p>PostgreSQL contrib ツリー ---------------------------</p>
+<p>このサブツリーには、移植ツール、分析ユーティリティ、およびプラグイン機能が含まれています。これらは主に、対象とするユーザー層が限られていることや、メインのソースツリーに入れるには実験的すぎるという理由から、PostgreSQLコアシステムのパーツにはなっていません。だからといって、これらが有用でないわけではありません。</p>
+<p>各モジュールのユーザー向けドキュメントは、メインのSGMLドキュメントに含まれています。</p>
+<p>ソース配布物からビルドする場合、&quot;world&quot;ターゲットをビルドしない限り、これらのモジュールは自動的にはビルドされません。また、このディレクトリで &quot;make all&quot; および &quot;make install&quot; を実行することで、これらすべてをビルドおよびインストールすることもできます。または、選択した1つのモジュールだけをビルドおよびインストールするには、そのモジュールのサブディレクトリで同様の操作を行います。</p>
+<p>ディレクトリによっては、新しいユーザー定義関数、演算子、または型を提供しているものもあります。これらのモジュールのいずれかを利用するには、コードをインストールした後、CREATE EXTENSION コマンドを実行して、データベースシステムに新しいSQLオブジェクトを登録する必要があります。新しいデータベースでは、単に次のように実行できます。</p>
+<p>CREATE EXTENSION module_name;</p>
+<p>この手順の詳細については、PostgreSQLのドキュメントを参照してください。</p></section></div><script>
+(function() {
+  function notifyParent() {
+    if (parent === window) return;
+    parent.postMessage({type: "frame-location", frame: window.name || "", href: window.location.href}, "*");
+  }
+  document.addEventListener("click", function(event) {
+    const link = event.target.closest("a[data-panel]");
+    if (!link || parent === window) return;
+    parent.postMessage({type: "source-link", panel: link.dataset.panel}, "*");
+  });
+  window.addEventListener("load", notifyParent);
+  window.addEventListener("hashchange", notifyParent);
+})();
+</script></body></html>

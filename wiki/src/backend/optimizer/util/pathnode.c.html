@@ -1,0 +1,117 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>src/backend/optimizer/util/pathnode.c.md</title><link rel="stylesheet" href="../../../../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/util/pathnode.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/backend/optimizer/util/pathnode.c.html&quot;}, '*');">src/backend/optimizer/util/pathnode.c</a></h1>
+<h2>概要</h2>
+<p><a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/util/pathnode.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/backend/optimizer/util/pathnode.c.html&quot;}, '*');"><code>src/backend/optimizer/util/pathnode.c</code></a> は、PostgreSQLのクエリ最適化フェーズにおいて、実行計画の候補となるパス（<code>Path</code> ノードおよびその派生構造体）を生成し、操作・管理するための主要な関数群を提供するソースファイルである。オプティマイザのサブシステム内において、各リレーションに対する多様なアクセス方式や結合方式のパスを構築し、それらを比較・トーナメント評価して最適なものを選択する責務を持つ。</p>
+<h2>モジュール内での役割</h2>
+<p><code>src/backend/optimizer/util</code> モジュール配下において、本書はパスノードのファクトリ、コスト比較、およびパスリストの管理（<code>add_path</code>, <a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/util/pathnode.c.html#L267" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__pathnode_c__set_cheapest.html&quot;}, '*');"><code>set_cheapest</code></a>）を担当する中核ファイルである。</p>
+<ul>
+<li>ヘッダファイル <a class="wiki-source-link" href="../../../../../source/src/include/optimizer/pathnode.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/optimizer/pathnode.h.html&quot;}, '*');"><code>src/include/optimizer/pathnode.h</code></a> とペアをなし、他のオプティマイザコンポーネント（<code>path/</code> や <code>plan/</code> 配下）に対してパス生成APIを公開する。</li>
+<li>スキャン系、結合系、および各種修飾（ソート、集約、射影等）の <code>Path</code> ノードを生成し、コストモデル（<code>cost.c</code>）を呼び出してコストと行数を見積もる。</li>
+</ul>
+<h2>責務</h2>
+<ul>
+<li>**パスの生成 (Path Creation)**:</li>
+<li>スキャンパス（<a class="wiki-source-link" href="../../../../../source/src/include/nodes/plannodes.h.html#L551" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__nodes__plannodes_h__SeqScan.html&quot;}, '*');">SeqScan</a>, <a class="wiki-source-link" href="../../../../../source/src/include/nodes/plannodes.h.html#L604" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__nodes__plannodes_h__IndexScan.html&quot;}, '*');">IndexScan</a>, BitmapHeap, Tid, Function, CTE, Foreign 等）の生成。</li>
+<li>結合パス（NestPath, MergePath, HashPath）の生成。</li>
+<li>上位処理パス（Append, GroupResult, <a class="wiki-source-link" href="../../../../../source/src/include/nodes/plannodes.h.html#L1082" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__nodes__plannodes_h__Material.html&quot;}, '*');">Material</a>, Memoize, <a class="wiki-source-link" href="../../../../../source/src/include/nodes/plannodes.h.html#L1356" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__nodes__plannodes_h__Gather.html&quot;}, '*');">Gather</a>, Sort, Agg, <a class="wiki-source-link" href="../../../../../source/src/include/nodes/plannodes.h.html#L1251" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__nodes__plannodes_h__WindowAgg.html&quot;}, '*');">WindowAgg</a>, <a class="wiki-source-link" href="../../../../../source/src/include/nodes/plannodes.h.html#L1446" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__nodes__plannodes_h__SetOp.html&quot;}, '*');">SetOp</a>, <a class="wiki-source-link" href="../../../../../source/src/include/nodes/plannodes.h.html#L1498" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__nodes__plannodes_h__Limit.html&quot;}, '*');">Limit</a> 等）の生成。</li>
+<li>**パストーナメントとフィルタリング (Path Management)**:</li>
+<li><code>add_path()</code> および <code>add_partial_path()</code> による、冗長または劣後するパスの排除（ドミネーション判定）。</li>
+<li>無駄になった <code>Path</code> ノードのメモリ解放（<code>pfree</code>）。ただし <code>IndexPath</code> は共有される場合があるため除外する。</li>
+<li>**コスト比較とファジィ判定 (<a class="wiki-source-link" href="../../../../../source/src/include/nodes/nodes.h.html#L259" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__nodes__nodes_h__Cost.html&quot;}, '*');">Cost</a> Comparison &amp; Fuzziness)**:</li>
+<li><code>compare_path_costs()</code> および <code>compare_path_costs_fuzzily()</code> による、浮動小数点誤差を考慮したコスト評価。</li>
+<li>**リパラメータライゼーション (Reparameterization)**:</li>
+<li>パーティション分割や継承テーブルに関連する、子リレーションへのパラメータ付きパスの変換 (<a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/util/pathnode.c.html#L4086" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__pathnode_c__reparameterize_path_by_child.html&quot;}, '*');"><code>reparameterize_path_by_child</code></a> 等)。</li>
+</ul>
+<h2>重要なシンボル</h2>
+<h3>パス管理・比較ファミリー</h3>
+<ul>
+<li><a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/util/pathnode.c.html#L34" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__pathnode_c__PathCostComparison.html&quot;}, '*');"><code>PathCostComparison</code></a> (enum): コスト比較の結果（<a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/util/pathnode.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__pathnode_c__COSTS_EQUAL.html&quot;}, '*');"><code>COSTS_EQUAL</code></a>, <a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/util/pathnode.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__pathnode_c__COSTS_BETTER1.html&quot;}, '*');"><code>COSTS_BETTER1</code></a>, <a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/util/pathnode.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__pathnode_c__COSTS_BETTER2.html&quot;}, '*');"><code>COSTS_BETTER2</code></a>, <a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/util/pathnode.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__pathnode_c__COSTS_DIFFERENT.html&quot;}, '*');"><code>COSTS_DIFFERENT</code></a>）。</li>
+<li><code>compare_path_costs()</code>: 2つのパスの指定されたコスト基準（起動コストまたはトータルコスト）を比較する。</li>
+<li><code>compare_fractional_path_costs()</code>: 指定されたタプル取得割合を考慮してパスコストを比較する。</li>
+<li><code>set_cheapest()</code>: リレーションの <a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/util/pathnode.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__pathnode_c__pathlist.html&quot;}, '*');"><code>pathlist</code></a> から最小コストの起動・トータルパス、およびパラメータ化パスのリストを抽出し、<code>RelOptInfo</code> に設定する。</li>
+<li><code>add_path()</code> / <code>add_partial_path()</code>: 新規パスが既存パスを支配しているか、または支配されているかを判定し、<a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/util/pathnode.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__pathnode_c__pathlist.html&quot;}, '*');"><code>pathlist</code></a> / <a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/util/pathnode.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__pathnode_c__partial_pathlist.html&quot;}, '*');"><code>partial_pathlist</code></a> を更新する。</li>
+<li><code>add_path_precheck()</code> / <code>add_partial_path_precheck()</code>: パス本体を構築する前に、下限コスト等を用いて早期に棄却可能かを判定する。</li>
+</ul>
+<h3>アクセスパス生成ファミリー</h3>
+<ul>
+<li><code>create_seqscan_path()</code>: シーケンシャルスキャンパスを作成。</li>
+<li><code>create_index_path()</code>: インデックススキャンパス（<code>IndexPath</code>）を作成。</li>
+<li><code>create_bitmap_heap_path()</code>, <code>create_bitmap_and_path()</code>, <code>create_bitmap_or_path()</code>: ビットマップスキャン関連のパスを作成。</li>
+<li><code>create_tidscan_path()</code>, <code>create_tidrangescan_path()</code>: TIDスキャンパスを作成。</li>
+<li><code>create_foreignscan_path()</code>, <code>create_foreign_join_path()</code>, <code>create_foreign_upper_path()</code>: 外部データラッパー（FDW）用のパスを作成。</li>
+</ul>
+<h3>結合パス生成ファミリー</h3>
+<ul>
+<li><code>calc_nestloop_required_outer()</code> / <code>calc_non_nestloop_required_outer()</code>: ネストループやハッシュ／マージ結合における要求外部リレーション（<a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/util/pathnode.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__pathnode_c__required_outer.html&quot;}, '*');"><code>required_outer</code></a>）を計算。</li>
+<li><code>create_nestloop_path()</code>: ネストループ結合パス（<code>NestPath</code>）を作成。</li>
+<li><code>create_mergejoin_path()</code>: マージ結合パス（<code>MergePath</code>）を作成。</li>
+<li><code>create_hashjoin_path()</code>: ハッシュ結合パス（<code>HashPath</code>）を作成。</li>
+</ul>
+<h3>上位・処理パス生成ファミリー</h3>
+<ul>
+<li><code>create_append_path()</code>, <code>create_merge_append_path()</code>: Append / MergeAppend パスを作成し、必要に応じてコスト順にソート。</li>
+<li><code>create_sort_path()</code>, <code>create_incremental_sort_path()</code>: ソートおよびインクリメンタルソートパスを作成。</li>
+<li><code>create_agg_path()</code>, <code>create_group_path()</code>, <code>create_groupingsets_path()</code>: 集約・グループ化パスを作成。</li>
+<li><code>create_limit_path()</code>: LIMIT / OFFSET 処理パスを作成。</li>
+<li><code>reparameterize_path_by_child()</code>: 親リレーション用のパラメータ化パスを、子リレーション（パーティション）用に変換・調整する。</li>
+</ul>
+<h2>制御フローとデータフロー</h2>
+<p>1. **パス生成の起点**: オプティマイザの各探索フェーズ（例: <code>query_planner</code> や結合探索）から、各種 <code>create_*_path</code> 関数が呼び出される。これらは対応する <code>makeNode()</code> でメモリを確保し、<code>cost_*</code> 関数を呼び出してコストフィールドを埋める。 2. **パスの登録 (Tournament)**: 生成されたパスは <code>add_path()</code> に渡される。</p>
+<ul>
+<li><code>add_path()</code> は既存の <a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/util/pathnode.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__pathnode_c__pathlist.html&quot;}, '*');"><code>pathlist</code></a> 内の各パスと <code>compare_path_costs_fuzzily()</code> および <code>compare_pathkeys()</code> を用いて比較を行う。</li>
+<li>新規パスが既存パスを優越（ドミネート）していれば、既存パスを <a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/util/pathnode.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__pathnode_c__pathlist.html&quot;}, '*');"><code>pathlist</code></a> から削除し、不必要な構造でなければ <code>pfree()</code> でメモリを回収する（例外として <code>IndexPath</code> は子として共有されるため解放しない）。</li>
+<li>逆に既存パスが新規パスを優越していれば、新規パスの追加を拒否して解放する。</li>
+<p>3. **最終選択**: すべてのパスが出揃った後、<code>set_cheapest()</code> が呼ばれ、リレーションごとの最安値パス（<code>cheapest_total_path</code>, <code>cheapest_startup_path</code> 等）が確定される。</p>
+</ul>
+<h2>直接依存</h2>
+<ul>
+<li><a class="wiki-source-link" href="../../../../../source/src/include/postgres.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/postgres.h.html&quot;}, '*');"><code>postgres.h</code></a>, <a class="wiki-source-link" href="../../../../../source/src/include/miscadmin.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/miscadmin.h.html&quot;}, '*');"><code>miscadmin.h</code></a></li>
+<li><code>access/htup_details.h</code></li>
+<li><code>executor/nodeSetOp.h</code></li>
+<li><code>foreign/fdwapi.h</code></li>
+<li><code>nodes/extensible.h</code></li>
+<li><code>optimizer/appendinfo.h</code>, <code>optimizer/clauses.h</code>, <code>optimizer/cost.h</code>, <code>optimizer/optimizer.h</code>, <code>optimizer/pathnode.h</code>, <code>optimizer/paths.h</code>, <code>optimizer/planmain.h</code>, <code>optimizer/tlist.h</code></li>
+<li><code>parser/parsetree.h</code></li>
+<li><code>utils/memutils.h</code>, <code>utils/selfuncs.h</code></li>
+</ul>
+<h2>関連コード</h2>
+<ul>
+<li><code>src/backend/optimizer/path/</code> (パス構築の呼び出し元となるモジュール群)</li>
+<li><a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/util/relnode.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/backend/optimizer/util/relnode.c.html&quot;}, '*');"><code>src/backend/optimizer/util/relnode.c</code></a> (<code>RelOptInfo</code> の管理)</li>
+<li><a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/plan/createplan.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/backend/optimizer/plan/createplan.c.html&quot;}, '*');"><code>src/backend/optimizer/plan/createplan.c</code></a> (生成された <code>Path</code> を <code>Plan</code> 木へ変換するコード)</li>
+</ul>
+<h2>読者向けメモ</h2>
+<ul>
+<li>**メモリ管理**: 破棄される <code>Path</code> オブジェクトは即座に <code>pfree()</code> される。ただし、複数箇所から参照されうる <code>IndexPath</code> などは、意図的にこの即時解放の対象外とされている。</li>
+<li>**ファジィコスト比較**: 浮動小数点の丸め誤差に起因するプラットフォーム依存の不安定なプラン変動を防ぐため、僅かな差は <a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/util/pathnode.c.html#L47" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/backend/optimizer/util/pathnode.c.html&quot;}, '*');"><code>STD_FUZZ_FACTOR</code></a>（1.01）などを用いたファジィ比較によって等価とみなされる。</li>
+<li>**並列処理の前提**: <code>add_partial_path()</code> は並列ワーカーで実行可能な部分パスを管理し、非パラメータ化かつ並列安全なパスのみを対象とする。</li>
+</ul>
+<h2>シンボルページ</h2>
+<ul>
+<li><a href="../../../../symbols/src__backend__optimizer__util__pathnode_c__PathCostComparison.html" target="wiki-view"><code>PathCostComparison</code></a></li>
+<li><a href="../../../../symbols/src__backend__optimizer__util__pathnode_c__compare_path_costs.html" target="wiki-view"><code>compare_path_costs</code></a></li>
+<li><a href="../../../../symbols/src__backend__optimizer__util__pathnode_c__compare_fractional_path_costs.html" target="wiki-view"><code>compare_fractional_path_costs</code></a></li>
+<li><a href="../../../../symbols/src__backend__optimizer__util__pathnode_c__compare_path_costs_fuzzily.html" target="wiki-view"><code>compare_path_costs_fuzzily</code></a></li>
+<li><a href="../../../../symbols/src__backend__optimizer__util__pathnode_c__set_cheapest.html" target="wiki-view"><code>set_cheapest</code></a></li>
+<li><a href="../../../../symbols/src__backend__optimizer__util__pathnode_c__add_path.html" target="wiki-view"><code>add_path</code></a></li>
+<li><a href="../../../../symbols/src__backend__optimizer__util__pathnode_c__add_path_precheck.html" target="wiki-view"><code>add_path_precheck</code></a></li>
+<li><a href="../../../../symbols/src__backend__optimizer__util__pathnode_c__add_partial_path.html" target="wiki-view"><code>add_partial_path</code></a></li>
+<li><a href="../../../../symbols/src__backend__optimizer__util__pathnode_c__add_partial_path_precheck.html" target="wiki-view"><code>add_partial_path_precheck</code></a></li>
+<li><a href="../../../../symbols/src__backend__optimizer__util__pathnode_c__create_seqscan_path.html" target="wiki-view"><code>create_seqscan_path</code></a></li>
+<li><a href="../../../../symbols/src__backend__optimizer__util__pathnode_c__create_samplescan_path.html" target="wiki-view"><code>create_samplescan_path</code></a></li>
+<li><a href="../../../../symbols/src__backend__optimizer__util__pathnode_c__create_index_path.html" target="wiki-view"><code>create_index_path</code></a></li>
+</ul><script>
+(function() {
+  function notifyParent() {
+    if (parent === window) return;
+    parent.postMessage({type: "frame-location", frame: window.name || "", href: window.location.href}, "*");
+  }
+  document.addEventListener("click", function(event) {
+    const link = event.target.closest("a[data-panel]");
+    if (!link || parent === window) return;
+    parent.postMessage({type: "source-link", panel: link.dataset.panel}, "*");
+  });
+  window.addEventListener("load", notifyParent);
+  window.addEventListener("hashchange", notifyParent);
+})();
+</script></body></html>

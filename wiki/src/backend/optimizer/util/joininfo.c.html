@@ -1,0 +1,65 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>src/backend/optimizer/util/joininfo.c.md</title><link rel="stylesheet" href="../../../../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/util/joininfo.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/backend/optimizer/util/joininfo.c.html&quot;}, '*');">src/backend/optimizer/util/joininfo.c</a></h1>
+<h2>概要</h2>
+<p><a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/util/joininfo.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/backend/optimizer/util/joininfo.c.html&quot;}, '*');"><code>src/backend/optimizer/util/joininfo.c</code></a> は、PostgreSQLオプティマイザにおいて結合条件（<a class="wiki-source-link" href="../../../../../source/src/include/nodes/plannodes.h.html#L984" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__nodes__plannodes_h__Join.html&quot;}, '*');">Join</a> Clause）の管理を行うユーティリティファイルです。リレーション（<code>RelOptInfo</code>）の <a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/util/joininfo.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__joininfo_c__joininfo.html&quot;}, '*');"><code>joininfo</code></a> リストに対して結合条件の追加・削除・検索を行い、結合探索の方向性を決定するための情報を提供します。</p>
+<h2>モジュール内での役割</h2>
+<p><code>src/backend/optimizer/util</code> モジュール群の一部として、クエリのパス生成やリレーション構築をサポートします。特に <a class="wiki-source-link" href="../../../../../source/src/include/optimizer/joininfo.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/optimizer/joininfo.h.html&quot;}, '*');"><code>src/include/optimizer/joininfo.h</code></a> とペアになっており、結合情報に関する公開関数をオプティマイザの他のフェーズ（パス生成やプラン作成など）に提供します。</p>
+<h2>責務</h2>
+<ul>
+<li>2つのリレーション間に適用可能な結合条件または関連する結合条件が存在するか判定する。</li>
+<li>結合条件（<code>RestrictInfo</code>）を、それを必要とする各ベースリレーションの <a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/util/joininfo.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__joininfo_c__joininfo.html&quot;}, '*');"><code>joininfo</code></a> リストへ登録する。</li>
+<li>不要になった結合条件をリレーションの <a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/util/joininfo.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__joininfo_c__joininfo.html&quot;}, '*');"><code>joininfo</code></a> リストから削除する。</li>
+<li>常に真・偽となる結合条件に対し、最適化や定数置換の処理を行う。</li>
+</ul>
+<h2>重要なシンボル</h2>
+<ul>
+<li><a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/util/joininfo.c.html#L38" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__joininfo_c__have_relevant_joinclause.html&quot;}, '*');"><code>have_relevant_joinclause</code></a>: 2つのリレーション間に関連する結合条件や等価クラス（<a class="wiki-source-link" href="../../../../../source/src/include/nodes/pathnodes.h.html#L1653" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__nodes__pathnodes_h__EquivalenceClass.html&quot;}, '*');">EquivalenceClass</a>）の関係が存在するかを判定します。</li>
+<li><a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/util/joininfo.c.html#L97" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__joininfo_c__add_join_clause_to_rels.html&quot;}, '*');"><code>add_join_clause_to_rels</code></a>: 指定された結合条件を、参加する各ベースリレーションの <a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/util/joininfo.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__joininfo_c__joininfo.html&quot;}, '*');"><code>joininfo</code></a> リストに追加します。定数偽の場合は <code>makeBoolConst</code> による置換を行います。</li>
+<li><a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/util/joininfo.c.html#L160" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__joininfo_c__remove_join_clause_from_rels.html&quot;}, '*');"><code>remove_join_clause_from_rels</code></a>: <a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/util/joininfo.c.html#L97" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__joininfo_c__add_join_clause_to_rels.html&quot;}, '*');"><code>add_join_clause_to_rels</code></a> の逆の操作を行い、不要になったリレーションの <a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/util/joininfo.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__joininfo_c__joininfo.html&quot;}, '*');"><code>joininfo</code></a> リストから該当する <code>RestrictInfo</code> を削除します。</li>
+</ul>
+<h2>制御フローとデータフロー</h2>
+<ul>
+<li>**探索フロー**: <a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/util/joininfo.c.html#L38" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__joininfo_c__have_relevant_joinclause.html&quot;}, '*');"><code>have_relevant_joinclause</code></a> は、指定された2つのリレーションのうち <a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/util/joininfo.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__joininfo_c__joininfo.html&quot;}, '*');"><code>joininfo</code></a> リストが短い方を走査し、他方のリレーションとビットマップ（<code>Relids</code>）でオーバーラップするか確認します。リストに見つからない場合は等価クラスも検証します。</li>
+<li>**登録フロー**: <a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/util/joininfo.c.html#L97" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__joininfo_c__add_join_clause_to_rels.html&quot;}, '*');"><code>add_join_clause_to_rels</code></a> は <code>join_relids</code> からビットマップメンバを順に取得し、<a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/util/relnode.c.html#L583" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__relnode_c__find_base_rel_ignore_join.html&quot;}, '*');"><code>find_base_rel_ignore_join</code></a> で該当するベースリレーションを特定して <a class="wiki-source-link" href="../../../../../source/src/backend/nodes/list.c.html#L338" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__nodes__list_c__lappend.html&quot;}, '*');"><code>lappend</code></a> でリストに追加します。ポインタ共有によりメモリ効率を維持します。</li>
+</ul>
+<h2>直接依存</h2>
+<ul>
+<li><a class="wiki-source-link" href="../../../../../source/src/include/postgres.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/postgres.h.html&quot;}, '*');"><code>postgres.h</code></a></li>
+<li><code>nodes/makefuncs.h</code></li>
+<li><code>optimizer/joininfo.h</code></li>
+<li><code>optimizer/pathnode.h</code></li>
+<li><code>optimizer/paths.h</code></li>
+<li><code>optimizer/planmain.h</code></li>
+<li><code>optimizer/restrictinfo.h</code></li>
+</ul>
+<h2>関連コード</h2>
+<ul>
+<li><a class="wiki-source-link" href="../../../../../source/src/include/optimizer/joininfo.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/optimizer/joininfo.h.html&quot;}, '*');"><code>src/include/optimizer/joininfo.h</code></a></li>
+<li><a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/util/restrictinfo.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/backend/optimizer/util/restrictinfo.c.html&quot;}, '*');"><code>src/backend/optimizer/util/restrictinfo.c</code></a></li>
+<li><a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/path/pathkeys.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/backend/optimizer/path/pathkeys.c.html&quot;}, '*');"><code>src/backend/optimizer/path/pathkeys.c</code></a></li>
+</ul>
+<h2>読者向けメモ</h2>
+<ul>
+<li><a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/util/joininfo.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__joininfo_c__joininfo.html&quot;}, '*');"><code>joininfo</code></a> に登録される条件は、必ずしもその2つのリレーションだけで評価可能である必要はありません（例: 多者間の結合条件を早期に引き起こすためのヒントとして利用されます）。</li>
+<li>ひとつの <code>RestrictInfo</code> インスタンスは複数のリレーションのリストから参照されるため、コンテキスト依存の変更を行わないよう注意が必要です。</li>
+</ul>
+<h2>シンボルページ</h2>
+<ul>
+<li><a href="../../../../symbols/src__backend__optimizer__util__joininfo_c__have_relevant_joinclause.html" target="wiki-view"><code>have_relevant_joinclause</code></a></li>
+<li><a href="../../../../symbols/src__backend__optimizer__util__joininfo_c__add_join_clause_to_rels.html" target="wiki-view"><code>add_join_clause_to_rels</code></a></li>
+<li><a href="../../../../symbols/src__backend__optimizer__util__joininfo_c__remove_join_clause_from_rels.html" target="wiki-view"><code>remove_join_clause_from_rels</code></a></li>
+</ul><script>
+(function() {
+  function notifyParent() {
+    if (parent === window) return;
+    parent.postMessage({type: "frame-location", frame: window.name || "", href: window.location.href}, "*");
+  }
+  document.addEventListener("click", function(event) {
+    const link = event.target.closest("a[data-panel]");
+    if (!link || parent === window) return;
+    parent.postMessage({type: "source-link", panel: link.dataset.panel}, "*");
+  });
+  window.addEventListener("load", notifyParent);
+  window.addEventListener("hashchange", notifyParent);
+})();
+</script></body></html>

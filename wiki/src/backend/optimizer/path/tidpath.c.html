@@ -1,0 +1,96 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>src/backend/optimizer/path/tidpath.c.md</title><link rel="stylesheet" href="../../../../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/path/tidpath.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/backend/optimizer/path/tidpath.c.html&quot;}, '*');">src/backend/optimizer/path/tidpath.c</a></h1>
+<h2>概要</h2>
+<p><a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/path/tidpath.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/backend/optimizer/path/tidpath.c.html&quot;}, '*');"><code>src/backend/optimizer/path/tidpath.c</code></a> は、PostgreSQLのオプティマイザにおいて、タプルID（<a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/path/tidpath.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__path__tidpath_c__CTID.html&quot;}, '*');"><code>CTID</code></a>）の条件を利用してリレーションを直接スキャンするためのパス（<code>TidPath</code> および <a class="wiki-source-link" href="../../../../../source/src/include/nodes/pathnodes.h.html#L2179" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__nodes__pathnodes_h__TidRangePath.html&quot;}, '*');"><code>TidRangePath</code></a>）を生成するルーチン群を提供します。<code>WHERE ctid = const</code>、<code>ctid IN (...)</code>、<code>CURRENT OF cursor</code>、および <code>ctid &gt; const</code> などの範囲条件を解析し、適切なプランを作成します。</p>
+<h2>モジュール内での役割</h2>
+<p><code>src/backend/optimizer/path/</code> モジュールの一部として、インデックスやシーケンシャルスキャン以外の特殊なアクセスパスである TID スキャン候補を網羅的に評価します。<a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/path/allpaths.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/backend/optimizer/path/allpaths.c.html&quot;}, '*');"><code>allpaths.c</code></a> やリレーション最適化の過程から呼び出され、構築したパスを <code>add_path</code> / <a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/util/pathnode.c.html#L792" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__pathnode_c__add_partial_path.html&quot;}, '*');"><code>add_partial_path</code></a> を通じて <code>RelOptInfo</code> に登録します。</p>
+<h2>責務</h2>
+<ul>
+<li>**TID 条件の検証**: <code>RestrictInfo</code> が <a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/path/tidpath.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__path__tidpath_c__CTID.html&quot;}, '*');"><code>CTID</code></a> と擬似定数（pseudoconstant）の比較、あるいは <code>CURRENT OF</code> 式であるかを判定する。</li>
+<li>**AND/OR 構造の解析**: 暗黙の AND リストや OR 節から利用可能な TID 条件（等価、配列、範囲）を抽出する。</li>
+<li>**パラメータ付きパスの構築**: 等価結合条件や同値クラス（<a class="wiki-source-link" href="../../../../../source/src/include/nodes/pathnodes.h.html#L1653" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__nodes__pathnodes_h__EquivalenceClass.html&quot;}, '*');">EquivalenceClass</a>）から、外部リレーションに依存するパラメータ付き <code>TidPath</code> を生成する。</li>
+<li>**TID スキャンパスの統合作成**: 単一スキャン、範囲スキャン（パラレル含む）、パラメータ付きスキャンの各パスを構築し、プラン空間に追加する。</li>
+</ul>
+<h2>重要なシンボル</h2>
+<h3>条件判定・検証ファミリー</h3>
+<ul>
+<li><code>IsCTIDVar(Var *var, RelOptInfo *rel)</code>: 指定された <code>Var</code> が対象リレーションの <a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/path/tidpath.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__path__tidpath_c__CTID.html&quot;}, '*');"><code>CTID</code></a> 属性を指しているかを厳密に検証する。</li>
+<li><code>IsBinaryTidClause(RestrictInfo *rinfo, RelOptInfo *rel)</code>: <a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/path/tidpath.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__path__tidpath_c__CTID.html&quot;}, '*');"><code>CTID</code></a> と非揮発性の他辺引数による二項演算子式であるかを検査する。</li>
+<li><code>IsTidEqualClause(RestrictInfo *rinfo, RelOptInfo *rel)</code>: 二項 TID 演算子が等価演算子（<a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/path/tidpath.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__path__tidpath_c__TIDEqualOperator.html&quot;}, '*');"><code>TIDEqualOperator</code></a>）であるかを検査する。</li>
+<li><code>IsTidRangeClause(RestrictInfo *rinfo, RelOptInfo *rel)</code>: 二項 TID 演算子が範囲演算子（<code>&lt;</code>, <code>&lt;=</code>, <code>&gt;</code>, <code>&gt;=</code>）であるかを検査する。</li>
+<li><code>IsTidEqualAnyClause(PlannerInfo *root, RestrictInfo *rinfo, RelOptInfo *rel)</code>: <code>CTID = ANY(...)</code> 形式の配列等価条件であるかを検査する。</li>
+<li><code>IsCurrentOfClause(RestrictInfo *rinfo, RelOptInfo *rel)</code>: カーソル参照を表す <code>CurrentOfExpr</code> であるかを検査する。</li>
+<li><code>RestrictInfoIsTidQual(PlannerInfo *root, RestrictInfo *rinfo, RelOptInfo *rel)</code>: セキュリティ昇格可能性を考慮し、基本ケースの TID 条件として使用可能か判定する。</li>
+</ul>
+<h3>抽出・構築ファミリー</h3>
+<ul>
+<li><code>TidQualFromRestrictInfoList(PlannerInfo *root, List *rlist, RelOptInfo *rel, bool *isCurrentOf)</code>: 与えられた制限リストから AND/OR 構造を再帰的に走査し、最適な TID 等価条件リストを抽出する。</li>
+<li><code>TidRangeQualFromRestrictInfoList(List *rlist, RelOptInfo *rel)</code>: テーブル AM の機能を考慮し、TID 範囲条件のリストを抽出する。</li>
+<li><code>BuildParameterizedTidPaths(PlannerInfo *root, RelOptInfo *rel, List *clauses)</code>: 結合条件や同値クラス由来の条件からパラメータ付き <code>TidPath</code> を構築して追加する。</li>
+<li><code>ec_member_matches_ctid(PlannerInfo *root, RelOptInfo *rel, EquivalenceClass *ec, EquivalenceMember *em, void *arg)</code>: 同値メンバが <a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/path/tidpath.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__path__tidpath_c__CTID.html&quot;}, '*');"><code>CTID</code></a> Var と一致するかを判定するコールバック。</li>
+</ul>
+<h3>エントリポイント</h3>
+<ul>
+<li><code>create_tidscan_paths(PlannerInfo *root, RelOptInfo *rel)</code>: リレーションに対する全ての TID スキャンパス（通常、範囲、パラレル範囲、パラメータ付き）の生成を統括する中心関数。</li>
+</ul>
+<h2>制御フローとデータフロー</h2>
+<p>1. **ベースリストの解析**: <a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/path/tidpath.c.html#L496" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__path__tidpath_c__create_tidscan_paths.html&quot;}, '*');"><code>create_tidscan_paths</code></a> はまず <code>rel-&gt;baserestrictinfo</code> から <a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/path/tidpath.c.html#L280" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__path__tidpath_c__TidQualFromRestrictInfoList.html&quot;}, '*');"><code>TidQualFromRestrictInfoList</code></a> を呼び出し、等価系または <code>CURRENT OF</code> 条件を抽出する。</p>
+<ul>
+<li><code>CurrentOfExpr</code> が検出された場合、唯一有効なパスとして即座に <code>TidPath</code> を追加し、他のパス生成をスキップして終了する（早期リターン）。</li>
+<p>2. **通常/範囲パスの追加**: TID スキャンが無効化（<a class="wiki-source-link" href="../../../../../source/src/include/nodes/pathnodes.h.html#L70" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/nodes/pathnodes.h.html&quot;}, '*');"><code>PGS_TIDSCAN</code></a> マスク不一致）されていなければ、<a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/path/tidpath.c.html#L397" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__path__tidpath_c__TidRangeQualFromRestrictInfoList.html&quot;}, '*');"><code>TidRangeQualFromRestrictInfoList</code></a> で範囲条件を収集し、<a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/util/pathnode.c.html#L1314" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__pathnode_c__create_tidrangescan_path.html&quot;}, '*');"><code>create_tidrangescan_path</code></a> で通常および（条件を満たせば）並列（Parallel）範囲スキャンパスを追加する。 3. **パラメータ付きパスの追加**:</p>
+<li><code>has_eclass_joins</code> が有効な場合、<a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/path/equivclass.c.html#L3237" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__path__equivclass_c__generate_implied_equalities_for_column.html&quot;}, '*');"><code>generate_implied_equalities_for_column</code></a> と <a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/path/tidpath.c.html#L480" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__path__tidpath_c__ec_member_matches_ctid.html&quot;}, '*');"><code>ec_member_matches_ctid</code></a> を用いて同値クラスから等価条件を生成し、<a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/path/tidpath.c.html#L425" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__path__tidpath_c__BuildParameterizedTidPaths.html&quot;}, '*');"><code>BuildParameterizedTidPaths</code></a> に渡す。</li>
+<li>リレーションの <a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/util/joininfo.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__joininfo_c__joininfo.html&quot;}, '*');"><code>joininfo</code></a>（「緩い」結合条件など）に対しても同様に <a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/path/tidpath.c.html#L425" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__path__tidpath_c__BuildParameterizedTidPaths.html&quot;}, '*');"><code>BuildParameterizedTidPaths</code></a> を実行し、パラメータ付き <code>TidPath</code> を網羅的に登録する。</li>
+</ul>
+<h2>直接依存</h2>
+<ul>
+<li><a class="wiki-source-link" href="../../../../../source/src/include/postgres.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/postgres.h.html&quot;}, '*');"><code>postgres.h</code></a></li>
+<li><code>access/sysattr.h</code></li>
+<li><code>catalog/pg_operator.h</code></li>
+<li><code>catalog/pg_type.h</code></li>
+<li><code>nodes/nodeFuncs.h</code></li>
+<li><code>optimizer/cost.h</code></li>
+<li><code>optimizer/optimizer.h</code></li>
+<li><code>optimizer/pathnode.h</code></li>
+<li><code>optimizer/paths.h</code></li>
+<li><code>optimizer/restrictinfo.h</code></li>
+</ul>
+<h2>関連コード</h2>
+<ul>
+<li><a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/path/allpaths.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/backend/optimizer/path/allpaths.c.html&quot;}, '*');"><code>src/backend/optimizer/path/allpaths.c</code></a></li>
+<li><a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/path/indxpath.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/backend/optimizer/path/indxpath.c.html&quot;}, '*');"><code>src/backend/optimizer/path/indxpath.c</code></a></li>
+<li><code>src/backend/optimizer/path/pathnode.c</code></li>
+</ul>
+<h2>読者向けメモ</h2>
+<ul>
+<li>**CurrentOfExpr の特異性**: <code>CURRENT OF</code> 条件が存在する場合、実行エンジンの制約上、他のいかなる TID 条件やパスよりも優先され、それ単体のパスのみが返されます（他のパスの追加はブロックされます）。</li>
+<li>**テーブル AM の制約**: <a class="wiki-source-link" href="../../../../../source/src/include/nodes/pathnodes.h.html#L2179" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__nodes__pathnodes_h__TidRangePath.html&quot;}, '*');"><code>TidRangePath</code></a> の生成は、対象リレーションのアクセス方式（Table AM）が <a class="wiki-source-link" href="../../../../../source/src/include/nodes/pathnodes.h.html#L973" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/nodes/pathnodes.h.html&quot;}, '*');"><code>AMFLAG_HAS_TID_RANGE</code></a> フラグをサポートしている場合のみ行われます。</li>
+</ul>
+<h2>シンボルページ</h2>
+<ul>
+<li><a href="../../../../symbols/src__backend__optimizer__path__tidpath_c__IsCTIDVar.html" target="wiki-view"><code>IsCTIDVar</code></a></li>
+<li><a href="../../../../symbols/src__backend__optimizer__path__tidpath_c__IsBinaryTidClause.html" target="wiki-view"><code>IsBinaryTidClause</code></a></li>
+<li><a href="../../../../symbols/src__backend__optimizer__path__tidpath_c__IsTidEqualClause.html" target="wiki-view"><code>IsTidEqualClause</code></a></li>
+<li><a href="../../../../symbols/src__backend__optimizer__path__tidpath_c__IsTidRangeClause.html" target="wiki-view"><code>IsTidRangeClause</code></a></li>
+<li><a href="../../../../symbols/src__backend__optimizer__path__tidpath_c__IsTidEqualAnyClause.html" target="wiki-view"><code>IsTidEqualAnyClause</code></a></li>
+<li><a href="../../../../symbols/src__backend__optimizer__path__tidpath_c__IsCurrentOfClause.html" target="wiki-view"><code>IsCurrentOfClause</code></a></li>
+<li><a href="../../../../symbols/src__backend__optimizer__path__tidpath_c__RestrictInfoIsTidQual.html" target="wiki-view"><code>RestrictInfoIsTidQual</code></a></li>
+<li><a href="../../../../symbols/src__backend__optimizer__path__tidpath_c__TidQualFromRestrictInfoList.html" target="wiki-view"><code>TidQualFromRestrictInfoList</code></a></li>
+<li><a href="../../../../symbols/src__backend__optimizer__path__tidpath_c__TidRangeQualFromRestrictInfoList.html" target="wiki-view"><code>TidRangeQualFromRestrictInfoList</code></a></li>
+<li><a href="../../../../symbols/src__backend__optimizer__path__tidpath_c__BuildParameterizedTidPaths.html" target="wiki-view"><code>BuildParameterizedTidPaths</code></a></li>
+<li><a href="../../../../symbols/src__backend__optimizer__path__tidpath_c__ec_member_matches_ctid.html" target="wiki-view"><code>ec_member_matches_ctid</code></a></li>
+<li><a href="../../../../symbols/src__backend__optimizer__path__tidpath_c__create_tidscan_paths.html" target="wiki-view"><code>create_tidscan_paths</code></a></li>
+</ul><script>
+(function() {
+  function notifyParent() {
+    if (parent === window) return;
+    parent.postMessage({type: "frame-location", frame: window.name || "", href: window.location.href}, "*");
+  }
+  document.addEventListener("click", function(event) {
+    const link = event.target.closest("a[data-panel]");
+    if (!link || parent === window) return;
+    parent.postMessage({type: "source-link", panel: link.dataset.panel}, "*");
+  });
+  window.addEventListener("load", notifyParent);
+  window.addEventListener("hashchange", notifyParent);
+})();
+</script></body></html>

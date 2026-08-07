@@ -1,0 +1,72 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>src/include/catalog/genbki.h.md</title><link rel="stylesheet" href="../../../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../../../source/src/include/catalog/genbki.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/catalog/genbki.h.html&quot;}, '*');">src/include/catalog/genbki.h</a></h1>
+<h2>概要</h2>
+<p>PostgreSQL のシステムカタログヘッダーファイルを C コンパイラとビルドツール（<a class="wiki-source-link" href="../../../../source/src/backend/catalog/genbki.pl.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/catalog/genbki.pl.html&quot;}, '*');"><code>genbki.pl</code></a>）の双方が解釈できるようにするためのマクロ定義を提供するヘッダーファイルです。カタログ定義構造体のレイアウト調整や、BKI（Backend Interface）生成用のメタデータマクロを定義しています。</p>
+<h2>モジュール内での役割</h2>
+<p><code>src/include/catalog</code> サブシステムにおいて、各 <code>pg_*.h</code> カタログ定義ヘッダーの基礎となるメタ構文を定義します。C コンパイラに対しては通常のC言語構造体として解釈させつつ、ビルドスクリプトにはスキーマ定義、OID、インデックス、TOAST、外部キーなどの情報を伝える二重の役割を持ちます。</p>
+<h2>責務</h2>
+<ul>
+<li>**構造体レイアウトの制御**: AIX などのプラットフォームにおけるアライメント差（<code>ALIGNOF_DOUBLE &lt; ALIGNOF_INT64_T</code>）を吸収し、タプル形成規則と互換性を持たせるための構造体パディング（<a class="wiki-source-link" href="../../../../source/src/include/catalog/genbki.h.html#L34" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/catalog/genbki.h.html&quot;}, '*');"><code>BEGIN_CATALOG_STRUCT</code></a> / <a class="wiki-source-link" href="../../../../source/src/include/catalog/genbki.h.html#L35" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/catalog/genbki.h.html&quot;}, '*');"><code>END_CATALOG_STRUCT</code></a>）の定義。</li>
+<li>**カタログ定義メタマクロの提供**: カタログ名、OID、ブートストラップ、共有リレーション等を宣言する <code>CATALOG</code> 関連マクロの提供。</li>
+<li>**属性修飾マクロの提供**: 列の NULL 制約強制、デフォルト値、配列デフォルト、OID 参照（ルックアップ）を指定する <code>BKI_*</code> マクロの定義。</li>
+<li>**補助構造・インデックス定義の宣言**: TOAST テーブル、インデックス、一意制約、プライマリキー、手動定義 OID マクロ、外部キー、シスキャッシュを宣言するためのプレースホルダーマクロの提供。</li>
+<li>**クライアント露出制御**: バックエンド専用コードとクライアント共通ヘッダー（<code>_d.h</code>）へのコード共有を制御する境界マーカーの提供。</li>
+</ul>
+<h2>重要なシンボル</h2>
+<h3>構造体アライメント制御</h3>
+<ul>
+<li><a class="wiki-source-link" href="../../../../source/src/include/catalog/genbki.h.html#L34" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/catalog/genbki.h.html&quot;}, '*');"><code>BEGIN_CATALOG_STRUCT</code></a> / <a class="wiki-source-link" href="../../../../source/src/include/catalog/genbki.h.html#L35" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/catalog/genbki.h.html&quot;}, '*');"><code>END_CATALOG_STRUCT</code></a>: </li>
+<li>ライフサイクル: カタログ構造体定義の直前と直後に配置。</li>
+<li>レイアウト: AIX 環境で <code>int64</code> フィールドを 4 バイト境界に強制配置 (<code>pack(push,4)</code>) し、それ以外の環境では無効化。</li>
+</ul>
+<h3>カタログおよび属性修飾マクロ（ダミー/パーサ用）</h3>
+<ul>
+<li><code>CATALOG(name,oid,oidmacro)</code>: カタログ構造体の定義（<code>typedef struct FormData_name</code>）を開始。</li>
+<li><a class="wiki-source-link" href="../../../../source/src/include/catalog/genbki.h.html#L45" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/catalog/genbki.h.html&quot;}, '*');"><code>BKI_BOOTSTRAP</code></a>, <a class="wiki-source-link" href="../../../../source/src/include/catalog/genbki.h.html#L46" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/catalog/genbki.h.html&quot;}, '*');"><code>BKI_SHARED_RELATION</code></a>, <a class="wiki-source-link" href="../../../../source/src/include/catalog/genbki.h.html#L47" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/catalog/genbki.h.html&quot;}, '*');"><code>BKI_ROWTYPE_OID</code></a>, <a class="wiki-source-link" href="../../../../source/src/include/catalog/genbki.h.html#L48" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/catalog/genbki.h.html&quot;}, '*');"><code>BKI_SCHEMA_MACRO</code></a>: カタログ属性の修飾。</li>
+<li><a class="wiki-source-link" href="../../../../source/src/include/catalog/genbki.h.html#L51" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/catalog/genbki.h.html&quot;}, '*');"><code>BKI_FORCE_NULL</code></a>, <a class="wiki-source-link" href="../../../../source/src/include/catalog/genbki.h.html#L52" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/catalog/genbki.h.html&quot;}, '*');"><code>BKI_FORCE_NOT_NULL</code></a>, <a class="wiki-source-link" href="../../../../source/src/include/catalog/genbki.h.html#L54" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/catalog/genbki.h.html&quot;}, '*');"><code>BKI_DEFAULT</code></a>, <a class="wiki-source-link" href="../../../../source/src/include/catalog/genbki.h.html#L56" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/catalog/genbki.h.html&quot;}, '*');"><code>BKI_ARRAY_DEFAULT</code></a>: フィールド単位の制約・初期値修飾。</li>
+<li><code>BKI_LOOKUP(catalog)</code>, <code>BKI_LOOKUP_OPT(catalog)</code>: 指定カタログの OID 参照およびオプショナル参照を定義し、初期データの名前解決やテスト検証に利用。</li>
+</ul>
+<h3>構築・スキーマ宣言マクロ</h3>
+<ul>
+<li><a class="wiki-source-link" href="../../../../source/src/include/catalog/genbki.h.html#L82" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/catalog/genbki.h.html&quot;}, '*');"><code>DECLARE_TOAST</code></a>, <a class="wiki-source-link" href="../../../../source/src/include/catalog/genbki.h.html#L83" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/catalog/genbki.h.html&quot;}, '*');"><code>DECLARE_TOAST_WITH_MACRO</code></a>: システムカタログ用の TOAST テーブルとインデックスの OID 割当てを指定。</li>
+<li><a class="wiki-source-link" href="../../../../source/src/include/catalog/genbki.h.html#L103" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/catalog/genbki.h.html&quot;}, '*');"><code>DECLARE_INDEX</code></a>, <a class="wiki-source-link" href="../../../../source/src/include/catalog/genbki.h.html#L104" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/catalog/genbki.h.html&quot;}, '*');"><code>DECLARE_UNIQUE_INDEX</code></a>, <a class="wiki-source-link" href="../../../../source/src/include/catalog/genbki.h.html#L105" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/catalog/genbki.h.html&quot;}, '*');"><code>DECLARE_UNIQUE_INDEX_PKEY</code></a>: インデックスおよびプライマリキーの作成文を生成。</li>
+<li><a class="wiki-source-link" href="../../../../source/src/include/catalog/genbki.h.html#L113" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/catalog/genbki.h.html&quot;}, '*');"><code>DECLARE_OID_DEFINING_MACRO</code></a>: カタログ <code>.dat</code> ファイルに存在しない手動割り当て OID 用のマクロ定義を生成。</li>
+<li><a class="wiki-source-link" href="../../../../source/src/include/catalog/genbki.h.html#L137" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/catalog/genbki.h.html&quot;}, '*');"><code>DECLARE_FOREIGN_KEY</code></a>, <a class="wiki-source-link" href="../../../../source/src/include/catalog/genbki.h.html#L138" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/catalog/genbki.h.html&quot;}, '*');"><code>DECLARE_FOREIGN_KEY_OPT</code></a>, <a class="wiki-source-link" href="../../../../source/src/include/catalog/genbki.h.html#L139" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/catalog/genbki.h.html&quot;}, '*');"><code>DECLARE_ARRAY_FOREIGN_KEY</code></a>, <a class="wiki-source-link" href="../../../../source/src/include/catalog/genbki.h.html#L140" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/catalog/genbki.h.html&quot;}, '*');"><code>DECLARE_ARRAY_FOREIGN_KEY_OPT</code></a>: カタログ間の外部キー関係を機械可読な形式で記録。</li>
+<li><a class="wiki-source-link" href="../../../../source/src/include/catalog/genbki.h.html#L146" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/catalog/genbki.h.html&quot;}, '*');"><code>MAKE_SYSCACHE</code></a>: 指定された名前、インデックス、バケットサイズでシスキャッシュを作成。</li>
+</ul>
+<h2>制御フローとデータフロー</h2>
+<p>本ファイルは純粋なプリプロセッサマクロおよび C 言語の型定義定義ファイルであり、実行時の制御フローやデータフローを持ちません。</p>
+<ul>
+<li>**ビルド時フロー**: </li>
+<p>1. <a class="wiki-source-link" href="../../../../source/src/backend/catalog/genbki.pl.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/catalog/genbki.pl.html&quot;}, '*');"><code>genbki.pl</code></a> スクリプトが <code>pg_*.h</code> ヘッダーを走査し、本ファイルで定義される各種 <code>CATALOG</code> や <code>DECLARE_*</code> マクロをパースする。 2. パース結果から <code>.bki</code> ブートストラップファイルや <code>*_d.h</code> クライアント用ヘッダーが生成される。</p>
+<li>**コンパイル時フロー**: </li>
+<li>C コンパイラがバックエンドをビルドする際、<code>DECLARE_*</code> や <code>BKI_*</code> マクロは <code>extern int no_such_variable</code> や空定義に展開され、実コードに影響を与えずに構造体定義（<code>FormData_*</code>）のみがコンパイルされる。</li>
+</ul>
+<h2>直接依存</h2>
+<ul>
+<li>なし（他のヘッダーをインクルードしない基礎ヘッダー）。</li>
+</ul>
+<h2>関連コード</h2>
+<ul>
+<li><a class="wiki-source-link" href="../../../../source/src/backend/catalog/genbki.pl.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/catalog/genbki.pl.html&quot;}, '*');"><code>src/backend/catalog/genbki.pl</code></a>: 本ファイルのマクロ群を解釈して BKI ファイルや派生ヘッダーを生成する Perl スクリプト。</li>
+<li><code>src/include/catalog/pg_*.h</code>: 本ファイルのマクロを利用して定義されている個別のシステムカタログヘッダー群。</li>
+</ul>
+<h2>読者向けメモ</h2>
+<ul>
+<li>**C構造体の不ビジビリティ**: 可変長カタログフィールドは原則として C 構造体から隠蔽されるため、<code>CATALOG_VARLEN</code> は未定義（<code>#undef</code>）として文書化されています。</li>
+<li>**EXPOSE_TO_CLIENT_CODE**: クライアントとバックエンドの両方で共有すべきコード片を囲むために使用され、<a class="wiki-source-link" href="../../../../source/src/backend/catalog/genbki.pl.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/catalog/genbki.pl.html&quot;}, '*');"><code>genbki.pl</code></a> によって <code>_d</code> ヘッダーへ選択的にコピーされます。</li>
+</ul><script>
+(function() {
+  function notifyParent() {
+    if (parent === window) return;
+    parent.postMessage({type: "frame-location", frame: window.name || "", href: window.location.href}, "*");
+  }
+  document.addEventListener("click", function(event) {
+    const link = event.target.closest("a[data-panel]");
+    if (!link || parent === window) return;
+    parent.postMessage({type: "source-link", panel: link.dataset.panel}, "*");
+  });
+  window.addEventListener("load", notifyParent);
+  window.addEventListener("hashchange", notifyParent);
+})();
+</script></body></html>

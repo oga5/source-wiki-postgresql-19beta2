@@ -1,0 +1,89 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>src/backend/optimizer/plan/planagg.c.md</title><link rel="stylesheet" href="../../../../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/plan/planagg.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/backend/optimizer/plan/planagg.c.html&quot;}, '*');">src/backend/optimizer/plan/planagg.c</a></h1>
+<h2>概要</h2>
+<p><a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/plan/planagg.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/backend/optimizer/plan/planagg.c.html&quot;}, '*');"><code>src/backend/optimizer/plan/planagg.c</code></a> は、PostgreSQLのオプティマイザーにおいて集約クエリに対する特殊な最適化、具体的には <a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/plan/planagg.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__plan__planagg_c__MIN.html&quot;}, '*');"><code>MIN</code></a> / <a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/plan/planagg.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__plan__planagg_c__MAX.html&quot;}, '*');"><code>MAX</code></a> 集約関数をインデックススキャンと <code>LIMIT 1</code> を利用したサブクエリ（InitPlan）に置き換える処理を担当します。全行スキャンを伴う通常の集約プランに比べ、適切なインデックスが存在する場合に劇的な性能向上の可能性があります。</p>
+<h2>モジュール内での役割</h2>
+<p><code>src/backend/optimizer/plan</code> モジュールの主要な一角として、<code>grouping_planner()</code> から呼び出され、標準的な集約プラン構築前の前処理段階で動作します。対象クエリ条件に合致する <a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/plan/planagg.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__plan__planagg_c__MIN.html&quot;}, '*');"><code>MIN</code></a> / <a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/plan/planagg.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__plan__planagg_c__MAX.html&quot;}, '*');"><code>MAX</code></a> 集約を見つけ出し、最適化可能であれば <code>MinMaxAggPath</code> を生成して <code>UPPERREL_GROUP_AGG</code> 上位リレーションに追加します。</p>
+<h2>責務</h2>
+<ul>
+<li>クエリが <a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/plan/planagg.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__plan__planagg_c__MIN.html&quot;}, '*');"><code>MIN</code></a> / <a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/plan/planagg.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__plan__planagg_c__MAX.html&quot;}, '*');"><code>MAX</code></a> 最適化の前提条件を満たしているかの判定（単一テーブル、GROUP BYなし、ウィンドウ関数なし、CTEなし等）。</li>
+<li>各 <a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/plan/planagg.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__plan__planagg_c__MIN.html&quot;}, '*');"><code>MIN</code></a> / <a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/plan/planagg.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__plan__planagg_c__MAX.html&quot;}, '*');"><code>MAX</code></a> 集約に対するソート演算子の検証およびサブクエリ用 <code>PlannerInfo</code> の構築。</li>
+<li>インデックススキャンと <code>LIMIT 1</code> を用いたサブプラン（InitPlan）アクセスパスの探索と評価。</li>
+<li>最適化成功時に出力用 <code>Param</code> の作成と <code>MinMaxAggPath</code> の登録。</li>
+</ul>
+<h2>重要なシンボル</h2>
+<h3>公開（外部から呼び出される）シンボル</h3>
+<ul>
+<li><code>preprocess_minmax_aggregates(PlannerInfo *root)</code></li>
+<li>**ライフサイクル / アクセス**: クエリのグループ化処理の直前（<code>grouping_planner</code> 内）から呼ばれる。</li>
+<li>**役割**: クエリが <a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/plan/planagg.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__plan__planagg_c__MIN.html&quot;}, '*');"><code>MIN</code></a> / <a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/plan/planagg.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__plan__planagg_c__MAX.html&quot;}, '*');"><code>MAX</code></a> 最適化の要件を満たすか検証し、全集約が最適化可能であれば <code>MinMaxAggPath</code> を構築して上流リレーションに追加する。</li>
+</ul>
+<h3>静的（モジュール内）ヘルパーシンボル</h3>
+<ul>
+<li><code>can_minmax_aggs(PlannerInfo *root, List **context)</code></li>
+<li>**役割**: <code>root-&gt;agginfos</code> を走査し、すべての集約が引数を1つ持つ純粋な <a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/plan/planagg.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__plan__planagg_c__MIN.html&quot;}, '*');"><code>MIN</code></a> / <a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/plan/planagg.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__plan__planagg_c__MAX.html&quot;}, '*');"><code>MAX</code></a> 集約（可変関数や行型を含まない）であるかを検証し、<code>MinMaxAggInfo</code> リストを構築する。</li>
+<li><code>build_minmax_path(PlannerInfo *root, MinMaxAggInfo *mminfo, Oid eqop, Oid sortop, bool reverse_sort, bool nulls_first)</code></li>
+<li>**役割**: 現在のクエリ状態をクローン・改変して仮想的なサブクエリ (<code>SELECT col FROM tab WHERE col IS NOT NULL ... ORDER BY col ... LIMIT 1</code>) を作成し、<code>query_planner</code> を実行して最適なプレソートパスを取得・コスト評価する。</li>
+<li><code>minmax_qp_callback(PlannerInfo *root, void *extra)</code></li>
+<li>**役割**: <code>query_planner</code> 用のコールバック。ソート句から <a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/plan/planagg.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__plan__planagg_c__query_pathkeys.html&quot;}, '*');"><code>query_pathkeys</code></a> を設定する。</li>
+<li><code>fetch_agg_sort_op(Oid aggfnoid)</code></li>
+<li>**役割**: <code>pg_aggregate</code> システムカタログから指定された集約関数のソート演算子 (<a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/plan/planagg.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__plan__planagg_c__aggsortop.html&quot;}, '*');"><code>aggsortop</code></a>) OID を取得する。</li>
+</ul>
+<h2>制御フローとデータフロー</h2>
+<p>1. **事前条件のチェック**: <a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/plan/planagg.c.html#L73" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__plan__planagg_c__preprocess_minmax_aggregates.html&quot;}, '*');"><code>preprocess_minmax_aggregates</code></a> が <code>parse-&gt;hasAggs</code> の有無、<code>groupClause</code>、<code>hasWindowFuncs</code>、<code>cteList</code>、単一テーブル制約などを順にチェックし、違反していれば早期リターンする。 2. **集約の検証**: <a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/plan/planagg.c.html#L237" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__plan__planagg_c__can_minmax_aggs.html&quot;}, '*');"><code>can_minmax_aggs</code></a> で各集約を走査。<a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/plan/planagg.c.html#L502" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__plan__planagg_c__fetch_agg_sort_op.html&quot;}, '*');"><code>fetch_agg_sort_op</code></a> を使ってカタログから <a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/plan/planagg.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__plan__planagg_c__aggsortop.html&quot;}, '*');"><code>aggsortop</code></a> を取得し、可変関数や行型でないことを確認した上で <code>MinMaxAggInfo</code> を生成する。 3. **サブプラン（パス）の構築**: 各 <code>MinMaxAggInfo</code> について <a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/plan/planagg.c.html#L317" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__plan__planagg_c__build_minmax_path.html&quot;}, '*');"><code>build_minmax_path</code></a> を呼び出す。</p>
+<ul>
+<li>親の <code>PlannerInfo</code> をコピーして <code>subroot</code> を作成し、<code>Var</code> のサブレベルをインクリメント。</li>
+<li>ターゲットリストを単一の集約対象式に書き換え、<code>IS NOT NULL</code> 条件と <code>ORDER BY</code> および <code>LIMIT 1</code> (<code>limit_tuples = 1.0</code>) を付与。</li>
+<li><code>query_planner</code> を実行し、最安の分数パス（<a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/path/pathkeys.c.html#L665" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__path__pathkeys_c__get_cheapest_fractional_path_for_pathkeys.html&quot;}, '*');"><code>get_cheapest_fractional_path_for_pathkeys</code></a>）を選択。</li>
+<p>4. **パスの登録**: すべての <a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/plan/planagg.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__plan__planagg_c__MIN.html&quot;}, '*');"><code>MIN</code></a> / <a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/plan/planagg.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__plan__planagg_c__MAX.html&quot;}, '*');"><code>MAX</code></a> 集約でインデックススキャンパスが得られた場合、<a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/plan/subselect.c.html#L3295" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__plan__subselect_c__SS_make_initplan_output_param.html&quot;}, '*');"><code>SS_make_initplan_output_param</code></a> でパラメータを割り当て、<a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/util/pathnode.c.html#L3301" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__pathnode_c__create_minmaxagg_path.html&quot;}, '*');"><code>create_minmaxagg_path</code></a> で生成した <code>MinMaxAggPath</code> を <code>UPPERREL_GROUP_AGG</code> の <code>grouped_rel</code> に追加する。</p>
+</ul>
+<h2>直接依存</h2>
+<ul>
+<li><a class="wiki-source-link" href="../../../../../source/src/include/postgres.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/postgres.h.html&quot;}, '*');"><code>postgres.h</code></a></li>
+<li><code>access/htup_details.h</code></li>
+<li><code>catalog/pg_aggregate.h</code></li>
+<li><code>catalog/pg_type.h</code></li>
+<li><code>nodes/makefuncs.h</code></li>
+<li><code>nodes/nodeFuncs.h</code></li>
+<li><code>optimizer/cost.h</code></li>
+<li><code>optimizer/optimizer.h</code></li>
+<li><code>optimizer/pathnode.h</code></li>
+<li><code>optimizer/paths.h</code></li>
+<li><code>optimizer/planmain.h</code></li>
+<li><code>optimizer/planner.h</code></li>
+<li><code>optimizer/subselect.h</code></li>
+<li><code>optimizer/tlist.h</code></li>
+<li><code>parser/parse_clause.h</code></li>
+<li><code>parser/parsetree.h</code></li>
+<li><code>rewrite/rewriteManip.h</code></li>
+<li><code>utils/lsyscache.h</code></li>
+<li><code>utils/syscache.h</code></li>
+</ul>
+<h2>読者向けメモ</h2>
+<ul>
+<li>**メモリ管理とライフサイクル**: <a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/plan/planagg.c.html#L317" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__plan__planagg_c__build_minmax_path.html&quot;}, '*');"><code>build_minmax_path</code></a> 内では <code>palloc_object(PlannerInfo)</code> および <a class="wiki-source-link" href="../../../../../source/src/include/nodes/nodes.h.html#L228" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/nodes/nodes.h.html&quot;}, '*');"><code>copyObject</code></a> を多用してサブクエリのコンテキストを動的に構築する。失敗時や未使用時も含めてメモリコンテキスト管理に依存する。</li>
+<li>**インバリアントと制約**: 対象クエリは厳格に単一テーブル（またはフラット化された <code>UNION ALL</code> 継承親）であり、<code>GROUP BY</code>、ウィンドウ関数、<code>FOR UPDATE</code>、<code>CTE</code>、<code>FILTER</code> 句を含まない場合にのみ本最適化が適用される。</li>
+<li>**並列性**: 生成される <code>MinMaxAggPath</code> は現状パラレルセーフではないため、並列実行プランの候補にはならない。</li>
+</ul>
+<h2>シンボルページ</h2>
+<ul>
+<li><a href="../../../../symbols/src__backend__optimizer__plan__planagg_c__preprocess_minmax_aggregates.html" target="wiki-view"><code>preprocess_minmax_aggregates</code></a></li>
+<li><a href="../../../../symbols/src__backend__optimizer__plan__planagg_c__can_minmax_aggs.html" target="wiki-view"><code>can_minmax_aggs</code></a></li>
+<li><a href="../../../../symbols/src__backend__optimizer__plan__planagg_c__build_minmax_path.html" target="wiki-view"><code>build_minmax_path</code></a></li>
+<li><a href="../../../../symbols/src__backend__optimizer__plan__planagg_c__minmax_qp_callback.html" target="wiki-view"><code>minmax_qp_callback</code></a></li>
+<li><a href="../../../../symbols/src__backend__optimizer__plan__planagg_c__fetch_agg_sort_op.html" target="wiki-view"><code>fetch_agg_sort_op</code></a></li>
+</ul><script>
+(function() {
+  function notifyParent() {
+    if (parent === window) return;
+    parent.postMessage({type: "frame-location", frame: window.name || "", href: window.location.href}, "*");
+  }
+  document.addEventListener("click", function(event) {
+    const link = event.target.closest("a[data-panel]");
+    if (!link || parent === window) return;
+    parent.postMessage({type: "source-link", panel: link.dataset.panel}, "*");
+  });
+  window.addEventListener("load", notifyParent);
+  window.addEventListener("hashchange", notifyParent);
+})();
+</script></body></html>

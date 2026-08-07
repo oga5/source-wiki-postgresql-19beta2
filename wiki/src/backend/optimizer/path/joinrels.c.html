@@ -1,0 +1,111 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>src/backend/optimizer/path/joinrels.c.md</title><link rel="stylesheet" href="../../../../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/path/joinrels.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/backend/optimizer/path/joinrels.c.html&quot;}, '*');">src/backend/optimizer/path/joinrels.c</a></h1>
+<h2>概要</h2>
+<p><a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/path/joinrels.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/backend/optimizer/path/joinrels.c.html&quot;}, '*');"><code>src/backend/optimizer/path/joinrels.c</code></a> は、PostgreSQLのオプティマイザにおけるジョイン探索（動的計画法によるバス・プランや左・右側プランの構築）の主要アルゴリズムを担当するソースファイルです。どのリレーション同士をどの順序で結合すべきかを決定し、結合関係（<code>RelOptInfo</code>）の作成、有効性検証、および通常またはパーティション分割されたジョイン（Partitionwise <a class="wiki-source-link" href="../../../../../source/src/include/nodes/plannodes.h.html#L984" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__nodes__plannodes_h__Join.html&quot;}, '*');">Join</a>）に対するパスの追加を統括します。</p>
+<h2>モジュール内での役割</h2>
+<p><code>src/backend/optimizer/path</code> モジュール内において、本ファイルは <a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/path/joinpath.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/backend/optimizer/path/joinpath.c.html&quot;}, '*');"><code>joinpath.c</code></a>（個々のジョインパス評価）や <a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/path/allpaths.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/backend/optimizer/path/allpaths.c.html&quot;}, '*');"><code>allpaths.c</code></a>（プラン全体のパス生成オーケストレーション）と密接に連携します。<a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/path/allpaths.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/backend/optimizer/path/allpaths.c.html&quot;}, '*');"><code>allpaths.c</code></a> から呼び出される動的計画法の 1 レベル分の探索（<a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/path/joinrels.c.html#L77" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__path__joinrels_c__join_search_one_level.html&quot;}, '*');"><code>join_search_one_level</code></a>）や、結合可能なリレーション対の抽出を行い、クエリツリーの結合順序空間を網羅・枝刈りします。</p>
+<h2>責務</h2>
+<ul>
+<li>**ジョイン探索レベルの制御**: 指定されたレベルのジョイン候補ペア（左・右側プランおよびブッシュプラン、クラスレス結合）を列挙する。</li>
+<li>**結合の有効性・制約検証 (<a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/path/joinrels.c.html#L354" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__path__joinrels_c__join_is_legal.html&quot;}, '*');"><code>join_is_legal</code></a>, 制限チェック)**: 特殊結合（外結合、半結合、アンチ結合）の順序制約、<a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/path/joinrels.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__path__joinrels_c__LATERAL.html&quot;}, '*');"><code>LATERAL</code></a> 参照、プレースホルダ変数（PHV）、および冗長な条件の矛盾（定数 <code>FALSE</code> や <code>NULL</code>）をチェックする。</li>
+<li>**結合関係の生成とパスの網羅**: <a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/path/joinrels.c.html#L698" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__path__joinrels_c__make_join_rel.html&quot;}, '*');"><code>make_join_rel</code></a> を通じてジョインリレーションを特定または構築し、外結合の種類に応じたパスや一意化パスを生成する。</li>
+<li>**アグリゲーションの早期プッシュダウン (<a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/path/joinrels.c.html#L915" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__path__joinrels_c__make_grouped_join_rel.html&quot;}, '*');"><code>make_grouped_join_rel</code></a>)**: 可能であればジョイン前の部分集約（Eager Aggregation）を適用する。</li>
+<li>**パーティション分割結合 (<a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/path/joinrels.c.html#L1610" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__path__joinrels_c__try_partitionwise_join.html&quot;}, '*');"><code>try_partitionwise_join</code></a>)**: パーティション同士の対応関係を計算し、子ジョインの生成や境界マージを行う。</li>
+</ul>
+<h2>重要なシンボル</h2>
+<h3>1. 探索・エントリポイント関数</h3>
+<ul>
+<li><code>join_search_one_level(PlannerInfo *root, int level)</code>: 指定された <a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/path/joinrels.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__path__joinrels_c__level.html&quot;}, '*');"><code>level</code></a> のジョイン関係を網羅的に探索し、<code>root-&gt;join_rel_level[level]</code> に格納する。</li>
+</ul>
+<h3>2. 結合の構築・検証ヘルパー</h3>
+<ul>
+<li><code>make_join_rel(PlannerInfo *root, RelOptInfo *rel1, RelOptInfo *rel2)</code>: 2つのリレーション間のジョイン関係を検索または新規構築し、パスを追加する。無効な場合は <code>NULL</code> を返す。</li>
+<li><code>join_is_legal(...)</code>: クエリの結合順序制約、特殊結合の構造、および <a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/path/joinrels.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__path__joinrels_c__LATERAL.html&quot;}, '*');"><code>LATERAL</code></a> 参照に照らして提案されたジョインが合法か判定する。</li>
+<li><code>init_dummy_sjinfo(SpecialJoinInfo *sjinfo, Relids left_relids, Relids right_relids)</code>: 通常の内結合用にダミーの <code>SpecialJoinInfo</code> を初期化する。</li>
+<li><code>add_outer_joins_to_relids(...)</code>: 外結合の結合関係（<a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/path/joinrels.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__path__joinrels_c__ojrelid.html&quot;}, '*');"><code>ojrelid</code></a> および外結合の推移的合流）をリレーションID集合に追加する。</li>
+</ul>
+<h3>3. グループ化・パス移譲</h3>
+<ul>
+<li><code>make_grouped_join_rel(...)</code>: 部分集約が適用可能な場合にグループ化されたジョイン関係を構築・管理する。</li>
+<li><code>populate_joinrel_with_paths(...)</code>: ジョイン種別（INNER, LEFT, FULL, SEMI, ANTI）に応じて適切なパスを <code>add_paths_to_joinrel</code> 経由で追加する。</li>
+</ul>
+<h3>4. パーティション分割結合 (Partitionwise <a class="wiki-source-link" href="../../../../../source/src/include/nodes/plannodes.h.html#L984" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__nodes__plannodes_h__Join.html&quot;}, '*');">Join</a>)</h3>
+<ul>
+<li><code>try_partitionwise_join(...)</code>: パーティション同士の結合が可能か評価し、子ジョインリレーション群とそのパスを生成する。</li>
+<li><code>compute_partition_bounds(...)</code>: 入力リレーションのパーティション境界をマージ、または比較して一致を確認する。</li>
+<li><code>get_matching_part_pairs(...)</code>: 結合セグメントに対応する子リレーションのペアを生成する。</li>
+</ul>
+<h3>5. 制限・検証判定</h3>
+<ul>
+<li><code>have_join_order_restriction(...)</code>: 特殊結合や <a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/path/joinrels.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__path__joinrels_c__LATERAL.html&quot;}, '*');"><code>LATERAL</code></a> 参照を満足するための結合順序上の制約があるか検出する。</li>
+<li><code>has_join_restriction(PlannerInfo *root, RelOptInfo *rel)</code>: 指定リレーションが外部結合や <a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/path/joinrels.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__path__joinrels_c__LATERAL.html&quot;}, '*');"><code>LATERAL</code></a> に絡む結合制限を持っているか判定する。</li>
+<li><code>is_dummy_rel(RelOptInfo *rel)</code> / <code>mark_dummy_rel(RelOptInfo *rel)</code>: リレーションが空（データ無し）であることの判定およびマーク。</li>
+<li><code>restriction_is_constant_false(...)</code>: 制限リスト内に定数 <code>FALSE</code> や <code>NULL</code> が含まれているかを検出し、無駄な結合探索をショートカットする。</li>
+</ul>
+<h2>制御フローとデータフロー</h2>
+<p>1. **レベル単位の駆動**: <a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/path/allpaths.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/backend/optimizer/path/allpaths.c.html&quot;}, '*');"><code>allpaths.c</code></a> から <code>join_search_one_level(root, level)</code> が呼ばれる。 2. **ペアの列挙**:</p>
+<ul>
+<li>レベル $k-1$ のリレーションと初期リレーション（レベル1）の結合を <a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/path/joinrels.c.html#L284" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__path__joinrels_c__make_rels_by_clause_joins.html&quot;}, '*');"><code>make_rels_by_clause_joins</code></a>（結合句がある場合）または <a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/path/joinrels.c.html#L318" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__path__joinrels_c__make_rels_by_clauseless_joins.html&quot;}, '*');"><code>make_rels_by_clauseless_joins</code></a>（デカルト積が必要な場合）で試行する。</li>
+<li>レベル 2 以上のブッシュプラン（$k$ と <code>level - k</code> の結合）を <a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/util/joininfo.c.html#L38" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__joininfo_c__have_relevant_joinclause.html&quot;}, '*');"><code>have_relevant_joinclause</code></a> / <a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/path/joinrels.c.html#L1253" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__path__joinrels_c__have_join_order_restriction.html&quot;}, '*');"><code>have_join_order_restriction</code></a> に基づいて試行する。</li>
+<p>3. **合法性チェック (<a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/path/joinrels.c.html#L698" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__path__joinrels_c__make_join_rel.html&quot;}, '*');"><code>make_join_rel</code></a> 内)**:</p>
+<li><a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/path/joinrels.c.html#L354" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__path__joinrels_c__join_is_legal.html&quot;}, '*');"><code>join_is_legal</code></a> により、<code>root-&gt;join_info_list</code> 内の <code>SpecialJoinInfo</code> や <a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/path/joinrels.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__path__joinrels_c__LATERAL.html&quot;}, '*');"><code>LATERAL</code></a> 参照との整合性を検証する。</li>
+<li>不適合であれば <code>NULL</code> を返却して破棄する。</li>
+<p>4. **関係・パスの生成**:</p>
+<li><a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/util/relnode.c.html#L794" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__relnode_c__build_join_rel.html&quot;}, '*');"><code>build_join_rel</code></a> で <code>RelOptInfo</code> を取得・構築。</li>
+<li><a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/path/joinrels.c.html#L915" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__path__joinrels_c__make_grouped_join_rel.html&quot;}, '*');"><code>make_grouped_join_rel</code></a> で集約の早期適用を試みる。</li>
+<li><a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/path/joinrels.c.html#L1071" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__path__joinrels_c__populate_joinrel_with_paths.html&quot;}, '*');"><code>populate_joinrel_with_paths</code></a> が <code>sjinfo-&gt;jointype</code> をスイッチ文で評価し、<code>add_paths_to_joinrel</code> を呼び出して具体的な物理パス（NestLoop, HashJoin, MergeJoin 等）を構築。</li>
+<li>必要に応じて <a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/path/joinrels.c.html#L1610" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__path__joinrels_c__try_partitionwise_join.html&quot;}, '*');"><code>try_partitionwise_join</code></a> を呼び出し、パーティション単位の子ジョインを再帰的に処理する。</li>
+</ul>
+<h2>直接依存</h2>
+<ul>
+<li><a class="wiki-source-link" href="../../../../../source/src/include/postgres.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/postgres.h.html&quot;}, '*');"><code>postgres.h</code></a></li>
+<li><a class="wiki-source-link" href="../../../../../source/src/include/miscadmin.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/miscadmin.h.html&quot;}, '*');"><code>miscadmin.h</code></a></li>
+<li><code>optimizer/appendinfo.h</code></li>
+<li><code>optimizer/cost.h</code></li>
+<li><code>optimizer/joininfo.h</code></li>
+<li><code>optimizer/pathnode.h</code></li>
+<li><code>optimizer/paths.h</code></li>
+<li><code>optimizer/planner.h</code></li>
+<li><code>partitioning/partbounds.h</code></li>
+<li><code>utils/memutils.h</code></li>
+</ul>
+<h2>関連コード</h2>
+<ul>
+<li><a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/path/allpaths.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/backend/optimizer/path/allpaths.c.html&quot;}, '*');"><code>src/backend/optimizer/path/allpaths.c</code></a></li>
+<li><a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/path/joinpath.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/backend/optimizer/path/joinpath.c.html&quot;}, '*');"><code>src/backend/optimizer/path/joinpath.c</code></a></li>
+<li><a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/util/joininfo.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/backend/optimizer/util/joininfo.c.html&quot;}, '*');"><code>src/backend/optimizer/util/joininfo.c</code></a></li>
+</ul>
+<h2>読者向けメモ</h2>
+<ul>
+<li>**メモリ管理**: パーティション数が数千に及ぶ場合、ループ内でアロケートされる <code>appinfos</code> などの動的メモリは各イテレーションの終わりに明示的に解放（<code>pfree</code>）され、メモリリークや肥大化を防いでいる。</li>
+<li>**不変条件 (Invariants)**: 結合対象の2つのリレーションの <code>relids</code> は互いに素（オーバーラップしない）でなければならず、コード冒頭の <code>Assert(!bms_overlap(rel1-&gt;relids, rel2-&gt;relids))</code> で厳格に保証されている。</li>
+</ul>
+<h2>シンボルページ</h2>
+<ul>
+<li><a href="../../../../symbols/src__backend__optimizer__path__joinrels_c__join_search_one_level.html" target="wiki-view"><code>join_search_one_level</code></a></li>
+<li><a href="../../../../symbols/src__backend__optimizer__path__joinrels_c__make_rels_by_clause_joins.html" target="wiki-view"><code>make_rels_by_clause_joins</code></a></li>
+<li><a href="../../../../symbols/src__backend__optimizer__path__joinrels_c__make_rels_by_clauseless_joins.html" target="wiki-view"><code>make_rels_by_clauseless_joins</code></a></li>
+<li><a href="../../../../symbols/src__backend__optimizer__path__joinrels_c__join_is_legal.html" target="wiki-view"><code>join_is_legal</code></a></li>
+<li><a href="../../../../symbols/src__backend__optimizer__path__joinrels_c__init_dummy_sjinfo.html" target="wiki-view"><code>init_dummy_sjinfo</code></a></li>
+<li><a href="../../../../symbols/src__backend__optimizer__path__joinrels_c__make_join_rel.html" target="wiki-view"><code>make_join_rel</code></a></li>
+<li><a href="../../../../symbols/src__backend__optimizer__path__joinrels_c__add_outer_joins_to_relids.html" target="wiki-view"><code>add_outer_joins_to_relids</code></a></li>
+<li><a href="../../../../symbols/src__backend__optimizer__path__joinrels_c__make_grouped_join_rel.html" target="wiki-view"><code>make_grouped_join_rel</code></a></li>
+<li><a href="../../../../symbols/src__backend__optimizer__path__joinrels_c__populate_joinrel_with_paths.html" target="wiki-view"><code>populate_joinrel_with_paths</code></a></li>
+<li><a href="../../../../symbols/src__backend__optimizer__path__joinrels_c__have_join_order_restriction.html" target="wiki-view"><code>have_join_order_restriction</code></a></li>
+<li><a href="../../../../symbols/src__backend__optimizer__path__joinrels_c__has_join_restriction.html" target="wiki-view"><code>has_join_restriction</code></a></li>
+<li><a href="../../../../symbols/src__backend__optimizer__path__joinrels_c__has_legal_joinclause.html" target="wiki-view"><code>has_legal_joinclause</code></a></li>
+</ul><script>
+(function() {
+  function notifyParent() {
+    if (parent === window) return;
+    parent.postMessage({type: "frame-location", frame: window.name || "", href: window.location.href}, "*");
+  }
+  document.addEventListener("click", function(event) {
+    const link = event.target.closest("a[data-panel]");
+    if (!link || parent === window) return;
+    parent.postMessage({type: "source-link", panel: link.dataset.panel}, "*");
+  });
+  window.addEventListener("load", notifyParent);
+  window.addEventListener("hashchange", notifyParent);
+})();
+</script></body></html>

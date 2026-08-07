@@ -1,0 +1,165 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>src/backend/optimizer/util/clauses.c.md</title><link rel="stylesheet" href="../../../../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/util/clauses.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/backend/optimizer/util/clauses.c.html&quot;}, '*');">src/backend/optimizer/util/clauses.c</a></h1>
+<h2>概要</h2>
+<p><a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/util/clauses.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/backend/optimizer/util/clauses.c.html&quot;}, '*');"><code>src/backend/optimizer/util/clauses.c</code></a> は、PostgreSQLのオプティマイザにおいて、クエリの修飾句（qualification clauses）や式ツリー（expression trees）の走査、解析、変形、および定数畳み込み（constant folding）を行うための極めて重要なユーティリティファイルです。</p>
+<p>このファイルは、プランナが実行時オーバーヘッドを削減するために、静的に評価可能な式を事前に計算して定数（<code>Const</code>）に置き換えたり、不要な論理分岐を削除したり、SQL関数をインライン展開したりするための多彩なロジックを実装しています。</p>
+<h2>モジュール内での役割</h2>
+<p><code>src/backend/optimizer/util</code> ディレクトリに属し、プランニングの初期段階（前処理フェーズ）からパス生成、コスト見積もりに至るまで、オプティマイザ全体から広く呼び出される共通の式処理エンジンとして機能します。</p>
+<p>パーサから出力された生のクエリツリーや、プランナ内部で構築される <a class="wiki-source-link" href="../../../../../source/src/include/nodes/primnodes.h.html#L189" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__nodes__primnodes_h__Expr.html&quot;}, '*');"><code>Expr</code></a> ノードを走査・変形し、後続のプラン作成処理がより単純かつ最適化された式を扱えるように下地を整える役割を担います。</p>
+<h2>責務</h2>
+<p>本ファイルが持つ責務は、大きく以下の5つの役割グループに分類されます。</p>
+<h3>1. 定数畳み込みと事前評価 (Constant Folding &amp; Evaluation)</h3>
+<ul>
+<li>**静的評価**: 実行前に値が確定可能な部分式（例: <code>2 + 2</code> や不変関数の定数引数呼び出し）を検出し、エグゼキュータを一時的に起動して事前評価（<a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/util/clauses.c.html#L5742" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__clauses_c__evaluate_expr.html&quot;}, '*');"><code>evaluate_expr</code></a>）し、<code>Const</code> ノードに置き換えます。</li>
+<li>**論理式の簡約**: AND/OR 節のネスト平坦化や、短絡評価（例: <code>x OR true</code> -&gt; <a class="wiki-source-link" href="../../../../../source/src/tools/pg_bsd_indent/indent_globs.h.html#L46" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/tools/pg_bsd_indent/indent_globs.h.html&quot;}, '*');"><code>true</code></a>）による不要な枝の刈り込みを行います。</li>
+<li>**見積もり評価**: コスト見積もり用の特殊モード（<a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/util/clauses.c.html#L2659" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__clauses_c__estimate_expression_value.html&quot;}, '*');"><code>estimate_expression_value</code></a>）では、安定（stable）関数やプレースホルダも含めて、よりアグレッシブに定数化を試みます。</li>
+</ul>
+<h3>2. 関数のインライン展開 (Function Inlining)</h3>
+<ul>
+<li>**式レベルのインライン化**: 単一の <code>SELECT</code> 式のみで構成される単純なSQL言語関数を、呼び出し元の式ツリーに直接展開（<a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/util/clauses.c.html#L5321" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__clauses_c__inline_function.html&quot;}, '*');"><code>inline_function</code></a>）します。</li>
+<li>**FROM句のインライン化**: FROM句内のテーブル関数（<a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/util/clauses.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__clauses_c__RTE_FUNCTION.html&quot;}, '*');"><code>RTE_FUNCTION</code></a>）をサブクエリとして展開（<a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/util/clauses.c.html#L5834" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__clauses_c__inline_function_in_from.html&quot;}, '*');"><code>inline_function_in_from</code></a>）し、結合最適化の対象にします。</li>
+</ul>
+<h3>3. ヌル可能性解析 (Nullability Analysis)</h3>
+<ul>
+<li>**非NULL制約の伝播解析**: 与えられた式が TRUE を返すために、どのリレーション（<a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/util/clauses.c.html#L1491" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__clauses_c__find_nonnullable_rels.html&quot;}, '*');"><code>find_nonnullable_rels</code></a>）や変数（<a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/util/clauses.c.html#L1742" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__clauses_c__find_nonnullable_vars.html&quot;}, '*');"><code>find_nonnullable_vars</code></a>）が非NULLでなければならないかを解析します。これは外部結合を内側結合に変換する最適化（Outer <a class="wiki-source-link" href="../../../../../source/src/include/nodes/plannodes.h.html#L984" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__nodes__plannodes_h__Join.html&quot;}, '*');">Join</a> Simplification）の基礎データとなります。</li>
+<li>**強制NULL変数の特定**: 式が TRUE を返すために NULL であることが強制される変数（<a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/util/clauses.c.html#L1951" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__clauses_c__find_forced_null_vars.html&quot;}, '*');"><code>find_forced_null_vars</code></a>）を特定します（例: <code>var IS NULL</code>）。</li>
+</ul>
+<h3>4. 並列処理安全性・ハザード評価 (Parallel Safety Assessment)</h3>
+<ul>
+<li>**並列ハザードの走査**: クエリツリーや式ツリーを再帰的に走査し、並列実行を阻害する要素（揮発性関数、特定のパラメータ、ウィンドウ関数など）が含まれていないかを検証し、並列安全度（SAFE / RESTRICTED / UNSAFE）を判定します。</li>
+</ul>
+<h3>5. 式構造の探索と属性判定 (Expression Scanning)</h3>
+<ul>
+<li>**特定ノードの検出**: 集約関数（<code>Aggref</code>）、ウィンドウ関数（<a class="wiki-source-link" href="../../../../../source/src/include/nodes/primnodes.h.html#L586" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__nodes__primnodes_h__WindowFunc.html&quot;}, '*');"><code>WindowFunc</code></a>）、サブプラン（<code>SubPlan</code> / <code>SubLink</code>）などの特定のノードが式ツリー内に存在するかを高速に判定します。</li>
+<li>**セキュリティ・リーク対策**: 非リークプローフ（non-leakproof）関数にセキュリティバリアを越えて変数が渡されないよう、リークの危険性がある式を検出（<a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/util/clauses.c.html#L1293" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__clauses_c__contain_leaked_vars.html&quot;}, '*');"><code>contain_leaked_vars</code></a>）します。</li>
+</ul>
+<h2>重要なシンボル</h2>
+<h3>定数畳み込み・評価ファミリー</h3>
+<ul>
+<li><code>eval_const_expressions(PlannerInfo *root, Node *node)</code></li>
+<li>式の定数畳み込みを行うメインエントリポイント。</li>
+<li><code>eval_const_expressions_mutator(Node *node, eval_const_expressions_context *context)</code></li>
+<li>式ツリーを再帰的に走査し、各ノード（<code>FuncExpr</code>, <code>OpExpr</code>, <code>BoolExpr</code>, <code>CaseExpr</code> 等）を個別に簡約する主要なミューテータ。</li>
+<li><code>evaluate_expr(Expr *expr, Oid result_type, int32 result_typmod, Oid result_collation)</code></li>
+<li>一時的なエグゼキュータ状態（<code>EState</code>）を構築し、実際に式を実行して結果を <code>Const</code> ノードとして返します。</li>
+<li><code>estimate_expression_value(PlannerInfo *root, Node *node)</code></li>
+<li>プランナの見積もり用に、安定（stable）関数なども定数とみなして評価するアグレッシブな定数畳み込み。</li>
+</ul>
+<h3>インライン展開ファミリー</h3>
+<ul>
+<li><code>inline_function(...)</code></li>
+<li>SQL言語関数を式ツリー内にインライン展開可能か検証し、可能であれば展開します。</li>
+<li><code>inline_function_in_from(PlannerInfo *root, RangeTblEntry *rte)</code></li>
+<li>FROM句の <a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/util/clauses.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__clauses_c__RTE_FUNCTION.html&quot;}, '*');"><code>RTE_FUNCTION</code></a> をサブクエリに展開するためのエントリポイント。</li>
+<li><code>inline_sql_function_in_from(...)</code></li>
+<li>SQL言語のセットリターン関数をFROM句にインライン展開する実体処理。</li>
+</ul>
+<h3>ヌル可能性解析ファミリー</h3>
+<ul>
+<li><code>find_nonnullable_rels(Node *clause)</code> / <code>find_nonnullable_vars(Node *clause)</code></li>
+<li>式が TRUE を返すために非NULLでなければならないリレーションID集合（<code>Relids</code>）または変数（<code>Var</code>）のリストを返します。</li>
+<li><code>expr_is_nonnullable(PlannerInfo *root, Expr *expr, NotNullSource source)</code></li>
+<li>指定された式が確実に SQL NULL を返さない（NOT NULL である）ことをカタログや制約情報から判定します。</li>
+<li><code>find_forced_null_vars(Node *node)</code> / <code>find_forced_null_var(Node *node)</code></li>
+<li>式が TRUE を返すために NULL であることが強制される変数を特定します。</li>
+</ul>
+<h3>安全性・属性検査ファミリー</h3>
+<ul>
+<li><code>max_parallel_hazard(Query *parse)</code> / <code>is_parallel_safe(PlannerInfo *root, Node *node)</code></li>
+<li>対象クエリまたはノードの並列実行安全性を判定します。</li>
+<li><code>contain_volatile_functions(Node *clause)</code> / <code>contain_mutable_functions(Node *clause)</code></li>
+<li>式の中に揮発性（volatile）または可変（mutable/stable）関数が含まれているかを判定します。</li>
+<li><code>contain_leaked_vars(Node *clause)</code></li>
+<li>非リークプローフ関数に渡されている <code>Var</code> ノードを検出し、行セキュリティ（RLS）などのバリアを越えたデータ漏洩を防ぐために使用されます。</li>
+</ul>
+<h2>制御フローとデータフロー</h2>
+<h3>1. 定数畳み込みの制御フロー (<a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/util/clauses.c.html#L2515" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__clauses_c__eval_const_expressions.html&quot;}, '*');"><code>eval_const_expressions</code></a>)</h3>
+<pre><code>[外部呼び出し] eval_const_expressions(root, node)
+  │
+  ▼
+context の初期化 (boundParams, active_fns, case_val 等)
+  │
+  ▼
+[再帰] eval_const_expressions_mutator(node, context)
+  │
+  ├─► [T_FuncExpr / T_OpExpr の場合]
+  │     │
+  │     ▼
+  │   simplify_function() を呼び出し
+  │     │
+  │     ├─► 引数の再帰的簡約 (expand_function_arguments -&gt; mutator)
+  │     ├─► evaluate_function() による定数評価の試み
+  │     │     └─► すべての引数が Const かつ不変関数なら evaluate_expr() へ
+  │     ├─► サポート関数による簡約の試み (prosupport)
+  │     └─► inline_function() によるインライン展開の試み
+  │
+  ├─► [T_BoolExpr (AND/OR) の場合]
+  │     │
+  │     ▼
+  │   simplify_and_arguments() / simplify_or_arguments()
+  │     ├─► ネストした AND/OR の平坦化
+  │     └─► 短絡評価による定数化 (例: FALSE AND x -&gt; FALSE)
+  │
+  └─► [T_CaseExpr の場合]
+        │
+        ▼
+      テスト式が定数の場合、CaseTestExpr を定数に置換して WHEN 節を評価・削減</code></pre>
+<h3>2. 式の実行評価フロー (<a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/util/clauses.c.html#L5742" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__clauses_c__evaluate_expr.html&quot;}, '*');"><code>evaluate_expr</code></a>)</h3>
+<p>1.  <code>CreateExecutorState()</code> により、評価専用の <code>EState</code> を作成。 2.  メモリリークを防ぐため、コンテキストを <code>estate-&gt;es_query_cxt</code> に切り替え。 3.  <code>ExecInitExpr()</code> で式を実行可能な <code>ExprState</code> に初期化。 4.  <code>ExecEvalExprSwitchContext()</code> を呼び出して、実際の <code>Datum</code> 値と NULL フラグを取得。 5.  取得した <code>Datum</code> が参照渡し（pass-by-reference）または <code>varlena</code>（TOASTの可能性あり）の場合、呼び出し元のメモリコンテキストに安全にコピー（<a class="wiki-source-link" href="../../../../../source/src/backend/utils/adt/datum.c.html#L131" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__utils__adt__datum_c__datumCopy.html&quot;}, '*');"><code>datumCopy</code></a> / <a class="wiki-source-link" href="../../../../../source/src/include/fmgr.h.html#L242" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/fmgr.h.html&quot;}, '*');"><code>PG_DETOAST_DATUM_COPY</code></a>）。 6.  <code>FreeExecutorState()</code> でエグゼキュータ状態を解放し、結果を <code>Const</code> ノードに包んで返却。</p>
+<h2>直接依存</h2>
+<p>本ファイルは、式評価やメタデータアクセスのために以下のモジュールに直接依存しています。</p>
+<ul>
+<li>**ノード操作基盤**: <code>nodes/nodeFuncs.h</code> (<a class="wiki-source-link" href="../../../../../source/src/include/nodes/nodeFuncs.h.html#L155" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/nodes/nodeFuncs.h.html&quot;}, '*');"><code>expression_tree_walker</code></a>, <code>expression_tree_mutator</code>)</li>
+<li>**エグゼキュータ**: <code>executor/executor.h</code> (<a class="wiki-source-link" href="../../../../../source/src/backend/executor/execUtils.c.html#L89" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__executor__execUtils_c__CreateExecutorState.html&quot;}, '*');"><code>CreateExecutorState</code></a>, <a class="wiki-source-link" href="../../../../../source/src/backend/executor/execExpr.c.html#L142" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__executor__execExpr_c__ExecInitExpr.html&quot;}, '*');"><code>ExecInitExpr</code></a>, <a class="wiki-source-link" href="../../../../../source/src/include/executor/executor.h.html#L443" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__executor__executor_h__ExecEvalExprSwitchContext.html&quot;}, '*');"><code>ExecEvalExprSwitchContext</code></a>)</li>
+<li>**システムカタログキャッシュ**: <code>utils/syscache.h</code>, <code>utils/lsyscache.h</code> (<code>pg_proc</code>, <code>pg_operator</code>, <code>pg_type</code> などのメタデータ取得)</li>
+<li>**パーサ・リライタ**: <code>parser/analyze.h</code>, <code>rewrite/rewriteHandler.h</code> (インライン展開時の再パースおよびルール適用)</li>
+</ul>
+<h2>関連コード</h2>
+<ul>
+<li><a class="wiki-source-link" href="../../../../../source/src/include/optimizer/clauses.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/optimizer/clauses.h.html&quot;}, '*');"><code>src/include/optimizer/clauses.h</code></a>: 本ファイルの公開インターフェース定義。</li>
+<li><a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/prep/prepqual.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/backend/optimizer/prep/prepqual.c.html&quot;}, '*');"><code>src/backend/optimizer/prep/prepqual.c</code></a>: プランニング初期段階における修飾句の標準化（CNF/DNF変換やAND/OR平坦化）。</li>
+<li><a class="wiki-source-link" href="../../../../../source/src/backend/nodes/nodeFuncs.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/nodes/nodeFuncs.c.html&quot;}, '*');"><code>src/backend/nodes/nodeFuncs.c</code></a>: 式ツリーを走査するための汎用的なウォーカー/ミューテータの実装。</li>
+</ul>
+<h2>読者向けメモ</h2>
+<h3>メモリ管理とライフタイム</h3>
+<ul>
+<li><a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/util/clauses.c.html#L5742" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__clauses_c__evaluate_expr.html&quot;}, '*');"><code>evaluate_expr</code></a> や <a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/util/clauses.c.html#L5321" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__clauses_c__inline_function.html&quot;}, '*');"><code>inline_function</code></a> などの処理は、一時的なメモリ割り当てを大量に行うため、専用の短期ライフタイムコンテキスト（<a class="wiki-source-link" href="../../../../../source/src/include/utils/memutils.h.html#L124" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/utils/memutils.h.html&quot;}, '*');"><code>AllocSetContextCreate</code></a> で作成する <a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/util/clauses.c.html#L5321" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__clauses_c__inline_function.html&quot;}, '*');"><code>inline_function</code></a> コンテキストや、<code>EState</code> のクエリコンテキスト）を明示的に作成し、処理終了時に一括破棄する設計になっています。これにより、プランニング中のメモリリークを防止しています。</li>
+</ul>
+<h3>再帰とスタックオーバーフロー対策</h3>
+<ul>
+<li>式ツリーはユーザー入力に依存して極めて深くなる可能性があり、またSQL関数のインライン展開によってツリーが急激に肥大化することがあります。</li>
+<li>そのため、主要な再帰処理の入り口（<a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/util/clauses.c.html#L2704" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__clauses_c__eval_const_expressions_mutator.html&quot;}, '*');"><code>eval_const_expressions_mutator</code></a>, <a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/util/clauses.c.html#L5834" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__clauses_c__inline_function_in_from.html&quot;}, '*');"><code>inline_function_in_from</code></a>, <a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/util/clauses.c.html#L4803" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__clauses_c__expr_is_nonnullable.html&quot;}, '*');"><code>expr_is_nonnullable</code></a> など）では、必ず <code>check_stack_depth()</code> を呼び出してスタックオーバーフローを防止しています。</li>
+</ul>
+<h3>破壊的変更（インプレース変更）</h3>
+<ul>
+<li><a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/util/clauses.c.html#L2407" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__clauses_c__CommuteOpExpr.html&quot;}, '*');"><code>CommuteOpExpr</code></a> などの一部のユーティリティは、渡されたノードを破壊的に（インプレースで）書き換えます。呼び出し側で元のツリーを保持する必要がある場合は、事前に <a class="wiki-source-link" href="../../../../../source/src/include/nodes/nodes.h.html#L228" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/nodes/nodes.h.html&quot;}, '*');"><code>copyObject</code></a> を行う必要があります。</li>
+</ul>
+<h2>シンボルページ</h2>
+<ul>
+<li><a href="../../../../symbols/src__backend__optimizer__util__clauses_c__eval_const_expressions_context.html" target="wiki-view"><code>eval_const_expressions_context</code></a></li>
+<li><a href="../../../../symbols/src__backend__optimizer__util__clauses_c__substitute_actual_parameters_context.html" target="wiki-view"><code>substitute_actual_parameters_context</code></a></li>
+<li><a href="../../../../symbols/src__backend__optimizer__util__clauses_c__substitute_actual_parameters_in_from_context.html" target="wiki-view"><code>substitute_actual_parameters_in_from_context</code></a></li>
+<li><a href="../../../../symbols/src__backend__optimizer__util__clauses_c__inline_error_callback_arg.html" target="wiki-view"><code>inline_error_callback_arg</code></a></li>
+<li><a href="../../../../symbols/src__backend__optimizer__util__clauses_c__max_parallel_hazard_context.html" target="wiki-view"><code>max_parallel_hazard_context</code></a></li>
+<li><a href="../../../../symbols/src__backend__optimizer__util__clauses_c__grouping_walker_ctx.html" target="wiki-view"><code>grouping_walker_ctx</code></a></li>
+<li><a href="../../../../symbols/src__backend__optimizer__util__clauses_c__contain_agg_clause.html" target="wiki-view"><code>contain_agg_clause</code></a></li>
+<li><a href="../../../../symbols/src__backend__optimizer__util__clauses_c__contain_agg_clause_walker.html" target="wiki-view"><code>contain_agg_clause_walker</code></a></li>
+<li><a href="../../../../symbols/src__backend__optimizer__util__clauses_c__contain_window_function.html" target="wiki-view"><code>contain_window_function</code></a></li>
+<li><a href="../../../../symbols/src__backend__optimizer__util__clauses_c__find_window_functions.html" target="wiki-view"><code>find_window_functions</code></a></li>
+<li><a href="../../../../symbols/src__backend__optimizer__util__clauses_c__NumRelids.html" target="wiki-view"><code>NumRelids</code></a></li>
+<li><a href="../../../../symbols/src__backend__optimizer__util__clauses_c__CommuteOpExpr.html" target="wiki-view"><code>CommuteOpExpr</code></a></li>
+</ul><script>
+(function() {
+  function notifyParent() {
+    if (parent === window) return;
+    parent.postMessage({type: "frame-location", frame: window.name || "", href: window.location.href}, "*");
+  }
+  document.addEventListener("click", function(event) {
+    const link = event.target.closest("a[data-panel]");
+    if (!link || parent === window) return;
+    parent.postMessage({type: "source-link", panel: link.dataset.panel}, "*");
+  });
+  window.addEventListener("load", notifyParent);
+  window.addEventListener("hashchange", notifyParent);
+})();
+</script></body></html>

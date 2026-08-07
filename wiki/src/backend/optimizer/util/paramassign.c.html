@@ -1,0 +1,101 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>src/backend/optimizer/util/paramassign.c.md</title><link rel="stylesheet" href="../../../../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/util/paramassign.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/backend/optimizer/util/paramassign.c.html&quot;}, '*');">src/backend/optimizer/util/paramassign.c</a></h1>
+<h2>概要</h2>
+<p><a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/util/paramassign.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/backend/optimizer/util/paramassign.c.html&quot;}, '*');"><code>src/backend/optimizer/util/paramassign.c</code></a> は、PostgreSQLオプティマイザがクエリのプランニング過程において実行時パラメータスロット (<code>PARAM_EXEC</code>) を割り当て・管理するための一連の関数を提供するソースファイルです。サブクエリへの値の受け渡し (<a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/util/paramassign.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__paramassign_c__plan_params.html&quot;}, '*');"><code>plan_params</code></a>) やネストループの右側へのパラメータ供給 (<a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/util/paramassign.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__paramassign_c__curOuterParams.html&quot;}, '*');"><code>curOuterParams</code></a>)、および全体的な実行時パラメータ型情報の管理 (<a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/util/paramassign.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__paramassign_c__paramExecTypes.html&quot;}, '*');"><code>paramExecTypes</code></a>) を担います。</p>
+<h2>モジュール内での役割</h2>
+<p><code>src/backend/optimizer/util</code> モジュール内に位置し、式やプルの変換時に必要となる外部変数（Outer Var）やプレースホルダ変数（PHV）、集約関数（Aggref）、グルーピング関数などの参照を <code>PARAM_EXEC</code> 型の <code>Param</code> ノードへと置換する実務的な変換処理を担当します。ヘッダーファイル <a class="wiki-source-link" href="../../../../../source/src/include/optimizer/paramassign.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/optimizer/paramassign.h.html&quot;}, '*');"><code>src/include/optimizer/paramassign.h</code></a> とペアを成しています。</p>
+<h2>責務</h2>
+<ul>
+<li>**グローバルパラメータ型の管理**: <code>root-&gt;glob-&gt;paramExecTypes</code> を拡張し、クエリツリー全体で共有される <code>PARAM_EXEC</code> スロットのデータ型 OID リストを維持する。</li>
+<li>**サブクエリパラメータ管理**: <code>root-&gt;plan_params</code> を使用して、上位クエリレベルから下位サブクエリへ供給すべき <code>Var</code> や <code>PlaceHolderVar</code> などの項目を記録・重複排除・管理する。</li>
+<li>**ネストループパラメータ管理**: <code>root-&gt;curOuterParams</code> を使用して、ネストループの親側から右側（子プランノード）へ受け渡すべき <code>NestLoopParam</code> を記録・抽出する。</li>
+<li>**各種式ノードのパラメータ置換**: <code>Var</code>、<code>PlaceHolderVar</code>、<code>Aggref</code>、<code>GroupingFunc</code>、<code>MergeSupportFunc</code>、<code>ReturningExpr</code> などの外向き参照を <code>Param</code> ノードへ変換する。</li>
+<li>**特殊パラメータの割り当て**: 実行時のシグナリング（再帰共用体のワークテーブルスキャンや <a class="wiki-source-link" href="../../../../../source/src/backend/executor/execMain.c.html#L2686" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__executor__execMain_c__EvalPlanQual.html&quot;}, '*');">EvalPlanQual</a> など）用の値を持たない <code>PARAM_EXEC</code> スロットを確保する。</li>
+</ul>
+<h2>重要なシンボル</h2>
+<h3>変数・状態管理関連</h3>
+<ul>
+<li><code>root-&gt;glob-&gt;paramExecTypes</code>: プラン全体の <code>PARAM_EXEC</code> スロットのデータ型 OID を保持するリスト（グローバル）。永続的。</li>
+<li><code>root-&gt;plan_params</code>: サブクエリ計画中に一時的に構築される <code>PlannerParamItem</code> のリスト。</li>
+<li><code>root-&gt;curOuterParams</code>: ネストループの構築中に子プランノードへ渡すパラメータを保持する <code>NestLoopParam</code> のリスト。</li>
+</ul>
+<h3>外部変数・式置換ファミリー</h3>
+<ul>
+<li><code>replace_outer_var(PlannerInfo *root, Var *var)</code>: <code>varlevelsup &gt; 0</code> の <code>Var</code> を <code>PARAM_EXEC</code> パラメータに置換し、<a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/util/paramassign.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__paramassign_c__plan_params.html&quot;}, '*');"><code>plan_params</code></a> に記録する。</li>
+<li><code>replace_outer_placeholdervar(PlannerInfo *root, PlaceHolderVar *phv)</code>: 外部 <code>PlaceHolderVar</code> を <code>PARAM_EXEC</code> パラメータに置換する。</li>
+<li><code>replace_outer_agg(PlannerInfo *root, Aggref *agg)</code>: 外部 <code>Aggref</code> を <code>PARAM_EXEC</code> パラメータに置換する（重複排除なしで毎回スロットを割り当て）。</li>
+<li><code>replace_outer_grouping(PlannerInfo *root, GroupingFunc *grp)</code>: 外部 <code>GroupingFunc</code> を <code>PARAM_EXEC</code> パラメータに置換する。</li>
+<li><code>replace_outer_merge_support(PlannerInfo *root, MergeSupportFunc *msf)</code>: 外部 <a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/util/paramassign.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__paramassign_c__MERGE.html&quot;}, '*');"><code>MERGE</code></a> クエリの <a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/util/paramassign.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__paramassign_c__RETURNING.html&quot;}, '*');"><code>RETURNING</code></a> リストにある <code>MergeSupportFunc</code> を置換する。</li>
+<li><code>replace_outer_returning(PlannerInfo *root, ReturningExpr *rexpr)</code>: 外部の <code>ReturningExpr</code> を置換する。</li>
+</ul>
+<h3>ネストループパラメータファミリー</h3>
+<ul>
+<li><code>replace_nestloop_param_var(PlannerInfo *root, Var *var)</code>: ネストループ用の外部 <code>Var</code> を <a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/util/paramassign.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__paramassign_c__curOuterParams.html&quot;}, '*');"><code>curOuterParams</code></a> に登録し、必要に応じて重複排除しながら <code>Param</code> を生成する。</li>
+<li><code>replace_nestloop_param_placeholdervar(PlannerInfo *root, PlaceHolderVar *phv)</code>: ネストループ用の外部 <code>PlaceHolderVar</code> を処理する。</li>
+<li><code>process_subquery_nestloop_params(PlannerInfo *root, List *subplan_params)</code>: FROM句内のサブクエリ（<a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/path/joinrels.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__path__joinrels_c__LATERAL.html&quot;}, '*');">LATERAL</a>参照）が要求するパラメータを <a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/util/paramassign.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__paramassign_c__curOuterParams.html&quot;}, '*');"><code>curOuterParams</code></a> に追加する。</li>
+<li><code>identify_current_nestloop_params(PlannerInfo *root, Relids leftrelids, Relids outerrelids)</code>: 指定された左側リレーションで評価可能な <code>NestLoopParam</code> を <a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/util/paramassign.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__paramassign_c__curOuterParams.html&quot;}, '*');"><code>curOuterParams</code></a> から抽出して返す。</li>
+</ul>
+<h3>スロット生成ヘルパー</h3>
+<ul>
+<li><code>generate_new_exec_param(PlannerInfo *root, Oid paramtype, int32 paramtypmod, Oid paramcollation)</code>: 既存のプランパラメータ項目に追加せず、型情報のみを指定して新しい <code>PARAM_EXEC</code> の <code>Param</code> ノードを発行する。</li>
+<li><code>assign_special_exec_param(PlannerInfo *root)</code>: 実行時シグナリング用の値を持たない <code>PARAM_EXEC</code> ID（型 OID は <code>InvalidOid</code>）を割り当てる。</li>
+<li><a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/util/paramassign.c.html#L65" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__paramassign_c__assign_param_for_var.html&quot;}, '*');"><code>assign_param_for_var</code></a> / <a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/util/paramassign.c.html#L149" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__paramassign_c__assign_param_for_placeholdervar.html&quot;}, '*');"><code>assign_param_for_placeholdervar</code></a> (内部関数): 既存の <a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/util/paramassign.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__paramassign_c__plan_params.html&quot;}, '*');"><code>plan_params</code></a> 内を走査して合致する項目があればその ID を返し、なければ新規作成して <a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/util/paramassign.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__paramassign_c__paramExecTypes.html&quot;}, '*');"><code>paramExecTypes</code></a> と <a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/util/paramassign.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__paramassign_c__plan_params.html&quot;}, '*');"><code>plan_params</code></a> に追加する。</li>
+</ul>
+<h2>制御フローとデータフロー</h2>
+<p>1. **探索とレベル解決**: <code>replace_outer_*</code> 系関数は、ノードの <code>*levelsup</code> プロパティに従って <code>root = root-&gt;parent_root</code> をたどり、対象のクエリレベルのコンテキストにアクセスする。 2. **重複排除とスロット割り当て**:</p>
+<ul>
+<li><a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/util/paramassign.c.html#L65" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__paramassign_c__assign_param_for_var.html&quot;}, '*');"><code>assign_param_for_var</code></a> は、同一クエリレベルの <a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/util/paramassign.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__paramassign_c__plan_params.html&quot;}, '*');"><code>plan_params</code></a> 内にある既存の <code>PlannerParamItem</code> と比較（<code>_equalVar</code> 相当のフィールド一致）し、既存であれば既存の <code>paramId</code> を再利用する。</li>
+<li>新規の場合は、<code>list_length(root-&gt;glob-&gt;paramExecTypes)</code> を新しい <code>paramId</code> とし、そのデータ型を <a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/util/paramassign.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__paramassign_c__paramExecTypes.html&quot;}, '*');"><code>paramExecTypes</code></a> に追加する。</li>
+<p>3. **ネストループへの伝播**:</p>
+<li>プラン作成段階で <a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/util/paramassign.c.html#L413" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__paramassign_c__replace_nestloop_param_var.html&quot;}, '*');"><code>replace_nestloop_param_var</code></a> が呼ばれると、<code>root-&gt;curOuterParams</code> を確認し、未登録であれば新規 <code>NestLoopParam</code> を作成して追加する。</li>
+<li><a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/util/paramassign.c.html#L621" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__paramassign_c__identify_current_nestloop_params.html&quot;}, '*');"><code>identify_current_nestloop_params</code></a> により、特定の NestLoop ノードの左側リレーションズで評価可能になったパラメータが <a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/util/paramassign.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__paramassign_c__curOuterParams.html&quot;}, '*');"><code>curOuterParams</code></a> から取り外され、実行計画のその階層へバインドされる。</li>
+</ul>
+<h2>直接依存</h2>
+<ul>
+<li><a class="wiki-source-link" href="../../../../../source/src/include/postgres.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/postgres.h.html&quot;}, '*');"><code>postgres.h</code></a></li>
+<li><code>nodes/nodeFuncs.h</code></li>
+<li><code>nodes/plannodes.h</code></li>
+<li><code>optimizer/paramassign.h</code></li>
+<li><code>optimizer/placeholder.h</code></li>
+<li><code>rewrite/rewriteManip.h</code></li>
+</ul>
+<h2>関連コード</h2>
+<ul>
+<li><a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/util/placeholder.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/backend/optimizer/util/placeholder.c.html&quot;}, '*');"><code>src/backend/optimizer/util/placeholder.c</code></a></li>
+<li><a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/plan/createplan.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/backend/optimizer/plan/createplan.c.html&quot;}, '*');"><code>src/backend/optimizer/plan/createplan.c</code></a></li>
+<li><code>src/backend/executor/execQual.c</code></li>
+</ul>
+<h2>読者向けメモ</h2>
+<ul>
+<li>**メモリ所有権**: <code>copyObject()</code> を用いて元の式構造をコピーし、レベルアップのオフセット調整（<a class="wiki-source-link" href="../../../../../source/src/backend/rewrite/rewriteManip.c.html#L892" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__rewrite__rewriteManip_c__IncrementVarSublevelsUp.html&quot;}, '*');"><code>IncrementVarSublevelsUp</code></a>）を行った上でプラン構造体に保持させるため、Plannerのコンテキストメモリ上で所有・管理される。</li>
+<li>**不変条件**: <code>root-&gt;glob-&gt;paramExecTypes</code> はエグゼキュータが単一の配列として参照するため、プラン全体で一意かつ不変（要素の削除は行われない）である必要がある。値を持たない特殊なシグナル用パラメータには <code>InvalidOid</code> が登録される。</li>
+</ul>
+<h2>シンボルページ</h2>
+<ul>
+<li><a href="../../../../symbols/src__backend__optimizer__util__paramassign_c__assign_param_for_var.html" target="wiki-view"><code>assign_param_for_var</code></a></li>
+<li><a href="../../../../symbols/src__backend__optimizer__util__paramassign_c__replace_outer_var.html" target="wiki-view"><code>replace_outer_var</code></a></li>
+<li><a href="../../../../symbols/src__backend__optimizer__util__paramassign_c__assign_param_for_placeholdervar.html" target="wiki-view"><code>assign_param_for_placeholdervar</code></a></li>
+<li><a href="../../../../symbols/src__backend__optimizer__util__paramassign_c__replace_outer_placeholdervar.html" target="wiki-view"><code>replace_outer_placeholdervar</code></a></li>
+<li><a href="../../../../symbols/src__backend__optimizer__util__paramassign_c__replace_outer_agg.html" target="wiki-view"><code>replace_outer_agg</code></a></li>
+<li><a href="../../../../symbols/src__backend__optimizer__util__paramassign_c__replace_outer_grouping.html" target="wiki-view"><code>replace_outer_grouping</code></a></li>
+<li><a href="../../../../symbols/src__backend__optimizer__util__paramassign_c__replace_outer_merge_support.html" target="wiki-view"><code>replace_outer_merge_support</code></a></li>
+<li><a href="../../../../symbols/src__backend__optimizer__util__paramassign_c__replace_outer_returning.html" target="wiki-view"><code>replace_outer_returning</code></a></li>
+<li><a href="../../../../symbols/src__backend__optimizer__util__paramassign_c__replace_nestloop_param_var.html" target="wiki-view"><code>replace_nestloop_param_var</code></a></li>
+<li><a href="../../../../symbols/src__backend__optimizer__util__paramassign_c__replace_nestloop_param_placeholdervar.html" target="wiki-view"><code>replace_nestloop_param_placeholdervar</code></a></li>
+<li><a href="../../../../symbols/src__backend__optimizer__util__paramassign_c__process_subquery_nestloop_params.html" target="wiki-view"><code>process_subquery_nestloop_params</code></a></li>
+<li><a href="../../../../symbols/src__backend__optimizer__util__paramassign_c__identify_current_nestloop_params.html" target="wiki-view"><code>identify_current_nestloop_params</code></a></li>
+</ul><script>
+(function() {
+  function notifyParent() {
+    if (parent === window) return;
+    parent.postMessage({type: "frame-location", frame: window.name || "", href: window.location.href}, "*");
+  }
+  document.addEventListener("click", function(event) {
+    const link = event.target.closest("a[data-panel]");
+    if (!link || parent === window) return;
+    parent.postMessage({type: "source-link", panel: link.dataset.panel}, "*");
+  });
+  window.addEventListener("load", notifyParent);
+  window.addEventListener("hashchange", notifyParent);
+})();
+</script></body></html>

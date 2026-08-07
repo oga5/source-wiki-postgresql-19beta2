@@ -1,0 +1,66 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>src/backend/optimizer/geqo/geqo_misc.c.md</title><link rel="stylesheet" href="../../../../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/geqo/geqo_misc.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/backend/optimizer/geqo/geqo_misc.c.html&quot;}, '*');">src/backend/optimizer/geqo/geqo_misc.c</a></h1>
+<h2>概要</h2>
+<p><a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/geqo/geqo_misc.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/backend/optimizer/geqo/geqo_misc.c.html&quot;}, '*');"><code>src/backend/optimizer/geqo/geqo_misc.c</code></a> は、PostgreSQLの遺伝的クエリ最適化（GEQO）モジュールにおけるデバッグおよび進捗可視化用のユーティリティファイルです。遺伝的アルゴリズム（GA）の実行過程において、個体群プールやエッジテーブルの内部状態を標準出力やログファイル（<code>FILE *</code>）へダンプする機能を提供します。</p>
+<h2>モジュール内での役割</h2>
+<p>GEQOサブシステム（<code>src/backend/optimizer/geqo</code>）において、アルゴリズムの挙動分析やデバッグを支援する補助的な位置づけにあります。メインの探索ループや特定の交叉アルゴリズムから呼び出され、世代交代ごとの統計情報やデータ構造の整合性を検証するために使用されます。</p>
+<h2>責務</h2>
+<ul>
+<li>**個体群統計の算出と出力**: 現在の世代における最良・最悪・中央値・平均のコスト（<a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/geqo/geqo_pool.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__geqo__geqo_pool_c__worth.html&quot;}, '*');">worth</a>）を算出し、フォーマット出力します。</li>
+<li>**プール状態のダンプ**: 個体群プール（<code>Pool</code>）内の各個体が持つ遺伝子配列（ジョイン順序）とコストの対応リストを出力します。</li>
+<li>**エッジテーブルの可視化**: 辺組換え交叉（<a class="wiki-source-link" href="../../../../../source/src/include/optimizer/geqo.h.html#L46" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/optimizer/geqo.h.html&quot;}, '*');">ERX</a>）で使用される、ノード間の接続関係を示すエッジテーブルの内容をダンプします。</li>
+<li>**数値オーバーフローの防止**: 平均値計算において、非常に大きなコスト値（<a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/geqo/geqo_pool.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__geqo__geqo_pool_c__DBL_MAX.html&quot;}, '*');"><code>DBL_MAX</code></a>など）の累積による浮動小数点オーバーフローを回避します。</li>
+</ul>
+<h2>重要なシンボル</h2>
+<ul>
+<li>**デバッグ出力インターフェース（<a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/geqo/geqo_misc.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__geqo__geqo_misc_c__GEQO_DEBUG.html&quot;}, '*');"><code>GEQO_DEBUG</code></a> 有効時のみ）**:</li>
+<li><a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/geqo/geqo_misc.c.html#L93" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__geqo__geqo_misc_c__print_gen.html&quot;}, '*');"><code>print_gen</code></a>: 指定された世代の最良、最悪、中央値、および平均コストを1行で出力します。</li>
+<li><a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/geqo/geqo_misc.c.html#L58" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__geqo__geqo_misc_c__print_pool.html&quot;}, '*');"><code>print_pool</code></a>: プール内の指定された範囲の個体（遺伝子配列とコスト）をダンプします。入力値に対する境界値の安全チェックも行います。</li>
+<li><a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/geqo/geqo_misc.c.html#L114" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__geqo__geqo_misc_c__print_edge_table.html&quot;}, '*');"><code>print_edge_table</code></a>: 辺組換え交叉（<a class="wiki-source-link" href="../../../../../source/src/include/optimizer/geqo.h.html#L46" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/optimizer/geqo.h.html&quot;}, '*');">ERX</a>）で用いられるエッジテーブルの隣接リストを出力します。</li>
+<li>**内部計算ヘルパー**:</li>
+<li><a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/geqo/geqo_misc.c.html#L34" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__geqo__geqo_misc_c__avg_pool.html&quot;}, '*');"><code>avg_pool</code></a> (静的関数): プール全体の平均コストを計算します。オーバーフローを避けるため、各個体のコストをプールサイズで除算してから累積する工夫がなされています。</li>
+</ul>
+<h2>制御フローとデータフロー</h2>
+<p>1. **呼び出し元からの制御流入**: <a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/geqo/geqo_main.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/backend/optimizer/geqo/geqo_main.c.html&quot;}, '*');"><code>geqo_main.c</code></a> などのメインループから、世代の節目やデバッグ要求時に <a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/geqo/geqo_misc.c.html#L93" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__geqo__geqo_misc_c__print_gen.html&quot;}, '*');"><code>print_gen</code></a> や <a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/geqo/geqo_misc.c.html#L58" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__geqo__geqo_misc_c__print_pool.html&quot;}, '*');"><code>print_pool</code></a> が呼び出されます。 2. **データの集計**:</p>
+<ul>
+<li><a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/geqo/geqo_misc.c.html#L93" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__geqo__geqo_misc_c__print_gen.html&quot;}, '*');"><code>print_gen</code></a> は、ソート済みの <code>Pool</code> 構造体から、最良（インデックス <code>0</code>）、最悪（インデックス <code>size - 2</code> ※最後尾はバッファ）、中央値（インデックス <code>size / 2</code>）を直接取得します。</li>
+<li>平均値の算出は <a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/geqo/geqo_misc.c.html#L34" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__geqo__geqo_misc_c__avg_pool.html&quot;}, '*');"><code>avg_pool</code></a> に委譲され、プール内の全個体の <a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/geqo/geqo_pool.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__geqo__geqo_pool_c__worth.html&quot;}, '*');"><code>worth</code></a> を走査して集計します。</li>
+<p>3. **ストリームへの書き出し**: 集計されたデータや遺伝子配列は、指定された <code>FILE *fp</code> ストリームへ <code>fprintf</code> を用いて書き出され、<code>fflush</code> によって即座に出力バッファがフラッシュされます。</p>
+</ul>
+<h2>直接依存</h2>
+<ul>
+<li><a class="wiki-source-link" href="../../../../../source/src/include/postgres.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/postgres.h.html&quot;}, '*');"><code>postgres.h</code></a>: PostgreSQLの基本型定義や <a class="wiki-source-link" href="../../../../../source/src/include/utils/elog.h.html#L242" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/utils/elog.h.html&quot;}, '*');"><code>elog</code></a> マクロ。</li>
+<li><code>optimizer/geqo_misc.h</code>: 本ファイルの関数プロトタイプ宣言（<a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/geqo/geqo_misc.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__geqo__geqo_misc_c__GEQO_DEBUG.html&quot;}, '*');"><code>GEQO_DEBUG</code></a> 定義時のみ有効）。</li>
+</ul>
+<h2>関連コード</h2>
+<ul>
+<li><a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/geqo/geqo_main.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/backend/optimizer/geqo/geqo_main.c.html&quot;}, '*');"><code>src/backend/optimizer/geqo/geqo_main.c</code></a>: GEQOのメインエントリーポイント。世代交代のループ内で <a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/geqo/geqo_misc.c.html#L93" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__geqo__geqo_misc_c__print_gen.html&quot;}, '*');"><code>print_gen</code></a> などを呼び出します。</li>
+<li><a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/geqo/geqo_erx.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/backend/optimizer/geqo/geqo_erx.c.html&quot;}, '*');"><code>src/backend/optimizer/geqo/geqo_erx.c</code></a>: 辺組換え交叉の実装。エッジテーブルの構築時に <a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/geqo/geqo_misc.c.html#L114" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__geqo__geqo_misc_c__print_edge_table.html&quot;}, '*');"><code>print_edge_table</code></a> を利用してデバッグ可能です。</li>
+<li><a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/geqo/geqo_pool.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/backend/optimizer/geqo/geqo_pool.c.html&quot;}, '*');"><code>src/backend/optimizer/geqo/geqo_pool.c</code></a>: 個体群プール（<code>Pool</code>）の管理。本ファイルが操作するデータ構造の実体です。</li>
+</ul>
+<h2>読者向けメモ</h2>
+<ul>
+<li>**条件付きコンパイル**: 本ファイルの実装はすべて <code>#ifdef GEQO_DEBUG</code> ブロックで囲まれています。通常ビルド（製品版）ではコード領域に含まれず、パフォーマンスへの影響はありません。</li>
+<li>**平均値計算の精度**: <a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/geqo/geqo_misc.c.html#L34" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__geqo__geqo_misc_c__avg_pool.html&quot;}, '*');"><code>avg_pool</code></a> では、オーバーフロー回避のために「各要素を割ってから足す」アプローチを採用しています。これにより、浮動小数点の丸め誤差がわずかに発生する可能性がありますが、デバッグ用途であるため許容されています。</li>
+</ul>
+<h2>シンボルページ</h2>
+<ul>
+<li><a href="../../../../symbols/src__backend__optimizer__geqo__geqo_misc_c__avg_pool.html" target="wiki-view"><code>avg_pool</code></a></li>
+<li><a href="../../../../symbols/src__backend__optimizer__geqo__geqo_misc_c__print_pool.html" target="wiki-view"><code>print_pool</code></a></li>
+<li><a href="../../../../symbols/src__backend__optimizer__geqo__geqo_misc_c__print_gen.html" target="wiki-view"><code>print_gen</code></a></li>
+<li><a href="../../../../symbols/src__backend__optimizer__geqo__geqo_misc_c__print_edge_table.html" target="wiki-view"><code>print_edge_table</code></a></li>
+</ul><script>
+(function() {
+  function notifyParent() {
+    if (parent === window) return;
+    parent.postMessage({type: "frame-location", frame: window.name || "", href: window.location.href}, "*");
+  }
+  document.addEventListener("click", function(event) {
+    const link = event.target.closest("a[data-panel]");
+    if (!link || parent === window) return;
+    parent.postMessage({type: "source-link", panel: link.dataset.panel}, "*");
+  });
+  window.addEventListener("load", notifyParent);
+  window.addEventListener("hashchange", notifyParent);
+})();
+</script></body></html>

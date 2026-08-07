@@ -1,0 +1,62 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>src/backend/optimizer/geqo/geqo_px.c.md</title><link rel="stylesheet" href="../../../../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/geqo/geqo_px.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/backend/optimizer/geqo/geqo_px.c.html&quot;}, '*');">src/backend/optimizer/geqo/geqo_px.c</a></h1>
+<h2>概要</h2>
+<p><a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/geqo/geqo_px.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/backend/optimizer/geqo/geqo_px.c.html&quot;}, '*');"><code>src/backend/optimizer/geqo/geqo_px.c</code></a> は、PostgreSQLの遺伝的クエリ最適化（GEQO）モジュールにおける遺伝子組み換え（リコンビネーション）演算子のひとつである **位置交叉（Position Crossover: PX）** を実装するファイルです。Syswerdaの提案およびGenitorアルゴリズムに基づき、親世代の遺伝子情報から子世代の遺伝子を生成します。</p>
+<h2>モジュール内での役割</h2>
+<p>GEQOサブシステムにおいて、探索空間を効率的に探索するための交叉アルゴリズムを提供するファイルの1つです。<a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/geqo/geqo_recombination.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/backend/optimizer/geqo/geqo_recombination.c.html&quot;}, '*');"><code>geqo_recombination.c</code></a> などの上位モジュールから呼び出され、コンパイル時フラグ（<code>PX</code>）が有効な場合にのみビルド・利用されます。</p>
+<h2>責務</h2>
+<ul>
+<li>親遺伝子（<a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/geqo/geqo_ox1.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__geqo__geqo_ox1_c__tour1.html&quot;}, '*');"><code>tour1</code></a>, <a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/geqo/geqo_ox1.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__geqo__geqo_ox1_c__tour2.html&quot;}, '*');"><code>tour2</code></a>）の順序情報を引き継ぎ、重複のない子遺伝子（<a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/geqo/geqo_ox1.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__geqo__geqo_ox1_c__offspring.html&quot;}, '*');"><code>offspring</code></a>）を構築する。</li>
+<li>ランダムに選択された位置の遺伝子を一方の親（<a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/geqo/geqo_ox1.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__geqo__geqo_ox1_c__tour1.html&quot;}, '*');"><code>tour1</code></a>）から直接継承し、使用済み都市を追跡・管理する。</li>
+<li>残りの位置をもう一方の親（<a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/geqo/geqo_ox1.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__geqo__geqo_ox1_c__tour2.html&quot;}, '*');"><code>tour2</code></a>）の順序に従って埋める。</li>
+</ul>
+<h2>重要なシンボル</h2>
+<ul>
+<li><a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/geqo/geqo_px.c.html#L50" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__geqo__geqo_px_c__px.html&quot;}, '*');"><code>px</code></a></li>
+<li>位置交叉を実行するメイン関数。親の巡回順序と都市テーブルを受け取り、交叉処理を行って子に反映する。</li>
+</ul>
+<h2>制御フローとデータフロー</h2>
+<p>1. **初期化**:</p>
+<ul>
+<li><code>city_table</code> 内の全都市の <code>used</code> フラグをクリアする。</li>
+<p>2. **ランダム位置の直接継承**:</p>
+<li><a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/geqo/geqo_random.c.html#L34" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__geqo__geqo_random_c__geqo_randint.html&quot;}, '*');"><code>geqo_randint</code></a> を用いて、親1（<a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/geqo/geqo_ox1.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__geqo__geqo_ox1_c__tour1.html&quot;}, '*');"><code>tour1</code></a>）から直接継承する遺伝子の数と位置をランダムに決定し、子（<a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/geqo/geqo_ox1.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__geqo__geqo_ox1_c__offspring.html&quot;}, '*');"><code>offspring</code></a>）にコピーした上で <code>used</code> フラグを立てる。</li>
+<p>3. **残余遺伝子の補完（メインループ）**:</p>
+<li><a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/geqo/geqo_ox1.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__geqo__geqo_ox1_c__offspring.html&quot;}, '*');"><code>offspring</code></a> の未入力位置に対し、親2（<a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/geqo/geqo_ox1.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__geqo__geqo_ox1_c__tour2.html&quot;}, '*');"><code>tour2</code></a>）の遺伝子を順に走査する。</li>
+<li><a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/geqo/geqo_ox1.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__geqo__geqo_ox1_c__tour2.html&quot;}, '*');"><code>tour2</code></a> の都市がまだ使用されていなければ子に割り当て、使用済みであればスキップして次の候補へ進む。</li>
+</ul>
+<h2>直接依存</h2>
+<ul>
+<li><a class="wiki-source-link" href="../../../../../source/src/include/postgres.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/postgres.h.html&quot;}, '*');"><code>postgres.h</code></a>: PostgreSQLの基本システム定義。</li>
+<li><code>optimizer/geqo.h</code>: GEQOの基本データ構造および型定義（<code>PlannerInfo</code>, <a class="wiki-source-link" href="../../../../../source/src/include/optimizer/geqo_gene.h.html#L33" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__optimizer__geqo_gene_h__Gene.html&quot;}, '*');"><code>Gene</code></a>, <code>City</code>）。</li>
+<li><code>optimizer/geqo_random.h</code>: 乱数生成関数（<a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/geqo/geqo_random.c.html#L34" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__geqo__geqo_random_c__geqo_randint.html&quot;}, '*');"><code>geqo_randint</code></a>）。</li>
+<li><code>optimizer/geqo_recombination.h</code>: 組み換え関連の定義。</li>
+</ul>
+<h2>関連コード</h2>
+<ul>
+<li><a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/geqo/geqo_recombination.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/backend/optimizer/geqo/geqo_recombination.c.html&quot;}, '*');"><code>src/backend/optimizer/geqo/geqo_recombination.c</code></a>: 各種交叉アルゴリズムを統括・ディスパッチするモジュール。</li>
+<li><a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/geqo/geqo_cx.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/backend/optimizer/geqo/geqo_cx.c.html&quot;}, '*');"><code>src/backend/optimizer/geqo/geqo_cx.c</code></a> / <a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/geqo/geqo_erx.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/backend/optimizer/geqo/geqo_erx.c.html&quot;}, '*');"><code>geqo_erx.c</code></a>: 他の交叉アルゴリズムの実装ファイル。</li>
+</ul>
+<h2>読者向けメモ</h2>
+<ul>
+<li>コード全体が <code>#if defined(PX)</code> で囲まれており、デフォルトのビルド構成では有効になっていない場合があります。</li>
+<li><code>City</code> 構造体の <code>used</code> フィールドをインプレースで書き換えるため、呼び出し元でのテーブル初期化や競合に注意してください。</li>
+</ul>
+<h2>シンボルページ</h2>
+<ul>
+<li><a href="../../../../symbols/src__backend__optimizer__geqo__geqo_px_c__px.html" target="wiki-view"><code>px</code></a></li>
+</ul><script>
+(function() {
+  function notifyParent() {
+    if (parent === window) return;
+    parent.postMessage({type: "frame-location", frame: window.name || "", href: window.location.href}, "*");
+  }
+  document.addEventListener("click", function(event) {
+    const link = event.target.closest("a[data-panel]");
+    if (!link || parent === window) return;
+    parent.postMessage({type: "source-link", panel: link.dataset.panel}, "*");
+  });
+  window.addEventListener("load", notifyParent);
+  window.addEventListener("hashchange", notifyParent);
+})();
+</script></body></html>
