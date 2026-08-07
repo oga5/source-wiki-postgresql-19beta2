@@ -33,7 +33,7 @@
 <li>These fields are not modified during the build.  They primarily exist</li>
 <li>for the benefit of worker processes that need to create state</li>
 <li>corresponding to that used by the leader.</li>
-<p>*/ Oid			heaprelid; Oid			indexrelid; bool		isconcurrent; BlockNumber pagesPerRange; <a class="wiki-source-link" href="../../source/src/include/port.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__port_h__int.html&quot;}, '*');">int</a>			scantuplesortstates;</p>
+<p>*/ Oid			heaprelid; Oid			indexrelid; bool		isconcurrent; BlockNumber pagesPerRange; int			scantuplesortstates;</p>
 </ul>
 <p>/* Query ID, for report in worker processes */ int64		queryid;</p>
 <p>/*</p>
@@ -62,7 +62,7 @@
 <li>reltuples <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> the total number of input heap tuples.</li>
 <p>*</p>
 <li>indtuples <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> the total number of tuples that made it into the <a class="wiki-source-link" href="../../source/src/interfaces/ecpg/preproc/type.h.html#L96" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__interfaces__ecpg__preproc__type_h__index.html&quot;}, '*');">index</a>.</li>
-<p>*/ <a class="wiki-source-link" href="../../source/src/include/port.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__port_h__int.html&quot;}, '*');">int</a>			nparticipantsdone; double		reltuples; double		indtuples;</p>
+<p>*/ int			nparticipantsdone; double		reltuples; double		indtuples;</p>
 </ul>
 <p>/*</p>
 <ul>

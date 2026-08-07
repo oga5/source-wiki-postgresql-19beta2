@@ -34,7 +34,7 @@
 <h2>関連データ構造</h2>
 <p>なし</p>
 <h2>ソース抜粋</h2>
-<p>~~~c static void <a class="wiki-source-link" href="../../source/src/backend/access/brin/brin_bloom.c.html#L271" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__access__brin__brin_bloom_c__bloom_filter_size.html&quot;}, '*');">bloom_filter_size</a>(<a class="wiki-source-link" href="../../source/src/include/port.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__port_h__int.html&quot;}, '*');">int</a> ndistinct, double false_positive_rate, <a class="wiki-source-link" href="../../source/src/include/port.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__port_h__int.html&quot;}, '*');">int</a> *nbytesp, <a class="wiki-source-link" href="../../source/src/include/port.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__port_h__int.html&quot;}, '*');">int</a> *nbitsp, <a class="wiki-source-link" href="../../source/src/include/port.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__port_h__int.html&quot;}, '*');">int</a> *nhashesp) { double		k; <a class="wiki-source-link" href="../../source/src/include/port.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__port_h__int.html&quot;}, '*');">int</a>			nbits, nbytes;</p>
+<p>~~~c static void <a class="wiki-source-link" href="../../source/src/backend/access/brin/brin_bloom.c.html#L271" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__access__brin__brin_bloom_c__bloom_filter_size.html&quot;}, '*');">bloom_filter_size</a>(int ndistinct, double false_positive_rate, int *nbytesp, int *nbitsp, int *nhashesp) { double		k; int			nbits, nbytes;</p>
 <p>/* sizing bloom filter: -(n * ln(p)) / (ln(2))^2 */ nbits = ceil(-(ndistinct * log(false_positive_rate)) / pow(log(2.0), 2));</p>
 <p>/* round m to whole bytes */ nbytes = ((nbits + 7) / 8); nbits = nbytes * 8;</p>
 <p>/*</p>
@@ -45,7 +45,7 @@
 </ul>
 <p>if (nbytesp) *nbytesp = nbytes;</p>
 <p>if (nbitsp) *nbitsp = nbits;</p>
-<p>if (nhashesp) *nhashesp = (<a class="wiki-source-link" href="../../source/src/include/port.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__port_h__int.html&quot;}, '*');">int</a>) k; } ~~~</p>
+<p>if (nhashesp) *nhashesp = (int) k; } ~~~</p>
 <h2>失敗モードと境界条件</h2>
 <p>まだ解析していません。</p>
 <h2>保守担当者向けメモ</h2>

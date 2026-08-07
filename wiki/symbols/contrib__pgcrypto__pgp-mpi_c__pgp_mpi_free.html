@@ -15,7 +15,7 @@
 <h2>入力と出力</h2>
 <ul>
 <li>引数: <code>PGP_MPI *mpi</code></li>
-<li>戻り値: <a class="wiki-source-link" href="../../source/src/include/port.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__port_h__int.html&quot;}, '*');"><code>int</code></a></li>
+<li>戻り値: <code>int</code></li>
 </ul>
 <h2>前提条件と不変条件</h2>
 <p>まだ解析していません。</p>
@@ -34,7 +34,7 @@
 <h2>関連データ構造</h2>
 <p><a class="wiki-source-link" href="../../source/contrib/pgcrypto/pgp.h.html#L117" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/contrib__pgcrypto__pgp_h__PGP_MPI.html&quot;}, '*');"><code>PGP_MPI</code></a></p>
 <h2>ソース抜粋</h2>
-<p>~~~c <a class="wiki-source-link" href="../../source/src/include/port.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__port_h__int.html&quot;}, '*');">int</a> <a class="wiki-source-link" href="../../source/contrib/pgcrypto/pgp-mpi.c.html#L69" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/contrib__pgcrypto__pgp-mpi_c__pgp_mpi_free.html&quot;}, '*');">pgp_mpi_free</a>(<a class="wiki-source-link" href="../../source/contrib/pgcrypto/pgp.h.html#L117" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/contrib__pgcrypto__pgp_h__PGP_MPI.html&quot;}, '*');">PGP_MPI</a> *mpi) { if (mpi == NULL) return 0; <a class="wiki-source-link" href="../../source/contrib/pgcrypto/px.c.html#L123" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/contrib__pgcrypto__px_c__px_memset.html&quot;}, '*');">px_memset</a>(mpi, 0, sizeof(*mpi) + mpi-&gt;bytes); pfree(mpi); return 0; } ~~~</p>
+<p>~~~c int <a class="wiki-source-link" href="../../source/contrib/pgcrypto/pgp-mpi.c.html#L69" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/contrib__pgcrypto__pgp-mpi_c__pgp_mpi_free.html&quot;}, '*');">pgp_mpi_free</a>(<a class="wiki-source-link" href="../../source/contrib/pgcrypto/pgp.h.html#L117" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/contrib__pgcrypto__pgp_h__PGP_MPI.html&quot;}, '*');">PGP_MPI</a> *mpi) { if (mpi == NULL) return 0; <a class="wiki-source-link" href="../../source/contrib/pgcrypto/px.c.html#L123" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/contrib__pgcrypto__px_c__px_memset.html&quot;}, '*');">px_memset</a>(mpi, 0, sizeof(*mpi) + mpi-&gt;bytes); pfree(mpi); return 0; } ~~~</p>
 <h2>失敗モードと境界条件</h2>
 <p>まだ解析していません。</p>
 <h2>保守担当者向けメモ</h2>

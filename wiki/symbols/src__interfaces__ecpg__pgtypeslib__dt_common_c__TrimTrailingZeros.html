@@ -34,7 +34,7 @@
 <h2>関連データ構造</h2>
 <p>なし</p>
 <h2>ソース抜粋</h2>
-<p>~~~c void <a class="wiki-source-link" href="../../source/src/interfaces/ecpg/pgtypeslib/dt_common.c.html#L724" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__interfaces__ecpg__pgtypeslib__dt_common_c__TrimTrailingZeros.html&quot;}, '*');">TrimTrailingZeros</a>(char *str) { <a class="wiki-source-link" href="../../source/src/include/port.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__port_h__int.html&quot;}, '*');">int</a>			len = strlen(str);</p>
+<p>~~~c void <a class="wiki-source-link" href="../../source/src/interfaces/ecpg/pgtypeslib/dt_common.c.html#L724" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__interfaces__ecpg__pgtypeslib__dt_common_c__TrimTrailingZeros.html&quot;}, '*');">TrimTrailingZeros</a>(<a class="wiki-source-link" href="../../source/src/include/port/atomics/generic-gcc.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__port__atomics__generic-gcc_h__char.html&quot;}, '*');">char</a> *str) { int			len = strlen(str);</p>
 <p>/* chop off trailing zeros... but leave at least 2 fractional digits */ while (*(str + len - 1) == &#x27;0&#x27; &amp;&amp; *(str + len - 3) != &#x27;.&#x27;) { len--; *(str + len) = &#x27;\0&#x27;; } } ~~~</p>
 <h2>失敗モードと境界条件</h2>
 <p>まだ解析していません。</p>

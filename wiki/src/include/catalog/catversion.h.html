@@ -1,0 +1,48 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>src/include/catalog/catversion.h.md</title><link rel="stylesheet" href="../../../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../../../source/src/include/catalog/catversion.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/catalog/catversion.h.html&quot;}, '*');">src/include/catalog/catversion.h</a></h1>
+<h2>概要</h2>
+<p>PostgreSQLのシステムカタログおよびデータベース構造の互換性を管理するためのバージョン番号（カタログバージョン）を定義するヘッダーファイルです。</p>
+<h2>モジュール内での役割</h2>
+<p><code>src/include/catalog</code> ディレクトリに位置し、システムカタログのスキーマ定義や内容変更に伴うバージョン追跡の要となります。ビルド時の定義値とストレージ上の記録を照合する基点を提供します。</p>
+<h2>責務</h2>
+<ul>
+<li>システムカタログやタプルヘッダー、シリアライズされたパースツリーの互換性変更を検知するための定数(<a class="wiki-source-link" href="../../../../source/src/include/catalog/catversion.h.html#L60" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/catalog/catversion.h.html&quot;}, '*');"><code>CATALOG_VERSION_NO</code></a>)を提供する。</li>
+<li>起動時に古いデータベースとの不整合による致命的な誤作動を防ぐためのメカニズムを定数定義によって支える。</li>
+</ul>
+<h2>重要なシンボル</h2>
+<ul>
+<li><a class="wiki-source-link" href="../../../../source/src/include/catalog/catversion.h.html#L60" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/catalog/catversion.h.html&quot;}, '*');"><code>CATALOG_VERSION_NO</code></a>: カタログの互換性を示す整数マクロ（通常は <a class="wiki-source-link" href="../../../../source/src/include/catalog/catversion.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__catalog__catversion_h__YYYYMMDDN.html&quot;}, '*');"><code>YYYYMMDDN</code></a> 形式）。</li>
+</ul>
+<h2>制御フローとデータフロー</h2>
+<ul>
+<li><code>initdb</code> 実行時に、<code>pg_control</code> へ <a class="wiki-source-link" href="../../../../source/src/include/catalog/catversion.h.html#L60" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/catalog/catversion.h.html&quot;}, '*');"><code>CATALOG_VERSION_NO</code></a> の値が書き込まれます。</li>
+<li>バックエンドの起動時に、コンパイル時に組み込まれた <a class="wiki-source-link" href="../../../../source/src/include/catalog/catversion.h.html#L60" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/catalog/catversion.h.html&quot;}, '*');"><code>CATALOG_VERSION_NO</code></a> と <code>pg_control</code> 内のバージョン値が比較されます。</li>
+<li>両者に不一致がある場合、バックエンドは互換性のないデータベースでの実行を拒否して終了します。</li>
+</ul>
+<h2>直接依存</h2>
+<ul>
+<li>なし（純粋なマクロ定義のみを含むヘッダーファイル）</li>
+</ul>
+<h2>関連コード</h2>
+<ul>
+<li><a class="wiki-source-link" href="../../../../source/src/include/catalog/pg_control.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/catalog/pg_control.h.html&quot;}, '*');"><code>src/include/catalog/pg_control.h</code></a>: <code>pg_control</code> の構造とバージョン情報の保持に関連する定義。</li>
+<li><code>src/include/catalog/</code> 内の各カタログ定義ヘッダー: スキーマ変更時に <a class="wiki-source-link" href="../../../../source/src/include/catalog/catversion.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/catalog/catversion.h.html&quot;}, '*');"><code>catversion.h</code></a> の更新が必要となる主要な変更元。</li>
+</ul>
+<h2>読者向けメモ</h2>
+<ul>
+<li><code>initdb</code> が必要となる変更（カタログ定義の変更や <a class="wiki-source-link" href="../../../../source/src/include/nodes/primnodes.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/nodes/primnodes.h.html&quot;}, '*');"><code>primnodes.h</code></a> / <a class="wiki-source-link" href="../../../../source/src/include/nodes/parsenodes.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/nodes/parsenodes.h.html&quot;}, '*');"><code>parsenodes.h</code></a> の変更など）をコミットする際は、必ず本ファイルの <a class="wiki-source-link" href="../../../../source/src/include/catalog/catversion.h.html#L60" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/catalog/catversion.h.html&quot;}, '*');"><code>CATALOG_VERSION_NO</code></a> をインクリメントする必要があります。</li>
+</ul><script>
+(function() {
+  function notifyParent() {
+    if (parent === window) return;
+    parent.postMessage({type: "frame-location", frame: window.name || "", href: window.location.href}, "*");
+  }
+  document.addEventListener("click", function(event) {
+    const link = event.target.closest("a[data-panel]");
+    if (!link || parent === window) return;
+    parent.postMessage({type: "source-link", panel: link.dataset.panel}, "*");
+  });
+  window.addEventListener("load", notifyParent);
+  window.addEventListener("hashchange", notifyParent);
+})();
+</script></body></html>

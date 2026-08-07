@@ -38,7 +38,7 @@
 <p>/* Parallel leader allows but ignores hint */ if (<a class="wiki-source-link" href="../../source/src/backend/utils/sort/tuplesort.c.html#L403" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/utils/sort/tuplesort.c.html&quot;}, '*');">LEADER</a>(state)) return;</p>
 <p>#ifdef DEBUG_BOUNDED_SORT /* Honor GUC setting that disables the feature (for easy testing) */ if (!optimize_bounded_sort) return; #endif</p>
 <p>/* We want to be able to compute bound * 2, so limit the setting */ if (bound &gt; (int64) (INT_MAX / 2)) return;</p>
-<p>state-&gt;bounded = <a class="wiki-source-link" href="../../source/src/tools/pg_bsd_indent/indent_globs.h.html#L46" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/tools/pg_bsd_indent/indent_globs.h.html&quot;}, '*');">true</a>; state-&gt;bound = (<a class="wiki-source-link" href="../../source/src/include/port.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__port_h__int.html&quot;}, '*');">int</a>) bound;</p>
+<p>state-&gt;bounded = <a class="wiki-source-link" href="../../source/src/tools/pg_bsd_indent/indent_globs.h.html#L46" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/tools/pg_bsd_indent/indent_globs.h.html&quot;}, '*');">true</a>; state-&gt;bound = (int) bound;</p>
 <p>/*</p>
 <ul>
 <li>Bounded sorts are not an effective target for abbreviated key</li>

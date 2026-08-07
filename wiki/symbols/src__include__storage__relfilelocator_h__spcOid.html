@@ -1,0 +1,105 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>symbols/src__include__storage__relfilelocator_h__spcOid.md</title><link rel="stylesheet" href="../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../source/src/include/storage/relfilelocator.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__storage__relfilelocator_h__spcOid.html&quot;}, '*');">spcOid</a></h1>
+<h2>定義</h2>
+<ul>
+<li>種別: <code>function</code></li>
+<li>定義箇所: <code>src/include/storage/relfilelocator.h:1</code></li>
+<li>所属モジュール: <a class="wiki-entity-link" href="../modules/src__include__storage.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/modules/src__include__storage.html&quot;, &quot;source&quot;: &quot;source/src/include/storage/aio.h.html&quot;}, '*');"><code>module:src/include/storage</code></a></li>
+</ul>
+<h2>目的</h2>
+<p>静的シンボル索引から生成された初期シンボルページです。</p>
+<h2>シグネチャまたは形状</h2>
+<ul>
+<li>シグネチャ: <code>/*------------------------------------------------------------------------- * * relfilelocator.h * Physical access information for relations. * * * Portions Copyright (c) 1996-2026, PostgreSQL Global Development Group * Portions Copyright (c) 1994, Regents of the University of California * * src/include/storage/relfilelocator.h * *------------------------------------------------------------------------- */ #ifndef RELFILELOCATOR_H #define RELFILELOCATOR_H #include &quot;common/relpath.h&quot; #include &quot;storage/procnumber.h&quot; /* * RelFileLocator must provide all that we need to know to physically access * a relation, with the exception of the backend&#x27;s proc number, which can be * provided separately. Note, however, that a &quot;physical&quot; relation is * comprised of multiple files on the filesystem, as each fork is stored as * a separate file, and each fork can be divided into multiple segments. See * md.c. * * spcOid identifies the tablespace of the relation. It corresponds to * pg_tablespace.oid. * * dbOid identifies the database of the relation. It is zero for * &quot;shared&quot; relations (those common to all databases of a cluster). * Nonzero dbOid values correspond to pg_database.oid. * * relNumber identifies the specific relation. relNumber corresponds to * pg_class.relfilenode (NOT pg_class.oid, because we need to be able * to assign new physical files to relations in some situations). * Notice that relNumber is only unique within a database in a particular * tablespace. * * Note: spcOid must be GLOBALTABLESPACE_OID if and only if dbOid is * zero. We support shared relations only in the &quot;global&quot; tablespace. * * Note: in pg_class we allow reltablespace == 0 to denote that the * relation is stored in its database&#x27;s &quot;default&quot; tablespace (as * identified by pg_database.dattablespace). However this shorthand * is NOT allowed in RelFileLocator structs --- the real tablespace ID * must be supplied when setting spcOid. * * Note: in pg_class, relfilenode can be zero to denote that the relation * is a &quot;mapped&quot; relation, whose current true filenode number is available * from relmapper.c. Again, this case is NOT allowed in RelFileLocators. * * Note: various places use RelFileLocator in hashtable keys. Therefore, * there *must not* be any unused padding bytes in this struct. That * should be safe as long as all the fields are of type Oid. */ typedef struct RelFileLocator</code></li>
+</ul>
+<h2>入力と出力</h2>
+<p>まだ解析していません。</p>
+<h2>前提条件と不変条件</h2>
+<p>まだ解析していません。</p>
+<h2>アルゴリズムまたは振る舞い</h2>
+<ul>
+<li>複雑度: <code>low</code> (score 1)</li>
+</ul>
+<p>まだ解析していません。</p>
+<h2>呼び出し元と呼び出し先</h2>
+<ul>
+<li>呼び出し元: なし</li>
+<li>呼び出し先: なし</li>
+<li>呼び出し元サイト: なし</li>
+<li>呼び出しサイト: なし</li>
+</ul>
+<h2>関連データ構造</h2>
+<p><a class="wiki-source-link" href="../../source/src/interfaces/ecpg/test/expected/preproc-type.c.html#L36" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__interfaces__ecpg__test__expected__preproc-type_c__access.html&quot;}, '*');"><code>access</code></a>, <code>c</code>, <code>Group</code>, <code>Oid</code>, <code>RelFileLocator</code>, <a class="wiki-source-link" href="../../source/src/include/common/relpath.h.html#L25" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__common__relpath_h__RelFileNumber.html&quot;}, '*');"><code>RelFileNumber</code></a>, <a class="wiki-source-link" href="../../source/src/interfaces/ecpg/preproc/type.h.html#L89" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__interfaces__ecpg__preproc__type_h__when.html&quot;}, '*');"><code>when</code></a></p>
+<h2>ソース抜粋</h2>
+<p>~~~c /*------------------------------------------------------------------------- *</p>
+<ul>
+<li><a class="wiki-source-link" href="../../source/src/include/storage/relfilelocator.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/storage/relfilelocator.h.html&quot;}, '*');">relfilelocator.h</a></li>
+<li>Physical <a class="wiki-source-link" href="../../source/src/interfaces/ecpg/test/expected/preproc-type.c.html#L36" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__interfaces__ecpg__test__expected__preproc-type_c__access.html&quot;}, '*');">access</a> information for relations.</li>
+<p>* *</p>
+<li>Portions Copyright (c) 1996-2026, PostgreSQL Global Development Group</li>
+<li>Portions Copyright (c) 1994, Regents of the University of California</li>
+<p>*</p>
+<li><a class="wiki-source-link" href="../../source/src/include/storage/relfilelocator.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/storage/relfilelocator.h.html&quot;}, '*');">src/include/storage/relfilelocator.h</a></li>
+<p>* *------------------------------------------------------------------------- */ #ifndef <a class="wiki-source-link" href="../../source/src/include/storage/relfilelocator.h.html#L15" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/storage/relfilelocator.h.html&quot;}, '*');">RELFILELOCATOR_H</a> #define <a class="wiki-source-link" href="../../source/src/include/storage/relfilelocator.h.html#L15" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/storage/relfilelocator.h.html&quot;}, '*');">RELFILELOCATOR_H</a></p>
+</ul>
+<p>#include &quot;common/relpath.h&quot; #include &quot;storage/procnumber.h&quot;</p>
+<p>/*</p>
+<ul>
+<li>RelFileLocator must provide all that we need to know to physically <a class="wiki-source-link" href="../../source/src/interfaces/ecpg/test/expected/preproc-type.c.html#L36" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__interfaces__ecpg__test__expected__preproc-type_c__access.html&quot;}, '*');">access</a></li>
+<li>a relation, with the exception of the backend&#x27;s proc number, which can be</li>
+<li>provided separately.  Note, however, that a &quot;physical&quot; relation <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a></li>
+<li>comprised of multiple files on the filesystem, as each fork <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> stored as</li>
+<li>a separate file, and each fork can be divided into multiple segments. See</li>
+<li>md.c.</li>
+<p>*</p>
+<li><a class="wiki-source-link" href="../../source/src/include/storage/relfilelocator.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__storage__relfilelocator_h__spcOid.html&quot;}, '*');">spcOid</a> identifies the <a class="wiki-source-link" href="../../source/src/bin/pgbench/pgbench.c.html#L217" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/bin/pgbench/pgbench.c.html&quot;}, '*');">tablespace</a> of the relation.  It corresponds to</li>
+<li>pg_tablespace.oid.</li>
+<p>*</p>
+<li><a class="wiki-source-link" href="../../source/src/include/storage/relfilelocator.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__storage__relfilelocator_h__dbOid.html&quot;}, '*');">dbOid</a> identifies the database of the relation.  It <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> zero for</li>
+<li>&quot;shared&quot; relations (those common to all databases of a cluster).</li>
+<li>Nonzero <a class="wiki-source-link" href="../../source/src/include/storage/relfilelocator.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__storage__relfilelocator_h__dbOid.html&quot;}, '*');">dbOid</a> values correspond to pg_database.oid.</li>
+<p>*</p>
+<li><a class="wiki-source-link" href="../../source/src/include/storage/relfilelocator.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__storage__relfilelocator_h__relNumber.html&quot;}, '*');">relNumber</a> identifies the specific relation.  <a class="wiki-source-link" href="../../source/src/include/storage/relfilelocator.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__storage__relfilelocator_h__relNumber.html&quot;}, '*');">relNumber</a> corresponds to</li>
+<li>pg_class.relfilenode (<a class="wiki-source-link" href="../../source/src/include/nodes/primnodes.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__nodes__primnodes_h__NOT.html&quot;}, '*');">NOT</a> pg_class.oid, because we need to be able</li>
+<li>to assign new physical files to relations in some situations).</li>
+<li>Notice that <a class="wiki-source-link" href="../../source/src/include/storage/relfilelocator.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__storage__relfilelocator_h__relNumber.html&quot;}, '*');">relNumber</a> <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> only unique within a database in a particular</li>
+<li><a class="wiki-source-link" href="../../source/src/bin/pgbench/pgbench.c.html#L217" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/bin/pgbench/pgbench.c.html&quot;}, '*');">tablespace</a>.</li>
+<p>*</p>
+<li>Note: <a class="wiki-source-link" href="../../source/src/include/storage/relfilelocator.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__storage__relfilelocator_h__spcOid.html&quot;}, '*');">spcOid</a> must be GLOBALTABLESPACE_OID if and only if <a class="wiki-source-link" href="../../source/src/include/storage/relfilelocator.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__storage__relfilelocator_h__dbOid.html&quot;}, '*');">dbOid</a> <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a></li>
+<li>zero.  We support shared relations only in the &quot;global&quot; <a class="wiki-source-link" href="../../source/src/bin/pgbench/pgbench.c.html#L217" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/bin/pgbench/pgbench.c.html&quot;}, '*');">tablespace</a>.</li>
+<p>*</p>
+<li>Note: in pg_class we allow reltablespace == 0 to denote that the</li>
+<li>relation <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> stored in its database&#x27;s &quot;default&quot; <a class="wiki-source-link" href="../../source/src/bin/pgbench/pgbench.c.html#L217" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/bin/pgbench/pgbench.c.html&quot;}, '*');">tablespace</a> (as</li>
+<li>identified by pg_database.dattablespace).  However this shorthand</li>
+<li><a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> <a class="wiki-source-link" href="../../source/src/include/nodes/primnodes.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__nodes__primnodes_h__NOT.html&quot;}, '*');">NOT</a> allowed in RelFileLocator structs --- the real <a class="wiki-source-link" href="../../source/src/bin/pgbench/pgbench.c.html#L217" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/bin/pgbench/pgbench.c.html&quot;}, '*');">tablespace</a> ID</li>
+<li>must be supplied <a class="wiki-source-link" href="../../source/src/interfaces/ecpg/preproc/type.h.html#L89" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__interfaces__ecpg__preproc__type_h__when.html&quot;}, '*');">when</a> setting <a class="wiki-source-link" href="../../source/src/include/storage/relfilelocator.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__storage__relfilelocator_h__spcOid.html&quot;}, '*');">spcOid</a>.</li>
+<p>*</p>
+<li>Note: in pg_class, relfilenode can be zero to denote that the relation</li>
+<li><a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> a &quot;mapped&quot; relation, whose current <a class="wiki-source-link" href="../../source/src/tools/pg_bsd_indent/indent_globs.h.html#L46" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/tools/pg_bsd_indent/indent_globs.h.html&quot;}, '*');">true</a> filenode number <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> available</li>
+<li>from relmapper.c.  Again, this case <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> <a class="wiki-source-link" href="../../source/src/include/nodes/primnodes.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__nodes__primnodes_h__NOT.html&quot;}, '*');">NOT</a> allowed in RelFileLocators.</li>
+<p>*</p>
+<li>Note: various places use RelFileLocator in hashtable keys.  Therefore,</li>
+<li>there *must not* be any unused padding bytes in this struct.  That</li>
+<li>should be safe as <a class="wiki-source-link" href="../../source/src/include/port/win32_port.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__port__win32_port_h__long.html&quot;}, '*');">long</a> as all the fields are of <a class="wiki-source-link" href="../../source/src/include/lib/ilist.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__lib__ilist_h__type.html&quot;}, '*');">type</a> Oid.</li>
+<p>*/ typedef struct RelFileLocator { Oid			<a class="wiki-source-link" href="../../source/src/include/storage/relfilelocator.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__storage__relfilelocator_h__spcOid.html&quot;}, '*');">spcOid</a>;			/* <a class="wiki-source-link" href="../../source/src/bin/pgbench/pgbench.c.html#L217" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/bin/pgbench/pgbench.c.html&quot;}, '*');">tablespace</a> */ ~~~</p>
+</ul>
+<h2>失敗モードと境界条件</h2>
+<p>まだ解析していません。</p>
+<h2>保守担当者向けメモ</h2>
+<ul>
+<li>後続フェーズで、ソース本文の文脈と caller/callee 情報を使ってこのページを強化する。</li>
+</ul><script>
+(function() {
+  function notifyParent() {
+    if (parent === window) return;
+    parent.postMessage({type: "frame-location", frame: window.name || "", href: window.location.href}, "*");
+  }
+  document.addEventListener("click", function(event) {
+    const link = event.target.closest("a[data-panel]");
+    if (!link || parent === window) return;
+    parent.postMessage({type: "source-link", panel: link.dataset.panel}, "*");
+  });
+  window.addEventListener("load", notifyParent);
+  window.addEventListener("hashchange", notifyParent);
+})();
+</script></body></html>

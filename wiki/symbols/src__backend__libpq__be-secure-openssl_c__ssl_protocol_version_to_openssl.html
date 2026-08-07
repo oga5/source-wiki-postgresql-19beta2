@@ -15,7 +15,7 @@
 <h2>入力と出力</h2>
 <ul>
 <li>引数: <code>int v</code></li>
-<li>戻り値: <a class="wiki-source-link" href="../../source/src/include/port.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__port_h__int.html&quot;}, '*');"><code>int</code></a></li>
+<li>戻り値: <code>int</code></li>
 </ul>
 <h2>前提条件と不変条件</h2>
 <p>まだ解析していません。</p>
@@ -34,7 +34,7 @@
 <h2>関連データ構造</h2>
 <p>なし</p>
 <h2>ソース抜粋</h2>
-<p>~~~c static <a class="wiki-source-link" href="../../source/src/include/port.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__port_h__int.html&quot;}, '*');">int</a> ssl_protocol_version_to_openssl(<a class="wiki-source-link" href="../../source/src/include/port.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__port_h__int.html&quot;}, '*');">int</a> v) { switch (v) { case PG_TLS_ANY: return 0; case PG_TLS1_VERSION: return TLS1_VERSION; case PG_TLS1_1_VERSION: #ifdef TLS1_1_VERSION return TLS1_1_VERSION; #else break; #endif case PG_TLS1_2_VERSION: #ifdef TLS1_2_VERSION return TLS1_2_VERSION; #else break; #endif case PG_TLS1_3_VERSION: #ifdef TLS1_3_VERSION return TLS1_3_VERSION; #else break; #endif }</p>
+<p>~~~c static int ssl_protocol_version_to_openssl(int v) { switch (v) { case PG_TLS_ANY: return 0; case PG_TLS1_VERSION: return TLS1_VERSION; case PG_TLS1_1_VERSION: #ifdef TLS1_1_VERSION return TLS1_1_VERSION; #else break; #endif case PG_TLS1_2_VERSION: #ifdef TLS1_2_VERSION return TLS1_2_VERSION; #else break; #endif case PG_TLS1_3_VERSION: #ifdef TLS1_3_VERSION return TLS1_3_VERSION; #else break; #endif }</p>
 <p>return -1; } ~~~</p>
 <h2>失敗モードと境界条件</h2>
 <p>まだ解析していません。</p>

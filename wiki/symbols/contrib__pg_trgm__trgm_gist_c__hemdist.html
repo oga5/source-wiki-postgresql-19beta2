@@ -15,7 +15,7 @@
 <h2>入力と出力</h2>
 <ul>
 <li>引数: <code>TRGM *a</code>, <code>TRGM *b</code>, <code>int siglen</code></li>
-<li>戻り値: <a class="wiki-source-link" href="../../source/src/include/port.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__port_h__int.html&quot;}, '*');"><code>int</code></a></li>
+<li>戻り値: <code>int</code></li>
 </ul>
 <h2>前提条件と不変条件</h2>
 <p>まだ解析していません。</p>
@@ -34,7 +34,7 @@
 <h2>関連データ構造</h2>
 <p><a class="wiki-source-link" href="../../source/contrib/pg_trgm/trgm.h.html#L58" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/contrib__pg_trgm__trgm_h__TRGM.html&quot;}, '*');"><code>TRGM</code></a></p>
 <h2>ソース抜粋</h2>
-<p>~~~c static <a class="wiki-source-link" href="../../source/src/include/port.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__port_h__int.html&quot;}, '*');">int</a> hemdist(<a class="wiki-source-link" href="../../source/contrib/pg_trgm/trgm.h.html#L58" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/contrib__pg_trgm__trgm_h__TRGM.html&quot;}, '*');">TRGM</a> *a, <a class="wiki-source-link" href="../../source/contrib/pg_trgm/trgm.h.html#L58" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/contrib__pg_trgm__trgm_h__TRGM.html&quot;}, '*');">TRGM</a> *b, <a class="wiki-source-link" href="../../source/src/include/port.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__port_h__int.html&quot;}, '*');">int</a> siglen) { if (ISALLTRUE(a)) { if (ISALLTRUE(b)) return 0; else return SIGLENBIT(siglen) - sizebitvec(GETSIGN(b), siglen); } else if (ISALLTRUE(b)) return SIGLENBIT(siglen) - sizebitvec(GETSIGN(a), siglen);</p>
+<p>~~~c static int hemdist(<a class="wiki-source-link" href="../../source/contrib/pg_trgm/trgm.h.html#L58" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/contrib__pg_trgm__trgm_h__TRGM.html&quot;}, '*');">TRGM</a> *a, <a class="wiki-source-link" href="../../source/contrib/pg_trgm/trgm.h.html#L58" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/contrib__pg_trgm__trgm_h__TRGM.html&quot;}, '*');">TRGM</a> *b, int siglen) { if (ISALLTRUE(a)) { if (ISALLTRUE(b)) return 0; else return SIGLENBIT(siglen) - sizebitvec(GETSIGN(b), siglen); } else if (ISALLTRUE(b)) return SIGLENBIT(siglen) - sizebitvec(GETSIGN(a), siglen);</p>
 <p>return hemdistsign(GETSIGN(a), GETSIGN(b), siglen); } ~~~</p>
 <h2>失敗モードと境界条件</h2>
 <p>まだ解析していません。</p>

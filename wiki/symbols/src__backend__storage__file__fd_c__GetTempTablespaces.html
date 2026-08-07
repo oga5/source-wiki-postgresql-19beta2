@@ -15,7 +15,7 @@
 <h2>入力と出力</h2>
 <ul>
 <li>引数: <code>Oid *tableSpaces</code>, <code>int numSpaces</code></li>
-<li>戻り値: <a class="wiki-source-link" href="../../source/src/include/port.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__port_h__int.html&quot;}, '*');"><code>int</code></a></li>
+<li>戻り値: <code>int</code></li>
 </ul>
 <h2>前提条件と不変条件</h2>
 <p>まだ解析していません。</p>
@@ -34,7 +34,7 @@
 <h2>関連データ構造</h2>
 <p><code>Oid</code></p>
 <h2>ソース抜粋</h2>
-<p>~~~c <a class="wiki-source-link" href="../../source/src/include/port.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__port_h__int.html&quot;}, '*');">int</a> <a class="wiki-source-link" href="../../source/src/backend/storage/file/fd.c.html#L3140" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__storage__file__fd_c__GetTempTablespaces.html&quot;}, '*');">GetTempTablespaces</a>(Oid *tableSpaces, <a class="wiki-source-link" href="../../source/src/include/port.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__port_h__int.html&quot;}, '*');">int</a> numSpaces) { <a class="wiki-source-link" href="../../source/src/include/port.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__port_h__int.html&quot;}, '*');">int</a>			i;</p>
+<p>~~~c int <a class="wiki-source-link" href="../../source/src/backend/storage/file/fd.c.html#L3140" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__storage__file__fd_c__GetTempTablespaces.html&quot;}, '*');">GetTempTablespaces</a>(Oid *tableSpaces, int numSpaces) { int			i;</p>
 <p><a class="wiki-source-link" href="../../source/src/include/c.h.html#L950" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/c.h.html&quot;}, '*');">Assert</a>(<a class="wiki-source-link" href="../../source/src/backend/storage/file/fd.c.html#L3125" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__storage__file__fd_c__TempTablespacesAreSet.html&quot;}, '*');">TempTablespacesAreSet</a>()); for (i = 0; i &lt; <a class="wiki-source-link" href="../../source/src/backend/storage/file/fd.c.html#L293" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/storage/file/fd.c.html&quot;}, '*');">numTempTableSpaces</a> &amp;&amp; i &lt; numSpaces; ++i) tableSpaces[i] = <a class="wiki-source-link" href="../../source/src/backend/storage/file/fd.c.html#L292" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/storage/file/fd.c.html&quot;}, '*');">tempTableSpaces</a>[i];</p>
 <p>return i; } ~~~</p>
 <h2>失敗モードと境界条件</h2>

@@ -51,7 +51,7 @@
 <li>conrelid + contypid + conname.</li>
 <p>*/ <a class="wiki-source-link" href="../../source/src/include/c.h.html#L836" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__c_h__NameData.html&quot;}, '*');">NameData</a>	conname;		/* name of this constraint */ Oid			connamespace <a class="wiki-source-link" href="../../source/src/include/catalog/genbki.h.html#L65" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/catalog/genbki.h.html&quot;}, '*');">BKI_LOOKUP</a>(pg_namespace);	/* OID of namespace</p>
 <li>containing constraint */</li>
-<p>char		contype;		/* constraint type; see codes below */ bool		condeferrable;	/* deferrable constraint? */ bool		condeferred;	/* deferred by default? */ bool		conenforced;	/* enforced constraint? */ bool		convalidated;	/* constraint has been validated? */</p>
+<p><a class="wiki-source-link" href="../../source/src/include/port/atomics/generic-gcc.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__port__atomics__generic-gcc_h__char.html&quot;}, '*');">char</a>		contype;		/* constraint <a class="wiki-source-link" href="../../source/src/include/lib/ilist.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__lib__ilist_h__type.html&quot;}, '*');">type</a>; see codes below */ bool		condeferrable;	/* deferrable constraint? */ bool		condeferred;	/* deferred by default? */ bool		conenforced;	/* enforced constraint? */ bool		convalidated;	/* constraint has been validated? */</p>
 </ul>
 <p>/*</p>
 <ul>
@@ -63,12 +63,12 @@
 </ul>
 <p>/*</p>
 <ul>
-<li>contypid links to the pg_type row for a domain if this <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> a domain</li>
+<li>contypid links to the <a class="wiki-source-link" href="../../source/src/include/catalog/pg_type.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__catalog__pg_type_h__pg_type.html&quot;}, '*');">pg_type</a> row for a domain if this <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> a domain</li>
 <li>constraint.  Otherwise it&#x27;s 0.</li>
 <p>*</p>
 <li>For SQL-style global ASSERTIONs, both conrelid and contypid would be</li>
 <li>zero. This <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> not presently supported, however.</li>
-<p>*/ Oid			contypid <a class="wiki-source-link" href="../../source/src/include/catalog/genbki.h.html#L66" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/catalog/genbki.h.html&quot;}, '*');">BKI_LOOKUP_OPT</a>(pg_type);	/* domain this constraint</p>
+<p>*/ Oid			contypid <a class="wiki-source-link" href="../../source/src/include/catalog/genbki.h.html#L66" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/catalog/genbki.h.html&quot;}, '*');">BKI_LOOKUP_OPT</a>(<a class="wiki-source-link" href="../../source/src/include/catalog/pg_type.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__catalog__pg_type_h__pg_type.html&quot;}, '*');">pg_type</a>);	/* domain this constraint</p>
 <li>constrains */</li>
 </ul>
 <p>/*</p>

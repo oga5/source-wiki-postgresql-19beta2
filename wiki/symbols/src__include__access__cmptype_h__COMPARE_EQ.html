@@ -1,0 +1,81 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>symbols/src__include__access__cmptype_h__COMPARE_EQ.md</title><link rel="stylesheet" href="../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../source/src/include/access/cmptype.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__access__cmptype_h__COMPARE_EQ.html&quot;}, '*');">COMPARE_EQ</a></h1>
+<h2>定義</h2>
+<ul>
+<li>種別: <code>function</code></li>
+<li>定義箇所: <code>src/include/access/cmptype.h:1</code></li>
+<li>所属モジュール: <a class="wiki-entity-link" href="../modules/src__include__access.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/modules/src__include__access.html&quot;, &quot;source&quot;: &quot;source/src/include/access/amapi.h.html&quot;}, '*');"><code>module:src/include/access</code></a></li>
+</ul>
+<h2>目的</h2>
+<p>静的シンボル索引から生成された初期シンボルページです。</p>
+<h2>シグネチャまたは形状</h2>
+<ul>
+<li>シグネチャ: <code>/*------------------------------------------------------------------------- * * cmptype.h * POSTGRES compare type definitions. * * Portions Copyright (c) 1996-2026, PostgreSQL Global Development Group * Portions Copyright (c) 1994, Regents of the University of California * * src/include/access/cmptype.h * *------------------------------------------------------------------------- */ #ifndef CMPTYPE_H #define CMPTYPE_H /* * CompareType - fundamental semantics of certain operators * * These enum symbols represent the fundamental semantics of certain operators * that the system needs to have some hardcoded knowledge about. (For * example, RowCompareExpr needs to know which operators can be determined to * act like =, &lt;&gt;, &lt;, etc.) Index access methods map (some of) strategy * numbers to these values so that the system can know about the meaning of * (some of) the operators without needing hardcoded knowledge of index AM&#x27;s * strategy numbering. * * XXX Currently, this mapping is not fully developed and most values are * chosen to match btree strategy numbers, which is not going to work very * well for other access methods. */ typedef enum CompareType</code></li>
+</ul>
+<h2>入力と出力</h2>
+<p>まだ解析していません。</p>
+<h2>前提条件と不変条件</h2>
+<p>まだ解析していません。</p>
+<h2>アルゴリズムまたは振る舞い</h2>
+<ul>
+<li>複雑度: <code>low</code> (score 3)</li>
+</ul>
+<p>まだ解析していません。</p>
+<h2>呼び出し元と呼び出し先</h2>
+<ul>
+<li>呼び出し元: なし</li>
+<li>呼び出し先: なし</li>
+<li>呼び出し元サイト: なし</li>
+<li>呼び出しサイト: なし</li>
+</ul>
+<h2>関連データ構造</h2>
+<p><a class="wiki-source-link" href="../../source/src/interfaces/ecpg/test/expected/preproc-type.c.html#L36" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__interfaces__ecpg__test__expected__preproc-type_c__access.html&quot;}, '*');"><code>access</code></a>, <code>c</code>, <code>CompareType</code>, <code>Group</code>, <a class="wiki-source-link" href="../../source/src/interfaces/ecpg/preproc/type.h.html#L96" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__interfaces__ecpg__preproc__type_h__index.html&quot;}, '*');"><code>index</code></a>, <code>Index</code>, <a class="wiki-source-link" href="../../source/src/include/nodes/primnodes.h.html#L1471" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__nodes__primnodes_h__RowCompareExpr.html&quot;}, '*');"><code>RowCompareExpr</code></a></p>
+<h2>ソース抜粋</h2>
+<p>~~~c /*------------------------------------------------------------------------- *</p>
+<ul>
+<li><a class="wiki-source-link" href="../../source/src/include/access/cmptype.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/access/cmptype.h.html&quot;}, '*');">cmptype.h</a></li>
+<li>POSTGRES <a class="wiki-source-link" href="../../source/src/backend/optimizer/geqo/geqo_pool.c.html#L144" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__geqo__geqo_pool_c__compare.html&quot;}, '*');">compare</a> <a class="wiki-source-link" href="../../source/src/include/lib/ilist.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__lib__ilist_h__type.html&quot;}, '*');">type</a> definitions.</li>
+<p>*</p>
+<li>Portions Copyright (c) 1996-2026, PostgreSQL Global Development Group</li>
+<li>Portions Copyright (c) 1994, Regents of the University of California</li>
+<p>*</p>
+<li><a class="wiki-source-link" href="../../source/src/include/access/cmptype.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/access/cmptype.h.html&quot;}, '*');">src/include/access/cmptype.h</a></li>
+<p>* *------------------------------------------------------------------------- */ #ifndef <a class="wiki-source-link" href="../../source/src/include/access/cmptype.h.html#L14" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/access/cmptype.h.html&quot;}, '*');">CMPTYPE_H</a> #define <a class="wiki-source-link" href="../../source/src/include/access/cmptype.h.html#L14" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/access/cmptype.h.html&quot;}, '*');">CMPTYPE_H</a></p>
+</ul>
+<p>/*</p>
+<ul>
+<li>CompareType - fundamental semantics of certain operators</li>
+<p>*</p>
+<li>These enum symbols represent the fundamental semantics of certain operators</li>
+<li>that the <a class="wiki-source-link" href="../../source/src/include/port.h.html#L388" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/port.h.html&quot;}, '*');">system</a> needs to have some hardcoded knowledge about.  (For</li>
+<li>example, <a class="wiki-source-link" href="../../source/src/include/nodes/primnodes.h.html#L1471" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__nodes__primnodes_h__RowCompareExpr.html&quot;}, '*');">RowCompareExpr</a> needs to know which operators can be determined to</li>
+<li>act like =, &lt;&gt;, &lt;, etc.)  Index <a class="wiki-source-link" href="../../source/src/interfaces/ecpg/test/expected/preproc-type.c.html#L36" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__interfaces__ecpg__test__expected__preproc-type_c__access.html&quot;}, '*');">access</a> methods map (some of) strategy</li>
+<li>numbers to these values so that the <a class="wiki-source-link" href="../../source/src/include/port.h.html#L388" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/port.h.html&quot;}, '*');">system</a> can know about the meaning of</li>
+<li>(some of) the operators without needing hardcoded knowledge of <a class="wiki-source-link" href="../../source/src/interfaces/ecpg/preproc/type.h.html#L96" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__interfaces__ecpg__preproc__type_h__index.html&quot;}, '*');">index</a> AM&#x27;s</li>
+<li>strategy numbering.</li>
+<p>*</p>
+<li>XXX Currently, this mapping <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> not fully developed and most values are</li>
+<li>chosen to match btree strategy numbers, which <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> not going to work very</li>
+<li>well for other <a class="wiki-source-link" href="../../source/src/interfaces/ecpg/test/expected/preproc-type.c.html#L36" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__interfaces__ecpg__test__expected__preproc-type_c__access.html&quot;}, '*');">access</a> methods.</li>
+<p>*/ typedef enum CompareType { <a class="wiki-source-link" href="../../source/src/include/access/cmptype.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__access__cmptype_h__COMPARE_INVALID.html&quot;}, '*');">COMPARE_INVALID</a> = 0, <a class="wiki-source-link" href="../../source/src/include/access/cmptype.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__access__cmptype_h__COMPARE_LT.html&quot;}, '*');">COMPARE_LT</a> = 1,				/* <a class="wiki-source-link" href="../../source/src/include/access/stratnum.h.html#L29" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/access/stratnum.h.html&quot;}, '*');">BTLessStrategyNumber</a> */ <a class="wiki-source-link" href="../../source/src/include/access/cmptype.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__access__cmptype_h__COMPARE_LE.html&quot;}, '*');">COMPARE_LE</a> = 2,				/* <a class="wiki-source-link" href="../../source/src/include/access/stratnum.h.html#L30" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/access/stratnum.h.html&quot;}, '*');">BTLessEqualStrategyNumber</a> */ <a class="wiki-source-link" href="../../source/src/include/access/cmptype.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__access__cmptype_h__COMPARE_EQ.html&quot;}, '*');">COMPARE_EQ</a> = 3,				/* <a class="wiki-source-link" href="../../source/src/include/access/stratnum.h.html#L31" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/access/stratnum.h.html&quot;}, '*');">BTEqualStrategyNumber</a> */ <a class="wiki-source-link" href="../../source/src/include/access/cmptype.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__access__cmptype_h__COMPARE_GE.html&quot;}, '*');">COMPARE_GE</a> = 4,				/* <a class="wiki-source-link" href="../../source/src/include/access/stratnum.h.html#L32" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/access/stratnum.h.html&quot;}, '*');">BTGreaterEqualStrategyNumber</a> */ <a class="wiki-source-link" href="../../source/src/include/access/cmptype.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__access__cmptype_h__COMPARE_GT.html&quot;}, '*');">COMPARE_GT</a> = 5,				/* <a class="wiki-source-link" href="../../source/src/include/access/stratnum.h.html#L33" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/access/stratnum.h.html&quot;}, '*');">BTGreaterStrategyNumber</a> */ <a class="wiki-source-link" href="../../source/src/include/access/cmptype.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__access__cmptype_h__COMPARE_NE.html&quot;}, '*');">COMPARE_NE</a> = 6,				/* no such btree strategy */ <a class="wiki-source-link" href="../../source/src/include/access/cmptype.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__access__cmptype_h__COMPARE_OVERLAP.html&quot;}, '*');">COMPARE_OVERLAP</a>, <a class="wiki-source-link" href="../../source/src/include/access/cmptype.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__access__cmptype_h__COMPARE_CONTAINED_BY.html&quot;}, '*');">COMPARE_CONTAINED_BY</a>, } CompareType; ~~~</p>
+</ul>
+<h2>失敗モードと境界条件</h2>
+<p>まだ解析していません。</p>
+<h2>保守担当者向けメモ</h2>
+<ul>
+<li>後続フェーズで、ソース本文の文脈と caller/callee 情報を使ってこのページを強化する。</li>
+</ul><script>
+(function() {
+  function notifyParent() {
+    if (parent === window) return;
+    parent.postMessage({type: "frame-location", frame: window.name || "", href: window.location.href}, "*");
+  }
+  document.addEventListener("click", function(event) {
+    const link = event.target.closest("a[data-panel]");
+    if (!link || parent === window) return;
+    parent.postMessage({type: "source-link", panel: link.dataset.panel}, "*");
+  });
+  window.addEventListener("load", notifyParent);
+  window.addEventListener("hashchange", notifyParent);
+})();
+</script></body></html>

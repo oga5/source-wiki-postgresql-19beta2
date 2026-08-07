@@ -15,7 +15,7 @@
 <h2>入力と出力</h2>
 <ul>
 <li>引数: <code>const pg_wchar *from</code>, <code>char *to</code></li>
-<li>戻り値: <a class="wiki-source-link" href="../../source/src/include/port.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__port_h__int.html&quot;}, '*');"><code>int</code></a></li>
+<li>戻り値: <code>int</code></li>
 </ul>
 <h2>前提条件と不変条件</h2>
 <p>まだ解析していません。</p>
@@ -34,7 +34,7 @@
 <h2>関連データ構造</h2>
 <p><code>pg_wchar</code></p>
 <h2>ソース抜粋</h2>
-<p>~~~c <a class="wiki-source-link" href="../../source/src/include/port.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__port_h__int.html&quot;}, '*');">int</a> <a class="wiki-source-link" href="../../source/src/backend/utils/mb/mbutils.c.html#L1011" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__utils__mb__mbutils_c__pg_wchar2mb.html&quot;}, '*');">pg_wchar2mb</a>(const pg_wchar *from, char *to) { return <a class="wiki-source-link" href="../../source/src/common/wchar.c.html#L1865" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/common/wchar.c.html&quot;}, '*');">pg_wchar_table</a>[DatabaseEncoding-&gt;encoding].wchar2mb_with_len(from, (unsigned char *) to, <a class="wiki-source-link" href="../../source/src/backend/utils/mb/wstrncmp.c.html#L69" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__utils__mb__wstrncmp_c__pg_wchar_strlen.html&quot;}, '*');">pg_wchar_strlen</a>(from)); } ~~~</p>
+<p>~~~c int <a class="wiki-source-link" href="../../source/src/backend/utils/mb/mbutils.c.html#L1011" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__utils__mb__mbutils_c__pg_wchar2mb.html&quot;}, '*');">pg_wchar2mb</a>(const pg_wchar *from, <a class="wiki-source-link" href="../../source/src/include/port/atomics/generic-gcc.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__port__atomics__generic-gcc_h__char.html&quot;}, '*');">char</a> *to) { return <a class="wiki-source-link" href="../../source/src/common/wchar.c.html#L1865" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/common/wchar.c.html&quot;}, '*');">pg_wchar_table</a>[DatabaseEncoding-&gt;encoding].wchar2mb_with_len(from, (unsigned <a class="wiki-source-link" href="../../source/src/include/port/atomics/generic-gcc.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__port__atomics__generic-gcc_h__char.html&quot;}, '*');">char</a> *) to, <a class="wiki-source-link" href="../../source/src/backend/utils/mb/wstrncmp.c.html#L69" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__utils__mb__wstrncmp_c__pg_wchar_strlen.html&quot;}, '*');">pg_wchar_strlen</a>(from)); } ~~~</p>
 <h2>失敗モードと境界条件</h2>
 <p>まだ解析していません。</p>
 <h2>保守担当者向けメモ</h2>

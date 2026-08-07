@@ -1,0 +1,163 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>src/include/nodes/primnodes.h.md</title><link rel="stylesheet" href="../../../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../../../source/src/include/nodes/primnodes.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/nodes/primnodes.h.html&quot;}, '*');">src/include/nodes/primnodes.h</a></h1>
+<h2>概要</h2>
+<p><a class="wiki-source-link" href="../../../../source/src/include/nodes/primnodes.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/nodes/primnodes.h.html&quot;}, '*');"><code>src/include/nodes/primnodes.h</code></a> は、PostgreSQLのクエリパイプラインにおける複数のステージ（解析、計画、実行）で共通して使用される「プリミティブ」なノード型の定義を提供します。主に実行可能な式ツリー、結合ツリー、ターゲットエントリ、および各種句（<a class="wiki-source-link" href="../../../../source/src/include/nodes/primnodes.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__nodes__primnodes_h__CASE.html&quot;}, '*');">CASE</a>、COALESCE、JSON操作、ウィンドウ関数など）の内部構造を定義しています。</p>
+<h2>モジュール内での役割</h2>
+<p><code>src/include/nodes</code> サブシステムの一部として、抽象構文木（<a class="wiki-source-link" href="../../../../source/src/include/nodes/parsenodes.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/nodes/parsenodes.h.html&quot;}, '*');">parsenodes.h</a>）から生成され、のちに最適化（<a class="wiki-source-link" href="../../../../source/src/include/nodes/pathnodes.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/nodes/pathnodes.h.html&quot;}, '*');">pathnodes.h</a> / <a class="wiki-source-link" href="../../../../source/src/include/nodes/plannodes.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/nodes/plannodes.h.html&quot;}, '*');">plannodes.h</a>）および実行（<a class="wiki-source-link" href="../../../../source/src/include/nodes/execnodes.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/nodes/execnodes.h.html&quot;}, '*');">execnodes.h</a>）へ渡される中核的なデータ構造を供給します。式ノード群は共通のスーパークラス概念（<a class="wiki-source-link" href="../../../../source/src/include/nodes/primnodes.h.html#L189" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__nodes__primnodes_h__Expr.html&quot;}, '*');"><code>Expr</code></a>）から派生します。</p>
+<h2>責務</h2>
+<ul>
+<li>**式ノードの定義**: 変数 (<code>Var</code>)、定数 (<code>Const</code>)、パラメータ (<code>Param</code>)、関数呼び出し (<code>FuncExpr</code>)、演算子 (<code>OpExpr</code>) などの実行可能式要素を定義する。</li>
+<li>**制御構文・特殊式の定義**: <code>CaseExpr</code>、<a class="wiki-source-link" href="../../../../source/src/include/nodes/primnodes.h.html#L1492" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__nodes__primnodes_h__CoalesceExpr.html&quot;}, '*');"><code>CoalesceExpr</code></a>、<code>SubLink</code>、<code>SubPlan</code>、<code>XmlExpr</code>、各種SQL/JSONコンストラクタおよび式を定義する。</li>
+<li>**結合ツリーの表現**: <code>RangeTblRef</code>、<code>JoinExpr</code>、<code>FromExpr</code> を用いて FROM 句および結合構造を表現する。</li>
+<li>**ターゲットとメタ情報の管理**: <code>TargetEntry</code> および各種の型キャスト・強制変換 (<a class="wiki-source-link" href="../../../../source/src/include/nodes/primnodes.h.html#L735" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/nodes/primnodes.h.html&quot;}, '*');"><code>CoercionContext</code></a>, <a class="wiki-source-link" href="../../../../source/src/include/nodes/primnodes.h.html#L755" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/nodes/primnodes.h.html&quot;}, '*');"><code>CoercionForm</code></a>, <a class="wiki-source-link" href="../../../../source/src/include/nodes/primnodes.h.html#L1197" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__nodes__primnodes_h__RelabelType.html&quot;}, '*');"><code>RelabelType</code></a> 等) を保持する。</li>
+</ul>
+<h2>重要なシンボル</h2>
+<h3>共通および基本式ノード</h3>
+<ul>
+<li><a class="wiki-source-link" href="../../../../source/src/include/nodes/primnodes.h.html#L189" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__nodes__primnodes_h__Expr.html&quot;}, '*');"><code>Expr</code></a>: すべての実行可能式ノードの抽象的なスーパークラス（<code>NodeTag type</code> を保持）。</li>
+<li><code>Var</code>: テーブル列やサブプラン出力を表す変数ノード（<code>varno</code>, <code>varattno</code>, <code>varlevelsup</code> 等）。</li>
+<li><code>Const</code>: 定数値を表すノード（<a class="wiki-source-link" href="../../../../source/src/include/nodes/primnodes.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__nodes__primnodes_h__consttype.html&quot;}, '*');"><code>consttype</code></a>, <a class="wiki-source-link" href="../../../../source/src/include/nodes/primnodes.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__nodes__primnodes_h__constvalue.html&quot;}, '*');"><code>constvalue</code></a>, <a class="wiki-source-link" href="../../../../source/src/include/nodes/primnodes.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__nodes__primnodes_h__constisnull.html&quot;}, '*');"><code>constisnull</code></a> 等）。</li>
+<li><code>Param</code>: パラメータを表すノード（<a class="wiki-source-link" href="../../../../source/src/include/nodes/primnodes.h.html#L383" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/nodes/primnodes.h.html&quot;}, '*');"><code>ParamKind</code></a> に応じて外部・内部・サブリンク等に分岐）。</li>
+<li><code>TargetEntry</code>: クエリのターゲットリスト内のエントリ（式、resno、resname、ressortgroupref等を保持）。</li>
+</ul>
+<h3>関数・演算子・条件分岐</h3>
+<ul>
+<li><code>FuncExpr</code>: 関数呼び出しを表すノード（<a class="wiki-source-link" href="../../../../source/src/include/nodes/primnodes.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__nodes__primnodes_h__funcid.html&quot;}, '*');"><code>funcid</code></a>, <code>args</code> 等）。</li>
+<li><code>OpExpr</code> / <a class="wiki-source-link" href="../../../../source/src/include/nodes/primnodes.h.html#L869" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/nodes/primnodes.h.html&quot;}, '*');"><code>DistinctExpr</code></a> / <a class="wiki-source-link" href="../../../../source/src/include/nodes/primnodes.h.html#L877" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/nodes/primnodes.h.html&quot;}, '*');"><code>NullIfExpr</code></a>: 演算子呼び出しおよび <code>DISTINCT FROM</code> / <a class="wiki-source-link" href="../../../../source/src/include/nodes/primnodes.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__nodes__primnodes_h__NULLIF.html&quot;}, '*');"><code>NULLIF</code></a>。</li>
+<li><code>ScalarArrayOpExpr</code>: 「スカラー op ANY/ALL (配列)」形式の式。</li>
+<li><code>BoolExpr</code>: 論理演算 (<code>AND</code>, <code>OR</code>, <a class="wiki-source-link" href="../../../../source/src/include/nodes/primnodes.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__nodes__primnodes_h__NOT.html&quot;}, '*');"><code>NOT</code></a>)。</li>
+<li><code>CaseExpr</code> / <a class="wiki-source-link" href="../../../../source/src/include/nodes/primnodes.h.html#L1338" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__nodes__primnodes_h__CaseWhen.html&quot;}, '*');"><code>CaseWhen</code></a>: <a class="wiki-source-link" href="../../../../source/src/include/nodes/primnodes.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__nodes__primnodes_h__CASE.html&quot;}, '*');"><code>CASE</code></a> 式とその分岐。</li>
+</ul>
+<h3>サブクエリ・プラン関連</h3>
+<ul>
+<li><code>SubLink</code>: 解析ツリーに現れるサブクエリ（<code>EXISTS</code>, <a class="wiki-source-link" href="../../../../source/src/include/nodes/primnodes.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__nodes__primnodes_h__IN.html&quot;}, '*');"><code>IN</code></a>, <code>ANY</code> など）。</li>
+<li><code>SubPlan</code>: プランナーによって <code>SubLink</code> から置換される、実行可能なサブプランノード。</li>
+<li><code>AlternativeSubPlan</code>: プラン時に選択肢となる複数の <code>SubPlan</code> を保持する一時的ノード。</li>
+</ul>
+<h3>型変換・コエルション</h3>
+<ul>
+<li><a class="wiki-source-link" href="../../../../source/src/include/nodes/primnodes.h.html#L735" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/nodes/primnodes.h.html&quot;}, '*');"><code>CoercionContext</code></a> / <a class="wiki-source-link" href="../../../../source/src/include/nodes/primnodes.h.html#L755" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/nodes/primnodes.h.html&quot;}, '*');"><code>CoercionForm</code></a>: 型キャストの許可コンテキストと表示形式の列挙型。</li>
+<li><a class="wiki-source-link" href="../../../../source/src/include/nodes/primnodes.h.html#L1197" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__nodes__primnodes_h__RelabelType.html&quot;}, '*');"><code>RelabelType</code></a>: 実行時ノーオペレーションの型ラベル変更ノード。</li>
+<li><a class="wiki-source-link" href="../../../../source/src/include/nodes/primnodes.h.html#L1220" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__nodes__primnodes_h__CoerceViaIO.html&quot;}, '*');"><code>CoerceViaIO</code></a> / <a class="wiki-source-link" href="../../../../source/src/include/nodes/primnodes.h.html#L1246" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__nodes__primnodes_h__ArrayCoerceExpr.html&quot;}, '*');"><code>ArrayCoerceExpr</code></a> / <a class="wiki-source-link" href="../../../../source/src/include/nodes/primnodes.h.html#L1274" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__nodes__primnodes_h__ConvertRowtypeExpr.html&quot;}, '*');"><code>ConvertRowtypeExpr</code></a> / <a class="wiki-source-link" href="../../../../source/src/include/nodes/primnodes.h.html#L2046" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__nodes__primnodes_h__CoerceToDomain.html&quot;}, '*');"><code>CoerceToDomain</code></a>: 各種複雑な型変換ノード。</li>
+</ul>
+<h3>JSONおよびXML式</h3>
+<ul>
+<li><a class="wiki-source-link" href="../../../../source/src/include/nodes/primnodes.h.html#L1834" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__nodes__primnodes_h__JsonExpr.html&quot;}, '*');"><code>JsonExpr</code></a> / <a class="wiki-source-link" href="../../../../source/src/include/nodes/primnodes.h.html#L1722" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__nodes__primnodes_h__JsonConstructorExpr.html&quot;}, '*');"><code>JsonConstructorExpr</code></a> / <code>JsonIsPredicate</code> / <a class="wiki-source-link" href="../../../../source/src/include/nodes/primnodes.h.html#L1688" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__nodes__primnodes_h__JsonValueExpr.html&quot;}, '*');"><code>JsonValueExpr</code></a>: SQL/JSON 関連の関数・述語・コンストラクタ表現。</li>
+<li><code>XmlExpr</code>: SQL/XML 関数群の表現。</li>
+</ul>
+<h3>結合ツリー構造</h3>
+<ul>
+<li><code>RangeTblRef</code>: クエリのレンジテーブル（RT）への参照。</li>
+<li><code>JoinExpr</code>: SQL 結合式（<code>JOIN ... ON / USING</code>）。</li>
+<li><code>FromExpr</code>: 複数要素のクロスプロダクト結合（<code>FROM ... WHERE ...</code>）。</li>
+</ul>
+<h2>制御フローとデータフロー</h2>
+<p>本ファイルは純粋なヘッダーファイルであり、実行コードやヘルパー関数は持たず、データ構造のレイアウトのみを定義します。</p>
+<ul>
+<li>**データフロー**: クエリ解析フェーズ（<a class="wiki-source-link" href="../../../../source/src/include/nodes/parsenodes.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/nodes/parsenodes.h.html&quot;}, '*');"><code>parsenodes.h</code></a> の構文木から変換）において <code>Var</code>、<code>FuncExpr</code>、<code>SubLink</code> 等のプリミティブノードが生成され、プランナーフェーズを経て <code>SubPlan</code> や実行用式ツリーに書き換えられ、最終的にエグゼキューターへ渡されます。</li>
+</ul>
+<h2>直接依存</h2>
+<ul>
+<li><code>access/attnum.h</code></li>
+<li><code>access/cmptype.h</code></li>
+<li><code>nodes/bitmapset.h</code></li>
+<li><code>nodes/lockoptions.h</code></li>
+<li><code>nodes/pg_list.h</code></li>
+</ul>
+<h2>関連コード</h2>
+<ul>
+<li><a class="wiki-source-link" href="../../../../source/src/include/nodes/parsenodes.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/nodes/parsenodes.h.html&quot;}, '*');"><code>src/include/nodes/parsenodes.h</code></a>: 解析フェーズの構文木定義</li>
+<li><a class="wiki-source-link" href="../../../../source/src/include/nodes/plannodes.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/nodes/plannodes.h.html&quot;}, '*');"><code>src/include/nodes/plannodes.h</code></a>: プランノードの定義</li>
+<li><a class="wiki-source-link" href="../../../../source/src/include/nodes/execnodes.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/nodes/execnodes.h.html&quot;}, '*');"><code>src/include/nodes/execnodes.h</code></a>: 実行時状態ノード（<code>ExprState</code> 等）の定義</li>
+<li><a class="wiki-source-link" href="../../../../source/src/include/nodes/nodeFuncs.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/nodes/nodeFuncs.h.html&quot;}, '*');"><code>src/include/nodes/nodeFuncs.h</code></a>: ノードツリーを走査・操作するユーティリティ関数</li>
+</ul>
+<h2>読者向けメモ</h2>
+<ul>
+<li>**メモリ管理**: ここで定義されるすべてのノードは PostgreSQL のメモリコンテキスト上で割り当てられ、明示的な個別 <code>pfree</code> よりもコンテキスト単位の解放に依存します。</li>
+<li>**Query Jumble 属性**: 各種ノードフィールドには <code>pg_node_attr(query_jumble_ignore)</code> や <code>pg_node_attr(equal_ignore)</code> などのマクロ属性が付与されており、正規化されたクエリハッシュ（<a class="wiki-source-link" href="../../../../source/contrib/pg_stat_statements/pg_stat_statements.c.html#L1657" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/contrib__pg_stat_statements__pg_stat_statements_c__pg_stat_statements.html&quot;}, '*');"><code>pg_stat_statements</code></a> 等）や等価性比較（<code>equal()</code>）の挙動を制御します。</li>
+</ul>
+<h2>シンボルページ</h2>
+<ul>
+<li><a href="../../../symbols/src__include__nodes__primnodes_h__Alias.html" target="wiki-view"><code>Alias</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__primnodes_h__RangeVar.html" target="wiki-view"><code>RangeVar</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__primnodes_h__TableFunc.html" target="wiki-view"><code>TableFunc</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__primnodes_h__IntoClause.html" target="wiki-view"><code>IntoClause</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__primnodes_h__Expr.html" target="wiki-view"><code>Expr</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__primnodes_h__Var.html" target="wiki-view"><code>Var</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__primnodes_h__Const.html" target="wiki-view"><code>Const</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__primnodes_h__Param.html" target="wiki-view"><code>Param</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__primnodes_h__Aggref.html" target="wiki-view"><code>Aggref</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__primnodes_h__GroupingFunc.html" target="wiki-view"><code>GroupingFunc</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__primnodes_h__WindowFunc.html" target="wiki-view"><code>WindowFunc</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__primnodes_h__WindowFuncRunCondition.html" target="wiki-view"><code>WindowFuncRunCondition</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__primnodes_h__MergeSupportFunc.html" target="wiki-view"><code>MergeSupportFunc</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__primnodes_h__SubscriptingRef.html" target="wiki-view"><code>SubscriptingRef</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__primnodes_h__FuncExpr.html" target="wiki-view"><code>FuncExpr</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__primnodes_h__NamedArgExpr.html" target="wiki-view"><code>NamedArgExpr</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__primnodes_h__OpExpr.html" target="wiki-view"><code>OpExpr</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__primnodes_h__ScalarArrayOpExpr.html" target="wiki-view"><code>ScalarArrayOpExpr</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__primnodes_h__BoolExpr.html" target="wiki-view"><code>BoolExpr</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__primnodes_h__SubLink.html" target="wiki-view"><code>SubLink</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__primnodes_h__SubPlan.html" target="wiki-view"><code>SubPlan</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__primnodes_h__AlternativeSubPlan.html" target="wiki-view"><code>AlternativeSubPlan</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__primnodes_h__FieldSelect.html" target="wiki-view"><code>FieldSelect</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__primnodes_h__FieldStore.html" target="wiki-view"><code>FieldStore</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__primnodes_h__RelabelType.html" target="wiki-view"><code>RelabelType</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__primnodes_h__CoerceViaIO.html" target="wiki-view"><code>CoerceViaIO</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__primnodes_h__ArrayCoerceExpr.html" target="wiki-view"><code>ArrayCoerceExpr</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__primnodes_h__ConvertRowtypeExpr.html" target="wiki-view"><code>ConvertRowtypeExpr</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__primnodes_h__CollateExpr.html" target="wiki-view"><code>CollateExpr</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__primnodes_h__CaseExpr.html" target="wiki-view"><code>CaseExpr</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__primnodes_h__CaseWhen.html" target="wiki-view"><code>CaseWhen</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__primnodes_h__CaseTestExpr.html" target="wiki-view"><code>CaseTestExpr</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__primnodes_h__ArrayExpr.html" target="wiki-view"><code>ArrayExpr</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__primnodes_h__RowExpr.html" target="wiki-view"><code>RowExpr</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__primnodes_h__RowCompareExpr.html" target="wiki-view"><code>RowCompareExpr</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__primnodes_h__CoalesceExpr.html" target="wiki-view"><code>CoalesceExpr</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__primnodes_h__MinMaxExpr.html" target="wiki-view"><code>MinMaxExpr</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__primnodes_h__SQLValueFunction.html" target="wiki-view"><code>SQLValueFunction</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__primnodes_h__XmlExpr.html" target="wiki-view"><code>XmlExpr</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__primnodes_h__JsonFormat.html" target="wiki-view"><code>JsonFormat</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__primnodes_h__JsonReturning.html" target="wiki-view"><code>JsonReturning</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__primnodes_h__JsonValueExpr.html" target="wiki-view"><code>JsonValueExpr</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__primnodes_h__JsonConstructorExpr.html" target="wiki-view"><code>JsonConstructorExpr</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__primnodes_h__JsonIsPredicate.html" target="wiki-view"><code>JsonIsPredicate</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__primnodes_h__JsonBehavior.html" target="wiki-view"><code>JsonBehavior</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__primnodes_h__JsonExpr.html" target="wiki-view"><code>JsonExpr</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__primnodes_h__JsonTablePath.html" target="wiki-view"><code>JsonTablePath</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__primnodes_h__JsonTablePlan.html" target="wiki-view"><code>JsonTablePlan</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__primnodes_h__JsonTablePathScan.html" target="wiki-view"><code>JsonTablePathScan</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__primnodes_h__JsonTableSiblingJoin.html" target="wiki-view"><code>JsonTableSiblingJoin</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__primnodes_h__NullTest.html" target="wiki-view"><code>NullTest</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__primnodes_h__BooleanTest.html" target="wiki-view"><code>BooleanTest</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__primnodes_h__MergeAction.html" target="wiki-view"><code>MergeAction</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__primnodes_h__CoerceToDomain.html" target="wiki-view"><code>CoerceToDomain</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__primnodes_h__CoerceToDomainValue.html" target="wiki-view"><code>CoerceToDomainValue</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__primnodes_h__SetToDefault.html" target="wiki-view"><code>SetToDefault</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__primnodes_h__CurrentOfExpr.html" target="wiki-view"><code>CurrentOfExpr</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__primnodes_h__NextValueExpr.html" target="wiki-view"><code>NextValueExpr</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__primnodes_h__InferenceElem.html" target="wiki-view"><code>InferenceElem</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__primnodes_h__ReturningExpr.html" target="wiki-view"><code>ReturningExpr</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__primnodes_h__GraphLabelRef.html" target="wiki-view"><code>GraphLabelRef</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__primnodes_h__GraphPropertyRef.html" target="wiki-view"><code>GraphPropertyRef</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__primnodes_h__TargetEntry.html" target="wiki-view"><code>TargetEntry</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__primnodes_h__RangeTblRef.html" target="wiki-view"><code>RangeTblRef</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__primnodes_h__JoinExpr.html" target="wiki-view"><code>JoinExpr</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__primnodes_h__FromExpr.html" target="wiki-view"><code>FromExpr</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__primnodes_h__OnConflictExpr.html" target="wiki-view"><code>OnConflictExpr</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__primnodes_h__ForPortionOfExpr.html" target="wiki-view"><code>ForPortionOfExpr</code></a></li>
+</ul><script>
+(function() {
+  function notifyParent() {
+    if (parent === window) return;
+    parent.postMessage({type: "frame-location", frame: window.name || "", href: window.location.href}, "*");
+  }
+  document.addEventListener("click", function(event) {
+    const link = event.target.closest("a[data-panel]");
+    if (!link || parent === window) return;
+    parent.postMessage({type: "source-link", panel: link.dataset.panel}, "*");
+  });
+  window.addEventListener("load", notifyParent);
+  window.addEventListener("hashchange", notifyParent);
+})();
+</script></body></html>

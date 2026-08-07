@@ -15,7 +15,7 @@
 <h2>入力と出力</h2>
 <ul>
 <li>引数: <code>date d</code>, <code>short *mdy</code></li>
-<li>戻り値: <a class="wiki-source-link" href="../../source/src/include/port.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__port_h__int.html&quot;}, '*');"><code>int</code></a></li>
+<li>戻り値: <code>int</code></li>
 </ul>
 <h2>前提条件と不変条件</h2>
 <p>まだ解析していません。</p>
@@ -34,7 +34,7 @@
 <h2>関連データ構造</h2>
 <p><a class="wiki-source-link" href="../../source/src/interfaces/ecpg/include/pgtypes_date.h.html#L9" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__interfaces__ecpg__include__pgtypes_date_h__date.html&quot;}, '*');"><code>date</code></a></p>
 <h2>ソース抜粋</h2>
-<p>~~~c <a class="wiki-source-link" href="../../source/src/include/port.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__port_h__int.html&quot;}, '*');">int</a> <a class="wiki-source-link" href="../../source/src/interfaces/ecpg/compatlib/informix.c.html#L540" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__interfaces__ecpg__compatlib__informix_c__rjulmdy.html&quot;}, '*');">rjulmdy</a>(<a class="wiki-source-link" href="../../source/src/interfaces/ecpg/include/pgtypes_date.h.html#L9" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__interfaces__ecpg__include__pgtypes_date_h__date.html&quot;}, '*');">date</a> d, short *mdy) { <a class="wiki-source-link" href="../../source/src/include/port.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__port_h__int.html&quot;}, '*');">int</a>			mdy_int[3];</p>
+<p>~~~c int <a class="wiki-source-link" href="../../source/src/interfaces/ecpg/compatlib/informix.c.html#L540" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__interfaces__ecpg__compatlib__informix_c__rjulmdy.html&quot;}, '*');">rjulmdy</a>(<a class="wiki-source-link" href="../../source/src/interfaces/ecpg/include/pgtypes_date.h.html#L9" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__interfaces__ecpg__include__pgtypes_date_h__date.html&quot;}, '*');">date</a> d, short *mdy) { int			mdy_int[3];</p>
 <p><a class="wiki-source-link" href="../../source/src/interfaces/ecpg/pgtypeslib/datetime.c.html#L114" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__interfaces__ecpg__pgtypeslib__datetime_c__PGTYPESdate_julmdy.html&quot;}, '*');">PGTYPESdate_julmdy</a>(d, mdy_int); mdy[0] = (short) mdy_int[0]; mdy[1] = (short) mdy_int[1]; mdy[2] = (short) mdy_int[2]; return 0; } ~~~</p>
 <h2>失敗モードと境界条件</h2>
 <p>まだ解析していません。</p>

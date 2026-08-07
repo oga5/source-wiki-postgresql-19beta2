@@ -1,0 +1,55 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>src/include/partitioning/partdefs.h.md</title><link rel="stylesheet" href="../../../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../../../source/src/include/partitioning/partdefs.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/partitioning/partdefs.h.html&quot;}, '*');">src/include/partitioning/partdefs.h</a></h1>
+<h2>概要</h2>
+<p>PostgreSQLのテーブルパーティショニング機能で使用される、主要なデータ構造体の前方宣言（forward declaration）を定義するヘッダーファイルです。</p>
+<h2>モジュール内での役割</h2>
+<p><code>src/include/partitioning</code> モジュールの基盤として位置づけられており、後続のパーティション関連ヘッダー（<a class="wiki-source-link" href="../../../../source/src/include/partitioning/partbounds.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/partitioning/partbounds.h.html&quot;}, '*');"><code>partbounds.h</code></a>, <a class="wiki-source-link" href="../../../../source/src/include/partitioning/partdesc.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/partitioning/partdesc.h.html&quot;}, '*');"><code>partdesc.h</code></a>, <a class="wiki-source-link" href="../../../../source/src/include/partitioning/partprune.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/partitioning/partprune.h.html&quot;}, '*');"><code>partprune.h</code></a> など）が共通して依存する型定義を提供します。</p>
+<h2>責務</h2>
+<ul>
+<li>パーティショニングに関連する主要な構造体のポインタ型を一箇所で定義し、モジュール内の循環参照やヘッダー間の依存関係を軽減する。</li>
+<li>外部モジュールや他サブシステムに対して、パーティション制御構造体の不透明ポインタ（opaque pointer）インターフェースを公開する。</li>
+</ul>
+<h2>重要なシンボル</h2>
+<ul>
+<li><a class="wiki-source-link" href="../../../../source/src/include/partitioning/partdefs.h.html#L18" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__partitioning__partdefs_h__PartitionKey.html&quot;}, '*');"><code>PartitionKey</code></a>: パーティションキーの定義や属性情報を管理する構造体へのポインタ。</li>
+<li><a class="wiki-source-link" href="../../../../source/src/include/partitioning/partdefs.h.html#L16" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__partitioning__partdefs_h__PartitionBoundInfo.html&quot;}, '*');"><code>PartitionBoundInfo</code></a>: パーティションの境界値（範囲やリストなど）を効率的に管理する構造体へのポインタ。</li>
+<li><a class="wiki-source-link" href="../../../../source/src/include/partitioning/partdefs.h.html#L22" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__partitioning__partdefs_h__PartitionDesc.html&quot;}, '*');"><code>PartitionDesc</code></a>: テーブルの全パーティションの構成やメタデータを保持する構造体へのポインタ。</li>
+<li><a class="wiki-source-link" href="../../../../source/src/include/partitioning/partdefs.h.html#L24" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__partitioning__partdefs_h__PartitionDirectory.html&quot;}, '*');"><code>PartitionDirectory</code></a>: プランナーやエグゼキューター実行時にパーティション記述子をキャッシュ・探索するための構造体へのポインタ。</li>
+</ul>
+<h2>制御フローとデータフロー</h2>
+<p>本ファイルは型定義（前方宣言）のみを提供するため、直接的な制御フローやデータ処理のロジックは含みません。ここ定義された型は、プランナーのパーティションプルーニングやエグゼキューターのルーティング処理において、データ構造の参照基盤としてデータフロー全体を通じて利用されます。</p>
+<h2>直接依存</h2>
+<p>ソースファイル内に明示的な <code>#include</code> ディレクティブはありません。</p>
+<h2>関連コード</h2>
+<ul>
+<li><a class="wiki-source-link" href="../../../../source/src/include/partitioning/partbounds.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/partitioning/partbounds.h.html&quot;}, '*');"><code>src/include/partitioning/partbounds.h</code></a>: 境界値の構造体の詳細な定義。</li>
+<li><a class="wiki-source-link" href="../../../../source/src/include/partitioning/partdesc.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/partitioning/partdesc.h.html&quot;}, '*');"><code>src/include/partitioning/partdesc.h</code></a>: パーティション記述子の詳細な定義。</li>
+<li><a class="wiki-source-link" href="../../../../source/src/include/partitioning/partprune.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/partitioning/partprune.h.html&quot;}, '*');"><code>src/include/partitioning/partprune.h</code></a>: パーティションプルーニングのロジック。</li>
+</ul>
+<h2>読者向けメモ</h2>
+<ul>
+<li>本ファイルは <code>src/include/partitioning</code> モジュールを読む際の最初の起点（推奨読書順の第1位）として位置づけられています。</li>
+<li>実体（structの定義）はそれぞれのサブコンポーネント側で定義されているため、メンバ構造を確認する際は関連コード側のヘッダーを参照してください。</li>
+</ul>
+<h2>シンボルページ</h2>
+<ul>
+<li><a href="../../../symbols/src__include__partitioning__partdefs_h__PartitionBoundInfo.html" target="wiki-view"><code>PartitionBoundInfo</code></a></li>
+<li><a href="../../../symbols/src__include__partitioning__partdefs_h__PartitionKey.html" target="wiki-view"><code>PartitionKey</code></a></li>
+<li><a href="../../../symbols/src__include__partitioning__partdefs_h__PartitionBoundSpec.html" target="wiki-view"><code>PartitionBoundSpec</code></a></li>
+<li><a href="../../../symbols/src__include__partitioning__partdefs_h__PartitionDesc.html" target="wiki-view"><code>PartitionDesc</code></a></li>
+<li><a href="../../../symbols/src__include__partitioning__partdefs_h__PartitionDirectory.html" target="wiki-view"><code>PartitionDirectory</code></a></li>
+</ul><script>
+(function() {
+  function notifyParent() {
+    if (parent === window) return;
+    parent.postMessage({type: "frame-location", frame: window.name || "", href: window.location.href}, "*");
+  }
+  document.addEventListener("click", function(event) {
+    const link = event.target.closest("a[data-panel]");
+    if (!link || parent === window) return;
+    parent.postMessage({type: "source-link", panel: link.dataset.panel}, "*");
+  });
+  window.addEventListener("load", notifyParent);
+  window.addEventListener("hashchange", notifyParent);
+})();
+</script></body></html>

@@ -34,13 +34,13 @@
 <h2>関連データ構造</h2>
 <p><code>uint64</code></p>
 <h2>ソース抜粋</h2>
-<p>~~~c static <a class="wiki-source-link" href="../../source/src/include/c.h.html#L116" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/c.h.html&quot;}, '*');">inline</a> uint64 <a class="wiki-source-link" href="../../source/src/include/port/pg_bitutils.h.html#L346" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__port__pg_bitutils_h__pg_popcount.html&quot;}, '*');">pg_popcount</a>(const char *buf, <a class="wiki-source-link" href="../../source/src/include/port.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__port_h__int.html&quot;}, '*');">int</a> bytes) { /*</p>
+<p>~~~c static <a class="wiki-source-link" href="../../source/src/include/c.h.html#L116" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/c.h.html&quot;}, '*');">inline</a> uint64 <a class="wiki-source-link" href="../../source/src/include/port/pg_bitutils.h.html#L346" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__port__pg_bitutils_h__pg_popcount.html&quot;}, '*');">pg_popcount</a>(const <a class="wiki-source-link" href="../../source/src/include/port/atomics/generic-gcc.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__port__atomics__generic-gcc_h__char.html&quot;}, '*');">char</a> *buf, int bytes) { /*</p>
 <ul>
 <li>We set the threshold to the point at which we&#x27;ll first use special</li>
 <li>instructions in the optimized version.</li>
 <p>*/ if (bytes &lt; 8) { uint64		popcnt = 0;</p>
 </ul>
-<p>while (bytes--) popcnt += <a class="wiki-source-link" href="../../source/src/port/pg_bitutils.c.html#L80" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/port/pg_bitutils.c.html&quot;}, '*');">pg_number_of_ones</a>[(unsigned char) *buf++]; return popcnt; }</p>
+<p>while (bytes--) popcnt += pg_number_of_ones[(unsigned <a class="wiki-source-link" href="../../source/src/include/port/atomics/generic-gcc.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__port__atomics__generic-gcc_h__char.html&quot;}, '*');">char</a>) *buf++]; return popcnt; }</p>
 <p>return pg_popcount_optimized(buf, bytes); } ~~~</p>
 <h2>失敗モードと境界条件</h2>
 <p>まだ解析していません。</p>

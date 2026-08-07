@@ -23,7 +23,7 @@
 <p>1. **入力**: コピー先ポインタ（<code>chromo1</code>）、コピー元ポインタ（<code>chromo2</code>）、およびコピー対象の遺伝子長（<code>string_length</code>）を受け取ります。 2. **ループ処理**: <code>0</code> から <code>string_length - 1</code> までのループを回し、<code>chromo2-&gt;string[i]</code> の値を <code>chromo1-&gt;string[i]</code> に代入します。 3. **評価値のコピー**: <code>chromo2-&gt;worth</code> の値を <code>chromo1-&gt;worth</code> に代入します。 4. **データフローの境界**: 本関数は呼び出し元のメモリ領域（通常はGEQOプール内の個体領域）を直接書き換えます。</p>
 <h2>直接依存</h2>
 <ul>
-<li>**<a class="wiki-source-link" href="../../../../../source/src/include/postgres.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/postgres.h.html&quot;}, '*');"><code>postgres.h</code></a>**: PostgreSQLの基本データ型やシステム定義。</li>
+<li>**<a class="wiki-source-link" href="../../../../../source/src/include/postgres.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/postgres.h.html&quot;}, '*');"><code>postgres.h</code></a>**: PostgreSQLの基本データ型やシステム定義。</li>
 <li>**<code>optimizer/geqo_copy.h</code>**: 本関数のプロトタイプ宣言を提供するヘッダーファイル。間接的に <code>optimizer/geqo.h</code>（<code>Chromosome</code> 構造体の定義を含む）に依存しています。</li>
 </ul>
 <h2>関連コード</h2>

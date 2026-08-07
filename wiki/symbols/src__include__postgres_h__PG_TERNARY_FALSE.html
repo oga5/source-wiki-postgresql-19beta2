@@ -1,0 +1,102 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>symbols/src__include__postgres_h__PG_TERNARY_FALSE.md</title><link rel="stylesheet" href="../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../source/src/include/postgres.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__postgres_h__PG_TERNARY_FALSE.html&quot;}, '*');">PG_TERNARY_FALSE</a></h1>
+<h2>定義</h2>
+<ul>
+<li>種別: <code>function</code></li>
+<li>定義箇所: <code>src/include/postgres.h:1</code></li>
+<li>所属モジュール: <a class="wiki-entity-link" href="../modules/src__include.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/modules/src__include.html&quot;, &quot;source&quot;: &quot;source/src/include/c.h.html&quot;}, '*');"><code>module:src/include</code></a></li>
+</ul>
+<h2>目的</h2>
+<p>静的シンボル索引から生成された初期シンボルページです。</p>
+<h2>シグネチャまたは形状</h2>
+<ul>
+<li>シグネチャ: <code>/*------------------------------------------------------------------------- * * postgres.h * Primary include file for PostgreSQL server .c files * * This should be the first file included by PostgreSQL backend modules. * Client-side code should include postgres_fe.h instead. * * * Portions Copyright (c) 1996-2026, PostgreSQL Global Development Group * Portions Copyright (c) 1995, Regents of the University of California * * src/include/postgres.h * *------------------------------------------------------------------------- */ /* IWYU pragma: always_keep */ /* *---------------------------------------------------------------- * TABLE OF CONTENTS * * When adding stuff to this file, please try to put stuff * into the relevant section, or add new sections as appropriate. * * section description * ------- ------------------------------------------------ * 1) Datum type + support functions * 2) miscellaneous * * NOTES * * In general, this file should contain declarations that are widely needed * in the backend environment, but are of no interest outside the backend. * * Simple type definitions live in c.h, where they are shared with * postgres_fe.h. We do that since those type definitions are needed by * frontend modules that want to deal with binary data transmission to or * from the backend. Type definitions in this file should be for * representations that never escape the backend, such as Datum. * *---------------------------------------------------------------- */ #ifndef POSTGRES_H #define POSTGRES_H /* IWYU pragma: begin_exports */ #include &quot;c.h&quot; #include &quot;utils/elog.h&quot; #include &quot;utils/palloc.h&quot; /* IWYU pragma: end_exports */ /* ---------------------------------------------------------------- * Section 1: Datum type + support functions * ---------------------------------------------------------------- */ /* * A Datum contains either a value of a pass-by-value type or a pointer to a * value of a pass-by-reference type. Therefore, we must have * sizeof(Datum) &gt;= sizeof(void *). No current or foreseeable Postgres * platform has pointers wider than 8 bytes, and standardizing on Datum being * exactly 8 bytes has advantages in reducing cross-platform differences. * * The functions below and the analogous functions for other types should be used to * convert between a Datum and the appropriate C type. */ typedef uint64_t Datum</code></li>
+</ul>
+<h2>入力と出力</h2>
+<p>まだ解析していません。</p>
+<h2>前提条件と不変条件</h2>
+<p>まだ解析していません。</p>
+<h2>アルゴリズムまたは振る舞い</h2>
+<ul>
+<li>複雑度: <code>low</code> (score 0)</li>
+</ul>
+<p>まだ解析していません。</p>
+<h2>呼び出し元と呼び出し先</h2>
+<ul>
+<li>呼び出し元: なし</li>
+<li>呼び出し先: なし</li>
+<li>呼び出し元サイト: なし</li>
+<li>呼び出しサイト: なし</li>
+</ul>
+<h2>関連データ構造</h2>
+<p><code>c</code>, <code>Datum</code>, <code>Group</code>, <a class="wiki-source-link" href="../../source/src/include/parser/parse_type.h.html#L20" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__parser__parse_type_h__Type.html&quot;}, '*');"><code>Type</code></a></p>
+<h2>ソース抜粋</h2>
+<p>~~~c /*------------------------------------------------------------------------- *</p>
+<ul>
+<li><a class="wiki-source-link" href="../../source/src/include/postgres.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/postgres.h.html&quot;}, '*');">postgres.h</a></li>
+<li>Primary include file for PostgreSQL server .c files</li>
+<p>*</p>
+<li>This should be the first file included by PostgreSQL backend modules.</li>
+<li>Client-side code should include <a class="wiki-source-link" href="../../source/src/include/postgres_fe.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/postgres_fe.h.html&quot;}, '*');">postgres_fe.h</a> instead.</li>
+<p>* *</p>
+<li>Portions Copyright (c) 1996-2026, PostgreSQL Global Development Group</li>
+<li>Portions Copyright (c) 1995, Regents of the University of California</li>
+<p>*</p>
+<li><a class="wiki-source-link" href="../../source/src/include/postgres.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/postgres.h.html&quot;}, '*');">src/include/postgres.h</a></li>
+<p>* *------------------------------------------------------------------------- */ /* IWYU pragma: always_keep */ /* *----------------------------------------------------------------</p>
+<li>TABLE OF CONTENTS</li>
+<p>*</p>
+<li>When adding stuff to this file, please try to put stuff</li>
+<li>into the relevant section, or add new sections as appropriate.</li>
+<p>*</p>
+<li>section	description</li>
+<li>-------	------------------------------------------------</li>
+<li>1)		Datum <a class="wiki-source-link" href="../../source/src/include/lib/ilist.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__lib__ilist_h__type.html&quot;}, '*');">type</a> + support <a class="wiki-source-link" href="../../source/src/backend/regex/regcomp.c.html#L358" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/regex/regcomp.c.html&quot;}, '*');">functions</a></li>
+<li>2)		miscellaneous</li>
+<p>*</p>
+<li>NOTES</li>
+<p>*</p>
+<li>In general, this file should contain declarations that are widely needed</li>
+<li>in the backend environment, but are of no interest outside the backend.</li>
+<p>*</p>
+<li>Simple <a class="wiki-source-link" href="../../source/src/include/lib/ilist.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__lib__ilist_h__type.html&quot;}, '*');">type</a> definitions live in <a class="wiki-source-link" href="../../source/src/include/c.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/c.h.html&quot;}, '*');">c.h</a>, where they are shared with</li>
+<li>postgres_fe.h.  We do that since those <a class="wiki-source-link" href="../../source/src/include/lib/ilist.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__lib__ilist_h__type.html&quot;}, '*');">type</a> definitions are needed by</li>
+<li>frontend modules that want to deal with binary data transmission to or</li>
+<li>from the backend.  <a class="wiki-source-link" href="../../source/src/include/parser/parse_type.h.html#L20" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__parser__parse_type_h__Type.html&quot;}, '*');">Type</a> definitions in this file should be for</li>
+<li>representations that never escape the backend, such as Datum.</li>
+<p>* *---------------------------------------------------------------- */ #ifndef <a class="wiki-source-link" href="../../source/src/include/postgres.h.html#L44" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/postgres.h.html&quot;}, '*');">POSTGRES_H</a> #define <a class="wiki-source-link" href="../../source/src/include/postgres.h.html#L44" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/postgres.h.html&quot;}, '*');">POSTGRES_H</a></p>
+</ul>
+<p>/* IWYU pragma: begin_exports */</p>
+<p>#include &quot;<a class="wiki-source-link" href="../../source/src/include/c.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/c.h.html&quot;}, '*');">c.h</a>&quot; #include &quot;utils/elog.h&quot; #include &quot;utils/palloc.h&quot;</p>
+<p>/* IWYU pragma: end_exports */</p>
+<p>/* ----------------------------------------------------------------</p>
+<ul>
+<li>Section 1:	Datum <a class="wiki-source-link" href="../../source/src/include/lib/ilist.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__lib__ilist_h__type.html&quot;}, '*');">type</a> + support <a class="wiki-source-link" href="../../source/src/backend/regex/regcomp.c.html#L358" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/regex/regcomp.c.html&quot;}, '*');">functions</a></li>
+<li>----------------------------------------------------------------</li>
+<p>*/</p>
+</ul>
+<p>/*</p>
+<ul>
+<li>A Datum contains either a <a class="wiki-source-link" href="../../source/src/interfaces/ecpg/compatlib/informix.c.html#L687" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/ecpg/compatlib/informix.c.html&quot;}, '*');">value</a> of a pass-by-<a class="wiki-source-link" href="../../source/src/interfaces/ecpg/compatlib/informix.c.html#L687" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/ecpg/compatlib/informix.c.html&quot;}, '*');">value</a> <a class="wiki-source-link" href="../../source/src/include/lib/ilist.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__lib__ilist_h__type.html&quot;}, '*');">type</a> or a pointer to a</li>
+<p>~~~</p>
+</ul>
+<h2>失敗モードと境界条件</h2>
+<p>まだ解析していません。</p>
+<h2>保守担当者向けメモ</h2>
+<ul>
+<li>後続フェーズで、ソース本文の文脈と caller/callee 情報を使ってこのページを強化する。</li>
+</ul><script>
+(function() {
+  function notifyParent() {
+    if (parent === window) return;
+    parent.postMessage({type: "frame-location", frame: window.name || "", href: window.location.href}, "*");
+  }
+  document.addEventListener("click", function(event) {
+    const link = event.target.closest("a[data-panel]");
+    if (!link || parent === window) return;
+    parent.postMessage({type: "source-link", panel: link.dataset.panel}, "*");
+  });
+  window.addEventListener("load", notifyParent);
+  window.addEventListener("hashchange", notifyParent);
+})();
+</script></body></html>

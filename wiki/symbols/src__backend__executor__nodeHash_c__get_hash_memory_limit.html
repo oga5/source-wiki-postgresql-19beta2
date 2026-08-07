@@ -34,7 +34,7 @@
 <p>なし</p>
 <h2>ソース抜粋</h2>
 <p>~~~c size_t <a class="wiki-source-link" href="../../source/src/backend/executor/nodeHash.c.html#L3679" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__executor__nodeHash_c__get_hash_memory_limit.html&quot;}, '*');">get_hash_memory_limit</a>(void) { double		mem_limit;</p>
-<p>/* Do initial calculation in double arithmetic */ mem_limit = (double) <a class="wiki-source-link" href="../../source/src/backend/utils/init/globals.c.html#L133" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/utils/init/globals.c.html&quot;}, '*');">work_mem</a> * <a class="wiki-source-link" href="../../source/src/backend/utils/init/globals.c.html#L134" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/utils/init/globals.c.html&quot;}, '*');">hash_mem_multiplier</a> * 1024.0;</p>
+<p>/* Do initial calculation in double arithmetic */ mem_limit = (double) work_mem * hash_mem_multiplier * 1024.0;</p>
 <p>/* Clamp in case it doesn&#x27;t fit in size_t */ mem_limit = Min(mem_limit, (double) SIZE_MAX);</p>
 <p>return (size_t) mem_limit; } ~~~</p>
 <h2>失敗モードと境界条件</h2>

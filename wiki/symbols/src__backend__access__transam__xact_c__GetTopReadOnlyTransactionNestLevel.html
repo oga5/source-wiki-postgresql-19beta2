@@ -14,7 +14,7 @@
 </ul>
 <h2>入力と出力</h2>
 <ul>
-<li>戻り値: <a class="wiki-source-link" href="../../source/src/include/port.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__port_h__int.html&quot;}, '*');"><code>int</code></a></li>
+<li>戻り値: <code>int</code></li>
 </ul>
 <h2>前提条件と不変条件</h2>
 <p>まだ解析していません。</p>
@@ -33,7 +33,7 @@
 <h2>関連データ構造</h2>
 <p><a class="wiki-source-link" href="../../source/src/backend/access/transam/xact.c.html#L223" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__access__transam__xact_c__TransactionState.html&quot;}, '*');"><code>TransactionState</code></a></p>
 <h2>ソース抜粋</h2>
-<p>~~~c <a class="wiki-source-link" href="../../source/src/include/port.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__port_h__int.html&quot;}, '*');">int</a> <a class="wiki-source-link" href="../../source/src/backend/access/transam/xact.c.html#L1061" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__access__transam__xact_c__GetTopReadOnlyTransactionNestLevel.html&quot;}, '*');">GetTopReadOnlyTransactionNestLevel</a>(void) { <a class="wiki-source-link" href="../../source/src/backend/access/transam/xact.c.html#L223" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__access__transam__xact_c__TransactionState.html&quot;}, '*');">TransactionState</a> s = <a class="wiki-source-link" href="../../source/src/backend/access/transam/xact.c.html#L262" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/access/transam/xact.c.html&quot;}, '*');">CurrentTransactionState</a>;</p>
+<p>~~~c int <a class="wiki-source-link" href="../../source/src/backend/access/transam/xact.c.html#L1061" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__access__transam__xact_c__GetTopReadOnlyTransactionNestLevel.html&quot;}, '*');">GetTopReadOnlyTransactionNestLevel</a>(void) { <a class="wiki-source-link" href="../../source/src/backend/access/transam/xact.c.html#L223" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__access__transam__xact_c__TransactionState.html&quot;}, '*');">TransactionState</a> s = <a class="wiki-source-link" href="../../source/src/backend/access/transam/xact.c.html#L262" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/access/transam/xact.c.html&quot;}, '*');">CurrentTransactionState</a>;</p>
 <p>if (!<a class="wiki-source-link" href="../../source/src/backend/access/transam/xact.c.html#L84" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/access/transam/xact.c.html&quot;}, '*');">XactReadOnly</a>) return 0; while (s-&gt;nestingLevel &gt; 1) { if (!s-&gt;prevXactReadOnly) return s-&gt;nestingLevel; s = s-&gt;parent; } return s-&gt;nestingLevel; } ~~~</p>
 <h2>失敗モードと境界条件</h2>
 <p>まだ解析していません。</p>

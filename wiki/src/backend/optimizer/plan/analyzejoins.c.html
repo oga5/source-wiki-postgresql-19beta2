@@ -27,7 +27,7 @@
 <li><code>static bool join_is_removable(PlannerInfo *root, SpecialJoinInfo *sjinfo)</code>: 左結合が削除可能か（右辺の一意性、変数やPHVが上流で必要とされないか）を判定する。</li>
 <li><code>static bool rel_supports_distinctness(PlannerInfo *root, RelOptInfo *rel)</code>: リレーションが一意性（distinctness）を持つ可能性を素早く事前チェックする。</li>
 <li><code>static bool rel_is_distinct_for(PlannerInfo *root, RelOptInfo *rel, List *clause_list, List **extra_clauses)</code>: 指定された条件リストに基づき、リレーションが一意な行を返すか検証する。</li>
-<li><code>static bool query_is_distinct_for(Query *query, List *distinct_cols)</code>: サブクエリ（<a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/plan/subselect.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__plan__subselect_c__RTE_SUBQUERY.html&quot;}, '*');">RTE_SUBQUERY</a>）の出力が特定の列について一意であるか検証する。</li>
+<li><code>static bool query_is_distinct_for(Query *query, List *distinct_cols)</code>: サブクエリ（RTE_SUBQUERY）の出力が特定の列について一意であるか検証する。</li>
 <li><code>static bool innerrel_is_unique(PlannerInfo *root, Relids joinrelids, Relids outerrelids, RelOptInfo *innerrel, JoinType jointype, List *restrictlist, bool force_cache)</code>: 内部リレーションが一意であるかを判定し、結果をキャッシュするフロントエンド。</li>
 </ul>
 <h3>クエリ書き換え・構造調整ヘルパー群</h3>
@@ -52,7 +52,7 @@
 </ul>
 <h2>直接依存</h2>
 <ul>
-<li><a class="wiki-source-link" href="../../../../../source/src/include/postgres.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/postgres.h.html&quot;}, '*');"><code>postgres.h</code></a></li>
+<li><a class="wiki-source-link" href="../../../../../source/src/include/postgres.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/postgres.h.html&quot;}, '*');"><code>postgres.h</code></a></li>
 <li><code>catalog/pg_class.h</code></li>
 <li><code>nodes/nodeFuncs.h</code></li>
 <li><code>optimizer/joininfo.h</code></li>

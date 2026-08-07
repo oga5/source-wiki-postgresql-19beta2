@@ -15,7 +15,7 @@
 <h2>入力と出力</h2>
 <ul>
 <li>引数: <code>const char *protocol</code></li>
-<li>戻り値: <a class="wiki-source-link" href="../../source/src/include/port.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__port_h__int.html&quot;}, '*');"><code>int</code></a></li>
+<li>戻り値: <code>int</code></li>
 </ul>
 <h2>前提条件と不変条件</h2>
 <p>まだ解析していません。</p>
@@ -34,7 +34,7 @@
 <h2>関連データ構造</h2>
 <p>なし</p>
 <h2>ソース抜粋</h2>
-<p>~~~c static <a class="wiki-source-link" href="../../source/src/include/port.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__port_h__int.html&quot;}, '*');">int</a> ssl_protocol_version_to_openssl(const char *protocol) { if (<a class="wiki-source-link" href="../../source/src/port/pgstrcasecmp.c.html#L31" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__port__pgstrcasecmp_c__pg_strcasecmp.html&quot;}, '*');">pg_strcasecmp</a>(&quot;TLSv1&quot;, protocol) == 0) return TLS1_VERSION;</p>
+<p>~~~c static int ssl_protocol_version_to_openssl(const <a class="wiki-source-link" href="../../source/src/include/port/atomics/generic-gcc.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__port__atomics__generic-gcc_h__char.html&quot;}, '*');">char</a> *protocol) { if (<a class="wiki-source-link" href="../../source/src/port/pgstrcasecmp.c.html#L31" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__port__pgstrcasecmp_c__pg_strcasecmp.html&quot;}, '*');">pg_strcasecmp</a>(&quot;TLSv1&quot;, protocol) == 0) return TLS1_VERSION;</p>
 <p>#ifdef TLS1_1_VERSION if (<a class="wiki-source-link" href="../../source/src/port/pgstrcasecmp.c.html#L31" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__port__pgstrcasecmp_c__pg_strcasecmp.html&quot;}, '*');">pg_strcasecmp</a>(&quot;TLSv1.1&quot;, protocol) == 0) return TLS1_1_VERSION; #endif</p>
 <p>#ifdef TLS1_2_VERSION if (<a class="wiki-source-link" href="../../source/src/port/pgstrcasecmp.c.html#L31" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__port__pgstrcasecmp_c__pg_strcasecmp.html&quot;}, '*');">pg_strcasecmp</a>(&quot;TLSv1.2&quot;, protocol) == 0) return TLS1_2_VERSION; #endif</p>
 <p>#ifdef TLS1_3_VERSION if (<a class="wiki-source-link" href="../../source/src/port/pgstrcasecmp.c.html#L31" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__port__pgstrcasecmp_c__pg_strcasecmp.html&quot;}, '*');">pg_strcasecmp</a>(&quot;TLSv1.3&quot;, protocol) == 0) return TLS1_3_VERSION; #endif</p>

@@ -1,0 +1,27 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>src/backend/lib/README</title><link rel="stylesheet" href="../../../../../styles.css"></head><body><h1>Japanese translation</h1><p><code>src/backend/lib/README</code></p><p><a href="../../../../../source/src/backend/lib/README.html" target="source-view">View original document</a></p><p class="document-translation-progress document-translation-complete">Translation complete.</p><div class="document-translation-body"><section class="document-translation-chunk translated" data-chunk-order="0"><p>このディレクトリには、バックエンド内のどこでも使用できる汎用的なデータ構造が含まれています。</p>
+<p>bipartite_match.c - 二部グラフのためのホップクロフト・カープ最大マッチングアルゴリズム</p>
+<p>bloomfilter.c - 確率的で空間効率の良い集合メンバーシップテスト</p>
+<p>dshash.c - 動的共有メモリ領域をバックエンドとする並行ハッシュテーブル</p>
+<p>hyperloglog.c - ストリーミングカーディナリティ推定器</p>
+<p>ilist.c - 単方向および双方向連結リスト</p>
+<p>integerset.c - 大きな整数の集合を保持するためのデータ構造</p>
+<p>knapsack.c - ナップサック問題のソルバー</p>
+<p>pairingheap.c - ペアリングヒープ</p>
+<p>rbtree.c - 赤黒木</p>
+<p>データ構造が持つ固有の特性のほかに、バイナリヒープとペアリングヒープの間にはいくつかの実用的な違いがあります。バイナリヒープは作成時に完全に割り当てられ、割り当てられたサイズを超えて拡張することはできません。一方、ペアリングヒープには固有の最大サイズはありませんが、呼び出し側はヒープに格納される各要素を割り当てる必要があり、バイナリヒープは通常の Datum やポインターを扱います。</p>
+<p>ilist.c の連結リストは、nodes/pg_list.h の List インターフェースとは対照的に、他の構造体に直接埋め込むことができます。</p></section></div><script>
+(function() {
+  function notifyParent() {
+    if (parent === window) return;
+    parent.postMessage({type: "frame-location", frame: window.name || "", href: window.location.href}, "*");
+  }
+  document.addEventListener("click", function(event) {
+    const link = event.target.closest("a[data-panel]");
+    if (!link || parent === window) return;
+    parent.postMessage({type: "source-link", panel: link.dataset.panel}, "*");
+  });
+  window.addEventListener("load", notifyParent);
+  window.addEventListener("hashchange", notifyParent);
+})();
+</script></body></html>

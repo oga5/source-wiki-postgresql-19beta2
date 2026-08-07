@@ -15,7 +15,7 @@
 <h2>入力と出力</h2>
 <ul>
 <li>引数: <code>TypeCacheEntry *typcache</code>, <code>const RangeBound *b1</code>, <code>const RangeBound *b2</code></li>
-<li>戻り値: <a class="wiki-source-link" href="../../source/src/include/port.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__port_h__int.html&quot;}, '*');"><code>int</code></a></li>
+<li>戻り値: <code>int</code></li>
 </ul>
 <h2>前提条件と不変条件</h2>
 <p>まだ解析していません。</p>
@@ -34,7 +34,7 @@
 <h2>関連データ構造</h2>
 <p><code>RangeBound</code>, <a class="wiki-source-link" href="../../source/src/include/utils/typcache.h.html#L31" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__utils__typcache_h__TypeCacheEntry.html&quot;}, '*');"><code>TypeCacheEntry</code></a></p>
 <h2>ソース抜粋</h2>
-<p>~~~c <a class="wiki-source-link" href="../../source/src/include/port.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__port_h__int.html&quot;}, '*');">int</a> <a class="wiki-source-link" href="../../source/src/backend/utils/adt/rangetypes.c.html#L2323" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__utils__adt__rangetypes_c__range_cmp_bound_values.html&quot;}, '*');">range_cmp_bound_values</a>(<a class="wiki-source-link" href="../../source/src/include/utils/typcache.h.html#L31" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__utils__typcache_h__TypeCacheEntry.html&quot;}, '*');">TypeCacheEntry</a> *typcache, const RangeBound *b1, const RangeBound *b2) { /*</p>
+<p>~~~c int <a class="wiki-source-link" href="../../source/src/backend/utils/adt/rangetypes.c.html#L2323" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__utils__adt__rangetypes_c__range_cmp_bound_values.html&quot;}, '*');">range_cmp_bound_values</a>(<a class="wiki-source-link" href="../../source/src/include/utils/typcache.h.html#L31" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__utils__typcache_h__TypeCacheEntry.html&quot;}, '*');">TypeCacheEntry</a> *typcache, const RangeBound *b1, const RangeBound *b2) { /*</p>
 <ul>
 <li>First, handle cases involving infinity, which don&#x27;t require invoking</li>
 <li>the comparison proc.</li>

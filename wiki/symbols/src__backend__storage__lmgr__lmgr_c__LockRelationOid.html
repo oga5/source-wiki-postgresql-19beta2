@@ -42,7 +42,7 @@
 <li>Now that we have the lock, check for invalidation messages, so that we</li>
 <li>will update or flush any stale relcache entry <a class="wiki-source-link" href="../../source/src/backend/regex/regc_locale.c.html#L487" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__regex__regc_locale_c__before.html&quot;}, '*');">before</a> we try to use it.</li>
 <li><a class="wiki-source-link" href="../../source/src/include/catalog/namespace.h.html#L98" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/catalog/namespace.h.html&quot;}, '*');">RangeVarGetRelid</a>() specifically relies on us for this.  We can skip</li>
-<li>this in the not-uncommon case that we already had the same type of lock</li>
+<li>this in the not-uncommon case that we already had the same <a class="wiki-source-link" href="../../source/src/include/lib/ilist.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__lib__ilist_h__type.html&quot;}, '*');">type</a> of lock</li>
 <li>being requested, since then no one else could have modified the</li>
 <li>relcache entry in an undesirable way.  (In the case where our own xact</li>
 <li>modifies the rel, the relcache update happens via</li>

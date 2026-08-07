@@ -56,16 +56,16 @@
 <p>/*</p>
 <ul>
 <li>Number of aggregated input columns.  This includes ORDER BY expressions</li>
-<li>in both the plain-agg and ordered-set cases.  Ordered-set direct <a class="wiki-source-link" href="../../source/src/include/fmgr.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__fmgr_h__args.html&quot;}, '*');">args</a></li>
+<li>in both the plain-agg and ordered-set cases.  Ordered-set direct args</li>
 <li>are not counted, though.</li>
-<p>*/ <a class="wiki-source-link" href="../../source/src/include/port.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__port_h__int.html&quot;}, '*');">int</a>			numInputs;</p>
+<p>*/ int			numInputs;</p>
 </ul>
 <p>/*</p>
 <ul>
 <li>Number of aggregated input columns to pass to the transfn.  This</li>
 <li>includes the ORDER BY columns for ordered-set aggs, but not for plain</li>
 <li>aggs.  (This doesn&#x27;t count the transition state <a class="wiki-source-link" href="../../source/src/interfaces/ecpg/compatlib/informix.c.html#L687" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/ecpg/compatlib/informix.c.html&quot;}, '*');">value</a>!)</li>
-<p>*/ <a class="wiki-source-link" href="../../source/src/include/port.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__port_h__int.html&quot;}, '*');">int</a>			numTransInputs;</p>
+<p>*/ int			numTransInputs;</p>
 </ul>
 <p>/* Oid of the state transition or <a class="wiki-source-link" href="../../source/src/backend/regex/regc_nfa.c.html#L1986" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__regex__regc_nfa_c__combine.html&quot;}, '*');">combine</a> function */ Oid			transfn_oid;</p>
 <p>/* Oid of the serialization function or InvalidOid */ Oid			serialfn_oid;</p>

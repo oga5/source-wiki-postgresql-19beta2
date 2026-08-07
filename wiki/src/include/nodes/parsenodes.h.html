@@ -1,0 +1,235 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>src/include/nodes/parsenodes.h.md</title><link rel="stylesheet" href="../../../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../../../source/src/include/nodes/parsenodes.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/nodes/parsenodes.h.html&quot;}, '*');">src/include/nodes/parsenodes.h</a></h1>
+<h2>概要</h2>
+<p>PostgreSQLのパーサーが生成する構文木（Parse Tree）および各種SQLステートメント、クエリ木（Query Tree）、補助データ構造を定義するヘッダーファイルです。SQLの生テキストからパースされた直後の表現（Raw Parse Tree）や、パーサーの解析を経た変換済みクエリ構造（<code>Query</code>、<code>RangeTblEntry</code> など）、さらにスキーマ定義やDML/DDL文などの多様なノード構造体を網羅しています。</p>
+<h2>モジュール内での役割</h2>
+<p><code>src/include/nodes</code> サブシステムの一部として、PostgreSQLのコアコンパイラパイプライン（パーサー、リライター、プランナー）全体で使用される構文解析・解析木の中核スキーマを提供します。特に <code>nodes/primnodes.h</code>（式ノード）や <code>nodes/nodes.h</code>（基底ノード機構）と密接に連携し、SQL文全体の抽象構文木構造を規定します。</p>
+<h2>責務</h2>
+<ul>
+<li>**クエリ構造の定義**: パース解析後の実行・最適化の単位となる <code>Query</code> 構造体および範囲テーブル（<a class="wiki-source-link" href="../../../../source/src/backend/utils/adt/geo_spgist.c.html#L103" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__utils__adt__geo_spgist_c__Range.html&quot;}, '*');">Range</a> Table）のエントリ群の所有。</li>
+<li>**生構文木の定義**: SQL文法（<a class="wiki-source-link" href="../../../../source/src/backend/parser/gram.y.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/parser/gram.y.html&quot;}, '*');">gram.y</a>）から直接出力される生ステートメント（<a class="wiki-source-link" href="../../../../source/src/include/nodes/parsenodes.h.html#L2285" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__nodes__parsenodes_h__SelectStmt.html&quot;}, '*');"><code>SelectStmt</code></a>、<a class="wiki-source-link" href="../../../../source/src/include/nodes/parsenodes.h.html#L2206" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__nodes__parsenodes_h__InsertStmt.html&quot;}, '*');"><code>InsertStmt</code></a>、<a class="wiki-source-link" href="../../../../source/src/include/nodes/parsenodes.h.html#L2853" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__nodes__parsenodes_h__CreateStmt.html&quot;}, '*');"><code>CreateStmt</code></a> 等）の表現形式の提供。</li>
+<li>**補助オブジェクトの定義**: ソート順、権限（<a class="wiki-source-link" href="../../../../source/src/include/nodes/parsenodes.h.html#L74" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/nodes/parsenodes.h.html&quot;}, '*');"><code>AclMode</code></a>）、パーティショニング、JSON式サポート、ウィンドウ関数などの周辺データ構造および列挙型の定義。</li>
+</ul>
+<h2>重要なシンボル</h2>
+<h3>クエリおよび範囲テーブル（Query &amp; <a class="wiki-source-link" href="../../../../source/src/backend/utils/adt/geo_spgist.c.html#L103" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__utils__adt__geo_spgist_c__Range.html&quot;}, '*');">Range</a> Table）</h3>
+<ul>
+<li><code>Query</code>: パース解析によって変換された、最適化・書き換え可能なクエリ木のルート構造体。</li>
+<li><code>RangeTblEntry (RTE)</code>: FROM句のテーブル、サブクエリ、結合などを表現する範囲テーブルのエントリ。</li>
+<li><a class="wiki-source-link" href="../../../../source/src/include/nodes/parsenodes.h.html#L1122" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/nodes/parsenodes.h.html&quot;}, '*');"><code>RTEKind</code></a>: <a class="wiki-source-link" href="../../../../source/src/include/nodes/parsenodes.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__nodes__parsenodes_h__RTE_RELATION.html&quot;}, '*');"><code>RTE_RELATION</code></a>, <code>RTE_SUBQUERY</code>, <a class="wiki-source-link" href="../../../../source/src/include/nodes/parsenodes.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__nodes__parsenodes_h__RTE_JOIN.html&quot;}, '*');"><code>RTE_JOIN</code></a>, <code>RTE_FUNCTION</code>, <a class="wiki-source-link" href="../../../../source/src/include/nodes/parsenodes.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__nodes__parsenodes_h__RTE_CTE.html&quot;}, '*');"><code>RTE_CTE</code></a> などのRTE種別を表す列挙型。</li>
+<li><a class="wiki-source-link" href="../../../../source/src/include/nodes/parsenodes.h.html#L1404" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__nodes__parsenodes_h__RTEPermissionInfo.html&quot;}, '*');"><code>RTEPermissionInfo</code></a>: 実行時パーミッションチェック用のリレーション別情報。</li>
+</ul>
+<h3>生ステートメント（Raw Statements）</h3>
+<ul>
+<li><code>RawStmt</code>: 単一の生SQL文のパースツリーを保持するコンテナ。</li>
+<li><a class="wiki-source-link" href="../../../../source/src/include/nodes/parsenodes.h.html#L2285" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__nodes__parsenodes_h__SelectStmt.html&quot;}, '*');"><code>SelectStmt</code></a>: SELECT、<a class="wiki-source-link" href="../../../../source/src/backend/optimizer/plan/subselect.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__plan__subselect_c__VALUES.html&quot;}, '*');">VALUES</a>、および <a class="wiki-source-link" href="../../../../source/src/include/nodes/parsenodes.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__nodes__parsenodes_h__UNION.html&quot;}, '*');"><code>UNION</code></a> 等の集合演算を表現するノード。</li>
+<li><a class="wiki-source-link" href="../../../../source/src/include/nodes/parsenodes.h.html#L2206" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__nodes__parsenodes_h__InsertStmt.html&quot;}, '*');"><code>InsertStmt</code></a>, <a class="wiki-source-link" href="../../../../source/src/include/nodes/parsenodes.h.html#L2237" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__nodes__parsenodes_h__UpdateStmt.html&quot;}, '*');"><code>UpdateStmt</code></a>, <a class="wiki-source-link" href="../../../../source/src/include/nodes/parsenodes.h.html#L2222" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__nodes__parsenodes_h__DeleteStmt.html&quot;}, '*');"><code>DeleteStmt</code></a>, <a class="wiki-source-link" href="../../../../source/src/include/nodes/parsenodes.h.html#L2253" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__nodes__parsenodes_h__MergeStmt.html&quot;}, '*');"><code>MergeStmt</code></a>: 各種DML文の生パーステュリー。</li>
+<li><a class="wiki-source-link" href="../../../../source/src/include/nodes/parsenodes.h.html#L2853" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__nodes__parsenodes_h__CreateStmt.html&quot;}, '*');"><code>CreateStmt</code></a>: <code>CREATE TABLE</code> 文の構造体。</li>
+</ul>
+<h3>補助構造体・演算子・型定義</h3>
+<ul>
+<li><a class="wiki-source-link" href="../../../../source/src/include/nodes/parsenodes.h.html#L74" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/nodes/parsenodes.h.html&quot;}, '*');"><code>AclMode</code></a>: アクセス権限を表す64ビットのビットマスク（<a class="wiki-source-link" href="../../../../source/src/include/nodes/parsenodes.h.html#L76" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/nodes/parsenodes.h.html&quot;}, '*');"><code>ACL_INSERT</code></a>, <a class="wiki-source-link" href="../../../../source/src/include/nodes/parsenodes.h.html#L77" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/nodes/parsenodes.h.html&quot;}, '*');"><code>ACL_SELECT</code></a> 等のマクロを含む）。</li>
+<li><a class="wiki-source-link" href="../../../../source/src/include/nodes/parsenodes.h.html#L576" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__nodes__parsenodes_h__SortBy.html&quot;}, '*');"><code>SortBy</code></a>: <code>ORDER BY</code> などのソート式や順序・NULL配置の定義。</li>
+<li><a class="wiki-source-link" href="../../../../source/src/include/nodes/parsenodes.h.html#L594" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__nodes__parsenodes_h__WindowDef.html&quot;}, '*');"><code>WindowDef</code></a> / <code>WindowClause</code>: ウィンドウ関数のフレームオプションやパーティション定義。</li>
+<li><code>CommonTableExpr (CTE)</code>: <code>WITH</code> 句で定義される共通テーブル式の構造体。</li>
+</ul>
+<h2>制御フローとデータフロー</h2>
+<p>本ファイルは純粋なデータ構造の定義（ヘッダー）であるため、直接的な関数ロジックは持ちません。データフローとしては以下のライフサイクルを辿ります： 1. **スキャン &amp; パース**: 字句解析と構文解析（<a class="wiki-source-link" href="../../../../source/src/backend/parser/gram.y.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/parser/gram.y.html&quot;}, '*');"><code>gram.y</code></a>）により、<a class="wiki-source-link" href="../../../../source/src/include/nodes/parsenodes.h.html#L2285" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__nodes__parsenodes_h__SelectStmt.html&quot;}, '*');"><code>SelectStmt</code></a> や <a class="wiki-source-link" href="../../../../source/src/include/nodes/parsenodes.h.html#L2206" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__nodes__parsenodes_h__InsertStmt.html&quot;}, '*');"><code>InsertStmt</code></a> などの生構文木（Raw Parse Tree）が生成されます。 2. **パース解析（Parse Analysis）**: <code>parser/analyze.c</code> 等が入力の生ツリーを消費し、<code>Query</code> 構造体およびその子孫（<code>RangeTblEntry</code>, <code>TargetEntry</code> 等）へと変換します。 3. **リライト &amp; プランニング**: 変換された <code>Query</code> ツリーがリライターとプランナーに渡され、最終的に実行用のプランツリー（<code>PlannedStmt</code>）へと変換されます。</p>
+<h2>直接依存</h2>
+<ul>
+<li><code>common/relpath.h</code></li>
+<li><code>nodes/bitmapset.h</code></li>
+<li><code>nodes/lockoptions.h</code></li>
+<li><code>nodes/primnodes.h</code></li>
+<li><code>nodes/value.h</code></li>
+<li><code>partitioning/partdefs.h</code></li>
+</ul>
+<h2>関連コード</h2>
+<ul>
+<li><a class="wiki-source-link" href="../../../../source/src/backend/parser/analyze.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/parser/analyze.c.html&quot;}, '*');"><code>src/backend/parser/analyze.c</code></a>: 生構文木を <code>Query</code> に変換する解析処理。</li>
+<li><a class="wiki-source-link" href="../../../../source/src/backend/parser/gram.y.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/parser/gram.y.html&quot;}, '*');"><code>src/backend/parser/gram.y</code></a>: 本ファイルで定義される各種 <code>Stmt</code> や表現ノードを構築するYacc文法ファイル。</li>
+<li><a class="wiki-source-link" href="../../../../source/src/include/nodes/primnodes.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/nodes/primnodes.h.html&quot;}, '*');"><code>src/include/nodes/primnodes.h</code></a>: 式木（Expression nodes）の定義元。</li>
+</ul>
+<h2>読者向けメモ</h2>
+<ul>
+<li>**メモリ所有権**: このファイルで定義されるノードは通常、PostgreSQLのメモリコンテキスト（QueryContextやParserContext）上でアロケートされ、明示的な個別解放ではなくコンテキストのリセットによって一括解放されます。</li>
+<li>**ファイルサイズと複雑性**: 多種多様なSQL文と構文要素を一度に定義しているためファイルが非常に大きいです。特定のDMLやDDLの構造を追う際は、対応する <code>*Stmt</code> 構造体名で直接検索することを推奨します。</li>
+</ul>
+<h2>シンボルページ</h2>
+<ul>
+<li><a href="../../../symbols/src__include__nodes__parsenodes_h__Query.html" target="wiki-view"><code>Query</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__parsenodes_h__TypeName.html" target="wiki-view"><code>TypeName</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__parsenodes_h__ColumnRef.html" target="wiki-view"><code>ColumnRef</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__parsenodes_h__ParamRef.html" target="wiki-view"><code>ParamRef</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__parsenodes_h__A_Expr.html" target="wiki-view"><code>A_Expr</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__parsenodes_h__A_Const.html" target="wiki-view"><code>A_Const</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__parsenodes_h__TypeCast.html" target="wiki-view"><code>TypeCast</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__parsenodes_h__CollateClause.html" target="wiki-view"><code>CollateClause</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__parsenodes_h__RoleSpec.html" target="wiki-view"><code>RoleSpec</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__parsenodes_h__FuncCall.html" target="wiki-view"><code>FuncCall</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__parsenodes_h__A_Star.html" target="wiki-view"><code>A_Star</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__parsenodes_h__A_Indices.html" target="wiki-view"><code>A_Indices</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__parsenodes_h__A_Indirection.html" target="wiki-view"><code>A_Indirection</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__parsenodes_h__A_ArrayExpr.html" target="wiki-view"><code>A_ArrayExpr</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__parsenodes_h__ResTarget.html" target="wiki-view"><code>ResTarget</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__parsenodes_h__MultiAssignRef.html" target="wiki-view"><code>MultiAssignRef</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__parsenodes_h__SortBy.html" target="wiki-view"><code>SortBy</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__parsenodes_h__WindowDef.html" target="wiki-view"><code>WindowDef</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__parsenodes_h__RangeSubselect.html" target="wiki-view"><code>RangeSubselect</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__parsenodes_h__RangeFunction.html" target="wiki-view"><code>RangeFunction</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__parsenodes_h__RangeTableFunc.html" target="wiki-view"><code>RangeTableFunc</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__parsenodes_h__RangeTableFuncCol.html" target="wiki-view"><code>RangeTableFuncCol</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__parsenodes_h__RangeGraphTable.html" target="wiki-view"><code>RangeGraphTable</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__parsenodes_h__RangeTableSample.html" target="wiki-view"><code>RangeTableSample</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__parsenodes_h__ColumnDef.html" target="wiki-view"><code>ColumnDef</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__parsenodes_h__TableLikeClause.html" target="wiki-view"><code>TableLikeClause</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__parsenodes_h__IndexElem.html" target="wiki-view"><code>IndexElem</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__parsenodes_h__DefElem.html" target="wiki-view"><code>DefElem</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__parsenodes_h__LockingClause.html" target="wiki-view"><code>LockingClause</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__parsenodes_h__XmlSerialize.html" target="wiki-view"><code>XmlSerialize</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__parsenodes_h__PartitionElem.html" target="wiki-view"><code>PartitionElem</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__parsenodes_h__PartitionSpec.html" target="wiki-view"><code>PartitionSpec</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__parsenodes_h__PartitionBoundSpec.html" target="wiki-view"><code>PartitionBoundSpec</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__parsenodes_h__PartitionRangeDatum.html" target="wiki-view"><code>PartitionRangeDatum</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__parsenodes_h__SinglePartitionSpec.html" target="wiki-view"><code>SinglePartitionSpec</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__parsenodes_h__PartitionCmd.html" target="wiki-view"><code>PartitionCmd</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__parsenodes_h__GraphPattern.html" target="wiki-view"><code>GraphPattern</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__parsenodes_h__GraphElementPattern.html" target="wiki-view"><code>GraphElementPattern</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__parsenodes_h__RangeTblEntry.html" target="wiki-view"><code>RangeTblEntry</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__parsenodes_h__RTEPermissionInfo.html" target="wiki-view"><code>RTEPermissionInfo</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__parsenodes_h__RangeTblFunction.html" target="wiki-view"><code>RangeTblFunction</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__parsenodes_h__TableSampleClause.html" target="wiki-view"><code>TableSampleClause</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__parsenodes_h__WithCheckOption.html" target="wiki-view"><code>WithCheckOption</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__parsenodes_h__SortGroupClause.html" target="wiki-view"><code>SortGroupClause</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__parsenodes_h__GroupingSet.html" target="wiki-view"><code>GroupingSet</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__parsenodes_h__WindowClause.html" target="wiki-view"><code>WindowClause</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__parsenodes_h__RowMarkClause.html" target="wiki-view"><code>RowMarkClause</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__parsenodes_h__ForPortionOfClause.html" target="wiki-view"><code>ForPortionOfClause</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__parsenodes_h__WithClause.html" target="wiki-view"><code>WithClause</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__parsenodes_h__InferClause.html" target="wiki-view"><code>InferClause</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__parsenodes_h__OnConflictClause.html" target="wiki-view"><code>OnConflictClause</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__parsenodes_h__CTESearchClause.html" target="wiki-view"><code>CTESearchClause</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__parsenodes_h__CTECycleClause.html" target="wiki-view"><code>CTECycleClause</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__parsenodes_h__CommonTableExpr.html" target="wiki-view"><code>CommonTableExpr</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__parsenodes_h__MergeWhenClause.html" target="wiki-view"><code>MergeWhenClause</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__parsenodes_h__ReturningClause.html" target="wiki-view"><code>ReturningClause</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__parsenodes_h__TriggerTransition.html" target="wiki-view"><code>TriggerTransition</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__parsenodes_h__JsonOutput.html" target="wiki-view"><code>JsonOutput</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__parsenodes_h__JsonArgument.html" target="wiki-view"><code>JsonArgument</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__parsenodes_h__JsonFuncExpr.html" target="wiki-view"><code>JsonFuncExpr</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__parsenodes_h__JsonTablePathSpec.html" target="wiki-view"><code>JsonTablePathSpec</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__parsenodes_h__JsonTable.html" target="wiki-view"><code>JsonTable</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__parsenodes_h__JsonTableColumn.html" target="wiki-view"><code>JsonTableColumn</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__parsenodes_h__JsonKeyValue.html" target="wiki-view"><code>JsonKeyValue</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__parsenodes_h__JsonParseExpr.html" target="wiki-view"><code>JsonParseExpr</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__parsenodes_h__JsonScalarExpr.html" target="wiki-view"><code>JsonScalarExpr</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__parsenodes_h__JsonSerializeExpr.html" target="wiki-view"><code>JsonSerializeExpr</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__parsenodes_h__JsonObjectConstructor.html" target="wiki-view"><code>JsonObjectConstructor</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__parsenodes_h__JsonArrayConstructor.html" target="wiki-view"><code>JsonArrayConstructor</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__parsenodes_h__JsonArrayQueryConstructor.html" target="wiki-view"><code>JsonArrayQueryConstructor</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__parsenodes_h__JsonAggConstructor.html" target="wiki-view"><code>JsonAggConstructor</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__parsenodes_h__JsonObjectAgg.html" target="wiki-view"><code>JsonObjectAgg</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__parsenodes_h__JsonArrayAgg.html" target="wiki-view"><code>JsonArrayAgg</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__parsenodes_h__RawStmt.html" target="wiki-view"><code>RawStmt</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__parsenodes_h__InsertStmt.html" target="wiki-view"><code>InsertStmt</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__parsenodes_h__DeleteStmt.html" target="wiki-view"><code>DeleteStmt</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__parsenodes_h__UpdateStmt.html" target="wiki-view"><code>UpdateStmt</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__parsenodes_h__MergeStmt.html" target="wiki-view"><code>MergeStmt</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__parsenodes_h__SelectStmt.html" target="wiki-view"><code>SelectStmt</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__parsenodes_h__SetOperationStmt.html" target="wiki-view"><code>SetOperationStmt</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__parsenodes_h__PLAssignStmt.html" target="wiki-view"><code>PLAssignStmt</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__parsenodes_h__CreateSchemaStmt.html" target="wiki-view"><code>CreateSchemaStmt</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__parsenodes_h__AlterTableStmt.html" target="wiki-view"><code>AlterTableStmt</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__parsenodes_h__AlterTableCmd.html" target="wiki-view"><code>AlterTableCmd</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__parsenodes_h__ATAlterConstraint.html" target="wiki-view"><code>ATAlterConstraint</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__parsenodes_h__ReplicaIdentityStmt.html" target="wiki-view"><code>ReplicaIdentityStmt</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__parsenodes_h__AlterDomainStmt.html" target="wiki-view"><code>AlterDomainStmt</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__parsenodes_h__GrantStmt.html" target="wiki-view"><code>GrantStmt</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__parsenodes_h__ObjectWithArgs.html" target="wiki-view"><code>ObjectWithArgs</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__parsenodes_h__AccessPriv.html" target="wiki-view"><code>AccessPriv</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__parsenodes_h__GrantRoleStmt.html" target="wiki-view"><code>GrantRoleStmt</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__parsenodes_h__AlterDefaultPrivilegesStmt.html" target="wiki-view"><code>AlterDefaultPrivilegesStmt</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__parsenodes_h__CopyStmt.html" target="wiki-view"><code>CopyStmt</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__parsenodes_h__VariableSetStmt.html" target="wiki-view"><code>VariableSetStmt</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__parsenodes_h__VariableShowStmt.html" target="wiki-view"><code>VariableShowStmt</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__parsenodes_h__CreateStmt.html" target="wiki-view"><code>CreateStmt</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__parsenodes_h__Constraint.html" target="wiki-view"><code>Constraint</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__parsenodes_h__AlterTableMoveAllStmt.html" target="wiki-view"><code>AlterTableMoveAllStmt</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__parsenodes_h__AlterExtensionContentsStmt.html" target="wiki-view"><code>AlterExtensionContentsStmt</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__parsenodes_h__CreateForeignTableStmt.html" target="wiki-view"><code>CreateForeignTableStmt</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__parsenodes_h__ImportForeignSchemaStmt.html" target="wiki-view"><code>ImportForeignSchemaStmt</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__parsenodes_h__CreatePolicyStmt.html" target="wiki-view"><code>CreatePolicyStmt</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__parsenodes_h__AlterPolicyStmt.html" target="wiki-view"><code>AlterPolicyStmt</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__parsenodes_h__CreateTrigStmt.html" target="wiki-view"><code>CreateTrigStmt</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__parsenodes_h__CreateSeqStmt.html" target="wiki-view"><code>CreateSeqStmt</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__parsenodes_h__AlterSeqStmt.html" target="wiki-view"><code>AlterSeqStmt</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__parsenodes_h__DefineStmt.html" target="wiki-view"><code>DefineStmt</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__parsenodes_h__CreateDomainStmt.html" target="wiki-view"><code>CreateDomainStmt</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__parsenodes_h__CreateOpClassStmt.html" target="wiki-view"><code>CreateOpClassStmt</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__parsenodes_h__CreateOpClassItem.html" target="wiki-view"><code>CreateOpClassItem</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__parsenodes_h__CreateOpFamilyStmt.html" target="wiki-view"><code>CreateOpFamilyStmt</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__parsenodes_h__AlterOpFamilyStmt.html" target="wiki-view"><code>AlterOpFamilyStmt</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__parsenodes_h__DropStmt.html" target="wiki-view"><code>DropStmt</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__parsenodes_h__CommentStmt.html" target="wiki-view"><code>CommentStmt</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__parsenodes_h__SecLabelStmt.html" target="wiki-view"><code>SecLabelStmt</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__parsenodes_h__DeclareCursorStmt.html" target="wiki-view"><code>DeclareCursorStmt</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__parsenodes_h__ClosePortalStmt.html" target="wiki-view"><code>ClosePortalStmt</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__parsenodes_h__FetchStmt.html" target="wiki-view"><code>FetchStmt</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__parsenodes_h__IndexStmt.html" target="wiki-view"><code>IndexStmt</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__parsenodes_h__CreateStatsStmt.html" target="wiki-view"><code>CreateStatsStmt</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__parsenodes_h__StatsElem.html" target="wiki-view"><code>StatsElem</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__parsenodes_h__CreateFunctionStmt.html" target="wiki-view"><code>CreateFunctionStmt</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__parsenodes_h__FunctionParameter.html" target="wiki-view"><code>FunctionParameter</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__parsenodes_h__AlterFunctionStmt.html" target="wiki-view"><code>AlterFunctionStmt</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__parsenodes_h__DoStmt.html" target="wiki-view"><code>DoStmt</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__parsenodes_h__InlineCodeBlock.html" target="wiki-view"><code>InlineCodeBlock</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__parsenodes_h__CallStmt.html" target="wiki-view"><code>CallStmt</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__parsenodes_h__CallContext.html" target="wiki-view"><code>CallContext</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__parsenodes_h__RenameStmt.html" target="wiki-view"><code>RenameStmt</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__parsenodes_h__AlterObjectDependsStmt.html" target="wiki-view"><code>AlterObjectDependsStmt</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__parsenodes_h__AlterObjectSchemaStmt.html" target="wiki-view"><code>AlterObjectSchemaStmt</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__parsenodes_h__AlterOwnerStmt.html" target="wiki-view"><code>AlterOwnerStmt</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__parsenodes_h__RuleStmt.html" target="wiki-view"><code>RuleStmt</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__parsenodes_h__NotifyStmt.html" target="wiki-view"><code>NotifyStmt</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__parsenodes_h__TransactionStmt.html" target="wiki-view"><code>TransactionStmt</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__parsenodes_h__CompositeTypeStmt.html" target="wiki-view"><code>CompositeTypeStmt</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__parsenodes_h__CreateEnumStmt.html" target="wiki-view"><code>CreateEnumStmt</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__parsenodes_h__CreateRangeStmt.html" target="wiki-view"><code>CreateRangeStmt</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__parsenodes_h__ViewStmt.html" target="wiki-view"><code>ViewStmt</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__parsenodes_h__CreatedbStmt.html" target="wiki-view"><code>CreatedbStmt</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__parsenodes_h__VacuumStmt.html" target="wiki-view"><code>VacuumStmt</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__parsenodes_h__VacuumRelation.html" target="wiki-view"><code>VacuumRelation</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__parsenodes_h__RepackStmt.html" target="wiki-view"><code>RepackStmt</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__parsenodes_h__ExplainStmt.html" target="wiki-view"><code>ExplainStmt</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__parsenodes_h__CreateTableAsStmt.html" target="wiki-view"><code>CreateTableAsStmt</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__parsenodes_h__CheckPointStmt.html" target="wiki-view"><code>CheckPointStmt</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__parsenodes_h__DiscardStmt.html" target="wiki-view"><code>DiscardStmt</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__parsenodes_h__LockStmt.html" target="wiki-view"><code>LockStmt</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__parsenodes_h__ConstraintsSetStmt.html" target="wiki-view"><code>ConstraintsSetStmt</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__parsenodes_h__ReindexStmt.html" target="wiki-view"><code>ReindexStmt</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__parsenodes_h__PropGraphVertex.html" target="wiki-view"><code>PropGraphVertex</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__parsenodes_h__PropGraphEdge.html" target="wiki-view"><code>PropGraphEdge</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__parsenodes_h__PropGraphLabelAndProperties.html" target="wiki-view"><code>PropGraphLabelAndProperties</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__parsenodes_h__PropGraphProperties.html" target="wiki-view"><code>PropGraphProperties</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__parsenodes_h__PrepareStmt.html" target="wiki-view"><code>PrepareStmt</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__parsenodes_h__ExecuteStmt.html" target="wiki-view"><code>ExecuteStmt</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__parsenodes_h__DeallocateStmt.html" target="wiki-view"><code>DeallocateStmt</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__parsenodes_h__AlterTSConfigurationStmt.html" target="wiki-view"><code>AlterTSConfigurationStmt</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__parsenodes_h__PublicationTable.html" target="wiki-view"><code>PublicationTable</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__parsenodes_h__AlterPublicationStmt.html" target="wiki-view"><code>AlterPublicationStmt</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__parsenodes_h__AlterSubscriptionStmt.html" target="wiki-view"><code>AlterSubscriptionStmt</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__parsenodes_h__WaitStmt.html" target="wiki-view"><code>WaitStmt</code></a></li>
+</ul><script>
+(function() {
+  function notifyParent() {
+    if (parent === window) return;
+    parent.postMessage({type: "frame-location", frame: window.name || "", href: window.location.href}, "*");
+  }
+  document.addEventListener("click", function(event) {
+    const link = event.target.closest("a[data-panel]");
+    if (!link || parent === window) return;
+    parent.postMessage({type: "source-link", panel: link.dataset.panel}, "*");
+  });
+  window.addEventListener("load", notifyParent);
+  window.addEventListener("hashchange", notifyParent);
+})();
+</script></body></html>

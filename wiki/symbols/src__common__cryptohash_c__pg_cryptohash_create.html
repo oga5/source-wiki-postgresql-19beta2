@@ -34,7 +34,7 @@
 <h2>関連データ構造</h2>
 <p><code>pg_cryptohash_ctx</code>, <a class="wiki-source-link" href="../../source/src/include/common/cryptohash.h.html#L19" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__common__cryptohash_h__pg_cryptohash_type.html&quot;}, '*');"><code>pg_cryptohash_type</code></a></p>
 <h2>ソース抜粋</h2>
-<p>~~~c pg_cryptohash_ctx * pg_cryptohash_create(<a class="wiki-source-link" href="../../source/src/include/common/cryptohash.h.html#L19" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__common__cryptohash_h__pg_cryptohash_type.html&quot;}, '*');">pg_cryptohash_type</a> type) { pg_cryptohash_ctx *ctx;</p>
+<p>~~~c pg_cryptohash_ctx * pg_cryptohash_create(<a class="wiki-source-link" href="../../source/src/include/common/cryptohash.h.html#L19" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__common__cryptohash_h__pg_cryptohash_type.html&quot;}, '*');">pg_cryptohash_type</a> <a class="wiki-source-link" href="../../source/src/include/lib/ilist.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__lib__ilist_h__type.html&quot;}, '*');">type</a>) { pg_cryptohash_ctx *ctx;</p>
 <p>/*</p>
 <ul>
 <li>Note that this always allocates enough space for the largest hash. A</li>
@@ -43,7 +43,7 @@
 <li>code.</li>
 <p>*/ ctx = ALLOC(sizeof(pg_cryptohash_ctx)); if (ctx == NULL) return NULL;</p>
 </ul>
-<p>memset(ctx, 0, sizeof(pg_cryptohash_ctx)); ctx-&gt;type = type; ctx-&gt;error = PG_CRYPTOHASH_ERROR_NONE; return ctx; } ~~~</p>
+<p>memset(ctx, 0, sizeof(pg_cryptohash_ctx)); ctx-&gt;<a class="wiki-source-link" href="../../source/src/include/lib/ilist.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__lib__ilist_h__type.html&quot;}, '*');">type</a> = <a class="wiki-source-link" href="../../source/src/include/lib/ilist.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__lib__ilist_h__type.html&quot;}, '*');">type</a>; ctx-&gt;error = PG_CRYPTOHASH_ERROR_NONE; return ctx; } ~~~</p>
 <h2>失敗モードと境界条件</h2>
 <p>まだ解析していません。</p>
 <h2>保守担当者向けメモ</h2>

@@ -15,7 +15,7 @@
 <h2>入力と出力</h2>
 <ul>
 <li>引数: <code>void *priv</code>, <code>PullFilter *src</code>, <code>int len</code>, <code>uint8 **data_p</code>, <code>uint8 *buf</code>, <code>int buflen</code></li>
-<li>戻り値: <a class="wiki-source-link" href="../../source/src/include/port.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__port_h__int.html&quot;}, '*');"><code>int</code></a></li>
+<li>戻り値: <code>int</code></li>
 </ul>
 <h2>前提条件と不変条件</h2>
 <p>まだ解析していません。</p>
@@ -34,7 +34,7 @@
 <h2>関連データ構造</h2>
 <p><code>PGP_CFB</code>, <code>PullFilter</code>, <code>uint8</code></p>
 <h2>ソース抜粋</h2>
-<p>~~~c static <a class="wiki-source-link" href="../../source/src/include/port.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__port_h__int.html&quot;}, '*');">int</a> <a class="wiki-source-link" href="../../source/contrib/pgcrypto/pgp-decrypt.c.html#L297" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/contrib__pgcrypto__pgp-decrypt_c__decrypt_read.html&quot;}, '*');">decrypt_read</a>(void *priv, PullFilter *src, <a class="wiki-source-link" href="../../source/src/include/port.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__port_h__int.html&quot;}, '*');">int</a> len, uint8 **data_p, uint8 *buf, <a class="wiki-source-link" href="../../source/src/include/port.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__port_h__int.html&quot;}, '*');">int</a> buflen) { PGP_CFB    *cfb = priv; uint8	   *tmp; <a class="wiki-source-link" href="../../source/src/include/port.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__port_h__int.html&quot;}, '*');">int</a>			res;</p>
+<p>~~~c static int <a class="wiki-source-link" href="../../source/contrib/pgcrypto/pgp-decrypt.c.html#L297" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/contrib__pgcrypto__pgp-decrypt_c__decrypt_read.html&quot;}, '*');">decrypt_read</a>(void *priv, PullFilter *src, int len, uint8 **data_p, uint8 *buf, int buflen) { PGP_CFB    *cfb = priv; uint8	   *tmp; int			res;</p>
 <p>res = <a class="wiki-source-link" href="../../source/contrib/pgcrypto/mbuf.c.html#L245" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/contrib__pgcrypto__mbuf_c__pullf_read.html&quot;}, '*');">pullf_read</a>(src, len, &amp;tmp); if (res &gt; 0) { <a class="wiki-source-link" href="../../source/contrib/pgcrypto/pgp-cfb.c.html#L259" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/contrib__pgcrypto__pgp-cfb_c__pgp_cfb_decrypt.html&quot;}, '*');">pgp_cfb_decrypt</a>(cfb, tmp, res, buf); *data_p = buf; } return res; } ~~~</p>
 <h2>失敗モードと境界条件</h2>
 <p>まだ解析していません。</p>

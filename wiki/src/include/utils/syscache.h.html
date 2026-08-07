@@ -1,0 +1,71 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>src/include/utils/syscache.h.md</title><link rel="stylesheet" href="../../../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../../../source/src/include/utils/syscache.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/utils/syscache.h.html&quot;}, '*');">src/include/utils/syscache.h</a></h1>
+<h2>概要</h2>
+<p>PostgreSQL のパーサー、プランナー、エグゼキューターがシステムカタログの内容を高速にルックアップするためのシステムキャッシュインターフェースを定義するヘッダーファイルです。</p>
+<h2>モジュール内での役割</h2>
+<p><a class="wiki-source-link" href="../../../../source/src/include/utils/syscache.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/utils/syscache.h.html&quot;}, '*');"><code>src/include/utils/syscache.h</code></a> は、カタログキャッシュ（<a class="wiki-source-link" href="../../../../source/src/include/utils/catcache.h.html#L44" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__utils__catcache_h__CatCache.html&quot;}, '*');">CatCache</a>）の実装詳細を隠蔽しつつ、外部のサブシステムに対してインデックスベースのシステムキャッシュ検索、属性取得、無効化、および関連する便利関数を提供する公開ヘッダーです。実体は対応するバックエンド実装 <a class="wiki-source-link" href="../../../../source/src/backend/utils/cache/syscache.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/utils/cache/syscache.c.html&quot;}, '*');"><code>src/backend/utils/cache/syscache.c</code></a> および <a class="wiki-source-link" href="../../../../source/src/include/utils/catcache.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/utils/catcache.h.html&quot;}, '*');"><code>catcache.h</code></a> に紐づいています。</p>
+<h2>責務</h2>
+<ul>
+<li>システムカタログのキャッシュ識別子と検索関数の宣言を提供する。</li>
+<li>キー数に応じた型安全かつ効率的な検索・コピー・存在確認のマクロおよび関数を提供する。</li>
+<li>キャッシュされたタプルからの属性値取得や、Oid・ハッシュ値の算出インターフェースを公開する。</li>
+<li>リレーション単位のキャッシュ有無の判定およびキャッシュ無効化ルーチンを宣言する。</li>
+</ul>
+<h2>重要なシンボル</h2>
+<ul>
+<li>**初期化・管理**:</li>
+<li><code>InitCatalogCache</code>, <code>InitCatalogCachePhase2</code>: カタログキャッシュの初期化を行う。</li>
+<li>**検索ファミリー**:</li>
+<li><code>SearchSysCache</code>, <code>SearchSysCache1</code>, <code>SearchSysCache2</code>, <code>SearchSysCache3</code>, <code>SearchSysCache4</code>: 指定されたキャッシュIDとキーでタプルを検索する。</li>
+<li><code>SearchSysCacheLocked1</code>: ロック付きでタプルを検索する。</li>
+<li>**便利関数・コピーファミリー**:</li>
+<li><code>ReleaseSysCache</code>: 取得したキャッシュタプルを解放する。</li>
+<li><code>SearchSysCacheCopy</code>, <a class="wiki-source-link" href="../../../../source/src/include/utils/syscache.h.html#L91" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/utils/syscache.h.html&quot;}, '*');"><code>SearchSysCacheCopy1</code></a>〜<code>4</code>: キャッシュタプルのコピーを返却する。</li>
+<li><code>SearchSysCacheExists</code>, <a class="wiki-source-link" href="../../../../source/src/include/utils/syscache.h.html#L100" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/utils/syscache.h.html&quot;}, '*');"><code>SearchSysCacheExists1</code></a>〜<code>4</code>: キャッシュエントリの存在有無をブール値で返す。</li>
+<li><code>GetSysCacheOid</code>, <a class="wiki-source-link" href="../../../../source/src/include/utils/syscache.h.html#L109" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/utils/syscache.h.html&quot;}, '*');"><code>GetSysCacheOid1</code></a>〜<code>4</code>: キャッシュエントリから特定のOid列の値を取得する。</li>
+<li>**属性名・属性番号による検索**:</li>
+<li><code>SearchSysCacheAttName</code>, <code>SearchSysCacheCopyAttName</code>, <code>SearchSysCacheExistsAttName</code></li>
+<li><code>SearchSysCacheAttNum</code>, <code>SearchSysCacheCopyAttNum</code></li>
+<li>**属性値取得**:</li>
+<li><code>SysCacheGetAttr</code>, <code>SysCacheGetAttrNotNull</code>: キャッシュされたタプルから指定属性のDatumを取得する。</li>
+<li>**ハッシュ・リスト検索**:</li>
+<li><code>GetSysCacheHashValue</code>, <a class="wiki-source-link" href="../../../../source/src/include/utils/syscache.h.html#L118" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/utils/syscache.h.html&quot;}, '*');"><code>GetSysCacheHashValue1</code></a>〜<code>4</code></li>
+<li><code>SearchSysCacheList</code>, <a class="wiki-source-link" href="../../../../source/src/include/utils/syscache.h.html#L127" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/utils/syscache.h.html&quot;}, '*');"><code>SearchSysCacheList1</code></a>〜<code>3</code></li>
+<li><a class="wiki-source-link" href="../../../../source/src/include/utils/syscache.h.html#L134" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/utils/syscache.h.html&quot;}, '*');"><code>ReleaseSysCacheList</code></a>（<code>ReleaseCatCacheList</code>へのマクロ）</li>
+<li>**無効化・リレーション判定**:</li>
+<li><code>SysCacheInvalidate</code>: キャッシュを無効化する。</li>
+<li><code>RelationInvalidatesSnapshotsOnly</code>, <code>RelationHasSysCache</code>, <code>RelationSupportsSysCache</code></li>
+</ul>
+<h2>制御フローとデータフロー</h2>
+<p>外部モジュールは <code>SearchSysCache*</code> や <code>SearchSysCacheCopy*</code> などの公開関数およびマクロを呼び出し、内部でカタログキャッシュを参照します。 データフローとしては、呼び出し側から渡された最大4つまでの <code>Datum</code> キーを元にキャッシュ内を走査し、ヒットした場合は <code>HeapTuple</code> を返却またはコピーします。ヒットしない場合はバックエンドのカタログストレージからフェッチされキャッシュに組み込まれます。不要になった <code>HeapTuple</code> は <code>ReleaseSysCache</code> またはコピー用のメモリ管理機構により解放されます。</p>
+<h2>直接依存</h2>
+<ul>
+<li><code>access/attnum.h</code>: 属性番号（AttrNumber）の定義。</li>
+<li><code>access/htup.h</code>: ヒープタプル構造体の定義。</li>
+<li><code>catalog/syscache_ids.h</code>: システムキャッシュ識別子の定義。</li>
+</ul>
+<h2>関連コード</h2>
+<ul>
+<li><a class="wiki-source-link" href="../../../../source/src/backend/utils/cache/syscache.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/utils/cache/syscache.c.html&quot;}, '*');"><code>src/backend/utils/cache/syscache.c</code></a>: 実装本体。</li>
+<li><a class="wiki-source-link" href="../../../../source/src/include/utils/catcache.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/utils/catcache.h.html&quot;}, '*');"><code>src/include/utils/catcache.h</code></a>: キャッシュリスト等の内部構造定義。</li>
+<li><a class="wiki-source-link" href="../../../../source/src/include/utils/lsyscache.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/utils/lsyscache.h.html&quot;}, '*');"><code>src/include/utils/lsyscache.h</code></a>: より特化した共通キャッシュルックアップの便利ルーチン群。</li>
+</ul>
+<h2>読者向けメモ</h2>
+<ul>
+<li>ヘッダー内では <code>utils/catcache.h</code> のインクルード意図的な除外が行われており、リスト検索等を使用するコードのみが個別にインクルードする必要があります。</li>
+<li>キー数に応じたラッパーマクロ（<a class="wiki-source-link" href="../../../../source/src/include/utils/syscache.h.html#L91" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/utils/syscache.h.html&quot;}, '*');"><code>SearchSysCacheCopy1</code></a> など）を使用することで、未使用のキー引数にデフォルト値（<code>0</code>）が自動補完され、将来的なシグネチャ変更に対する耐性が高められています。</li>
+</ul><script>
+(function() {
+  function notifyParent() {
+    if (parent === window) return;
+    parent.postMessage({type: "frame-location", frame: window.name || "", href: window.location.href}, "*");
+  }
+  document.addEventListener("click", function(event) {
+    const link = event.target.closest("a[data-panel]");
+    if (!link || parent === window) return;
+    parent.postMessage({type: "source-link", panel: link.dataset.panel}, "*");
+  });
+  window.addEventListener("load", notifyParent);
+  window.addEventListener("hashchange", notifyParent);
+})();
+</script></body></html>

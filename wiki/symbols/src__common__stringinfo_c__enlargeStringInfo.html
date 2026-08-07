@@ -34,7 +34,7 @@
 <h2>関連データ構造</h2>
 <p><code>Size</code>, <code>string</code>, <code>StringInfo</code></p>
 <h2>ソース抜粋</h2>
-<p>~~~c void <a class="wiki-source-link" href="../../source/src/common/stringinfo.c.html#L336" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__common__stringinfo_c__enlargeStringInfo.html&quot;}, '*');">enlargeStringInfo</a>(StringInfo str, <a class="wiki-source-link" href="../../source/src/include/port.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__port_h__int.html&quot;}, '*');">int</a> needed) { <a class="wiki-source-link" href="../../source/src/include/port.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__port_h__int.html&quot;}, '*');">int</a>			newlen;</p>
+<p>~~~c void <a class="wiki-source-link" href="../../source/src/common/stringinfo.c.html#L336" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__common__stringinfo_c__enlargeStringInfo.html&quot;}, '*');">enlargeStringInfo</a>(StringInfo str, int needed) { int			newlen;</p>
 <p>/* <a class="wiki-source-link" href="../../source/src/backend/libpq/auth-oauth.c.html#L671" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__libpq__auth-oauth_c__validate.html&quot;}, '*');">validate</a> this <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> not a read-only StringInfo */ <a class="wiki-source-link" href="../../source/src/include/c.h.html#L950" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/c.h.html&quot;}, '*');">Assert</a>(str-&gt;maxlen != 0);</p>
 <p>/*</p>
 <ul>
@@ -57,7 +57,7 @@
 <li>Clamp to MaxAllocSize in case we went past it.  Note we are assuming</li>
 <li>here that MaxAllocSize &lt;= INT_MAX/2, else the above loop could</li>
 <li>overflow.  We will still have newlen &gt;= needed.</li>
-<p>*/ if (newlen &gt; (<a class="wiki-source-link" href="../../source/src/include/port.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__port_h__int.html&quot;}, '*');">int</a>) MaxAllocSize) newlen = (<a class="wiki-source-link" href="../../source/src/include/port.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__port_h__int.html&quot;}, '*');">int</a>) MaxAllocSize; ~~~</p>
+<p>*/ if (newlen &gt; (int) MaxAllocSize) newlen = (int) MaxAllocSize; ~~~</p>
 </ul>
 <h2>失敗モードと境界条件</h2>
 <p>まだ解析していません。</p>

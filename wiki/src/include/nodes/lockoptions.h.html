@@ -1,0 +1,51 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>src/include/nodes/lockoptions.h.md</title><link rel="stylesheet" href="../../../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../../../source/src/include/nodes/lockoptions.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/nodes/lockoptions.h.html&quot;}, '*');">src/include/nodes/lockoptions.h</a></h1>
+<h2>概要</h2>
+<p><a class="wiki-source-link" href="../../../../source/src/include/nodes/lockoptions.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/nodes/lockoptions.h.html&quot;}, '*');"><code>src/include/nodes/lockoptions.h</code></a> は、PostgreSQLの行レベルロック（<code>FOR UPDATE</code> や <code>FOR SHARE</code> など）に関連する列挙型定義を提供するヘッダーファイルです。構文解析、書き換え、プラン生成の各段階で共通して利用されるロックの強度や待機ポリシーを定義します。</p>
+<h2>モジュール内での役割</h2>
+<p><code>src/include/nodes</code> ディレクトリに属し、主にパーサノードやプランナノード（<a class="wiki-source-link" href="../../../../source/src/include/nodes/parsenodes.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/nodes/parsenodes.h.html&quot;}, '*');"><code>parsenodes.h</code></a> や <a class="wiki-source-link" href="../../../../source/src/include/nodes/plannodes.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/nodes/plannodes.h.html&quot;}, '*');"><code>plannodes.h</code></a> など）で使用されるロック関連の定数群を独立して定義しています。他のノード定義から参照されるプリミティブな型定義の役割を果たします。</p>
+<h2>責務</h2>
+<ul>
+<li><code>FOR UPDATE</code> / <code>FOR SHARE</code> 句の強度（Strength）を表す列挙型の定義。</li>
+<li><code>NOWAIT</code> や <code>SKIP LOCKED</code> などのロック待機ポリシー（Wait Policy）を表す列挙型の定義。</li>
+<li>タプルに対する実際のロックモードを表す列挙型の定義。</li>
+</ul>
+<h2>重要なシンボル</h2>
+<ul>
+<li><code>LockClauseStrength</code>: <code>FOR KEY SHARE</code> から <code>FOR UPDATE</code> までの強度を表現し、複数のロック指定が競合した際に優先度を決定するために順序付けられています。</li>
+<li><a class="wiki-source-link" href="../../../../source/src/include/nodes/lockoptions.h.html#L37" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__nodes__lockoptions_h__LockWaitPolicy.html&quot;}, '*');"><code>LockWaitPolicy</code></a>: ロック取得時の動作（待機、スキップ、エラー発生）を指定します。</li>
+<li><a class="wiki-source-link" href="../../../../source/src/include/nodes/lockoptions.h.html#L50" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__nodes__lockoptions_h__LockTupleMode.html&quot;}, '*');"><code>LockTupleMode</code></a>: タプルレベルでの具体的なロック排他モードを定義します。</li>
+</ul>
+<h2>制御フローとデータフロー</h2>
+<p>このファイルはデータ構造（列挙型）の定義のみを提供するため、独自の実行時制御フローやデータフローは持ちません。パーサがクエリ内の行ロック句を解釈する際や、書き換えエンジンが <a class="wiki-source-link" href="../../../../source/src/backend/parser/analyze.c.html#L4041" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__parser__analyze_c__applyLockingClause.html&quot;}, '*');"><code>applyLockingClause</code></a> を実行する際にこれらの値が参照され、プランノードや実行ノードへと引き渡されます。</p>
+<h2>直接依存</h2>
+<p>このファイルには直接インクルードされる外部ファイルや依存関係はありません。</p>
+<h2>関連コード</h2>
+<ul>
+<li><a class="wiki-source-link" href="../../../../source/src/include/nodes/parsenodes.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/nodes/parsenodes.h.html&quot;}, '*');"><code>src/include/nodes/parsenodes.h</code></a>: 行ロック句を含むパースツリー構造体を定義します。</li>
+<li><a class="wiki-source-link" href="../../../../source/src/include/nodes/plannodes.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/nodes/plannodes.h.html&quot;}, '*');"><code>src/include/nodes/plannodes.h</code></a>: プラン生成後の行マーク情報を定義します。</li>
+</ul>
+<h2>読者向けメモ</h2>
+<ul>
+<li>列挙型の定義順序（特に <code>LockClauseStrength</code> や <a class="wiki-source-link" href="../../../../source/src/include/nodes/lockoptions.h.html#L37" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__nodes__lockoptions_h__LockWaitPolicy.html&quot;}, '*');"><code>LockWaitPolicy</code></a>）は重要であり、複数のロック条項が競合した際の上書き解決（優先度の評価）に利用されます。</li>
+</ul>
+<h2>シンボルページ</h2>
+<ul>
+<li><a href="../../../symbols/src__include__nodes__lockoptions_h__LockClauseStrength.html" target="wiki-view"><code>LockClauseStrength</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__lockoptions_h__LockWaitPolicy.html" target="wiki-view"><code>LockWaitPolicy</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__lockoptions_h__LockTupleMode.html" target="wiki-view"><code>LockTupleMode</code></a></li>
+</ul><script>
+(function() {
+  function notifyParent() {
+    if (parent === window) return;
+    parent.postMessage({type: "frame-location", frame: window.name || "", href: window.location.href}, "*");
+  }
+  document.addEventListener("click", function(event) {
+    const link = event.target.closest("a[data-panel]");
+    if (!link || parent === window) return;
+    parent.postMessage({type: "source-link", panel: link.dataset.panel}, "*");
+  });
+  window.addEventListener("load", notifyParent);
+  window.addEventListener("hashchange", notifyParent);
+})();
+</script></body></html>

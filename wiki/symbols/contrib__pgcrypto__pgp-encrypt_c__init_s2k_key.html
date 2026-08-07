@@ -15,7 +15,7 @@
 <h2>入力と出力</h2>
 <ul>
 <li>引数: <code>PGP_Context *ctx</code></li>
-<li>戻り値: <a class="wiki-source-link" href="../../source/src/include/port.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__port_h__int.html&quot;}, '*');"><code>int</code></a></li>
+<li>戻り値: <code>int</code></li>
 </ul>
 <h2>前提条件と不変条件</h2>
 <p>まだ解析していません。</p>
@@ -34,7 +34,7 @@
 <h2>関連データ構造</h2>
 <p><a class="wiki-source-link" href="../../source/contrib/pgcrypto/pgp.h.html#L119" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/contrib__pgcrypto__pgp_h__PGP_Context.html&quot;}, '*');"><code>PGP_Context</code></a></p>
 <h2>ソース抜粋</h2>
-<p>~~~c static <a class="wiki-source-link" href="../../source/src/include/port.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__port_h__int.html&quot;}, '*');">int</a> <a class="wiki-source-link" href="../../source/contrib/pgcrypto/pgp-encrypt.c.html#L561" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/contrib__pgcrypto__pgp-encrypt_c__init_s2k_key.html&quot;}, '*');">init_s2k_key</a>(<a class="wiki-source-link" href="../../source/contrib/pgcrypto/pgp.h.html#L119" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/contrib__pgcrypto__pgp_h__PGP_Context.html&quot;}, '*');">PGP_Context</a> *ctx) { <a class="wiki-source-link" href="../../source/src/include/port.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__port_h__int.html&quot;}, '*');">int</a>			res;</p>
+<p>~~~c static int <a class="wiki-source-link" href="../../source/contrib/pgcrypto/pgp-encrypt.c.html#L561" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/contrib__pgcrypto__pgp-encrypt_c__init_s2k_key.html&quot;}, '*');">init_s2k_key</a>(<a class="wiki-source-link" href="../../source/contrib/pgcrypto/pgp.h.html#L119" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/contrib__pgcrypto__pgp_h__PGP_Context.html&quot;}, '*');">PGP_Context</a> *ctx) { int			res;</p>
 <p>if (ctx-&gt;s2k_cipher_algo &lt; 0) ctx-&gt;s2k_cipher_algo = ctx-&gt;cipher_algo;</p>
 <p>res = <a class="wiki-source-link" href="../../source/contrib/pgcrypto/pgp-s2k.c.html#L222" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/contrib__pgcrypto__pgp-s2k_c__pgp_s2k_fill.html&quot;}, '*');">pgp_s2k_fill</a>(&amp;ctx-&gt;s2k, ctx-&gt;s2k_mode, ctx-&gt;s2k_digest_algo, ctx-&gt;s2k_count); if (res &lt; 0) return res;</p>
 <p>return <a class="wiki-source-link" href="../../source/contrib/pgcrypto/pgp-s2k.c.html#L278" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/contrib__pgcrypto__pgp-s2k_c__pgp_s2k_process.html&quot;}, '*');">pgp_s2k_process</a>(&amp;ctx-&gt;s2k, ctx-&gt;s2k_cipher_algo, ctx-&gt;sym_key, ctx-&gt;sym_key_len); } ~~~</p>

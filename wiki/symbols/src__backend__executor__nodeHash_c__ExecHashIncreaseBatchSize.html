@@ -37,8 +37,8 @@
 <p>~~~c static bool <a class="wiki-source-link" href="../../source/src/backend/executor/nodeHash.c.html#L1022" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__executor__nodeHash_c__ExecHashIncreaseBatchSize.html&quot;}, '*');">ExecHashIncreaseBatchSize</a>(<a class="wiki-source-link" href="../../source/src/include/nodes/execnodes.h.html#L2247" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__nodes__execnodes_h__HashJoinTable.html&quot;}, '*');">HashJoinTable</a> hashtable) { /*</p>
 <ul>
 <li>How much additional memory would doubling nbatch use? Each batch may</li>
-<li>require two buffered files (inner/outer), with a <a class="wiki-source-link" href="../../source/src/include/c.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__c_h__BLCKSZ.html&quot;}, '*');">BLCKSZ</a> buffer.</li>
-<p>*/ size_t		batchSpace = (hashtable-&gt;nbatch * 2 * (size_t) <a class="wiki-source-link" href="../../source/src/include/c.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__c_h__BLCKSZ.html&quot;}, '*');">BLCKSZ</a>);</p>
+<li>require two buffered files (inner/outer), with a BLCKSZ buffer.</li>
+<p>*/ size_t		batchSpace = (hashtable-&gt;nbatch * 2 * (size_t) BLCKSZ);</p>
 </ul>
 <p>/*</p>
 <ul>

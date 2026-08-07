@@ -57,12 +57,12 @@
 <p>/*</p>
 <ul>
 <li>Calculate the number of pages fetched from the heap.  Then based on</li>
-<li>current <a class="wiki-source-link" href="../../source/src/backend/utils/init/globals.c.html#L133" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/utils/init/globals.c.html&quot;}, '*');">work_mem</a> estimate get the estimated maxentries in the bitmap.</li>
+<li>current work_mem estimate get the estimated maxentries in the bitmap.</li>
 <li>(Note that we always do this calculation based on the number of pages</li>
 <li>that would be fetched in a single iteration, even if loop_count &gt; 1.</li>
 <li>That&#x27;s correct, because only that number of entries will be stored in</li>
 <li>the bitmap at one time.)</li>
-<p>*/ heap_pages = Min(pages_fetched, baserel-&gt;pages); maxentries = <a class="wiki-source-link" href="../../source/src/backend/nodes/tidbitmap.c.html#L1541" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__nodes__tidbitmap_c__tbm_calculate_entries.html&quot;}, '*');">tbm_calculate_entries</a>(<a class="wiki-source-link" href="../../source/src/backend/utils/init/globals.c.html#L133" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/utils/init/globals.c.html&quot;}, '*');">work_mem</a> * (Size) 1024);</p>
+<p>*/ heap_pages = Min(pages_fetched, baserel-&gt;pages); maxentries = <a class="wiki-source-link" href="../../source/src/backend/nodes/tidbitmap.c.html#L1541" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__nodes__tidbitmap_c__tbm_calculate_entries.html&quot;}, '*');">tbm_calculate_entries</a>(work_mem * (Size) 1024);</p>
 </ul>
 <p>if (loop_count &gt; 1) { /*</p>
 <ul>

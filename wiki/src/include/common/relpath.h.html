@@ -1,0 +1,62 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>src/include/common/relpath.h.md</title><link rel="stylesheet" href="../../../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../../../source/src/include/common/relpath.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/common/relpath.h.html&quot;}, '*');">src/include/common/relpath.h</a></h1>
+<h2>概要</h2>
+<p>PostgreSQL のリレーション（テーブルやインデックスなど）のファイルパスや、データベースディレクトリのパスを算出するためのデータ型、マクロ、および関数宣言を定義するヘッダーファイルです。フロントエンドとバックエンドの両方から共有されます。</p>
+<h2>モジュール内での役割</h2>
+<p><code>src/include/common</code> モジュールの一部として、ストレージ層やカタログ層がファイルシステム上の物理パスを構築する際の共通インターフェースを提供します。対となる実装ファイル <a class="wiki-source-link" href="../../../../source/src/common/relpath.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/common/relpath.c.html&quot;}, '*');"><code>src/common/relpath.c</code></a> と協調し、フォーク名やテーブルスペースの命名規則をカプセル化します。</p>
+<h2>責務</h2>
+<ul>
+<li>リレーションファイルを識別する <a class="wiki-source-link" href="../../../../source/src/include/common/relpath.h.html#L25" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__common__relpath_h__RelFileNumber.html&quot;}, '*');"><code>RelFileNumber</code></a> 型および関連マクロの定義。</li>
+<li>メジャーバージョンとカタログバージョンから構成されるテーブルスペースサブディレクトリ（<a class="wiki-source-link" href="../../../../source/src/include/common/relpath.h.html#L33" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/common/relpath.h.html&quot;}, '*');"><code>TABLESPACE_VERSION_DIRECTORY</code></a>）の定義。</li>
+<li>リレーションの物理ストレージを分割するフォーク（<a class="wiki-source-link" href="../../../../source/src/include/common/relpath.h.html#L56" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__common__relpath_h__ForkNumber.html&quot;}, '*');"><code>ForkNumber</code></a> とその名前配列）の管理。</li>
+<li>リレーションパスの最大長（<a class="wiki-source-link" href="../../../../source/src/include/common/relpath.h.html#L97" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/common/relpath.h.html&quot;}, '*');"><code>REL_PATH_STR_MAXLEN</code></a>）と、スタック上で安全にパス文字列を保持するための <a class="wiki-source-link" href="../../../../source/src/include/common/relpath.h.html#L122" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__common__relpath_h__RelPathStr.html&quot;}, '*');"><code>RelPathStr</code></a> 構造体の提供。</li>
+<li>パス構築関数 (<a class="wiki-source-link" href="../../../../source/src/common/relpath.c.html#L109" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__common__relpath_c__GetDatabasePath.html&quot;}, '*');"><code>GetDatabasePath</code></a>, <code>GetRelationPath</code>) および簡便なラッパーマクロ (<a class="wiki-source-link" href="../../../../source/src/include/common/relpath.h.html#L151" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/common/relpath.h.html&quot;}, '*');"><code>relpath</code></a>, <a class="wiki-source-link" href="../../../../source/src/include/common/relpath.h.html#L147" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/common/relpath.h.html&quot;}, '*');"><code>relpathperm</code></a>, <a class="wiki-source-link" href="../../../../source/src/include/common/relpath.h.html#L142" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/common/relpath.h.html&quot;}, '*');"><code>relpathbackend</code></a>) の公開。</li>
+</ul>
+<h2>重要なシンボル</h2>
+<ul>
+<li><a class="wiki-source-link" href="../../../../source/src/include/common/relpath.h.html#L25" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__common__relpath_h__RelFileNumber.html&quot;}, '*');"><code>RelFileNumber</code></a>: リレーションファイルを一意に識別するための <code>Oid</code> のエイリアс。</li>
+<li><a class="wiki-source-link" href="../../../../source/src/include/common/relpath.h.html#L56" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__common__relpath_h__ForkNumber.html&quot;}, '*');"><code>ForkNumber</code></a>: メイン、FSM、VM、初期化などのフォーク種別を表す列挙型。</li>
+<li><a class="wiki-source-link" href="../../../../source/src/include/common/relpath.h.html#L122" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__common__relpath_h__RelPathStr.html&quot;}, '*');"><code>RelPathStr</code></a>: バッファ安全性のため固定長文字列をラップする構造体。</li>
+<li><code>GetRelationPath</code>: 指定されたOidやフォークから完全なリレーションファイルパスを構築する関数。</li>
+<li><a class="wiki-source-link" href="../../../../source/src/include/common/relpath.h.html#L151" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/common/relpath.h.html&quot;}, '*');"><code>relpath</code></a>, <a class="wiki-source-link" href="../../../../source/src/include/common/relpath.h.html#L147" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/common/relpath.h.html&quot;}, '*');"><code>relpathperm</code></a>, <a class="wiki-source-link" href="../../../../source/src/include/common/relpath.h.html#L142" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/common/relpath.h.html&quot;}, '*');"><code>relpathbackend</code></a>: <code>RelFileLocator</code> やバックエンド情報からパス取得を簡略化するラッパーマクロ。</li>
+</ul>
+<h2>制御フローとデータフロー</h2>
+<ul>
+<li>呼び出し側は <a class="wiki-source-link" href="../../../../source/src/include/common/relpath.h.html#L151" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/common/relpath.h.html&quot;}, '*');"><code>relpath</code></a> などのマクロに <code>RelFileLocator</code> や <a class="wiki-source-link" href="../../../../source/src/include/common/relpath.h.html#L56" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__common__relpath_h__ForkNumber.html&quot;}, '*');"><code>ForkNumber</code></a> を渡します。</li>
+<li>マクロは内部で <code>GetRelationPath</code> を呼び出し、データベースOID、テーブルスペースOID、リレーションファイル番号、プロセス番号、フォーク番号を組み合わせてファイルパスを決定します。</li>
+<li>構築されたパスは <a class="wiki-source-link" href="../../../../source/src/include/common/relpath.h.html#L122" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__common__relpath_h__RelPathStr.html&quot;}, '*');"><code>RelPathStr</code></a> 構造体に格納され、スタック上の安全な戻り値として呼び出し元に返されます。</li>
+</ul>
+<h2>直接依存</h2>
+<ul>
+<li><code>catalog/catversion.h</code>: カタログバージョン番号 (<a class="wiki-source-link" href="../../../../source/src/include/catalog/catversion.h.html#L60" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/catalog/catversion.h.html&quot;}, '*');"><code>CATALOG_VERSION_NO</code></a>) を取得するためにインクルードされます。</li>
+</ul>
+<h2>関連コード</h2>
+<ul>
+<li><a class="wiki-source-link" href="../../../../source/src/common/relpath.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/common/relpath.c.html&quot;}, '*');"><code>src/common/relpath.c</code></a>: フォーク名のルックアップや <a class="wiki-source-link" href="../../../../source/src/common/relpath.c.html#L109" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__common__relpath_c__GetDatabasePath.html&quot;}, '*');"><code>GetDatabasePath</code></a> / <code>GetRelationPath</code> の実際の実装を含むペアファイル。</li>
+<li><a class="wiki-source-link" href="../../../../source/src/include/storage/relfilelocator.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/storage/relfilelocator.h.html&quot;}, '*');"><code>src/include/storage/relfilelocator.h</code></a>: <code>RelFileLocator</code> や関連構造体の定義元。</li>
+</ul>
+<h2>読者向けメモ</h2>
+<ul>
+<li><a class="wiki-source-link" href="../../../../source/src/include/common/relpath.h.html#L122" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__common__relpath_h__RelPathStr.html&quot;}, '*');"><code>RelPathStr</code></a> は <code>char[REL_PATH_STR_MAXLEN + 1]</code> を直接露出させず構造体で包むことで、ポインタの不意の減衰を防ぎ、スタック上の戻り値に対する無効な参照をコンパイラが検出しやすくしています。</li>
+<li>パス最大長のマクロはヌル終端文字を含まないため、他の文字列長と結合する際に注意が必要です。</li>
+</ul>
+<h2>シンボルページ</h2>
+<ul>
+<li><a href="../../../symbols/src__include__common__relpath_h__RelFileNumber.html" target="wiki-view"><code>RelFileNumber</code></a></li>
+<li><a href="../../../symbols/src__include__common__relpath_h__ForkNumber.html" target="wiki-view"><code>ForkNumber</code></a></li>
+<li><a href="../../../symbols/src__include__common__relpath_h__RelPathStr.html" target="wiki-view"><code>RelPathStr</code></a></li>
+</ul><script>
+(function() {
+  function notifyParent() {
+    if (parent === window) return;
+    parent.postMessage({type: "frame-location", frame: window.name || "", href: window.location.href}, "*");
+  }
+  document.addEventListener("click", function(event) {
+    const link = event.target.closest("a[data-panel]");
+    if (!link || parent === window) return;
+    parent.postMessage({type: "source-link", panel: link.dataset.panel}, "*");
+  });
+  window.addEventListener("load", notifyParent);
+  window.addEventListener("hashchange", notifyParent);
+})();
+</script></body></html>

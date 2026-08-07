@@ -17,7 +17,7 @@
 <h3>2. 関数のインライン展開 (Function Inlining)</h3>
 <ul>
 <li>**式レベルのインライン化**: 単一の <code>SELECT</code> 式のみで構成される単純なSQL言語関数を、呼び出し元の式ツリーに直接展開（<a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/util/clauses.c.html#L5321" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__clauses_c__inline_function.html&quot;}, '*');"><code>inline_function</code></a>）します。</li>
-<li>**FROM句のインライン化**: FROM句内のテーブル関数（<a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/util/clauses.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__clauses_c__RTE_FUNCTION.html&quot;}, '*');"><code>RTE_FUNCTION</code></a>）をサブクエリとして展開（<a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/util/clauses.c.html#L5834" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__clauses_c__inline_function_in_from.html&quot;}, '*');"><code>inline_function_in_from</code></a>）し、結合最適化の対象にします。</li>
+<li>**FROM句のインライン化**: FROM句内のテーブル関数（<code>RTE_FUNCTION</code>）をサブクエリとして展開（<a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/util/clauses.c.html#L5834" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__clauses_c__inline_function_in_from.html&quot;}, '*');"><code>inline_function_in_from</code></a>）し、結合最適化の対象にします。</li>
 </ul>
 <h3>3. ヌル可能性解析 (Nullability Analysis)</h3>
 <ul>
@@ -50,7 +50,7 @@
 <li><code>inline_function(...)</code></li>
 <li>SQL言語関数を式ツリー内にインライン展開可能か検証し、可能であれば展開します。</li>
 <li><code>inline_function_in_from(PlannerInfo *root, RangeTblEntry *rte)</code></li>
-<li>FROM句の <a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/util/clauses.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__clauses_c__RTE_FUNCTION.html&quot;}, '*');"><code>RTE_FUNCTION</code></a> をサブクエリに展開するためのエントリポイント。</li>
+<li>FROM句の <code>RTE_FUNCTION</code> をサブクエリに展開するためのエントリポイント。</li>
 <li><code>inline_sql_function_in_from(...)</code></li>
 <li>SQL言語のセットリターン関数をFROM句にインライン展開する実体処理。</li>
 </ul>
@@ -59,7 +59,7 @@
 <li><code>find_nonnullable_rels(Node *clause)</code> / <code>find_nonnullable_vars(Node *clause)</code></li>
 <li>式が TRUE を返すために非NULLでなければならないリレーションID集合（<code>Relids</code>）または変数（<code>Var</code>）のリストを返します。</li>
 <li><code>expr_is_nonnullable(PlannerInfo *root, Expr *expr, NotNullSource source)</code></li>
-<li>指定された式が確実に SQL NULL を返さない（NOT NULL である）ことをカタログや制約情報から判定します。</li>
+<li>指定された式が確実に SQL NULL を返さない（<a class="wiki-source-link" href="../../../../../source/src/include/nodes/primnodes.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__nodes__primnodes_h__NOT.html&quot;}, '*');">NOT</a> NULL である）ことをカタログや制約情報から判定します。</li>
 <li><code>find_forced_null_vars(Node *node)</code> / <code>find_forced_null_var(Node *node)</code></li>
 <li>式が TRUE を返すために NULL であることが強制される変数を特定します。</li>
 </ul>
@@ -111,7 +111,7 @@ context の初期化 (boundParams, active_fns, case_val 等)
 <ul>
 <li>**ノード操作基盤**: <code>nodes/nodeFuncs.h</code> (<a class="wiki-source-link" href="../../../../../source/src/include/nodes/nodeFuncs.h.html#L155" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/nodes/nodeFuncs.h.html&quot;}, '*');"><code>expression_tree_walker</code></a>, <code>expression_tree_mutator</code>)</li>
 <li>**エグゼキュータ**: <code>executor/executor.h</code> (<a class="wiki-source-link" href="../../../../../source/src/backend/executor/execUtils.c.html#L89" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__executor__execUtils_c__CreateExecutorState.html&quot;}, '*');"><code>CreateExecutorState</code></a>, <a class="wiki-source-link" href="../../../../../source/src/backend/executor/execExpr.c.html#L142" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__executor__execExpr_c__ExecInitExpr.html&quot;}, '*');"><code>ExecInitExpr</code></a>, <a class="wiki-source-link" href="../../../../../source/src/include/executor/executor.h.html#L443" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__executor__executor_h__ExecEvalExprSwitchContext.html&quot;}, '*');"><code>ExecEvalExprSwitchContext</code></a>)</li>
-<li>**システムカタログキャッシュ**: <code>utils/syscache.h</code>, <code>utils/lsyscache.h</code> (<code>pg_proc</code>, <code>pg_operator</code>, <code>pg_type</code> などのメタデータ取得)</li>
+<li>**システムカタログキャッシュ**: <code>utils/syscache.h</code>, <code>utils/lsyscache.h</code> (<code>pg_proc</code>, <code>pg_operator</code>, <a class="wiki-source-link" href="../../../../../source/src/include/catalog/pg_type.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__catalog__pg_type_h__pg_type.html&quot;}, '*');"><code>pg_type</code></a> などのメタデータ取得)</li>
 <li>**パーサ・リライタ**: <code>parser/analyze.h</code>, <code>rewrite/rewriteHandler.h</code> (インライン展開時の再パースおよびルール適用)</li>
 </ul>
 <h2>関連コード</h2>

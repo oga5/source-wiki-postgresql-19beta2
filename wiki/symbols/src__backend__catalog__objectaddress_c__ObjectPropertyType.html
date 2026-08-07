@@ -28,14 +28,14 @@
 <h2>関連データ構造</h2>
 <p><code>AttrNumber</code>, <a class="wiki-source-link" href="../../source/src/interfaces/ecpg/preproc/type.h.html#L96" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__interfaces__ecpg__preproc__type_h__index.html&quot;}, '*');"><code>index</code></a>, <code>ObjectType</code>, <code>Oid</code>, <code>string</code></p>
 <h2>ソース抜粋</h2>
-<p>~~~c typedef struct { const char *class_descr;	/* string describing the catalog, for internal</p>
+<p>~~~c typedef struct { const <a class="wiki-source-link" href="../../source/src/include/port/atomics/generic-gcc.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__port__atomics__generic-gcc_h__char.html&quot;}, '*');">char</a> *class_descr;	/* string describing the catalog, for internal</p>
 <ul>
 <li>error messages */</li>
 <p>Oid			class_oid;		/* oid of catalog */ Oid			oid_index_oid;	/* oid of <a class="wiki-source-link" href="../../source/src/interfaces/ecpg/preproc/type.h.html#L96" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__interfaces__ecpg__preproc__type_h__index.html&quot;}, '*');">index</a> on <a class="wiki-source-link" href="../../source/src/include/port.h.html#L388" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/port.h.html&quot;}, '*');">system</a> oid column */ SysCacheIdentifier oid_catcache_id; /* id of catcache on <a class="wiki-source-link" href="../../source/src/include/port.h.html#L388" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/port.h.html&quot;}, '*');">system</a> oid column	*/ SysCacheIdentifier name_catcache_id;	/* id of catcache on</p>
 <li>(name,namespace), or (name) if</li>
 <li>the object does not live in a</li>
 <li>namespace */</li>
-<p>AttrNumber	attnum_oid;		/* attribute number of oid column */ AttrNumber	attnum_name;	/* attnum of name field */ AttrNumber	attnum_namespace;	/* attnum of namespace field */ AttrNumber	attnum_owner;	/* attnum of owner field */ AttrNumber	attnum_acl;		/* attnum of acl field */ ObjectType	objtype;		/* OBJECT_* of this object type */ bool		is_nsp_name_unique; /* can the nsp/name combination (or name</p>
+<p>AttrNumber	attnum_oid;		/* attribute number of oid column */ AttrNumber	attnum_name;	/* attnum of name field */ AttrNumber	attnum_namespace;	/* attnum of namespace field */ AttrNumber	attnum_owner;	/* attnum of owner field */ AttrNumber	attnum_acl;		/* attnum of acl field */ ObjectType	objtype;		/* OBJECT_* of this object <a class="wiki-source-link" href="../../source/src/include/lib/ilist.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__lib__ilist_h__type.html&quot;}, '*');">type</a> */ bool		is_nsp_name_unique; /* can the nsp/name combination (or name</p>
 <li>alone, if there&#x27;s no namespace) be</li>
 <li>considered a unique identifier for an</li>
 <li>object of this class? */</li>

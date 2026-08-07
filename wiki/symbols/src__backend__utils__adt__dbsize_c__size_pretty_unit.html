@@ -28,7 +28,7 @@
 <h2>関連データ構造</h2>
 <p><code>uint32</code>, <code>uint8</code></p>
 <h2>ソース抜粋</h2>
-<p>~~~c struct <a class="wiki-source-link" href="../../source/src/backend/utils/adt/dbsize.c.html#L38" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__utils__adt__dbsize_c__size_pretty_unit.html&quot;}, '*');">size_pretty_unit</a> { const char *name;			/* bytes, kB, MB, GB etc */ uint32		limit;			/* upper limit, prior to half rounding after</p>
+<p>~~~c struct <a class="wiki-source-link" href="../../source/src/backend/utils/adt/dbsize.c.html#L38" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__utils__adt__dbsize_c__size_pretty_unit.html&quot;}, '*');">size_pretty_unit</a> { const <a class="wiki-source-link" href="../../source/src/include/port/atomics/generic-gcc.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__port__atomics__generic-gcc_h__char.html&quot;}, '*');">char</a> *name;			/* bytes, kB, MB, GB etc */ uint32		limit;			/* upper limit, prior to half rounding after</p>
 <ul>
 <li>converting to this unit. */</li>
 <p>bool		round;			/* do half rounding for this unit */ uint8		unitbits;		/* (1 &lt;&lt; unitbits) bytes to make 1 of this</p>

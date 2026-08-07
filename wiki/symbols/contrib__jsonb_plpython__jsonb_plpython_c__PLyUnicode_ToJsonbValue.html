@@ -34,7 +34,7 @@
 <h2>関連データ構造</h2>
 <p><code>JsonbValue</code>, <code>PyObject</code>, <code>string</code></p>
 <h2>ソース抜粋</h2>
-<p>~~~c static void <a class="wiki-source-link" href="../../source/contrib/jsonb_plpython/jsonb_plpython.c.html#L84" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/contrib__jsonb_plpython__jsonb_plpython_c__PLyUnicode_ToJsonbValue.html&quot;}, '*');">PLyUnicode_ToJsonbValue</a>(PyObject *obj, JsonbValue *jbvElem) { jbvElem-&gt;type = jbvString; jbvElem-&gt;val.string.val = PLyObject_AsString(obj); jbvElem-&gt;val.string.len = strlen(jbvElem-&gt;val.string.val); } ~~~</p>
+<p>~~~c static void <a class="wiki-source-link" href="../../source/contrib/jsonb_plpython/jsonb_plpython.c.html#L84" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/contrib__jsonb_plpython__jsonb_plpython_c__PLyUnicode_ToJsonbValue.html&quot;}, '*');">PLyUnicode_ToJsonbValue</a>(PyObject *obj, JsonbValue *jbvElem) { jbvElem-&gt;<a class="wiki-source-link" href="../../source/src/include/lib/ilist.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__lib__ilist_h__type.html&quot;}, '*');">type</a> = jbvString; jbvElem-&gt;val.string.val = PLyObject_AsString(obj); jbvElem-&gt;val.string.len = strlen(jbvElem-&gt;val.string.val); } ~~~</p>
 <h2>失敗モードと境界条件</h2>
 <p>まだ解析していません。</p>
 <h2>保守担当者向けメモ</h2>

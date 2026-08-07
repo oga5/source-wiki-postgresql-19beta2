@@ -37,7 +37,7 @@
 <p>~~~c static BlockNumber <a class="wiki-source-link" href="../../source/src/backend/access/brin/brin_revmap.c.html#L441" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__access__brin__brin_revmap_c__revmap_get_blkno.html&quot;}, '*');">revmap_get_blkno</a>(BrinRevmap *revmap, BlockNumber heapBlk) { BlockNumber targetblk;</p>
 <p>/* obtain revmap block number, skip 1 for metapage block */ targetblk = <a class="wiki-source-link" href="../../source/src/backend/access/brin/brin_revmap.c.html#L40" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/access/brin/brin_revmap.c.html&quot;}, '*');">HEAPBLK_TO_REVMAP_BLK</a>(revmap-&gt;rm_pagesPerRange, heapBlk) + 1;</p>
 <p>/* Normal case: the revmap page <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> already allocated */ if (targetblk &lt;= revmap-&gt;rm_lastRevmapPage) return targetblk;</p>
-<p>return <a class="wiki-source-link" href="../../source/src/include/storage/block.h.html#L33" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/storage/block.h.html&quot;}, '*');">InvalidBlockNumber</a>; } ~~~</p>
+<p>return InvalidBlockNumber; } ~~~</p>
 <h2>失敗モードと境界条件</h2>
 <p>まだ解析していません。</p>
 <h2>保守担当者向けメモ</h2>

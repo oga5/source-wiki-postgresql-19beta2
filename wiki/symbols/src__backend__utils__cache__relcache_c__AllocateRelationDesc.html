@@ -47,7 +47,7 @@
 <li>Copy the relation tuple form</li>
 <p>*</p>
 <li>We only allocate space for the fixed fields, ie, CLASS_TUPLE_SIZE. The</li>
-<li>variable-length fields (relacl, reloptions) are NOT stored in the</li>
+<li>variable-length fields (relacl, reloptions) are <a class="wiki-source-link" href="../../source/src/include/nodes/primnodes.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__nodes__primnodes_h__NOT.html&quot;}, '*');">NOT</a> stored in the</li>
 <li>relcache --- there&#x27;d be little point in it, since we don&#x27;t copy the</li>
 <li>tuple&#x27;s nulls bitmap and hence wouldn&#x27;t know if the values are valid.</li>
 <li>Bottom line <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> that relacl *cannot* be retrieved from the relcache. Get</li>

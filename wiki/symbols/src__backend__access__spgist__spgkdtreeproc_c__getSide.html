@@ -15,7 +15,7 @@
 <h2>入力と出力</h2>
 <ul>
 <li>引数: <code>double coord</code>, <code>bool isX</code>, <code>Point *tst</code></li>
-<li>戻り値: <a class="wiki-source-link" href="../../source/src/include/port.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__port_h__int.html&quot;}, '*');"><code>int</code></a></li>
+<li>戻り値: <code>int</code></li>
 </ul>
 <h2>前提条件と不変条件</h2>
 <p>まだ解析していません。</p>
@@ -34,7 +34,7 @@
 <h2>関連データ構造</h2>
 <p><a class="wiki-source-link" href="../../source/src/include/utils/geo_decls.h.html#L95" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__utils__geo_decls_h__Point.html&quot;}, '*');"><code>Point</code></a></p>
 <h2>ソース抜粋</h2>
-<p>~~~c static <a class="wiki-source-link" href="../../source/src/include/port.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__port_h__int.html&quot;}, '*');">int</a> <a class="wiki-source-link" href="../../source/src/backend/access/spgist/spgkdtreeproc.c.html#L42" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__access__spgist__spgkdtreeproc_c__getSide.html&quot;}, '*');">getSide</a>(double coord, bool isX, <a class="wiki-source-link" href="../../source/src/include/utils/geo_decls.h.html#L95" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__utils__geo_decls_h__Point.html&quot;}, '*');">Point</a> *tst) { double		tstcoord = (isX) ? tst-&gt;x : tst-&gt;y;</p>
+<p>~~~c static int <a class="wiki-source-link" href="../../source/src/backend/access/spgist/spgkdtreeproc.c.html#L42" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__access__spgist__spgkdtreeproc_c__getSide.html&quot;}, '*');">getSide</a>(double coord, bool isX, <a class="wiki-source-link" href="../../source/src/include/utils/geo_decls.h.html#L95" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__utils__geo_decls_h__Point.html&quot;}, '*');">Point</a> *tst) { double		tstcoord = (isX) ? tst-&gt;x : tst-&gt;y;</p>
 <p>if (coord == tstcoord) return 0; else if (coord &gt; tstcoord) return 1; else return -1; } ~~~</p>
 <h2>失敗モードと境界条件</h2>
 <p>まだ解析していません。</p>

@@ -24,7 +24,7 @@
 <li>所属モジュール: <a class="wiki-entity-link" href="../modules/src__backend__optimizer__util.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/modules/src__backend__optimizer__util.html&quot;, &quot;source&quot;: &quot;source/src/backend/optimizer/util/appendinfo.c.html&quot;}, '*');"><code>module:src/backend/optimizer/util</code></a></li>
 </ul>
 <h2>目的</h2>
-<p>指定された式木（<code>node</code>）を走査し、特定のリレーション識別子（<code>varno</code>）に対応する属性番号（<a class="wiki-source-link" href="../../source/src/backend/optimizer/util/tlist.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__tlist_c__varattno.html&quot;}, '*');"><code>varattno</code></a>）の集合を抽出してビットマップ（<a class="wiki-source-link" href="../../source/src/backend/optimizer/util/var.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__var_c__varattnos.html&quot;}, '*');"><code>varattnos</code></a>）に蓄積する。</p>
+<p>指定された式木（<code>node</code>）を走査し、特定のリレーション識別子（<code>varno</code>）に対応する属性番号（<code>varattno</code>）の集合を抽出してビットマップ（<a class="wiki-source-link" href="../../source/src/backend/optimizer/util/var.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__var_c__varattnos.html&quot;}, '*');"><code>varattnos</code></a>）に蓄積する。</p>
 <h2>シグネチャまたは形状</h2>
 <ul>
 <li>シグネチャ: <code>void pull_varattnos(Node *node, Index varno, Bitmapset **varattnos)</code></li>

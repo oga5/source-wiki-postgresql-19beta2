@@ -1,0 +1,97 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>src/include/storage/itemptr.h.md</title><link rel="stylesheet" href="../../../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../../../source/src/include/storage/itemptr.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/storage/itemptr.h.html&quot;}, '*');">src/include/storage/itemptr.h</a></h1>
+<h2>概要</h2>
+<p>ディスク上のタプルやインデックスエントリの位置を指し示す「タプルID（TID / ItemPointer）」のデータ構造と、それを操作するためのインライン関数群および外部関数群を定義するヘッダーファイルである。</p>
+<h2>モジュール内での役割</h2>
+<p><code>src/include/storage</code> サブシステムのストレージ層において、ページ内の特定の位置（ブロック番号とラインポインタ配列のオフセット）を表現する基礎的なプリミティブを提供する。ヒープタプルのヘッダー（<code>t_ctid</code>）やインデックスから親テーブルへのクロスリンクなど、PostgreSQL 全体で広く利用される。</p>
+<h2>責務</h2>
+<ul>
+<li>**データ構造の定義**: 6バイトのコンパクトな構造体 <code>ItemPointerData</code> の定義とパディング防止。</li>
+<li>**特殊マーカーの提供**: スペキュスラティブ挿入やパーティション間移動を示すマジック値の定義。</li>
+<li>**アクセサおよびバリデーション**: ブロック番号やオフセット番号の取得・設定、および有効性検証（<a class="wiki-source-link" href="../../../../source/src/include/c.h.html#L950" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/c.h.html&quot;}, '*');"><code>Assert</code></a>）。</li>
+<li>**比較・演算関数**: TID 同士の比較、等価性判定、ポインタのインクリメント/デクリメント。</li>
+<li>**Datum 変換**: PostgreSQL の関数呼び出しインターフェース（<code>Datum</code>）と <code>ItemPointer</code> 間のキャストマクロ/インライン関数。</li>
+</ul>
+<h2>重要なシンボル</h2>
+<h3>データ構造と型</h3>
+<ul>
+<li><code>ItemPointerData</code>: ディスク上の位置（<code>BlockIdData ip_blkid</code> と <code>OffsetNumber ip_posid</code>）を保持する構造体。コンパイラ依存の属性により正確に 6 バイトに調整される。</li>
+<li><code>ItemPointer</code>: <code>ItemPointerData *</code> 型のエイリアス。</li>
+</ul>
+<h3>特殊値マクロ</h3>
+<ul>
+<li><a class="wiki-source-link" href="../../../../source/src/include/storage/itemptr.h.html#L63" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/storage/itemptr.h.html&quot;}, '*');"><code>SpecTokenOffsetNumber</code></a> (<code>0xfffe</code>): スペキュスラティブ挿入トークンを表すオフセット番号。</li>
+<li><a class="wiki-source-link" href="../../../../source/src/include/storage/itemptr.h.html#L69" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/storage/itemptr.h.html&quot;}, '*');"><code>MovedPartitionsOffsetNumber</code></a> (<code>0xfffd</code>) / <a class="wiki-source-link" href="../../../../source/src/include/storage/itemptr.h.html#L70" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/storage/itemptr.h.html&quot;}, '*');"><code>MovedPartitionsBlockNumber</code></a> (<code>InvalidBlockNumber</code>): <a class="wiki-source-link" href="../../../../source/src/backend/optimizer/prep/preptlist.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__prep__preptlist_c__UPDATE.html&quot;}, '*');">UPDATE</a> によって他パーティションへ移動したタプルを示すマジック値。</li>
+</ul>
+<h3>アクセサ・バリデーション・ミューテータ (インライン関数)</h3>
+<ul>
+<li><code>ItemPointerIsValid(pointer)</code>: ポインタが非 NULL かつ <code>ip_posid != 0</code> であるかを検証する。</li>
+<li><code>ItemPointerGetBlockNumber(pointer)</code> / <code>ItemPointerGetBlockNumberNoCheck(pointer)</code>: ブロック番号を取得する。前者は有効性をアサートする。</li>
+<li><code>ItemPointerGetOffsetNumber(pointer)</code> / <code>ItemPointerGetOffsetNumberNoCheck(pointer)</code>: オフセット番号を取得する。前者は有効性をアサートする。</li>
+<li><code>ItemPointerSet(pointer, blockNumber, offNum)</code> / <a class="wiki-source-link" href="../../../../source/src/include/storage/itemptr.h.html#L146" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__storage__itemptr_h__ItemPointerSetBlockNumber.html&quot;}, '*');"><code>ItemPointerSetBlockNumber</code></a> / <a class="wiki-source-link" href="../../../../source/src/include/storage/itemptr.h.html#L157" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__storage__itemptr_h__ItemPointerSetOffsetNumber.html&quot;}, '*');"><code>ItemPointerSetOffsetNumber</code></a>: ブロック番号やオフセット番号を設定する。</li>
+<li><code>ItemPointerSetInvalid(pointer)</code>: 無効な状態（<code>InvalidBlockNumber</code>, <code>InvalidOffsetNumber</code>）に設定する。</li>
+<li><code>ItemPointerCopy(from, to)</code>: ポインタの中身をコピーする（ハッシュキーとしても利用される）。</li>
+<li><code>ItemPointerIndicatesMovedPartitions(pointer)</code> / <code>ItemPointerSetMovedPartitions(pointer)</code>: パーティション間移動状態の判定および設定を行う。</li>
+</ul>
+<h3>比較・算術関数 (外部定義 / <a class="wiki-source-link" href="../../../../source/src/backend/storage/page/itemptr.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/storage/page/itemptr.c.html&quot;}, '*');"><code>itemptr.c</code></a>)</h3>
+<ul>
+<li><code>ItemPointerEquals(pointer1, pointer2)</code>: 両者が同じブロック・オフセットを指すか比較する（有効性のアサートを含む）。</li>
+<li><code>ItemPointerCompare(arg1, arg2)</code>: B パイプラインスタイルの汎用比較関数（-1, 0, 1 を返す）。チェックなしのアクセサを使用する。</li>
+<li><code>ItemPointerInc(pointer)</code> / <code>ItemPointerDec(pointer)</code>: オーバーフロー/アンダーフロー境界に配慮しつつ TID を 1 つ増減させる。</li>
+</ul>
+<h3>Datum 変換</h3>
+<ul>
+<li><code>DatumGetItemPointer(X)</code> / <code>ItemPointerGetDatum(X)</code>: <code>Datum</code> との相互変換。</li>
+<li><code>PG_GETARG_ITEMPOINTER(n)</code> / <code>PG_RETURN_ITEMPOINTER(x)</code>: 関数引数/戻 сторо 用のマクロ。</li>
+</ul>
+<h2>制御フローとデータフロー</h2>
+<ul>
+<li>本ファイルは主にインライン関数とマクロの定義で構成されており、単体の制御フローは持たない。</li>
+<li>値の取得や設定は <code>pointer-&gt;ip_posid</code> および <a class="wiki-source-link" href="../../../../source/src/include/storage/block.h.html#L53" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__storage__block_h__BlockIdData.html&quot;}, '*');"><code>BlockIdData</code></a>（<code>storage/block.h</code>）を直接読み書きする。</li>
+<li><a class="wiki-source-link" href="../../../../source/src/backend/storage/page/itemptr.c.html#L50" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__storage__page__itemptr_c__ItemPointerCompare.html&quot;}, '*');"><code>ItemPointerCompare</code></a> などの外部関数では、ユーザ入力などの非検証済みポインタを安全に扱うために <a class="wiki-source-link" href="../../../../source/src/include/storage/itemptr.h.html#L92" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__storage__itemptr_h__ItemPointerGetBlockNumberNoCheck.html&quot;}, '*');"><code>ItemPointerGetBlockNumberNoCheck</code></a> および <a class="wiki-source-link" href="../../../../source/src/include/storage/itemptr.h.html#L113" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__storage__itemptr_h__ItemPointerGetOffsetNumberNoCheck.html&quot;}, '*');"><code>ItemPointerGetOffsetNumberNoCheck</code></a> を経由してブロック・オフセットを取り出し、大小関係を判定する。</li>
+</ul>
+<h2>直接依存</h2>
+<ul>
+<li><code>storage/block.h</code>: <a class="wiki-source-link" href="../../../../source/src/include/storage/block.h.html#L53" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__storage__block_h__BlockIdData.html&quot;}, '*');"><code>BlockIdData</code></a> および <code>BlockNumber</code> の定義。</li>
+<li><code>storage/off.h</code>: <code>OffsetNumber</code> の定義。</li>
+</ul>
+<h2>関連コード</h2>
+<ul>
+<li><a class="wiki-source-link" href="../../../../source/src/backend/storage/page/itemptr.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/storage/page/itemptr.c.html&quot;}, '*');"><code>src/backend/storage/page/itemptr.c</code></a>: <a class="wiki-source-link" href="../../../../source/src/backend/storage/page/itemptr.c.html#L34" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__storage__page__itemptr_c__ItemPointerEquals.html&quot;}, '*');"><code>ItemPointerEquals</code></a>, <a class="wiki-source-link" href="../../../../source/src/backend/storage/page/itemptr.c.html#L50" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__storage__page__itemptr_c__ItemPointerCompare.html&quot;}, '*');"><code>ItemPointerCompare</code></a>, <a class="wiki-source-link" href="../../../../source/src/backend/storage/page/itemptr.c.html#L83" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__storage__page__itemptr_c__ItemPointerInc.html&quot;}, '*');"><code>ItemPointerInc</code></a>, <a class="wiki-source-link" href="../../../../source/src/backend/storage/page/itemptr.c.html#L113" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__storage__page__itemptr_c__ItemPointerDec.html&quot;}, '*');"><code>ItemPointerDec</code></a> の実体を保持するペアファイル。</li>
+<li><a class="wiki-source-link" href="../../../../source/src/include/storage/block.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/storage/block.h.html&quot;}, '*');"><code>src/include/storage/block.h</code></a>: ブロック識別子の詳細。</li>
+<li><a class="wiki-source-link" href="../../../../source/src/include/storage/itemid.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/storage/itemid.h.html&quot;}, '*');"><code>src/include/storage/itemid.h</code></a>: ページ内のラインポインタ（<code>ItemIdData</code>）定義。</li>
+</ul>
+<h2>読者向けメモ</h2>
+<ul>
+<li>**メモリレイアウトの制約**: <code>ItemPointerData</code> は各タプルヘッダーにインラインで含まれるため、構造体のパディングによるサイズ肥大化が厳しく制限されている（正確に 6 バイト）。ハッシュキーとしても利用されるため、メモリ上のビット列コピー（<a class="wiki-source-link" href="../../../../source/src/include/storage/itemptr.h.html#L171" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__storage__itemptr_h__ItemPointerCopy.html&quot;}, '*');"><code>ItemPointerCopy</code></a>）が前提となっている点に注意。</li>
+<li>**バリデーションの使い分け**: 通常の内部処理では <a class="wiki-source-link" href="../../../../source/src/include/storage/itemptr.h.html#L102" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__storage__itemptr_h__ItemPointerGetBlockNumber.html&quot;}, '*');"><code>ItemPointerGetBlockNumber</code></a> などのアサート付き関数を使い、ユーザ定義 TID や比較など不正なオフセットが入り得る文脈では <code>NoCheck</code> 版を使用する設計になっている。</li>
+</ul>
+<h2>シンボルページ</h2>
+<ul>
+<li><a href="../../../symbols/src__include__storage__itemptr_h__ItemPointerData.html" target="wiki-view"><code>ItemPointerData</code></a></li>
+<li><a href="../../../symbols/src__include__storage__itemptr_h__ItemPointer.html" target="wiki-view"><code>ItemPointer</code></a></li>
+<li><a href="../../../symbols/src__include__storage__itemptr_h__ItemPointerIsValid.html" target="wiki-view"><code>ItemPointerIsValid</code></a></li>
+<li><a href="../../../symbols/src__include__storage__itemptr_h__ItemPointerGetOffsetNumberNoCheck.html" target="wiki-view"><code>ItemPointerGetOffsetNumberNoCheck</code></a></li>
+<li><a href="../../../symbols/src__include__storage__itemptr_h__ItemPointerGetOffsetNumber.html" target="wiki-view"><code>ItemPointerGetOffsetNumber</code></a></li>
+<li><a href="../../../symbols/src__include__storage__itemptr_h__ItemPointerSet.html" target="wiki-view"><code>ItemPointerSet</code></a></li>
+<li><a href="../../../symbols/src__include__storage__itemptr_h__ItemPointerSetOffsetNumber.html" target="wiki-view"><code>ItemPointerSetOffsetNumber</code></a></li>
+<li><a href="../../../symbols/src__include__storage__itemptr_h__ItemPointerCopy.html" target="wiki-view"><code>ItemPointerCopy</code></a></li>
+<li><a href="../../../symbols/src__include__storage__itemptr_h__ItemPointerSetInvalid.html" target="wiki-view"><code>ItemPointerSetInvalid</code></a></li>
+<li><a href="../../../symbols/src__include__storage__itemptr_h__ItemPointerIndicatesMovedPartitions.html" target="wiki-view"><code>ItemPointerIndicatesMovedPartitions</code></a></li>
+<li><a href="../../../symbols/src__include__storage__itemptr_h__ItemPointerSetMovedPartitions.html" target="wiki-view"><code>ItemPointerSetMovedPartitions</code></a></li>
+<li><a href="../../../symbols/src__include__storage__itemptr_h__DatumGetItemPointer.html" target="wiki-view"><code>DatumGetItemPointer</code></a></li>
+</ul><script>
+(function() {
+  function notifyParent() {
+    if (parent === window) return;
+    parent.postMessage({type: "frame-location", frame: window.name || "", href: window.location.href}, "*");
+  }
+  document.addEventListener("click", function(event) {
+    const link = event.target.closest("a[data-panel]");
+    if (!link || parent === window) return;
+    parent.postMessage({type: "source-link", panel: link.dataset.panel}, "*");
+  });
+  window.addEventListener("load", notifyParent);
+  window.addEventListener("hashchange", notifyParent);
+})();
+</script></body></html>

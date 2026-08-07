@@ -15,7 +15,7 @@
 <h2>入力と出力</h2>
 <ul>
 <li>引数: <code>int64 num</code></li>
-<li>戻り値: <a class="wiki-source-link" href="../../source/src/include/port.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__port_h__int.html&quot;}, '*');"><code>int</code></a></li>
+<li>戻り値: <code>int</code></li>
 </ul>
 <h2>前提条件と不変条件</h2>
 <p>まだ解析していません。</p>
@@ -34,13 +34,13 @@
 <h2>関連データ構造</h2>
 <p><code>int64</code></p>
 <h2>ソース抜粋</h2>
-<p>~~~c static <a class="wiki-source-link" href="../../source/src/include/port.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__port_h__int.html&quot;}, '*');">int</a> <a class="wiki-source-link" href="../../source/src/backend/utils/hash/dynahash.c.html#L1749" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__utils__hash__dynahash_c__my_log2.html&quot;}, '*');">my_log2</a>(int64 num) { /*</p>
+<p>~~~c static int <a class="wiki-source-link" href="../../source/src/backend/utils/hash/dynahash.c.html#L1749" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__utils__hash__dynahash_c__my_log2.html&quot;}, '*');">my_log2</a>(int64 <a class="wiki-source-link" href="../../source/src/include/port/pg_bitutils.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__port__pg_bitutils_h__num.html&quot;}, '*');">num</a>) { /*</p>
 <ul>
 <li>guard against too-large input, which would be invalid for</li>
 <li>pg_ceil_log2_*()</li>
-<p>*/ if (num &gt; <a class="wiki-source-link" href="../../source/src/include/c.h.html#L683" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/c.h.html&quot;}, '*');">PG_INT64_MAX</a> / 2) num = <a class="wiki-source-link" href="../../source/src/include/c.h.html#L683" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/c.h.html&quot;}, '*');">PG_INT64_MAX</a> / 2;</p>
+<p>*/ if (<a class="wiki-source-link" href="../../source/src/include/port/pg_bitutils.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__port__pg_bitutils_h__num.html&quot;}, '*');">num</a> &gt; <a class="wiki-source-link" href="../../source/src/include/c.h.html#L683" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/c.h.html&quot;}, '*');">PG_INT64_MAX</a> / 2) <a class="wiki-source-link" href="../../source/src/include/port/pg_bitutils.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__port__pg_bitutils_h__num.html&quot;}, '*');">num</a> = <a class="wiki-source-link" href="../../source/src/include/c.h.html#L683" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/c.h.html&quot;}, '*');">PG_INT64_MAX</a> / 2;</p>
 </ul>
-<p>return <a class="wiki-source-link" href="../../source/src/include/port/pg_bitutils.h.html#L270" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__port__pg_bitutils_h__pg_ceil_log2_64.html&quot;}, '*');">pg_ceil_log2_64</a>(num); } ~~~</p>
+<p>return <a class="wiki-source-link" href="../../source/src/include/port/pg_bitutils.h.html#L270" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__port__pg_bitutils_h__pg_ceil_log2_64.html&quot;}, '*');">pg_ceil_log2_64</a>(<a class="wiki-source-link" href="../../source/src/include/port/pg_bitutils.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__port__pg_bitutils_h__num.html&quot;}, '*');">num</a>); } ~~~</p>
 <h2>失敗モードと境界条件</h2>
 <p>まだ解析していません。</p>
 <h2>保守担当者向けメモ</h2>

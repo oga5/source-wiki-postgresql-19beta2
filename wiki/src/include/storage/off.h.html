@@ -1,0 +1,53 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>src/include/storage/off.h.md</title><link rel="stylesheet" href="../../../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../../../source/src/include/storage/off.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/storage/off.h.html&quot;}, '*');">src/include/storage/off.h</a></h1>
+<h2>概要</h2>
+<p>PostgreSQLのディスクページ（ブロック）内におけるタプル位置の識別子である、オフセット番号（<code>OffsetNumber</code>）の定義と関連マクロを提供するヘッダーファイルです。</p>
+<h2>モジュール内での役割</h2>
+<p><code>src/include/storage</code> サブシステムにおいて、ページ内の行ポインタ配列（<code>ItemIdData</code>）を操作するための基本型と位置検証ルールを定義しています。上位のバッファページ管理やアクセスメソッドから頻繁に参照されます。</p>
+<h2>責務</h2>
+<ul>
+<li>1から始まるページ内インデックス型 <code>OffsetNumber</code> の定義。</li>
+<li>無効値や境界値（最初と最大）を表す定数マクロの提供。</li>
+<li>オフセットの有効性検証および、次のインデックスへ移動するための演算マクロの提供。</li>
+</ul>
+<h2>重要なシンボル</h2>
+<ul>
+<li><code>OffsetNumber</code>: ページ内行ポインタ配列のインデックスを表す <code>uint16</code> 型。</li>
+<li><code>InvalidOffsetNumber</code> / <a class="wiki-source-link" href="../../../../source/src/include/storage/off.h.html#L27" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/storage/off.h.html&quot;}, '*');"><code>FirstOffsetNumber</code></a>: それぞれ無効なオフセット（0）と最初の有効なオフセット（1）。</li>
+<li><a class="wiki-source-link" href="../../../../source/src/include/storage/off.h.html#L28" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/storage/off.h.html&quot;}, '*');"><code>MaxOffsetNumber</code></a>: 1ページ（<code>BLCKSZ</code>）内に収まる <code>ItemIdData</code> の最大数に基づく上限値。</li>
+<li><a class="wiki-source-link" href="../../../../source/src/include/storage/off.h.html#L39" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/storage/off.h.html&quot;}, '*');"><code>OffsetNumberIsValid</code></a>: 指定したオフセットが有効範囲内にあるかを判定するマクロ。</li>
+<li><a class="wiki-source-link" href="../../../../source/src/include/storage/off.h.html#L52" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/storage/off.h.html&quot;}, '*');"><code>OffsetNumberNext</code></a> / <a class="wiki-source-link" href="../../../../source/src/include/storage/off.h.html#L54" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/storage/off.h.html&quot;}, '*');"><code>OffsetNumberPrev</code></a>: オフセット値をインクリメント・デクリメントする支援マクロ。</li>
+</ul>
+<h2>制御フローとデータフロー</h2>
+<p>本ファイルは型定義とマクロのみを提供するため、直接的な実行フローは持ちません。データ構造としては、<code>OffsetNumber</code> が <code>storage/itemid.h</code> で定義される <code>ItemIdData</code> 配列のインデックスとして機能し、ページ内のタプル位置解決のデータフローを支えます。</p>
+<h2>直接依存</h2>
+<ul>
+<li><code>storage/itemid.h</code>: ページ内の行ポインタ構造体（<code>ItemIdData</code>）の定義元。</li>
+</ul>
+<h2>関連コード</h2>
+<ul>
+<li><a class="wiki-source-link" href="../../../../source/src/include/storage/bufpage.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/storage/bufpage.h.html&quot;}, '*');"><code>src/include/storage/bufpage.h</code></a>: ページヘッダーとオフセットの利用文脈を提供するファイル。</li>
+<li><a class="wiki-source-link" href="../../../../source/src/include/storage/block.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/storage/block.h.html&quot;}, '*');"><code>src/include/storage/block.h</code></a>: ブロック番号やサイズに関する定義ファイル。</li>
+</ul>
+<h2>読者向けメモ</h2>
+<ul>
+<li><code>OffsetNumber</code> は 1-based インデックス（最初の要素が 1）であるため、0-based の C 言語配列へ直接渡す際にはオフセットの調整が必要になる点に注意してください。</li>
+</ul>
+<h2>シンボルページ</h2>
+<ul>
+<li><a href="../../../symbols/src__include__storage__off_h__OffsetNumber.html" target="wiki-view"><code>OffsetNumber</code></a></li>
+</ul><script>
+(function() {
+  function notifyParent() {
+    if (parent === window) return;
+    parent.postMessage({type: "frame-location", frame: window.name || "", href: window.location.href}, "*");
+  }
+  document.addEventListener("click", function(event) {
+    const link = event.target.closest("a[data-panel]");
+    if (!link || parent === window) return;
+    parent.postMessage({type: "source-link", panel: link.dataset.panel}, "*");
+  });
+  window.addEventListener("load", notifyParent);
+  window.addEventListener("hashchange", notifyParent);
+})();
+</script></body></html>

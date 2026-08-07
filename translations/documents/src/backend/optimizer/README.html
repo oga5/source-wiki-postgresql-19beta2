@@ -1,0 +1,1047 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>src/backend/optimizer/README</title><link rel="stylesheet" href="../../../../../styles.css"></head><body><h1>Japanese translation</h1><p><code>src/backend/optimizer/README</code></p><p><a href="../../../../../source/src/backend/optimizer/README.html" target="source-view">View original document</a></p><p class="document-translation-progress document-translation-incomplete">Translation in progress: 3/8 chunks complete. Pending chunks show their original text below.</p><div class="document-translation-body"><section class="document-translation-chunk translated" data-chunk-order="0"><p>src/backend/optimizer/README</p>
+<p>Optimizer =========</p>
+<p>これらのディレクトリは、パーサーから返されたQuery構造体を受け取り、エグゼキューターが使用するプランを生成します。/planディレクトリは実際の出力プランを生成し、/pathコードはテーブルを結合するためのすべての可能な方法を生成し、/prepは特殊なケースに対するさまざまな前処理ステップを処理します。/utilはユーティリティ関係です。/geqoは個別の「遺伝的最適化」プランナーです。これは、可能な結合ツリーをすべて網羅的に検討するのではなく、結合ツリー空間を半ランダムに検索します（ただし、/geqoによって検討される各結合は、パスを作成するために/pathに渡されるため、GEQOモードでも、特定の結合ペアごとに可能なすべての実装パスが検討されます）。</p>
+<p>Paths and Join Pairs --------------------</p>
+<p>計画/最適化のプロセス中に、クエリを実行するさまざまな方法を表す「Path」ツリーを構築します。目的のリレーションを生成する最もコストの低いPathを選択し、エグゼキューターに渡すPlanに変換します（PathツリーとPlanツリーの間にはほぼ1対1の対応関係がありますが、Pathノードには計画時には不要な情報が省略され、エグゼキューターには不要だが計画には必要な情報が含まれています）。</p>
+<p>オプティマイザーは、クエリで使用される各ベースリレーションに対してRelOptInfo構造体を構築します。ベースリレーションは、プリミティブテーブル、またはプランナーの別の再帰的呼び出しによって計画されるサブクエリのサブセレクトのいずれかです。RelOptInfoは、計画中に検討される各結合リレーションに対しても構築されます。結合リレーションは、単にベースリレーションの組み合わせです。指定されたベースリレーションのセットに対して結合RelOptInfoは1つだけ存在します。たとえば、結合 {A B C} は、最初にAとBを結合してからCを追加した場合でも、最初にBとCを結合してからAを追加した場合でも、同じRelOptInfoで表されます。結合リレーションを構築するこれらの異なる手段は、Pathとして表されます。各RelOptInfoについて、そのリレーションのスキャンまたは結合を実装する妥当な方法を表すPathのリストを構築します。リレーションのすべての妥当なPathを検討したら、プランナーのコスト見積もりに従って最もコストの低いものを選択します。最終的なプランは、クエリのすべてのベースリレーションを含むRelOptInfoの最もコストの低いPathから導出されます。</p>
+<p>プリミティブテーブルリレーションの可能なPathには、古き良きシーケンシャルスキャンに加え、テーブルに存在する任意のインデックスに対するインデックススキャン、さらに1つ以上のインデックスを使用したビットマップインデックススキャンが含まれます。関数RTEなどの特殊化されたRTEタイプには、可能なPathが1つしかない場合があります。</p>
+<p>結合は常にかつて2つのRelOptInfoを使用して発生します。1つは外側、もう1つは内側です。外側は内側での値のルックアップを駆動します。ネストループでは、内側での値のルックアップは、一致する内側の行をそれぞれ見つけるために、外側のタプルごとに内側のパスを1回スキャンすることによって発生します。マージジョインでは、内側と外側の行が順序付けられ、順序通りにアクセスされるため、結合全体を実行するのに必要なスキャンは1回だけです。内側と外側の両方のパスが同期してスキャンされます（マージジョインでは内側と外側の間に大きな違いはありません...）。ハッシュジョインでは、最初に内側がスキャンされてそのすべての行がハッシュテーブルに登録され、次に外側がスキャンされて行ごとに結合キーがハッシュテーブルでルックアップされます。</p>
+<p>結合リレーションのPathは、実際にはツリー構造であり、最上位のPathノードは最後に適用された結合メソッドを表します。これには、2つの入力リレーションに使用されるスキャンまたは結合メソッドを表す左サブパスと右サブパスがあります。</p>
+<p>Join Tree Construction ----------------------</p>
+<p>オプティマイザーは、クエリの実行方法を多かれ少なかれ網羅的に検索することにより、最適なクエリプランを生成します。最適なPathツリーは、再帰的なプロセスによって見つかります。</p>
+<p>1) クエリ内の各ベースリレーションを取得し、そのRelOptInfo構造体を作成します。シーケンシャルスキャンやインデックススキャンなど、リレーションにアクセスする可能性のある有用な方法をすべて見つけ、それらの方法を表すPathを作成します。特定のリレーションに対して作成されたすべてのPathは、そのRelOptInfo.pathlistに配置されます。（実際には、パスリストに入る前に、明らかに劣る代替手段であるPathは破棄されます。パスリストに行き着くのは、リレーションの潜在的に有用なソート順序とパラメータ化のそれぞれを生成する最も安価な方法です。）また、このリレーションに関係するすべての結合句を含むRelOptInfo.joininfoリストを作成します。たとえば、WHERE句 &quot;tab1.col1 = tab2.col1&quot; は、tab1とtab2の両方のjoininfoリストのエントリを生成します。</p>
+<p>クエリ内にベースリレーションが1つしかない場合は、これで完了です。それ以外の場合は、ベースリレーションを単一の結合リレーションに結合する方法を考え出す必要があります。</p>
+<p>2) 通常、明示的なJOIN句は、結合するリレーションのリストを持つだけになるように「平坦化」されます。ただし、FULL OUTER JOIN句は決して平坦化されず、join_collapse_limitまたはfrom_collapse_limitの制限によって平坦化プロセスが停止された場合、他の種類のJOINも平坦化されない可能性があります。したがって、任意の順序で結合するリレーションのリストを含む計画問題に帰着します。ここで、個々のアイテムは、その兄弟と結合することを検討する前に結合する必要があるサブリストである可能性があります。これらのサブ問題は、ボトムアップで再帰的に処理します。結合リストの構造は可能な結合順序を制約しますが、各結合での結合実装方法（ネストループ、マージ、ハッシュ）を制約せず、各結合でどのリレーションが外側または内側と見なされるかも指定しません。Pathsを構築する際に、これらすべての可能性を検討します。実行可能な結合方法ごとにPathを生成し、最もコストの低いPathを選択します。</p>
+<p>したがって、各計画問題について、ベースリレーションまたはサブ結合リストごとに構築された結合リレーションのいずれかであるリレーションのリストを持つことになります。プランナーが適切とみなす任意の順序で、これらのリレーションを結合できます。標準の（GEQOではない）プランナーは、これを次のように実行します。</p>
+<p>使用可能な結合句がある各RelOptInfoを他の各RelOptInfoと結合することを検討し、そのような各ペアの可能な結合方法ごとにPathを生成します。（結合句のないRelOptInfoがある場合、句のないデカルト積結合を生成する以外の選択肢がないため、そのリレーションを使用可能な他の各リレーションと結合することを検討します。ただし、結合句が存在する場合は、使用可能な結合句を使用する結合のみを検討します。なお、外部結合やIN/EXISTS句によって誘発される結合順序の制限もチェックされ、それらの制限によって句のない結合を強制される場合に実行可能な結合順序が見つかるようにします。）</p>
+<p>リスト内のリレーションが2つだけの場合は、これで完了です。結合RelOptInfoの最も安いパスを選択するだけです。3つ以上ある場合は、結合RelOptInfo同士を結合して、3つ以上のリストアイテムを表す結合RelOptInfoを作る方法を検討する必要があります。</p>
+<p>結合ツリーは「動的計画法」アルゴリズムを使用して構築されます。最初のパス（すでに説明した）では、正確に2つのリストアイテムを表す結合リレーションを作成する方法を検討します。2回目のパスでは、正確に3つのリストアイテムを表す結合リレーションを作る方法を検討し、次のパスでは4つのアイテム、というようになります。最後のパスでは、すべてのリストアイテムを含む最終的な結合リレーションを作る方法を検討します。当然ながら、この最上位レベルの結合リレーションは1つしか存在できませんが、下位レベルでは複数の結合リレーションが存在する可能性があります。各レベルでは、最初のレベルで説明したように、可能であれば使用可能な結合句に従う結合を使用します。</p>
+<p>例:</p>
+<p>SELECT  * FROM    tab1, tab2, tab3, tab4 WHERE   tab1.col = tab2.col AND tab2.col = tab3.col AND tab3.col = tab4.col</p>
+<p>テーブル 1、2、3、4 は次のように結合されます: {1 2},{2 3},{3 4} {1 2 3},{2 3 4} {1 2 3 4}</p>
+<p>SELECT  * FROM    tab1, tab2, tab3, tab4 WHERE   tab1.col = tab2.col AND tab1.col = tab3.col AND tab1.col = tab4.col</p>
+<p>テーブル 1、2、3、4 は次のように結合されます: {1 2},{1 3},{1 4} {1 2 3},{1 3 4},{1 2 4} {1 2 3 4}</p>
+<p>これらの各例において、結合句がないため、他の結合順序の可能性は除外されます。（実際には、EquivalenceClassesを使用することで、より多くの結合順序を許可する追加の結合句を推論できますが、ここでは例の単純さを保つためにそれを無視しています。）</p>
+<p>左偏向プラン（上位結合の外側リレーションは結合リレーションですが、内側は常に単一のリストアイテムです）、右偏向プラン（外側リレーションは常に単一のアイテムです）、および木構造プラン（内側と外側の両方がそれ自体で結合になり得ます）を検討します。たとえば、{1 2 3 4}を構築する場合、{1 2 3}と{4}の結合（左偏向）、{4}と{1 2 3}の結合（右偏向）、および{1 2}と{3 4}の結合（木構造）などを検討します。結合ツリー走査コードはこれらの潜在的な結合の組み合わせを1つずつ生成しますが、結合されたベースリレーションの同じセットを生成するすべての方法は同じRelOptInfoを共有するため、同等の結合リレーションを生成する異なる結合の組み合わせから生成されたパスはadd_path()で競合します。</p>
+<p>動的計画法のアプローチには、すぐには分からない重要な特性があります。それは、そのリレーションを含むリレーションのパスを構築する前に、特定のリレーションのすべてのパスの構築が完了するということです。これは、高レベルのリレーションがそれを知る必要が生じる前に、各リレーションの「最も安いパス」を確実に対象として特定できることを意味します。また、同じリレーションの別のパスの方が優れていることが判明したときに、高レベルの結合パスにそのパスへの参照がすでに含まれているのではないかと心配することなく、パスを安全に破棄できます。これがないと、パスのメモリ管理ははるかに複雑になります。</p>
+<p>最終的な結合リレーションを構築したら、その最も安いパスか、あるいは目的の順序を持つ最も安いパス（それが他の最も安いパスにソートを適用するよりも安い場合）を使用します。</p>
+<p>クエリに片側外部結合（LEFTまたはRIGHT結合）、あるいはセミジョインまたはアンチジョインに変換されたINまたはEXISTS WHERE句が含まれている場合、可能な結合順序の一部が不正になる可能性があります。これらは、提案された結合が不正かどうかを確認するために、join_is_legalにそのような「特殊な」結合のサイドリストを参照させることで除外されます。（同じ参照により、有効な結合（つまりJOIN_INNER、JOIN_LEFTなど）に対してどの結合スタイルを適用すべきかを確認できます。）</p>
+<p>Valid OUTER JOIN Optimizations ------------------------------</p>
+<p>プランナーによる外部結合の並び替えの扱いは、次の同一性に基づいています。</p>
+<p>1.	(A leftjoin B on (Pab)) innerjoin C on (Pac) = (A innerjoin C on (Pac)) leftjoin B on (Pab)</p>
+<p>ここで、PacはAとCなどを参照する述語です（この場合、PacがBを参照できないことは明らかです。そうでない場合、変換は無意味になります）。</p>
+<p>2.	(A leftjoin B on (Pab)) leftjoin C on (Pac) = (A leftjoin C on (Pac)) leftjoin B on (Pab)</p>
+<p>3.	(A leftjoin B on (Pab)) leftjoin C on (Pbc) = A leftjoin (B leftjoin C on (Pbc)) on (Pab)</p>
+<p>同一性3は、述語Pbcがすべての値がNULLであるBの行に対して失敗する場合にのみ成り立ちます（つまり、PbcはBの少なくとも1つのカラムに対して厳密です）。Pbcが厳密でない場合、最初の形式では、2番目の形式ではそれらのエントリがNULLになる場所で、非NULLのCカラムを持ついくつかの行が生成される可能性があります。</p>
+<p>RIGHT JOINは、2つの入力テーブルを入れ替えた後のLEFT JOINと同等であるため、右結合に対しても同じ同一性が機能します。</p>
+<p>機能し*ない*ケースの例として、内部結合を外部結合のNULL許容側に移動したり、そこから外に移動したりすることが挙げられます。</p>
+<p>A leftjoin (B join C on (Pbc)) on (Pab) != (A leftjoin B on (Pab)) join C on (Pbc)</p>
+<p>セミジョインの動作は少し異なります。セミジョインは、別のセミジョイン、左結合、またはアンチジョインの左側の内部または外部に関連付け直すことはできますが、右側に関連付け直すことはできません。同様に、内部結合、左結合、またはアンチジョインは、セミジョインの左側に結びつけて関連付け直すことはできますが、右側に関連付け直すことはできません。</p></section><section class="document-translation-chunk translated" data-chunk-order="1"><p>ANTI結合は、LEFT結合とほぼ同様に機能しますが、Cへの結合がアンチ結合である場合（Pbcが厳密（strict）である場合であっても、また、もう一方の結合がLEFT結合である場合とアンチ結合である場合の双方向において）、恒等式3が成立しなくなります。そのため、関連する節が厳密である場合であっても、アンチ結合をLEFT結合やアンチ結合のRHS（右辺）に移動したり、RHSから外へ並び替えたりすることはできません。</p>
+<p>現在のコードでは、FULL JOINの並び替えをまったく試みません。 FULL JOINの順序付けは、ジョインツリーを「joinlist」表現に変換する際にFULL JOINノードを折り畳まないことで強制されます。他のタイプのJOINノードは、結合順序の探索に完全に参加できるよう、通常は折り畳まれます。不正な結合順序の生成を回避するため、プランナは非インナー結合ごとにSpecialJoinInfoノードを作成し、join_is_legalはこのリストをチェックして、提案された結合が合法であるかどうかを判断します。</p>
+<p>SpecialJoinInfoノードに格納されるのは、アウター結合（OJ）を形成するために結合の両側に必要なRelidの最小セットです。これらは最小値であることに注意してください。明示的な最大値はありません。なぜなら、他のリレーションをOJの構文上のリレーションに結合することは合法である可能性があるからです。恒等式1および2に従い、非FULL結合はOJの左辺に自由に結合させることができますが、場合によっては右辺に結合させることができないこともあります。 したがって、join_is_legalによって強制される制限とは、提案された結合が、RHS境界の内側または部分的に内側にあるリレーションを、境界の外側にあるリレーションに結合してはならないというものです。ただし、その提案された結合が、恒等式3を使用してSpecialJoinInfoのRHSに結合できるLEFT結合である場合は除きます。</p>
+<p>最小Relidセットの使用にはいくつかの落とし穴があります。例えば、次のようなクエリを考えてみてください。 A leftjoin (B leftjoin (C innerjoin D) on (Pbcd)) on Pa ここで、PaはB、C、Dにまったく言及していません。この場合、素朴な計算では、上側のleftjoinの最小LHSは{A}となり、最小RHSは{C,D}となります（インナー結合がleftjoinのRHSから外へ結合できないことが分かっているため、そのrelidをleftjoinの最小RHSに含めることでそれを強制するため）。そして、下側のleftjoinの最小LHSは{B}、最小RHSは{C,D}となります。このような情報が与えられると、join_is_legalは上側の結合を下側の結合のRHSに結合しても問題ないと判断し、クエリを次のように変換してしまいます。 B leftjoin (A leftjoin (C innerjoin D) on Pa) on (Pbcd) これにより、完全に誤った結果が生成されます。これを防ぐために、上側の結合の最小RHSにBを含めるよう強制します。これはおそらく制限が厳しすぎますが、そのようなケースは頻繁には発生しないため、より複雑なシステムを開発する価値があるかどうかは明確ではありません。</p>
+<p>サブクエリのプルアップ ---------------------</p>
+<p>前述したように、レンジテーブルに現れるサブクエリは個別に計画され、外部クエリの計画時には「ブラックボックス」として扱われます。これは、サブクエリが集約、GROUP、DISTINCTなどの機能を使用している場合には必須です。しかし、サブクエリが単なる単純なスキャンや結合である場合、サブクエリをブラックボックスとして扱うと、プラン全体の探索空間の一部として考慮する場合と比較して、質の低いプランが生成される可能性があります。 したがって、計画プロセスの開始時に、プランナは単純なサブクエリを探し出し、メインクエリのジョインツリーへとプルアップします。</p>
+<p>サブクエリのプルアップにより、ジョインツリーの最上部より下にFROMリストの結合が現れる結果となることがあります。各FROMリストは、前述の動的計画法による探索手法を使用して計画されます。</p>
+<p>サブクエリのプルアップによって、別のFROMリストの直接の子としてFROMリストが生成された場合、これら2つのFROMリストをマージすることができます。それが完了すると、サブクエリは外部クエリの完全に不可欠な一部となり、ジョインツリーの探索空間をまったく制約しなくなります。しかし、動的計画法による探索の実行時間が考慮対象のFROM項目の数に対して指数関数的であるため、これにより計画時間が好ましくない増大をする可能性があります。したがって、もしマージした結果1つのリスト内のFROM項目が多すぎることになる場合は、FROMリストをマージしません。</p>
+<p>Vars と PlaceHolderVars ------------------------</p>
+<p>Varノードは、テーブル列参照のパースツリー表現に過ぎません。しかし、アウター結合が存在する場合、その概念は一見して思われるよりも微妙です。Varを強制的にNULLにする可能性のあるアウター結合の「上」と「下」におけるVarの値を区別する必要があります。例として、次を考えてみてください。</p>
+<p>SELECT * FROM t1 LEFT JOIN t2 ON (t1.x = t2.y) WHERE foo(t2.z)</p>
+<p>（foo()は厳密（strict）ではないと仮定し、left joinを通常のjoinに縮小できないようにします。）素朴な実装では、foo(t2.z)の呼び出しをt2のスキャンまでプッシュダウンしようとするかもしれませんが、それは正しくありません。なぜなら、(a) NULL拡張された結合行に対してfoo()が実際に目にするべきなのはNULLであり、(b) foo()が偽を返す場合、t2がNULL拡張された行として出力するのではなく、結合からt1の行を完全に除外すべきだからです。一方で、もしクエリが次のようなものであれば、その呼び出しをスキャンレベルまでプッシュダウンすることは正しい（そして望ましい）ことです。</p>
+<p>SELECT * FROM t1 LEFT JOIN t2 ON (t1.x = t2.y AND foo(t2.z))</p>
+<p>このことから、left joinのON句内における「t2.z」は、JOIN句の外側における「t2.z」とは異なる値であるとみなす動機が生まれます。前者はリレーションスキャンレベルで見られるt2.zと同一視できますが、後者はできません。</p>
+<p>もう一つの例は、（後述する）EquivalenceClassに関連して発生します。次が与えられたとき、 SELECT * FROM t1 LEFT JOIN t2 ON (t1.x = t2.y) WHERE t1.x = 42</p>
+<p>EquivalenceClassのメカニズムを使用して「t2.y = 42」を導出し、それをt2のスキャンの制限句として使用したいと考えます（yが42と異なるt2行はクエリ結果に影響を与えないため、これは機能します）。しかし、結合されたすべての行においてt2.yがt1.xと等しくなると結論付けるのは誤りです。この問題の解決策の一部は、ON句内の「t2.y」がt2.yのリレーションスキャンレベルの値を指し、結合された行でyがt1.xと等しいのではなくNULLになる可能性がある値は指さないとみなすことです。</p>
+<p>したがって、Varノードには「varnullingrels」が装飾されます。これらは、クエリ内でVarが現れる地点でそのVarを潜在的にNULLにするアウター結合のレンジテーブルインデックスのセットです。（順序付きリストではなくセットを使用するのは、どの結合が値をNULLに強制したかは重要ではないためであり、異なるアウター結合の順序を考慮する際に表現を変更する必要をなくすためです。）上記の例では、left joinはt1をNULLにしないため、t1.xのすべての出現箇所は空のvarnullingrelsを持ちます。JOIN ON句内のt2参照も空のvarnullingrelsを持ちます。しかし、JOIN句の外側では、t2を参照するすべてのVarは、スキャンレベルで見られるt2の値とは潜在的に異なるものとして理解されるように、JOINのレンジテーブルエントリ（RTE）のインデックスを含むvarnullingrelsを持ちます。WHERE句内のt2.zにJOINのRTインデックスのラベルを付けることで、そのfoo(t2.z)の出現をt2のスキャンレベルにプッシュダウンできないことを認識できます。つまり、その値はスキャンレベルでは評価できず、結合が行われた後でなければ評価できないのです。</p>
+<p>LEFTおよびRIGHTアウター結合の場合、結合のNULL許容側からのVarのみが、その結合のRTインデックスでマークされます。FULL結合の場合、両方の入力からのVarがマークされます。（このようなマーク付けでは、Varがフル結合のどちらの側から来たのかを判別することはできませんが、その情報は必要に応じて他の場所で見つけることができます。）</p>
+<p>観念的に、空でないvarnullingrelsを持つVarは次のように考えることができます。 CASE WHEN これらのアウター結合のいずれかがNULL拡張行を生成した THEN NULL ELSE 列のスキャンレベルの値 END これはあくまで観念的なものであり、このような計算が明示的に行われることはありません。完成したプランでは、スキャンレベルのプランノードに現れるVarは実際のテーブル列値を表しますが、上位レベルのVarは常に下位レベルのプランノードの出力への参照です。結合ノードがNULL拡張行を出力する場合、入力から値をコピーアップするのではなく、関連する出力列に対して単にNULLを返します。この計算を明示的に行う必要が一切ないため、アウター結合のどちらの側がNULL拡張されたかを区別する必要もありません。これはFULL JOINの場合には本質的な情報となるはずですが、不要になります。</p>
+<p>アウター結合の恒等式3（前述）は、この状況を少し複雑にします。次のような形式において、 A leftjoin (B leftjoin C on (Pbc)) on (Pab) 句PbcおよびPab内のすべてのVarは空のvarnullingrelsを持ちますが、もし次から始めた場合、 (A leftjoin B on (Pab)) leftjoin C on (Pbc) パーサはPbcのBのVarをA/B結合のRTインデックスでマークし、この形式を最初の形式とは人工的に異なるものにしてしまいます。議論のために、このマーク付けをアスタリスクで表してみましょう。 (A leftjoin B on (Pab)) leftjoin C on (Pb*c) これに対処するため、これらの結合を可換にすることが合法であると検出すれば、パーサが作成したBのVarにおける最初の結合のRTインデックスを削除または追加することにより、そのON句のPbc形式とPb*c形式の両方を生成します。BとCを結合するプランステップのパスを生成する際、AがすでにBに結合されているかどうかに応じて適切な形式のみを、関連する結合条件として含めます。</p>
+<p>また、恒等式3によって「left joinのRTインデックス」自体が少し曖昧な概念になることも注目に値します。各結合RTEの構文上のスコープは、パーサによってどの形式が生成されたかに依存するためです。これを解決するために、left joinの同一性は、その右側入力リレーションの最小セットによって決定されると考えます。恒等式3で許可されている両方の形式において、最初の結合は最小RHSがBであり、2番目の結合は最小RHSがCであると特定できます。</p>
+<p>もう1つの注意点は、もしパーサの元の入力が恒等式3の最初の形式であった場合、ネストされたJOIN句の外側に現れるCのVarは、両方のleft joinによってNULL化されるものとしてマークされますが、パーサの入力が2番目の形式であった場合、そのようなVarは2番目の結合によってのみNULL化されるものとしてマークされるということです。これは実質的な意味論上の問題ではありません。そのようなVarはクエリの上位部分全体で同じようにマークされるため、すべてequal()に見え、これは正しく、また、JOIN ON句内やこれらの結合の下に現いかなるCのVarともequal()に見えることはありません。しかし、結合リレーションの出力を表すVarを構築する際には、クエリの上位部分ですでに存在するVarとequal()に見えるように、そのvarnullingrelsが構文上の結合順序と一致する値に設定されることを保証する必要があります。</p>
+<p>アウター結合はサブクエリのプルアップの処理も複雑にします。次を考えてみてください。</p>
+<p>SELECT ..., ss.x FROM tab1 LEFT JOIN (SELECT *, 42 AS x FROM tab2) ss ON ...</p>
+<p>前述のようにサブクエリをプルアップしたいのですが、トップレベルのSELECTリスト内の「ss.x」Varを定数42に単純に置き換えることはできません。そうしてしまうと、NULL拡張された結合行でNULLを出力するのではなく、常に42を出力することになってしまいます。</p>
+<p>これを解決するために、PlaceHolderVarsの概念を導入します。 PlaceHolderVarはVarにやや似ており、その値はリレーションスキャンレベルで発生し、その後より上位のアウター結合によって強制的にNULLにされることがあります。そのため、PlaceHolderVarはVarと同様にNULL化するリレーションIDのセットを保持します。テーブルから元の値が取得されるVarとは異なり、PlaceHolderVar元の値はクエリによって決定される式（この例では「42」）によって定義されます。そのため、PlaceHolderVarはその式を子として持つノードとして表現します。サブクエリのプルアップにおいて、空でないvarnullingrelsを持つサブクエリ参照Varを、単なるVarではない式に置き換える必要があるときはいつでも、PlaceHolderVarを挿入します。（置き換え先の式がプルアップされたVarである場合、置き換えられたVarのvarnullingrelsをそのセットに追加するだけで済みます。また、置き換えられたVarが空のvarnullingrelsを持つ場合、値をNULLに強制するものは何もないため、PlaceHolderVarは必要ありません。そのため、プルアップされた式をそのまま使用して問題ありません。）完成したプランでは、PlaceHolderVarは評価されるべきプランレベルでの内包された式そのものになり、その後上位レベルの出現箇所は下位プランノードのその出力列へのVar参照に置き換えられます。これにより、通常のアウター結合と同様に、適切なアウター結合で値がNULLになります。したがって、PlaceHolderVarがプランナの外側で見られることはありません。</p>
+<p>&lt;/document&gt;</p></section><section class="document-translation-chunk translated" data-chunk-order="2"><p>PlaceHolderVars (PHVs) are more complicated than Vars in another way: their original value might need to be calculated at a join, not a base-level relation scan.  This can happen when a pulled-up subquery contains a join.  Because of this, a PHV can create a join order constraint that wouldn&#x27;t otherwise exist, to ensure that it can be calculated before it is used.  A PHV&#x27;s expression can also contain LATERAL references, adding complications that are discussed below.</p>
+<p>Relation Identification and Qual Clause Placement -------------------------------------------------</p>
+<p>A qual clause obtained from WHERE or JOIN/ON can be enforced at the lowest scan or join level that includes all relations used in the clause.  For this purpose we consider that outer joins listed in varnullingrels or phnullingrels are used in the clause, since we can&#x27;t compute the qual&#x27;s result correctly until we know whether such Vars have gone to null.</p>
+<p>The one exception to this general rule is that a non-degenerate outer JOIN/ON qual (one that references the non-nullable side of the join) cannot be enforced below that join, even if it doesn&#x27;t reference the nullable side.  Pushing it down into the non-nullable side would result in rows disappearing from the join&#x27;s result, rather than appearing as null-extended rows.  To handle that, when we identify such a qual we artificially add the join&#x27;s minimum input relid set to the set of relations it is considered to use, forcing it to be evaluated exactly at that join level.  The same happens for outer-join quals that mention no relations at all.</p>
+<p>When attaching a qual clause to a join plan node that is performing an outer join, the qual clause is considered a &quot;join clause&quot; (that is, it is applied before the join performs null-extension) if it does not reference that outer join in any varnullingrels or phnullingrels set, or a &quot;filter clause&quot; (applied after null-extension) if it does reference that outer join.  A qual clause that originally appeared in that outer join&#x27;s JOIN/ON will fall into the first category, since the parser would not have marked any of its Vars as referencing the outer join.  A qual clause that originally came from some upper ON clause or WHERE clause will be seen as referencing the outer join if it references any of the nullable side&#x27;s Vars, since those Vars will be so marked by the parser.  But, if such a qual does not reference any nullable-side Vars, it&#x27;s okay to push it down into the non-nullable side, so it won&#x27;t get attached to the join node in the first place.</p>
+<p>These things lead us to identify join relations within the planner by the sets of base relation RT indexes plus outer join RT indexes that they include.  In that way, the sets of relations used by qual clauses can be directly compared to join relations&#x27; relid sets to see where to place the clauses.  These identifying sets are unique because, for any given collection of base relations, there is only one valid set of outer joins to have performed along the way to joining that set of base relations (although the order of applying them could vary, as discussed above).</p>
+<p>SEMI joins do not have RT indexes, because they are artifacts made by the planner rather than the parser.  (We could create rangetable entries for them, but there seems no need at present.)  This does not cause a problem for qual placement, because the nullable side of a semijoin is not referenceable from above the join, so there is never a need to cite it in varnullingrels or phnullingrels.  It does not cause a problem for join relation identification either, since whether a semijoin has been completed is again implicit in the set of base relations included in the join.</p>
+<p>As usual, outer join identity 3 complicates matters.  If we start with (A leftjoin B on (Pab)) leftjoin C on (Pbc) then the parser will have marked any C Vars appearing above these joins with the RT index of the B/C join.  If we now transform to A leftjoin (B leftjoin C on (Pbc)) on (Pab) then it would appear that a clause using only such Vars could be pushed down and applied as a filter clause (not a join clause) at the lower B/C join.  But *this might not give the right answer* since the clause might see a non-null value for the C Var that will be replaced by null once the A/B join is performed.  We handle this by saying that the pushed-down join hasn&#x27;t completely performed the work of the B/C join and hence is not entitled to include that outer join relid in its relid set.  When we form the A/B join, both outer joins&#x27; relids will be added to its relid set, and then the upper clause will be applied at the correct join level.  (Note there is no problem when identity 3 is applied in the other direction: if we started with the second form then upper C Vars are marked with both outer join relids, so they cannot drop below whichever join is applied second.)  Similarly, Vars representing the output of a pushed-down join do not acquire nullingrel bits for that join until after the upper join is performed.</p>
+<p>There is one additional complication for qual clause placement, which occurs when we have made multiple versions of an outer-join clause as described previously (that is, we have both &quot;Pbc&quot; and &quot;Pb*c&quot; forms of the same clause seen in outer join identity 3).  When forming an outer join we only want to apply one of the redundant versions of the clause. If we are forming the B/C join without having yet computed the A/B join, it&#x27;s easy to reject the &quot;Pb*c&quot; form since its required relid set includes the A/B join relid which is not in the input.  However, if we form B/C after A/B, then both forms of the clause are applicable so far as that test can tell.  We have to look more closely to notice that the &quot;Pbc&quot; clause form refers to relation B which is no longer directly accessible.  While such a check could be performed using the per-relation RelOptInfo.nulling_relids data, it would be annoyingly expensive to do over and over as we consider different join paths. To make this simple and reliable, we compute an &quot;incompatible_relids&quot; set for each variant version (clone) of a redundant clause.  A clone clause should not be applied if any of the outer-join relids listed in incompatible_relids has already been computed below the current join.</p>
+<p>Optimizer Functions -------------------</p>
+<p>The primary entry point is planner().</p>
+<p>planner() set up for recursive handling of subqueries -subquery_planner() pull up sublinks and subqueries from rangetable, if possible canonicalize qual Attempt to simplify WHERE clause to the most useful form; this includes flattening nested AND/ORs and detecting clauses that are duplicated in different branches of an OR. simplify constant expressions process sublinks convert Vars of outer query levels into Params --grouping_planner() preprocess target list for non-SELECT queries handle UNION/INTERSECT/EXCEPT, GROUP BY, HAVING, aggregates, ORDER BY, DISTINCT, LIMIT ---query_planner() make list of base relations used in query split up the qual into restrictions (a=1) and joins (b=c) find qual clauses that enable merge and hash joins ----make_one_rel() set_base_rel_pathlists() find seqscan and all index paths for each base relation find selectivity of columns used in joins make_rel_from_joinlist() hand off join subproblems to a plugin, GEQO, or standard_join_search() ------standard_join_search() call join_search_one_level() for each level of join tree needed join_search_one_level(): For each joinrel of the prior level, do make_rels_by_clause_joins() if it has join clauses, or make_rels_by_clauseless_joins() if not. Also generate &quot;bushy plan&quot; joins between joinrels of lower levels. Back at standard_join_search(), generate gather paths if needed for each newly constructed joinrel, then apply set_cheapest() to extract the cheapest path for it. Loop back if this wasn&#x27;t the top join level. Back at grouping_planner: do grouping (GROUP BY) and aggregation do window functions make unique (DISTINCT) do sorting (ORDER BY) do limit (LIMIT/OFFSET) Back at planner(): convert finished Path tree into a Plan tree do final cleanup after planning</p>
+<p>Optimizer Data Structures -------------------------</p>
+<p>PlannerGlobal   - global information for a single planner invocation</p>
+<p>PlannerInfo     - information for planning a particular Query (we make a separate PlannerInfo node for each sub-Query)</p>
+<p>RelOptInfo      - a relation or joined relations</p>
+<p>RestrictInfo   - WHERE clauses, like &quot;x = 3&quot; or &quot;y = z&quot; (note the same structure is used for restriction and join clauses)</p>
+<p>Path           - every way to generate a RelOptInfo(sequential,index,joins) A plain Path node can represent several simple plans, per its pathtype: T_SeqScan   - sequential scan T_SampleScan - tablesample scan T_FunctionScan - function-in-FROM scan T_TableFuncScan - table function scan T_ValuesScan - VALUES scan T_CteScan   - CTE (WITH) scan T_NamedTuplestoreScan - ENR scan T_WorkTableScan - scan worktable of a recursive CTE T_Result    - childless Result plan node (used for FROM-less SELECT) IndexPath     - index scan BitmapHeapPath - top of a bitmapped index scan TidPath       - scan by CTID TidRangePath  - scan a contiguous range of CTIDs SubqueryScanPath - scan a subquery-in-FROM ForeignPath   - scan a foreign table, foreign join or foreign upper-relation CustomPath    - for custom scan providers AppendPath    - append multiple subpaths together MergeAppendPath - merge multiple subpaths, preserving their common sort order GroupResultPath - childless Result plan node (used for degenerate grouping) MaterialPath  - a Material plan node MemoizePath   - a Memoize plan node for caching tuples from sub-paths GatherPath    - collect the results of parallel workers GatherMergePath - collect parallel results, preserving their common sort order ProjectionPath - a Result plan node with child (used for projection) ProjectSetPath - a ProjectSet plan node applied to some sub-path SortPath      - a Sort plan node applied to some sub-path IncrementalSortPath - an IncrementalSort plan node applied to some sub-path GroupPath     - a Group plan node applied to some sub-path UniquePath    - a Unique plan node applied to some sub-path AggPath       - an Agg plan node applied to some sub-path GroupingSetsPath - an Agg plan node used to implement GROUPING SETS MinMaxAggPath - a Result plan node with subplans performing MIN/MAX WindowAggPath - a WindowAgg plan node applied to some sub-path SetOpPath     - a SetOp plan node applied to two sub-paths RecursiveUnionPath - a RecursiveUnion plan node applied to two sub-paths LockRowsPath  - a LockRows plan node applied to some sub-path ModifyTablePath - a ModifyTable plan node applied to some sub-path(s) LimitPath     - a Limit plan node applied to some sub-path NestPath      - nested-loop joins MergePath     - merge joins HashPath      - hash joins</p>
+<p>EquivalenceClass - a data structure representing a set of values known equal</p>
+<p>PathKey        - a data structure representing the sort ordering of a path</p>
+<p>The optimizer spends a good deal of its time worrying about the ordering of the tuples returned by a path.  The reason this is useful is that by knowing the sort ordering of a path, we may be able to use that path as the left or right input of a mergejoin and avoid an explicit sort step. Nestloops and hash joins don&#x27;t really care what the order of their inputs is, but mergejoin needs suitably ordered inputs.  Therefore, all paths generated during the optimization process are marked with their sort order (to the extent that it is known) for possible use by a higher-level merge.</p></section><section class="document-translation-chunk pending" data-chunk-order="3"><h2>Chunk 4: translation pending</h2><p>This chunk has not been translated yet. Original text:</p><pre class="document-translation-text">It is also possible to avoid an explicit sort step to implement a user&#x27;s
+ORDER BY clause if the final path has the right ordering already, so the
+sort ordering is of interest even at the top level.  grouping_planner() will
+look for the cheapest path with a sort order matching the desired order,
+then compare its cost to the cost of using the cheapest-overall path and
+doing an explicit sort on that.
+
+When we are generating paths for a particular RelOptInfo, we discard a path
+if it is more expensive than another known path that has the same or better
+sort order.  We will never discard a path that is the only known way to
+achieve a given sort order (without an explicit sort, that is).  In this
+way, the next level up will have the maximum freedom to build mergejoins
+without sorting, since it can pick from any of the paths retained for its
+inputs.
+
+
+EquivalenceClasses
+------------------
+
+During the deconstruct_jointree() scan of the query&#x27;s qual clauses, we
+look for mergejoinable equality clauses A = B.  When we find one, we
+create an EquivalenceClass containing the expressions A and B to record
+that they are equal.  If we later find another equivalence clause B = C,
+we add C to the existing EquivalenceClass for {A B}; this may require
+merging two existing EquivalenceClasses.  At the end of the scan, we have
+sets of values that are known all transitively equal to each other.  We can
+therefore use a comparison of any pair of the values as a restriction or
+join clause (when these values are available at the scan or join, of
+course); furthermore, we need test only one such comparison, not all of
+them.  Therefore, equivalence clauses are removed from the standard qual
+distribution process.  Instead, when preparing a restriction or join clause
+list, we examine each EquivalenceClass to see if it can contribute a
+clause, and if so we select an appropriate pair of values to compare.  For
+example, if we are trying to join A&#x27;s relation to C&#x27;s, we can generate the
+clause A = C, even though this appeared nowhere explicitly in the original
+query.  This may allow us to explore join paths that otherwise would have
+been rejected as requiring Cartesian-product joins.
+
+Sometimes an EquivalenceClass may contain a pseudo-constant expression
+(i.e., one not containing Vars or Aggs of the current query level, nor
+volatile functions).  In this case we do not follow the policy of
+dynamically generating join clauses: instead, we dynamically generate
+restriction clauses &quot;var = const&quot; wherever one of the variable members of
+the class can first be computed.  For example, if we have A = B and B = 42,
+we effectively generate the restriction clauses A = 42 and B = 42, and then
+we need not bother with explicitly testing the join clause A = B when the
+relations are joined.  In effect, all the class members can be tested at
+relation-scan level and there&#x27;s never a need for join tests.
+
+The precise technical interpretation of an EquivalenceClass is that it
+asserts that at any plan node where more than one of its member values
+can be computed, output rows in which the values are not all equal may
+be discarded without affecting the query result.  (We require all levels
+of the plan to enforce EquivalenceClasses, hence a join need not recheck
+equality of values that were computable by one of its children.)
+
+Outer joins complicate this picture quite a bit, however.  While we could
+theoretically use mergejoinable equality clauses that appear in outer-join
+conditions as sources of EquivalenceClasses, there&#x27;s a serious difficulty:
+the resulting deductions are not valid everywhere.  For example, given
+
+	SELECT * FROM a LEFT JOIN b ON (a.x = b.y AND a.x = 42);
+
+we can safely derive b.y = 42 and use that in the scan of B, because B
+rows not having b.y = 42 will not contribute to the join result.  However,
+we cannot apply a.x = 42 at the scan of A, or we will remove rows that
+should appear in the join result.  We could apply a.x = 42 as an outer join
+condition (and then it would be unnecessary to also check a.x = b.y).
+This is not yet implemented, however.
+
+A related issue is that constants appearing below an outer join are
+less constant than they appear.  Ordinarily, if we find &quot;A = 1&quot; and
+&quot;B = 1&quot;, it&#x27;s okay to put A and B into the same EquivalenceClass.
+But consider
+
+	SELECT * FROM a
+	  LEFT JOIN (SELECT * FROM b WHERE b.z = 1) b ON (a.x = b.y)
+	WHERE a.x = 1;
+
+It would be a serious error to conclude that a.x = b.z, so we cannot
+form a single EquivalenceClass {a.x b.z 1}.
+
+This leads to considering EquivalenceClasses as applying within &quot;join
+domains&quot;, which are sets of relations that are inner-joined to each other.
+(We can treat semijoins as if they were inner joins for this purpose.)
+There is a top-level join domain, and then each outer join in the query
+creates a new join domain comprising its nullable side.  Full joins create
+two join domains, one for each side.  EquivalenceClasses generated from
+WHERE are associated with the top-level join domain.  EquivalenceClasses
+generated from the ON clause of an outer join are associated with the
+domain created by that outer join.  EquivalenceClasses generated from the
+ON clause of an inner or semi join are associated with the syntactically
+most closely nested join domain.
+
+Having defined these domains, we can fix the not-so-constant-constants
+problem by considering that constants only match EquivalenceClass members
+when they come from clauses within the same join domain.  In the above
+example, this means we keep {a.x 1} and {b.z 1} as separate
+EquivalenceClasses and don&#x27;t erroneously merge them.  We don&#x27;t have to
+worry about this for Vars (or expressions containing Vars), because
+references to the &quot;same&quot; column from different join domains will have
+different varnullingrels and thus won&#x27;t be equal() anyway.
+
+In the future, the join-domain concept may allow us to treat mergejoinable
+outer-join conditions as sources of EquivalenceClasses.  The idea would be
+that conditions derived from such classes could only be enforced at scans
+or joins that are within the appropriate join domain.  This is not
+implemented yet, however, as the details are trickier than they appear.
+
+Another instructive example is:
+
+	SELECT *
+	  FROM a LEFT JOIN
+	       (SELECT * FROM b JOIN c ON b.y = c.z WHERE b.y = 10) ss
+	       ON a.x = ss.y
+	  ORDER BY ss.y;
+
+We can form the EquivalenceClass {b.y c.z 10} and thereby apply c.z = 10
+while scanning C, as well as b.y = 10 while scanning B, so that no clause
+needs to be checked at the inner join.  The left-join clause &quot;a.x = ss.y&quot;
+(really &quot;a.x = b.y&quot;) is not considered an equivalence clause, so we do
+not insert a.x into that same EquivalenceClass; if we did, we&#x27;d falsely
+conclude a.x = 10.  In the future though we might be able to do that,
+if we can keep from applying a.x = 10 at the scan of A, which in principle
+we could do by noting that the EquivalenceClass only applies within the
+{B,C} join domain.
+
+Also notice that ss.y in the ORDER BY is really b.y* (that is, the
+possibly-nulled form of b.y), so we will not confuse it with the b.y member
+of the lower EquivalenceClass.  Thus, we won&#x27;t mistakenly conclude that
+that ss.y is equal to a constant, which if true would lead us to think that
+sorting for the ORDER BY is unnecessary (see discussion of PathKeys below).
+Instead, there will be a separate EquivalenceClass containing only b.y*,
+which will form the basis for the PathKey describing the required sort
+order.
+
+Also consider this variant:
+
+	SELECT *
+	  FROM a LEFT JOIN
+	       (SELECT * FROM b JOIN c ON b.y = c.z WHERE b.y = 10) ss
+	       ON a.x = ss.y
+	  WHERE a.x = 42;
+
+We still form the EquivalenceClass {b.y c.z 10}, and additionally
+we have an EquivalenceClass {a.x 42} belonging to a different join domain.
+We cannot use &quot;a.x = b.y&quot; to merge these classes.  However, we can compare
+that outer join clause to the existing EquivalenceClasses and form the
+derived clause &quot;b.y = 42&quot;, which we can treat as a valid equivalence
+within the lower join domain (since no row of that domain not having
+b.y = 42 can contribute to the outer-join result).  That makes the lower
+EquivalenceClass {42 b.y c.z 10}, resulting in the contradiction 10 = 42,
+which lets the planner deduce that the B/C join need not be computed at
+all: the result of that whole join domain can be forced to empty.
+(This gets implemented as a gating Result filter, since more usually the
+potential contradiction involves Param values rather than just Consts, and
+thus it has to be checked at runtime.  We can use the join domain to
+determine the join level at which to place the gating condition.)
+
+There is an additional complication when re-ordering outer joins according
+to identity 3.  Recall that the two choices we consider for such joins are
+
+	A leftjoin (B leftjoin C on (Pbc)) on (Pab)
+	(A leftjoin B on (Pab)) leftjoin C on (Pb*c)
+
+where the star denotes varnullingrels markers on B&#x27;s Vars.  When Pbc
+is (or includes) a mergejoinable clause, we have something like
+
+	A leftjoin (B leftjoin C on (b.b = c.c)) on (Pab)
+	(A leftjoin B on (Pab)) leftjoin C on (b.b* = c.c)
+
+We could generate an EquivalenceClause linking b.b and c.c, but if we
+then also try to link b.b* and c.c, we end with a nonsensical conclusion
+that b.b and b.b* are equal (at least in some parts of the plan tree).
+In any case, the conclusions we could derive from such a thing would be
+largely duplicative.  Conditions involving b.b* can&#x27;t be computed below
+this join nest, while any conditions that can be computed would be
+duplicative of what we&#x27;d get from the b.b/c.c combination.  Therefore,
+we choose to generate an EquivalenceClause linking b.b and c.c, but
+&quot;b.b* = c.c&quot; is handled as just an ordinary clause.
+
+To aid in determining the sort ordering(s) that can work with a mergejoin,
+we mark each mergejoinable clause with the EquivalenceClasses of its left
+and right inputs.  For an equivalence clause, these are of course the same
+EquivalenceClass.  For a non-equivalence mergejoinable clause (such as an
+outer-join qualification), we generate two separate EquivalenceClasses for
+the left and right inputs.  This may result in creating single-item
+equivalence &quot;classes&quot;, though of course these are still subject to merging
+if other equivalence clauses are later found to bear on the same
+expressions.
+
+Another way that we may form a single-item EquivalenceClass is in creation
+of a PathKey to represent a desired sort order (see below).  This happens
+if an ORDER BY or GROUP BY key is not mentioned in any equivalence
+clause.  We need to reason about sort orders in such queries, and our
+representation of sort ordering is a PathKey which depends on an
+EquivalenceClass, so we have to make an EquivalenceClass.  This is a bit
+different from the above cases because such an EquivalenceClass might
+contain an aggregate function or volatile expression.  (A clause containing
+a volatile function will never be considered mergejoinable, even if its top
+operator is mergejoinable, so there is no way for a volatile expression to
+get into EquivalenceClasses otherwise.  Aggregates are disallowed in WHERE
+altogether, so will never be found in a mergejoinable clause.)  This is just
+a convenience to maintain a uniform PathKey representation: such an
+EquivalenceClass will never be merged with any other.  Note in particular
+that a single-item EquivalenceClass {a.x} is *not* meant to imply an
+assertion that a.x = a.x; the practical effect of this is that a.x could
+be NULL.
+
+</pre></section><section class="document-translation-chunk pending" data-chunk-order="4"><h2>Chunk 5: translation pending</h2><p>This chunk has not been translated yet. Original text:</p><pre class="document-translation-text">An EquivalenceClass also contains a list of btree opfamily OIDs, which
+determines what the equalities it represents actually &quot;mean&quot;.  All the
+equivalence clauses that contribute to an EquivalenceClass must have
+equality operators that belong to the same set of opfamilies.  (Note: most
+of the time, a particular equality operator belongs to only one family, but
+it&#x27;s possible that it belongs to more than one.  We keep track of all the
+families to ensure that we can make use of an index belonging to any one of
+the families for mergejoin purposes.)
+
+For the same sort of reason, an EquivalenceClass is also associated
+with a particular collation, if its datatype(s) care about collation.
+
+An EquivalenceClass can contain &quot;em_is_child&quot; members, which are copies
+of members that contain appendrel parent relation Vars, transposed to
+contain the equivalent child-relation variables or expressions.  These
+members are *not* full-fledged members of the EquivalenceClass and do not
+affect the class&#x27;s overall properties at all.  They are kept only to
+simplify matching of child-relation expressions to EquivalenceClasses.
+Most operations on EquivalenceClasses needn&#x27;t look at child members.
+
+
+PathKeys
+--------
+
+The PathKeys data structure represents what is known about the sort order
+of the tuples generated by a particular Path.  A path&#x27;s pathkeys field is a
+list of PathKey nodes, where the n&#x27;th item represents the n&#x27;th sort key of
+the result.  Each PathKey contains these fields:
+
+	* a reference to an EquivalenceClass
+	* a btree opfamily OID (must match one of those in the EC)
+	* a sort direction (ascending or descending)
+	* a nulls-first-or-last flag
+
+The EquivalenceClass represents the value being sorted on.  Since the
+various members of an EquivalenceClass are known equal according to the
+opfamily, we can consider a path sorted by any one of them to be sorted by
+any other too; this is what justifies referencing the whole
+EquivalenceClass rather than just one member of it.
+
+In single/base relation RelOptInfo&#x27;s, the Paths represent various ways
+of scanning the relation and the resulting ordering of the tuples.
+Sequential scan Paths have NIL pathkeys, indicating no known ordering.
+Index scans have Path.pathkeys that represent the chosen index&#x27;s ordering,
+if any.  A single-key index would create a single-PathKey list, while a
+multi-column index generates a list with one element per key index column.
+Non-key columns specified in the INCLUDE clause of covering indexes don&#x27;t
+have corresponding PathKeys in the list, because they have no influence on
+index ordering.  (Actually, since an index can be scanned either forward or
+backward, there are two possible sort orders and two possible PathKey lists
+it can generate.)
+
+Note that a bitmap scan has NIL pathkeys since we can say nothing about
+the overall order of its result.  Also, an indexscan on an unordered type
+of index generates NIL pathkeys.  However, we can always create a pathkey
+by doing an explicit sort.  The pathkeys for a Sort plan&#x27;s output just
+represent the sort key fields and the ordering operators used.
+
+Things get more interesting when we consider joins.  Suppose we do a
+mergejoin between A and B using the mergeclause A.X = B.Y.  The output
+of the mergejoin is sorted by X --- but it is also sorted by Y.  Again,
+this can be represented by a PathKey referencing an EquivalenceClass
+containing both X and Y.
+
+With a little further thought, it becomes apparent that nestloop joins
+can also produce sorted output.  For example, if we do a nestloop join
+between outer relation A and inner relation B, then any pathkeys relevant
+to A are still valid for the join result: we have not altered the order of
+the tuples from A.  Even more interesting, if there was an equivalence clause
+A.X=B.Y, and A.X was a pathkey for the outer relation A, then we can assert
+that B.Y is a pathkey for the join result; X was ordered before and still
+is, and the joined values of Y are equal to the joined values of X, so Y
+must now be ordered too.  This is true even though we used neither an
+explicit sort nor a mergejoin on Y.  (Note: hash joins cannot be counted
+on to preserve the order of their outer relation, because the executor
+might decide to &quot;batch&quot; the join, so we always set pathkeys to NIL for
+a hashjoin path.)
+
+An outer join doesn&#x27;t preserve the ordering of its nullable input
+relation(s), because it might insert nulls at random points in the
+ordering.  We don&#x27;t need to think about this explicitly in the PathKey
+representation, because a PathKey representing a post-join variable
+will contain varnullingrel bits, making it not equal to a PathKey
+representing the pre-join value.
+
+In general, we can justify using EquivalenceClasses as the basis for
+pathkeys because, whenever we scan a relation containing multiple
+EquivalenceClass members or join two relations each containing
+EquivalenceClass members, we apply restriction or join clauses derived from
+the EquivalenceClass.  This guarantees that any two values listed in the
+EquivalenceClass are in fact equal in all tuples emitted by the scan or
+join, and therefore that if the tuples are sorted by one of the values,
+they can be considered sorted by any other as well.  It does not matter
+whether the test clause is used as a mergeclause, or merely enforced
+after-the-fact as a qpqual filter.
+
+Note that there is no particular difficulty in labeling a path&#x27;s sort
+order with a PathKey referencing an EquivalenceClass that contains
+variables not yet joined into the path&#x27;s output.  We can simply ignore
+such entries as not being relevant (yet).  This makes it possible to
+use the same EquivalenceClasses throughout the join planning process.
+In fact, by being careful not to generate multiple identical PathKey
+objects, we can reduce comparison of EquivalenceClasses and PathKeys
+to simple pointer comparison, which is a huge savings because add_path
+has to make a large number of PathKey comparisons in deciding whether
+competing Paths are equivalently sorted.
+
+Pathkeys are also useful to represent an ordering that we wish to achieve,
+since they are easily compared to the pathkeys of a potential candidate
+path.  So, SortGroupClause lists are turned into pathkeys lists for use
+inside the optimizer.
+
+An additional refinement we can make is to insist that canonical pathkey
+lists (sort orderings) do not mention the same EquivalenceClass more than
+once.  For example, in all these cases the second sort column is redundant,
+because it cannot distinguish values that are the same according to the
+first sort column:
+	SELECT ... ORDER BY x, x
+	SELECT ... ORDER BY x, x DESC
+	SELECT ... WHERE x = y ORDER BY x, y
+Although a user probably wouldn&#x27;t write &quot;ORDER BY x,x&quot; directly, such
+redundancies are more probable once equivalence classes have been
+considered.  Also, the system may generate redundant pathkey lists when
+computing the sort ordering needed for a mergejoin.  By eliminating the
+redundancy, we save time and improve planning, since the planner will more
+easily recognize equivalent orderings as being equivalent.
+
+Another interesting property is that if the underlying EquivalenceClass
+contains a constant, then the pathkey is completely redundant and need not
+be sorted by at all!  Every interesting row must contain the same value,
+so there&#x27;s no need to sort.  This might seem pointless because users
+are unlikely to write &quot;... WHERE x = 42 ORDER BY x&quot;, but it allows us to
+recognize when particular index columns are irrelevant to the sort order:
+if we have &quot;... WHERE x = 42 ORDER BY y&quot;, scanning an index on (x,y)
+produces correctly ordered data without a sort step.  We used to have very
+ugly ad-hoc code to recognize that in limited contexts, but discarding
+constant ECs from pathkeys makes it happen cleanly and automatically.
+
+
+Order of processing for EquivalenceClasses and PathKeys
+-------------------------------------------------------
+
+As alluded to above, there is a specific sequence of phases in the
+processing of EquivalenceClasses and PathKeys during planning.  During the
+initial scanning of the query&#x27;s quals (deconstruct_jointree followed by
+reconsider_outer_join_clauses), we construct EquivalenceClasses based on
+mergejoinable clauses found in the quals.  At the end of this process,
+we know all we can know about equivalence of different variables, so
+subsequently there will be no further merging of EquivalenceClasses.
+At that point it is possible to consider the EquivalenceClasses as
+&quot;canonical&quot; and build canonical PathKeys that reference them.  At this
+time we construct PathKeys for the query&#x27;s ORDER BY and related clauses.
+(Any ordering expressions that do not appear elsewhere will result in
+the creation of new EquivalenceClasses, but this cannot result in merging
+existing classes, so canonical-ness is not lost.)
+
+Because all the EquivalenceClasses are known before we begin path
+generation, we can use them as a guide to which indexes are of interest:
+if an index&#x27;s column is not mentioned in any EquivalenceClass then that
+index&#x27;s sort order cannot possibly be helpful for the query.  This allows
+short-circuiting of much of the processing of create_index_paths() for
+irrelevant indexes.
+
+There are some cases where planner.c constructs additional
+EquivalenceClasses and PathKeys after query_planner has completed.
+In these cases, the extra ECs/PKs are needed to represent sort orders
+that were not considered during query_planner.  Such situations should be
+minimized since it is impossible for query_planner to return a plan
+producing such a sort order, meaning an explicit sort will always be needed.
+Currently this happens only for queries involving multiple window functions
+with different orderings, for which extra sorts are needed anyway.
+
+
+Parameterized Paths
+-------------------
+
+The naive way to join two relations using a clause like WHERE A.X = B.Y
+is to generate a nestloop plan like this:
+
+	NestLoop
+		Filter: A.X = B.Y
+		-&gt; Seq Scan on A
+		-&gt; Seq Scan on B
+
+We can make this better by using a merge or hash join, but it still
+requires scanning all of both input relations.  If A is very small and B is
+very large, but there is an index on B.Y, it can be enormously better to do
+something like this:
+
+	NestLoop
+		-&gt; Seq Scan on A
+		-&gt; Index Scan using B_Y_IDX on B
+			Index Condition: B.Y = A.X
+
+Here, we are expecting that for each row scanned from A, the nestloop
+plan node will pass down the current value of A.X into the scan of B.
+That allows the indexscan to treat A.X as a constant for any one
+invocation, and thereby use it as an index key.  This is the only plan type
+that can avoid fetching all of B, and for small numbers of rows coming from
+A, that will dominate every other consideration.  (As A gets larger, this
+gets less attractive, and eventually a merge or hash join will win instead.
+So we have to cost out all the alternatives to decide what to do.)
+
+It can be useful for the parameter value to be passed down through
+intermediate layers of joins, for example:
+
+	NestLoop
+		-&gt; Seq Scan on A
+		Hash Join
+			Join Condition: B.Y = C.W
+			-&gt; Seq Scan on B
+			-&gt; Index Scan using C_Z_IDX on C
+				Index Condition: C.Z = A.X
+
+If all joins are plain inner joins then this is usually unnecessary,
+because it&#x27;s possible to reorder the joins so that a parameter is used
+immediately below the nestloop node that provides it.  But in the
+presence of outer joins, such join reordering may not be possible.
+
+Also, the bottom-level scan might require parameters from more than one
+other relation.  In principle we could join the other relations first
+so that all the parameters are supplied from a single nestloop level.
+But if those other relations have no join clause in common (which is
+common in star-schema queries for instance), the planner won&#x27;t consider
+joining them directly to each other.  In such a case we need to be able
+to create a plan like
+
+</pre></section><section class="document-translation-chunk pending" data-chunk-order="5"><h2>Chunk 6: translation pending</h2><p>This chunk has not been translated yet. Original text:</p><pre class="document-translation-text">    NestLoop
+        -&gt; Seq Scan on SmallTable1 A
+        NestLoop
+            -&gt; Seq Scan on SmallTable2 B
+            -&gt; Index Scan using XYIndex on LargeTable C
+                 Index Condition: C.X = A.AID and C.Y = B.BID
+
+so we should be willing to pass down A.AID through a join even though
+there is no join order constraint forcing the plan to look like this.
+
+Before version 9.2, Postgres used ad-hoc methods for planning and
+executing nestloop queries of this kind, and those methods could not
+handle passing parameters down through multiple join levels.
+
+To plan such queries, we now use a notion of a &quot;parameterized path&quot;,
+which is a path that makes use of a join clause to a relation that&#x27;s not
+scanned by the path.  In the example two above, we would construct a
+path representing the possibility of doing this:
+
+	-&gt; Index Scan using C_Z_IDX on C
+		Index Condition: C.Z = A.X
+
+This path will be marked as being parameterized by relation A.  (Note that
+this is only one of the possible access paths for C; we&#x27;d still have a
+plain unparameterized seqscan, and perhaps other possibilities.)  The
+parameterization marker does not prevent joining the path to B, so one of
+the paths generated for the joinrel {B C} will represent
+
+	Hash Join
+		Join Condition: B.Y = C.W
+		-&gt; Seq Scan on B
+		-&gt; Index Scan using C_Z_IDX on C
+			Index Condition: C.Z = A.X
+
+This path is still marked as being parameterized by A.  When we attempt to
+join {B C} to A to form the complete join tree, such a path can only be
+used as the inner side of a nestloop join: it will be ignored for other
+possible join types.  So we will form a join path representing the query
+plan shown above, and it will compete in the usual way with paths built
+from non-parameterized scans.
+
+While all ordinary paths for a particular relation generate the same set
+of rows (since they must all apply the same set of restriction clauses),
+parameterized paths typically generate fewer rows than less-parameterized
+paths, since they have additional clauses to work with.  This means we
+must consider the number of rows generated as an additional figure of
+merit.  A path that costs more than another, but generates fewer rows,
+must be kept since the smaller number of rows might save work at some
+intermediate join level.  (It would not save anything if joined
+immediately to the source of the parameters.)
+
+To keep cost estimation rules relatively simple, we make an implementation
+restriction that all paths for a given relation of the same parameterization
+(i.e., the same set of outer relations supplying parameters) must have the
+same rowcount estimate.  This is justified by insisting that each such path
+apply *all* join clauses that are available with the named outer relations.
+Different paths might, for instance, choose different join clauses to use
+as index clauses; but they must then apply any other join clauses available
+from the same outer relations as filter conditions, so that the set of rows
+returned is held constant.  This restriction doesn&#x27;t degrade the quality of
+the finished plan: it amounts to saying that we should always push down
+movable join clauses to the lowest possible evaluation level, which is a
+good thing anyway.  The restriction is useful in particular to support
+pre-filtering of join paths in add_path_precheck.  Without this rule we
+could never reject a parameterized path in advance of computing its rowcount
+estimate, which would greatly reduce the value of the pre-filter mechanism.
+
+To limit planning time, we have to avoid generating an unreasonably large
+number of parameterized paths.  We do this by only generating parameterized
+relation scan paths for index scans, and then only for indexes for which
+suitable join clauses are available.  There are also heuristics in join
+planning that try to limit the number of parameterized paths considered.
+
+In particular, there&#x27;s been a deliberate policy decision to favor hash
+joins over merge joins for parameterized join steps (those occurring below
+a nestloop that provides parameters to the lower join&#x27;s inputs).  While we
+do not ignore merge joins entirely, joinpath.c does not fully explore the
+space of potential merge joins with parameterized inputs.  Also, add_path
+treats parameterized paths as having no pathkeys, so that they compete
+only on cost and rowcount; they don&#x27;t get preference for producing a
+special sort order.  This creates additional bias against merge joins,
+since we might discard a path that could have been useful for performing
+a merge without an explicit sort step.  Since a parameterized path must
+ultimately be used on the inside of a nestloop, where its sort order is
+uninteresting, these choices do not affect any requirement for the final
+output order of a query --- they only make it harder to use a merge join
+at a lower level.  The savings in planning work justifies that.
+
+Similarly, parameterized paths do not normally get preference in add_path
+for having cheap startup cost; that&#x27;s seldom of much value when on the
+inside of a nestloop, so it seems not worth keeping extra paths solely for
+that.  An exception occurs for parameterized paths for the RHS relation of
+a SEMI or ANTI join: in those cases, we can stop the inner scan after the
+first match, so it&#x27;s primarily startup not total cost that we care about.
+
+
+LATERAL subqueries
+------------------
+
+As of 9.3 we support SQL-standard LATERAL references from subqueries in
+FROM (and also functions in FROM).  The planner implements these by
+generating parameterized paths for any RTE that contains lateral
+references.  In such cases, *all* paths for that relation will be
+parameterized by at least the set of relations used in its lateral
+references.  (And in turn, join relations including such a subquery might
+not have any unparameterized paths.)  All the other comments made above for
+parameterized paths still apply, though; in particular, each such path is
+still expected to enforce any join clauses that can be pushed down to it,
+so that all paths of the same parameterization have the same rowcount.
+
+We also allow LATERAL subqueries to be flattened (pulled up into the parent
+query) by the optimizer, but only when this does not introduce lateral
+references into JOIN/ON quals that would refer to relations outside the
+lowest outer join at/above that qual.  The semantics of such a qual would
+be unclear.  Note that even with this restriction, pullup of a LATERAL
+subquery can result in creating PlaceHolderVars that contain lateral
+references to relations outside their syntactic scope.  We still evaluate
+such PHVs at their syntactic location or lower, but the presence of such a
+PHV in the quals or targetlist of a plan node requires that node to appear
+on the inside of a nestloop join relative to the rel(s) supplying the
+lateral reference.  (Perhaps now that that stuff works, we could relax the
+pullup restriction?)
+
+
+Security-level constraints on qual clauses
+------------------------------------------
+
+To support row-level security and security-barrier views efficiently,
+we mark qual clauses (RestrictInfo nodes) with a &quot;security_level&quot; field.
+The basic concept is that a qual with a lower security_level must be
+evaluated before one with a higher security_level.  This ensures that
+&quot;leaky&quot; quals that might expose sensitive data are not evaluated until
+after the security barrier quals that are supposed to filter out
+security-sensitive rows.  However, many qual conditions are &quot;leakproof&quot;,
+that is we trust the functions they use to not expose data.  To avoid
+unnecessarily inefficient plans, a leakproof qual is not delayed by
+security-level considerations, even if it has a higher syntactic
+security_level than another qual.
+
+In a query that contains no use of RLS or security-barrier views, all
+quals will have security_level zero, so that none of these restrictions
+kick in; we don&#x27;t even need to check leakproofness of qual conditions.
+
+If there are security-barrier quals, they get security_level zero (and
+possibly higher, if there are multiple layers of barriers).  Regular quals
+coming from the query text get a security_level one more than the highest
+level used for barrier quals.
+
+When new qual clauses are generated by EquivalenceClass processing,
+they must be assigned a security_level.  This is trickier than it seems.
+One&#x27;s first instinct is that it would be safe to use the largest level
+found among the source quals for the EquivalenceClass, but that isn&#x27;t
+safe at all, because it allows unwanted delays of security-barrier quals.
+Consider a barrier qual &quot;t.x = t.y&quot; plus a query qual &quot;t.x = constant&quot;,
+and suppose there is another query qual &quot;leaky_function(t.z)&quot; that
+we mustn&#x27;t evaluate before the barrier qual has been checked.
+We will have an EC {t.x, t.y, constant} which will lead us to replace
+the EC quals with &quot;t.x = constant AND t.y = constant&quot;.  (We do not want
+to give up that behavior, either, since the latter condition could allow
+use of an index on t.y, which we would never discover from the original
+quals.)  If these generated quals are assigned the same security_level as
+the query quals, then it&#x27;s possible for the leaky_function qual to be
+evaluated first, allowing leaky_function to see data from rows that
+possibly don&#x27;t pass the barrier condition.
+
+Instead, our handling of security levels with ECs works like this:
+* Quals are not accepted as source clauses for ECs in the first place
+unless they are leakproof or have security_level zero.
+* EC-derived quals are assigned the minimum (not maximum) security_level
+found among the EC&#x27;s source clauses.
+* If the maximum security_level found among the EC&#x27;s source clauses is
+above zero, then the equality operators selected for derived quals must
+be leakproof.  When no such operator can be found, the EC is treated as
+&quot;broken&quot; and we fall back to emitting its source clauses without any
+additional derived quals.
+
+These rules together ensure that an untrusted qual clause (one with
+security_level above zero) cannot cause an EC to generate a leaky derived
+clause.  This makes it safe to use the minimum not maximum security_level
+for derived clauses.  The rules could result in poor plans due to not
+being able to generate derived clauses at all, but the risk of that is
+small in practice because most btree equality operators are leakproof.
+Also, by making exceptions for level-zero quals, we ensure that there is
+no plan degradation when no barrier quals are present.
+
+Once we have security levels assigned to all clauses, enforcement
+of barrier-qual ordering restrictions boils down to two rules:
+
+* Table scan plan nodes must not select quals for early execution
+(for example, use them as index qualifiers in an indexscan) unless
+they are leakproof or have security_level no higher than any other
+qual that is due to be executed at the same plan node.  (Use the
+utility function restriction_is_securely_promotable() to check
+whether it&#x27;s okay to select a qual for early execution.)
+
+* Normal execution of a list of quals must execute them in an order
+that satisfies the same security rule, ie higher security_levels must
+be evaluated later unless leakproof.  (This is handled in a single place
+by order_qual_clauses() in createplan.c.)
+
+order_qual_clauses() uses a heuristic to decide exactly what to do with
+leakproof clauses.  Normally it sorts clauses by security_level then cost,
+being careful that the sort is stable so that we don&#x27;t reorder clauses
+without a clear reason.  But this could result in a very expensive qual
+being done before a cheaper one that is of higher security_level.
+If the cheaper qual is leaky we have no choice, but if it is leakproof
+we could put it first.  We choose to sort leakproof quals as if they
+have security_level zero, but only when their cost is less than 10X
+cpu_operator_cost; that restriction alleviates the opposite problem of
+doing expensive quals first just because they&#x27;re leakproof.
+
+</pre></section><section class="document-translation-chunk pending" data-chunk-order="6"><h2>Chunk 7: translation pending</h2><p>This chunk has not been translated yet. Original text:</p><pre class="document-translation-text">Additional rules will be needed to support safe handling of join quals
+when there is a mix of security levels among join quals; for example, it
+will be necessary to prevent leaky higher-security-level quals from being
+evaluated at a lower join level than other quals of lower security level.
+Currently there is no need to consider that since security-prioritized
+quals can only be single-table restriction quals coming from RLS policies
+or security-barrier views, and security-barrier view subqueries are never
+flattened into the parent query.  Hence enforcement of security-prioritized
+quals only happens at the table scan level.  With extra rules for safe
+handling of security levels among join quals, it should be possible to let
+security-barrier views be flattened into the parent query, allowing more
+flexibility of planning while still preserving required ordering of qual
+evaluation.  But that will come later.
+
+
+Post scan/join planning
+-----------------------
+
+So far we have discussed only scan/join planning, that is, implementation
+of the FROM and WHERE clauses of a SQL query.  But the planner must also
+determine how to deal with GROUP BY, aggregation, and other higher-level
+features of queries; and in many cases there are multiple ways to do these
+steps and thus opportunities for optimization choices.  These steps, like
+scan/join planning, are handled by constructing Paths representing the
+different ways to do a step, then choosing the cheapest Path.
+
+Since all Paths require a RelOptInfo as &quot;parent&quot;, we create RelOptInfos
+representing the outputs of these upper-level processing steps.  These
+RelOptInfos are mostly dummy, but their pathlist lists hold all the Paths
+considered useful for each step.  Currently, we may create these types of
+additional RelOptInfos during upper-level planning:
+
+UPPERREL_SETOP		result of UNION/INTERSECT/EXCEPT, if any
+UPPERREL_PARTIAL_GROUP_AGG	result of partial grouping/aggregation, if any
+UPPERREL_GROUP_AGG	result of grouping/aggregation, if any
+UPPERREL_WINDOW		result of window functions, if any
+UPPERREL_PARTIAL_DISTINCT	result of partial &quot;SELECT DISTINCT&quot;, if any
+UPPERREL_DISTINCT	result of &quot;SELECT DISTINCT&quot;, if any
+UPPERREL_ORDERED	result of ORDER BY, if any
+UPPERREL_FINAL		result of any remaining top-level actions
+
+UPPERREL_FINAL is used to represent any final processing steps, currently
+LockRows (SELECT FOR UPDATE), LIMIT/OFFSET, and ModifyTable.  There is no
+flexibility about the order in which these steps are done, and thus no need
+to subdivide this stage more finely.
+
+These &quot;upper relations&quot; are identified by the UPPERREL enum values shown
+above, plus a relids set, which allows there to be more than one upperrel
+of the same kind.  We use NULL for the relids if there&#x27;s no need for more
+than one upperrel of the same kind.  Currently, in fact, the relids set
+is vestigial because it&#x27;s always NULL, but that&#x27;s expected to change in
+the future.  For example, in planning set operations, we might need the
+relids to denote which subset of the leaf SELECTs has been combined in a
+particular group of Paths that are competing with each other.
+
+The result of subquery_planner() is always returned as a set of Paths
+stored in the UPPERREL_FINAL rel with NULL relids.  The other types of
+upperrels are created only if needed for the particular query.
+
+
+Parallel Query and Partial Paths
+--------------------------------
+
+Parallel query involves dividing up the work that needs to be performed
+either by an entire query or some portion of the query in such a way that
+some of that work can be done by one or more worker processes, which are
+called parallel workers.  Parallel workers are a subtype of dynamic
+background workers; see src/backend/access/transam/README.parallel for a
+fuller description.  The academic literature on parallel query suggests
+that parallel execution strategies can be divided into essentially two
+categories: pipelined parallelism, where the execution of the query is
+divided into multiple stages and each stage is handled by a separate
+process; and partitioning parallelism, where the data is split between
+multiple processes and each process handles a subset of it.  The
+literature, however, suggests that gains from pipeline parallelism are
+often very limited due to the difficulty of avoiding pipeline stalls.
+Consequently, we do not currently attempt to generate query plans that
+use this technique.
+
+Instead, we focus on partitioning parallelism, which does not require
+that the underlying table be partitioned.  It only requires that (1)
+there is some method of dividing the data from at least one of the base
+tables involved in the relation across multiple processes, (2) allowing
+each process to handle its own portion of the data, and then (3)
+collecting the results.  Requirements (2) and (3) are satisfied by the
+executor node Gather (or GatherMerge), which launches any number of worker
+processes and executes its single child plan in all of them, and perhaps
+in the leader also, if the children aren&#x27;t generating enough data to keep
+the leader busy.  Requirement (1) is handled by the table scan node: when
+invoked with parallel_aware = true, this node will, in effect, partition
+the table on a block by block basis, returning a subset of the tuples from
+the relation in each worker where that scan node is executed.
+
+Just as we do for non-parallel access methods, we build Paths to
+represent access strategies that can be used in a parallel plan.  These
+are, in essence, the same strategies that are available in the
+non-parallel plan, but there is an important difference: a path that
+will run beneath a Gather node returns only a subset of the query
+results in each worker, not all of them.  To form a path that can
+actually be executed, the (rather large) cost of the Gather node must be
+accounted for.  For this reason among others, paths intended to run
+beneath a Gather node - which we call &quot;partial&quot; paths since they return
+only a subset of the results in each worker - must be kept separate from
+ordinary paths (see RelOptInfo&#x27;s partial_pathlist and the function
+add_partial_path).
+
+One of the keys to making parallel query effective is to run as much of
+the query in parallel as possible.  Therefore, we expect it to generally
+be desirable to postpone the Gather stage until as near to the top of the
+plan as possible.  Expanding the range of cases in which more work can be
+pushed below the Gather (and costing them accurately) is likely to keep us
+busy for a long time to come.
+
+Partitionwise joins
+-------------------
+
+A join between two similarly partitioned tables can be broken down into joins
+between their matching partitions if there exists an equi-join condition
+between the partition keys of the joining tables. The equi-join between
+partition keys implies that all join partners for a given row in one
+partitioned table must be in the corresponding partition of the other
+partitioned table. Because of this the join between partitioned tables to be
+broken into joins between the matching partitions. The resultant join is
+partitioned in the same way as the joining relations, thus allowing an N-way
+join between similarly partitioned tables having equi-join condition between
+their partition keys to be broken down into N-way joins between their matching
+partitions. This technique of breaking down a join between partitioned tables
+into joins between their partitions is called partitionwise join. We will use
+term &quot;partitioned relation&quot; for either a partitioned table or a join between
+compatibly partitioned tables.
+
+Even if the joining relations don&#x27;t have exactly the same partition bounds,
+partitionwise join can still be applied by using an advanced
+partition-matching algorithm.  For both the joining relations, the algorithm
+checks whether every partition of one joining relation only matches one
+partition of the other joining relation at most.  In such a case the join
+between the joining relations can be broken down into joins between the
+matching partitions.  The join relation can then be considered partitioned.
+The algorithm produces the pairs of the matching partitions, plus the
+partition bounds for the join relation, to allow partitionwise join for
+computing the join.  The algorithm is implemented in partition_bounds_merge().
+For an N-way join relation considered partitioned this way, not every pair of
+joining relations can use partitionwise join.  For example:
+
+	(A leftjoin B on (Pab)) innerjoin C on (Pac)
+
+where A, B, and C are partitioned tables, and A has an extra partition
+compared to B and C.  When considering partitionwise join for the join {A B},
+the extra partition of A doesn&#x27;t have a matching partition on the nullable
+side, which is the case that the current implementation of partitionwise join
+can&#x27;t handle.  So {A B} is not considered partitioned, and the pair of {A B}
+and C considered for the 3-way join can&#x27;t use partitionwise join.  On the
+other hand, the pair of {A C} and B can use partitionwise join because {A C}
+is considered partitioned by eliminating the extra partition (see identity 1
+on outer join reordering).  Whether an N-way join can use partitionwise join
+is determined based on the first pair of joining relations that are both
+partitioned and can use partitionwise join.
+
+The partitioning properties of a partitioned relation are stored in its
+RelOptInfo.  The information about data types of partition keys are stored in
+PartitionSchemeData structure. The planner maintains a list of canonical
+partition schemes (distinct PartitionSchemeData objects) so that RelOptInfo of
+any two partitioned relations with same partitioning scheme point to the same
+PartitionSchemeData object.  This reduces memory consumed by
+PartitionSchemeData objects and makes it easy to compare the partition schemes
+of joining relations.
+
+Partitionwise aggregates/grouping
+---------------------------------
+
+If the GROUP BY clause contains all of the partition keys, all the rows
+that belong to a given group must come from a single partition; therefore,
+aggregation can be done completely separately for each partition. Otherwise,
+partial aggregates can be computed for each partition, and then finalized
+after appending the results from the individual partitions.  This technique of
+breaking down aggregation or grouping over a partitioned relation into
+aggregation or grouping over its partitions is called partitionwise
+aggregation.  Especially when the partition keys match the GROUP BY clause,
+this can be significantly faster than the regular method.
+
+Eager aggregation
+-----------------
+
+Eager aggregation is a query optimization technique that partially
+pushes aggregation past a join, and finalizes it once all the
+relations are joined.  Eager aggregation may reduce the number of
+input rows to the join and thus could result in a better overall plan.
+
+To prove that the transformation is correct, let&#x27;s first consider the
+case where only inner joins are involved.  In this case, we partition
+the tables in the FROM clause into two groups: those that contain at
+least one aggregation column, and those that do not contain any
+aggregation columns.  Each group can be treated as a single relation
+formed by the Cartesian product of the tables within that group.
+Therefore, without loss of generality, we can assume that the FROM
+clause contains exactly two relations, R1 and R2, where R1 represents
+the relation containing all aggregation columns, and R2 represents the
+relation without any aggregation columns.
+
+Let the query be of the form:
+
+SELECT G, AGG(A)
+FROM R1 JOIN R2 ON J
+GROUP BY G;
+
+where G is the set of grouping keys that may include columns from R1
+and/or R2; AGG(A) is an aggregate function over columns A from R1; J
+is the join condition between R1 and R2.
+
+The transformation of eager aggregation is:
+
+    GROUP BY G, AGG(A) on (R1 JOIN R2 ON J)
+    =
+    GROUP BY G, AGG(agg_A) on ((GROUP BY G1, AGG(A) AS agg_A on R1) JOIN R2 ON J)
+
+This equivalence holds under the following conditions:
+
+</pre></section><section class="document-translation-chunk pending" data-chunk-order="7"><h2>Chunk 8: translation pending</h2><p>This chunk has not been translated yet. Original text:</p><pre class="document-translation-text">1) AGG is decomposable, meaning that it can be computed in two stages:
+a partial aggregation followed by a final aggregation;
+2) The set G1 used in the pre-aggregation of R1 includes:
+    * all columns from R1 that are part of the grouping keys G, and
+    * all columns from R1 that appear in the join condition J.
+3) The grouping operator for any column in G1 must be compatible with
+the operator used for that column in the join condition J.
+
+Since G1 includes all columns from R1 that appear in either the
+grouping keys G or the join condition J, all rows within each partial
+group have identical values for both the grouping keys and the
+join-relevant columns from R1, assuming compatible operators are used.
+As a result, the rows within a partial group are indistinguishable in
+terms of their contribution to the aggregation and their behavior in
+the join.  This ensures that all rows in the same partial group share
+the same &quot;destiny&quot;: they either all match or all fail to match a given
+row in R2.  Because the aggregate function AGG is decomposable,
+aggregating the partial results after the join yields the same final
+result as aggregating after the full join, thereby preserving query
+semantics.  Q.E.D.
+
+In the case where there are any outer joins, the situation becomes
+more complex due to join order constraints and the semantics of
+null-extension in outer joins.  If the relations that contain at least
+one aggregation column cannot be treated as a single relation because
+of the join order constraints, partial aggregation paths will not be
+generated, and thus the transformation is not applicable.  Otherwise,
+let R1 be the relation containing all aggregation columns, and R2, R3,
+... be the remaining relations.  From the inner join case, under the
+aforementioned conditions, we have the equivalence:
+
+    GROUP BY G, AGG(A) on (R1 JOIN R2 JOIN R3 ...)
+    =
+    GROUP BY G, AGG(agg_A) on ((GROUP BY G1, AGG(A) AS agg_A on R1) JOIN R2 JOIN R3 ...)
+
+To preserve correctness when outer joins are involved, we require an
+additional condition:
+
+4) R1 must not be on the nullable side of any outer join.
+
+This condition ensures that partial aggregation over R1 does not
+suppress any null-extended rows that would be introduced by outer
+joins.  If R1 is on the nullable side of an outer join, the
+NULL-extended rows produced by the outer join would not be available
+when we perform the partial aggregation, while with a
+non-eager-aggregation plan these rows are available for the top-level
+aggregation.  Pushing partial aggregation in this case may result in
+the rows being grouped differently than expected, or produce incorrect
+values from the aggregate functions.
+
+Semi joins and anti joins impose a similar restriction.  Such a join
+does not preserve its inner rows in the join output, so a partial
+aggregate computed on the inner side would not survive the join and
+could not be combined by the final aggregation.  We therefore do not
+push partial aggregation down to the inner side of a semi/anti join.
+(An anti join reduced from an outer join null-extends its inner side,
+so that inner relation is already excluded by the outer-join condition
+above; the case specifically addressed here is a semi/anti join that
+does not null-extend its inner side, such as one formed from an
+EXISTS, IN, NOT EXISTS, or NOT IN sublink.)
+
+During the construction of the join tree, we evaluate each base or
+join relation to determine if eager aggregation can be applied.  If
+feasible, we create a separate RelOptInfo called a &quot;grouped relation&quot;
+and generate grouped paths by adding sorted and hashed partial
+aggregation paths on top of the non-grouped paths.  To limit planning
+time, we consider only the cheapest or suitably-sorted non-grouped
+paths in this step.
+
+Another way to generate grouped paths is to join a grouped relation
+with a non-grouped relation.  Joining two grouped relations is
+currently not supported.
+
+To further limit planning time, we currently adopt a strategy where
+partial aggregation is pushed only to the lowest feasible level in the
+join tree where it provides a significant reduction in row count.
+This strategy also helps ensure that all grouped paths for the same
+grouped relation produce the same set of rows, which is important to
+support a fundamental assumption of the planner.
+
+If we have generated a grouped relation for the topmost join relation,
+we need to finalize its paths at the end.  The final paths will
+compete in the usual way with paths built from regular planning.
+</pre></section></div><script>
+(function() {
+  function notifyParent() {
+    if (parent === window) return;
+    parent.postMessage({type: "frame-location", frame: window.name || "", href: window.location.href}, "*");
+  }
+  document.addEventListener("click", function(event) {
+    const link = event.target.closest("a[data-panel]");
+    if (!link || parent === window) return;
+    parent.postMessage({type: "source-link", panel: link.dataset.panel}, "*");
+  });
+  window.addEventListener("load", notifyParent);
+  window.addEventListener("hashchange", notifyParent);
+})();
+</script></body></html>

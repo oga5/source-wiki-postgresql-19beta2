@@ -20,7 +20,7 @@
 <h3>3. 中間・上層操作のコスト算出 (Upper/Intermediate Path Costing)</h3>
 <ul>
 <li>**データ加工操作の評価**: ソート（通常およびインクリメンタル）、集約（Agg）、ウィンドウ関数（<a class="wiki-source-link" href="../../../../../source/src/include/nodes/plannodes.h.html#L1251" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__nodes__plannodes_h__WindowAgg.html&quot;}, '*');">WindowAgg</a>）、グループ化（Group）、Append/MergeAppend、Materialize、Memoize などのコストを算出します。</li>
-<li>**メモリ溢れ（Spill）のシミュレーション**: ソートやハッシュ集約において、推定データサイズが <a class="wiki-source-link" href="../../../../../source/src/backend/utils/init/globals.c.html#L133" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/utils/init/globals.c.html&quot;}, '*');"><code>work_mem</code></a> や <code>hash_mem</code> を超過する場合に発生する、一時ファイルへの書き出し・読み戻しに伴うディスクI/OおよびCPUコストを算入します。</li>
+<li>**メモリ溢れ（Spill）のシミュレーション**: ソートやハッシュ集約において、推定データサイズが <code>work_mem</code> や <code>hash_mem</code> を超過する場合に発生する、一時ファイルへの書き出し・読み戻しに伴うディスクI/OおよびCPUコストを算入します。</li>
 </ul>
 <h3>4. サイズと幅の推定 (Size and Width Estimation)</h3>
 <ul>

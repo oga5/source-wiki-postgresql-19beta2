@@ -38,16 +38,16 @@
 <p>/*</p>
 <ul>
 <li>Both the valuetypid and the boundstypid should exactly match the</li>
-<li>declared input type(s) of the operator we are invoked for.  However,</li>
+<li>declared input <a class="wiki-source-link" href="../../source/src/include/lib/ilist.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__lib__ilist_h__type.html&quot;}, '*');">type</a>(s) of the operator we are invoked for.  However,</li>
 <li>extensions might try to use <a class="wiki-source-link" href="../../source/src/backend/utils/adt/selfuncs.c.html#L652" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__utils__adt__selfuncs_c__scalarineqsel.html&quot;}, '*');">scalarineqsel</a> as estimator for operators</li>
-<li>with input type(s) we don&#x27;t handle here; in such cases, we want to</li>
+<li>with input <a class="wiki-source-link" href="../../source/src/include/lib/ilist.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__lib__ilist_h__type.html&quot;}, '*');">type</a>(s) we don&#x27;t handle here; in such cases, we want to</li>
 <li>return <a class="wiki-source-link" href="../../source/src/tools/pg_bsd_indent/indent_globs.h.html#L43" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/tools/pg_bsd_indent/indent_globs.h.html&quot;}, '*');">false</a>, not fail.  In any case, we mustn&#x27;t assume that valuetypid</li>
 <li>and boundstypid are identical.</li>
 <p>*</p>
 <li>XXX The histogram we are interpolating between points of could belong</li>
-<li>to a column that&#x27;s only binary-compatible with the declared type. In</li>
+<li>to a column that&#x27;s only binary-compatible with the declared <a class="wiki-source-link" href="../../source/src/include/lib/ilist.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__lib__ilist_h__type.html&quot;}, '*');">type</a>. In</li>
 <li>essence we are assuming that the semantics of binary-compatible <a class="wiki-source-link" href="../../source/src/interfaces/ecpg/preproc/ecpg.c.html#L30" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/ecpg/preproc/ecpg.c.html&quot;}, '*');">types</a></li>
-<li>are enough alike that we can use a histogram generated with one type&#x27;s</li>
+<li>are enough alike that we can use a histogram generated with one <a class="wiki-source-link" href="../../source/src/include/lib/ilist.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__lib__ilist_h__type.html&quot;}, '*');">type</a>&#x27;s</li>
 <li>operators to estimate selectivity for the other&#x27;s.  This <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> outright</li>
 <li>wrong in some cases --- in particular signed versus unsigned</li>
 <li>interpretation could trip us up.  But it&#x27;s useful enough in the</li>

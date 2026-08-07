@@ -1,0 +1,54 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>src/include/access/xlogdefs.h.md</title><link rel="stylesheet" href="../../../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../../../source/src/include/access/xlogdefs.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/access/xlogdefs.h.html&quot;}, '*');">src/include/access/xlogdefs.h</a></h1>
+<h2>概要</h2>
+<p>PostgreSQLの先行書き込みログ（WAL）管理で使用される基本的なデータ型、ポインタ構造、および定数を定義するヘッダーファイルです。</p>
+<h2>モジュール内での役割</h2>
+<p><code>src/include/access</code> モジュール内において、WALに関連する他の多くのヘッダーファイル（<a class="wiki-source-link" href="../../../../source/src/include/access/xlog.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/access/xlog.h.html&quot;}, '*');"><code>xlog.h</code></a>, <a class="wiki-source-link" href="../../../../source/src/include/access/xlogreader.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/access/xlogreader.h.html&quot;}, '*');"><code>xlogreader.h</code></a>, <a class="wiki-source-link" href="../../../../source/src/include/access/xloginsert.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/access/xloginsert.h.html&quot;}, '*');"><code>xloginsert.h</code></a> など）が共通して依存する基礎的な型定義を提供します。依存関係の循環を防ぐため、主要な構造体定義よりもプリミティブな型やマクロを集約しています。</p>
+<h2>責務</h2>
+<ul>
+<li>WALの位置を示す 64 ビットポインタ型（<code>XLogRecPtr</code>）および関連する検証マクロの定義。</li>
+<li>物理ログファイル番号（<a class="wiki-source-link" href="../../../../source/src/include/access/xlogdefs.h.html#L52" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__access__xlogdefs_h__XLogSegNo.html&quot;}, '*');"><code>XLogSegNo</code></a>）、タイムライン ID（<code>TimeLineID</code>）、およびレプリケーション元 ID（<code>ReplOriginId</code>）の型定義。</li>
+<li>プラットフォームごとのデフォルト WAL 同期方式（<a class="wiki-source-link" href="../../../../source/src/include/access/xlogdefs.h.html#L79" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/access/xlogdefs.h.html&quot;}, '*');"><code>DEFAULT_WAL_SYNC_METHOD</code></a>）の決定。</li>
+</ul>
+<h2>重要なシンボル</h2>
+<ul>
+<li><code>XLogRecPtr</code>: WAL上の位置を指す64ビット整数型のポインタ。</li>
+<li><a class="wiki-source-link" href="../../../../source/src/include/access/xlogdefs.h.html#L28" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/access/xlogdefs.h.html&quot;}, '*');"><code>InvalidXLogRecPtr</code></a> / <a class="wiki-source-link" href="../../../../source/src/include/access/xlogdefs.h.html#L29" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/access/xlogdefs.h.html&quot;}, '*');"><code>XLogRecPtrIsValid</code></a>: 無効なLＳＮの表現と有効性チェックマクロ。</li>
+<li><a class="wiki-source-link" href="../../../../source/src/include/access/xlogdefs.h.html#L47" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/access/xlogdefs.h.html&quot;}, '*');"><code>LSN_FORMAT_ARGS</code></a>: <code>printf</code> 等でLＳＮを上位・下位の16進数表現（<code>%X/%08X</code>）に展開するための便利マクロ。</li>
+<li><code>TimeLineID</code>: データベースの分岐履歴（タイムライン）を識別する32ビット整数型。</li>
+<li><a class="wiki-source-link" href="../../../../source/src/include/access/xlogdefs.h.html#L79" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/access/xlogdefs.h.html&quot;}, '*');"><code>DEFAULT_WAL_SYNC_METHOD</code></a>: プラットフォームに応じた最適なWALファイル同期方法のデフォルト値。</li>
+</ul>
+<h2>制御フローとデータフロー</h2>
+<p>本ファイルはプリミティブな型定義とマクロのみを提供するため、直接的な実行制御フローやデータ処理ロジックは持ちません。ここで定義された型（<code>XLogRecPtr</code> や <code>TimeLineID</code>）は、WALの記録、リカバリ、レプリケーション処理全般においてデータ構造のフィールドとして保持・渡されます。</p>
+<h2>関連コード</h2>
+<ul>
+<li><a class="wiki-source-link" href="../../../../source/src/include/access/xlog.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/access/xlog.h.html&quot;}, '*');"><code>src/include/access/xlog.h</code></a>: WAL管理全体の高レベルなインターフェース。</li>
+<li><a class="wiki-source-link" href="../../../../source/src/include/access/xlogreader.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/access/xlogreader.h.html&quot;}, '*');"><code>src/include/access/xlogreader.h</code></a>: WALレコードを順次読み込むためのモジュール。</li>
+<li><a class="wiki-source-link" href="../../../../source/src/include/access/xloginsert.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/access/xloginsert.h.html&quot;}, '*');"><code>src/include/access/xloginsert.h</code></a>: WALレコードの書き込み・挿入を行うモジュール。</li>
+</ul>
+<h2>読者向けメモ</h2>
+<ul>
+<li><code>XLogRecPtr</code> が 0 の値をとることは、<a class="wiki-source-link" href="../../../../source/src/include/access/xlogdefs.h.html#L28" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/access/xlogdefs.h.html&quot;}, '*');"><code>InvalidXLogRecPtr</code></a> として特別な意味を持つため、通常の有効なLＳＮとして使用されることはありません。</li>
+<li>レプリケーション元 ID（<code>ReplOriginId</code>）は、関連ヘッダーのインクルード競合を避けるためにこの基礎的な定義ファイルに配置されています。</li>
+</ul>
+<h2>シンボルページ</h2>
+<ul>
+<li><a href="../../../symbols/src__include__access__xlogdefs_h__XLogRecPtr.html" target="wiki-view"><code>XLogRecPtr</code></a></li>
+<li><a href="../../../symbols/src__include__access__xlogdefs_h__XLogSegNo.html" target="wiki-view"><code>XLogSegNo</code></a></li>
+<li><a href="../../../symbols/src__include__access__xlogdefs_h__TimeLineID.html" target="wiki-view"><code>TimeLineID</code></a></li>
+<li><a href="../../../symbols/src__include__access__xlogdefs_h__ReplOriginId.html" target="wiki-view"><code>ReplOriginId</code></a></li>
+</ul><script>
+(function() {
+  function notifyParent() {
+    if (parent === window) return;
+    parent.postMessage({type: "frame-location", frame: window.name || "", href: window.location.href}, "*");
+  }
+  document.addEventListener("click", function(event) {
+    const link = event.target.closest("a[data-panel]");
+    if (!link || parent === window) return;
+    parent.postMessage({type: "source-link", panel: link.dataset.panel}, "*");
+  });
+  window.addEventListener("load", notifyParent);
+  window.addEventListener("hashchange", notifyParent);
+})();
+</script></body></html>

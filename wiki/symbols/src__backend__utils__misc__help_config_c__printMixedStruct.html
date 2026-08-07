@@ -41,7 +41,7 @@
 <p>case PGC_REAL: printf(&quot;REAL\t%g\t%g\t%g\t&quot;, structToPrint-&gt;_real.reset_val, structToPrint-&gt;_real.min, structToPrint-&gt;_real.max); break;</p>
 <p>case PGC_STRING: printf(&quot;STRING\t%s\t\t\t&quot;, structToPrint-&gt;_string.boot_val ? structToPrint-&gt;_string.boot_val : &quot;&quot;); break;</p>
 <p>case PGC_ENUM: printf(&quot;ENUM\t%s\t\t\t&quot;, <a class="wiki-source-link" href="../../source/src/backend/utils/misc/guc.c.html#L2926" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__utils__misc__guc_c__config_enum_lookup_by_value.html&quot;}, '*');">config_enum_lookup_by_value</a>(structToPrint, structToPrint-&gt;_enum.boot_val)); break;</p>
-<p>default: write_stderr(&quot;internal error: unrecognized run-time parameter type\n&quot;); break; }</p>
+<p>default: write_stderr(&quot;internal error: unrecognized run-time parameter <a class="wiki-source-link" href="../../source/src/include/lib/ilist.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__lib__ilist_h__type.html&quot;}, '*');">type</a>\n&quot;); break; }</p>
 <p>printf(&quot;%s\t%s\n&quot;, (structToPrint-&gt;short_desc == NULL) ? &quot;&quot; : _(structToPrint-&gt;short_desc), (structToPrint-&gt;long_desc == NULL) ? &quot;&quot; : _(structToPrint-&gt;long_desc)); } ~~~</p>
 <h2>失敗モードと境界条件</h2>
 <p>まだ解析していません。</p>

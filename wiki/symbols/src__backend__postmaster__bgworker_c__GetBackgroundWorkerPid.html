@@ -57,7 +57,7 @@
 <p>*/ if (handle-&gt;generation != slot-&gt;generation || !slot-&gt;in_use) pid = 0; else pid = slot-&gt;pid;</p>
 </ul>
 <p>/* All done. */ <a class="wiki-source-link" href="../../source/src/backend/storage/lmgr/lwlock.c.html#L1766" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__storage__lmgr__lwlock_c__LWLockRelease.html&quot;}, '*');">LWLockRelease</a>(BackgroundWorkerLock);</p>
-<p>if (pid == 0) return BGWH_STOPPED; else if (pid == <a class="wiki-source-link" href="../../source/src/include/miscadmin.h.html#L32" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/miscadmin.h.html&quot;}, '*');">InvalidPid</a>) return BGWH_NOT_YET_STARTED; *pidp = pid; return BGWH_STARTED; } ~~~</p>
+<p>if (pid == 0) return BGWH_STOPPED; else if (pid == <a class="wiki-source-link" href="../../source/src/include/miscadmin.h.html#L32" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/miscadmin.h.html&quot;}, '*');">InvalidPid</a>) return BGWH_NOT_YET_STARTED; *pidp = pid; return BGWH_STARTED; } ~~~</p>
 <h2>失敗モードと境界条件</h2>
 <p>まだ解析していません。</p>
 <h2>保守担当者向けメモ</h2>

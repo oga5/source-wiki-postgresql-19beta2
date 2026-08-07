@@ -1,0 +1,85 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>src/include/miscadmin.h.md</title><link rel="stylesheet" href="../../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../../source/src/include/miscadmin.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/miscadmin.h.html&quot;}, '*');">src/include/miscadmin.h</a></h1>
+<h2>概要</h2>
+<p><a class="wiki-source-link" href="../../../source/src/include/miscadmin.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/miscadmin.h.html&quot;}, '*');"><code>src/include/miscadmin.h</code></a> は、PostgreSQLの全体的なアドミニストレーション、初期化、プロセス管理、割り込み制御、およびリソース制限に関する共通の宣言を集約したヘッダーファイルです。元々は複数の独立したファイル（<code>globals.h</code>, <code>pdir.h</code>, <code>pinit.h</code>, <code>pmod.h</code>）に分散していた定義を統合・継承しており、バックエンド全体で広く参照される大域変数や制御マクロを定義しています。</p>
+<h2>モジュール内での役割</h2>
+<p><code>src/include</code> モジュール内において、本ファイルはプロセス全体のライフサイクル管理、バックエンド種別の判定、およびシグナル割り込み・クリティカルセクションの協調制御を行う中核的な定義を提供します。周辺のヘッダーファイル（<a class="wiki-source-link" href="../../../source/src/include/c.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/c.h.html&quot;}, '*');"><code>c.h</code></a>, <a class="wiki-source-link" href="../../../source/src/include/postgres.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/postgres.h.html&quot;}, '*');"><code>postgres.h</code></a> など）と連携し、プロセスの初期化やセキュリティ・権限コンテキストの維持を支えます。</p>
+<h2>責務</h2>
+<ul>
+<li>**割り込みおよびクリティカルセクション管理**: クエリキャンセル（SIGINT）やプロセス終了（SIGTERM）の非同期シグナルを安全に処理するためのフラグ、ホールトカウンタ、およびマクロの提供。</li>
+<li>**大域変数とプロセスの状態管理**: データディレクトリ、プロセスID、バッファ数、日付／時間フォーマット、メモリ制限などの大域設定変数の外部宣言。</li>
+<li>**バックエンド種別とプロセスモードの定義**: <a class="wiki-source-link" href="../../../source/src/include/miscadmin.h.html#L340" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__miscadmin_h__BackendType.html&quot;}, '*');"><code>BackendType</code></a> 列挙型および各種 <code>Am*Process()</code> マクロ、<a class="wiki-source-link" href="../../../source/src/include/miscadmin.h.html#L477" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__miscadmin_h__ProcessingMode.html&quot;}, '*');"><code>ProcessingMode</code></a> による実行フェーズ（Bootstrap, Init, Normal）の管理。</li>
+<li>**セキュリティ・ユーザーコンテキスト**: ユーザーID、セッション認可、セキュリティ制限操作フラグの管理関数の宣言。</li>
+<li>**初期化と環境構築**: <a class="wiki-source-link" href="../../../source/src/backend/utils/init/postinit.c.html#L721" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__utils__init__postinit_c__InitPostgres.html&quot;}, '*');"><code>InitPostgres</code></a> やプリロードライブラリ処理、ロックファイル操作などの初期化関連関数の宣言。</li>
+</ul>
+<h2>重要なシンボル</h2>
+<h3>割り込み・クリティカルセクション制御</h3>
+<ul>
+<li><code>InterruptPending</code>, <code>QueryCancelPending</code>, <code>ProcDiePending</code>: シグナルハンドラによって設定される揮発性の割り込みフラグ。</li>
+<li><code>InterruptHoldoffCount</code>, <code>QueryCancelHoldoffCount</code>, <code>CritSectionCount</code>: 割り込みやクリティカルセクションのネストを追跡するカウンタ。</li>
+<li><code>CHECK_FOR_INTERRUPTS()</code>: 保留中の割り込みが存在する場合に <code>ProcessInterrupts()</code> を呼び出すマクロ。</li>
+<li><code>HOLD_INTERRUPTS()</code>, <code>RESUME_INTERRUPTS()</code>: 一般割り込みの受付けを一時的ティに禁止・再開するマクロ。</li>
+<li><code>START_CRIT_SECTION()</code>, <code>END_CRIT_SECTION()</code>: クリティカルセクション（主にXLOG関連）を開始・終了し、エラーを<a class="wiki-source-link" href="../../../source/src/include/utils/elog.h.html#L58" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/utils/elog.h.html&quot;}, '*');">PANIC</a>に昇格させるためのカウンタ操作マクロ。</li>
+</ul>
+<h3>プロセス種別と処理モード</h3>
+<ul>
+<li><a class="wiki-source-link" href="../../../source/src/include/miscadmin.h.html#L340" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__miscadmin_h__BackendType.html&quot;}, '*');"><code>BackendType</code></a>: バックエンドの種別（<a class="wiki-source-link" href="../../../source/src/include/miscadmin.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__miscadmin_h__B_BACKEND.html&quot;}, '*');"><code>B_BACKEND</code></a>, <a class="wiki-source-link" href="../../../source/src/include/miscadmin.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__miscadmin_h__B_AUTOVAC_LAUNCHER.html&quot;}, '*');"><code>B_AUTOVAC_LAUNCHER</code></a>, <a class="wiki-source-link" href="../../../source/src/include/miscadmin.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__miscadmin_h__B_CHECKPOINTER.html&quot;}, '*');"><code>B_CHECKPOINTER</code></a>, <a class="wiki-source-link" href="../../../source/src/include/miscadmin.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__miscadmin_h__B_WAL_SENDER.html&quot;}, '*');"><code>B_WAL_SENDER</code></a>, <a class="wiki-source-link" href="../../../source/src/include/miscadmin.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__miscadmin_h__B_LOGGER.html&quot;}, '*');"><code>B_LOGGER</code></a> など）を定義する列挙型。</li>
+<li><code>AmRegularBackendProcess()</code>, <code>AmCheckpointerProcess()</code> 等: 現在のプロセスが特定のバックエンド種別であるかを判定するマクロ群。</li>
+<li><a class="wiki-source-link" href="../../../source/src/include/miscadmin.h.html#L477" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__miscadmin_h__ProcessingMode.html&quot;}, '*');"><code>ProcessingMode</code></a>: システムの処理モード（<a class="wiki-source-link" href="../../../source/src/include/miscadmin.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__miscadmin_h__BootstrapProcessing.html&quot;}, '*');"><code>BootstrapProcessing</code></a>, <a class="wiki-source-link" href="../../../source/src/include/miscadmin.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__miscadmin_h__InitProcessing.html&quot;}, '*');"><code>InitProcessing</code></a>, <a class="wiki-source-link" href="../../../source/src/include/miscadmin.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__miscadmin_h__NormalProcessing.html&quot;}, '*');"><code>NormalProcessing</code></a>）を定義する列挙型。</li>
+</ul>
+<h3>ユーザー・セキュリティ管理</h3>
+<ul>
+<li><code>GetUserId()</code>, <code>GetSessionUserId()</code>, <code>GetAuthenticatedUserId()</code>: 現在の実行ユーザー、セッションユーザー、認証済みユーザーのOidを取得する関数。</li>
+<li><code>GetUserIdAndSecContext()</code>, <code>SetUserIdAndSecContext()</code>: ユーザーIDとセキュリティコンテキストフラグ（<a class="wiki-source-link" href="../../../source/src/include/miscadmin.h.html#L321" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/miscadmin.h.html&quot;}, '*');"><code>SECURITY_LOCAL_USERID_CHANGE</code></a> など）を退避・復元する関数。</li>
+<li><code>superuser()</code>: 現在のユーザーがスーパーユーザーであるかを判定する関数。</li>
+</ul>
+<h3>リソース・スタック深さ制限</h3>
+<ul>
+<li><code>work_mem</code>, <code>maintenance_work_mem</code>, <code>hash_mem_multiplier</code>: メモリ割り当て上限に関する大域変数。</li>
+<li><code>check_stack_depth()</code>, <code>stack_is_too_deep()</code>: 再帰呼び出し時におけるスタックオーバーフローを検知・防止するための関数。</li>
+</ul>
+<h2>制御フローとデータフロー</h2>
+<ul>
+<li>**非同期割り込みの伝播**: OSからのシグナル（SIGINT/SIGTERMなど）を受信したシグナルハンドラは、<code>QueryCancelPending</code> や <code>ProcDiePending</code> などの <code>sig_atomic_t</code> 変数をセットします。実行パス上の安全な位置で <code>CHECK_FOR_INTERRUPTS()</code> マクロが評価され、条件が満たされている場合は <code>ProcessInterrupts()</code>（<code>tcop/postgres.c</code>）へディスパッチされてトランザクションのロールバックやプロセス終了が行われます。</li>
+<li>**クリティカルセクションの不変条件**: <code>START_CRIT_SECTION()</code> が呼ばれると <code>CritSectionCount</code> がインクリメントされ、この期間中に <code>ereport(ERROR)</code> や <code>ereport(FATAL)</code> が発生した場合、システム全体を保護するために <a class="wiki-source-link" href="../../../source/src/include/utils/elog.h.html#L58" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/utils/elog.h.html&quot;}, '*');"><code>PANIC</code></a>（強制リセット）へと昇格します。</li>
+</ul>
+<h2>直接依存</h2>
+<ul>
+<li><code>&lt;signal.h&gt;</code>: <code>sig_atomic_t</code> およびシグナル関連の定義。</li>
+<li><code>&quot;datatype/timestamp.h&quot;</code>: <code>TimestampTz</code> 型の定義。</li>
+<li><code>&quot;pgtime.h&quot;</code>: <a class="wiki-source-link" href="../../../source/src/include/pgtime.h.html#L23" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__pgtime_h__pg_time_t.html&quot;}, '*');"><code>pg_time_t</code></a> 型の定義。</li>
+</ul>
+<h2>関連コード</h2>
+<ul>
+<li><a class="wiki-source-link" href="../../../source/src/backend/tcop/postgres.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/tcop/postgres.c.html&quot;}, '*');"><code>src/backend/tcop/postgres.c</code></a>: <code>ProcessInterrupts()</code> の実装。</li>
+<li><a class="wiki-source-link" href="../../../source/src/backend/utils/init/globals.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/utils/init/globals.c.html&quot;}, '*');"><code>src/backend/utils/init/globals.c</code></a>: 本ファイルで宣言されている大実変数の実体定義。</li>
+<li><a class="wiki-source-link" href="../../../source/src/backend/utils/misc/stack_depth.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/utils/misc/stack_depth.c.html&quot;}, '*');"><code>src/backend/utils/misc/stack_depth.c</code></a>: スタック深さの検査と制限の実装。</li>
+<li><a class="wiki-source-link" href="../../../source/src/backend/utils/init/miscinit.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/utils/init/miscinit.c.html&quot;}, '*');"><code>src/backend/utils/init/miscinit.c</code></a>: セッションおよびディレクトリ初期化の実装。</li>
+</ul>
+<h2>読者向けメモ</h2>
+<ul>
+<li>本ファイルで宣言されている多数の外部変数は <code>PGDLLIMPORT</code> 修飾されており、Windows環境でのDLLビルドに対応しています。</li>
+<li>シグナルハンドラから直接変更されるフラグ類はすべて <code>volatile sig_atomic_t</code> として宣言されており、コンパイラの最適化による読み飛ばしを防いでいます。</li>
+</ul>
+<h2>シンボルページ</h2>
+<ul>
+<li><a href="../../symbols/src__include__miscadmin_h__pg_stack_base_t.html" target="wiki-view"><code>pg_stack_base_t</code></a></li>
+<li><a href="../../symbols/src__include__miscadmin_h__BackendType.html" target="wiki-view"><code>BackendType</code></a></li>
+<li><a href="../../symbols/src__include__miscadmin_h__ProcessingMode.html" target="wiki-view"><code>ProcessingMode</code></a></li>
+<li><a href="../../symbols/src__include__miscadmin_h__ConnectionWarningFilter.html" target="wiki-view"><code>ConnectionWarningFilter</code></a></li>
+<li><a href="../../symbols/src__include__miscadmin_h__shmem_request_hook_type.html" target="wiki-view"><code>shmem_request_hook_type</code></a></li>
+</ul><script>
+(function() {
+  function notifyParent() {
+    if (parent === window) return;
+    parent.postMessage({type: "frame-location", frame: window.name || "", href: window.location.href}, "*");
+  }
+  document.addEventListener("click", function(event) {
+    const link = event.target.closest("a[data-panel]");
+    if (!link || parent === window) return;
+    parent.postMessage({type: "source-link", panel: link.dataset.panel}, "*");
+  });
+  window.addEventListener("load", notifyParent);
+  window.addEventListener("hashchange", notifyParent);
+})();
+</script></body></html>

@@ -1,0 +1,66 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>src/include/utils/palloc.h.md</title><link rel="stylesheet" href="../../../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../../../source/src/include/utils/palloc.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/utils/palloc.h.html&quot;}, '*');">src/include/utils/palloc.h</a></h1>
+<h2>概要</h2>
+<p>PostgreSQLのバックエンド全体で使用される、メモリ管理と動的アロケーション（palloc/pfree等）の基本インターフェースを定義するヘッダーファイルです。ほぼすべてのバックエンドソースから参照される <a class="wiki-source-link" href="../../../../source/src/include/postgres.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/postgres.h.html&quot;}, '*');"><code>postgres.h</code></a> に直接インクルードされます。</p>
+<h2>モジュール内での役割</h2>
+<ul>
+<li><code>src/include/utils</code> モジュール内において、メモリコンテキスト機構の抽象型と基本的なメモリ割り当てAPIを公開します。</li>
+<li>個別解放の代わりにメモリコンテキスト単位での一括解放や階層管理を可能にする基盤を提供し、<code>utils/mmgr/README</code> や <a class="wiki-source-link" href="../../../../source/src/include/utils/memutils.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/utils/memutils.h.html&quot;}, '*');"><code>src/include/utils/memutils.h</code></a> に繋がるエントリーポイントとして機能します。</li>
+</ul>
+<h2>責務</h2>
+<ul>
+<li><code>MemoryContext</code> 抽象型およびコンテキスト破棄時に呼び出されるコールバック構造体（<a class="wiki-source-link" href="../../../../source/src/include/utils/palloc.h.html#L47" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__utils__palloc_h__MemoryContextCallback.html&quot;}, '*');"><code>MemoryContextCallback</code></a>）の定義。</li>
+<li><code>palloc</code>、<code>p5alloc0</code>、<code>pfree</code>、<code>repalloc</code> などの標準的なメモリ割り当て・解放関数の宣言。</li>
+<li>型安全性を高めるためのオブジェクトおよび配列用ヘルパーマクロ（<code>palloc_object</code>, <code>palloc_array</code> 等）の提供。</li>
+<li>割り当てサイズの安全な計算（オーバフロー防止）や、コンテキスト切替を行うインライン関数（<a class="wiki-source-link" href="../../../../source/src/include/utils/palloc.h.html#L137" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__utils__palloc_h__MemoryContextSwitchTo.html&quot;}, '*');"><code>MemoryContextSwitchTo</code></a>）の提供。</li>
+</ul>
+<h2>重要なシンボル</h2>
+<ul>
+<li><code>MemoryContext</code>: メモリコンテキストを表す不透明ポインタ型（実体は <code>nodes/memnodes.h</code>）。</li>
+<li><code>CurrentMemoryContext</code>: 現在のデフォルト割り当てコンテキストを保持するグローバル変数。</li>
+<li><a class="wiki-source-link" href="../../../../source/src/include/utils/palloc.h.html#L137" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__utils__palloc_h__MemoryContextSwitchTo.html&quot;}, '*');"><code>MemoryContextSwitchTo</code></a>: 現在のコンテキストを切り替え、直前のコンテキストを返すインライン関数。</li>
+<li><code>palloc</code> / <code>pfree</code> / <code>repalloc</code>: メモリの動的確保・解放・リサイズを行う基本関数群。</li>
+<li><code>palloc_object</code> / <code>palloc_array</code>: 型キャストを内包した安全なオブジェクト・配列用アロケーションマクロ。</li>
+</ul>
+<h2>制御フローとデータフロー</h2>
+<ul>
+<li>バックエンド処理中、メモリを割り当てる際は原則として <code>CurrentMemoryContext</code> が暗黙のコンテキストとして使用されます。</li>
+<li><code>MemoryContextSwitchTo(context)</code> が呼び出されると、<code>CurrentMemoryContext</code> が指定されたコンテキストに更新され、呼び出し元には以前のコンテキストが返却されます。</li>
+<li>拡張フラグ付きの割り当て（<code>MCXT_ALLOC_ZERO</code> や <code>MCXT_ALLOC_HUGE</code> 等）を用いることで、ゼロクリアや1GBを超える巨大なアロケーション、OOM発生時のハンドリングを制御できます。</li>
+</ul>
+<h2>直接依存</h2>
+<ul>
+<li>ソースコード内に直接の <code>#include</code> ディレクティブはありませんが、概念的・型定義的に <code>nodes/memnodes.h</code>（<a class="wiki-source-link" href="../../../../source/src/include/nodes/memnodes.h.html#L117" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__nodes__memnodes_h__MemoryContextData.html&quot;}, '*');"><code>MemoryContextData</code></a> の定義元）や <a class="wiki-source-link" href="../../../../source/src/include/postgres.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/postgres.h.html&quot;}, '*');"><code>postgres.h</code></a> と密接に関連しています。</li>
+</ul>
+<h2>関連コード</h2>
+<ul>
+<li><a class="wiki-source-link" href="../../../../source/src/include/utils/memutils.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/utils/memutils.h.html&quot;}, '*');"><code>src/include/utils/memutils.h</code></a>: より高度なメモリコンテキスト作成・管理関数群を提供する関連ヘッダー。</li>
+<li><code>src/backend/utils/mmgr/</code>: メモリコンテキストの実装本体が含まれるディレクトリ。</li>
+</ul>
+<h2>読者向けメモ</h2>
+<ul>
+<li>ヘッダーの肥大化を防ぎコンパイル負荷を抑えるため、構造体の内部詳細（<a class="wiki-source-link" href="../../../../source/src/include/nodes/memnodes.h.html#L117" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__nodes__memnodes_h__MemoryContextData.html&quot;}, '*');"><code>MemoryContextData</code></a>）は隠蔽されており、前方宣言のみが行われています。</li>
+<li><code>CurrentMemoryContext</code> への直接の代入は避け、必ず <code>MemoryContextSwitchTo()</code> を使用してください。</li>
+<li>フロントエンドプログラム（<code>pg_controldata</code> 等）からもインクルードされるため、一部のマクロやインライン関数は <code>FRONTEND</code> マクロによるガードが施されています。</li>
+</ul>
+<h2>シンボルページ</h2>
+<ul>
+<li><a href="../../../symbols/src__include__utils__palloc_h__MemoryContext.html" target="wiki-view"><code>MemoryContext</code></a></li>
+<li><a href="../../../symbols/src__include__utils__palloc_h__MemoryContextCallbackFunction.html" target="wiki-view"><code>MemoryContextCallbackFunction</code></a></li>
+<li><a href="../../../symbols/src__include__utils__palloc_h__MemoryContextCallback.html" target="wiki-view"><code>MemoryContextCallback</code></a></li>
+<li><a href="../../../symbols/src__include__utils__palloc_h__MemoryContextSwitchTo.html" target="wiki-view"><code>MemoryContextSwitchTo</code></a></li>
+</ul><script>
+(function() {
+  function notifyParent() {
+    if (parent === window) return;
+    parent.postMessage({type: "frame-location", frame: window.name || "", href: window.location.href}, "*");
+  }
+  document.addEventListener("click", function(event) {
+    const link = event.target.closest("a[data-panel]");
+    if (!link || parent === window) return;
+    parent.postMessage({type: "source-link", panel: link.dataset.panel}, "*");
+  });
+  window.addEventListener("load", notifyParent);
+  window.addEventListener("hashchange", notifyParent);
+})();
+</script></body></html>

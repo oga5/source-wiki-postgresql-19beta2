@@ -46,7 +46,7 @@
 <li>though, because it&#x27;s not used anywhere in that case. Except if it&#x27;s a</li>
 <li>snapshot taken during recovery; all the top-level XIDs are in subxip as</li>
 <li>well in that case, so we mustn&#x27;t lose them.</li>
-<p>*/ if (snapshot-&gt;subxcnt &gt; 0 &amp;&amp; (!snapshot-&gt;suboverflowed || snapshot-&gt;takenDuringRecovery)) { newsnap-&gt;subxip = (TransactionId *) ((char *) newsnap + subxipoff); memcpy(newsnap-&gt;subxip, snapshot-&gt;subxip, snapshot-&gt;subxcnt * sizeof(TransactionId)); } else newsnap-&gt;subxip = NULL;</p>
+<p>*/ if (snapshot-&gt;subxcnt &gt; 0 &amp;&amp; (!snapshot-&gt;suboverflowed || snapshot-&gt;takenDuringRecovery)) { newsnap-&gt;subxip = (TransactionId *) ((<a class="wiki-source-link" href="../../source/src/include/port/atomics/generic-gcc.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__port__atomics__generic-gcc_h__char.html&quot;}, '*');">char</a> *) newsnap + subxipoff); memcpy(newsnap-&gt;subxip, snapshot-&gt;subxip, snapshot-&gt;subxcnt * sizeof(TransactionId)); } else newsnap-&gt;subxip = NULL;</p>
 </ul>
 <p>return newsnap; } ~~~</p>
 <h2>失敗モードと境界条件</h2>

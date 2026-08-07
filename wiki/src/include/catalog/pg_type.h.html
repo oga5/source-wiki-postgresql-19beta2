@@ -1,0 +1,75 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>src/include/catalog/pg_type.h.md</title><link rel="stylesheet" href="../../../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../../../source/src/include/catalog/pg_type.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/catalog/pg_type.h.html&quot;}, '*');">src/include/catalog/pg_type.h</a></h1>
+<h2>概要</h2>
+<p>PostgreSQLのデータ型カタログ（<a class="wiki-source-link" href="../../../../source/src/include/catalog/pg_type.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__catalog__pg_type_h__pg_type.html&quot;}, '*');"><code>pg_type</code></a>）のスキーマ定義、列挙マクロ、および関連関数宣言を提供するヘッダーファイルです。<a class="wiki-source-link" href="../../../../source/src/backend/catalog/Catalog.pm.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/catalog/Catalog.pm.html&quot;}, '*');"><code>Catalog.pm</code></a> モジュールによってパースされ、ブートストラップやシステムカタログのメタデータ構築に利用されます。</p>
+<h2>モジュール内での役割</h2>
+<p><code>src/include/catalog</code> モジュール群の一部として、データベース内のすべてのデータ型（基本型、複合型、ドメイン、列挙型、疑似型、範囲型など）の静的構造およびインデックス定義を定義します。また、<a class="wiki-source-link" href="../../../../source/src/backend/catalog/pg_type.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/catalog/pg_type.c.html&quot;}, '*');"><code>src/backend/catalog/pg_type.c</code></a> とペアになり、型の作成やシェル型の挿入などの操作インターフェースを提供します。</p>
+<h2>責務</h2>
+<ul>
+<li>**カタログ構造の定義**: <a class="wiki-source-link" href="../../../../source/src/include/catalog/pg_type.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__catalog__pg_type_h__FormData_pg_type.html&quot;}, '*');"><code>FormData_pg_type</code></a> および <a class="wiki-source-link" href="../../../../source/src/include/catalog/pg_type.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__catalog__pg_type_h__Form_pg_type.html&quot;}, '*');"><code>Form_pg_type</code></a> による <a class="wiki-source-link" href="../../../../source/src/include/catalog/pg_type.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__catalog__pg_type_h__pg_type.html&quot;}, '*');"><code>pg_type</code></a> リレーションのタプル構造の定義。</li>
+<li>**型分類マクロの提供**: <code>typtype</code>、<code>typcategory</code>、<code>typalign</code>、<code>typstorage</code> などの属性値に対する定数マクロの提供。</li>
+<li>**多態性・配列判定マクロの提供**: <a class="wiki-source-link" href="../../../../source/src/include/catalog/pg_type.h.html#L317" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/catalog/pg_type.h.html&quot;}, '*');"><code>IsPolymorphicType</code></a> や <a class="wiki-source-link" href="../../../../source/src/include/catalog/pg_type.h.html#L338" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/catalog/pg_type.h.html&quot;}, '*');"><code>IsTrueArrayType</code></a> などの判定マクロの提供。</li>
+<li>**型操作関数の宣言**: <code>TypeShellMake</code>、<code>TypeCreate</code>、<code>GenerateTypeDependencies</code>、名前変更や配列型名生成を行う関数の外部インターフェース宣言。</li>
+</ul>
+<h2>重要なシンボル</h2>
+<h3>型定義・フォーム</h3>
+<ul>
+<li><a class="wiki-source-link" href="../../../../source/src/include/catalog/pg_type.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__catalog__pg_type_h__FormData_pg_type.html&quot;}, '*');"><code>FormData_pg_type</code></a>: <a class="wiki-source-link" href="../../../../source/src/include/catalog/pg_type.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__catalog__pg_type_h__pg_type.html&quot;}, '*');"><code>pg_type</code></a> カタログの1行分の物理レイアウト構造体。</li>
+<li><a class="wiki-source-link" href="../../../../source/src/include/catalog/pg_type.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__catalog__pg_type_h__Form_pg_type.html&quot;}, '*');"><code>Form_pg_type</code></a>: <code>FormData_pg_type *</code> 型へのポインタ。</li>
+</ul>
+<h3>型分類・属性マクロ (<a class="wiki-source-link" href="../../../../source/src/include/catalog/pg_type.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__catalog__pg_type_h__EXPOSE_TO_CLIENT_CODE.html&quot;}, '*');"><code>EXPOSE_TO_CLIENT_CODE</code></a>)</h3>
+<ul>
+<li><code>TYPTYPE_*</code>: 型の種類を表すマクロ（基底型、複合型、ドメイン、列挙、疑似型、範囲等）。</li>
+<li><code>TYPCATEGORY_*</code>: 型のカテゴリを表すマクロ（配列、ブール、数値、文字列等）。</li>
+<li><code>TYPALIGN_*</code>: アライメント要件を表すマクロ（<a class="wiki-source-link" href="../../../../source/src/include/port/atomics/generic-gcc.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__port__atomics__generic-gcc_h__char.html&quot;}, '*');">char</a>, short, int, double）。</li>
+<li><code>TYPSTORAGE_*</code>: TOAST ストレージ戦略を表すマクロ（plain, external, extended, main）。</li>
+</ul>
+<h3>多態性・配列判定マクロ</h3>
+<ul>
+<li><code>IsPolymorphicType(typid)</code>: 指定された OID が多態的な疑似型ファミリーに属するか判定。</li>
+<li><code>IsTrueArrayType(typeForm)</code>: <a class="wiki-source-link" href="../../../../source/src/include/catalog/pg_type.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__catalog__pg_type_h__typelem.html&quot;}, '*');"><code>typelem</code></a> と <a class="wiki-source-link" href="../../../../source/src/include/catalog/pg_type.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__catalog__pg_type_h__typsubscript.html&quot;}, '*');"><code>typsubscript</code></a> が有効な真の配列型であるか判定。</li>
+</ul>
+<h3>操作・依存関係関数宣言</h3>
+<ul>
+<li><code>TypeShellMake</code>: 未定義のプレースホルダー（シェル型）タプルを挿入。</li>
+<li><code>TypeCreate</code>: 完全なデータ型定義を作成してカタログに登録。</li>
+<li><code>GenerateTypeDependencies</code>: 型に関連する依存関係（拡張、要素型など）を生成。</li>
+<li><code>makeArrayTypeName</code> / <code>moveArrayTypeName</code> / <code>makeMultirangeTypeName</code>: 配列型名やマルチレンジ型名の生成・移動。</li>
+</ul>
+<h2>制御フローとデータフロー</h2>
+<ul>
+<li>型定義の作成フローでは、まず <code>TypeShellMake</code> がダミーの値を持つシェル型タプルを <a class="wiki-source-link" href="../../../../source/src/include/catalog/pg_type.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__catalog__pg_type_h__pg_type.html&quot;}, '*');"><code>pg_type</code></a> に挿入し、I/O関数などがリンクできるようにします。</li>
+<li>その後、<code>TypeCreate</code> が呼び出されて実際の属性値（アライメント、ストレージ、I/O関数など）で上書きされ、<code>typisdefined</code> が <a class="wiki-source-link" href="../../../../source/src/tools/pg_bsd_indent/indent_globs.h.html#L46" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/tools/pg_bsd_indent/indent_globs.h.html&quot;}, '*');">true</a> に更新されます。</li>
+<li><code>GenerateTypeDependencies</code> により、要素型やデフォルト式、所有者、名前空間に対する依存関係が <code>pg_depend</code> 等に登録されます。</li>
+</ul>
+<h2>直接依存</h2>
+<ul>
+<li><code>catalog/genbki.h</code>: BKI 生成マクロ定義。</li>
+<li><code>catalog/objectaddress.h</code>: <code>ObjectAddress</code> 構造体の定義。</li>
+<li><code>catalog/pg_type_d.h</code>: 定数およびOID定義（IWYU export）。</li>
+<li><code>nodes/nodes.h</code>: ノードツリー定義（<code>pg_node_tree</code> 用）。</li>
+</ul>
+<h2>関連コード</h2>
+<ul>
+<li><a class="wiki-source-link" href="../../../../source/src/backend/catalog/pg_type.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/catalog/pg_type.c.html&quot;}, '*');"><code>src/backend/catalog/pg_type.c</code></a>: ペアとなる実装ファイル。型作成やシェル型構築の実ロジックを含む。</li>
+<li><code>src/include/catalog/pg_type_d.h</code>: <a class="wiki-source-link" href="../../../../source/src/include/catalog/pg_type.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__catalog__pg_type_h__pg_type.html&quot;}, '*');"><code>pg_type</code></a> に関連する OID マクロの定義。</li>
+</ul>
+<h2>読者向けメモ</h2>
+<ul>
+<li>システムテーブルのサイズとアライメントは、コンパイラが構造体をレイアウトする方法と一致している必要があるため、変更時は注意が必要です。</li>
+<li><code>#ifdef CATALOG_VARLEN</code> 以降のフィールド（<code>typdefaultbin</code>、<code>typdefault</code>、<code>typacl</code>）は可変長属性として扱われます。</li>
+</ul><script>
+(function() {
+  function notifyParent() {
+    if (parent === window) return;
+    parent.postMessage({type: "frame-location", frame: window.name || "", href: window.location.href}, "*");
+  }
+  document.addEventListener("click", function(event) {
+    const link = event.target.closest("a[data-panel]");
+    if (!link || parent === window) return;
+    parent.postMessage({type: "source-link", panel: link.dataset.panel}, "*");
+  });
+  window.addEventListener("load", notifyParent);
+  window.addEventListener("hashchange", notifyParent);
+})();
+</script></body></html>

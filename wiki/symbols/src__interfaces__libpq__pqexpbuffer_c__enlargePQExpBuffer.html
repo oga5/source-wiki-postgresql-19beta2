@@ -15,7 +15,7 @@
 <h2>入力と出力</h2>
 <ul>
 <li>引数: <code>PQExpBuffer str</code>, <code>size_t needed</code></li>
-<li>戻り値: <a class="wiki-source-link" href="../../source/src/include/port.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__port_h__int.html&quot;}, '*');"><code>int</code></a></li>
+<li>戻り値: <code>int</code></li>
 </ul>
 <h2>前提条件と不変条件</h2>
 <p>まだ解析していません。</p>
@@ -34,7 +34,7 @@
 <h2>関連データ構造</h2>
 <p><a class="wiki-source-link" href="../../source/src/interfaces/libpq/pqexpbuffer.h.html#L51" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__interfaces__libpq__pqexpbuffer_h__PQExpBuffer.html&quot;}, '*');"><code>PQExpBuffer</code></a></p>
 <h2>ソース抜粋</h2>
-<p>~~~c <a class="wiki-source-link" href="../../source/src/include/port.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__port_h__int.html&quot;}, '*');">int</a> <a class="wiki-source-link" href="../../source/src/interfaces/libpq/pqexpbuffer.c.html#L171" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__interfaces__libpq__pqexpbuffer_c__enlargePQExpBuffer.html&quot;}, '*');">enlargePQExpBuffer</a>(<a class="wiki-source-link" href="../../source/src/interfaces/libpq/pqexpbuffer.h.html#L51" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__interfaces__libpq__pqexpbuffer_h__PQExpBuffer.html&quot;}, '*');">PQExpBuffer</a> str, size_t needed) { size_t		newlen; char	   *newdata;</p>
+<p>~~~c int <a class="wiki-source-link" href="../../source/src/interfaces/libpq/pqexpbuffer.c.html#L171" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__interfaces__libpq__pqexpbuffer_c__enlargePQExpBuffer.html&quot;}, '*');">enlargePQExpBuffer</a>(<a class="wiki-source-link" href="../../source/src/interfaces/libpq/pqexpbuffer.h.html#L51" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__interfaces__libpq__pqexpbuffer_h__PQExpBuffer.html&quot;}, '*');">PQExpBuffer</a> str, size_t needed) { size_t		newlen; <a class="wiki-source-link" href="../../source/src/include/port/atomics/generic-gcc.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__port__atomics__generic-gcc_h__char.html&quot;}, '*');">char</a>	   *newdata;</p>
 <p>if (<a class="wiki-source-link" href="../../source/src/interfaces/libpq/pqexpbuffer.h.html#L59" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq/pqexpbuffer.h.html&quot;}, '*');">PQExpBufferBroken</a>(str)) return 0;				/* already failed */</p>
 <p>/*</p>
 <ul>
@@ -60,7 +60,7 @@
 <li>will still have newlen &gt;= needed.</li>
 <p>*/ if (newlen &gt; (size_t) INT_MAX) newlen = (size_t) INT_MAX;</p>
 </ul>
-<p>newdata = (char *) <a class="wiki-source-link" href="../../source/src/include/snowball/snowball_runtime.h.html#L60" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/snowball/snowball_runtime.h.html&quot;}, '*');">realloc</a>(str-&gt;data, newlen); if (newdata != NULL) { str-&gt;data = newdata; str-&gt;maxlen = newlen; return 1; }</p>
+<p>newdata = (<a class="wiki-source-link" href="../../source/src/include/port/atomics/generic-gcc.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__port__atomics__generic-gcc_h__char.html&quot;}, '*');">char</a> *) <a class="wiki-source-link" href="../../source/src/include/snowball/snowball_runtime.h.html#L60" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/snowball/snowball_runtime.h.html&quot;}, '*');">realloc</a>(str-&gt;data, newlen); if (newdata != NULL) { str-&gt;data = newdata; str-&gt;maxlen = newlen; return 1; }</p>
 <p><a class="wiki-source-link" href="../../source/src/interfaces/libpq/pqexpbuffer.c.html#L49" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__interfaces__libpq__pqexpbuffer_c__markPQExpBufferBroken.html&quot;}, '*');">markPQExpBufferBroken</a>(str); return 0; } ~~~</p>
 <h2>失敗モードと境界条件</h2>
 <p>まだ解析していません。</p>

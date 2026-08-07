@@ -71,7 +71,7 @@
 <li>comparator.  Core code may switch this over the initial preference of</li>
 <li>an opclass support function despite originally indicating abbreviation</li>
 <li>was applicable, by assigning the authoritative comparator back.</li>
-<p>*/ <a class="wiki-source-link" href="../../source/src/include/port.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__port_h__int.html&quot;}, '*');">int</a>			(*comparator) (Datum x, Datum y, SortSupport ssup);</p>
+<p>*/ int			(*comparator) (Datum x, Datum y, SortSupport ssup);</p>
 </ul>
 <p>/*</p>
 <ul>
@@ -83,7 +83,7 @@
 <li>abbrev_converter must not be set).</li>
 <p>*</p>
 <li>This allows opclass authors to supply a conversion routine, used to</li>
-<li>create an alternative representation of the underlying type (an</li>
+<li>create an alternative representation of the underlying <a class="wiki-source-link" href="../../source/src/include/lib/ilist.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__lib__ilist_h__type.html&quot;}, '*');">type</a> (an</li>
 <li>&quot;abbreviated key&quot;).  This representation must be pass-by-value and</li>
 <li>typically will use some ad-hoc <a class="wiki-source-link" href="../../source/src/bin/pg_basebackup/pg_basebackup.c.html#L134" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/bin/pg_basebackup/pg_basebackup.c.html&quot;}, '*');">format</a> that only the opclass has</li>
 <p>~~~</p>

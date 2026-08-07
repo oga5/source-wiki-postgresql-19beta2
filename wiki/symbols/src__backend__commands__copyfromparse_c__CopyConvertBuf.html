@@ -44,7 +44,7 @@
 <li>same.  raw_buf_len <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> the total number of bytes in the buffer, and</li>
 <li>input_buf_len tracks how many of those bytes have already been</li>
 <li>verified.</li>
-<p>*/ <a class="wiki-source-link" href="../../source/src/include/port.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__port_h__int.html&quot;}, '*');">int</a>			preverifiedlen = cstate-&gt;input_buf_len; <a class="wiki-source-link" href="../../source/src/include/port.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__port_h__int.html&quot;}, '*');">int</a>			unverifiedlen = cstate-&gt;raw_buf_len - cstate-&gt;input_buf_len; <a class="wiki-source-link" href="../../source/src/include/port.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__port_h__int.html&quot;}, '*');">int</a>			nverified;</p>
+<p>*/ int			preverifiedlen = cstate-&gt;input_buf_len; int			unverifiedlen = cstate-&gt;raw_buf_len - cstate-&gt;input_buf_len; int			nverified;</p>
 </ul>
 <p>if (unverifiedlen == 0) { /*</p>
 <ul>
@@ -65,7 +65,7 @@
 <li>hit an invalid byte sequence.</li>
 <p>*/ if (cstate-&gt;raw_reached_eof || unverifiedlen &gt;= <a class="wiki-source-link" href="../../source/src/common/wchar.c.html#L2012" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__common__wchar_c__pg_encoding_max_length.html&quot;}, '*');">pg_encoding_max_length</a>(cstate-&gt;file_encoding)) cstate-&gt;input_reached_error = <a class="wiki-source-link" href="../../source/src/tools/pg_bsd_indent/indent_globs.h.html#L46" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/tools/pg_bsd_indent/indent_globs.h.html&quot;}, '*');">true</a>; return; } cstate-&gt;input_buf_len += nverified; } else { /*</p>
 <li>Encoding conversion <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> needed.</li>
-<p>*/ <a class="wiki-source-link" href="../../source/src/include/port.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__port_h__int.html&quot;}, '*');">int</a>			nbytes; ~~~</p>
+<p>*/ int			nbytes; ~~~</p>
 </ul>
 <h2>失敗モードと境界条件</h2>
 <p>まだ解析していません。</p>
