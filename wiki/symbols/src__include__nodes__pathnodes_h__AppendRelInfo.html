@@ -1,5 +1,5 @@
 <!doctype html>
-<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>symbols/src__include__nodes__pathnodes_h__AppendRelInfo.md</title><link rel="stylesheet" href="../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../source/src/include/nodes/pathnodes.h.html#L3289" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__nodes__pathnodes_h__AppendRelInfo.html&quot;}, '*');">AppendRelInfo</a></h1>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>symbols/src__include__nodes__pathnodes_h__AppendRelInfo.md</title><link rel="stylesheet" href="../../styles.css"></head><body><h1>AppendRelInfo</h1>
 <h2>定義</h2>
 <ul>
 <li>種別: <code>struct</code></li>
@@ -28,7 +28,7 @@
 <h2>関連データ構造</h2>
 <p><code>AttrNumber</code>, <code>Index</code>, <a class="wiki-source-link" href="../../source/src/interfaces/ecpg/preproc/type.h.html#L96" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__interfaces__ecpg__preproc__type_h__index.html&quot;}, '*');"><code>index</code></a>, <code>List</code>, <code>NodeTag</code>, <code>Oid</code>, <code>Var</code>, <a class="wiki-source-link" href="../../source/src/interfaces/ecpg/preproc/type.h.html#L89" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__interfaces__ecpg__preproc__type_h__when.html&quot;}, '*');"><code>when</code></a></p>
 <h2>ソース抜粋</h2>
-<p>~~~c typedef struct <a class="wiki-source-link" href="../../source/src/include/nodes/pathnodes.h.html#L3289" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__nodes__pathnodes_h__AppendRelInfo.html&quot;}, '*');">AppendRelInfo</a> { <a class="wiki-source-link" href="../../source/src/include/nodes/nodes.h.html#L124" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/nodes/nodes.h.html&quot;}, '*');">pg_node_attr</a>(no_query_jumble)</p>
+<p>~~~c typedef struct AppendRelInfo { <a class="wiki-source-link" href="../../source/src/include/nodes/nodes.h.html#L124" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/nodes/nodes.h.html&quot;}, '*');">pg_node_attr</a>(no_query_jumble)</p>
 <p>NodeTag		type;</p>
 <p>/*</p>
 <ul>
@@ -43,7 +43,7 @@
 <li>For an inheritance appendrel, the parent and child are both regular</li>
 <li>relations, and we store their rowtype OIDs here for use in translating</li>
 <li>whole-row Vars.  For a UNION-ALL appendrel, the parent and child are</li>
-<li>both subqueries with no named rowtype, and we store <a class="wiki-source-link" href="../../source/src/include/postgres_ext.h.html#L35" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/postgres_ext.h.html&quot;}, '*');">InvalidOid</a> here.</li>
+<li>both subqueries with no named rowtype, and we store InvalidOid here.</li>
 <p>*/ Oid			parent_reltype; /* OID of parent&#x27;s composite type */ Oid			child_reltype;	/* OID of child&#x27;s composite type */</p>
 </ul>
 <p>/*</p>
@@ -60,9 +60,9 @@
 <li>Vars are special-cased, and <a class="wiki-source-link" href="../../source/src/include/port.h.html#L388" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/port.h.html&quot;}, '*');">system</a> columns (attno &lt; 0) need no special</li>
 <li>translation since their attnos are the same for all tables.</li>
 <p>*</p>
-<li>Caution: the Vars have <a class="wiki-source-link" href="../../source/src/backend/optimizer/util/tlist.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/backend/optimizer/util/tlist.c.html&quot;}, '*');">varlevelsup</a> = 0.  Be careful to adjust as needed</li>
+<li>Caution: the Vars have <a class="wiki-source-link" href="../../source/src/backend/optimizer/util/tlist.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__tlist_c__varlevelsup.html&quot;}, '*');">varlevelsup</a> = 0.  Be careful to adjust as needed</li>
 <li><a class="wiki-source-link" href="../../source/src/interfaces/ecpg/preproc/type.h.html#L89" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__interfaces__ecpg__preproc__type_h__when.html&quot;}, '*');">when</a> copying into a subquery.</li>
-<p>*/ List	   *translated_vars;	/* Expressions in the child&#x27;s Vars */</p>
+<p>*/ List	   *<a class="wiki-source-link" href="../../source/src/backend/optimizer/util/appendinfo.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__appendinfo_c__translated_vars.html&quot;}, '*');">translated_vars</a>;	/* Expressions in the child&#x27;s Vars */</p>
 </ul>
 <p>/*</p>
 <ul>
@@ -70,14 +70,14 @@
 <li>child&#x27;s column numbers to parent&#x27;s.  The entry at [ccolno - 1] <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> the</li>
 <li>1-based parent column number for child column ccolno, or zero if that</li>
 <li>child column <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> dropped or doesn&#x27;t exist in the parent.</li>
-<p>*/ <a class="wiki-source-link" href="../../source/src/include/port.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__port_h__int.html&quot;}, '*');">int</a>			num_child_cols; /* length of array */ AttrNumber *parent_colnos <a class="wiki-source-link" href="../../source/src/include/nodes/nodes.h.html#L124" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/nodes/nodes.h.html&quot;}, '*');">pg_node_attr</a>(array_size(num_child_cols));</p>
+<p>*/ <a class="wiki-source-link" href="../../source/src/include/port.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__port_h__int.html&quot;}, '*');">int</a>			num_child_cols; /* length of array */ AttrNumber *<a class="wiki-source-link" href="../../source/src/backend/optimizer/util/appendinfo.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__appendinfo_c__parent_colnos.html&quot;}, '*');">parent_colnos</a> <a class="wiki-source-link" href="../../source/src/include/nodes/nodes.h.html#L124" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/nodes/nodes.h.html&quot;}, '*');">pg_node_attr</a>(array_size(num_child_cols));</p>
 </ul>
 <p>/*</p>
 <ul>
-<li>We store the parent <a class="wiki-source-link" href="../../source/src/port/pg_localeconv_r.c.html#L63" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/port/pg_localeconv_r.c.html&quot;}, '*');">table</a>&#x27;s OID here for inheritance, or <a class="wiki-source-link" href="../../source/src/include/postgres_ext.h.html#L35" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/postgres_ext.h.html&quot;}, '*');">InvalidOid</a> for</li>
+<li>We store the parent <a class="wiki-source-link" href="../../source/src/port/pg_localeconv_r.c.html#L63" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/port/pg_localeconv_r.c.html&quot;}, '*');">table</a>&#x27;s OID here for inheritance, or InvalidOid for</li>
 <li>UNION ALL.  This <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> only needed to help in generating error messages if</li>
 <li>an attempt <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> made to reference a dropped parent column.</li>
-<p>*/ Oid			parent_reloid;	/* OID of parent relation */ } <a class="wiki-source-link" href="../../source/src/include/nodes/pathnodes.h.html#L3289" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__nodes__pathnodes_h__AppendRelInfo.html&quot;}, '*');">AppendRelInfo</a>; ~~~</p>
+<p>*/ Oid			parent_reloid;	/* OID of parent relation */ } AppendRelInfo; ~~~</p>
 </ul>
 <h2>失敗モードと境界条件</h2>
 <p>まだ解析していません。</p>

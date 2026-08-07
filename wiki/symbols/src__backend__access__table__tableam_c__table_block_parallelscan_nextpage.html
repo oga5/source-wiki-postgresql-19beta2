@@ -51,10 +51,10 @@
 <li><a class="wiki-source-link" href="../../source/src/backend/regex/regc_locale.c.html#L411" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__regex__regc_locale_c__range.html&quot;}, '*');">range</a> of blocks we then allocate another <a class="wiki-source-link" href="../../source/src/backend/regex/regc_locale.c.html#L411" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__regex__regc_locale_c__range.html&quot;}, '*');">range</a> for it and return the</li>
 <li>first block number from that <a class="wiki-source-link" href="../../source/src/backend/regex/regc_locale.c.html#L411" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__regex__regc_locale_c__range.html&quot;}, '*');">range</a>.</li>
 <p>*</p>
-<li>Here we name these ranges of blocks &quot;chunks&quot;.  The initial size of</li>
+<li>Here we name these ranges of blocks &quot;chunks&quot;.  The initial <a class="wiki-source-link" href="../../source/src/backend/optimizer/geqo/geqo_eval.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__geqo__geqo_eval_c__size.html&quot;}, '*');">size</a> of</li>
 <li>these chunks <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> determined in <a class="wiki-source-link" href="../../source/src/backend/access/table/tableam.c.html#L452" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__access__table__tableam_c__table_block_parallelscan_startblock_init.html&quot;}, '*');">table_block_parallelscan_startblock_init</a></li>
 <li>based on the number of blocks to scan.  Towards the end of the scan, we</li>
-<li>start making reductions in the size of the chunks in order to attempt</li>
+<li>start making reductions in the <a class="wiki-source-link" href="../../source/src/backend/optimizer/geqo/geqo_eval.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__geqo__geqo_eval_c__size.html&quot;}, '*');">size</a> of the chunks in order to attempt</li>
 <li>to divide the remaining work over all the workers as evenly as</li>
 <li>possible.</li>
 <p>*</p>
@@ -77,7 +77,7 @@
 <li>starting block number, modulo phs_nblocks.</li>
 <p>*/</p>
 </ul>
-<p>/* First, figure out how many blocks we&#x27;re planning on scanning */ if (pbscan-&gt;phs_numblock == <a class="wiki-source-link" href="../../source/src/include/storage/block.h.html#L33" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/storage/block.h.html&quot;}, '*');">InvalidBlockNumber</a>) scan_nblocks = pbscan-&gt;phs_nblocks; else scan_nblocks = pbscan-&gt;phs_numblock;</p>
+<p>/* First, figure out how many blocks we&#x27;re planning on scanning */ if (pbscan-&gt;phs_numblock == <a class="wiki-source-link" href="../../source/src/include/storage/block.h.html#L33" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/storage/block.h.html&quot;}, '*');">InvalidBlockNumber</a>) scan_nblocks = pbscan-&gt;phs_nblocks; else scan_nblocks = pbscan-&gt;phs_numblock;</p>
 <p>/*</p>
 <ul>
 <li>Now check if we have any remaining blocks in a previous chunk for this</li>

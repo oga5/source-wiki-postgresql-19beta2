@@ -53,7 +53,7 @@
 <ul>
 <li><a class="wiki-source-link" href="../../source/src/backend/storage/file/fd.c.html#L1300" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__storage__file__fd_c__Insert.html&quot;}, '*');">Insert</a> a special WAL record to mark the end of recovery, since we</li>
 <li>aren&#x27;t doing a checkpoint. That means that the checkpointer process</li>
-<li>may <a class="wiki-source-link" href="../../source/src/include/c.h.html#L441" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/c.h.html&quot;}, '*');">likely</a> be in the middle of a time-smoothed restartpoint and</li>
+<li>may <a class="wiki-source-link" href="../../source/src/include/c.h.html#L441" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/c.h.html&quot;}, '*');">likely</a> be in the middle of a time-smoothed restartpoint and</li>
 <li>could continue to be for minutes after this.  That sounds strange,</li>
 <li>but the effect <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> roughly the same and it would be stranger to try</li>
 <li>to come out of the restartpoint and then checkpoint. We request a</li>

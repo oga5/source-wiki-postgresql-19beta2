@@ -29,13 +29,13 @@
 <li>呼び出し元: なし</li>
 <li>呼び出し先: なし</li>
 <li>呼び出し元サイト: なし</li>
-<li>呼び出しサイト: <a class="wiki-source-link" href="../../source/src/include/c.h.html#L1254" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/c.h.html&quot;}, '*');"><code>IS_HIGHBIT_SET</code></a> at <code>src/backend/utils/adt/encode.c:772:23</code> (unresolved)</li>
+<li>呼び出しサイト: <a class="wiki-source-link" href="../../source/src/include/c.h.html#L1254" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/c.h.html&quot;}, '*');"><code>IS_HIGHBIT_SET</code></a> at <code>src/backend/utils/adt/encode.c:772:23</code> (unresolved)</li>
 </ul>
 <h2>関連データ構造</h2>
 <p><code>uint64</code></p>
 <h2>ソース抜粋</h2>
 <p>~~~c static uint64 <a class="wiki-source-link" href="../../source/src/backend/utils/adt/encode.c.html#L764" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__utils__adt__encode_c__esc_enc_len.html&quot;}, '*');">esc_enc_len</a>(const char *src, size_t srclen) { const char *end = src + srclen; uint64		len = 0;</p>
-<p>while (src &lt; end) { if (*src == &#x27;\0&#x27; || <a class="wiki-source-link" href="../../source/src/include/c.h.html#L1254" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/c.h.html&quot;}, '*');">IS_HIGHBIT_SET</a>(*src)) len += 4; else if (*src == &#x27;\\&#x27;) len += 2; else len++;</p>
+<p>while (src &lt; end) { if (*src == &#x27;\0&#x27; || <a class="wiki-source-link" href="../../source/src/include/c.h.html#L1254" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/c.h.html&quot;}, '*');">IS_HIGHBIT_SET</a>(*src)) len += 4; else if (*src == &#x27;\\&#x27;) len += 2; else len++;</p>
 <p>src++; }</p>
 <p>return len; } ~~~</p>
 <h2>失敗モードと境界条件</h2>

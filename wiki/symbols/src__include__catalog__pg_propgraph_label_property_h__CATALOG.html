@@ -15,7 +15,7 @@
 <h2>入力と出力</h2>
 <ul>
 <li>引数: <code>pg_propgraph_label_property</code>, <code>PropgraphLabelPropertyRelationId</code></li>
-<li>戻り値: <a class="wiki-source-link" href="../../source/src/include/catalog/genbki.h.html#L34" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/catalog/genbki.h.html&quot;}, '*');"><code>BEGIN_CATALOG_STRUCT</code></a></li>
+<li>戻り値: <a class="wiki-source-link" href="../../source/src/include/catalog/genbki.h.html#L34" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/catalog/genbki.h.html&quot;}, '*');"><code>BEGIN_CATALOG_STRUCT</code></a></li>
 </ul>
 <h2>前提条件と不変条件</h2>
 <p>まだ解析していません。</p>
@@ -29,17 +29,17 @@
 <li>呼び出し元: なし</li>
 <li>呼び出し先: なし</li>
 <li>呼び出し元サイト: なし</li>
-<li>呼び出しサイト: <a class="wiki-source-link" href="../../source/src/include/catalog/genbki.h.html#L65" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/catalog/genbki.h.html&quot;}, '*');"><code>BKI_LOOKUP</code></a> at <code>src/include/catalog/pg_propgraph_label_property.h:37:21</code> (macro)</li>
+<li>呼び出しサイト: <a class="wiki-source-link" href="../../source/src/include/catalog/genbki.h.html#L65" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/catalog/genbki.h.html&quot;}, '*');"><code>BKI_LOOKUP</code></a> at <code>src/include/catalog/pg_propgraph_label_property.h:37:21</code> (macro)</li>
 </ul>
 <h2>関連データ構造</h2>
 <p><code>Oid</code>, <code>variable</code></p>
 <h2>ソース抜粋</h2>
-<p>~~~c <a class="wiki-source-link" href="../../source/src/include/catalog/genbki.h.html#L34" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/catalog/genbki.h.html&quot;}, '*');">BEGIN_CATALOG_STRUCT</a></p>
+<p>~~~c <a class="wiki-source-link" href="../../source/src/include/catalog/genbki.h.html#L34" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/catalog/genbki.h.html&quot;}, '*');">BEGIN_CATALOG_STRUCT</a></p>
 <p>CATALOG(pg_propgraph_label_property,6482,PropgraphLabelPropertyRelationId) { Oid			oid;</p>
-<p>/* OID of the property */ Oid			plppropid <a class="wiki-source-link" href="../../source/src/include/catalog/genbki.h.html#L65" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/catalog/genbki.h.html&quot;}, '*');">BKI_LOOKUP</a>(pg_propgraph_property);</p>
-<p>/* OID of the <a class="wiki-source-link" href="../../source/src/backend/regex/regc_locale.c.html#L375" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__regex__regc_locale_c__element.html&quot;}, '*');">element</a> <a class="wiki-source-link" href="../../source/src/bin/pg_basebackup/pg_basebackup.c.html#L135" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/bin/pg_basebackup/pg_basebackup.c.html&quot;}, '*');">label</a> */ Oid			plpellabelid <a class="wiki-source-link" href="../../source/src/include/catalog/genbki.h.html#L65" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/catalog/genbki.h.html&quot;}, '*');">BKI_LOOKUP</a>(pg_propgraph_element_label);</p>
+<p>/* OID of the property */ Oid			plppropid <a class="wiki-source-link" href="../../source/src/include/catalog/genbki.h.html#L65" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/catalog/genbki.h.html&quot;}, '*');">BKI_LOOKUP</a>(pg_propgraph_property);</p>
+<p>/* OID of the <a class="wiki-source-link" href="../../source/src/backend/regex/regc_locale.c.html#L375" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__regex__regc_locale_c__element.html&quot;}, '*');">element</a> <a class="wiki-source-link" href="../../source/src/bin/pg_basebackup/pg_basebackup.c.html#L135" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/bin/pg_basebackup/pg_basebackup.c.html&quot;}, '*');">label</a> */ Oid			plpellabelid <a class="wiki-source-link" href="../../source/src/include/catalog/genbki.h.html#L65" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/catalog/genbki.h.html&quot;}, '*');">BKI_LOOKUP</a>(pg_propgraph_element_label);</p>
 <p>#ifdef CATALOG_VARLEN			/* variable-length fields start here */</p>
-<p>/* property expression */ pg_node_tree plpexpr <a class="wiki-source-link" href="../../source/src/include/catalog/genbki.h.html#L52" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/catalog/genbki.h.html&quot;}, '*');">BKI_FORCE_NOT_NULL</a>;</p>
+<p>/* property expression */ pg_node_tree plpexpr <a class="wiki-source-link" href="../../source/src/include/catalog/genbki.h.html#L52" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/catalog/genbki.h.html&quot;}, '*');">BKI_FORCE_NOT_NULL</a>;</p>
 <p>#endif } FormData_pg_propgraph_label_property; ~~~</p>
 <h2>失敗モードと境界条件</h2>
 <p>まだ解析していません。</p>

@@ -32,7 +32,7 @@
 <li>呼び出しサイト: <code>HeSVKEY_force</code> at <code>src/pl/plperl/plperl.c:366:7</code> (unresolved), <code>HeUTF8</code> at <code>src/pl/plperl/plperl.c:367:6</code> (unresolved), <code>SvUTF8_on</code> at <code>src/pl/plperl/plperl.c:368:3</code> (unresolved), <a class="wiki-source-link" href="../../source/src/pl/plperl/plperl.h.html#L88" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__pl__plperl__plperl_h__sv2cstr.html&quot;}, '*');"><code>sv2cstr</code></a> at <code>src/pl/plperl/plperl.c:369:8</code> (unresolved)</li>
 </ul>
 <h2>関連データ構造</h2>
-<p><code>decimal</code>, <a class="wiki-source-link" href="../../source/src/include/c.h.html#L796" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/c.h.html&quot;}, '*');"><code>text</code></a>, <a class="wiki-source-link" href="../../source/src/interfaces/ecpg/preproc/type.h.html#L89" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__interfaces__ecpg__preproc__type_h__when.html&quot;}, '*');"><code>when</code></a></p>
+<p><code>decimal</code>, <code>text</code>, <a class="wiki-source-link" href="../../source/src/interfaces/ecpg/preproc/type.h.html#L89" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__interfaces__ecpg__preproc__type_h__when.html&quot;}, '*');"><code>when</code></a></p>
 <h2>ソース抜粋</h2>
 <p>~~~c static char * <a class="wiki-source-link" href="../../source/src/pl/plperl/plperl.c.html#L327" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__pl__plperl__plperl_c__hek2cstr.html&quot;}, '*');">hek2cstr</a>(HE *he) { <a class="wiki-source-link" href="../../source/src/pl/plperl/ppport.h.html#L11306" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/pl/plperl/ppport.h.html&quot;}, '*');">dTHX</a>; char	   *ret; SV		   *sv;</p>
 <p>/*</p>
@@ -57,7 +57,7 @@
 <p>*</p>
 <li>For a more concrete example given a column with the name of the unicode</li>
 <li>codepoint U+00ae (registered sign) and a UTF8 database and the perl</li>
-<li>return_next { &quot;\N{U+00ae}=&gt;&#x27;<a class="wiki-source-link" href="../../source/src/include/c.h.html#L796" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/c.h.html&quot;}, '*');">text</a> } would always fail as heUTF8 returns</li>
+<li>return_next { &quot;\N{U+00ae}=&gt;&#x27;text } would always fail as heUTF8 returns</li>
 <li>0 and HePV() would give us a char * with 1 byte contains the decimal</li>
 <li><a class="wiki-source-link" href="../../source/src/interfaces/ecpg/compatlib/informix.c.html#L687" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/ecpg/compatlib/informix.c.html&quot;}, '*');">value</a> 174</li>
 <p>*</p>

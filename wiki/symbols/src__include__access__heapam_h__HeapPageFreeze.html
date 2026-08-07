@@ -26,7 +26,7 @@
 <li>呼び出しサイト: なし</li>
 </ul>
 <h2>関連データ構造</h2>
-<p><code>c</code>, <a class="wiki-source-link" href="../../source/src/include/c.h.html#L753" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/c.h.html&quot;}, '*');"><code>MultiXactId</code></a>, <code>TransactionId</code>, <a class="wiki-source-link" href="../../source/src/interfaces/ecpg/preproc/type.h.html#L89" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__interfaces__ecpg__preproc__type_h__when.html&quot;}, '*');"><code>when</code></a></p>
+<p><code>c</code>, <a class="wiki-source-link" href="../../source/src/include/c.h.html#L753" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/c.h.html&quot;}, '*');"><code>MultiXactId</code></a>, <code>TransactionId</code>, <a class="wiki-source-link" href="../../source/src/interfaces/ecpg/preproc/type.h.html#L89" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__interfaces__ecpg__preproc__type_h__when.html&quot;}, '*');"><code>when</code></a></p>
 <h2>ソース抜粋</h2>
 <p>~~~c typedef struct <a class="wiki-source-link" href="../../source/src/include/access/heapam.h.html#L191" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__access__heapam_h__HeapPageFreeze.html&quot;}, '*');">HeapPageFreeze</a> { /* Is <a class="wiki-source-link" href="../../source/src/backend/access/heap/heapam.c.html#L7026" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__access__heap__heapam_c__heap_prepare_freeze_tuple.html&quot;}, '*');">heap_prepare_freeze_tuple</a> caller required to freeze page? */ bool		freeze_required;</p>
 <p>/*</p>
@@ -53,7 +53,7 @@
 <li>generally prefers to remove Multis eagerly, but lazy processing <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> used</li>
 <li>in cases where laziness allows VACUUM to avoid allocating a new Multi.</li>
 <li>The &quot;freeze the page&quot; trackers enable this flexibility.</li>
-<p>*/ TransactionId FreezePageRelfrozenXid; <a class="wiki-source-link" href="../../source/src/include/c.h.html#L753" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/c.h.html&quot;}, '*');">MultiXactId</a> FreezePageRelminMxid;</p>
+<p>*/ TransactionId FreezePageRelfrozenXid; <a class="wiki-source-link" href="../../source/src/include/c.h.html#L753" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/c.h.html&quot;}, '*');">MultiXactId</a> FreezePageRelminMxid;</p>
 </ul>
 <p>/*</p>
 <ul>
@@ -75,7 +75,7 @@
 <li>VACUUM scans a page that isn&#x27;t cleanup locked.  Both code paths are</li>
 <li>based on the same general idea (do less work for this page during the</li>
 <li>ongoing VACUUM, at the cost of having to <a class="wiki-source-link" href="../../source/src/include/port/win32_port.h.html#L498" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/port/win32_port.h.html&quot;}, '*');">accept</a> older <a class="wiki-source-link" href="../../source/src/common/hashfn.c.html#L116" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/common/hashfn.c.html&quot;}, '*');">final</a> values).</li>
-<p>*/ TransactionId NoFreezePageRelfrozenXid; <a class="wiki-source-link" href="../../source/src/include/c.h.html#L753" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/c.h.html&quot;}, '*');">MultiXactId</a> NoFreezePageRelminMxid;</p>
+<p>*/ TransactionId NoFreezePageRelfrozenXid; <a class="wiki-source-link" href="../../source/src/include/c.h.html#L753" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/c.h.html&quot;}, '*');">MultiXactId</a> NoFreezePageRelminMxid;</p>
 </ul>
 <p>} <a class="wiki-source-link" href="../../source/src/include/access/heapam.h.html#L191" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__access__heapam_h__HeapPageFreeze.html&quot;}, '*');">HeapPageFreeze</a>; ~~~</p>
 <h2>失敗モードと境界条件</h2>

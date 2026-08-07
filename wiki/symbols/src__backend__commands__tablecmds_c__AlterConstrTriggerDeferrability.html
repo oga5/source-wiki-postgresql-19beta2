@@ -39,7 +39,7 @@
 <p>/*</p>
 <ul>
 <li>Remember OIDs of other relation(s) involved in FK constraint.</li>
-<li>(Note: it&#x27;s <a class="wiki-source-link" href="../../source/src/include/c.h.html#L441" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/c.h.html&quot;}, '*');">likely</a> that we could skip forcing a relcache inval for</li>
+<li>(Note: it&#x27;s <a class="wiki-source-link" href="../../source/src/include/c.h.html#L441" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/c.h.html&quot;}, '*');">likely</a> that we could skip forcing a relcache inval for</li>
 <li>other rels that don&#x27;t have a trigger whose properties change, but</li>
 <li>let&#x27;s be conservative.)</li>
 <p>*/ if (tgform-&gt;tgrelid != <a class="wiki-source-link" href="../../source/src/include/utils/rel.h.html#L516" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/utils/rel.h.html&quot;}, '*');">RelationGetRelid</a>(rel)) *otherrelids = <a class="wiki-source-link" href="../../source/src/backend/nodes/list.c.html#L1379" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__nodes__list_c__list_append_unique_oid.html&quot;}, '*');">list_append_unique_oid</a>(*otherrelids, tgform-&gt;tgrelid);</p>

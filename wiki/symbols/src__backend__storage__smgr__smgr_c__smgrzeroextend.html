@@ -38,10 +38,10 @@
 <p><a class="wiki-source-link" href="../../source/src/backend/storage/smgr/smgr.c.html#L128" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/storage/smgr/smgr.c.html&quot;}, '*');">smgrsw</a>[reln-&gt;smgr_which].smgr_zeroextend(reln, forknum, blocknum, nblocks, skipFsync);</p>
 <p>/*</p>
 <ul>
-<li>Normally we expect this to increase the fork size by nblocks, but if</li>
+<li>Normally we expect this to increase the fork <a class="wiki-source-link" href="../../source/src/backend/optimizer/geqo/geqo_eval.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__geqo__geqo_eval_c__size.html&quot;}, '*');">size</a> by nblocks, but if</li>
 <li>the cached <a class="wiki-source-link" href="../../source/src/interfaces/ecpg/compatlib/informix.c.html#L687" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/ecpg/compatlib/informix.c.html&quot;}, '*');">value</a> isn&#x27;t as expected, just invalidate it so the next call</li>
 <li>asks the kernel.</li>
-<p>*/ if (reln-&gt;smgr_cached_nblocks[forknum] == blocknum) reln-&gt;smgr_cached_nblocks[forknum] = blocknum + nblocks; else reln-&gt;smgr_cached_nblocks[forknum] = <a class="wiki-source-link" href="../../source/src/include/storage/block.h.html#L33" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/storage/block.h.html&quot;}, '*');">InvalidBlockNumber</a>;</p>
+<p>*/ if (reln-&gt;smgr_cached_nblocks[forknum] == blocknum) reln-&gt;smgr_cached_nblocks[forknum] = blocknum + nblocks; else reln-&gt;smgr_cached_nblocks[forknum] = <a class="wiki-source-link" href="../../source/src/include/storage/block.h.html#L33" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/storage/block.h.html&quot;}, '*');">InvalidBlockNumber</a>;</p>
 </ul>
 <p><a class="wiki-source-link" href="../../source/src/include/miscadmin.h.html#L138" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/miscadmin.h.html&quot;}, '*');">RESUME_INTERRUPTS</a>(); } ~~~</p>
 <h2>失敗モードと境界条件</h2>

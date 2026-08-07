@@ -40,7 +40,7 @@
 <ul>
 <li>date2j involves several integer divisions; moreover, unless our session</li>
 <li>lives across local midnight, we don&#x27;t really have to do it more than</li>
-<li>once.  <a class="wiki-source-link" href="../../source/src/common/md5.c.html#L110" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/common/md5.c.html&quot;}, '*');">So</a> it seems worth having a separate cache here.</li>
+<li>once.  <a class="wiki-source-link" href="../../source/src/common/md5.c.html#L110" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/common/md5.c.html&quot;}, '*');">So</a> it seems <a class="wiki-source-link" href="../../source/src/backend/optimizer/geqo/geqo_pool.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__geqo__geqo_pool_c__worth.html&quot;}, '*');">worth</a> having a separate cache here.</li>
 <p>*/ if (tm.tm_year != cache_year || tm.tm_mon != cache_mon || tm.tm_mday != cache_mday) { cache_date = date2j(tm.tm_year, tm.tm_mon, tm.tm_mday) - <a class="wiki-source-link" href="../../source/src/include/datatype/timestamp.h.html#L235" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/datatype/timestamp.h.html&quot;}, '*');">POSTGRES_EPOCH_JDATE</a>; cache_year = tm.tm_year; cache_mon = tm.tm_mon; cache_mday = tm.tm_mday; }</p>
 </ul>
 <p>return cache_date; } ~~~</p>

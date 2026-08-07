@@ -39,7 +39,7 @@
 <ul>
 <li>can&#x27;t return anything useful if we have no FmgrInfo or if its fn_expr</li>
 <li>node has not been <a class="wiki-source-link" href="../../source/src/port/win32ntdll.c.html#L36" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/port/win32ntdll.c.html&quot;}, '*');">initialized</a></li>
-<p>*/ if (!flinfo || !flinfo-&gt;fn_expr) return <a class="wiki-source-link" href="../../source/src/include/postgres_ext.h.html#L35" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/postgres_ext.h.html&quot;}, '*');">InvalidOid</a>;</p>
+<p>*/ if (!flinfo || !flinfo-&gt;fn_expr) return InvalidOid;</p>
 </ul>
 <p>expr = flinfo-&gt;fn_expr;</p>
 <p>return <a class="wiki-source-link" href="../../source/src/backend/nodes/nodeFuncs.c.html#L41" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__nodes__nodeFuncs_c__exprType.html&quot;}, '*');">exprType</a>(expr); } ~~~</p>

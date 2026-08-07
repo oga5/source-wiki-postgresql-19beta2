@@ -35,7 +35,7 @@
 <p><code>subre</code>, <code>vars</code></p>
 <h2>ソース抜粋</h2>
 <p>~~~c static void <a class="wiki-source-link" href="../../source/src/backend/regex/regcomp.c.html#L2312" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__regex__regcomp_c__cleanst.html&quot;}, '*');">cleanst</a>(struct vars *v) { struct subre *t; struct subre *next;</p>
-<p>for (t = v-&gt;treechain; t != NULL; t = next) { next = t-&gt;chain; if (!(t-&gt;flags &amp; <a class="wiki-source-link" href="../../source/src/include/regex/regguts.h.html#L501" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/regex/regguts.h.html&quot;}, '*');">INUSE</a>)) FREE(t); } v-&gt;treechain = NULL; v-&gt;treefree = NULL;			/* just on general principles */ } ~~~</p>
+<p>for (t = v-&gt;treechain; t != NULL; t = next) { next = t-&gt;chain; if (!(t-&gt;<a class="wiki-source-link" href="../../source/src/backend/optimizer/util/var.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__var_c__flags.html&quot;}, '*');">flags</a> &amp; <a class="wiki-source-link" href="../../source/src/include/regex/regguts.h.html#L501" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/regex/regguts.h.html&quot;}, '*');">INUSE</a>)) FREE(t); } v-&gt;treechain = NULL; v-&gt;treefree = NULL;			/* just on general principles */ } ~~~</p>
 <h2>失敗モードと境界条件</h2>
 <p>まだ解析していません。</p>
 <h2>保守担当者向けメモ</h2>

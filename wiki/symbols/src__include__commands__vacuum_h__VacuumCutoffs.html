@@ -26,12 +26,12 @@
 <li>呼び出しサイト: なし</li>
 </ul>
 <h2>関連データ構造</h2>
-<p><a class="wiki-source-link" href="../../source/src/interfaces/ecpg/preproc/type.h.html#L198" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__interfaces__ecpg__preproc__type_h__arguments.html&quot;}, '*');"><code>arguments</code></a>, <a class="wiki-source-link" href="../../source/src/include/c.h.html#L753" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/c.h.html&quot;}, '*');"><code>MultiXactId</code></a>, <code>TransactionId</code>, <a class="wiki-source-link" href="../../source/src/interfaces/ecpg/preproc/type.h.html#L89" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__interfaces__ecpg__preproc__type_h__when.html&quot;}, '*');"><code>when</code></a></p>
+<p><a class="wiki-source-link" href="../../source/src/interfaces/ecpg/preproc/type.h.html#L198" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__interfaces__ecpg__preproc__type_h__arguments.html&quot;}, '*');"><code>arguments</code></a>, <a class="wiki-source-link" href="../../source/src/include/c.h.html#L753" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/c.h.html&quot;}, '*');"><code>MultiXactId</code></a>, <code>TransactionId</code>, <a class="wiki-source-link" href="../../source/src/interfaces/ecpg/preproc/type.h.html#L89" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__interfaces__ecpg__preproc__type_h__when.html&quot;}, '*');"><code>when</code></a></p>
 <h2>ソース抜粋</h2>
 <p>~~~c struct VacuumCutoffs { /*</p>
 <ul>
 <li>Existing pg_class fields at start of VACUUM</li>
-<p>*/ TransactionId relfrozenxid; <a class="wiki-source-link" href="../../source/src/include/c.h.html#L753" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/c.h.html&quot;}, '*');">MultiXactId</a> relminmxid;</p>
+<p>*/ TransactionId relfrozenxid; <a class="wiki-source-link" href="../../source/src/include/c.h.html#L753" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/c.h.html&quot;}, '*');">MultiXactId</a> relminmxid;</p>
 </ul>
 <p>/*</p>
 <ul>
@@ -46,7 +46,7 @@
 <li><a class="wiki-source-link" href="../../source/src/interfaces/ecpg/preproc/type.h.html#L198" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__interfaces__ecpg__preproc__type_h__arguments.html&quot;}, '*');">arguments</a> at the end of VACUUM.  These same values should be passed</li>
 <li><a class="wiki-source-link" href="../../source/src/interfaces/ecpg/preproc/type.h.html#L89" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__interfaces__ecpg__preproc__type_h__when.html&quot;}, '*');">when</a> it turns out that VACUUM will leave no unfrozen XIDs/MXIDs behind</li>
 <li>in the table.</li>
-<p>*/ TransactionId OldestXmin; <a class="wiki-source-link" href="../../source/src/include/c.h.html#L753" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/c.h.html&quot;}, '*');">MultiXactId</a> OldestMxact;</p>
+<p>*/ TransactionId OldestXmin; <a class="wiki-source-link" href="../../source/src/include/c.h.html#L753" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/c.h.html&quot;}, '*');">MultiXactId</a> OldestMxact;</p>
 </ul>
 <p>/*</p>
 <ul>
@@ -55,7 +55,7 @@
 <p>*</p>
 <li>MultiXactCutoff <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> the <a class="wiki-source-link" href="../../source/src/interfaces/ecpg/compatlib/informix.c.html#L687" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/ecpg/compatlib/informix.c.html&quot;}, '*');">value</a> below which all MultiXactIds are</li>
 <li>definitely removed from Xmax in pages VACUUM scans and cleanup locks.</li>
-<p>*/ TransactionId FreezeLimit; <a class="wiki-source-link" href="../../source/src/include/c.h.html#L753" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/c.h.html&quot;}, '*');">MultiXactId</a> MultiXactCutoff; }; ~~~</p>
+<p>*/ TransactionId FreezeLimit; <a class="wiki-source-link" href="../../source/src/include/c.h.html#L753" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/c.h.html&quot;}, '*');">MultiXactId</a> MultiXactCutoff; }; ~~~</p>
 </ul>
 <h2>失敗モードと境界条件</h2>
 <p>まだ解析していません。</p>

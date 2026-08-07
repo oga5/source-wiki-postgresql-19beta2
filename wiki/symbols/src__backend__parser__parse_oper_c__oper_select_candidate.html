@@ -41,7 +41,7 @@
 <li><a class="wiki-source-link" href="../../source/src/interfaces/ecpg/preproc/ecpg.c.html#L30" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/ecpg/preproc/ecpg.c.html&quot;}, '*');">types</a>, whether directly or by coercion.</li>
 <p>*/ ncandidates = <a class="wiki-source-link" href="../../source/src/backend/parser/parse_func.c.html#L1042" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__parser__parse_func_c__func_match_argtypes.html&quot;}, '*');">func_match_argtypes</a>(nargs, input_typeids, candidates, &amp;candidates);</p>
 </ul>
-<p>/* Done if no candidate or only one candidate survives */ if (ncandidates == 0) { *operOid = <a class="wiki-source-link" href="../../source/src/include/postgres_ext.h.html#L35" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/postgres_ext.h.html&quot;}, '*');">InvalidOid</a>; return FUNCDETAIL_NOTFOUND; } if (ncandidates == 1) { *operOid = candidates-&gt;oid; return FUNCDETAIL_NORMAL; }</p>
+<p>/* Done if no candidate or only one candidate survives */ if (ncandidates == 0) { *operOid = InvalidOid; return FUNCDETAIL_NOTFOUND; } if (ncandidates == 1) { *operOid = candidates-&gt;oid; return FUNCDETAIL_NORMAL; }</p>
 <p>/*</p>
 <ul>
 <li>Use the same heuristics as for ambiguous <a class="wiki-source-link" href="../../source/src/backend/regex/regcomp.c.html#L358" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/regex/regcomp.c.html&quot;}, '*');">functions</a> to resolve the</li>
@@ -49,7 +49,7 @@
 <p>*/ candidates = <a class="wiki-source-link" href="../../source/src/backend/parser/parse_func.c.html#L1128" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__parser__parse_func_c__func_select_candidate.html&quot;}, '*');">func_select_candidate</a>(nargs, input_typeids, candidates);</p>
 </ul>
 <p>if (candidates) { *operOid = candidates-&gt;oid; return FUNCDETAIL_NORMAL; }</p>
-<p>*operOid = <a class="wiki-source-link" href="../../source/src/include/postgres_ext.h.html#L35" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/postgres_ext.h.html&quot;}, '*');">InvalidOid</a>; return FUNCDETAIL_MULTIPLE; /* failed to <a class="wiki-source-link" href="../../source/src/include/port/win32_port.h.html#L500" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/port/win32_port.h.html&quot;}, '*');">select</a> a best candidate */ } ~~~</p>
+<p>*operOid = InvalidOid; return FUNCDETAIL_MULTIPLE; /* failed to <a class="wiki-source-link" href="../../source/src/include/port/win32_port.h.html#L500" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/port/win32_port.h.html&quot;}, '*');">select</a> a best candidate */ } ~~~</p>
 <h2>失敗モードと境界条件</h2>
 <p>まだ解析していません。</p>
 <h2>保守担当者向けメモ</h2>

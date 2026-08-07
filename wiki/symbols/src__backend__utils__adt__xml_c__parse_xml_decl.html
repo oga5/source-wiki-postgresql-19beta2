@@ -53,7 +53,7 @@
 <li>XMLDecl.</li>
 <p>*</p>
 <li>We need an input length <a class="wiki-source-link" href="../../source/src/interfaces/ecpg/compatlib/informix.c.html#L687" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/ecpg/compatlib/informix.c.html&quot;}, '*');">value</a> for xmlGetUTF8Char, but there&#x27;s no need</li>
-<li>to count the whole document size, so use strnlen not strlen.</li>
+<li>to count the whole document <a class="wiki-source-link" href="../../source/src/backend/optimizer/geqo/geqo_eval.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__geqo__geqo_eval_c__size.html&quot;}, '*');">size</a>, so use strnlen not strlen.</li>
 <p>*/ utf8len = strnlen((const char *) (p + 5), <a class="wiki-source-link" href="../../source/src/include/mb/pg_wchar.h.html#L33" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/mb/pg_wchar.h.html&quot;}, '*');">MAX_MULTIBYTE_CHAR_LEN</a>); utf8char = xmlGetUTF8Char(p + 5, &amp;utf8len); if (<a class="wiki-source-link" href="../../source/src/backend/utils/adt/xml.c.html#L1409" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/utils/adt/xml.c.html&quot;}, '*');">PG_XMLISNAMECHAR</a>(utf8char)) goto finished;</p>
 </ul>
 <p>p += 5;</p>

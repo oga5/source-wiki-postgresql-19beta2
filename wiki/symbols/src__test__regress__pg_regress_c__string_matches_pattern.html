@@ -32,22 +32,22 @@
 <li>呼び出しサイト: <a class="wiki-source-link" href="../../source/src/test/regress/pg_regress.c.html#L556" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__test__regress__pg_regress_c__string_matches_pattern.html&quot;}, '*');"><code>string_matches_pattern</code></a> at <code>src/test/regress/pg_regress.c:580:10</code> (direct, confidence=high, resolved=<a class="wiki-entity-link" href="src__test__regress__pg_regress_c__string_matches_pattern.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__test__regress__pg_regress_c__string_matches_pattern.html&quot;, &quot;source&quot;: &quot;source/src/test/regress/pg_regress.c.html#L556&quot;}, '*');"><code>symbol:src/test/regress/pg_regress.c#string_matches_pattern</code></a>)</li>
 </ul>
 <h2>関連データ構造</h2>
-<p><code>string</code>, <a class="wiki-source-link" href="../../source/src/include/c.h.html#L796" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/c.h.html&quot;}, '*');"><code>text</code></a></p>
+<p><code>string</code>, <code>text</code></p>
 <h2>ソース抜粋</h2>
 <p>~~~c static bool <a class="wiki-source-link" href="../../source/src/test/regress/pg_regress.c.html#L556" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__test__regress__pg_regress_c__string_matches_pattern.html&quot;}, '*');">string_matches_pattern</a>(const char *str, const char *pattern) { while (*str &amp;&amp; *pattern) { if (*pattern == &#x27;.&#x27; &amp;&amp; pattern[1] == &#x27;*&#x27;) { pattern += 2; /* Trailing .* matches everything. */ if (*pattern == &#x27;\0&#x27;) return <a class="wiki-source-link" href="../../source/src/tools/pg_bsd_indent/indent_globs.h.html#L46" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/tools/pg_bsd_indent/indent_globs.h.html&quot;}, '*');">true</a>;</p>
 <p>/*</p>
 <ul>
-<li>Otherwise, scan for a <a class="wiki-source-link" href="../../source/src/include/c.h.html#L796" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/c.h.html&quot;}, '*');">text</a> position at which we can match the</li>
+<li>Otherwise, scan for a text position at which we can match the</li>
 <li>rest of the pattern.</li>
 <p>*/ while (*str) { /*</p>
 <li>Optimization to prevent most recursion: don&#x27;t recurse</li>
-<li>unless first pattern char might match this <a class="wiki-source-link" href="../../source/src/include/c.h.html#L796" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/c.h.html&quot;}, '*');">text</a> char.</li>
+<li>unless first pattern char might match this text char.</li>
 <p>*/ if (*str == *pattern || *pattern == &#x27;.&#x27;) { if (<a class="wiki-source-link" href="../../source/src/test/regress/pg_regress.c.html#L556" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__test__regress__pg_regress_c__string_matches_pattern.html&quot;}, '*');">string_matches_pattern</a>(str, pattern)) return <a class="wiki-source-link" href="../../source/src/tools/pg_bsd_indent/indent_globs.h.html#L46" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/tools/pg_bsd_indent/indent_globs.h.html&quot;}, '*');">true</a>; }</p>
 </ul>
 <p>str++; }</p>
 <p>/*</p>
 <ul>
-<li>End of <a class="wiki-source-link" href="../../source/src/include/c.h.html#L796" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/c.h.html&quot;}, '*');">text</a> with no match.</li>
+<li>End of text with no match.</li>
 <p>*/ return <a class="wiki-source-link" href="../../source/src/tools/pg_bsd_indent/indent_globs.h.html#L43" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/tools/pg_bsd_indent/indent_globs.h.html&quot;}, '*');">false</a>; } else if (*pattern != &#x27;.&#x27; &amp;&amp; *str != *pattern) { /*</p>
 <li>Not the single-character wildcard and no explicit match? Then</li>
 <li>time to quit...</li>

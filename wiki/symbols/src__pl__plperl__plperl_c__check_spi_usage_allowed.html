@@ -39,7 +39,7 @@
 <li>Disallow SPI usage if we&#x27;re not executing a fully-compiled plperl</li>
 <li>function.  It might seem impossible to get here in that case, but there</li>
 <li>are cases where Perl will try to <a class="wiki-source-link" href="../../source/contrib/intarray/_int_bool.c.html#L263" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/contrib__intarray___int_bool_c__execute.html&quot;}, '*');">execute</a> code during compilation.  If</li>
-<li>we proceed we are <a class="wiki-source-link" href="../../source/src/include/c.h.html#L441" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/c.h.html&quot;}, '*');">likely</a> to crash trying to dereference the prodesc</li>
+<li>we proceed we are <a class="wiki-source-link" href="../../source/src/include/c.h.html#L441" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/c.h.html&quot;}, '*');">likely</a> to crash trying to dereference the prodesc</li>
 <li>pointer.  Working around that might be possible, but it seems unwise</li>
 <li>because it&#x27;d allow code execution to happen while validating a</li>
 <li>function, which <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> undesirable.</li>

@@ -1,5 +1,5 @@
 <!doctype html>
-<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>symbols/src__include__nodes__plannodes_h__Append.md</title><link rel="stylesheet" href="../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../source/src/include/nodes/plannodes.h.html#L398" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__nodes__plannodes_h__Append.html&quot;}, '*');">Append</a></h1>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>symbols/src__include__nodes__plannodes_h__Append.md</title><link rel="stylesheet" href="../../styles.css"></head><body><h1>Append</h1>
 <h2>定義</h2>
 <ul>
 <li>種別: <code>struct</code></li>
@@ -28,7 +28,7 @@
 <h2>関連データ構造</h2>
 <p><a class="wiki-source-link" href="../../source/src/include/nodes/bitmapset.h.html#L49" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__nodes__bitmapset_h__Bitmapset.html&quot;}, '*');"><code>Bitmapset</code></a>, <code>EState</code>, <code>Index</code>, <a class="wiki-source-link" href="../../source/src/interfaces/ecpg/preproc/type.h.html#L96" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__interfaces__ecpg__preproc__type_h__index.html&quot;}, '*');"><code>index</code></a>, <code>List</code>, <code>Plan</code>, <code>PlannedStmt</code></p>
 <h2>ソース抜粋</h2>
-<p>~~~c typedef struct <a class="wiki-source-link" href="../../source/src/include/nodes/plannodes.h.html#L398" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__nodes__plannodes_h__Append.html&quot;}, '*');">Append</a> { Plan		<a class="wiki-source-link" href="../../source/src/test/regress/pg_regress.c.html#L164" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/test/regress/pg_regress.c.html&quot;}, '*');">plan</a>;</p>
+<p>~~~c typedef struct Append { Plan		<a class="wiki-source-link" href="../../source/src/test/regress/pg_regress.c.html#L164" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/test/regress/pg_regress.c.html&quot;}, '*');">plan</a>;</p>
 <p>/* RTIs of appendrel(s) formed by this node */ <a class="wiki-source-link" href="../../source/src/include/nodes/bitmapset.h.html#L49" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__nodes__bitmapset_h__Bitmapset.html&quot;}, '*');">Bitmapset</a>  *apprelids;</p>
 <p>/* sets of RTIs of appendrels consolidated into this node */ List	   *child_append_relid_sets;</p>
 <p>/* plans to run */ List	   *appendplans;</p>
@@ -44,7 +44,7 @@
 <li>Index into PlannedStmt.partPruneInfos and parallel lists in EState:</li>
 <li>es_part_prune_states and es_part_prune_results. Set to -1 if no</li>
 <li>run-time pruning <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> used.</li>
-<p>*/ <a class="wiki-source-link" href="../../source/src/include/port.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__port_h__int.html&quot;}, '*');">int</a>			part_prune_index; } <a class="wiki-source-link" href="../../source/src/include/nodes/plannodes.h.html#L398" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__nodes__plannodes_h__Append.html&quot;}, '*');">Append</a>; ~~~</p>
+<p>*/ <a class="wiki-source-link" href="../../source/src/include/port.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__port_h__int.html&quot;}, '*');">int</a>			part_prune_index; } Append; ~~~</p>
 </ul>
 <h2>失敗モードと境界条件</h2>
 <p>まだ解析していません。</p>

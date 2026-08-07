@@ -15,7 +15,7 @@
 <h2>入力と出力</h2>
 <ul>
 <li>引数: <code>pg_cast</code>, <code>CastRelationId</code></li>
-<li>戻り値: <a class="wiki-source-link" href="../../source/src/include/catalog/genbki.h.html#L34" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/catalog/genbki.h.html&quot;}, '*');"><code>BEGIN_CATALOG_STRUCT</code></a></li>
+<li>戻り値: <a class="wiki-source-link" href="../../source/src/include/catalog/genbki.h.html#L34" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/catalog/genbki.h.html&quot;}, '*');"><code>BEGIN_CATALOG_STRUCT</code></a></li>
 </ul>
 <h2>前提条件と不変条件</h2>
 <p>まだ解析していません。</p>
@@ -29,16 +29,16 @@
 <li>呼び出し元: なし</li>
 <li>呼び出し先: なし</li>
 <li>呼び出し元サイト: なし</li>
-<li>呼び出しサイト: <a class="wiki-source-link" href="../../source/src/include/catalog/genbki.h.html#L65" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/catalog/genbki.h.html&quot;}, '*');"><code>BKI_LOOKUP</code></a> at <code>src/include/catalog/pg_cast.h:39:19</code> (macro), <a class="wiki-source-link" href="../../source/src/include/catalog/genbki.h.html#L65" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/catalog/genbki.h.html&quot;}, '*');"><code>BKI_LOOKUP</code></a> at <code>src/include/catalog/pg_cast.h:42:19</code> (macro)</li>
+<li>呼び出しサイト: <a class="wiki-source-link" href="../../source/src/include/catalog/genbki.h.html#L65" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/catalog/genbki.h.html&quot;}, '*');"><code>BKI_LOOKUP</code></a> at <code>src/include/catalog/pg_cast.h:39:19</code> (macro), <a class="wiki-source-link" href="../../source/src/include/catalog/genbki.h.html#L65" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/catalog/genbki.h.html&quot;}, '*');"><code>BKI_LOOKUP</code></a> at <code>src/include/catalog/pg_cast.h:42:19</code> (macro)</li>
 </ul>
 <h2>関連データ構造</h2>
 <p><code>Oid</code></p>
 <h2>ソース抜粋</h2>
-<p>~~~c <a class="wiki-source-link" href="../../source/src/include/catalog/genbki.h.html#L34" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/catalog/genbki.h.html&quot;}, '*');">BEGIN_CATALOG_STRUCT</a></p>
+<p>~~~c <a class="wiki-source-link" href="../../source/src/include/catalog/genbki.h.html#L34" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/catalog/genbki.h.html&quot;}, '*');">BEGIN_CATALOG_STRUCT</a></p>
 <p>CATALOG(pg_cast,2605,CastRelationId) { Oid			oid;			/* oid */</p>
-<p>/* source datatype for cast */ Oid			castsource <a class="wiki-source-link" href="../../source/src/include/catalog/genbki.h.html#L65" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/catalog/genbki.h.html&quot;}, '*');">BKI_LOOKUP</a>(pg_type);</p>
-<p>/* destination datatype for cast */ Oid			casttarget <a class="wiki-source-link" href="../../source/src/include/catalog/genbki.h.html#L65" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/catalog/genbki.h.html&quot;}, '*');">BKI_LOOKUP</a>(pg_type);</p>
-<p>/* cast function; 0 = binary coercible */ Oid			castfunc <a class="wiki-source-link" href="../../source/src/include/catalog/genbki.h.html#L66" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/catalog/genbki.h.html&quot;}, '*');">BKI_LOOKUP_OPT</a>(pg_proc);</p>
+<p>/* source datatype for cast */ Oid			castsource <a class="wiki-source-link" href="../../source/src/include/catalog/genbki.h.html#L65" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/catalog/genbki.h.html&quot;}, '*');">BKI_LOOKUP</a>(pg_type);</p>
+<p>/* destination datatype for cast */ Oid			casttarget <a class="wiki-source-link" href="../../source/src/include/catalog/genbki.h.html#L65" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/catalog/genbki.h.html&quot;}, '*');">BKI_LOOKUP</a>(pg_type);</p>
+<p>/* cast function; 0 = binary coercible */ Oid			castfunc <a class="wiki-source-link" href="../../source/src/include/catalog/genbki.h.html#L66" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/catalog/genbki.h.html&quot;}, '*');">BKI_LOOKUP_OPT</a>(pg_proc);</p>
 <p>/* contexts in which cast can be used */ char		castcontext;</p>
 <p>/* cast method */ char		castmethod; } FormData_pg_cast; ~~~</p>
 <h2>失敗モードと境界条件</h2>

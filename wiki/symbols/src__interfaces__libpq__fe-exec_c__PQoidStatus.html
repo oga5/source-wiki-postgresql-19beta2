@@ -41,7 +41,7 @@
 <p>*/ static char buf[24];</p>
 </ul>
 <p>size_t		len;</p>
-<p>if (!res || strncmp(res-&gt;cmdStatus, &quot;INSERT &quot;, 7) != 0) return &quot;&quot;;</p>
+<p>if (!res || strncmp(res-&gt;cmdStatus, &quot;<a class="wiki-source-link" href="../../source/src/backend/optimizer/prep/preptlist.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__prep__preptlist_c__INSERT.html&quot;}, '*');">INSERT</a> &quot;, 7) != 0) return &quot;&quot;;</p>
 <p>len = strspn(res-&gt;cmdStatus + 7, &quot;0123456789&quot;); if (len &gt; sizeof(buf) - 1) len = sizeof(buf) - 1; memcpy(buf, res-&gt;cmdStatus + 7, len); buf[len] = &#x27;\0&#x27;;</p>
 <p>return buf; } ~~~</p>
 <h2>失敗モードと境界条件</h2>

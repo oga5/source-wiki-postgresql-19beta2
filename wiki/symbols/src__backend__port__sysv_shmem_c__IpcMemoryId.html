@@ -35,7 +35,7 @@
 <p>*</p>
 <li>One could recycle unattached segments of different data directories if we</li>
 <li>distinguished that case from other SHMSTATE_FOREIGN cases.  Doing so would</li>
-<li>cause us to visit less of the key space, making us less <a class="wiki-source-link" href="../../source/src/include/c.h.html#L441" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/c.h.html&quot;}, '*');">likely</a> to detect a</li>
+<li>cause us to visit less of the key space, making us less <a class="wiki-source-link" href="../../source/src/include/c.h.html#L441" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/c.h.html&quot;}, '*');">likely</a> to detect a</li>
 <li>SHMSTATE_ATTACHED key.  It would also complicate the concurrency analysis,</li>
 <li>in that postmasters of different data directories could simultaneously</li>
 <li>attempt to recycle a given key.  We&#x27;ll waste keys longer in some cases, but</li>

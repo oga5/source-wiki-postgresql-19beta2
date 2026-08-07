@@ -15,7 +15,7 @@
 <h2>入力と出力</h2>
 <ul>
 <li>引数: <code>pg_shdescription</code>, <code>SharedDescriptionRelationId</code></li>
-<li>戻り値: <a class="wiki-source-link" href="../../source/src/include/catalog/genbki.h.html#L34" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/catalog/genbki.h.html&quot;}, '*');"><code>BEGIN_CATALOG_STRUCT</code></a></li>
+<li>戻り値: <a class="wiki-source-link" href="../../source/src/include/catalog/genbki.h.html#L34" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/catalog/genbki.h.html&quot;}, '*');"><code>BEGIN_CATALOG_STRUCT</code></a></li>
 </ul>
 <h2>前提条件と不変条件</h2>
 <p>まだ解析していません。</p>
@@ -32,11 +32,11 @@
 <li>呼び出しサイト: なし</li>
 </ul>
 <h2>関連データ構造</h2>
-<p><code>Oid</code>, <a class="wiki-source-link" href="../../source/src/include/c.h.html#L796" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/c.h.html&quot;}, '*');"><code>text</code></a>, <code>variable</code></p>
+<p><code>Oid</code>, <code>text</code>, <code>variable</code></p>
 <h2>ソース抜粋</h2>
-<p>~~~c <a class="wiki-source-link" href="../../source/src/include/catalog/genbki.h.html#L34" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/catalog/genbki.h.html&quot;}, '*');">BEGIN_CATALOG_STRUCT</a></p>
-<p>CATALOG(pg_shdescription,2396,SharedDescriptionRelationId) <a class="wiki-source-link" href="../../source/src/include/catalog/genbki.h.html#L46" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/catalog/genbki.h.html&quot;}, '*');">BKI_SHARED_RELATION</a> { Oid			objoid;			/* OID of object itself */ Oid			classoid;		/* OID of <a class="wiki-source-link" href="../../source/src/port/pg_localeconv_r.c.html#L63" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/port/pg_localeconv_r.c.html&quot;}, '*');">table</a> containing object */</p>
-<p>#ifdef CATALOG_VARLEN			/* variable-length fields start here */ <a class="wiki-source-link" href="../../source/src/include/c.h.html#L796" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/c.h.html&quot;}, '*');">text</a>		description <a class="wiki-source-link" href="../../source/src/include/catalog/genbki.h.html#L52" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/catalog/genbki.h.html&quot;}, '*');">BKI_FORCE_NOT_NULL</a>; /* description of object */ #endif } FormData_pg_shdescription; ~~~</p>
+<p>~~~c <a class="wiki-source-link" href="../../source/src/include/catalog/genbki.h.html#L34" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/catalog/genbki.h.html&quot;}, '*');">BEGIN_CATALOG_STRUCT</a></p>
+<p>CATALOG(pg_shdescription,2396,SharedDescriptionRelationId) <a class="wiki-source-link" href="../../source/src/include/catalog/genbki.h.html#L46" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/catalog/genbki.h.html&quot;}, '*');">BKI_SHARED_RELATION</a> { Oid			objoid;			/* OID of object itself */ Oid			classoid;		/* OID of <a class="wiki-source-link" href="../../source/src/port/pg_localeconv_r.c.html#L63" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/port/pg_localeconv_r.c.html&quot;}, '*');">table</a> containing object */</p>
+<p>#ifdef CATALOG_VARLEN			/* variable-length fields start here */ text		description <a class="wiki-source-link" href="../../source/src/include/catalog/genbki.h.html#L52" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/catalog/genbki.h.html&quot;}, '*');">BKI_FORCE_NOT_NULL</a>; /* description of object */ #endif } FormData_pg_shdescription; ~~~</p>
 <h2>失敗モードと境界条件</h2>
 <p>まだ解析していません。</p>
 <h2>保守担当者向けメモ</h2>

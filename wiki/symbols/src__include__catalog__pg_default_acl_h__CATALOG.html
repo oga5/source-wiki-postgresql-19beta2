@@ -15,7 +15,7 @@
 <h2>入力と出力</h2>
 <ul>
 <li>引数: <code>pg_default_acl</code>, <code>DefaultAclRelationId</code></li>
-<li>戻り値: <a class="wiki-source-link" href="../../source/src/include/catalog/genbki.h.html#L34" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/catalog/genbki.h.html&quot;}, '*');"><code>BEGIN_CATALOG_STRUCT</code></a></li>
+<li>戻り値: <a class="wiki-source-link" href="../../source/src/include/catalog/genbki.h.html#L34" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/catalog/genbki.h.html&quot;}, '*');"><code>BEGIN_CATALOG_STRUCT</code></a></li>
 </ul>
 <h2>前提条件と不変条件</h2>
 <p>まだ解析していません。</p>
@@ -29,20 +29,20 @@
 <li>呼び出し元: なし</li>
 <li>呼び出し先: なし</li>
 <li>呼び出し元サイト: なし</li>
-<li>呼び出しサイト: <a class="wiki-source-link" href="../../source/src/include/catalog/genbki.h.html#L65" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/catalog/genbki.h.html&quot;}, '*');"><code>BKI_LOOKUP</code></a> at <code>src/include/catalog/pg_default_acl.h:35:19</code> (macro), <a class="wiki-source-link" href="../../source/src/include/catalog/genbki.h.html#L66" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/catalog/genbki.h.html&quot;}, '*');"><code>BKI_LOOKUP_OPT</code></a> at <code>src/include/catalog/pg_default_acl.h:37:24</code> (macro)</li>
+<li>呼び出しサイト: <a class="wiki-source-link" href="../../source/src/include/catalog/genbki.h.html#L65" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/catalog/genbki.h.html&quot;}, '*');"><code>BKI_LOOKUP</code></a> at <code>src/include/catalog/pg_default_acl.h:35:19</code> (macro), <a class="wiki-source-link" href="../../source/src/include/catalog/genbki.h.html#L66" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/catalog/genbki.h.html&quot;}, '*');"><code>BKI_LOOKUP_OPT</code></a> at <code>src/include/catalog/pg_default_acl.h:37:24</code> (macro)</li>
 </ul>
 <h2>関連データ構造</h2>
 <p><code>Oid</code>, <code>variable</code></p>
 <h2>ソース抜粋</h2>
-<p>~~~c <a class="wiki-source-link" href="../../source/src/include/catalog/genbki.h.html#L34" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/catalog/genbki.h.html&quot;}, '*');">BEGIN_CATALOG_STRUCT</a></p>
-<p>CATALOG(pg_default_acl,826,DefaultAclRelationId) { Oid			oid;			/* oid */ Oid			defaclrole <a class="wiki-source-link" href="../../source/src/include/catalog/genbki.h.html#L65" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/catalog/genbki.h.html&quot;}, '*');">BKI_LOOKUP</a>(pg_authid);	/* OID of role owning this</p>
+<p>~~~c <a class="wiki-source-link" href="../../source/src/include/catalog/genbki.h.html#L34" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/catalog/genbki.h.html&quot;}, '*');">BEGIN_CATALOG_STRUCT</a></p>
+<p>CATALOG(pg_default_acl,826,DefaultAclRelationId) { Oid			oid;			/* oid */ Oid			defaclrole <a class="wiki-source-link" href="../../source/src/include/catalog/genbki.h.html#L65" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/catalog/genbki.h.html&quot;}, '*');">BKI_LOOKUP</a>(pg_authid);	/* OID of role owning this</p>
 <ul>
 <li>ACL */</li>
-<p>Oid			defaclnamespace <a class="wiki-source-link" href="../../source/src/include/catalog/genbki.h.html#L66" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/catalog/genbki.h.html&quot;}, '*');">BKI_LOOKUP_OPT</a>(pg_namespace);	/* OID of namespace, or</p>
+<p>Oid			defaclnamespace <a class="wiki-source-link" href="../../source/src/include/catalog/genbki.h.html#L66" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/catalog/genbki.h.html&quot;}, '*');">BKI_LOOKUP_OPT</a>(pg_namespace);	/* OID of namespace, or</p>
 <li>0 for all */</li>
 <p>char		defaclobjtype;	/* see DEFACLOBJ_xxx constants below */</p>
 </ul>
-<p>#ifdef CATALOG_VARLEN			/* variable-length fields start here */ aclitem		defaclacl[1] <a class="wiki-source-link" href="../../source/src/include/catalog/genbki.h.html#L52" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/catalog/genbki.h.html&quot;}, '*');">BKI_FORCE_NOT_NULL</a>;	/* permissions to add at</p>
+<p>#ifdef CATALOG_VARLEN			/* variable-length fields start here */ aclitem		defaclacl[1] <a class="wiki-source-link" href="../../source/src/include/catalog/genbki.h.html#L52" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/catalog/genbki.h.html&quot;}, '*');">BKI_FORCE_NOT_NULL</a>;	/* permissions to add at</p>
 <ul>
 <li>CREATE time */</li>
 <p>#endif } FormData_pg_default_acl; ~~~</p>

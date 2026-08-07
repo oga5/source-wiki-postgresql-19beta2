@@ -1,0 +1,86 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>symbols/src__backend__optimizer__util__predtest_c__pg_amop.md</title><link rel="stylesheet" href="../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../source/src/backend/optimizer/util/predtest.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__predtest_c__pg_amop.html&quot;}, '*');">pg_amop</a></h1>
+<h2>定義</h2>
+<ul>
+<li>種別: <code>function</code></li>
+<li>定義箇所: <code>src/backend/optimizer/util/predtest.c:1</code></li>
+<li>所属モジュール: <a class="wiki-entity-link" href="../modules/src__backend__optimizer__util.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/modules/src__backend__optimizer__util.html&quot;, &quot;source&quot;: &quot;source/src/backend/optimizer/util/appendinfo.c.html&quot;}, '*');"><code>module:src/backend/optimizer/util</code></a></li>
+</ul>
+<h2>目的</h2>
+<p>静的シンボル索引から生成された初期シンボルページです。</p>
+<h2>シグネチャまたは形状</h2>
+<ul>
+<li>シグネチャ: <code>/*------------------------------------------------------------------------- * * predtest.c * Routines to attempt to prove logical implications between predicate * expressions. * * Portions Copyright (c) 1996-2026, PostgreSQL Global Development Group * Portions Copyright (c) 1994, Regents of the University of California * * * IDENTIFICATION * src/backend/optimizer/util/predtest.c * *------------------------------------------------------------------------- */ #include &quot;postgres.h&quot; #include &quot;catalog/pg_operator.h&quot; #include &quot;catalog/pg_proc.h&quot; #include &quot;catalog/pg_type.h&quot; #include &quot;executor/executor.h&quot; #include &quot;miscadmin.h&quot; #include &quot;nodes/makefuncs.h&quot; #include &quot;nodes/nodeFuncs.h&quot; #include &quot;nodes/pathnodes.h&quot; #include &quot;optimizer/optimizer.h&quot; #include &quot;utils/array.h&quot; #include &quot;utils/hsearch.h&quot; #include &quot;utils/inval.h&quot; #include &quot;utils/lsyscache.h&quot; #include &quot;utils/syscache.h&quot; /* * Proof attempts involving large arrays in ScalarArrayOpExpr nodes are * likely to require O(N^2) time, and more often than not fail anyway. * So we set an arbitrary limit on the number of array elements that * we will allow to be treated as an AND or OR clause. * XXX is it worth exposing this as a GUC knob? */ #define MAX_SAOP_ARRAY_SIZE 100 /* * To avoid redundant coding in predicate_implied_by_recurse and * predicate_refuted_by_recurse, we need to abstract out the notion of * iterating over the components of an expression that is logically an AND * or OR structure. There are multiple sorts of expression nodes that can * be treated as ANDs or ORs, and we don&#x27;t want to code each one separately. * Hence, these types and support routines. */ typedef enum</code></li>
+</ul>
+<h2>入力と出力</h2>
+<p>まだ解析していません。</p>
+<h2>前提条件と不変条件</h2>
+<p>まだ解析していません。</p>
+<h2>アルゴリズムまたは振る舞い</h2>
+<ul>
+<li>複雑度: <code>low</code> (score 2)</li>
+</ul>
+<p>まだ解析していません。</p>
+<h2>呼び出し元と呼び出し先</h2>
+<ul>
+<li>呼び出し元: なし</li>
+<li>呼び出し先: なし</li>
+<li>呼び出し元サイト: なし</li>
+<li>呼び出しサイト: なし</li>
+</ul>
+<h2>関連データ構造</h2>
+<p><code>c</code>, <code>Group</code>, <a class="wiki-source-link" href="../../source/src/backend/optimizer/util/predtest.c.html#L51" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__predtest_c__PredClass.html&quot;}, '*');"><code>PredClass</code></a>, <code>ScalarArrayOpExpr</code></p>
+<h2>ソース抜粋</h2>
+<p>~~~c /*------------------------------------------------------------------------- *</p>
+<ul>
+<li><a class="wiki-source-link" href="../../source/src/backend/optimizer/util/predtest.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/backend/optimizer/util/predtest.c.html&quot;}, '*');">predtest.c</a></li>
+<li>Routines to attempt to prove logical implications between predicate</li>
+<li>expressions.</li>
+<p>*</p>
+<li>Portions Copyright (c) 1996-2026, PostgreSQL Global Development Group</li>
+<li>Portions Copyright (c) 1994, Regents of the University of California</li>
+<p>* *</p>
+<li>IDENTIFICATION</li>
+<li><a class="wiki-source-link" href="../../source/src/backend/optimizer/util/predtest.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/backend/optimizer/util/predtest.c.html&quot;}, '*');">src/backend/optimizer/util/predtest.c</a></li>
+<p>* *------------------------------------------------------------------------- */ #include &quot;<a class="wiki-source-link" href="../../source/src/include/postgres.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/postgres.h.html&quot;}, '*');">postgres.h</a>&quot;</p>
+</ul>
+<p>#include &quot;catalog/pg_operator.h&quot; #include &quot;catalog/pg_proc.h&quot; #include &quot;catalog/pg_type.h&quot; #include &quot;executor/executor.h&quot; #include &quot;<a class="wiki-source-link" href="../../source/src/include/miscadmin.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/miscadmin.h.html&quot;}, '*');">miscadmin.h</a>&quot; #include &quot;nodes/makefuncs.h&quot; #include &quot;nodes/nodeFuncs.h&quot; #include &quot;nodes/pathnodes.h&quot; #include &quot;optimizer/optimizer.h&quot; #include &quot;utils/array.h&quot; #include &quot;utils/hsearch.h&quot; #include &quot;utils/inval.h&quot; #include &quot;utils/lsyscache.h&quot; #include &quot;utils/syscache.h&quot;</p>
+<p>/*</p>
+<ul>
+<li>Proof attempts involving large arrays in ScalarArrayOpExpr nodes are</li>
+<li><a class="wiki-source-link" href="../../source/src/include/c.h.html#L441" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/c.h.html&quot;}, '*');">likely</a> to require O(N^2) time, and more often than not fail anyway.</li>
+<li><a class="wiki-source-link" href="../../source/src/common/md5.c.html#L110" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/common/md5.c.html&quot;}, '*');">So</a> we set an arbitrary limit on the number of array elements that</li>
+<li>we will allow to be treated as an AND or OR clause.</li>
+<li>XXX <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> it <a class="wiki-source-link" href="../../source/src/backend/optimizer/geqo/geqo_pool.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__geqo__geqo_pool_c__worth.html&quot;}, '*');">worth</a> exposing this as a GUC knob?</li>
+<p>*/ #define <a class="wiki-source-link" href="../../source/src/backend/optimizer/util/predtest.c.html#L41" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/backend/optimizer/util/predtest.c.html&quot;}, '*');">MAX_SAOP_ARRAY_SIZE</a>		100</p>
+</ul>
+<p>/*</p>
+<ul>
+<li>To avoid redundant coding in <a class="wiki-source-link" href="../../source/src/backend/optimizer/util/predtest.c.html#L291" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__predtest_c__predicate_implied_by_recurse.html&quot;}, '*');">predicate_implied_by_recurse</a> and</li>
+<li><a class="wiki-source-link" href="../../source/src/backend/optimizer/util/predtest.c.html#L532" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__predtest_c__predicate_refuted_by_recurse.html&quot;}, '*');">predicate_refuted_by_recurse</a>, we need to abstract out the notion of</li>
+<li>iterating over the components of an expression that <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> logically an AND</li>
+<li>or OR structure.  There are multiple sorts of expression nodes that can</li>
+<li>be treated as ANDs or ORs, and we don&#x27;t want to code each one separately.</li>
+<li>Hence, these <a class="wiki-source-link" href="../../source/src/interfaces/ecpg/preproc/ecpg.c.html#L30" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/ecpg/preproc/ecpg.c.html&quot;}, '*');">types</a> and support routines.</li>
+<p>*/ typedef enum { <a class="wiki-source-link" href="../../source/src/backend/optimizer/util/predtest.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__predtest_c__CLASS_ATOM.html&quot;}, '*');">CLASS_ATOM</a>,					/* expression that&#x27;s not AND or OR */ <a class="wiki-source-link" href="../../source/src/backend/optimizer/util/predtest.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__predtest_c__CLASS_AND.html&quot;}, '*');">CLASS_AND</a>,					/* expression with AND semantics */ <a class="wiki-source-link" href="../../source/src/backend/optimizer/util/predtest.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__predtest_c__CLASS_OR.html&quot;}, '*');">CLASS_OR</a>,					/* expression with OR semantics */ } <a class="wiki-source-link" href="../../source/src/backend/optimizer/util/predtest.c.html#L51" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__predtest_c__PredClass.html&quot;}, '*');">PredClass</a>; ~~~</p>
+</ul>
+<h2>失敗モードと境界条件</h2>
+<p>まだ解析していません。</p>
+<h2>保守担当者向けメモ</h2>
+<ul>
+<li>後続フェーズで、ソース本文の文脈と caller/callee 情報を使ってこのページを強化する。</li>
+</ul><script>
+(function() {
+  function notifyParent() {
+    if (parent === window) return;
+    parent.postMessage({type: "frame-location", frame: window.name || "", href: window.location.href}, "*");
+  }
+  document.addEventListener("click", function(event) {
+    const link = event.target.closest("a[data-panel]");
+    if (!link || parent === window) return;
+    parent.postMessage({type: "source-link", panel: link.dataset.panel}, "*");
+  });
+  window.addEventListener("load", notifyParent);
+  window.addEventListener("hashchange", notifyParent);
+})();
+</script></body></html>

@@ -1,0 +1,89 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>symbols/src__include__catalog__genbki_h__int64.md</title><link rel="stylesheet" href="../../styles.css"></head><body><h1>int64</h1>
+<h2>定義</h2>
+<ul>
+<li>種別: <code>function</code></li>
+<li>定義箇所: <code>src/include/catalog/genbki.h:1</code></li>
+<li>所属モジュール: <a class="wiki-entity-link" href="../modules/src__include__catalog.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/modules/src__include__catalog.html&quot;, &quot;source&quot;: &quot;source/src/include/catalog/binary_upgrade.h.html&quot;}, '*');"><code>module:src/include/catalog</code></a></li>
+</ul>
+<h2>目的</h2>
+<p>静的シンボル索引から生成された初期シンボルページです。</p>
+<h2>シグネチャまたは形状</h2>
+<ul>
+<li>シグネチャ: <code>/*------------------------------------------------------------------------- * * genbki.h * Required include file for all POSTGRES catalog header files * * genbki.h defines CATALOG(), BKI_BOOTSTRAP and related macros * so that the catalog header files can be read by the C compiler. * (These same words are recognized by genbki.pl to build the BKI * bootstrap file from these header files.) * * * Portions Copyright (c) 1996-2026, PostgreSQL Global Development Group * Portions Copyright (c) 1994, Regents of the University of California * * src/include/catalog/genbki.h * *------------------------------------------------------------------------- */ #ifndef GENBKI_H #define GENBKI_H /* * These macros should be written before and after each catalog structure * definition. On most platforms they do nothing, but on some platforms * we need special hacks to coax the compiler into laying out the catalog * struct compatibly with our tuple forming/deforming rules. * * On AIX, where ALIGNOF_DOUBLE &lt; ALIGNOF_INT64_T, we need to coerce int64 * catalog fields to be aligned on just 4-byte boundaries. Ideally we&#x27;d * write this like pack(push,ALIGNOF_DOUBLE), but gcc seems unwilling * to take anything but a plain string literal as the argument of _Pragma. */ #if ALIGNOF_DOUBLE &lt; ALIGNOF_INT64_T #define BEGIN_CATALOG_STRUCT _Pragma(&quot;pack(push,4)&quot;) #define END_CATALOG_STRUCT _Pragma(&quot;pack(pop)&quot;) #else #define BEGIN_CATALOG_STRUCT #define END_CATALOG_STRUCT #endif /* Introduces a catalog&#x27;s structure definition */ #define CATALOG(name,oid,oidmacro) typedef struct CppConcat(FormData_,name) /* Options that may appear after CATALOG (on the same line) */ #define BKI_BOOTSTRAP #define BKI_SHARED_RELATION #define BKI_ROWTYPE_OID(oid,oidmacro) #define BKI_SCHEMA_MACRO /* Options that may appear after an attribute (on the same line) */ #define BKI_FORCE_NULL #define BKI_FORCE_NOT_NULL /* Specifies a default value for a catalog field */ #define BKI_DEFAULT(value) /* Specifies a default value for auto-generated array types */ #define BKI_ARRAY_DEFAULT(value) /* * Indicates that the attribute contains OIDs referencing the named catalog</code></li>
+</ul>
+<h2>入力と出力</h2>
+<p>まだ解析していません。</p>
+<h2>前提条件と不変条件</h2>
+<p>まだ解析していません。</p>
+<h2>アルゴリズムまたは振る舞い</h2>
+<ul>
+<li>複雑度: <code>medium</code> (score 6)</li>
+</ul>
+<p>まだ解析していません。</p>
+<h2>呼び出し元と呼び出し先</h2>
+<ul>
+<li>呼び出し元: なし</li>
+<li>呼び出し先: なし</li>
+<li>呼び出し元サイト: なし</li>
+<li>呼び出しサイト: なし</li>
+</ul>
+<h2>関連データ構造</h2>
+<p><code>c</code>, <code>Group</code>, <code>string</code></p>
+<h2>ソース抜粋</h2>
+<p>~~~c /*------------------------------------------------------------------------- *</p>
+<ul>
+<li><a class="wiki-source-link" href="../../source/src/include/catalog/genbki.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/catalog/genbki.h.html&quot;}, '*');">genbki.h</a></li>
+<li>Required include file for all POSTGRES catalog header files</li>
+<p>*</p>
+<li><a class="wiki-source-link" href="../../source/src/include/catalog/genbki.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/catalog/genbki.h.html&quot;}, '*');">genbki.h</a> <a class="wiki-source-link" href="../../source/src/interfaces/ecpg/preproc/ecpg.c.html#L31" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/ecpg/preproc/ecpg.c.html&quot;}, '*');">defines</a> CATALOG(), <a class="wiki-source-link" href="../../source/src/include/catalog/genbki.h.html#L45" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/catalog/genbki.h.html&quot;}, '*');">BKI_BOOTSTRAP</a> and related macros</li>
+<li>so that the catalog header files can be <a class="wiki-source-link" href="../../source/src/interfaces/libpq/win32.h.html#L13" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq/win32.h.html&quot;}, '*');">read</a> by the C compiler.</li>
+<li>(These same words are recognized by <a class="wiki-source-link" href="../../source/src/backend/catalog/genbki.pl.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/catalog/genbki.pl.html&quot;}, '*');">genbki.pl</a> to build the BKI</li>
+<li>bootstrap file from these header files.)</li>
+<p>* *</p>
+<li>Portions Copyright (c) 1996-2026, PostgreSQL Global Development Group</li>
+<li>Portions Copyright (c) 1994, Regents of the University of California</li>
+<p>*</p>
+<li><a class="wiki-source-link" href="../../source/src/include/catalog/genbki.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/catalog/genbki.h.html&quot;}, '*');">src/include/catalog/genbki.h</a></li>
+<p>* *------------------------------------------------------------------------- */ #ifndef <a class="wiki-source-link" href="../../source/src/include/catalog/genbki.h.html#L20" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/catalog/genbki.h.html&quot;}, '*');">GENBKI_H</a> #define <a class="wiki-source-link" href="../../source/src/include/catalog/genbki.h.html#L20" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/catalog/genbki.h.html&quot;}, '*');">GENBKI_H</a></p>
+</ul>
+<p>/*</p>
+<ul>
+<li>These macros should be written <a class="wiki-source-link" href="../../source/src/backend/regex/regc_locale.c.html#L487" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__regex__regc_locale_c__before.html&quot;}, '*');">before</a> and after each catalog <a class="wiki-source-link" href="../../source/src/tools/pg_bsd_indent/indent_codes.h.html#L71" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/tools/pg_bsd_indent/indent_codes.h.html&quot;}, '*');">structure</a></li>
+<li>definition.  On most platforms they do nothing, but on some platforms</li>
+<li>we need special hacks to coax the compiler into laying out the catalog</li>
+<li>struct compatibly with our tuple forming/deforming rules.</li>
+<p>*</p>
+<li>On AIX, where ALIGNOF_DOUBLE &lt; ALIGNOF_INT64_T, we need to coerce int64</li>
+<li>catalog fields to be aligned on just 4-byte boundaries.  Ideally we&#x27;d</li>
+<li><a class="wiki-source-link" href="../../source/src/interfaces/libpq/win32.h.html#L14" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq/win32.h.html&quot;}, '*');">write</a> this like pack(<a class="wiki-source-link" href="../../source/src/backend/regex/regc_nfa.c.html#L1890" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__regex__regc_nfa_c__push.html&quot;}, '*');">push</a>,ALIGNOF_DOUBLE), but gcc seems unwilling</li>
+<li>to take anything but a plain string literal as the argument of _Pragma.</li>
+<p>*/ #if ALIGNOF_DOUBLE &lt; ALIGNOF_INT64_T #define <a class="wiki-source-link" href="../../source/src/include/catalog/genbki.h.html#L34" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/catalog/genbki.h.html&quot;}, '*');">BEGIN_CATALOG_STRUCT</a>	_Pragma(&quot;pack(<a class="wiki-source-link" href="../../source/src/backend/regex/regc_nfa.c.html#L1890" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__regex__regc_nfa_c__push.html&quot;}, '*');">push</a>,4)&quot;) #define <a class="wiki-source-link" href="../../source/src/include/catalog/genbki.h.html#L35" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/catalog/genbki.h.html&quot;}, '*');">END_CATALOG_STRUCT</a>		_Pragma(&quot;pack(pop)&quot;) #else #define <a class="wiki-source-link" href="../../source/src/include/catalog/genbki.h.html#L34" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/catalog/genbki.h.html&quot;}, '*');">BEGIN_CATALOG_STRUCT</a> #define <a class="wiki-source-link" href="../../source/src/include/catalog/genbki.h.html#L35" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/catalog/genbki.h.html&quot;}, '*');">END_CATALOG_STRUCT</a> #endif</p>
+</ul>
+<p>/* Introduces a catalog&#x27;s <a class="wiki-source-link" href="../../source/src/tools/pg_bsd_indent/indent_codes.h.html#L71" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/tools/pg_bsd_indent/indent_codes.h.html&quot;}, '*');">structure</a> definition */ #define CATALOG(name,oid,oidmacro)	typedef struct <a class="wiki-source-link" href="../../source/src/include/c.h.html#L514" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/c.h.html&quot;}, '*');">CppConcat</a>(FormData_,name)</p>
+<p>/* Options that may appear after CATALOG (on the same line) */ #define <a class="wiki-source-link" href="../../source/src/include/catalog/genbki.h.html#L45" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/catalog/genbki.h.html&quot;}, '*');">BKI_BOOTSTRAP</a> #define <a class="wiki-source-link" href="../../source/src/include/catalog/genbki.h.html#L46" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/catalog/genbki.h.html&quot;}, '*');">BKI_SHARED_RELATION</a> #define <a class="wiki-source-link" href="../../source/src/include/catalog/genbki.h.html#L47" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/catalog/genbki.h.html&quot;}, '*');">BKI_ROWTYPE_OID</a>(oid,oidmacro) #define <a class="wiki-source-link" href="../../source/src/include/catalog/genbki.h.html#L48" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/catalog/genbki.h.html&quot;}, '*');">BKI_SCHEMA_MACRO</a></p>
+<p>/* Options that may appear after an attribute (on the same line) */ #define <a class="wiki-source-link" href="../../source/src/include/catalog/genbki.h.html#L51" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/catalog/genbki.h.html&quot;}, '*');">BKI_FORCE_NULL</a> #define <a class="wiki-source-link" href="../../source/src/include/catalog/genbki.h.html#L52" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/catalog/genbki.h.html&quot;}, '*');">BKI_FORCE_NOT_NULL</a> /* Specifies a default <a class="wiki-source-link" href="../../source/src/interfaces/ecpg/compatlib/informix.c.html#L687" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/ecpg/compatlib/informix.c.html&quot;}, '*');">value</a> for a catalog field */ #define <a class="wiki-source-link" href="../../source/src/include/catalog/genbki.h.html#L54" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/catalog/genbki.h.html&quot;}, '*');">BKI_DEFAULT</a>(<a class="wiki-source-link" href="../../source/src/interfaces/ecpg/compatlib/informix.c.html#L687" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/ecpg/compatlib/informix.c.html&quot;}, '*');">value</a>) /* Specifies a default <a class="wiki-source-link" href="../../source/src/interfaces/ecpg/compatlib/informix.c.html#L687" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/ecpg/compatlib/informix.c.html&quot;}, '*');">value</a> for auto-generated array <a class="wiki-source-link" href="../../source/src/interfaces/ecpg/preproc/ecpg.c.html#L30" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/ecpg/preproc/ecpg.c.html&quot;}, '*');">types</a> */ #define <a class="wiki-source-link" href="../../source/src/include/catalog/genbki.h.html#L56" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/catalog/genbki.h.html&quot;}, '*');">BKI_ARRAY_DEFAULT</a>(<a class="wiki-source-link" href="../../source/src/interfaces/ecpg/compatlib/informix.c.html#L687" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/ecpg/compatlib/informix.c.html&quot;}, '*');">value</a>) /*</p>
+<ul>
+<li>Indicates that the attribute contains OIDs referencing the named catalog;</li>
+<p>~~~</p>
+</ul>
+<h2>失敗モードと境界条件</h2>
+<p>まだ解析していません。</p>
+<h2>保守担当者向けメモ</h2>
+<ul>
+<li>後続フェーズで、ソース本文の文脈と caller/callee 情報を使ってこのページを強化する。</li>
+</ul><script>
+(function() {
+  function notifyParent() {
+    if (parent === window) return;
+    parent.postMessage({type: "frame-location", frame: window.name || "", href: window.location.href}, "*");
+  }
+  document.addEventListener("click", function(event) {
+    const link = event.target.closest("a[data-panel]");
+    if (!link || parent === window) return;
+    parent.postMessage({type: "source-link", panel: link.dataset.panel}, "*");
+  });
+  window.addEventListener("load", notifyParent);
+  window.addEventListener("hashchange", notifyParent);
+})();
+</script></body></html>

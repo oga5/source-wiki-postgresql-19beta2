@@ -34,7 +34,7 @@
 <h2>関連データ構造</h2>
 <p><code>HASHHDR</code>, <code>uint32</code></p>
 <h2>ソース抜粋</h2>
-<p>~~~c static <a class="wiki-source-link" href="../../source/src/include/c.h.html#L116" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/c.h.html&quot;}, '*');">inline</a> uint32 <a class="wiki-source-link" href="../../source/src/backend/utils/hash/dynahash.c.html#L851" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__utils__hash__dynahash_c__calc_bucket.html&quot;}, '*');">calc_bucket</a>(HASHHDR *hctl, uint32 hash_val) { uint32		bucket;</p>
+<p>~~~c static <a class="wiki-source-link" href="../../source/src/include/c.h.html#L116" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/c.h.html&quot;}, '*');">inline</a> uint32 <a class="wiki-source-link" href="../../source/src/backend/utils/hash/dynahash.c.html#L851" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__utils__hash__dynahash_c__calc_bucket.html&quot;}, '*');">calc_bucket</a>(HASHHDR *hctl, uint32 hash_val) { uint32		bucket;</p>
 <p>bucket = hash_val &amp; hctl-&gt;high_mask; if (bucket &gt; hctl-&gt;max_bucket) bucket = bucket &amp; hctl-&gt;low_mask;</p>
 <p>return bucket; } ~~~</p>
 <h2>失敗モードと境界条件</h2>

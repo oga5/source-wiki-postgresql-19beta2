@@ -41,7 +41,7 @@
 <li>Normally we expect this to increase nblocks by one, but if the cached</li>
 <li><a class="wiki-source-link" href="../../source/src/interfaces/ecpg/compatlib/informix.c.html#L687" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/ecpg/compatlib/informix.c.html&quot;}, '*');">value</a> isn&#x27;t as expected, just invalidate it so the next call asks the</li>
 <li>kernel.</li>
-<p>*/ if (reln-&gt;smgr_cached_nblocks[forknum] == blocknum) reln-&gt;smgr_cached_nblocks[forknum] = blocknum + 1; else reln-&gt;smgr_cached_nblocks[forknum] = <a class="wiki-source-link" href="../../source/src/include/storage/block.h.html#L33" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/storage/block.h.html&quot;}, '*');">InvalidBlockNumber</a>;</p>
+<p>*/ if (reln-&gt;smgr_cached_nblocks[forknum] == blocknum) reln-&gt;smgr_cached_nblocks[forknum] = blocknum + 1; else reln-&gt;smgr_cached_nblocks[forknum] = <a class="wiki-source-link" href="../../source/src/include/storage/block.h.html#L33" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/storage/block.h.html&quot;}, '*');">InvalidBlockNumber</a>;</p>
 </ul>
 <p><a class="wiki-source-link" href="../../source/src/include/miscadmin.h.html#L138" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/miscadmin.h.html&quot;}, '*');">RESUME_INTERRUPTS</a>(); } ~~~</p>
 <h2>失敗モードと境界条件</h2>

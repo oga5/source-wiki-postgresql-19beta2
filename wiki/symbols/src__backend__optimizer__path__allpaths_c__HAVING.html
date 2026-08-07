@@ -1,0 +1,70 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>symbols/src__backend__optimizer__path__allpaths_c__HAVING.md</title><link rel="stylesheet" href="../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../source/src/backend/optimizer/path/allpaths.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__path__allpaths_c__HAVING.html&quot;}, '*');">HAVING</a></h1>
+<h2>定義</h2>
+<ul>
+<li>種別: <code>function</code></li>
+<li>定義箇所: <code>src/backend/optimizer/path/allpaths.c:1</code></li>
+<li>所属モジュール: <a class="wiki-entity-link" href="../modules/src__backend__optimizer__path.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/modules/src__backend__optimizer__path.html&quot;, &quot;source&quot;: &quot;source/src/backend/optimizer/path/allpaths.c.html&quot;}, '*');"><code>module:src/backend/optimizer/path</code></a></li>
+</ul>
+<h2>目的</h2>
+<p>静的シンボル索引から生成された初期シンボルページです。</p>
+<h2>シグネチャまたは形状</h2>
+<ul>
+<li>シグネチャ: <code>/*------------------------------------------------------------------------- * * allpaths.c * Routines to find possible search paths for processing a query * * Portions Copyright (c) 1996-2026, PostgreSQL Global Development Group * Portions Copyright (c) 1994, Regents of the University of California * * * IDENTIFICATION * src/backend/optimizer/path/allpaths.c * *------------------------------------------------------------------------- */ #include &quot;postgres.h&quot; #include &lt;limits.h&gt; #include &lt;math.h&gt; #include &quot;access/sysattr.h&quot; #include &quot;access/tsmapi.h&quot; #include &quot;catalog/pg_class.h&quot; #include &quot;catalog/pg_operator.h&quot; #include &quot;catalog/pg_proc.h&quot; #include &quot;foreign/fdwapi.h&quot; #include &quot;miscadmin.h&quot; #include &quot;nodes/makefuncs.h&quot; #include &quot;nodes/nodeFuncs.h&quot; #include &quot;nodes/supportnodes.h&quot; #ifdef OPTIMIZER_DEBUG #include &quot;nodes/print.h&quot; #endif #include &quot;optimizer/appendinfo.h&quot; #include &quot;optimizer/clauses.h&quot; #include &quot;optimizer/cost.h&quot; #include &quot;optimizer/geqo.h&quot; #include &quot;optimizer/optimizer.h&quot; #include &quot;optimizer/pathnode.h&quot; #include &quot;optimizer/paths.h&quot; #include &quot;optimizer/plancat.h&quot; #include &quot;optimizer/planner.h&quot; #include &quot;optimizer/prep.h&quot; #include &quot;optimizer/tlist.h&quot; #include &quot;parser/parse_clause.h&quot; #include &quot;parser/parsetree.h&quot; #include &quot;partitioning/partbounds.h&quot; #include &quot;port/pg_bitutils.h&quot; #include &quot;rewrite/rewriteManip.h&quot; #include &quot;utils/lsyscache.h&quot; #include &quot;utils/selfuncs.h&quot; /* Bitmask flags for pushdown_safety_info.unsafeFlags */ #define UNSAFE_HAS_VOLATILE_FUNC (1 &lt;&lt; 0) #define UNSAFE_HAS_SET_FUNC (1 &lt;&lt; 1) #define UNSAFE_NOTIN_DISTINCTON_CLAUSE (1 &lt;&lt; 2) #define UNSAFE_NOTIN_PARTITIONBY_CLAUSE (1 &lt;&lt; 3) #define UNSAFE_TYPE_MISMATCH (1 &lt;&lt; 4) /* results of subquery_is_pushdown_safe */ typedef struct pushdown_safety_info</code></li>
+</ul>
+<h2>入力と出力</h2>
+<p>まだ解析していません。</p>
+<h2>前提条件と不変条件</h2>
+<p>まだ解析していません。</p>
+<h2>アルゴリズムまたは振る舞い</h2>
+<ul>
+<li>複雑度: <code>medium</code> (score 6)</li>
+</ul>
+<p>まだ解析していません。</p>
+<h2>呼び出し元と呼び出し先</h2>
+<ul>
+<li>呼び出し元: なし</li>
+<li>呼び出し先: なし</li>
+<li>呼び出し元サイト: なし</li>
+<li>呼び出しサイト: なし</li>
+</ul>
+<h2>関連データ構造</h2>
+<p><a class="wiki-source-link" href="../../source/src/interfaces/ecpg/test/expected/preproc-type.c.html#L36" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__interfaces__ecpg__test__expected__preproc-type_c__access.html&quot;}, '*');"><code>access</code></a>, <code>c</code>, <code>Group</code>, <a class="wiki-source-link" href="../../source/src/interfaces/ecpg/preproc/type.h.html#L109" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__interfaces__ecpg__preproc__type_h__prep.html&quot;}, '*');"><code>prep</code></a>, <a class="wiki-source-link" href="../../source/src/backend/optimizer/path/allpaths.c.html#L62" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__path__allpaths_c__pushdown_safety_info.html&quot;}, '*');"><code>pushdown_safety_info</code></a></p>
+<h2>ソース抜粋</h2>
+<p>~~~c /*------------------------------------------------------------------------- *</p>
+<ul>
+<li><a class="wiki-source-link" href="../../source/src/backend/optimizer/path/allpaths.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/backend/optimizer/path/allpaths.c.html&quot;}, '*');">allpaths.c</a></li>
+<li>Routines to <a class="wiki-source-link" href="../../source/src/backend/regex/regexec.c.html#L420" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__regex__regexec_c__find.html&quot;}, '*');">find</a> possible search paths for processing a query</li>
+<p>*</p>
+<li>Portions Copyright (c) 1996-2026, PostgreSQL Global Development Group</li>
+<li>Portions Copyright (c) 1994, Regents of the University of California</li>
+<p>* *</p>
+<li>IDENTIFICATION</li>
+<li><a class="wiki-source-link" href="../../source/src/backend/optimizer/path/allpaths.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/backend/optimizer/path/allpaths.c.html&quot;}, '*');">src/backend/optimizer/path/allpaths.c</a></li>
+<p>* *------------------------------------------------------------------------- */</p>
+</ul>
+<p>#include &quot;<a class="wiki-source-link" href="../../source/src/include/postgres.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/postgres.h.html&quot;}, '*');">postgres.h</a>&quot;</p>
+<p>#include &lt;limits.h&gt; #include &lt;math.h&gt;</p>
+<p>#include &quot;access/sysattr.h&quot; #include &quot;access/tsmapi.h&quot; #include &quot;catalog/pg_class.h&quot; #include &quot;catalog/pg_operator.h&quot; #include &quot;catalog/pg_proc.h&quot; #include &quot;foreign/fdwapi.h&quot; #include &quot;<a class="wiki-source-link" href="../../source/src/include/miscadmin.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/miscadmin.h.html&quot;}, '*');">miscadmin.h</a>&quot; #include &quot;nodes/makefuncs.h&quot; #include &quot;nodes/nodeFuncs.h&quot; #include &quot;nodes/supportnodes.h&quot; #ifdef OPTIMIZER_DEBUG #include &quot;nodes/print.h&quot; #endif #include &quot;optimizer/appendinfo.h&quot; #include &quot;optimizer/clauses.h&quot; #include &quot;optimizer/cost.h&quot; #include &quot;optimizer/geqo.h&quot; #include &quot;optimizer/optimizer.h&quot; #include &quot;optimizer/pathnode.h&quot; #include &quot;optimizer/paths.h&quot; #include &quot;optimizer/plancat.h&quot; #include &quot;optimizer/planner.h&quot; #include &quot;optimizer/prep.h&quot; #include &quot;optimizer/tlist.h&quot; #include &quot;parser/parse_clause.h&quot; #include &quot;parser/parsetree.h&quot; #include &quot;partitioning/partbounds.h&quot; #include &quot;port/pg_bitutils.h&quot; #include &quot;rewrite/rewriteManip.h&quot; #include &quot;utils/lsyscache.h&quot; #include &quot;utils/selfuncs.h&quot;</p>
+<p>/* Bitmask <a class="wiki-source-link" href="../../source/src/backend/optimizer/util/var.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__var_c__flags.html&quot;}, '*');">flags</a> for pushdown_safety_info.unsafeFlags */ #define <a class="wiki-source-link" href="../../source/src/backend/optimizer/path/allpaths.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/backend/optimizer/path/allpaths.c.html&quot;}, '*');">UNSAFE_HAS_VOLATILE_FUNC</a>		(1 &lt;&lt; 0) #define <a class="wiki-source-link" href="../../source/src/backend/optimizer/path/allpaths.c.html#L56" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/backend/optimizer/path/allpaths.c.html&quot;}, '*');">UNSAFE_HAS_SET_FUNC</a>				(1 &lt;&lt; 1) #define <a class="wiki-source-link" href="../../source/src/backend/optimizer/path/allpaths.c.html#L57" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/backend/optimizer/path/allpaths.c.html&quot;}, '*');">UNSAFE_NOTIN_DISTINCTON_CLAUSE</a>	(1 &lt;&lt; 2) #define <a class="wiki-source-link" href="../../source/src/backend/optimizer/path/allpaths.c.html#L58" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/backend/optimizer/path/allpaths.c.html&quot;}, '*');">UNSAFE_NOTIN_PARTITIONBY_CLAUSE</a>	(1 &lt;&lt; 3) #define <a class="wiki-source-link" href="../../source/src/backend/optimizer/path/allpaths.c.html#L59" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/backend/optimizer/path/allpaths.c.html&quot;}, '*');">UNSAFE_TYPE_MISMATCH</a>			(1 &lt;&lt; 4)</p>
+<p>~~~</p>
+<h2>失敗モードと境界条件</h2>
+<p>まだ解析していません。</p>
+<h2>保守担当者向けメモ</h2>
+<ul>
+<li>後続フェーズで、ソース本文の文脈と caller/callee 情報を使ってこのページを強化する。</li>
+</ul><script>
+(function() {
+  function notifyParent() {
+    if (parent === window) return;
+    parent.postMessage({type: "frame-location", frame: window.name || "", href: window.location.href}, "*");
+  }
+  document.addEventListener("click", function(event) {
+    const link = event.target.closest("a[data-panel]");
+    if (!link || parent === window) return;
+    parent.postMessage({type: "source-link", panel: link.dataset.panel}, "*");
+  });
+  window.addEventListener("load", notifyParent);
+  window.addEventListener("hashchange", notifyParent);
+})();
+</script></body></html>
