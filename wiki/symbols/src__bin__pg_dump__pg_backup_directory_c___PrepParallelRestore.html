@@ -35,7 +35,7 @@
 <p><code>ArchiveHandle</code>, <code>lclTocEntry</code>, <code>stat</code>, <code>TocEntry</code></p>
 <h2>ソース抜粋</h2>
 <p>~~~c static void _PrepParallelRestore(ArchiveHandle *AH) { TocEntry   *te;</p>
-<p>for (te = AH-&gt;toc-&gt;next; te != AH-&gt;toc; te = te-&gt;next) { lclTocEntry *tctx = (lclTocEntry *) te-&gt;formatData; <a class="wiki-source-link" href="../../source/src/include/port/atomics/generic-gcc.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__port__atomics__generic-gcc_h__char.html&quot;}, '*');">char</a>		fname[<a class="wiki-source-link" href="../../source/src/include/pg_config_manual.h.html#L105" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/pg_config_manual.h.html&quot;}, '*');">MAXPGPATH</a>]; struct stat st;</p>
+<p>for (te = AH-&gt;toc-&gt;next; te != AH-&gt;toc; te = te-&gt;next) { lclTocEntry *tctx = (lclTocEntry *) te-&gt;formatData; char		fname[<a class="wiki-source-link" href="../../source/src/include/pg_config_manual.h.html#L105" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/pg_config_manual.h.html&quot;}, '*');">MAXPGPATH</a>]; struct stat st;</p>
 <p>/*</p>
 <ul>
 <li>A dumpable object has set tctx-&gt;filename, any other object has not.</li>

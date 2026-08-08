@@ -1,5 +1,5 @@
 <!doctype html>
-<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>src/backend/optimizer/README</title><link rel="stylesheet" href="../../../../../styles.css"></head><body><h1>Japanese translation</h1><p><code>src/backend/optimizer/README</code></p><p><a href="../../../../../source/src/backend/optimizer/README.html" target="source-view">View original document</a></p><p class="document-translation-progress document-translation-incomplete">Translation in progress: 3/8 chunks complete. Pending chunks show their original text below.</p><div class="document-translation-body"><section class="document-translation-chunk translated" data-chunk-order="0"><p>src/backend/optimizer/README</p>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>src/backend/optimizer/README</title><link rel="stylesheet" href="../../../../../styles.css"></head><body><h1>Japanese translation</h1><p><code>src/backend/optimizer/README</code></p><p><a href="../../../../../source/src/backend/optimizer/README.html" target="source-view">View original document</a></p><p class="document-translation-progress document-translation-incomplete">Translation in progress: 6/8 chunks complete. Pending chunks show their original text below.</p><div class="document-translation-body"><section class="document-translation-chunk translated" data-chunk-order="0"><p>src/backend/optimizer/README</p>
 <p>Optimizer =========</p>
 <p>これらのディレクトリは、パーサーから返されたQuery構造体を受け取り、エグゼキューターが使用するプランを生成します。/planディレクトリは実際の出力プランを生成し、/pathコードはテーブルを結合するためのすべての可能な方法を生成し、/prepは特殊なケースに対するさまざまな前処理ステップを処理します。/utilはユーティリティ関係です。/geqoは個別の「遺伝的最適化」プランナーです。これは、可能な結合ツリーをすべて網羅的に検討するのではなく、結合ツリー空間を半ランダムに検索します（ただし、/geqoによって検討される各結合は、パスを作成するために/pathに渡されるため、GEQOモードでも、特定の結合ペアごとに可能なすべての実装パスが検討されます）。</p>
 <p>Paths and Join Pairs --------------------</p>
@@ -519,518 +519,88 @@ common in star-schema queries for instance), the planner won&#x27;t consider
 joining them directly to each other.  In such a case we need to be able
 to create a plan like
 
-</pre></section><section class="document-translation-chunk pending" data-chunk-order="5"><h2>Chunk 6: translation pending</h2><p>This chunk has not been translated yet. Original text:</p><pre class="document-translation-text">    NestLoop
-        -&gt; Seq Scan on SmallTable1 A
-        NestLoop
-            -&gt; Seq Scan on SmallTable2 B
-            -&gt; Index Scan using XYIndex on LargeTable C
-                 Index Condition: C.X = A.AID and C.Y = B.BID
-
-so we should be willing to pass down A.AID through a join even though
-there is no join order constraint forcing the plan to look like this.
-
-Before version 9.2, Postgres used ad-hoc methods for planning and
-executing nestloop queries of this kind, and those methods could not
-handle passing parameters down through multiple join levels.
-
-To plan such queries, we now use a notion of a &quot;parameterized path&quot;,
-which is a path that makes use of a join clause to a relation that&#x27;s not
-scanned by the path.  In the example two above, we would construct a
-path representing the possibility of doing this:
-
-	-&gt; Index Scan using C_Z_IDX on C
-		Index Condition: C.Z = A.X
-
-This path will be marked as being parameterized by relation A.  (Note that
-this is only one of the possible access paths for C; we&#x27;d still have a
-plain unparameterized seqscan, and perhaps other possibilities.)  The
-parameterization marker does not prevent joining the path to B, so one of
-the paths generated for the joinrel {B C} will represent
-
-	Hash Join
-		Join Condition: B.Y = C.W
-		-&gt; Seq Scan on B
-		-&gt; Index Scan using C_Z_IDX on C
-			Index Condition: C.Z = A.X
-
-This path is still marked as being parameterized by A.  When we attempt to
-join {B C} to A to form the complete join tree, such a path can only be
-used as the inner side of a nestloop join: it will be ignored for other
-possible join types.  So we will form a join path representing the query
-plan shown above, and it will compete in the usual way with paths built
-from non-parameterized scans.
-
-While all ordinary paths for a particular relation generate the same set
-of rows (since they must all apply the same set of restriction clauses),
-parameterized paths typically generate fewer rows than less-parameterized
-paths, since they have additional clauses to work with.  This means we
-must consider the number of rows generated as an additional figure of
-merit.  A path that costs more than another, but generates fewer rows,
-must be kept since the smaller number of rows might save work at some
-intermediate join level.  (It would not save anything if joined
-immediately to the source of the parameters.)
-
-To keep cost estimation rules relatively simple, we make an implementation
-restriction that all paths for a given relation of the same parameterization
-(i.e., the same set of outer relations supplying parameters) must have the
-same rowcount estimate.  This is justified by insisting that each such path
-apply *all* join clauses that are available with the named outer relations.
-Different paths might, for instance, choose different join clauses to use
-as index clauses; but they must then apply any other join clauses available
-from the same outer relations as filter conditions, so that the set of rows
-returned is held constant.  This restriction doesn&#x27;t degrade the quality of
-the finished plan: it amounts to saying that we should always push down
-movable join clauses to the lowest possible evaluation level, which is a
-good thing anyway.  The restriction is useful in particular to support
-pre-filtering of join paths in add_path_precheck.  Without this rule we
-could never reject a parameterized path in advance of computing its rowcount
-estimate, which would greatly reduce the value of the pre-filter mechanism.
-
-To limit planning time, we have to avoid generating an unreasonably large
-number of parameterized paths.  We do this by only generating parameterized
-relation scan paths for index scans, and then only for indexes for which
-suitable join clauses are available.  There are also heuristics in join
-planning that try to limit the number of parameterized paths considered.
-
-In particular, there&#x27;s been a deliberate policy decision to favor hash
-joins over merge joins for parameterized join steps (those occurring below
-a nestloop that provides parameters to the lower join&#x27;s inputs).  While we
-do not ignore merge joins entirely, joinpath.c does not fully explore the
-space of potential merge joins with parameterized inputs.  Also, add_path
-treats parameterized paths as having no pathkeys, so that they compete
-only on cost and rowcount; they don&#x27;t get preference for producing a
-special sort order.  This creates additional bias against merge joins,
-since we might discard a path that could have been useful for performing
-a merge without an explicit sort step.  Since a parameterized path must
-ultimately be used on the inside of a nestloop, where its sort order is
-uninteresting, these choices do not affect any requirement for the final
-output order of a query --- they only make it harder to use a merge join
-at a lower level.  The savings in planning work justifies that.
-
-Similarly, parameterized paths do not normally get preference in add_path
-for having cheap startup cost; that&#x27;s seldom of much value when on the
-inside of a nestloop, so it seems not worth keeping extra paths solely for
-that.  An exception occurs for parameterized paths for the RHS relation of
-a SEMI or ANTI join: in those cases, we can stop the inner scan after the
-first match, so it&#x27;s primarily startup not total cost that we care about.
-
-
-LATERAL subqueries
-------------------
-
-As of 9.3 we support SQL-standard LATERAL references from subqueries in
-FROM (and also functions in FROM).  The planner implements these by
-generating parameterized paths for any RTE that contains lateral
-references.  In such cases, *all* paths for that relation will be
-parameterized by at least the set of relations used in its lateral
-references.  (And in turn, join relations including such a subquery might
-not have any unparameterized paths.)  All the other comments made above for
-parameterized paths still apply, though; in particular, each such path is
-still expected to enforce any join clauses that can be pushed down to it,
-so that all paths of the same parameterization have the same rowcount.
-
-We also allow LATERAL subqueries to be flattened (pulled up into the parent
-query) by the optimizer, but only when this does not introduce lateral
-references into JOIN/ON quals that would refer to relations outside the
-lowest outer join at/above that qual.  The semantics of such a qual would
-be unclear.  Note that even with this restriction, pullup of a LATERAL
-subquery can result in creating PlaceHolderVars that contain lateral
-references to relations outside their syntactic scope.  We still evaluate
-such PHVs at their syntactic location or lower, but the presence of such a
-PHV in the quals or targetlist of a plan node requires that node to appear
-on the inside of a nestloop join relative to the rel(s) supplying the
-lateral reference.  (Perhaps now that that stuff works, we could relax the
-pullup restriction?)
-
-
-Security-level constraints on qual clauses
-------------------------------------------
-
-To support row-level security and security-barrier views efficiently,
-we mark qual clauses (RestrictInfo nodes) with a &quot;security_level&quot; field.
-The basic concept is that a qual with a lower security_level must be
-evaluated before one with a higher security_level.  This ensures that
-&quot;leaky&quot; quals that might expose sensitive data are not evaluated until
-after the security barrier quals that are supposed to filter out
-security-sensitive rows.  However, many qual conditions are &quot;leakproof&quot;,
-that is we trust the functions they use to not expose data.  To avoid
-unnecessarily inefficient plans, a leakproof qual is not delayed by
-security-level considerations, even if it has a higher syntactic
-security_level than another qual.
-
-In a query that contains no use of RLS or security-barrier views, all
-quals will have security_level zero, so that none of these restrictions
-kick in; we don&#x27;t even need to check leakproofness of qual conditions.
-
-If there are security-barrier quals, they get security_level zero (and
-possibly higher, if there are multiple layers of barriers).  Regular quals
-coming from the query text get a security_level one more than the highest
-level used for barrier quals.
-
-When new qual clauses are generated by EquivalenceClass processing,
-they must be assigned a security_level.  This is trickier than it seems.
-One&#x27;s first instinct is that it would be safe to use the largest level
-found among the source quals for the EquivalenceClass, but that isn&#x27;t
-safe at all, because it allows unwanted delays of security-barrier quals.
-Consider a barrier qual &quot;t.x = t.y&quot; plus a query qual &quot;t.x = constant&quot;,
-and suppose there is another query qual &quot;leaky_function(t.z)&quot; that
-we mustn&#x27;t evaluate before the barrier qual has been checked.
-We will have an EC {t.x, t.y, constant} which will lead us to replace
-the EC quals with &quot;t.x = constant AND t.y = constant&quot;.  (We do not want
-to give up that behavior, either, since the latter condition could allow
-use of an index on t.y, which we would never discover from the original
-quals.)  If these generated quals are assigned the same security_level as
-the query quals, then it&#x27;s possible for the leaky_function qual to be
-evaluated first, allowing leaky_function to see data from rows that
-possibly don&#x27;t pass the barrier condition.
-
-Instead, our handling of security levels with ECs works like this:
-* Quals are not accepted as source clauses for ECs in the first place
-unless they are leakproof or have security_level zero.
-* EC-derived quals are assigned the minimum (not maximum) security_level
-found among the EC&#x27;s source clauses.
-* If the maximum security_level found among the EC&#x27;s source clauses is
-above zero, then the equality operators selected for derived quals must
-be leakproof.  When no such operator can be found, the EC is treated as
-&quot;broken&quot; and we fall back to emitting its source clauses without any
-additional derived quals.
-
-These rules together ensure that an untrusted qual clause (one with
-security_level above zero) cannot cause an EC to generate a leaky derived
-clause.  This makes it safe to use the minimum not maximum security_level
-for derived clauses.  The rules could result in poor plans due to not
-being able to generate derived clauses at all, but the risk of that is
-small in practice because most btree equality operators are leakproof.
-Also, by making exceptions for level-zero quals, we ensure that there is
-no plan degradation when no barrier quals are present.
-
-Once we have security levels assigned to all clauses, enforcement
-of barrier-qual ordering restrictions boils down to two rules:
-
-* Table scan plan nodes must not select quals for early execution
-(for example, use them as index qualifiers in an indexscan) unless
-they are leakproof or have security_level no higher than any other
-qual that is due to be executed at the same plan node.  (Use the
-utility function restriction_is_securely_promotable() to check
-whether it&#x27;s okay to select a qual for early execution.)
-
-* Normal execution of a list of quals must execute them in an order
-that satisfies the same security rule, ie higher security_levels must
-be evaluated later unless leakproof.  (This is handled in a single place
-by order_qual_clauses() in createplan.c.)
-
-order_qual_clauses() uses a heuristic to decide exactly what to do with
-leakproof clauses.  Normally it sorts clauses by security_level then cost,
-being careful that the sort is stable so that we don&#x27;t reorder clauses
-without a clear reason.  But this could result in a very expensive qual
-being done before a cheaper one that is of higher security_level.
-If the cheaper qual is leaky we have no choice, but if it is leakproof
-we could put it first.  We choose to sort leakproof quals as if they
-have security_level zero, but only when their cost is less than 10X
-cpu_operator_cost; that restriction alleviates the opposite problem of
-doing expensive quals first just because they&#x27;re leakproof.
-
-</pre></section><section class="document-translation-chunk pending" data-chunk-order="6"><h2>Chunk 7: translation pending</h2><p>This chunk has not been translated yet. Original text:</p><pre class="document-translation-text">Additional rules will be needed to support safe handling of join quals
-when there is a mix of security levels among join quals; for example, it
-will be necessary to prevent leaky higher-security-level quals from being
-evaluated at a lower join level than other quals of lower security level.
-Currently there is no need to consider that since security-prioritized
-quals can only be single-table restriction quals coming from RLS policies
-or security-barrier views, and security-barrier view subqueries are never
-flattened into the parent query.  Hence enforcement of security-prioritized
-quals only happens at the table scan level.  With extra rules for safe
-handling of security levels among join quals, it should be possible to let
-security-barrier views be flattened into the parent query, allowing more
-flexibility of planning while still preserving required ordering of qual
-evaluation.  But that will come later.
-
-
-Post scan/join planning
------------------------
-
-So far we have discussed only scan/join planning, that is, implementation
-of the FROM and WHERE clauses of a SQL query.  But the planner must also
-determine how to deal with GROUP BY, aggregation, and other higher-level
-features of queries; and in many cases there are multiple ways to do these
-steps and thus opportunities for optimization choices.  These steps, like
-scan/join planning, are handled by constructing Paths representing the
-different ways to do a step, then choosing the cheapest Path.
-
-Since all Paths require a RelOptInfo as &quot;parent&quot;, we create RelOptInfos
-representing the outputs of these upper-level processing steps.  These
-RelOptInfos are mostly dummy, but their pathlist lists hold all the Paths
-considered useful for each step.  Currently, we may create these types of
-additional RelOptInfos during upper-level planning:
-
-UPPERREL_SETOP		result of UNION/INTERSECT/EXCEPT, if any
-UPPERREL_PARTIAL_GROUP_AGG	result of partial grouping/aggregation, if any
-UPPERREL_GROUP_AGG	result of grouping/aggregation, if any
-UPPERREL_WINDOW		result of window functions, if any
-UPPERREL_PARTIAL_DISTINCT	result of partial &quot;SELECT DISTINCT&quot;, if any
-UPPERREL_DISTINCT	result of &quot;SELECT DISTINCT&quot;, if any
-UPPERREL_ORDERED	result of ORDER BY, if any
-UPPERREL_FINAL		result of any remaining top-level actions
-
-UPPERREL_FINAL is used to represent any final processing steps, currently
-LockRows (SELECT FOR UPDATE), LIMIT/OFFSET, and ModifyTable.  There is no
-flexibility about the order in which these steps are done, and thus no need
-to subdivide this stage more finely.
-
-These &quot;upper relations&quot; are identified by the UPPERREL enum values shown
-above, plus a relids set, which allows there to be more than one upperrel
-of the same kind.  We use NULL for the relids if there&#x27;s no need for more
-than one upperrel of the same kind.  Currently, in fact, the relids set
-is vestigial because it&#x27;s always NULL, but that&#x27;s expected to change in
-the future.  For example, in planning set operations, we might need the
-relids to denote which subset of the leaf SELECTs has been combined in a
-particular group of Paths that are competing with each other.
-
-The result of subquery_planner() is always returned as a set of Paths
-stored in the UPPERREL_FINAL rel with NULL relids.  The other types of
-upperrels are created only if needed for the particular query.
-
-
-Parallel Query and Partial Paths
---------------------------------
-
-Parallel query involves dividing up the work that needs to be performed
-either by an entire query or some portion of the query in such a way that
-some of that work can be done by one or more worker processes, which are
-called parallel workers.  Parallel workers are a subtype of dynamic
-background workers; see src/backend/access/transam/README.parallel for a
-fuller description.  The academic literature on parallel query suggests
-that parallel execution strategies can be divided into essentially two
-categories: pipelined parallelism, where the execution of the query is
-divided into multiple stages and each stage is handled by a separate
-process; and partitioning parallelism, where the data is split between
-multiple processes and each process handles a subset of it.  The
-literature, however, suggests that gains from pipeline parallelism are
-often very limited due to the difficulty of avoiding pipeline stalls.
-Consequently, we do not currently attempt to generate query plans that
-use this technique.
-
-Instead, we focus on partitioning parallelism, which does not require
-that the underlying table be partitioned.  It only requires that (1)
-there is some method of dividing the data from at least one of the base
-tables involved in the relation across multiple processes, (2) allowing
-each process to handle its own portion of the data, and then (3)
-collecting the results.  Requirements (2) and (3) are satisfied by the
-executor node Gather (or GatherMerge), which launches any number of worker
-processes and executes its single child plan in all of them, and perhaps
-in the leader also, if the children aren&#x27;t generating enough data to keep
-the leader busy.  Requirement (1) is handled by the table scan node: when
-invoked with parallel_aware = true, this node will, in effect, partition
-the table on a block by block basis, returning a subset of the tuples from
-the relation in each worker where that scan node is executed.
-
-Just as we do for non-parallel access methods, we build Paths to
-represent access strategies that can be used in a parallel plan.  These
-are, in essence, the same strategies that are available in the
-non-parallel plan, but there is an important difference: a path that
-will run beneath a Gather node returns only a subset of the query
-results in each worker, not all of them.  To form a path that can
-actually be executed, the (rather large) cost of the Gather node must be
-accounted for.  For this reason among others, paths intended to run
-beneath a Gather node - which we call &quot;partial&quot; paths since they return
-only a subset of the results in each worker - must be kept separate from
-ordinary paths (see RelOptInfo&#x27;s partial_pathlist and the function
-add_partial_path).
-
-One of the keys to making parallel query effective is to run as much of
-the query in parallel as possible.  Therefore, we expect it to generally
-be desirable to postpone the Gather stage until as near to the top of the
-plan as possible.  Expanding the range of cases in which more work can be
-pushed below the Gather (and costing them accurately) is likely to keep us
-busy for a long time to come.
-
-Partitionwise joins
--------------------
-
-A join between two similarly partitioned tables can be broken down into joins
-between their matching partitions if there exists an equi-join condition
-between the partition keys of the joining tables. The equi-join between
-partition keys implies that all join partners for a given row in one
-partitioned table must be in the corresponding partition of the other
-partitioned table. Because of this the join between partitioned tables to be
-broken into joins between the matching partitions. The resultant join is
-partitioned in the same way as the joining relations, thus allowing an N-way
-join between similarly partitioned tables having equi-join condition between
-their partition keys to be broken down into N-way joins between their matching
-partitions. This technique of breaking down a join between partitioned tables
-into joins between their partitions is called partitionwise join. We will use
-term &quot;partitioned relation&quot; for either a partitioned table or a join between
-compatibly partitioned tables.
-
-Even if the joining relations don&#x27;t have exactly the same partition bounds,
-partitionwise join can still be applied by using an advanced
-partition-matching algorithm.  For both the joining relations, the algorithm
-checks whether every partition of one joining relation only matches one
-partition of the other joining relation at most.  In such a case the join
-between the joining relations can be broken down into joins between the
-matching partitions.  The join relation can then be considered partitioned.
-The algorithm produces the pairs of the matching partitions, plus the
-partition bounds for the join relation, to allow partitionwise join for
-computing the join.  The algorithm is implemented in partition_bounds_merge().
-For an N-way join relation considered partitioned this way, not every pair of
-joining relations can use partitionwise join.  For example:
-
-	(A leftjoin B on (Pab)) innerjoin C on (Pac)
-
-where A, B, and C are partitioned tables, and A has an extra partition
-compared to B and C.  When considering partitionwise join for the join {A B},
-the extra partition of A doesn&#x27;t have a matching partition on the nullable
-side, which is the case that the current implementation of partitionwise join
-can&#x27;t handle.  So {A B} is not considered partitioned, and the pair of {A B}
-and C considered for the 3-way join can&#x27;t use partitionwise join.  On the
-other hand, the pair of {A C} and B can use partitionwise join because {A C}
-is considered partitioned by eliminating the extra partition (see identity 1
-on outer join reordering).  Whether an N-way join can use partitionwise join
-is determined based on the first pair of joining relations that are both
-partitioned and can use partitionwise join.
-
-The partitioning properties of a partitioned relation are stored in its
-RelOptInfo.  The information about data types of partition keys are stored in
-PartitionSchemeData structure. The planner maintains a list of canonical
-partition schemes (distinct PartitionSchemeData objects) so that RelOptInfo of
-any two partitioned relations with same partitioning scheme point to the same
-PartitionSchemeData object.  This reduces memory consumed by
-PartitionSchemeData objects and makes it easy to compare the partition schemes
-of joining relations.
-
-Partitionwise aggregates/grouping
----------------------------------
-
-If the GROUP BY clause contains all of the partition keys, all the rows
-that belong to a given group must come from a single partition; therefore,
-aggregation can be done completely separately for each partition. Otherwise,
-partial aggregates can be computed for each partition, and then finalized
-after appending the results from the individual partitions.  This technique of
-breaking down aggregation or grouping over a partitioned relation into
-aggregation or grouping over its partitions is called partitionwise
-aggregation.  Especially when the partition keys match the GROUP BY clause,
-this can be significantly faster than the regular method.
-
-Eager aggregation
------------------
-
-Eager aggregation is a query optimization technique that partially
-pushes aggregation past a join, and finalizes it once all the
-relations are joined.  Eager aggregation may reduce the number of
-input rows to the join and thus could result in a better overall plan.
-
-To prove that the transformation is correct, let&#x27;s first consider the
-case where only inner joins are involved.  In this case, we partition
-the tables in the FROM clause into two groups: those that contain at
-least one aggregation column, and those that do not contain any
-aggregation columns.  Each group can be treated as a single relation
-formed by the Cartesian product of the tables within that group.
-Therefore, without loss of generality, we can assume that the FROM
-clause contains exactly two relations, R1 and R2, where R1 represents
-the relation containing all aggregation columns, and R2 represents the
-relation without any aggregation columns.
-
-Let the query be of the form:
-
-SELECT G, AGG(A)
-FROM R1 JOIN R2 ON J
-GROUP BY G;
-
-where G is the set of grouping keys that may include columns from R1
-and/or R2; AGG(A) is an aggregate function over columns A from R1; J
-is the join condition between R1 and R2.
-
-The transformation of eager aggregation is:
-
-    GROUP BY G, AGG(A) on (R1 JOIN R2 ON J)
-    =
-    GROUP BY G, AGG(agg_A) on ((GROUP BY G1, AGG(A) AS agg_A on R1) JOIN R2 ON J)
-
-This equivalence holds under the following conditions:
-
-</pre></section><section class="document-translation-chunk pending" data-chunk-order="7"><h2>Chunk 8: translation pending</h2><p>This chunk has not been translated yet. Original text:</p><pre class="document-translation-text">1) AGG is decomposable, meaning that it can be computed in two stages:
-a partial aggregation followed by a final aggregation;
-2) The set G1 used in the pre-aggregation of R1 includes:
-    * all columns from R1 that are part of the grouping keys G, and
-    * all columns from R1 that appear in the join condition J.
-3) The grouping operator for any column in G1 must be compatible with
-the operator used for that column in the join condition J.
-
-Since G1 includes all columns from R1 that appear in either the
-grouping keys G or the join condition J, all rows within each partial
-group have identical values for both the grouping keys and the
-join-relevant columns from R1, assuming compatible operators are used.
-As a result, the rows within a partial group are indistinguishable in
-terms of their contribution to the aggregation and their behavior in
-the join.  This ensures that all rows in the same partial group share
-the same &quot;destiny&quot;: they either all match or all fail to match a given
-row in R2.  Because the aggregate function AGG is decomposable,
-aggregating the partial results after the join yields the same final
-result as aggregating after the full join, thereby preserving query
-semantics.  Q.E.D.
-
-In the case where there are any outer joins, the situation becomes
-more complex due to join order constraints and the semantics of
-null-extension in outer joins.  If the relations that contain at least
-one aggregation column cannot be treated as a single relation because
-of the join order constraints, partial aggregation paths will not be
-generated, and thus the transformation is not applicable.  Otherwise,
-let R1 be the relation containing all aggregation columns, and R2, R3,
-... be the remaining relations.  From the inner join case, under the
-aforementioned conditions, we have the equivalence:
-
-    GROUP BY G, AGG(A) on (R1 JOIN R2 JOIN R3 ...)
-    =
-    GROUP BY G, AGG(agg_A) on ((GROUP BY G1, AGG(A) AS agg_A on R1) JOIN R2 JOIN R3 ...)
-
-To preserve correctness when outer joins are involved, we require an
-additional condition:
-
-4) R1 must not be on the nullable side of any outer join.
-
-This condition ensures that partial aggregation over R1 does not
-suppress any null-extended rows that would be introduced by outer
-joins.  If R1 is on the nullable side of an outer join, the
-NULL-extended rows produced by the outer join would not be available
-when we perform the partial aggregation, while with a
-non-eager-aggregation plan these rows are available for the top-level
-aggregation.  Pushing partial aggregation in this case may result in
-the rows being grouped differently than expected, or produce incorrect
-values from the aggregate functions.
-
-Semi joins and anti joins impose a similar restriction.  Such a join
-does not preserve its inner rows in the join output, so a partial
-aggregate computed on the inner side would not survive the join and
-could not be combined by the final aggregation.  We therefore do not
-push partial aggregation down to the inner side of a semi/anti join.
-(An anti join reduced from an outer join null-extends its inner side,
-so that inner relation is already excluded by the outer-join condition
-above; the case specifically addressed here is a semi/anti join that
-does not null-extend its inner side, such as one formed from an
-EXISTS, IN, NOT EXISTS, or NOT IN sublink.)
-
-During the construction of the join tree, we evaluate each base or
-join relation to determine if eager aggregation can be applied.  If
-feasible, we create a separate RelOptInfo called a &quot;grouped relation&quot;
-and generate grouped paths by adding sorted and hashed partial
-aggregation paths on top of the non-grouped paths.  To limit planning
-time, we consider only the cheapest or suitably-sorted non-grouped
-paths in this step.
-
-Another way to generate grouped paths is to join a grouped relation
-with a non-grouped relation.  Joining two grouped relations is
-currently not supported.
-
-To further limit planning time, we currently adopt a strategy where
-partial aggregation is pushed only to the lowest feasible level in the
-join tree where it provides a significant reduction in row count.
-This strategy also helps ensure that all grouped paths for the same
-grouped relation produce the same set of rows, which is important to
-support a fundamental assumption of the planner.
-
-If we have generated a grouped relation for the topmost join relation,
-we need to finalize its paths at the end.  The final paths will
-compete in the usual way with paths built from regular planning.
-</pre></section></div><script>
+</pre></section><section class="document-translation-chunk translated" data-chunk-order="5"><p>NestLoop -&gt; Seq Scan on SmallTable1 A NestLoop -&gt; Seq Scan on SmallTable2 B -&gt; Index Scan using XYIndex on LargeTable C Index Condition: C.X = A.AID and C.Y = B.BID</p>
+<p>したがって、プランをこのように見せるような結合順序の制約がない場合でも、結合を介して A.AID を渡すことをいとわないはずです。</p>
+<p>バージョン 9.2 より前では、Postgres はこのような種類のネストループクエリの計画と実行にアドホックな手法を使用しており、それらの手法では複数の結合レベルにわたってパラメータを下方に渡すことを処理できませんでした。</p>
+<p>このようなクエリを計画するために、現在では「パラメータ化されたパス（parameterized path）」という概念を使用しています。これは、パスによってスキャンされないリレーションへの結合句を利用するパスです。上の 2 つ目の例では、次のような処理を行う可能性を表すパスを構築します。</p>
+<p>-&gt; Index Scan using C_Z_IDX on C Index Condition: C.Z = A.X</p>
+<p>このパスは、リレーション A によってパラメータ化されているものとしてマークされます（これは C の可能なアクセスの1つに過ぎず、通常のパラメータ化されていないシーケンシャルスキャンや、おそらくその他の可能性も依然として存在することに注意してください）。パラメータ化マーカーは、パスを B に結合することを妨げないため、結合リレーション {B C} に対して生成されるパスの 1 つは以下を表すことになります。</p>
+<p>Hash Join Join Condition: B.Y = C.W -&gt; Seq Scan on B -&gt; Index Scan using C_Z_IDX on C Index Condition: C.Z = A.X</p>
+<p>このパスは依然として A によってパラメータ化されているものとしてマークされます。{B C} を A と結合して完全な結合ツリーを形成しようとする際、このようなパスはネストループ結合の内側としてのみ使用でき、他の可能な結合タイプでは無視されます。そのため、上記のクエリプランを表す結合パスが形成され、パラメータ化されていないスキャンから構築されたパスと通常の方法で競合することになります。</p>
+<p>特定のリレーションに対する通常のパスはすべて同じ行のセットを生成しますが（すべて同じ制限句のセットを適用する必要があるため）、パラメータ化されたパスは、処理すべき追加の句を持っているため、パラメータ化されていないパスよりも通常は少ない行数を生成します。これは、生成される行数を追加のメリットの指標として考慮しなければならないことを意味します。別のパスよりもコストがかかるものの、生成する行数が少ないパスは、中間結合レベルでより少ない行数によって作業量を節約できる可能性があるため、保持されなければなりません。（パラメータのソースに直ちに結合される場合は、何も節約されません。）</p>
+<p>コスト見積もりの​​ルールを比較的シンプルに保つため、同じパラメータ化を持つ特定のリレーションのすべてのパス（つまり、パラメータを提供する外部リレーションのセットが同じもの）は、同じ行数の見積もりを持たなければならないという実装上の制約を設けています。これは、そのような各パスが、指定された外部リレーションで使用可能な*すべての*結合句を適用することを主張することで正当化されます。例えば、異なるパスでインデックス句として使用する異なる結合句を選択する場合がありますが、返される行数のセットが一定に保つように、同じ外部リレーションから利用可能な他のすべての結合句をフィルター条件として適用する必要があります。この制約は、完成したプランの品質を低下させることはありません。これは、移動可能な結合句を常に可能な限り低い評価レベルにプッシュダウンすべきであるということを意味しており、いずれにせよそれは良いことです。この制約は、特に add_path_precheck における結合パスの事前フィルタリングをサポートする上で役立ちます。このルールがないと、行数の見積もりを計算する前にパラメータ化されたパスを拒否することが決してできなくなり、事前フィルタリングメカニズムの価値が大幅に低下することになります。</p>
+<p>計画時間を制限するため、不当に多数のパラメータ化されたパスが生成されるのを避けなければなりません。これを行うには、インデックススキャンに対してのみパラメータ化されたリレーションスキャンパスを生成し、さらに適切な結合句が利用可能なインデックスに対してのみ生成するようにします。また、考慮されるパラメータ化されたパスの数を制限しようとする結合計画のヒューリスティクスもあります。</p>
+<p>特に、パラメータ化された結合ステップ（下位の結合の入力にパラメータを提供するネストループの下位で発生するもの）に対して、マージ結合よりもハッシュ結合を優先するという意図的なポリシー上の決定がなされています。マージ結合を完全に無視するわけではありませんが、joinpath.c は、パラメータ化された入力を持つ潜在的なマージ結合の空間を完全に探索するわけではありません。また、add_path はパラメータ化されたパスにパスキーがないものとして扱うため、コストと行数のみで競合し、特別なソート順序を生成するための優先権は得られません。これにより、明示的なソートステップなしでマージを実行するのに役立つ可能性があったパスを破棄する可能性があるため、マージ結合に対する追加のバイアスが生じます。パラメータ化されたパスは最終的にネストループの内側で使用される必要があり、そのソート順序は重要ではないため、これらの選択はクエリの最終的な出力順序に対する要件には影響を与えず、下位レベルでのマージ結合の使用を困難にするだけです。計画作業における節約はそれを正当化します。</p>
+<p>同様に、パラメータ化されたパスは、低いスタートアップコストを持つことに対して add_path で通常は優先権を与えられません。ネストループの内側にある場合、それはほとんど価値がないため、そのためだけに余分なパスを保持する価値はないように思われます。例外として、SEMI または ANTI 結合の RHS リレーションのパラメータ化されたパスの場合があります。これらのケースでは、最初のマッチ後に内部スキャンを停止できるため、気にするべきなのはトータルコストではなく主にスタートアップコストです。</p>
+<p>LATERAL サブクエリ ------------------</p>
+<p>9.3 以降では、FROM 内のサブクエリ（および FROM 内の関数）からの SQL 標準の LATERAL 参照をサポートしています。オプティマイザは、lateral 参照を含む RTE に対してパラメータ化されたパスを生成することによってこれらを実装します。そのような場合、そのリレーションの*すべての*パスは、少なくともその lateral 参照で使用されるリレーションのセットによってパラメータ化されます（そして順番に、そのようなサブクエリを含む結合リレーションは、パラメータ化されていないパスを全く持たない可能性があります）。ただし、パラメータ化されたパスに対して上記で行われた他のすべてのコメントは引き続き適用されます。特に、そのような各パスは、それにプッシュダウンできる結合句を引き続き強制することが期待されるため、同じパラメータ化を持つすべてのパスは同じ行数を持ちます。</p>
+<p>また、オプティマイザによる LATERAL サブクエリの平坦化（親クエリへのプルアップ）も許可されていますが、これは、そのクエリ条件のレベル以下にある最も低いアウター結合の外側にあるリレーションを参照するような lateral 参照を JOIN/ON 条件内に持ち込まない場合に限られます。そのような条件のセマンティクスは不明確になります。この制約があっても、LATERAL サブクエリのプルアップにより、構文上のスコープ外のリレーションに対する lateral 参照を含む PlaceHolderVar が作成される可能性があることに注意してください。私たちは引き続きそのような PHV をその構文上の場所またはそれ以下で評価しますが、プランノードの条件またはターゲットリストにそのような PHV が存在する場合、そのノードは、lateral 参照を提供するリレーションに対してネストループ結合の内側に現れる必要があります。（おそらく、その機能が動作するようになったので、プルアップの制約を緩和できるでしょうか？）</p>
+<p>条件句に対するセキュリティレベルの制約 ------------------------------------------</p>
+<p>行レベルセキュリティとセキュリティバリアビューを効率的にサポートするため、条件句（RestrictInfo ノード）に &quot;security_level&quot; フィールドのマークを付けます。基本的な概念は、より低い security_level を持つ条件が、より高い security_level を持つ条件よりも先に評価されなければならないということです。これにより、機密データを露出させる可能性のある「漏洩しやすい（leaky）」条件が、セキュリティ機密行をフィルタリングすることになっているセキュリティバリア条件がチェックされるまで評価されないことが保証されます。しかし、多くの条件式は「漏洩防止（leakproof）」、つまり、それらが使用する関数がデータを露出させない信頼できるものです。不必要に非効率なプランを避けるため、たとえ別の条件よりも構文上の security_level が高くても、漏洩防止条件はセキュリティレベルの考慮によって遅延させられません。</p>
+<p>RLS またはセキュリティバリアビューを使用しないクエリでは、すべての条件の security_level が 0 になるため、これらの制約はどれも機能しません。条件式の leakproof 性をチェックする必要さえないのです。</p>
+<p>セキュリティバリア条件がある場合、それらの security_level は 0 になり（バリアのレイヤーが複数ある場合はさらに高くなる可能性があります）、クエリテキストからの通常の条件には、バリア条件に使用された最も高いレベルよりも 1 つ高い security_level が割り当てられます。</p>
+<p>EquivalenceClass 処理によって新しい条件句が生成されるとき、それらに security_level を割り当てる必要があります。これが見た目以上に厄介です。最初に思い浮かぶ直感としては、EquivalenceClass のソース条件の中から見つかった最大のレベルを使用するのが安全であるということですが、それは全く安全ではありません。なぜなら、セキュリティバリア条件の不要な遅延を許容してしまうからです。バリア条件「t.x = t.y」に加えてクエリ条件「t.x = constant」があり、さらにバリア条件がチェックされる前に評価してはならない別のクエリ条件「leaky_function(t.z)」があると仮定します。 EC条件を「t.x = constant AND t.y = constant」に置き換えることになる EC {t.x, t.y, constant} が存在することになります（後者の条件により、元の条件からは決して発見できなかった t.y のインデックスの使用が可能になるため、この動作を諦めることも望みません）。これらの生成された条件にクエリ条件と同じ security_level が割り当てられた場合、leaky_function 条件が最初に評価され、leaky_function がバリア条件を通過しない可能性のある行のデータを見ることが可能になります。</p>
+<p>代わりに、ECでのセキュリティレベルの処理は次のように機能します。</p>
+<ul>
+<li>条件が漏洩防止（leakproof）であるか security_level が 0 でない限り、そもそも EC のソース句として受け入れられません。</li>
+<li>EC から派生した条件には、EC のソース句の中で見つかった最小の（最大ではない）security_level が割り当てられます。</li>
+<li>EC のソース句で見つかった最大の security_level が 0 より大きい場合、派生条件に選択される等価演算子は漏洩防止でなければなりません。そのような演算子が見つからない場合、EC は「破損（broken）」として扱われ、追加の派生条件なしでソース句を出力することにフォールバックします。</li>
+</ul>
+<p>これらのルールを合わせることで、信頼できない条件句（security_level が 0 より大きいもの）が EC に漏洩しやすい派生句を生成させないことが保証されます。これにより、派生句に対して最大ではなく最小の security_level を使用することが安全になります。これらのルールは、派生句を全く生成できないことにより、貧弱なプランをもたらす可能性がありますが、実際にはほとんどの btree 等価演算子が漏洩防止であるため、そのリスクはわずかです。また、レベルゼロの条件に対して例外を設けることにより、バリア条件が存在しない場合にプランの品質低下が発生しないことが保証されます。</p>
+<p>すべての条件にセキュリティレベルが割り当てられたら、バリア条件の順序付け制約の強制は 2 つのルールに帰着します。</p>
+<ul>
+<li>テーブルスキャンプランノードは、漏洩防止であるか、または同じプランノードで実行される予定の他のどの条件よりも高くない security_level を持たない限り、条件を早期実行のために選択してはなりません（たとえば、インデックススキャンのインデックス修飾子としてそれらを使用することなど）。（条件を早期実行のために選択しても問題ないかどうかをチェックするには、ユーティリティ関数 restriction_is_securely_promotable() を使用してください。）</li>
+</ul>
+<ul>
+<li>条件のリストの通常の実行は、同じセキュリティルールを満たす順序、すなわち、漏洩防止でない限り、より高い security_level が後で評価されなければならないという順序でそれらを実行しなければなりません。（これは createplan.c の order_qual_clauses() によって 1 つの場所で処理されます。）</li>
+</ul>
+<p>order_qual_clauses() は、漏洩防止条件に対して正確に何をすべきかを決定するためにヒューリスティクスを使用します。通常、明確な理由なしに条件の順序を再並べ替えしないようにソートが安定していることに注意しながら、security_level、次にコスト順に条件をソートします。しかし、これにより、より高い security_level を持つ安価な条件の前に、非常に高価な条件が実行される結果になる可能性があります。 安価な条件が漏洩しやすい場合は選択の余地がありませんが、それが漏洩防止であれば、最初に置くことができます。漏洩防止条件は security_level が 0 であるかのようにソートすることを選択しますが、そのコストが 10 * cpu_operator_cost よりも低い場合に限られます。この制約は、高価な条件を漏洩防止であるという理由だけで最初に実行してしまうという逆の問題を緩和します。</p></section><section class="document-translation-chunk translated" data-chunk-order="6"><p>結合条件のセキュリティレベルが混在する場合に、結合条件の安全な処理をサポートするためには追加のルールが必要になります。例えば、情報漏洩の恐れがあるより高いセキュリティレベルの条件が、より低いセキュリティレベルの他の条件よりも低い結合レベルで評価されるのを防ぐ必要があります。現在、セキュリティ優先の条件はRLSポリシーやセキュリティバリアビューからの単一テーブルの制限条件に限られ、セキュリティバリアビューのサブクエリは親クエリに平坦化されないため、これを考慮する必要はありません。したがって、セキュリティ優先の条件の強制はテーブルスキャンレベルでしか行われません。結合条件間でのセキュリティレベルの安全な処理に関する追加ルールがあれば、セキュリティバリアビューを親クエリに平坦化できるようになり、条件評価の必要な順序を維持しつつ、プランニングの柔軟性を高めることができるはずです。しかし、それは後の話になります。</p>
+<p>スキャン/結合プランニングの後 -----------------------</p>
+<p>ここまでは、スキャン/結合プランニング、つまりSQLクエリのFROM句とWHERE句の実装についてのみ議論してきました。しかし、プランナーはGROUP BY、集約、その他のクエリの上位機能に対処する方法も決定しなければなりません。多くの場合、これらのステップを実行する方法は複数あり、最適化の選択肢が存在します。これらのステップは、スキャン/結合プランニングと同様に、ステップを実行するさまざまな方法を表すPathを構築し、最もコストの低いPathを選択することによって処理されます。</p>
+<p>すべてのPathには「親」としてのRelOptInfoが必要なため、これらの上位処理ステップの出力を表すRelOptInfoを作成します。これらのRelOptInfoはほとんどがダミーですが、そのpathlistリストには各ステップで有用とみなされたすべてのPathが保持されます。現在、上位プランニング中にこれらタイプの追加のRelOptInfoを作成する場合があります。</p>
+<p>UPPERREL_SETOP		UNION/INTERSECT/EXCEPTの結果（存在する場合） UPPERREL_PARTIAL_GROUP_AGG	部分的なグループ化/集約の結果（存在する場合） UPPERREL_GROUP_AGG	グループ化/集約の結果（存在する場合） UPPERREL_WINDOW		ウィンドウ関数の結果（存在する場合） UPPERREL_PARTIAL_DISTINCT	部分的な「SELECT DISTINCT」の結果（存在する場合） UPPERREL_DISTINCT	「SELECT DISTINCT」の結果（存在する場合） UPPERREL_ORDERED	ORDER BYの結果（存在する場合） UPPERREL_FINAL		残りのトップレベルのアクションの結果（存在する場合）</p>
+<p>UPPERREL_FINALは、最終的な処理ステップ（現在はLockRows (SELECT FOR UPDATE)、LIMIT/OFFSET、およびModifyTable）を表すために使用されます。これらのステップが実行される順序には柔軟性がないため、このステージをより細かく小分けする必要はありません。</p>
+<p>これらの「上位リレーション」は、上記のUPPERREL列挙値とrelidsセットによって識別されます。これにより、同じ種類の上位リレーションを複数存在させることができます。同じ種類の上位リレーションを複数必要としない場合は、relidsにNULLを使用します。実際、現在ではrelidsセットは常にNULLであるため痕跡的なものとなっていますが、将来的には変更されることが想定されています。例えば、集合演算のプランニングにおいては、互いに競合するPathの特定のグループに結合されたリーフSELECTのどのサブセットをrelidsが表しているかを示すために、relidsが必要になる場合があります。</p>
+<p>subquery_planner()の結果は、常にNULLのrelidsを持つUPPERREL_FINALリレーションに格納されたPathのセットとして返されます。他の種類の上位リレーションは、特定のクエリで必要な場合にのみ作成されます。</p>
+<p>並列クエリと部分パス --------------------------------</p>
+<p>並列クエリとは、クエリ全体またはクエリの一部によって実行される必要がある作業を分割し、その作業の一部を1つ以上のワーカープロセス（並列ワーカーと呼ばれる）によって実行できるようにするものです。並列ワーカーは動的バックグラウンドワーカーのサブタイプです。詳細な説明については src/backend/access/transam/README.parallel を参照してください。並列クエリに関する学術文献によると、並列実行戦略は本質的に2つのカテゴリに分けることができます。クエリの実行が複数のステージに分割され、各ステージが別々のプロセスによって処理されるパイプライン並列性と、データが複数のプロセス間で分割され、各プロセスがそのサブセットを処理するパーティション並列性です。しかし、文献によれば、パイプライン並列性による利得は、パイプラインのストールを回避することが難しいため、非常に限定的なことが多いとされています。そのため、現時点ではこの技術を使用するクエリプランの生成は試みていません。</p>
+<p>代わりに、ベーステーブルがパーティション分割されていることを必要としないパーティション並列性に焦点を当てています。これに必要なのは、(1)リレーションに関与する少なくとも1つのベーステーブルからのデータを複数のプロセス間で分割する方法が存在すること、(2)各プロセスが独自のデータ部分を処理できるようにすること、そして(3)結果を収集することの3点のみです。要件(2)および(3)は、任意の数のワーカープロセスを起動し、そのすべてにおいて、また子プロセスがリーダーを忙しく保つのに十分なデータを生成していない場合はおそらくリーダーにおいても、単一の子プランを実行するエグゼキューターノードGather（またはGatherMerge）によって満たされます。要件(1)はテーブルスキャンノードによって処理されます。parallel_aware = trueを指定して呼び出された場合、このノードは実質的にブロック単位でテーブルをパーティション分割し、そのスキャンノードが実行される各ワーカーでリレーションからのタプルのサブセットを返します。</p>
+<p>非並列アクセス方法で行うのと同様に、並列プランで使用できるアクセス戦略を表すPathを構築します。これらは本質的に非並列プランで使用可能な戦略と同じですが、重要な違いがあります。Gatherノードの下で実行されるパスは、すべての結果ではなく、各ワーカーにおけるクエリ結果のサブセットのみを返します。実際に実行できるパスを形成するには、Gatherノードの（かなり大きな）コストを考慮に入れる必要があります。このような理由などから、Gatherノードの下で実行することを意図したパス（各ワーカーで結果のサブセットのみを返すため「部分（partial）」パスと呼ぶ）は、通常のパスとは別々に保持する必要があります（RelOptInfoのpartial_pathlistと add_partial_path関数を参照してください）。</p>
+<p>並列クエリを効果的にするための鍵の1つは、クエリのできるだけ多くを並列で実行することです。したがって、Gatherステージをプランのトップにできる限り近づくまで延期することが一般的に望ましいと予想されます。より多くの作業をGatherの下に押し下げることができるケースの範囲を広げ、（それらのコストを正確に算定することは）当分の間私たちを忙しさと共にあり続けるでしょう。</p>
+<p>パーティション単位の結合（Partitionwise joins） -----------------------------------</p>
+<p>同様にパーティション分割された2つのテーブル間の結合は、結合するテーブルのパーティションキー間に等価結合条件が存在する場合、それらの一致するパーティション間の結合に分解できます。パーティションキー間の等価結合は、あるパーティション分割されたテーブル内の特定の行に対するすべての結合相手が、もう一方のパーティション分割されたテーブルの対応するパーティション内になければならないことを意味します。このため、パーティション分割されたテーブル間の結合を、一致するパーティション間の結合に分解することができます。結果として得られる結合は、結合するリレーションと同じ方法でパーティション分割されるため、パーティションキー間に等価結合条件を持つ、同様にパーティション分割されたテーブル間のN方向の結合を、その一致するパーティション間のN方向の結合に分解することができます。パーティション分割されたテーブル間の結合をそのパーティション間の結合に分解するこの手法は、パーティション単位の結合（partitionwise join）と呼ばれます。「パーティション分割されたリレーション」という用語は、パーティション分割されたテーブル、または互換性のあるパーティション分割されたテーブル間の結合のどちらに対しても使用します。</p>
+<p>結合するリレーションのパーティション境界が正確に同じでない場合でも、高度なパーティションマッチングアルゴリズムを使用することで、パーティション単位の結合を適用できます。このアルゴリズムは、両方の結合リレーションについて、一方の結合リレーションのすべてのパーティションが、もう一方の結合リレーションの最大で1つのパーティションにのみ一致するかどうかをチェックします。そのような場合、結合リレーション間の結合を、一致するパーティション間の結合に分解できます。その後、結合リレーションをパーティション分割されたものとみなすことができます。このアルゴリズムは、結合を計算するためのパーティション単位の結合を可能にするために、一致するパーティションのペアと、結合リレーションのパーティション境界を生成します。このアルゴリズムは partition_bounds_merge() に実装されています。このようにパーティション分割されたとみなされるN方向の結合リレーションにおいて、すべての結合リレーションのペアがパーティション単位の結合を使用できるわけではありません。例えば、次のような場合です。</p>
+<p>(A leftjoin B on (Pab)) innerjoin C on (Pac)</p>
+<p>ここで、A、B、Cはパーティション分割されたテーブルであり、AはBおよびCと比較して余分なパーティションを持っています。結合 {A B} についてパーティション単位の結合を考慮する場合、Aの余分なパーティションにはヌル許容側に一致するパーティションがありません。これは、現在のパーティション単位の結合の実装では処理できないケースです。したがって、{A B} はパーティション分割されているとはみなされず、3方向の結合のために考慮される {A B} とCのペアはパーティション単位の結合を使用できません。一方、{A C} とBのペアはパーティション単位の結合を使用できます。なぜなら、{A C} は余分なパーティションを排除することでパーティション分割されているとみなされるためです（外部結合の順序変更に関する同一性1を参照してください）。N方向の結合でパーティション単位の結合を使用できるかどうかは、両方ともパーティション分割されておりパーティション単位の結合を使用できる、最初に現れた結合リレーションのペアに基づいて決定されます。</p>
+<p>パーティション分割されたリレーションのパーティションプロパティは、その RelOptInfo に格納されます。パーティションキーのデータ型に関する情報は PartitionSchemeData 構造体に格納されます。プランナーは正準パーティションスキーム（異なる PartitionSchemeData オブジェクト）のリストを維持し、同じパーティションスキームを持つ任意の2つのパーティション分割されたリレーションの RelOptInfo が同じ PartitionSchemeData オブジェクトを指すようにします。これにより、PartitionSchemeData オブジェクトによって消費されるメモリが削減され、結合リレーションのパーティションスキームを簡単に比較できるようになります。</p>
+<p>パーティション単位の集約/グループ化（Partitionwise aggregates/grouping） -------------------------------------------------------------------</p>
+<p>GROUP BY句がすべてのパーティションキーを含んでいる場合、特定のグループに属するすべての行は単一のパーティションから来なければなりません。したがって、集約は各パーティションに対して完全に個別に実行できます。そうでない場合は、各パーティションに対して部分集約を計算し、個々のパーティションからの結果をアペンドした後に最終処理を行うことができます。パーティション分割されたリレーションに対する集約またはグループ化を、そのパーティションに対する集約またはグループ化に分解するこの手法は、パーティション単位の集約（partitionwise aggregation）と呼ばれます。特にパーティションキーがGROUP BY句と一致する場合、これは通常の方法よりも大幅に高速になる可能性があります。</p>
+<p>積極的集約（Eager aggregation） ---------------------------</p>
+<p>積極的集約は、集約を結合の向こう側に部分的にプッシュし、すべてのリレーションが結合された後にそれをファイナライズするクエリ最適化手法です。積極的集約により、結合への入力行数を削減できるため、結果としてより優れた全体的なプランが得られる可能性があります。</p>
+<p>この変換が正しいことを証明するために、まず内部結合のみが関与するケースを考えます。この場合、FROM句のテーブルを2つのグループに分割します。少なくとも1つの集約列を含むグループと、集約列を全く含まないグループです。各グループは、そのグループ内のテーブルの直積によって形成される単一のリレーションとして扱うことができます。したがって、一般性を失うことなく、FROM句にはちょうど2つのリレーション、R1とR2が含まれていると仮定できます。ここで、R1はすべての集約列を含むリレーションを表し、R2は集約列を一切含まないリレーションを表します。</p>
+<p>クエリが次の形式であるとします。</p>
+<p>SELECT G, AGG(A) FROM R1 JOIN R2 ON J GROUP BY G;</p>
+<p>ここで、GはR1および/またはR2の列を含む可能性のあるグループ化キーのセットです。AGG(A)はR1の列Aに対する集約関数です。JはR1とR2の間の結合条件です。</p>
+<p>積極的集約の変換は次のようになります。</p>
+<p>GROUP BY G, AGG(A) on (R1 JOIN R2 ON J) = GROUP BY G, AGG(agg_A) on ((GROUP BY G1, AGG(A) AS agg_A on R1) JOIN R2 ON J)</p>
+<p>この等価性は、以下の条件下で成り立ちます。</p></section><section class="document-translation-chunk translated" data-chunk-order="7"><p>1) AGG は分解可能であり、つまり、部分集約とそれに続く最終集約の 2 つの段階で計算できること。 2) R1 の事前集約で使用される集合 G1 には以下が含まれる:</p>
+<ul>
+<li>グルーピングキー G の一部である R1 のすべての列、および</li>
+<li>結合条件 J に現れる R1 のすべての列。</li>
+<p>3) G1 内の任意の列に対するグルーピング演算子は、結合条件 J 内のその列で使用される演算子と互換性がある必要がある。</p>
+</ul>
+<p>G1 には、グルーピングキー G または結合条件 J のいずれかに現れる R1 のすべての列が含まれているため、互換性のある演算子が使用されていると仮定すると、各部分グループ内のすべての行は、グルーピングキーと R1 由来の結合関連列の両方について同一の値を持つ。 結果として、部分グループ内の行は、集約への貢献度や結合における挙動の点において区別がつかない。 これにより、同じ部分グループ内のすべての行が同じ「運命」を共有することが保証される: それらはすべて一致するか、あるいは R2 内の特定の行との一致に失敗するか的確に一致する。 集約関数 AGG は分解可能であるため、結合後に部分結果を集約することは、完全結合後に集約するのと同じ最終結果をもたらし、それによってクエリのセマンティクスが保持される。 証明終了。</p>
+<p>外部結合が存在する場合、結合順序の制約と外部結合における NULL 拡張のセマンティクスにより、状況はより複雑になる。 結合順序の制約のために、少なくとも 1 つの集約列を含むリレーションを単一のリレーションとして扱うことができない場合、部分集約パスは生成されず、したがってこの変換は適用できない。 それ以外の場合は、すべての集約列を含むリレーションを R1 とし、残りのリレーションを R2, R3, ... とする。 内部結合の場合から、前述の条件下で以下の等価性が成り立つ:</p>
+<p>GROUP BY G, AGG(A) on (R1 JOIN R2 JOIN R3 ...) = GROUP BY G, AGG(agg_A) on ((GROUP BY G1, AGG(A) AS agg_A on R1) JOIN R2 JOIN R3 ...)</p>
+<p>外部結合が関与する場合に正しさを維持するには、追加の条件が必要となる:</p>
+<p>4) R1 は、いかなる外部結合の NULL 許容側にあってはならない。</p>
+<p>この条件により、R1 に対する部分集約が、外部結合によって導入される NULL 拡張行を抑制しないことが保証される。 R1 が外部結合の NULL 許容側にある場合、外部結合によって生成された NULL 拡張行は部分集約を実行する際には利用できなくなるが、非先行集約 (non-eager-aggregation) プランではこれらの行がトップレベルの集約で利用可能である。 この場合に部分集約をプッシュダウンすると、行が予期したのとは異なる方法でグルーピングされたり、集約関数から不正確な値が生成されたりする可能性がある。</p>
+<p>セミ結合とアンチ結合にも同様の制限が課される。 そのような結合はその内部行を結合出力に残さないため、内部側で計算された部分集約は結合を生き延びることができず、最終集約によって結合することができない。 したがって、セミ結合やアンチ結合の内部側に部分集約をプッシュダウンすることはしない。 (外部結合から縮小されたアンチ結合はその内部側を NULL 拡張するため、その内部リレーションは上記の外部結合条件によってすでに除外されている。ここで具体的に対象としているのは、EXISTS、IN、NOT EXISTS、または NOT IN サブリンクから形成されるような、その内部側を NULL 拡張しないセミ結合やアンチ結合である。)</p>
+<p>結合ツリーの構築中、各ベースリレーションまたは結合リレーションを評価して、先行集約 (eager aggregation) を適用できるかどうかを判断する。 可能であれば、「グループ化されたリレーション (grouped relation)」と呼ばれる個別の RelOptInfo を作成し、非グループ化パスの上にソート済みおよびハッシュ済みの部分集約パスを追加してグループ化パスを生成する。 プランニング時間を制限するため、このステップでは最も安価な、または適切にソートされた非グループ化パスのみを考慮する。</p>
+<p>グループ化パスを生成するもう一つの方法は、グループ化されたリレーションとグループ化されていないリレーションを結合することである。 2 つのグループ化されたリレーション同士の結合は現在サポートされていない。</p>
+<p>プランニング時間をさらに制限するため、現在では、行数を大幅に削減できる結合ツリー内の最も低い実行可能なレベルにのみ部分集約をプッシュダウンする戦略を採用している。 この戦略はまた、同じグループ化されたリレーションに対するすべてのグループ化パスが同じ行のセットを生成することを保証するのにも役立ち、これはプランナーの基本仮定をサポートする上で重要である。</p>
+<p>最上位の結合リレーションに対してグループ化されたリレーションを生成した場合は、最後にそのパスを確定させる必要がある。 最終的なパスは、通常のプランニングから構築されたパスと通常の方法で競合する。</p>
+<p>&lt;/document&gt;</p></section></div><script>
 (function() {
   function notifyParent() {
     if (parent === window) return;

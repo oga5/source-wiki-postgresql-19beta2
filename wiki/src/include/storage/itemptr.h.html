@@ -3,7 +3,7 @@
 <h2>概要</h2>
 <p>ディスク上のタプルやインデックスエントリの位置を指し示す「タプルID（TID / ItemPointer）」のデータ構造と、それを操作するためのインライン関数群および外部関数群を定義するヘッダーファイルである。</p>
 <h2>モジュール内での役割</h2>
-<p><code>src/include/storage</code> サブシステムのストレージ層において、ページ内の特定の位置（ブロック番号とラインポインタ配列のオフセット）を表現する基礎的なプリミティブを提供する。ヒープタプルのヘッダー（<code>t_ctid</code>）やインデックスから親テーブルへのクロスリンクなど、PostgreSQL 全体で広く利用される。</p>
+<p><code>src/include/storage</code> サブシステムのストレージ層において、ページ内の特定の位置（ブロック番号とラインポインタ配列のオフセット）を表現する基礎的なプリミティブを提供する。ヒープタプルのヘッダー（<a class="wiki-source-link" href="../../../../source/src/include/access/htup_details.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__access__htup_details_h__t_ctid.html&quot;}, '*');"><code>t_ctid</code></a>）やインデックスから親テーブルへのクロスリンクなど、PostgreSQL 全体で広く利用される。</p>
 <h2>責務</h2>
 <ul>
 <li>**データ構造の定義**: 6バイトのコンパクトな構造体 <code>ItemPointerData</code> の定義とパディング防止。</li>
@@ -21,7 +21,7 @@
 <h3>特殊値マクロ</h3>
 <ul>
 <li><a class="wiki-source-link" href="../../../../source/src/include/storage/itemptr.h.html#L63" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/storage/itemptr.h.html&quot;}, '*');"><code>SpecTokenOffsetNumber</code></a> (<code>0xfffe</code>): スペキュスラティブ挿入トークンを表すオフセット番号。</li>
-<li><a class="wiki-source-link" href="../../../../source/src/include/storage/itemptr.h.html#L69" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/storage/itemptr.h.html&quot;}, '*');"><code>MovedPartitionsOffsetNumber</code></a> (<code>0xfffd</code>) / <a class="wiki-source-link" href="../../../../source/src/include/storage/itemptr.h.html#L70" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/storage/itemptr.h.html&quot;}, '*');"><code>MovedPartitionsBlockNumber</code></a> (<code>InvalidBlockNumber</code>): <a class="wiki-source-link" href="../../../../source/src/backend/optimizer/prep/preptlist.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__prep__preptlist_c__UPDATE.html&quot;}, '*');">UPDATE</a> によって他パーティションへ移動したタプルを示すマジック値。</li>
+<li><a class="wiki-source-link" href="../../../../source/src/include/storage/itemptr.h.html#L69" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/storage/itemptr.h.html&quot;}, '*');"><code>MovedPartitionsOffsetNumber</code></a> (<code>0xfffd</code>) / <a class="wiki-source-link" href="../../../../source/src/include/storage/itemptr.h.html#L70" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/storage/itemptr.h.html&quot;}, '*');"><code>MovedPartitionsBlockNumber</code></a> (<code>InvalidBlockNumber</code>): UPDATE によって他パーティションへ移動したタプルを示すマジック値。</li>
 </ul>
 <h3>アクセサ・バリデーション・ミューテータ (インライン関数)</h3>
 <ul>

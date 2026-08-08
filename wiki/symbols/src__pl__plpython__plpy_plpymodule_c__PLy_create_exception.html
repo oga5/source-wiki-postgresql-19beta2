@@ -34,12 +34,12 @@
 <h2>関連データ構造</h2>
 <p><code>PyObject</code>, <code>variable</code></p>
 <h2>ソース抜粋</h2>
-<p>~~~c static PyObject * <a class="wiki-source-link" href="../../source/src/pl/plpython/plpy_plpymodule.c.html#L180" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__pl__plpython__plpy_plpymodule_c__PLy_create_exception.html&quot;}, '*');">PLy_create_exception</a>(<a class="wiki-source-link" href="../../source/src/include/port/atomics/generic-gcc.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__port__atomics__generic-gcc_h__char.html&quot;}, '*');">char</a> *name, PyObject *base, PyObject *dict, const <a class="wiki-source-link" href="../../source/src/include/port/atomics/generic-gcc.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__port__atomics__generic-gcc_h__char.html&quot;}, '*');">char</a> *modname, PyObject *mod) { PyObject   *exc;</p>
+<p>~~~c static PyObject * <a class="wiki-source-link" href="../../source/src/pl/plpython/plpy_plpymodule.c.html#L180" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__pl__plpython__plpy_plpymodule_c__PLy_create_exception.html&quot;}, '*');">PLy_create_exception</a>(char *name, PyObject *base, PyObject *dict, const char *modname, PyObject *mod) { PyObject   *exc;</p>
 <p>exc = PyErr_NewException(name, base, dict); if (exc == NULL) PLy_elog(ERROR, NULL);</p>
 <p>/*</p>
 <ul>
 <li>PyModule_AddObject() (below) steals the reference to exc, but we also</li>
-<li>want to return the <a class="wiki-source-link" href="../../source/src/interfaces/ecpg/compatlib/informix.c.html#L687" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/ecpg/compatlib/informix.c.html&quot;}, '*');">value</a> from this function, so add another ref to</li>
+<li>want to return the value from this function, so add another ref to</li>
 <li>account for that.  (The caller will store a pointer to the exception</li>
 <li>object in some permanent variable.)</li>
 <p>*/ Py_INCREF(exc);</p>

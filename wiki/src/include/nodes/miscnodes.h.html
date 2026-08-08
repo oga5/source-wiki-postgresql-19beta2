@@ -1,0 +1,53 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>src/include/nodes/miscnodes.h.md</title><link rel="stylesheet" href="../../../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../../../source/src/include/nodes/miscnodes.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/nodes/miscnodes.h.html&quot;}, '*');">src/include/nodes/miscnodes.h</a></h1>
+<h2>概要</h2>
+<p><a class="wiki-source-link" href="../../../../source/src/include/nodes/miscnodes.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/nodes/miscnodes.h.html&quot;}, '*');"><code>src/include/nodes/miscnodes.h</code></a> は、PostgreSQL のパースツリー、プランツリー、実行ステートツリーのいずれにも分類されない、特殊な目的を持つノード型を定義するヘッダーファイルです。</p>
+<h2>モジュール内での役割</h2>
+<p><code>src/include/nodes</code> サブシステムの一部として、他の主要なツリー構造（パース、プラン、実行）には属さないものの、API 間のコンテキスト引き渡しなどで <code>IsA()</code> マクロによる型判別が必要となる構造体を提供します。</p>
+<h2>責務</h2>
+<ul>
+<li>どの主要なツリーにも属さない分類困難なノード型（<code>NodeTag</code> を持つ構造体）の定義。</li>
+<li>ソフトエラー（捕捉可能なエラー）の通知およびハンドリング用コンテキスト構造体と関連マクロの提供。</li>
+</ul>
+<h2>重要なシンボル</h2>
+<ul>
+<li><a class="wiki-source-link" href="../../../../source/src/include/nodes/miscnodes.h.html#L44" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__nodes__miscnodes_h__ErrorSaveContext.html&quot;}, '*');"><code>ErrorSaveContext</code></a>: 関数呼び出し等のコンテキストを通じて「ソフトエラー」を捕捉・伝播させるためのノード構造体。</li>
+<li><a class="wiki-source-link" href="../../../../source/src/include/nodes/miscnodes.h.html#L53" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/nodes/miscnodes.h.html&quot;}, '*');"><code>SOFT_ERROR_OCCURRED</code></a>: 渡されたコンテキストが有効かつ <a class="wiki-source-link" href="../../../../source/src/include/nodes/miscnodes.h.html#L44" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__nodes__miscnodes_h__ErrorSaveContext.html&quot;}, '*');"><code>ErrorSaveContext</code></a> であり、かつエラーが発生しているかを簡便に判定するマクロ。</li>
+</ul>
+<h2>制御フローとデータフロー</h2>
+<ul>
+<li>呼び出し元は <a class="wiki-source-link" href="../../../../source/src/include/nodes/miscnodes.h.html#L44" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__nodes__miscnodes_h__ErrorSaveContext.html&quot;}, '*');"><code>ErrorSaveContext</code></a> を初期化（<code>NodeTag</code> の設定と必要に応じた <code>details_wanted = true</code> の指定）し、<code>FunctionCallInfo.context</code> や直接のサブルーチン引数として渡します。</li>
+<li>呼び出し先のエラー発生箇所ではエラー情報を <a class="wiki-source-link" href="../../../../source/src/include/nodes/miscnodes.h.html#L44" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__nodes__miscnodes_h__ErrorSaveContext.html&quot;}, '*');"><code>ErrorSaveContext</code></a> に格納し、<code>error_occurred</code> フラグを <a class="wiki-source-link" href="../../../../source/src/tools/pg_bsd_indent/indent_globs.h.html#L46" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/tools/pg_bsd_indent/indent_globs.h.html&quot;}, '*');"><code>true</code></a> に設定します。</li>
+<li>呼び出し元は <code>SOFT_ERROR_OCCURRED(escontext)</code> マクロや <code>error_occurred</code> フィールドをチェックし、必要に応じて詳細な <a class="wiki-source-link" href="../../../../source/src/include/utils/elog.h.html#L435" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__utils__elog_h__ErrorData.html&quot;}, '*');"><code>ErrorData</code></a> を処理します。</li>
+</ul>
+<h2>直接依存</h2>
+<ul>
+<li><code>nodes/nodes.h</code>: 基本的なノード機構と <code>NodeTag</code> 定義を提供。</li>
+</ul>
+<h2>関連コード</h2>
+<ul>
+<li><a class="wiki-source-link" href="../../../../source/src/include/nodes/nodes.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/nodes/nodes.h.html&quot;}, '*');"><code>src/include/nodes/nodes.h</code></a>: ノード基盤定義。</li>
+<li><code>src/include/nodes/</code> 内の他のノード定義ファイル（パースや実行用ノードとは異なり、こちらは独立した補助的用途）。</li>
+</ul>
+<h2>読者向けメモ</h2>
+<ul>
+<li>ここで定義されるノードは通常のツリー構築用ではないため、API 境界を越えるコンテキスト伝達やエラーハンドリングの仕組みを追う際によく参照されます。</li>
+</ul>
+<h2>シンボルページ</h2>
+<ul>
+<li><a href="../../../symbols/src__include__nodes__miscnodes_h__ErrorSaveContext.html" target="wiki-view"><code>ErrorSaveContext</code></a></li>
+</ul><script>
+(function() {
+  function notifyParent() {
+    if (parent === window) return;
+    parent.postMessage({type: "frame-location", frame: window.name || "", href: window.location.href}, "*");
+  }
+  document.addEventListener("click", function(event) {
+    const link = event.target.closest("a[data-panel]");
+    if (!link || parent === window) return;
+    parent.postMessage({type: "source-link", panel: link.dataset.panel}, "*");
+  });
+  window.addEventListener("load", notifyParent);
+  window.addEventListener("hashchange", notifyParent);
+})();
+</script></body></html>

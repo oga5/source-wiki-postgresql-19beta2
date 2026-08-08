@@ -1,0 +1,137 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>src/backend/regex/README</title><link rel="stylesheet" href="../../../../../styles.css"></head><body><h1>Japanese translation</h1><p><code>src/backend/regex/README</code></p><p><a href="../../../../../source/src/backend/regex/README.html" target="source-view">View original document</a></p><p class="document-translation-progress document-translation-incomplete">Translation in progress: 2/3 chunks complete. Pending chunks show their original text below.</p><div class="document-translation-body"><section class="document-translation-chunk translated" data-chunk-order="0"><p>Henry Spencer の正規表現ライブラリに関する実装ノート ========================================================</p>
+<p>Henry が内部ドキュメントを残していたとしても、それは公開されていませんでした。 そのため、このファイルはいくつかのドキュメントをリバースエンジニアリングしようとする試みです。</p>
+<p>ソースファイルの一般的な構成 --------------------------</p>
+<p>個別にコンパイル可能なソースファイルが 6 つあり、そのうちの 5 つは それぞれ正確に 1 つのエクスポートされた関数を公開しています。 regcomp.c: pg_regcomp regexec.c: pg_regexec regerror.c: pg_regerror regfree.c: pg_regfree regprefix.c: pg_regprefix (pg_ 接頭辞は、このライブラリのバージョンを、特定のシステムに存在するかもしれない 同様のものと区別するために Postgres プロジェクトによって追加されました。 ライブラリのスタンドアロン版では、これらを削除するか置き換える必要があります。)</p>
+<p>6番目のファイルである regexport.c は、コンパイルされた正規表現に関する情報の抽出を 許可する複数の関数を公開しています (regexport.h を参照)。</p>
+<p>regcomp に #include される追加のソースファイル regc_*.c があり、 同様に regexec に #include される追加のソースファイル rege_*.c があります。 これは内部シンボルがグローバルに公開されるのを避けるために行われました。 ライブラリ API の一部となることを意図していない関数はすべて static です。</p>
+<p>(実際、上記は 1 つの点で事実とは異なります。regcomp にはさらに 2 つのグローバル シンボル、pg_set_regex_collation と pg_reg_getcolor があります。これらは API の一部であることを意図していませんが、regcomp と regexec の両方がそれらを呼び出すため、 グローバルである必要があります。必要なロケール状態を正規表現構造体に保持させる方法で、 pg_set_regex_collation およびそれが設定する静的変数を排除する方がより良いでしょう。 アプリケーション固有の状態を構造体に追加する方法の設計がないため、 これはまだ行われていません。)</p>
+<p>src/backend/regex/ 内の配置:</p>
+<p>regcomp.c		トップレベルの正規表現コンパイルコード regc_color.c		カラーマップ管理 regc_cvec.c		文字ベクター (cvec) 管理 regc_lex.c		lexer (字句解析器) regc_nfa.c		NFA 処理 regc_locale.c		Tcl プロジェクトからのアプリケーション固有のロケールコード regc_pg_locale.c	Postgres が追加したアプリケーション固有のロケールコード regexec.c		トップレベルの正規表現実行コード rege_dfa.c		DFA の作成と実行 regerror.c		pg_regerror: 正規表現エラーコードのテキストを生成 regfree.c		pg_regfree: 不要になった regex_t を解放するための API regexport.c		regex_t から情報を抽出するための関数 regprefix.c		regex_t から共通のプレフィックスを抽出するためのコード</p>
+<p>ロケール固有のコードは、主としてケースフォールディングや、[[:alnum:]] のような ロケール固有の文字クラスの展開に関係しています。 これがスタンドアロンライブラリになるためには、真のリファクタリングが必要です。</p>
+<p>ライブラリのヘッダーファイルは src/include/regex/ にあります:</p>
+<p>regcustom.h		特定のアプリケーション向けにライブラリをカスタマイズする regerrs.h		エラーメッセージのリスト regex.h			エクスポートされた API regexport.h		regexport.c 用のエクスポートされた API regguts.h		内部宣言</p>
+<p>DFA、NFA、およびそれらに関するすべて ----------------------------------</p>
+<p>このライブラリは、ハイブリッド DFA/NFA 正規表現の実装です。 (これらの用語のどちらも聞いたことがない場合は、1年目のコンピュータ科学の教科書を読みに行ってください。) ひと目でそれが実際に何を意味し、コード内で目にするものとどう関連しているのかが 明確ではないかもしれません。実際に起こることは次のとおりです。</p>
+<ul>
+<li>正規表現の初期パースによって NFA 表現が生成され、</li>
+<p>その状態数は正規表現の長さにほぼ比例します。</p>
+</ul>
+<ul>
+<li>次に、NFA は「コンパクト NFA」表現に最適化されます。これは基本的には同じ概念ですが、</li>
+<p>実行時に必要とならないフィールドが除外されています。また簡素化もされており、 コンパクト形式では「プレーン」および「LACON」アーク型のみが許可されます。 この cNFA 表現が regcomp から regexec に渡されます。</p>
+</ul>
+<ul>
+<li>従来の NFA ベースの正規表現エンジンとは異なり、NFA 表現から直接実行することはありません。</li>
+<p>それはバックトラッキングを必要とし、したがって場合によっては非常に遅くなるためです。 むしろ、バックトラッキングなしで線形時間 (入力の M 文字に対して O(M)) で 入力文字列を処理できる DFA を理想的に実行します。 DFA の各状態は、NFA の状態の集合、つまり入力文字列内の現在のポイントに到達したときに NFA が取り得たすべての状態に対応します。 したがって、N States 個の状態を持つ NFA は、対応する DFA で最大 2^N 個の状態を必要とする可能性があり、 それは簡単に不合理な量のメモリを要求する可能性があります。 私たちは、DFA の状態を遅延して (必要な場合にのみ) 具現化し、 それらを制限されたサイズのキャッシュに保持することでこれに対処しています。 DFA の同じ状態を繰り返し構築する必要が生じる可能性があるため、 このアプローチは真の O(M) 時間にはなりませんが、最悪の場合でも O(M*N) です。 それでもバックトラッキング NFA エンジンの最悪ケースよりはるかに優れています。</p>
+</ul>
+<p>もしそれが全てであれば、単にこれは DFA エンジンであり、 NFA の使用は単なる実装詳細にすぎないと言うでしょう。 しかし、DFA エンジンは、キャプチャ用括弧や後方参照などの いくつかの重要な正規表現機能を処理できません。 パーサーが正規表現にこれらの機能が使用されていると判断した場合 (コード内では総称して「厄介なケース (messy cases)」と呼ばれます)、 結局 NFA スタイルのバックトラッキング検索を使用する必要があります。</p>
+<p>NFA モードを使用する場合、パーサーによって構築される表現は サブ式のツリー (&quot;subre&quot;) で構成されます。 ツリーの葉ノードは、プレーンな正規表現 (上述の方法で DFA として実行される) または後方参照 (入力と以前の部分文字列とのマッチングを試みる) のいずれかです。 葉以外のノードは、キャプチャノード (子ノードに現在マッチしている部分文字列の位置を保存する)、 連結、選択、または反復ノードです。 実行時に、エグゼキューターはツリーを再帰的にスキャンします。 連結、選択、または反復ノードでは、入力文字列にマッチさせるための 考えられるすべての代替方法を検討します。つまり、連結または反復のために文字列を分割できる各位置、 あるいは選択のための各子ノードを検討します。 子ノードに従ってマッチが失敗した場合、次の代替方法を試します。 これはまさに従来の NFA 正規表現エンジンが行うバックトラッキング検索の種類です。 ツリーのレベルが多い場合、非常に遅くなる可能性があります。</p>
+<p>しかし、まだ望みは絶たれていません。通常の純粋な NFA エンジンよりも賢くあり続けることができます。 これを行うために、各 subre ノードには対応する DFA が関連付けられています。 これは、数学的に純粋な正規表現が記述できる限りにおいて、そのノードが何にマッチし得るかを表します。 基本的には「バックレフなし」を意味します。 考えられる代替サブマッチの検索を実行する前に、DFAを実行して、 提案された部分文字列が実際にマッチする可能性があるかどうかを確認します。 もしそうでなければ、多数の可能性を反復処理することなく、すぐにマッチを拒否できます。</p>
+<p>例として、正規表現 &quot;(a[bc]+)\1&quot; を考えます。 コンパイルされた表現は、トップレベルの連結 subre ノードを持ちます。 その最初の子は &quot;a[bc]+&quot; のプレーンな DFA ノードです (キャプチャノードとしてマークされています)。 連結の 2 番目の子部品は \1 のバックレフノードです。 連結ノードに関連付けられた DFA は &quot;a[bc]+a[bc]+&quot; になります。 ここでバックレフは、その参照元表現の DFA のコピーに置き換えられています。 実行時、連結ノードは、2つの子ノードがそれぞれ文字列の部分にマッチすることを許可する 入力文字列の可能な分割を探す必要があります (そして、この特定のケースは分割が中央にある場合にのみ成功しますが、 コードはそれを知らず、一般的にそれが真であるわけでもありません)。 ただし、最初に DFA を実行して、&quot;a&quot; で始まらず、 1つの追加の &quot;a&quot; と任意の数の b および c を含まない入力を素早く拒否することができます。 DFA がマッチしない場合、考えられるすべての文字列分割点に対して 2つの子ノードに再帰する必要はありません。 多くの場合、このプレフィルタリングにより、検索は純粋な NFA エンジンが実行できるよりも はるかに高速に実行されます。 スペンサーのライブラリを説明するために「ハイブリッド DFA/NFA エンジン」というフレーズの使用を 正当化するのは、まさにこの挙動です。</p>
+<p>個別のキャプチャ subre ノードが珍しいことは言及する価値があるかもしれません。 通常、subre をキャプチャとしてマークするだけでそれでおしまいです。 ただし、同じ部分文字列が複数の括弧の組によってキャプチャされなければならない &quot;((x))&quot; のような正規表現を書くことは合法です。 subre には 1つの &quot;capno&quot; フィールドしか入る余裕がないため、単一の subre ではそれを処理できません。 このようなケースを処理するために、ベースとなる subre (最も内側の括弧をキャプチャする) を no-op (何もしない) キャプチャノードでラップするか、&quot;(((x)))&quot; などの場合は複数でラップします。 これは、複数の同一の NFA が生成されるため少し非効率的ですが、 そのケースは無意味であり頻度も低いため、それ以上努力する価値はありません。</p>
+<p>色とカラーマッピング --------------------</p>
+<p>多くの一般的な正規表現パターンには、実行エンジンによって同じように処理できる 大量の文字が存在します。 簡単な例は、識別子のためのパターン &quot;[[:alpha:]][[:alnum:]]*&quot; です。 基本的にエンジンは、入力シンボルが文字、数字、またはその他のいずれであるかを気にするだけでよいのです。 可能な文字や数字ごとに個別のアーチを持つ NFA または DFA を構築することもできますが、 それはスペースの無駄であり、特に何千もの文字を持つ可能性のある Unicode を扱う場合には 実行コストも安くありません。 その代わりに、パーサーは可能な各入力シンボルを「色」 (同値クラス) にマップする 「カラーマップ」を構築します。 そうすると、NFA または DFA 表現には、特定の入力シンボルではなく、 色でラベル付けされたアークが配置されます。 実行時、エグゼキューターが各入力シンボルに対して最初に行うことは、 カラーマップでその色をルックアップすることであり、 その後はすべて色のみに基づいて動作します。</p>
+<p>カラーマップを構築するために、まずすべての可能な入力シンボルに WHITE という色を割り当てます。 これは「その他」を意味します (つまり、パースの終了時に依然として WHITE であるシンボルは、 正規表現内のどこからも明示的に参照されなかったものです)。 正規表現内で単純なリテラル文字またはブラケット表現を見つけたとき、 その文字、またはブラケット表現によって表されるすべての文字に、 この文字またはブラケット表現にマッチするための状態遷移に対応する NFA アークに ラベル付けするために使用できる、一意の新色を割り当てたいと考えます。 基本的なアイデアは次のとおりです: 第 1 に、文字に割り当てられている色を何らかの新値に変更する。 第 2 に、部分的に構築された NFA 内の既存のアークすべてを走査し、 文字の旧色を参照しているアークのそれぞれについて、 その新色を参照する並行アークを追加する (これにより、再割り当てによって すでに構築したもののセマンティクスが変更されるのを防ぐ)。 そして第 3 に、現在の NFA の状態のペアに文字の新色を持つ新しいアークを追加し、 この文字を見ることで状態遷移を行えるようになることを示す。</p>
+<p>これは、必要以上に多くの色 (同値クラス) を作成したくないという理由から、 少し複雑になっています。 特に、ブラケット表現が以前と同じ色を持っていた 2 つの文字に言及している場合、 それらを区別する必要が依然としてないため、ブラケットを処理した後も 同じ色を共有し続けるべきです。 しかし、以前と同じ色を持っていたにもかかわらず、ブラケット表現にリストされていない 他の文字とはそれらを区別する必要があります。 これをメカニズム化するために、コードには「親の色 (parent colors)」と 「サブカラー (subcolors)」という概念があり、ある色のサブカラーとは、 現在のアトムをパースしている間にその色の任意の文字に与えている新色です。 (ここで「親」という言葉は、長期的な関係を暗示するため少し不適切ですが、 サブカラーのリンクは実際には単一のアトムをパースする期間中しか持続しません。) 言い換えると、サブカラーのリンクは、現在の正規表現アトムによって 各メンバー文字が含まれるべきかどうか応じて、 親の色を 2 つの色 (同値クラス) に分割する処理の最中であることを意味します。</p></section><section class="document-translation-chunk translated" data-chunk-order="1"><p>例として、正規表現 &quot;a\d\wx&quot; があるとします。初期状態では、可能なすべての文字コードに WHITE (色 0) が割り当てられています。アトム &quot;a&quot; をパースするために、新しい色 (1) を作成し、&quot;a&quot; のカラーマップのエントリを 1 に更新し、NFA の最初の 2 つの状態の間に 1 というラベルの付いたアークを作成します。ここで \d が現れますが、これは実際には数字 &quot;0&quot; から &quot;9&quot; を含むブラケット表現です。まず &quot;0&quot; を処理します。これは現在 WHITE であるため、新しい色 (2) を作成し、&quot;0&quot; のカラーマップのエントリを 2 に更新し、NFA の 2 番目と 3 番目の状態の間に 2 というラベルの付いたアークを作成します。また、WHITE の色にサブカラー 2 があるというマークを付けます。これは、後で WHITE 文字を再割り当てするときにも新しい色として 2 を選択すべきであることを意味します。したがって、&quot;1&quot; を処理するときには、新しい色を作成する代わりに 2 を再利用します。&quot;1&quot; のカラーマップのエントリを 2 に更新し、NFA の 2 番目と 3 番目の状態の間にはすでに 2 というラベルの付いたアークが存在するため、新しいアークが必要ないことが分かります。残りの 8 つの数字についても同様であるため、このブラケット表現のすべてのメンバーについて、NFA の状態 2 と 3 の間には 2 というラベルの付いたアークが 1 つだけ存在することになります。ブラケット表現の処理が完了すると、okcolors() を呼び出して、既存の親/サブカラーのリンクをすべて解除します。WHITE 文字を 2 に再割り当てすべきであるというマーカーはなくなります。(注: 実際には、プリミティブアトム &quot;a&quot; に対してもサブカラーリンクの作成とクリアを行いましたが、それはあまり面白いことではありませんでした。) 次に &quot;\w&quot; ブラケット表現に移ります。簡単のために、これは単に &quot;[a-z0-9]&quot; に展開されると仮定します。&quot;a&quot; を処理しますが、それがすでにその色 1 の唯一のメンバーであることに気づきます。これは、その同値クラスをこれ以上細かく分割する必要がないことを意味するため、新しい色は作成しません。3 番目と 4 番目の NFA 状態の間に 1 というラベルの付いたアークを作成するだけです。次に &quot;b&quot; を処理します。これは WHITE であり、唯一の WHITE 文字からはほど遠いため、新しい色 (3) を作成し、それを WHITE のサブカラーとしてリンクし、&quot;b&quot; を色 3 に再割り当てし、3 というラベルの付いたアークを作成します。&quot;c&quot; から &quot;z&quot; を処理する際、それぞれが WHITE から 3 に再割り当てされますが、新しいアークは必要ありません。次に &quot;0&quot; に移りますが、これはその色 2 の唯一のメンバーではないため、新しい色が必要であると推測し、色 4 を作成します。4 を 2 のサブカラーとしてリンクし、マップ内の &quot;0&quot; を色 4 に再割り当てし、色 4 のアークを追加します。次に &quot;1&quot; から &quot;9&quot; も同様に色 4 に再割り当てされ、追加のアークは必要ありません。ブラケット表現の処理が終了したら、okcolors() を呼び出し、サブカラーリンクを解除します。okcolors() はさらに、色 2 (数字文字の以前の色) のすべてのメンバーを削除したことに気づきます。したがって、これまでに構築された部分 NFA を走査し、2 というラベルの付いたアークを色 4 に再割り当てします。特に、NFA の状態 2 から状態 3 へのアークは色 4 に再割り当てされます。次に、その色をこれ以上使用しないため、色 2 を解放します。これで、数字の遷移が一貫して色 4 のラベルで表される NFA ができました。最後に、アトム &quot;x&quot; に移ります。&quot;x&quot; は現在色 3 でラベル付けされており、その色の唯一のメンバーではないため、これまで区別していなかった &quot;x&quot; を他の文字と区別する必要があることに気づきます。新しい色を作成します。5 になった可能性がありますが、代わりに未使用の色 2 を再利用します。&quot;x&quot; はカラーマップ内で 2 に再割り当てされ、2 は 3 のサブカラーとしてリンクされ、NFA の状態 4 と 5 の間に 2 のアークが追加されます。ここで okcolors() を呼び出すと、色 3 と 2 の間のサブカラーリンクが解除され、両方の色が空でないことが確認されます。したがって、既存の NFA アークも走査し、3 というラベルの付いたアークがある場所にはどこでも、2 というラベルの付いた追加のアークを追加します。この動作により、色 2 の文字 (つまり &quot;x&quot;) は、これまでと同様に任意の遷移を許可すると見なされることが保証されます。これで正規表現のパースが完了し、最終的に次の色の割り当てが得られます。 color 1: &quot;a&quot; color 2: &quot;x&quot; color 3: other letters color 4: digits また、NFA には次のアークがあります。 states 1 -&gt; 2 on color 1 (hence, &quot;a&quot; only) states 2 -&gt; 3 on color 4 (digits) states 3 -&gt; 4 on colors 1, 3, 4, and 2 (covering all \w characters) states 4 -&gt; 5 on color 2 (&quot;x&quot; only) これらは、正規表現の正しい表現であることがわかります。</p>
+<p>もう 1 つの複雑な点として、任意の文字にマッチするアトムである &quot;.&quot; をどのように処理するかという問題があります。以前は、ドットの前後の 2 つの NFA 状態の間にある、すべてのライブルの色の「レインボー」アークを生成することによって行っていました。色が多い場合、それ自体がコストがかかりますし、通常、色分割ロジックに対して多くの後続のアーク分割作業を追加することになります。現在では、すべての色を意味する特殊な色 RAINBOW のラベルが付いた単一のアークを生成することで、このケースを処理しています。このようなアークは分割する必要が一切ないため、この一般的なケースで NFA を小さく保つのに役立ちます。(注: この最適化は、&quot;.&quot; が改行にマッチしないことになっている REG_NLSTOP モードでは役立ちません。その場合でも、改行の色を除くすべての色のほぼレインボーを生成することによって &quot;.&quot; を処理します。)</p>
+<p>この概要から、色には次の操作が必要であることがわかります。</p>
+<ul>
+<li>任意の文字コードの現在のカラー割り当てを高速にルックアップする方法。(これはパース時と実行時の両方で必要ですが、残りの操作はパース時のみ必要です。)</li>
+<li>指定された文字コードのカラー割り当てを変更する方法。</li>
+<li>空の色やシングルトン色を検出し,できるように、各色に現在割り当てられている文字数を追跡する必要があります。</li>
+<li>既存の色を細分化する必要があるときに、それらを再割り当てしたり、新しい色の並行アークを追加したりできるように、特定の色に関する既存の NFA アークをすべて追跡する必要があります。</li>
+</ul>
+<p>最後の 2 つは、&quot;struct colordesc&quot; 配列と NFA アーク構造体の &quot;colorchain&quot; リンクによって処理されます。</p>
+<p>理想的には、最初の 2 つの操作は、各文字コードの現在のカラー割り当てを格納する単純な線形配列を使用して行いたいところです。残念ながら、Unicode などの大きな文字セットでは、それはあまり実用的ではありません。私たちの解決策は、カラーマップを 2 つの部分に分割することです。単純な線形配列は、MAX_SIMPLE_CHR までの文字コードに使用されます。これは、よく使われるすべての文字を含めるのに十分な大きさに選択できます (これにより、これから説明する大幅に低速なコードパスが呼び出されることがほとんどなくなります)。それよりも上の文字は、正規表現パターンのなかに明示的に現れる場合にのみ、コンパイル時に考慮する必要があります。そのような言及された文字または文字範囲はそれぞれ、カラーマップ内の &quot;colormaprange&quot; 配列のエントリとして格納されます。(重複する範囲は一意の部分範囲に分割されるため、完了したリスト内の各範囲には、そのすべての文字を説明する単一の色のみが必要になります。) 実行時に MAX_SIMPLE_CHR より上の文字を色にマッピングする場合、この範囲のリストを明示的に検索します。</p>
+<p>ただし、[[:alpha:]] などのロケール依存の文字クラスがあるため、それだけではまだ十分ではありません。Unicode ロケールでは、これらのクラスには MAX_SIMPLE_CHR を超えるエントリが何千も含まれている可能性があり、実行時に大きな colormaprange 配列を検索することは確実に避けたいところです。また、それらの文字を網羅的に記述する cvec 構造体を初期化するのに時間を費やすことも望ましくありません。私たちの解決策は、正確な文字ごとの色を、MAX_SIMPLE_CHR までの正規表現コンパイル時にのみ計算することです。それより上の文字については、正規表現パターンで使用されているロケール依存の文字クラスごとに実行時に &lt;ctype.h&gt; または &lt;wctype.h&gt; ルックアップ関数を適用し、実行時文字がどのクラスに属するかを記述するビットマップを構築します。前述の文字範囲ごとのデータ構造は、実際には、範囲ごとに、文字クラスのプロパティの可能なすべての組み合わせに対して個別のカラーエントリを保持します。つまり、MAX_SIMPLE_CHR より上の文字のカラーマップは、実際には 2 次元配列であり、その行は正規表現パターンで明示的に言及されている高位の文字または文字範囲に対応し、列は正規表現で使用されているロケール依存の文字クラスのセットに対応します。</p>
+<p>例として、パターン &#x27;\w\u1234[\U0001D100-\U0001D1FF]&#x27; が与えられた場合 (かつ MAX_SIMPLE_CHR が 0x1234 未満であると仮定した場合)、3 つの行を持つ高位カラーマップが必要になります。1 つの行は単一文字 U+1234 (単一要素の範囲として表される) 用であり、1 つは範囲 U+1D100..U+1D1FF 用であり、もう 1 つの行は残りのすべての高位文字を表します。カラーマップには 2 つの列があり、1 つは iswalnum() を満たす文字用で、もう 1 つは満たさない文字用です。</p>
+<p>このカラーマップは、正規表現のスキャンと並行して構築されます。新しい明示的な高位文字 (または範囲) やロケール依存の文字クラスを検出するたびに、高位カラーマップ内の既存のエントリを分割し、区別できるようにする必要がある文字が、個別の色を割り当てることができる別個のエントリを持つようにします。ただし、多くの場合、高位カラーマップ内の単一のエントリは、非常に大きな文字のセットを表します。</p>
+<p>明示的な高位文字/範囲とロケール依存の文字クラスの両方がある場合、高位カラーマップ配列には、WHITE 以外の色を持っているが実際には実際の文字を表さないエントリが存在する可能性があります。(たとえば、シングルトン範囲を表す行では、実際のロケールプロパティに一致する列の 1 つだけがライブエントリになり得ます。) 現在のところ、このような色を回収する努力は行っていません。原理的には可能ですが、の手間をかける価値があるかどうかは明らかではありません。</p>
+<p>NFA の詳細なセマンティクス ----------------------------</p>
+<p>ダンプされた NFA を読み取ろうとする場合、次の事実を知っておくと役に立ちます。</p>
+<p>状態 0 (dumpnfa の出力ではさらに &quot;@&quot; でマークされる) は常にゴール状態であり、状態 1 (さらに &quot;&gt;&quot; でマークされる) は開始状態です。(コードではこれらをそれぞれポスト状態およびプリ状態と呼びます。)</p>
+<p>可能なアークの種類は次のとおりです。</p>
+<p>PLAIN アーク。指定された「色」(上記参照) の任意の文字のマッチングを指定します。これらは &quot;[color_number]-&gt;to_state&quot; としてダンプされます。さらに、&quot;[*]-&gt;to_state&quot; としてダンプされる &quot;レインボー&quot; PLAIN アークが存在する場合もあります。</p>
+<p>EMPTY アーク。別の状態へのノーオペレーション遷移を指定します。これらは &quot;-&gt;to_state&quot; としてダンプされます。</p>
+<p>AHEAD 制約。「次の文字はこの色でなければならない」という制約を表します。AHEAD は、アークを横断するときに入力文字が消費されない点で PLAIN アークとは異なります。これらは &quot;&gt;color_number&gt;-&gt;to_state&quot; または場合によっては &quot;&gt;*&gt;-&gt;to_state&quot; としてダンプされます。</p>
+<p>BEHIND 制約。「前の文字はこの色でなければならない」という制約を表し、同様に入力を消費しません。これらは &quot;&lt;color_number&lt;-&gt;to_state&quot; または場合によっては &quot;&lt;*&lt;-&gt;to_state&quot; としてダンプされます。</p>
+<p>&#x27;^&#x27; アーク。入力開始制約を指定します。これらは、それぞれ文字列の先頭および行の先頭の制約に対して &quot;^0-&gt;to_state&quot; または &quot;^1-&gt;to_state&quot; としてダンプされます。</p>
+<p>&#x27;$&#x27; アーク。入力終了制約を指定します。これらは、それぞれ文字列の末尾および行の末尾の制約に対して &quot;$0-&gt;to_state&quot; または &quot;$1-&gt;to_state&quot; としてダンプされます。</p>
+<p>LACON 制約。&quot;(?=re)&quot;, &quot;(?!re)&quot;, &quot;(?&lt;=re)&quot;, &quot;(?&lt;!re)&quot; の制約を表します。つまり、この時点で開始/終了する入力は指定されたサブ RE にマッチする (またはマッチしない) 必要がありますが、マッチした入力は消費されません。これらは &quot;:subtree_number:-&gt;to_state&quot; としてダンプされます。</p>
+<p>アークの表示にその他のもの (特に疑問符) が表示されている場合は、それはアークに疑わしい点があることを伝えようとする dumpnfa() の試みです。ソースコードを参照してください。</p>
+<p>正規表現エグゼキュータは、PLAIN および LACON の遷移のみを処理できます。正規表現の optimize() 関数は、他のすべての種類のアークを取り除くために、パーサーの出力を変換する責任を負います。特に、不可能としてドロップされない ^ および $ アークは、常にそれぞれプリ状態またはポスト状態に隣接することになり、その後、BOS、BOL、EOS、または EOL の特殊な「色」に言及する PLAIN アークに変換されます。</p></section><section class="document-translation-chunk pending" data-chunk-order="2"><h2>Chunk 3: translation pending</h2><p>This chunk has not been translated yet. Original text:</p><pre class="document-translation-text">To decide whether a thus-transformed NFA matches a given substring of the
+input string, the executor essentially follows these rules:
+1. Start the NFA &quot;looking at&quot; the character *before* the given substring,
+or if the substring is at the start of the input, prepend an imaginary BOS
+character instead.
+2. Run the NFA until it has consumed the character *after* the given
+substring, or an imaginary following EOS character if the substring is at
+the end of the input.
+3. If the NFA is (or can be) in the goal state at this point, it matches.
+
+This definition is necessary to support regexes that begin or end with
+constraints such as \m and \M, which imply requirements on the adjacent
+character if any.  The executor implements that by checking if the
+adjacent character (or BOS/BOL/EOS/EOL pseudo-character) is of the
+right color, and it does that in the same loop that checks characters
+within the match.
+
+So one can mentally execute an untransformed NFA by taking ^ and $ as
+ordinary constraints that match at start and end of input; but plain
+arcs out of the start state should be taken as matches for the character
+before the target substring, and similarly, plain arcs leading to the
+post state are matches for the character after the target substring.
+After the optimize() transformation, there are explicit arcs mentioning
+BOS/BOL/EOS/EOL adjacent to the pre-state and post-state.  So a finished
+NFA for a pattern without anchors or adjacent-character constraints will
+have pre-state outarcs for RAINBOW (all possible character colors) as well
+as BOS and BOL, and likewise post-state inarcs for RAINBOW, EOS, and EOL.
+Also note that LACON arcs will never connect to the pre-state
+or post-state.
+
+
+Look-around constraints (LACONs)
+--------------------------------
+
+The regex compiler doesn&#x27;t have much intelligence about LACONs; it just
+constructs a sub-NFA representing the pattern that the constraint says to
+match or not match, and puts a LACON arc referencing that sub-NFA into the
+main NFA.  At runtime, the executor applies the sub-NFA at each point in
+the string where the constraint is relevant, and then traverses or doesn&#x27;t
+traverse the arc.  (&quot;Traversal&quot; means including the arc&#x27;s to-state in the
+set of NFA states that are considered active at the next character.)
+
+The actual basic matching cycle of the executor is
+1.  Identify the color of the next input character, then advance over it.
+2.  Apply the DFA to follow all the matching &quot;plain&quot; arcs of the NFA.
+    (Notionally, the previous DFA state represents the set of states the
+    NFA could have been in before the character, and the new DFA state
+    represents the set of states the NFA could be in after the character.)
+3.  If there are any LACON arcs leading out of any of the new NFA states,
+    apply each LACON constraint starting from the new next input character
+    (while not actually consuming any input).  For each successful LACON,
+    add its to-state to the current set of NFA states.  If any such
+    to-state has outgoing LACON arcs, process those in the same way.
+    (Mathematically speaking, we compute the transitive closure of the
+    set of states reachable by successful LACONs.)
+
+Thus, LACONs are always checked immediately after consuming a character
+via a plain arc.  This is okay because the NFA&#x27;s &quot;pre&quot; state only has
+plain out-arcs, so we can always consume a character (possibly a BOS
+pseudo-character as described above) before we need to worry about LACONs.
+</pre></section></div><script>
+(function() {
+  function notifyParent() {
+    if (parent === window) return;
+    parent.postMessage({type: "frame-location", frame: window.name || "", href: window.location.href}, "*");
+  }
+  document.addEventListener("click", function(event) {
+    const link = event.target.closest("a[data-panel]");
+    if (!link || parent === window) return;
+    parent.postMessage({type: "source-link", panel: link.dataset.panel}, "*");
+  });
+  window.addEventListener("load", notifyParent);
+  window.addEventListener("hashchange", notifyParent);
+})();
+</script></body></html>

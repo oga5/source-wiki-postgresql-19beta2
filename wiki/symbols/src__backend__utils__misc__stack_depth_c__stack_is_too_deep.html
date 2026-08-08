@@ -14,7 +14,7 @@
 </ul>
 <h2>入力と出力</h2>
 <ul>
-<li>戻り値: <code>bool</code></li>
+<li>戻り値: <a class="wiki-source-link" href="../../source/src/include/access/tupmacs.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__access__tupmacs_h__bool.html&quot;}, '*');"><code>bool</code></a></li>
 </ul>
 <h2>前提条件と不変条件</h2>
 <p>まだ解析していません。</p>
@@ -33,14 +33,14 @@
 <h2>関連データ構造</h2>
 <p>なし</p>
 <h2>ソース抜粋</h2>
-<p>~~~c bool <a class="wiki-source-link" href="../../source/src/backend/utils/misc/stack_depth.c.html#L109" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__utils__misc__stack_depth_c__stack_is_too_deep.html&quot;}, '*');">stack_is_too_deep</a>(void) { #ifndef HAVE__BUILTIN_FRAME_ADDRESS <a class="wiki-source-link" href="../../source/src/include/port/atomics/generic-gcc.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__port__atomics__generic-gcc_h__char.html&quot;}, '*');">char</a>		stack_top_loc; #endif <a class="wiki-source-link" href="../../source/src/include/port/win32_port.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__port__win32_port_h__ssize_t.html&quot;}, '*');">ssize_t</a>		stack_depth; <a class="wiki-source-link" href="../../source/src/include/port/atomics/generic-gcc.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__port__atomics__generic-gcc_h__char.html&quot;}, '*');">char</a>	   *stack_address;</p>
+<p>~~~c <a class="wiki-source-link" href="../../source/src/include/access/tupmacs.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__access__tupmacs_h__bool.html&quot;}, '*');">bool</a> <a class="wiki-source-link" href="../../source/src/backend/utils/misc/stack_depth.c.html#L109" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__utils__misc__stack_depth_c__stack_is_too_deep.html&quot;}, '*');">stack_is_too_deep</a>(void) { #ifndef HAVE__BUILTIN_FRAME_ADDRESS char		stack_top_loc; #endif <a class="wiki-source-link" href="../../source/src/include/port/win32_port.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__port__win32_port_h__ssize_t.html&quot;}, '*');">ssize_t</a>		stack_depth; char	   *stack_address;</p>
 <p>/*</p>
 <ul>
 <li>With address sanitizer&#x27;s stack-use-after-return check, stack variables</li>
 <li>are moved to heap allocations, to allow to detect references to the</li>
 <li>memory at a later time. That would break our stack-depth check. Luckily</li>
 <li>__builtin_frame_address() works correctly, even under asan.</li>
-<p>*/ #ifndef HAVE__BUILTIN_FRAME_ADDRESS stack_address = &amp;stack_top_loc; #else stack_address = (<a class="wiki-source-link" href="../../source/src/include/port/atomics/generic-gcc.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__port__atomics__generic-gcc_h__char.html&quot;}, '*');">char</a> *) __builtin_frame_address(0); #endif</p>
+<p>*/ #ifndef HAVE__BUILTIN_FRAME_ADDRESS stack_address = &amp;stack_top_loc; #else stack_address = (char *) __builtin_frame_address(0); #endif</p>
 </ul>
 <p>/*</p>
 <ul>
@@ -49,7 +49,7 @@
 </ul>
 <p>/*</p>
 <ul>
-<li>Take abs <a class="wiki-source-link" href="../../source/src/interfaces/ecpg/compatlib/informix.c.html#L687" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/ecpg/compatlib/informix.c.html&quot;}, '*');">value</a>, since stacks grow up on some machines, down on others</li>
+<li>Take abs value, since stacks grow up on some machines, down on others</li>
 <p>*/ if (stack_depth &lt; 0) stack_depth = -stack_depth;</p>
 </ul>
 <p>/*</p>

@@ -45,7 +45,7 @@
 <p>/*</p>
 <ul>
 <li>While we&#x27;re waiting for the workers to finish, let&#x27;s get rid of the</li>
-<li>tuple queue readers.  (Any other local cleanup could be done here too.)</li>
+<li>tuple queue readers.  (<a class="wiki-source-link" href="../../source/src/include/utils/array.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/utils/array.h.html&quot;}, '*');">Any</a> other local cleanup could be done here too.)</li>
 <p>*/ if (pei-&gt;reader != NULL) { for (i = 0; i &lt; nworkers; i++) <a class="wiki-source-link" href="../../source/src/backend/executor/tqueue.c.html#L154" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__executor__tqueue_c__DestroyTupleQueueReader.html&quot;}, '*');">DestroyTupleQueueReader</a>(pei-&gt;reader[i]); pfree(pei-&gt;reader); pei-&gt;reader = NULL; }</p>
 </ul>
 <p>/* Now wait for the workers to finish. */ <a class="wiki-source-link" href="../../source/src/backend/access/transam/parallel.c.html#L804" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__access__transam__parallel_c__WaitForParallelWorkersToFinish.html&quot;}, '*');">WaitForParallelWorkersToFinish</a>(pei-&gt;pcxt);</p>

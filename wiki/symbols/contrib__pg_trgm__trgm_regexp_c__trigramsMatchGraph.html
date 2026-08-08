@@ -15,7 +15,7 @@
 <h2>入力と出力</h2>
 <ul>
 <li>引数: <code>TrgmPackedGraph *graph</code>, <code>bool *check</code></li>
-<li>戻り値: <code>bool</code></li>
+<li>戻り値: <a class="wiki-source-link" href="../../source/src/include/access/tupmacs.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__access__tupmacs_h__bool.html&quot;}, '*');"><code>bool</code></a></li>
 </ul>
 <h2>前提条件と不変条件</h2>
 <p>まだ解析していません。</p>
@@ -34,11 +34,11 @@
 <h2>関連データ構造</h2>
 <p><a class="wiki-source-link" href="../../source/src/include/regex/regguts.h.html#L303" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__regex__regguts_h__arc.html&quot;}, '*');"><code>arc</code></a>, <a class="wiki-source-link" href="../../source/src/include/regex/regguts.h.html#L163" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/regex/regguts.h.html&quot;}, '*');"><code>color</code></a>, <code>state</code>, <a class="wiki-source-link" href="../../source/contrib/pg_trgm/trgm_regexp.c.html#L429" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/contrib__pg_trgm__trgm_regexp_c__TrgmPackedArc.html&quot;}, '*');"><code>TrgmPackedArc</code></a>, <code>TrgmPackedGraph</code>, <a class="wiki-source-link" href="../../source/contrib/pg_trgm/trgm_regexp.c.html#L435" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/contrib__pg_trgm__trgm_regexp_c__TrgmPackedState.html&quot;}, '*');"><code>TrgmPackedState</code></a></p>
 <h2>ソース抜粋</h2>
-<p>~~~c bool <a class="wiki-source-link" href="../../source/contrib/pg_trgm/trgm_regexp.c.html#L627" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/contrib__pg_trgm__trgm_regexp_c__trigramsMatchGraph.html&quot;}, '*');">trigramsMatchGraph</a>(TrgmPackedGraph *graph, bool *check) { int			i, j, k, queueIn, queueOut;</p>
+<p>~~~c <a class="wiki-source-link" href="../../source/src/include/access/tupmacs.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__access__tupmacs_h__bool.html&quot;}, '*');">bool</a> <a class="wiki-source-link" href="../../source/contrib/pg_trgm/trgm_regexp.c.html#L627" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/contrib__pg_trgm__trgm_regexp_c__trigramsMatchGraph.html&quot;}, '*');">trigramsMatchGraph</a>(TrgmPackedGraph *graph, <a class="wiki-source-link" href="../../source/src/include/access/tupmacs.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__access__tupmacs_h__bool.html&quot;}, '*');">bool</a> *check) { int			i, j, k, queueIn, queueOut;</p>
 <p>/*</p>
 <ul>
 <li>Reset temporary working areas.</li>
-<p>*/ memset(graph-&gt;colorTrigramsActive, 0, sizeof(bool) * graph-&gt;colorTrigramsCount); memset(graph-&gt;statesActive, 0, sizeof(bool) * graph-&gt;statesCount);</p>
+<p>*/ memset(graph-&gt;colorTrigramsActive, 0, sizeof(<a class="wiki-source-link" href="../../source/src/include/access/tupmacs.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__access__tupmacs_h__bool.html&quot;}, '*');">bool</a>) * graph-&gt;colorTrigramsCount); memset(graph-&gt;statesActive, 0, sizeof(<a class="wiki-source-link" href="../../source/src/include/access/tupmacs.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__access__tupmacs_h__bool.html&quot;}, '*');">bool</a>) * graph-&gt;statesCount);</p>
 </ul>
 <p>/*</p>
 <ul>

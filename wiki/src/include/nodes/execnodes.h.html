@@ -1,0 +1,184 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>src/include/nodes/execnodes.h.md</title><link rel="stylesheet" href="../../../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../../../source/src/include/nodes/execnodes.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/nodes/execnodes.h.html&quot;}, '*');">src/include/nodes/execnodes.h</a></h1>
+<h2>概要</h2>
+<p><a class="wiki-source-link" href="../../../../source/src/include/nodes/execnodes.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/nodes/execnodes.h.html&quot;}, '*');"><code>src/include/nodes/execnodes.h</code></a> は、PostgreSQLのクエリ実行エンジン（Executor）で使用される実行時状態ノードおよび関連構造体を定義する中心的なヘッダーファイルです。計画ノード（<a class="wiki-source-link" href="../../../../source/src/include/nodes/plannodes.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/nodes/plannodes.h.html&quot;}, '*');"><code>plannodes.h</code></a>）に対応する実行状態ノード群（<code>PlanState</code> のサブクラス群）、式評価の状態を保持する <code>ExprState</code>、評価コンテキストの <code>ExprContext</code>、テーブル更新情報を保持する <code>ResultRelInfo</code>、実行全体の状態を管理する <code>EState</code> などを定義しています。</p>
+<h2>モジュール内での役割</h2>
+<p><code>src/include/nodes</code> モジュールはPostgreSQL全体のASTおよびプラン・実行ノードのデータ構造を提供します。その中で本ファイルは、プランツリーの静的表現を実行フェーズへ落とし込むための「動的状態ツリー（Executor State Trees）」の型定義を担います。<a class="wiki-source-link" href="../../../../source/src/include/nodes/plannodes.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/nodes/plannodes.h.html&quot;}, '*');"><code>plannodes.h</code></a> が静的なクエリ計画を定義するのに対し、<a class="wiki-source-link" href="../../../../source/src/include/nodes/execnodes.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/nodes/execnodes.h.html&quot;}, '*');"><code>execnodes.h</code></a> は行のフェッチ、メモリ管理、JIT、並列実行、ロック、トリガー発火などのランタイム状態を保持します。</p>
+<h2>責務</h2>
+<ul>
+<li>**式評価の状態管理**: 式ツリーのステップ列や結果を保持する <code>ExprState</code>、および評価に必要な変数・パラメータ・コンテキストを保持する <code>ExprContext</code> の定義。</li>
+<li>**実行状態ノード（PlanState階層）の定義**: <code>PlanState</code> を抽象基底とし、スキャン、結合、集約、ソート、変更系（<a class="wiki-source-link" href="../../../../source/src/include/nodes/plannodes.h.html#L336" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__nodes__plannodes_h__ModifyTable.html&quot;}, '*');">ModifyTable</a>）など、あらゆる実行ノードの状態構造体の定義。</li>
+<li>**クエリ実行全体の状態管理**: スナップショット、範囲テーブル、JITコンテキスト、パラメータ、処理済みタプル数などを統括する <code>EState</code> の定義。</li>
+<li>**更新・ロック・ハッシュ等の補助構造体の定義**: 外部表やトリガー、インデックス構築のための <code>IndexInfo</code>、行ロック用の <a class="wiki-source-link" href="../../../../source/src/include/nodes/execnodes.h.html#L49" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__nodes__execnodes_h__ExecRowMark.html&quot;}, '*');"><code>ExecRowMark</code></a>、タプルハッシュテーブル用の定義の提供。</li>
+</ul>
+<h2>重要なシンボル</h2>
+<h3>コア実行・コンテキスト構造体</h3>
+<ul>
+<li><code>EState</code>: クエリ実行全体（<code>ExecutorStart</code> から <code>ExecutorFinish</code> まで）のワーキング状態。スナップショット、範囲テーブル、パラレル実行コンテキストなどを保持。</li>
+<li><code>ExprContext</code>: 式評価における「現在のコンテキスト」（内・外・スキャンタプル、メモリコンテキスト、集約値、パラメータ）。</li>
+<li><code>ExprState</code>: 式ツリー全体の評価状態。評価ステップの配列（<a class="wiki-source-link" href="../../../../source/src/include/nodes/execnodes.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__nodes__execnodes_h__steps.html&quot;}, '*');"><code>steps</code></a>）と評価関数ポインタ（<a class="wiki-source-link" href="../../../../source/src/include/nodes/execnodes.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__nodes__execnodes_h__evalfunc.html&quot;}, '*');"><code>evalfunc</code></a>）を保持。</li>
+<li><code>PlanState</code>: すべての実行状態ノードの共通抽象基底。プランノード、親ノード、子ノード（<code>lefttree</code>, <code>righttree</code>）、スロット、計装情報（<a class="wiki-source-link" href="../../../../source/src/include/nodes/execnodes.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__nodes__execnodes_h__instrument.html&quot;}, '*');"><code>instrument</code></a>）を保持。</li>
+</ul>
+<h3>スキャン・結合・集約の状態ノード</h3>
+<ul>
+<li><code>ScanState</code>: スキャン系ノードの共通基底（現在のリレーションやスキャンスロットを保持）。</li>
+<li><a class="wiki-source-link" href="../../../../source/src/include/nodes/execnodes.h.html#L1672" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__nodes__execnodes_h__SeqScanState.html&quot;}, '*');"><code>SeqScanState</code></a>, <a class="wiki-source-link" href="../../../../source/src/include/nodes/execnodes.h.html#L1750" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__nodes__execnodes_h__IndexScanState.html&quot;}, '*');"><code>IndexScanState</code></a>, <a class="wiki-source-link" href="../../../../source/src/include/nodes/execnodes.h.html#L1878" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__nodes__execnodes_h__BitmapHeapScanState.html&quot;}, '*');"><code>BitmapHeapScanState</code></a>, <code>ForeignScanState</code>: 各種スキャン手法の実行状態。</li>
+<li><a class="wiki-source-link" href="../../../../source/src/include/nodes/execnodes.h.html#L2144" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__nodes__execnodes_h__JoinState.html&quot;}, '*');"><code>JoinState</code></a>: 結合系ノードの共通基底。</li>
+<li><a class="wiki-source-link" href="../../../../source/src/include/nodes/execnodes.h.html#L2161" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__nodes__execnodes_h__NestLoopState.html&quot;}, '*');"><code>NestLoopState</code></a>, <a class="wiki-source-link" href="../../../../source/src/include/nodes/execnodes.h.html#L2194" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__nodes__execnodes_h__MergeJoinState.html&quot;}, '*');"><code>MergeJoinState</code></a>, <a class="wiki-source-link" href="../../../../source/src/include/nodes/execnodes.h.html#L2249" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__nodes__execnodes_h__HashJoinState.html&quot;}, '*');"><code>HashJoinState</code></a>: ネストループ、マージ、ハッシュ結合の状態。</li>
+<li><a class="wiki-source-link" href="../../../../source/src/include/nodes/execnodes.h.html#L2433" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__nodes__execnodes_h__AggState.html&quot;}, '*');"><code>AggState</code></a>, <a class="wiki-source-link" href="../../../../source/src/include/nodes/execnodes.h.html#L2530" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__nodes__execnodes_h__WindowAggState.html&quot;}, '*');"><code>WindowAggState</code></a>: 集約およびウィンドウ関数の実行状態（ハッシュ集約用のメモリ制限やスピル状態、ウィンドウフレーム位置などを保持）。</li>
+<li><a class="wiki-source-link" href="../../../../source/src/include/nodes/execnodes.h.html#L1440" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__nodes__execnodes_h__ModifyTableState.html&quot;}, '*');"><code>ModifyTableState</code></a>: INSERT, UPDATE, DELETE, <a class="wiki-source-link" href="../../../../source/src/backend/optimizer/util/paramassign.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__paramassign_c__MERGE.html&quot;}, '*');">MERGE</a> を実行するための状態（ターゲットリレーション、EPQ状態、トリガー制御を保持）。</li>
+</ul>
+<h2>制御フローとデータフロー</h2>
+<p>本ファイルは型定義のみを提供するヘッダーファイルであるため、直接的な関数実装はありません。しかし、ここで定義されるデータ構造間のデータフローの規約を規定しています：</p>
+<ul>
+<li>**タプルフェッチ**: <code>PlanState</code> の関数ポインタ <a class="wiki-source-link" href="../../../../source/src/include/executor/executor.h.html#L321" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__executor__executor_h__ExecProcNode.html&quot;}, '*');"><code>ExecProcNode</code></a> を通じて、子ノードから親ノードへ <code>TupleTableSlot</code> を介してタプルが流れます。</li>
+<li>**式評価コンテキストの切り替え**: 式を評価する前に、<code>CurrentMemoryContext</code> を <code>ExprContext</code> の <code>ecxt_per_tuple_memory</code> に切り替え、評価後にリセットすることで、タプルごとのメモリリークを防ぎます。</li>
+<li>**パラレル実行**: <code>EState</code> 内の <code>es_query_dsa</code> や各ステートの <code>shared_info</code> を通じて、リーダープロセスとワーカープロセス間で統計情報やハッシュテーブルの状態が共有されます。</li>
+</ul>
+<h2>直接依存</h2>
+<ul>
+<li><code>access/htup.h</code></li>
+<li><code>executor/instrument_node.h</code></li>
+<li><a class="wiki-source-link" href="../../../../source/src/include/fmgr.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/fmgr.h.html&quot;}, '*');"><code>fmgr.h</code></a></li>
+<li><code>lib/ilist.h</code></li>
+<li><code>nodes/miscnodes.h</code></li>
+<li><code>nodes/params.h</code></li>
+<li><code>nodes/plannodes.h</code></li>
+<li><code>partitioning/partdefs.h</code></li>
+<li><code>storage/buf.h</code></li>
+<li><code>utils/reltrigger.h</code></li>
+<li><code>utils/typcache.h</code></li>
+<li><code>lib/simplehash.h</code></li>
+</ul>
+<h2>関連コード</h2>
+<ul>
+<li><a class="wiki-source-link" href="../../../../source/src/include/nodes/plannodes.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/nodes/plannodes.h.html&quot;}, '*');"><code>src/include/nodes/plannodes.h</code></a>: 対応する静的プランノードの定義。</li>
+<li><code>src/backend/executor/</code>: 本ファイルで定義された各 <code>*State</code> ノードを操作・初期化・実行するCソースファイル群（<a class="wiki-source-link" href="../../../../source/src/backend/executor/nodeSeqscan.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/executor/nodeSeqscan.c.html&quot;}, '*');"><code>nodeSeqscan.c</code></a>, <a class="wiki-source-link" href="../../../../source/src/backend/executor/nodeHashjoin.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/executor/nodeHashjoin.c.html&quot;}, '*');"><code>nodeHashjoin.c</code></a>, <a class="wiki-source-link" href="../../../../source/src/backend/executor/execExpr.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/executor/execExpr.c.html&quot;}, '*');"><code>execExpr.c</code></a> など）。</li>
+</ul>
+<h2>読者向けメモ</h2>
+<ul>
+<li>**コピー・シリアライゼーションの不適用**: ファイル冒頭のコメントにもある通り、本ファイルで定義されるノード群は <code>copy</code>, <a class="wiki-source-link" href="../../../../source/src/backend/nodes/equalfuncs.c.html#L222" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__nodes__equalfuncs_c__equal.html&quot;}, '*');"><code>equal</code></a>, <code>out</code>, <a class="wiki-source-link" href="../../../../source/src/interfaces/libpq/win32.h.html#L13" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq/win32.h.html&quot;}, '*');"><code>read</code></a> のサポートを持ちません（実行時ツリーには不要なため）。</li>
+<li>**メモリ管理の分離**: <code>ExprContext</code> はクエリ寿命のメモリとタプル寿命のメモリ（<code>ecxt_per_tuple_memory</code>）を厳密に分離しています。ループ内での式評価の際は、タプルメモリの定期的なリセットが前提となります。</li>
+</ul>
+<h2>シンボルページ</h2>
+<ul>
+<li><a href="../../../symbols/src__include__nodes__execnodes_h__BufferUsage.html" target="wiki-view"><code>BufferUsage</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__execnodes_h__ExecRowMark.html" target="wiki-view"><code>ExecRowMark</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__execnodes_h__ExprState.html" target="wiki-view"><code>ExprState</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__execnodes_h__ExprContext.html" target="wiki-view"><code>ExprContext</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__execnodes_h__HTAB.html" target="wiki-view"><code>HTAB</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__execnodes_h__Instrumentation.html" target="wiki-view"><code>Instrumentation</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__execnodes_h__pairingheap.html" target="wiki-view"><code>pairingheap</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__execnodes_h__PlanState.html" target="wiki-view"><code>PlanState</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__execnodes_h__QueryEnvironment.html" target="wiki-view"><code>QueryEnvironment</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__execnodes_h__Relation.html" target="wiki-view"><code>Relation</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__execnodes_h__ScanKeyData.html" target="wiki-view"><code>ScanKeyData</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__execnodes_h__Snapshot.html" target="wiki-view"><code>Snapshot</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__execnodes_h__SortSupport.html" target="wiki-view"><code>SortSupport</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__execnodes_h__TIDBitmap.html" target="wiki-view"><code>TIDBitmap</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__execnodes_h__NodeInstrumentation.html" target="wiki-view"><code>NodeInstrumentation</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__execnodes_h__TriggerInstrumentation.html" target="wiki-view"><code>TriggerInstrumentation</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__execnodes_h__TupleConversionMap.html" target="wiki-view"><code>TupleConversionMap</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__execnodes_h__TupleDesc.html" target="wiki-view"><code>TupleDesc</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__execnodes_h__Tuplesortstate.html" target="wiki-view"><code>Tuplesortstate</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__execnodes_h__Tuplestorestate.html" target="wiki-view"><code>Tuplestorestate</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__execnodes_h__TupleTableSlot.html" target="wiki-view"><code>TupleTableSlot</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__execnodes_h__TupleTableSlotOps.html" target="wiki-view"><code>TupleTableSlotOps</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__execnodes_h__WalUsage.html" target="wiki-view"><code>WalUsage</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__execnodes_h__WorkerNodeInstrumentation.html" target="wiki-view"><code>WorkerNodeInstrumentation</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__execnodes_h__IndexInfo.html" target="wiki-view"><code>IndexInfo</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__execnodes_h__ExprContext_CB.html" target="wiki-view"><code>ExprContext_CB</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__execnodes_h__ReturnSetInfo.html" target="wiki-view"><code>ReturnSetInfo</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__execnodes_h__ProjectionInfo.html" target="wiki-view"><code>ProjectionInfo</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__execnodes_h__JunkFilter.html" target="wiki-view"><code>JunkFilter</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__execnodes_h__OnConflictActionState.html" target="wiki-view"><code>OnConflictActionState</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__execnodes_h__MergeActionState.html" target="wiki-view"><code>MergeActionState</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__execnodes_h__ForPortionOfState.html" target="wiki-view"><code>ForPortionOfState</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__execnodes_h__ResultRelInfo.html" target="wiki-view"><code>ResultRelInfo</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__execnodes_h__AsyncRequest.html" target="wiki-view"><code>AsyncRequest</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__execnodes_h__EState.html" target="wiki-view"><code>EState</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__execnodes_h__ExecAuxRowMark.html" target="wiki-view"><code>ExecAuxRowMark</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__execnodes_h__TupleHashEntry.html" target="wiki-view"><code>TupleHashEntry</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__execnodes_h__TupleHashTable.html" target="wiki-view"><code>TupleHashTable</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__execnodes_h__TupleHashEntryData.html" target="wiki-view"><code>TupleHashEntryData</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__execnodes_h__WindowFuncExprState.html" target="wiki-view"><code>WindowFuncExprState</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__execnodes_h__SetExprState.html" target="wiki-view"><code>SetExprState</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__execnodes_h__SubPlanState.html" target="wiki-view"><code>SubPlanState</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__execnodes_h__DomainConstraintState.html" target="wiki-view"><code>DomainConstraintState</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__execnodes_h__JsonExprState.html" target="wiki-view"><code>JsonExprState</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__execnodes_h__EPQState.html" target="wiki-view"><code>EPQState</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__execnodes_h__ResultState.html" target="wiki-view"><code>ResultState</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__execnodes_h__ProjectSetState.html" target="wiki-view"><code>ProjectSetState</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__execnodes_h__ModifyTableState.html" target="wiki-view"><code>ModifyTableState</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__execnodes_h__AppendState.html" target="wiki-view"><code>AppendState</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__execnodes_h__ParallelAppendState.html" target="wiki-view"><code>ParallelAppendState</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__execnodes_h__MergeAppendState.html" target="wiki-view"><code>MergeAppendState</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__execnodes_h__RecursiveUnionState.html" target="wiki-view"><code>RecursiveUnionState</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__execnodes_h__BitmapAndState.html" target="wiki-view"><code>BitmapAndState</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__execnodes_h__BitmapOrState.html" target="wiki-view"><code>BitmapOrState</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__execnodes_h__ScanState.html" target="wiki-view"><code>ScanState</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__execnodes_h__SeqScanState.html" target="wiki-view"><code>SeqScanState</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__execnodes_h__SampleScanState.html" target="wiki-view"><code>SampleScanState</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__execnodes_h__IndexRuntimeKeyInfo.html" target="wiki-view"><code>IndexRuntimeKeyInfo</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__execnodes_h__IndexArrayKeyInfo.html" target="wiki-view"><code>IndexArrayKeyInfo</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__execnodes_h__IndexScanState.html" target="wiki-view"><code>IndexScanState</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__execnodes_h__IndexOnlyScanState.html" target="wiki-view"><code>IndexOnlyScanState</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__execnodes_h__BitmapIndexScanState.html" target="wiki-view"><code>BitmapIndexScanState</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__execnodes_h__ParallelBitmapHeapState.html" target="wiki-view"><code>ParallelBitmapHeapState</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__execnodes_h__BitmapHeapScanState.html" target="wiki-view"><code>BitmapHeapScanState</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__execnodes_h__TidScanState.html" target="wiki-view"><code>TidScanState</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__execnodes_h__TidRangeScanState.html" target="wiki-view"><code>TidRangeScanState</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__execnodes_h__SubqueryScanState.html" target="wiki-view"><code>SubqueryScanState</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__execnodes_h__FunctionScanState.html" target="wiki-view"><code>FunctionScanState</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__execnodes_h__ValuesScanState.html" target="wiki-view"><code>ValuesScanState</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__execnodes_h__TableFuncScanState.html" target="wiki-view"><code>TableFuncScanState</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__execnodes_h__CteScanState.html" target="wiki-view"><code>CteScanState</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__execnodes_h__NamedTuplestoreScanState.html" target="wiki-view"><code>NamedTuplestoreScanState</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__execnodes_h__WorkTableScanState.html" target="wiki-view"><code>WorkTableScanState</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__execnodes_h__ForeignScanState.html" target="wiki-view"><code>ForeignScanState</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__execnodes_h__CustomScanState.html" target="wiki-view"><code>CustomScanState</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__execnodes_h__JoinState.html" target="wiki-view"><code>JoinState</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__execnodes_h__NestLoopState.html" target="wiki-view"><code>NestLoopState</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__execnodes_h__MergeJoinClause.html" target="wiki-view"><code>MergeJoinClause</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__execnodes_h__MergeJoinState.html" target="wiki-view"><code>MergeJoinState</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__execnodes_h__HashJoinTuple.html" target="wiki-view"><code>HashJoinTuple</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__execnodes_h__HashJoinTable.html" target="wiki-view"><code>HashJoinTable</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__execnodes_h__HashJoinState.html" target="wiki-view"><code>HashJoinState</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__execnodes_h__MaterialState.html" target="wiki-view"><code>MaterialState</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__execnodes_h__MemoizeState.html" target="wiki-view"><code>MemoizeState</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__execnodes_h__PresortedKeyData.html" target="wiki-view"><code>PresortedKeyData</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__execnodes_h__SortState.html" target="wiki-view"><code>SortState</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__execnodes_h__IncrementalSortState.html" target="wiki-view"><code>IncrementalSortState</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__execnodes_h__GroupState.html" target="wiki-view"><code>GroupState</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__execnodes_h__AggStatePerAgg.html" target="wiki-view"><code>AggStatePerAgg</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__execnodes_h__AggStatePerTrans.html" target="wiki-view"><code>AggStatePerTrans</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__execnodes_h__AggStatePerGroup.html" target="wiki-view"><code>AggStatePerGroup</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__execnodes_h__AggStatePerPhase.html" target="wiki-view"><code>AggStatePerPhase</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__execnodes_h__AggStatePerHash.html" target="wiki-view"><code>AggStatePerHash</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__execnodes_h__AggState.html" target="wiki-view"><code>AggState</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__execnodes_h__WindowStatePerFunc.html" target="wiki-view"><code>WindowStatePerFunc</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__execnodes_h__WindowStatePerAgg.html" target="wiki-view"><code>WindowStatePerAgg</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__execnodes_h__WindowAggState.html" target="wiki-view"><code>WindowAggState</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__execnodes_h__UniqueState.html" target="wiki-view"><code>UniqueState</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__execnodes_h__GatherState.html" target="wiki-view"><code>GatherState</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__execnodes_h__GatherMergeState.html" target="wiki-view"><code>GatherMergeState</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__execnodes_h__HashState.html" target="wiki-view"><code>HashState</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__execnodes_h__SetOpStatePerInput.html" target="wiki-view"><code>SetOpStatePerInput</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__execnodes_h__SetOpState.html" target="wiki-view"><code>SetOpState</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__execnodes_h__LockRowsState.html" target="wiki-view"><code>LockRowsState</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__execnodes_h__LimitState.html" target="wiki-view"><code>LimitState</code></a></li>
+</ul><script>
+(function() {
+  function notifyParent() {
+    if (parent === window) return;
+    parent.postMessage({type: "frame-location", frame: window.name || "", href: window.location.href}, "*");
+  }
+  document.addEventListener("click", function(event) {
+    const link = event.target.closest("a[data-panel]");
+    if (!link || parent === window) return;
+    parent.postMessage({type: "source-link", panel: link.dataset.panel}, "*");
+  });
+  window.addEventListener("load", notifyParent);
+  window.addEventListener("hashchange", notifyParent);
+})();
+</script></body></html>

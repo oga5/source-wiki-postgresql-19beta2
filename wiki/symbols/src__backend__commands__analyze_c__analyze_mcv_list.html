@@ -51,8 +51,8 @@
 <li>values in the MCV list and the number of nulls (c.f. <a class="wiki-source-link" href="../../source/src/backend/utils/adt/selfuncs.c.html#L299" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__utils__adt__selfuncs_c__eqsel.html&quot;}, '*');">eqsel</a>()).</li>
 <p>*</p>
 <li>Here sumcount tracks the total count of all but the last (least common)</li>
-<li><a class="wiki-source-link" href="../../source/src/interfaces/ecpg/compatlib/informix.c.html#L687" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/ecpg/compatlib/informix.c.html&quot;}, '*');">value</a> in the MCV list, allowing us to determine the effect of excluding</li>
-<li>that <a class="wiki-source-link" href="../../source/src/interfaces/ecpg/compatlib/informix.c.html#L687" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/ecpg/compatlib/informix.c.html&quot;}, '*');">value</a> from the list.</li>
+<li>value in the MCV list, allowing us to determine the effect of excluding</li>
+<li>that value from the list.</li>
 <p>*</p>
 <li>Note that we deliberately do this by removing values from the full</li>
 <li>list, rather than starting with an empty list and adding values,</li>
@@ -66,7 +66,7 @@
 <p>while (num_mcv &gt; 0) { double		selec, otherdistinct, N, n, <a class="wiki-source-link" href="../../source/src/common/sha1.c.html#L66" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/common/sha1.c.html&quot;}, '*');">K</a>, variance, stddev;</p>
 <p>/*</p>
 <ul>
-<li>Estimated selectivity the least common <a class="wiki-source-link" href="../../source/src/interfaces/ecpg/compatlib/informix.c.html#L687" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/ecpg/compatlib/informix.c.html&quot;}, '*');">value</a> would have if it</li>
+<li>Estimated selectivity the least common value would have if it</li>
 <li>wasn&#x27;t in the MCV list (c.f. <a class="wiki-source-link" href="../../source/src/backend/utils/adt/selfuncs.c.html#L299" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__utils__adt__selfuncs_c__eqsel.html&quot;}, '*');">eqsel</a>()).</li>
 <p>~~~</p>
 </ul>

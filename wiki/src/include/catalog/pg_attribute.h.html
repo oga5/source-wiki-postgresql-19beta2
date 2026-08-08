@@ -3,7 +3,7 @@
 <h2>概要</h2>
 <p>PostgreSQL のシステムカタログ <code>pg_attribute</code> のスキーマ定義を行います。テーブルやリレーションの各列（属性）のメタデータを保持し、コンパイル時に <a class="wiki-source-link" href="../../../../source/src/backend/catalog/genbki.pl.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/catalog/genbki.pl.html&quot;}, '*');"><code>genbki.pl</code></a> によって BKI ファイルへ変換されます。</p>
 <h2>モジュール内での役割</h2>
-<p><code>src/include/catalog/</code> ディレクトリに位置し、各リレーションの列構成を定義する基盤カタログの一つです。<code>pg_class</code> や <a class="wiki-source-link" href="../../../../source/src/include/catalog/pg_type.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__catalog__pg_type_h__pg_type.html&quot;}, '*');"><code>pg_type</code></a> と密接に連携し、タプルディスクリプタ（TupleDesc）のベース構造を提供します。</p>
+<p><code>src/include/catalog/</code> ディレクトリに位置し、各リレーションの列構成を定義する基盤カタログの一つです。<code>pg_class</code> や <code>pg_type</code> と密接に連携し、タプルディスクリプタ（TupleDesc）のベース構造を提供します。</p>
 <h2>責務</h2>
 <ul>
 <li><code>pg_attribute</code> カタログの物理・論理レイアウト（<code>FormData_pg_attribute</code>）を定義する。</li>
@@ -13,7 +13,7 @@
 </ul>
 <h2>重要なシンボル</h2>
 <ul>
-<li><code>FormData_pg_attribute</code> / <a class="wiki-source-link" href="../../../../source/src/include/catalog/pg_attribute.h.html#L206" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__catalog__pg_attribute_h__Form_pg_attribute.html&quot;}, '*');"><code>Form_pg_attribute</code></a>: カタログ行データの構造体とそのポインタ型。</li>
+<li><code>FormData_pg_attribute</code> / <code>Form_pg_attribute</code>: カタログ行データの構造体とそのポインタ型。</li>
 <li><a class="wiki-source-link" href="../../../../source/src/include/catalog/pg_attribute.h.html#L216" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__catalog__pg_attribute_h__FormExtraData_pg_attribute.html&quot;}, '*');"><code>FormExtraData_pg_attribute</code></a>: タプルディスクリプタに含まれない可変長・補助データを扱う構造体。</li>
 <li><a class="wiki-source-link" href="../../../../source/src/include/catalog/pg_attribute.h.html#L198" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/catalog/pg_attribute.h.html&quot;}, '*');"><code>ATTRIBUTE_FIXED_PART_SIZE</code></a>: タプルディスクリプタにコピーされる固定長部分のサイズ。</li>
 <li><code>ATTRIBUTE_IDENTITY_*</code> / <code>ATTRIBUTE_GENERATED_*</code>: 列の属性種別を識別するマクロ群。</li>
@@ -34,7 +34,7 @@
 <h2>読者向けメモ</h2>
 <ul>
 <li><code>CATALOG_VARLEN</code> ブロック内のフィールドは通常のタプルディスクリプタには含まれないため、実タプルからのみアクセス可能です。</li>
-<li>列番号（<code>attnum</code>）はユーザー属性が 1 以上、システム属性が 0 未満の値を持ちます。</li>
+<li>列番号（<a class="wiki-source-link" href="../../../../source/src/include/executor/tuptable.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__executor__tuptable_h__attnum.html&quot;}, '*');"><code>attnum</code></a>）はユーザー属性が 1 以上、システム属性が 0 未満の値を持ちます。</li>
 </ul>
 <h2>シンボルページ</h2>
 <ul>

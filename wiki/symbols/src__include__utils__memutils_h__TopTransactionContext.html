@@ -1,0 +1,99 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>symbols/src__include__utils__memutils_h__TopTransactionContext.md</title><link rel="stylesheet" href="../../styles.css"></head><body><h1>TopTransactionContext</h1>
+<h2>定義</h2>
+<ul>
+<li>種別: <code>function</code></li>
+<li>定義箇所: <code>src/include/utils/memutils.h:1</code></li>
+<li>所属モジュール: <a class="wiki-entity-link" href="../modules/src__include__utils.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/modules/src__include__utils.html&quot;, &quot;source&quot;: &quot;source/src/include/utils/acl.h.html&quot;}, '*');"><code>module:src/include/utils</code></a></li>
+</ul>
+<h2>目的</h2>
+<p>静的シンボル索引から生成された初期シンボルページです。</p>
+<h2>シグネチャまたは形状</h2>
+<ul>
+<li>シグネチャ: <code>/*------------------------------------------------------------------------- * * memutils.h * This file contains declarations for memory allocation utility * functions. These are functions that are not quite widely used * enough to justify going in utils/palloc.h, but are still part * of the API of the memory management subsystem. * * * Portions Copyright (c) 1996-2026, PostgreSQL Global Development Group * Portions Copyright (c) 1994, Regents of the University of California * * src/include/utils/memutils.h * *------------------------------------------------------------------------- */ #ifndef MEMUTILS_H #define MEMUTILS_H #include &quot;nodes/memnodes.h&quot; /* * MaxAllocSize, MaxAllocHugeSize * Quasi-arbitrary limits on size of allocations. * * Note: * There is no guarantee that smaller allocations will succeed, but * larger requests will be summarily denied. * * palloc() enforces MaxAllocSize, chosen to correspond to the limiting size * of varlena objects under TOAST. See VARSIZE_4B() and related macros in * varatt.h. Many datatypes assume that any allocatable size can be * represented in a varlena header. This limit also permits a caller to use * an &quot;int&quot; variable for an index into or length of an allocation. Callers * careful to avoid these hazards can access the higher limit with * MemoryContextAllocHuge(). Both limits permit code to assume that it may * compute twice an allocation&#x27;s size without overflow. */ #define MaxAllocSize ((Size) 0x3fffffff) /* 1 gigabyte - 1 */ #define AllocSizeIsValid(size) ((Size) (size) &lt;= MaxAllocSize) /* Do not make this any bigger; see add_size() and mul_size() */ #define MaxAllocHugeSize (SIZE_MAX / 2) #define InvalidAllocSize SIZE_MAX #define AllocHugeSizeIsValid(size) ((Size) (size) &lt;= MaxAllocHugeSize) /* * Standard top-level memory contexts. * * Only TopMemoryContext and ErrorContext are initialized by * MemoryContextInit() itself. */ extern PGDLLIMPORT MemoryContext TopMemoryContext</code></li>
+</ul>
+<h2>入力と出力</h2>
+<p>まだ解析していません。</p>
+<h2>前提条件と不変条件</h2>
+<p>まだ解析していません。</p>
+<h2>アルゴリズムまたは振る舞い</h2>
+<ul>
+<li>複雑度: <code>low</code> (score 2)</li>
+</ul>
+<p>まだ解析していません。</p>
+<h2>呼び出し元と呼び出し先</h2>
+<ul>
+<li>呼び出し元: なし</li>
+<li>呼び出し先: なし</li>
+<li>呼び出し元サイト: なし</li>
+<li>呼び出しサイト: なし</li>
+</ul>
+<h2>関連データ構造</h2>
+<p><a class="wiki-source-link" href="../../source/src/interfaces/ecpg/test/expected/preproc-type.c.html#L36" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__interfaces__ecpg__test__expected__preproc-type_c__access.html&quot;}, '*');"><code>access</code></a>, <code>c</code>, <code>Group</code>, <a class="wiki-source-link" href="../../source/src/interfaces/ecpg/preproc/type.h.html#L96" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__interfaces__ecpg__preproc__type_h__index.html&quot;}, '*');"><code>index</code></a>, <code>MemoryContext</code>, <code>Size</code>, <code>variable</code>, <code>varlena</code></p>
+<h2>ソース抜粋</h2>
+<p>~~~c /*------------------------------------------------------------------------- *</p>
+<ul>
+<li><a class="wiki-source-link" href="../../source/src/include/utils/memutils.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/utils/memutils.h.html&quot;}, '*');">memutils.h</a></li>
+<li>This file contains declarations for memory allocation utility</li>
+<li><a class="wiki-source-link" href="../../source/src/backend/regex/regcomp.c.html#L358" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/regex/regcomp.c.html&quot;}, '*');">functions</a>.  These are <a class="wiki-source-link" href="../../source/src/backend/regex/regcomp.c.html#L358" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/regex/regcomp.c.html&quot;}, '*');">functions</a> that are not quite widely used</li>
+<li>enough to justify going in utils/palloc.h, but are still part</li>
+<li>of the API of the memory management subsystem.</li>
+<p>* *</p>
+<li>Portions Copyright (c) 1996-2026, PostgreSQL Global Development Group</li>
+<li>Portions Copyright (c) 1994, Regents of the University of California</li>
+<p>*</p>
+<li><a class="wiki-source-link" href="../../source/src/include/utils/memutils.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/utils/memutils.h.html&quot;}, '*');">src/include/utils/memutils.h</a></li>
+<p>* *------------------------------------------------------------------------- */ #ifndef <a class="wiki-source-link" href="../../source/src/include/utils/memutils.h.html#L18" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/utils/memutils.h.html&quot;}, '*');">MEMUTILS_H</a> #define <a class="wiki-source-link" href="../../source/src/include/utils/memutils.h.html#L18" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/utils/memutils.h.html&quot;}, '*');">MEMUTILS_H</a></p>
+</ul>
+<p>#include &quot;nodes/memnodes.h&quot;</p>
+<p>/*</p>
+<ul>
+<li>MaxAllocSize, <a class="wiki-source-link" href="../../source/src/include/utils/memutils.h.html#L45" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/utils/memutils.h.html&quot;}, '*');">MaxAllocHugeSize</a></li>
+<li>Quasi-arbitrary limits on <a class="wiki-source-link" href="../../source/src/backend/optimizer/geqo/geqo_eval.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__geqo__geqo_eval_c__size.html&quot;}, '*');">size</a> of allocations.</li>
+<p>*</p>
+<li>Note:</li>
+<li>There <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> no guarantee that smaller allocations will succeed, but</li>
+<li>larger requests will be summarily denied.</li>
+<p>*</p>
+<li>palloc() enforces MaxAllocSize, chosen to correspond to the limiting <a class="wiki-source-link" href="../../source/src/backend/optimizer/geqo/geqo_eval.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__geqo__geqo_eval_c__size.html&quot;}, '*');">size</a></li>
+<li>of varlena objects under TOAST.  See <a class="wiki-source-link" href="../../source/src/include/varatt.h.html#L209" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/varatt.h.html&quot;}, '*');">VARSIZE_4B</a>() and related macros in</li>
+<li>varatt.h.  Many datatypes assume that any allocatable <a class="wiki-source-link" href="../../source/src/backend/optimizer/geqo/geqo_eval.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__geqo__geqo_eval_c__size.html&quot;}, '*');">size</a> can be</li>
+<li>represented in a varlena header.  This limit also permits a caller to use</li>
+<li>an &quot;int&quot; variable for an <a class="wiki-source-link" href="../../source/src/interfaces/ecpg/preproc/type.h.html#L96" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__interfaces__ecpg__preproc__type_h__index.html&quot;}, '*');">index</a> into or length of an allocation.  Callers</li>
+<li>careful to avoid these hazards can <a class="wiki-source-link" href="../../source/src/interfaces/ecpg/test/expected/preproc-type.c.html#L36" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__interfaces__ecpg__test__expected__preproc-type_c__access.html&quot;}, '*');">access</a> the higher limit with</li>
+<li><a class="wiki-source-link" href="../../source/src/backend/utils/mmgr/mcxt.c.html#L1853" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__utils__mmgr__mcxt_c__MemoryContextAllocHuge.html&quot;}, '*');">MemoryContextAllocHuge</a>().  Both limits permit code to assume that it may</li>
+<li>compute twice an allocation&#x27;s <a class="wiki-source-link" href="../../source/src/backend/optimizer/geqo/geqo_eval.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__geqo__geqo_eval_c__size.html&quot;}, '*');">size</a> without overflow.</li>
+<p>*/ #define MaxAllocSize	((Size) 0x3fffffff) /* 1 gigabyte - 1 */</p>
+</ul>
+<p>#define <a class="wiki-source-link" href="../../source/src/include/utils/memutils.h.html#L42" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/utils/memutils.h.html&quot;}, '*');">AllocSizeIsValid</a>(<a class="wiki-source-link" href="../../source/src/backend/optimizer/geqo/geqo_eval.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__geqo__geqo_eval_c__size.html&quot;}, '*');">size</a>)	((Size) (<a class="wiki-source-link" href="../../source/src/backend/optimizer/geqo/geqo_eval.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__geqo__geqo_eval_c__size.html&quot;}, '*');">size</a>) &lt;= MaxAllocSize)</p>
+<p>/* Do not make this any bigger; see add_size() and mul_size() */ #define <a class="wiki-source-link" href="../../source/src/include/utils/memutils.h.html#L45" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/utils/memutils.h.html&quot;}, '*');">MaxAllocHugeSize</a>	(SIZE_MAX / 2)</p>
+<p>#define <a class="wiki-source-link" href="../../source/src/include/utils/memutils.h.html#L47" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/utils/memutils.h.html&quot;}, '*');">InvalidAllocSize</a>	SIZE_MAX</p>
+<p>#define <a class="wiki-source-link" href="../../source/src/include/utils/memutils.h.html#L49" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/utils/memutils.h.html&quot;}, '*');">AllocHugeSizeIsValid</a>(<a class="wiki-source-link" href="../../source/src/backend/optimizer/geqo/geqo_eval.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__geqo__geqo_eval_c__size.html&quot;}, '*');">size</a>)	((Size) (<a class="wiki-source-link" href="../../source/src/backend/optimizer/geqo/geqo_eval.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__geqo__geqo_eval_c__size.html&quot;}, '*');">size</a>) &lt;= <a class="wiki-source-link" href="../../source/src/include/utils/memutils.h.html#L45" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/utils/memutils.h.html&quot;}, '*');">MaxAllocHugeSize</a>)</p>
+<p>/*</p>
+<ul>
+<li>Standard top-level memory contexts.</li>
+<p>*</p>
+<li>Only TopMemoryContext and ErrorContext are <a class="wiki-source-link" href="../../source/src/port/win32ntdll.c.html#L36" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/port/win32ntdll.c.html&quot;}, '*');">initialized</a> by</li>
+<li><a class="wiki-source-link" href="../../source/src/backend/utils/mmgr/mcxt.c.html#L361" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__utils__mmgr__mcxt_c__MemoryContextInit.html&quot;}, '*');">MemoryContextInit</a>() itself.</li>
+<p>*/ <a class="wiki-source-link" href="../../source/src/tools/pg_bsd_indent/indent_globs.h.html#L54" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/tools/pg_bsd_indent/indent_globs.h.html&quot;}, '*');">extern</a> PGDLLIMPORT MemoryContext TopMemoryContext; ~~~</p>
+</ul>
+<h2>失敗モードと境界条件</h2>
+<p>まだ解析していません。</p>
+<h2>保守担当者向けメモ</h2>
+<ul>
+<li>後続フェーズで、ソース本文の文脈と caller/callee 情報を使ってこのページを強化する。</li>
+</ul><script>
+(function() {
+  function notifyParent() {
+    if (parent === window) return;
+    parent.postMessage({type: "frame-location", frame: window.name || "", href: window.location.href}, "*");
+  }
+  document.addEventListener("click", function(event) {
+    const link = event.target.closest("a[data-panel]");
+    if (!link || parent === window) return;
+    parent.postMessage({type: "source-link", panel: link.dataset.panel}, "*");
+  });
+  window.addEventListener("load", notifyParent);
+  window.addEventListener("hashchange", notifyParent);
+})();
+</script></body></html>

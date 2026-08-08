@@ -38,7 +38,7 @@
 <p>ltime = <a class="wiki-source-link" href="../../source/src/backend/storage/ipc/standby.c.html#L201" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__storage__ipc__standby_c__GetStandbyLimitTime.html&quot;}, '*');">GetStandbyLimitTime</a>();</p>
 <p>if (<a class="wiki-source-link" href="../../source/src/backend/utils/adt/timestamp.c.html#L1648" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__utils__adt__timestamp_c__GetCurrentTimestamp.html&quot;}, '*');">GetCurrentTimestamp</a>() &gt;= ltime &amp;&amp; ltime != 0) { /*</p>
 <ul>
-<li>We&#x27;re already behind, so clear a path as quickly as possible.</li>
+<li>We&#x27;re already behind, so <a class="wiki-source-link" href="../../source/src/include/executor/tuptable.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__executor__tuptable_h__clear.html&quot;}, '*');">clear</a> a path as quickly as possible.</li>
 <p>*/ <a class="wiki-source-link" href="../../source/src/backend/storage/ipc/standby.c.html#L878" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__storage__ipc__standby_c__SendRecoveryConflictWithBufferPin.html&quot;}, '*');">SendRecoveryConflictWithBufferPin</a>(RECOVERY_CONFLICT_BUFFERPIN); } else { /*</p>
 <li>Wake up at ltime, and check for deadlocks as well if we will be</li>
 <li>waiting longer than deadlock_timeout</li>

@@ -34,7 +34,7 @@
 <h2>関連データ構造</h2>
 <p><code>AttrNumber</code>, <code>Datum</code>, <code>HeapTuple</code>, <code>TupleDesc</code></p>
 <h2>ソース抜粋</h2>
-<p>~~~c Datum SysCacheGetAttr(SysCacheIdentifier cacheId, HeapTuple tup, AttrNumber attributeNumber, bool *isNull) { /*</p>
+<p>~~~c Datum SysCacheGetAttr(SysCacheIdentifier cacheId, HeapTuple tup, AttrNumber attributeNumber, <a class="wiki-source-link" href="../../source/src/include/access/tupmacs.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__access__tupmacs_h__bool.html&quot;}, '*');">bool</a> *isNull) { /*</p>
 <ul>
 <li>We just need to get the TupleDesc out of the cache entry, and then we</li>
 <li>can apply <a class="wiki-source-link" href="../../source/src/include/access/htup_details.h.html#L894" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__access__htup_details_h__heap_getattr.html&quot;}, '*');">heap_getattr</a>().  Normally the cache control data <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> already</li>

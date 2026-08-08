@@ -29,7 +29,7 @@
 <li>呼び出し元: なし</li>
 <li>呼び出し先: なし</li>
 <li>呼び出し元サイト: なし</li>
-<li>呼び出しサイト: <code>strncmp</code> at <code>src/backend/utils/adt/json.c:892:9</code> (unresolved)</li>
+<li>呼び出しサイト: <a class="wiki-source-link" href="../../source/src/include/utils/hsearch.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__utils__hsearch_h__strncmp.html&quot;}, '*');"><code>strncmp</code></a> at <code>src/backend/utils/adt/json.c:892:9</code> (unresolved)</li>
 </ul>
 <h2>関連データ構造</h2>
 <p><a class="wiki-source-link" href="../../source/src/backend/utils/adt/json.c.html#L45" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__utils__adt__json_c__JsonUniqueHashEntry.html&quot;}, '*');"><code>JsonUniqueHashEntry</code></a>, <code>Size</code></p>
@@ -37,7 +37,7 @@
 <p>~~~c static int <a class="wiki-source-link" href="../../source/src/backend/utils/adt/json.c.html#L880" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__utils__adt__json_c__json_unique_hash_match.html&quot;}, '*');">json_unique_hash_match</a>(const void *key1, const void *key2, Size keysize) { const <a class="wiki-source-link" href="../../source/src/backend/utils/adt/json.c.html#L45" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__utils__adt__json_c__JsonUniqueHashEntry.html&quot;}, '*');">JsonUniqueHashEntry</a> *entry1 = (const <a class="wiki-source-link" href="../../source/src/backend/utils/adt/json.c.html#L45" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__utils__adt__json_c__JsonUniqueHashEntry.html&quot;}, '*');">JsonUniqueHashEntry</a> *) key1; const <a class="wiki-source-link" href="../../source/src/backend/utils/adt/json.c.html#L45" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__utils__adt__json_c__JsonUniqueHashEntry.html&quot;}, '*');">JsonUniqueHashEntry</a> *entry2 = (const <a class="wiki-source-link" href="../../source/src/backend/utils/adt/json.c.html#L45" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__utils__adt__json_c__JsonUniqueHashEntry.html&quot;}, '*');">JsonUniqueHashEntry</a> *) key2;</p>
 <p>if (entry1-&gt;object_id != entry2-&gt;object_id) return entry1-&gt;object_id &gt; entry2-&gt;object_id ? 1 : -1;</p>
 <p>if (entry1-&gt;key_len != entry2-&gt;key_len) return entry1-&gt;key_len &gt; entry2-&gt;key_len ? 1 : -1;</p>
-<p>return strncmp(entry1-&gt;key, entry2-&gt;key, entry1-&gt;key_len); } ~~~</p>
+<p>return <a class="wiki-source-link" href="../../source/src/include/utils/hsearch.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__utils__hsearch_h__strncmp.html&quot;}, '*');">strncmp</a>(entry1-&gt;key, entry2-&gt;key, entry1-&gt;key_len); } ~~~</p>
 <h2>失敗モードと境界条件</h2>
 <p>まだ解析していません。</p>
 <h2>保守担当者向けメモ</h2>

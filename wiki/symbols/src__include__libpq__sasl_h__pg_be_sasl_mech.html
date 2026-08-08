@@ -48,7 +48,7 @@
 </ul>
 <p>/*---------</p>
 <ul>
-<li><a class="wiki-source-link" href="../../source/src/interfaces/ecpg/test/expected/sql-bytea.c.html#L72" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/ecpg/test/expected/sql-bytea.c.html&quot;}, '*');">init</a>()</li>
+<li>init()</li>
 <p>*</p>
 <li>Initializes mechanism-specific state for a <a class="wiki-source-link" href="../../source/src/interfaces/ecpg/ecpglib/ecpglib_extern.h.html#L101" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__interfaces__ecpg__ecpglib__ecpglib_extern_h__connection.html&quot;}, '*');">connection</a>. This <a class="wiki-source-link" href="../../source/src/tools/ifaddrs/test_ifaddrs.c.html#L45" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__tools__ifaddrs__test_ifaddrs_c__callback.html&quot;}, '*');">callback</a></li>
 <li>must return a pointer to its allocated state, which will be passed</li>
@@ -67,7 +67,7 @@
 <li>the implementation must continue the <a class="wiki-source-link" href="../../source/src/include/port/atomics/generic.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__port__atomics__generic_h__exchange.html&quot;}, '*');">exchange</a> as if the</li>
 <li><a class="wiki-source-link" href="../../source/src/test/regress/pg_regress.c.html#L121" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/test/regress/pg_regress.c.html&quot;}, '*');">user</a> existed and the <a class="wiki-source-link" href="../../source/src/bin/pg_basebackup/streamutil.c.html#L51" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/bin/pg_basebackup/streamutil.c.html&quot;}, '*');">password</a> did not match, to avoid</li>
 <li>disclosing valid <a class="wiki-source-link" href="../../source/src/test/regress/pg_regress.c.html#L121" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/test/regress/pg_regress.c.html&quot;}, '*');">user</a> names.</li>
-<p>*--------- */ void	   *(*<a class="wiki-source-link" href="../../source/src/interfaces/ecpg/test/expected/sql-bytea.c.html#L72" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/ecpg/test/expected/sql-bytea.c.html&quot;}, '*');">init</a>) (Port *<a class="wiki-source-link" href="../../source/src/test/regress/pg_regress.c.html#L117" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/test/regress/pg_regress.c.html&quot;}, '*');">port</a>, const <a class="wiki-source-link" href="../../source/src/include/port/atomics/generic-gcc.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__port__atomics__generic-gcc_h__char.html&quot;}, '*');">char</a> *mech, const <a class="wiki-source-link" href="../../source/src/include/port/atomics/generic-gcc.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__port__atomics__generic-gcc_h__char.html&quot;}, '*');">char</a> *shadow_pass);</p>
+<p>*--------- */ void	   *(*init) (Port *<a class="wiki-source-link" href="../../source/src/test/regress/pg_regress.c.html#L117" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/test/regress/pg_regress.c.html&quot;}, '*');">port</a>, const char *mech, const char *shadow_pass);</p>
 </ul>
 <p>/*---------</p>
 <ul>
@@ -80,7 +80,7 @@
 <p>*</p>
 <li>Input parameters:</li>
 <p>*</p>
-<li>state:	  The opaque mechanism state returned by <a class="wiki-source-link" href="../../source/src/interfaces/ecpg/test/expected/sql-bytea.c.html#L72" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/ecpg/test/expected/sql-bytea.c.html&quot;}, '*');">init</a>()</li>
+<li>state:	  The opaque mechanism state returned by init()</li>
 <p>*</p>
 <li>input:	  The response data sent by the client, or NULL if the</li>
 <li>mechanism <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> client-first but the client did not <a class="wiki-source-link" href="../../source/src/include/port/win32_port.h.html#L502" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/port/win32_port.h.html&quot;}, '*');">send</a> an</li>

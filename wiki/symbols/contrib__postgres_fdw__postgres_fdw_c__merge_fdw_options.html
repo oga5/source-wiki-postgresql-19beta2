@@ -39,7 +39,7 @@
 <p>/*</p>
 <ul>
 <li>Copy the server specific FDW options.  (For a join, both relations come</li>
-<li>from the same server, so the server options should have the same <a class="wiki-source-link" href="../../source/src/interfaces/ecpg/compatlib/informix.c.html#L687" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/ecpg/compatlib/informix.c.html&quot;}, '*');">value</a></li>
+<li>from the same server, so the server options should have the same value</li>
 <li>for both relations.)</li>
 <p>*/ fpinfo-&gt;fdw_startup_cost = fpinfo_o-&gt;fdw_startup_cost; fpinfo-&gt;fdw_tuple_cost = fpinfo_o-&gt;fdw_tuple_cost; fpinfo-&gt;shippable_extensions = fpinfo_o-&gt;shippable_extensions; fpinfo-&gt;use_remote_estimate = fpinfo_o-&gt;use_remote_estimate; fpinfo-&gt;<a class="wiki-source-link" href="../../source/src/bin/pg_rewind/pg_rewind.c.html#L85" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/bin/pg_rewind/pg_rewind.c.html&quot;}, '*');">fetch_size</a> = fpinfo_o-&gt;<a class="wiki-source-link" href="../../source/src/bin/pg_rewind/pg_rewind.c.html#L85" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/bin/pg_rewind/pg_rewind.c.html&quot;}, '*');">fetch_size</a>; fpinfo-&gt;async_capable = fpinfo_o-&gt;async_capable;</p>
 </ul>
@@ -49,7 +49,7 @@
 <li>from either side of the join <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> using remote estimates.  This <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a></li>
 <li>most <a class="wiki-source-link" href="../../source/src/include/c.h.html#L441" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/c.h.html&quot;}, '*');">likely</a> going to be preferred since they&#x27;re already willing to</li>
 <li>pay the price of a round trip to get the remote EXPLAIN.  In any</li>
-<li>case it&#x27;s not entirely clear how we might otherwise handle this</li>
+<li>case it&#x27;s not entirely <a class="wiki-source-link" href="../../source/src/include/executor/tuptable.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__executor__tuptable_h__clear.html&quot;}, '*');">clear</a> how we might otherwise handle this</li>
 <li>best.</li>
 <p>*/ fpinfo-&gt;use_remote_estimate = fpinfo_o-&gt;use_remote_estimate || fpinfo_i-&gt;use_remote_estimate;</p>
 </ul>

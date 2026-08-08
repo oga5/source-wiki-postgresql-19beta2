@@ -34,15 +34,15 @@
 <h2>関連データ構造</h2>
 <p>なし</p>
 <h2>ソース抜粋</h2>
-<p>~~~c <a class="wiki-source-link" href="../../source/src/include/port/atomics/generic-gcc.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__port__atomics__generic-gcc_h__char.html&quot;}, '*');">char</a> * libpq_gettext(const <a class="wiki-source-link" href="../../source/src/include/port/atomics/generic-gcc.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__port__atomics__generic-gcc_h__char.html&quot;}, '*');">char</a> *msgid) { if (!<a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/oauth-utils.c.html#L36" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/oauth-utils.c.html&quot;}, '*');">libpq_gettext_impl</a>) { /*</p>
+<p>~~~c char * libpq_gettext(const char *msgid) { if (!<a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/oauth-utils.c.html#L36" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/oauth-utils.c.html&quot;}, '*');">libpq_gettext_impl</a>) { /*</p>
 <ul>
 <li>Possible if the libpq build didn&#x27;t enable NLS but the libpq-oauth</li>
 <li>build did. That&#x27;s an odd mismatch, but we can handle it.</li>
 <p>*</p>
-<li>Note that callers of libpq_gettext() have to treat the return <a class="wiki-source-link" href="../../source/src/interfaces/ecpg/compatlib/informix.c.html#L687" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/ecpg/compatlib/informix.c.html&quot;}, '*');">value</a></li>
+<li>Note that callers of libpq_gettext() have to treat the return value</li>
 <li>as if it were const, because builds without NLS simply pass through</li>
 <li>their argument.</li>
-<p>*/ return <a class="wiki-source-link" href="../../source/src/include/c.h.html#L1332" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/c.h.html&quot;}, '*');">unconstify</a>(<a class="wiki-source-link" href="../../source/src/include/port/atomics/generic-gcc.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__port__atomics__generic-gcc_h__char.html&quot;}, '*');">char</a> *, msgid); }</p>
+<p>*/ return <a class="wiki-source-link" href="../../source/src/include/c.h.html#L1332" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/c.h.html&quot;}, '*');">unconstify</a>(char *, msgid); }</p>
 </ul>
 <p>return <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/oauth-utils.c.html#L36" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/oauth-utils.c.html&quot;}, '*');">libpq_gettext_impl</a>(msgid); } ~~~</p>
 <h2>失敗モードと境界条件</h2>

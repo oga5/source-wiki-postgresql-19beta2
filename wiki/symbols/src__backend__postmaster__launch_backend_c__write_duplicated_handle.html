@@ -15,7 +15,7 @@
 <h2>入力と出力</h2>
 <ul>
 <li>引数: <code>HANDLE *dest</code>, <code>HANDLE src</code>, <code>HANDLE childProcess</code></li>
-<li>戻り値: <code>bool</code></li>
+<li>戻り値: <a class="wiki-source-link" href="../../source/src/include/access/tupmacs.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__access__tupmacs_h__bool.html&quot;}, '*');"><code>bool</code></a></li>
 </ul>
 <h2>前提条件と不変条件</h2>
 <p>まだ解析していません。</p>
@@ -34,7 +34,7 @@
 <h2>関連データ構造</h2>
 <p>なし</p>
 <h2>ソース抜粋</h2>
-<p>~~~c static bool <a class="wiki-source-link" href="../../source/src/backend/postmaster/launch_backend.c.html#L787" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__postmaster__launch_backend_c__write_duplicated_handle.html&quot;}, '*');">write_duplicated_handle</a>(HANDLE *dest, HANDLE src, HANDLE childProcess) { HANDLE		hChild = INVALID_HANDLE_VALUE;</p>
+<p>~~~c static <a class="wiki-source-link" href="../../source/src/include/access/tupmacs.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__access__tupmacs_h__bool.html&quot;}, '*');">bool</a> <a class="wiki-source-link" href="../../source/src/backend/postmaster/launch_backend.c.html#L787" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__postmaster__launch_backend_c__write_duplicated_handle.html&quot;}, '*');">write_duplicated_handle</a>(HANDLE *dest, HANDLE src, HANDLE childProcess) { HANDLE		hChild = INVALID_HANDLE_VALUE;</p>
 <p>if (!DuplicateHandle(GetCurrentProcess(), src, childProcess, &amp;hChild, 0, TRUE, DUPLICATE_CLOSE_SOURCE | DUPLICATE_SAME_ACCESS)) { <a class="wiki-source-link" href="../../source/src/include/utils/elog.h.html#L166" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/utils/elog.h.html&quot;}, '*');">ereport</a>(<a class="wiki-source-link" href="../../source/src/include/utils/elog.h.html#L33" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/utils/elog.h.html&quot;}, '*');">LOG</a>, (<a class="wiki-source-link" href="../../source/src/backend/utils/error/elog.c.html#L1348" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__utils__error__elog_c__errmsg_internal.html&quot;}, '*');">errmsg_internal</a>(&quot;could not duplicate handle to be written to backend parameter file: error code %lu&quot;, GetLastError()))); return <a class="wiki-source-link" href="../../source/src/tools/pg_bsd_indent/indent_globs.h.html#L43" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/tools/pg_bsd_indent/indent_globs.h.html&quot;}, '*');">false</a>; }</p>
 <p>*dest = hChild; return <a class="wiki-source-link" href="../../source/src/tools/pg_bsd_indent/indent_globs.h.html#L46" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/tools/pg_bsd_indent/indent_globs.h.html&quot;}, '*');">true</a>; } ~~~</p>
 <h2>失敗モードと境界条件</h2>

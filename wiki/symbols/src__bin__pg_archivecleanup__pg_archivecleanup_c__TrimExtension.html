@@ -34,7 +34,7 @@
 <h2>関連データ構造</h2>
 <p>なし</p>
 <h2>ソース抜粋</h2>
-<p>~~~c static void <a class="wiki-source-link" href="../../source/src/bin/pg_archivecleanup/pg_archivecleanup.c.html#L75" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__bin__pg_archivecleanup__pg_archivecleanup_c__TrimExtension.html&quot;}, '*');">TrimExtension</a>(<a class="wiki-source-link" href="../../source/src/include/port/atomics/generic-gcc.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__port__atomics__generic-gcc_h__char.html&quot;}, '*');">char</a> *filename, <a class="wiki-source-link" href="../../source/src/include/port/atomics/generic-gcc.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__port__atomics__generic-gcc_h__char.html&quot;}, '*');">char</a> *extension) { int			flen; int			elen;</p>
+<p>~~~c static void <a class="wiki-source-link" href="../../source/src/bin/pg_archivecleanup/pg_archivecleanup.c.html#L75" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__bin__pg_archivecleanup__pg_archivecleanup_c__TrimExtension.html&quot;}, '*');">TrimExtension</a>(char *filename, char *extension) { int			flen; int			elen;</p>
 <p>if (extension == NULL) return;</p>
 <p>elen = strlen(extension); flen = strlen(filename);</p>
 <p>if (flen &gt; elen &amp;&amp; strcmp(filename + flen - elen, extension) == 0) filename[flen - elen] = &#x27;\0&#x27;; } ~~~</p>

@@ -15,7 +15,7 @@
 <h2>入力と出力</h2>
 <ul>
 <li>引数: <code>Oid atttypid</code>, <code>const char *compression</code></li>
-<li>戻り値: <a class="wiki-source-link" href="../../source/src/include/port/atomics/generic-gcc.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__port__atomics__generic-gcc_h__char.html&quot;}, '*');"><code>char</code></a></li>
+<li>戻り値: <code>char</code></li>
 </ul>
 <h2>前提条件と不変条件</h2>
 <p>まだ解析していません。</p>
@@ -34,7 +34,7 @@
 <h2>関連データ構造</h2>
 <p><code>Oid</code></p>
 <h2>ソース抜粋</h2>
-<p>~~~c static <a class="wiki-source-link" href="../../source/src/include/port/atomics/generic-gcc.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__port__atomics__generic-gcc_h__char.html&quot;}, '*');">char</a> <a class="wiki-source-link" href="../../source/src/backend/commands/tablecmds.c.html#L22704" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__commands__tablecmds_c__GetAttributeCompression.html&quot;}, '*');">GetAttributeCompression</a>(Oid atttypid, const <a class="wiki-source-link" href="../../source/src/include/port/atomics/generic-gcc.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__port__atomics__generic-gcc_h__char.html&quot;}, '*');">char</a> *compression) { <a class="wiki-source-link" href="../../source/src/include/port/atomics/generic-gcc.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__port__atomics__generic-gcc_h__char.html&quot;}, '*');">char</a>		cmethod;</p>
+<p>~~~c static char <a class="wiki-source-link" href="../../source/src/backend/commands/tablecmds.c.html#L22704" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__commands__tablecmds_c__GetAttributeCompression.html&quot;}, '*');">GetAttributeCompression</a>(Oid atttypid, const char *compression) { char		cmethod;</p>
 <p>if (compression == NULL || strcmp(compression, &quot;default&quot;) == 0) return <a class="wiki-source-link" href="../../source/src/include/access/toast_compression.h.html#L51" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/access/toast_compression.h.html&quot;}, '*');">InvalidCompressionMethod</a>;</p>
 <p>/*</p>
 <ul>
@@ -42,7 +42,7 @@
 <li>Note this says nothing about whether the column&#x27;s attstorage setting</li>
 <li>permits compression; we intentionally allow attstorage and</li>
 <li>attcompression to be independent.  But with a non-toastable <a class="wiki-source-link" href="../../source/src/include/lib/ilist.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__lib__ilist_h__type.html&quot;}, '*');">type</a>,</li>
-<li>attstorage could not be set to a <a class="wiki-source-link" href="../../source/src/interfaces/ecpg/compatlib/informix.c.html#L687" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/ecpg/compatlib/informix.c.html&quot;}, '*');">value</a> that would permit compression.</li>
+<li>attstorage could not be set to a value that would permit compression.</li>
 <p>*</p>
 <li>We don&#x27;t actually need to enforce this, since nothing bad would happen</li>
 <li>if attcompression were non-default; it would never be consulted.  But</li>

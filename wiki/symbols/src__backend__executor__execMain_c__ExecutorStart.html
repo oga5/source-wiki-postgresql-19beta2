@@ -1,5 +1,5 @@
 <!doctype html>
-<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>symbols/src__backend__executor__execMain_c__ExecutorStart.md</title><link rel="stylesheet" href="../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../source/src/backend/executor/execMain.c.html#L123" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__executor__execMain_c__ExecutorStart.html&quot;}, '*');">ExecutorStart</a></h1>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>symbols/src__backend__executor__execMain_c__ExecutorStart.md</title><link rel="stylesheet" href="../../styles.css"></head><body><h1>ExecutorStart</h1>
 <h2>定義</h2>
 <ul>
 <li>種別: <code>function</code></li>
@@ -34,7 +34,7 @@
 <h2>関連データ構造</h2>
 <p><a class="wiki-source-link" href="../../source/src/interfaces/ecpg/test/expected/preproc-init.c.html#L82" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__interfaces__ecpg__test__expected__preproc-init_c__e.html&quot;}, '*');"><code>e</code></a>, <code>QueryDesc</code>, <a class="wiki-source-link" href="../../source/src/interfaces/ecpg/ecpglib/ecpglib_extern.h.html#L64" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__interfaces__ecpg__ecpglib__ecpglib_extern_h__statement.html&quot;}, '*');"><code>statement</code></a></p>
 <h2>ソース抜粋</h2>
-<p>~~~c void <a class="wiki-source-link" href="../../source/src/backend/executor/execMain.c.html#L123" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__executor__execMain_c__ExecutorStart.html&quot;}, '*');">ExecutorStart</a>(QueryDesc *queryDesc, int eflags) { /*</p>
+<p>~~~c void ExecutorStart(QueryDesc *queryDesc, int eflags) { /*</p>
 <ul>
 <li>In some cases (e.g. an EXECUTE <a class="wiki-source-link" href="../../source/src/interfaces/ecpg/ecpglib/ecpglib_extern.h.html#L64" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__interfaces__ecpg__ecpglib__ecpglib_extern_h__statement.html&quot;}, '*');">statement</a> or an <a class="wiki-source-link" href="../../source/contrib/intarray/_int_bool.c.html#L263" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/contrib__intarray___int_bool_c__execute.html&quot;}, '*');">execute</a> message with the</li>
 <li>extended query protocol) the query_id won&#x27;t be reported, so do it now.</li>

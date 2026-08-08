@@ -10,7 +10,7 @@
 <li>**サブクエリパラメータ管理**: <code>root-&gt;plan_params</code> を使用して、上位クエリレベルから下位サブクエリへ供給すべき <code>Var</code> や <code>PlaceHolderVar</code> などの項目を記録・重複排除・管理する。</li>
 <li>**ネストループパラメータ管理**: <code>root-&gt;curOuterParams</code> を使用して、ネストループの親側から右側（子プランノード）へ受け渡すべき <code>NestLoopParam</code> を記録・抽出する。</li>
 <li>**各種式ノードのパラメータ置換**: <code>Var</code>、<code>PlaceHolderVar</code>、<code>Aggref</code>、<code>GroupingFunc</code>、<code>MergeSupportFunc</code>、<code>ReturningExpr</code> などの外向き参照を <code>Param</code> ノードへ変換する。</li>
-<li>**特殊パラメータの割り当て**: 実行時のシグナリング（再帰共用体のワークテーブルスキャンや <a class="wiki-source-link" href="../../../../../source/src/backend/executor/execMain.c.html#L2686" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__executor__execMain_c__EvalPlanQual.html&quot;}, '*');">EvalPlanQual</a> など）用の値を持たない <code>PARAM_EXEC</code> スロットを確保する。</li>
+<li>**特殊パラメータの割り当て**: 実行時のシグナリング（再帰共用体のワークテーブルスキャンや EvalPlanQual など）用の値を持たない <code>PARAM_EXEC</code> スロットを確保する。</li>
 </ul>
 <h2>重要なシンボル</h2>
 <h3>変数・状態管理関連</h3>

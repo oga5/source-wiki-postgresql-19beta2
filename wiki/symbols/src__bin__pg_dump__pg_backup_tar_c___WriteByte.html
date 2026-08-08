@@ -34,7 +34,7 @@
 <h2>関連データ構造</h2>
 <p><code>ArchiveHandle</code>, <code>lclContext</code></p>
 <h2>ソース抜粋</h2>
-<p>~~~c static int _WriteByte(ArchiveHandle *AH, const int i) { lclContext *ctx = (lclContext *) AH-&gt;formatData; <a class="wiki-source-link" href="../../source/src/include/port/atomics/generic-gcc.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__port__atomics__generic-gcc_h__char.html&quot;}, '*');">char</a>		b = i;			/* Avoid endian problems */</p>
+<p>~~~c static int _WriteByte(ArchiveHandle *AH, const int i) { lclContext *ctx = (lclContext *) AH-&gt;formatData; char		b = i;			/* Avoid endian problems */</p>
 <p>if (<a class="wiki-source-link" href="../../source/src/bin/pg_dump/pg_backup_tar.c.html#L528" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__bin__pg_dump__pg_backup_tar_c__tarWrite.html&quot;}, '*');">tarWrite</a>(&amp;b, 1, ctx-&gt;FH) != 1) <a class="wiki-source-link" href="../../source/src/bin/pg_dump/pg_backup_archiver.h.html#L111" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/bin/pg_dump/pg_backup_archiver.h.html&quot;}, '*');">WRITE_ERROR_EXIT</a>;</p>
 <p>ctx-&gt;filePos += 1; return 1; } ~~~</p>
 <h2>失敗モードと境界条件</h2>

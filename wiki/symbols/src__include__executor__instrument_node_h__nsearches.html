@@ -1,0 +1,84 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>symbols/src__include__executor__instrument_node_h__nsearches.md</title><link rel="stylesheet" href="../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../source/src/include/executor/instrument_node.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__executor__instrument_node_h__nsearches.html&quot;}, '*');">nsearches</a></h1>
+<h2>定義</h2>
+<ul>
+<li>種別: <code>function</code></li>
+<li>定義箇所: <code>src/include/executor/instrument_node.h:1</code></li>
+<li>所属モジュール: <a class="wiki-entity-link" href="../modules/src__include__executor.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/modules/src__include__executor.html&quot;, &quot;source&quot;: &quot;source/src/include/executor/execAsync.h.html&quot;}, '*');"><code>module:src/include/executor</code></a></li>
+</ul>
+<h2>目的</h2>
+<p>静的シンボル索引から生成された初期シンボルページです。</p>
+<h2>シグネチャまたは形状</h2>
+<ul>
+<li>シグネチャ: <code>/*------------------------------------------------------------------------- * * instrument_node.h * Definitions for node-specific support for parallel query instrumentation * * These structs purposely contain no pointers because they are copied * across processes during parallel query execution. Each worker copies its * individual information into the container struct at executor shutdown time, * to allow the leader to display the information in EXPLAIN ANALYZE. * * Portions Copyright (c) 1996-2026, PostgreSQL Global Development Group * Portions Copyright (c) 1994, Regents of the University of California * * src/include/executor/instrument_node.h * *------------------------------------------------------------------------- */ #ifndef INSTRUMENT_NODE_H #define INSTRUMENT_NODE_H /* * Offset added to plan_node_id to create a second TOC key for per-worker scan * instrumentation. Instrumentation and parallel-awareness are independent, so * separate DSM chunks let each be allocated and initialized only when needed. * In the future, if nodes need more DSM allocations, we would need a more * robust system. */ #define PARALLEL_KEY_SCAN_INSTRUMENT_OFFSET UINT64CONST(0xD000000000000000) /* --------------------- * Instrumentation information for aggregate function execution * --------------------- */ typedef struct AggregateInstrumentation</code></li>
+</ul>
+<h2>入力と出力</h2>
+<p>まだ解析していません。</p>
+<h2>前提条件と不変条件</h2>
+<p>まだ解析していません。</p>
+<h2>アルゴリズムまたは振る舞い</h2>
+<ul>
+<li>複雑度: <code>low</code> (score 0)</li>
+</ul>
+<p>まだ解析していません。</p>
+<h2>呼び出し元と呼び出し先</h2>
+<ul>
+<li>呼び出し元: なし</li>
+<li>呼び出し先: なし</li>
+<li>呼び出し元サイト: なし</li>
+<li>呼び出しサイト: なし</li>
+</ul>
+<h2>関連データ構造</h2>
+<p><a class="wiki-source-link" href="../../source/src/include/executor/instrument_node.h.html#L34" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__executor__instrument_node_h__AggregateInstrumentation.html&quot;}, '*');"><code>AggregateInstrumentation</code></a>, <code>c</code>, <code>Group</code>, <code>Instrumentation</code>, <a class="wiki-source-link" href="../../source/src/include/c.h.html#L715" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/c.h.html&quot;}, '*');"><code>Offset</code></a>, <code>Size</code>, <code>uint64</code>, <a class="wiki-source-link" href="../../source/src/interfaces/ecpg/preproc/type.h.html#L89" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__interfaces__ecpg__preproc__type_h__when.html&quot;}, '*');"><code>when</code></a></p>
+<h2>ソース抜粋</h2>
+<p>~~~c /*------------------------------------------------------------------------- *</p>
+<ul>
+<li><a class="wiki-source-link" href="../../source/src/include/executor/instrument_node.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/executor/instrument_node.h.html&quot;}, '*');">instrument_node.h</a></li>
+<li>Definitions for node-specific support for parallel query instrumentation</li>
+<p>*</p>
+<li>These structs purposely contain no pointers because they are copied</li>
+<li>across processes during parallel query execution.  Each worker copies its</li>
+<li>individual information into the container struct at executor shutdown time,</li>
+<li>to allow the leader to display the information in EXPLAIN ANALYZE.</li>
+<p>*</p>
+<li>Portions Copyright (c) 1996-2026, PostgreSQL Global Development Group</li>
+<li>Portions Copyright (c) 1994, Regents of the University of California</li>
+<p>*</p>
+<li><a class="wiki-source-link" href="../../source/src/include/executor/instrument_node.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/executor/instrument_node.h.html&quot;}, '*');">src/include/executor/instrument_node.h</a></li>
+<p>* *------------------------------------------------------------------------- */ #ifndef <a class="wiki-source-link" href="../../source/src/include/executor/instrument_node.h.html#L19" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/executor/instrument_node.h.html&quot;}, '*');">INSTRUMENT_NODE_H</a> #define <a class="wiki-source-link" href="../../source/src/include/executor/instrument_node.h.html#L19" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/executor/instrument_node.h.html&quot;}, '*');">INSTRUMENT_NODE_H</a></p>
+</ul>
+<p>/*</p>
+<ul>
+<li><a class="wiki-source-link" href="../../source/src/include/c.h.html#L715" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/c.h.html&quot;}, '*');">Offset</a> added to plan_node_id to create a second TOC key for per-worker scan</li>
+<li>instrumentation. Instrumentation and parallel-awareness are independent, so</li>
+<li>separate DSM chunks let each be allocated and <a class="wiki-source-link" href="../../source/src/port/win32ntdll.c.html#L36" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/port/win32ntdll.c.html&quot;}, '*');">initialized</a> only <a class="wiki-source-link" href="../../source/src/interfaces/ecpg/preproc/type.h.html#L89" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__interfaces__ecpg__preproc__type_h__when.html&quot;}, '*');">when</a> needed.</li>
+<li>In the future, if nodes need more DSM allocations, we would need a more</li>
+<li>robust system.</li>
+<p>*/ #define <a class="wiki-source-link" href="../../source/src/include/executor/instrument_node.h.html#L28" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/executor/instrument_node.h.html&quot;}, '*');">PARALLEL_KEY_SCAN_INSTRUMENT_OFFSET</a>	<a class="wiki-source-link" href="../../source/src/include/c.h.html#L638" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/c.h.html&quot;}, '*');">UINT64CONST</a>(0xD000000000000000)</p>
+</ul>
+<p>/* ---------------------</p>
+<ul>
+<li>Instrumentation information for aggregate function execution</li>
+<li>---------------------</li>
+<p>*/ typedef struct <a class="wiki-source-link" href="../../source/src/include/executor/instrument_node.h.html#L34" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__executor__instrument_node_h__AggregateInstrumentation.html&quot;}, '*');">AggregateInstrumentation</a> { Size		hash_mem_peak;	/* peak <a class="wiki-source-link" href="../../source/src/backend/regex/rege_dfa.c.html#L723" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__regex__rege_dfa_c__hash.html&quot;}, '*');">hash</a> <a class="wiki-source-link" href="../../source/src/port/pg_localeconv_r.c.html#L63" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/port/pg_localeconv_r.c.html&quot;}, '*');">table</a> memory usage */ uint64		hash_disk_used; /* kB of disk space used */ int			hash_batches_used;	/* batches used during entire execution */ } <a class="wiki-source-link" href="../../source/src/include/executor/instrument_node.h.html#L34" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__executor__instrument_node_h__AggregateInstrumentation.html&quot;}, '*');">AggregateInstrumentation</a>; ~~~</p>
+</ul>
+<h2>失敗モードと境界条件</h2>
+<p>まだ解析していません。</p>
+<h2>保守担当者向けメモ</h2>
+<ul>
+<li>後続フェーズで、ソース本文の文脈と caller/callee 情報を使ってこのページを強化する。</li>
+</ul><script>
+(function() {
+  function notifyParent() {
+    if (parent === window) return;
+    parent.postMessage({type: "frame-location", frame: window.name || "", href: window.location.href}, "*");
+  }
+  document.addEventListener("click", function(event) {
+    const link = event.target.closest("a[data-panel]");
+    if (!link || parent === window) return;
+    parent.postMessage({type: "source-link", panel: link.dataset.panel}, "*");
+  });
+  window.addEventListener("load", notifyParent);
+  window.addEventListener("hashchange", notifyParent);
+})();
+</script></body></html>

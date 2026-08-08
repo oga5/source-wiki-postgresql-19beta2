@@ -47,7 +47,7 @@
 <p>/*</p>
 <ul>
 <li>Use fctx to keep state from call to call. Seed current with the</li>
-<li>original start <a class="wiki-source-link" href="../../source/src/interfaces/ecpg/compatlib/informix.c.html#L687" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/ecpg/compatlib/informix.c.html&quot;}, '*');">value</a></li>
+<li>original start value</li>
 <p>*/ fctx-&gt;current = start; fctx-&gt;finish = finish; fctx-&gt;step = step;</p>
 </ul>
 <p>funcctx-&gt;user_fctx = fctx; <a class="wiki-source-link" href="../../source/src/include/utils/palloc.h.html#L137" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__utils__palloc_h__MemoryContextSwitchTo.html&quot;}, '*');">MemoryContextSwitchTo</a>(oldcontext); }</p>
@@ -59,7 +59,7 @@
 </ul>
 <p>if ((fctx-&gt;step &gt; 0 &amp;&amp; fctx-&gt;current &lt;= fctx-&gt;finish) || (fctx-&gt;step &lt; 0 &amp;&amp; fctx-&gt;current &gt;= fctx-&gt;finish)) { /*</p>
 <ul>
-<li>Increment current in preparation for next iteration. If next-<a class="wiki-source-link" href="../../source/src/interfaces/ecpg/compatlib/informix.c.html#L687" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/ecpg/compatlib/informix.c.html&quot;}, '*');">value</a></li>
+<li>Increment current in preparation for next iteration. If next-value</li>
 <p>~~~</p>
 </ul>
 <h2>失敗モードと境界条件</h2>

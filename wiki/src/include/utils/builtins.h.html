@@ -6,7 +6,7 @@
 <p><code>src/include/utils/</code> ディレクトリに位置し、ブール値、整数、OID、文字列、ネットワーク、型フォーマットなど、PostgreSQLのコア処理で多用される基本的なC言語関数インターフェースを他のサブシステムへ提供します。</p>
 <h2>責務</h2>
 <ul>
-<li>各種組み込み型（bool, int16/32/64, Oid, text, ネットワーク型等）の変換・操作関数のプロトタイプ宣言。</li>
+<li>各種組み込み型（<a class="wiki-source-link" href="../../../../source/src/include/access/tupmacs.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__access__tupmacs_h__bool.html&quot;}, '*');">bool</a>, int16/32/64, Oid, text, ネットワーク型等）の変換・操作関数のプロトタイプ宣言。</li>
 <li>C文字列とPostgreSQL内部のテキストデータム間を変換するマクロ（<a class="wiki-source-link" href="../../../../source/src/include/utils/builtins.h.html#L98" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/utils/builtins.h.html&quot;}, '*');"><code>CStringGetTextDatum</code></a>, <a class="wiki-source-link" href="../../../../source/src/include/utils/builtins.h.html#L99" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/utils/builtins.h.html&quot;}, '*');"><code>TextDatumGetCString</code></a>）の提供。</li>
 <li>型名フォーマット関数（<code>format_type_extended</code> 等）や識別子クォーティング関数の定義。</li>
 </ul>

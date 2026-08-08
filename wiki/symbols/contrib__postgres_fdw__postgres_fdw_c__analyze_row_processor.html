@@ -39,7 +39,7 @@
 <p>/*</p>
 <ul>
 <li>Determine the slot where this sample row should be stored.  Set pos to</li>
-<li>negative <a class="wiki-source-link" href="../../source/src/interfaces/ecpg/compatlib/informix.c.html#L687" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/ecpg/compatlib/informix.c.html&quot;}, '*');">value</a> to indicate the row should be skipped.</li>
+<li>negative value to indicate the row should be skipped.</li>
 <p>*/ if (astate-&gt;numrows &lt; targrows) { /* First targrows rows are always included into the sample */ pos = astate-&gt;numrows++; } else { /*</p>
 <li>Now we start replacing tuples in the sample until we reach the end</li>
 <li>of the relation.  Same algorithm as in <a class="wiki-source-link" href="../../source/src/backend/commands/analyze.c.html#L1261" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__commands__analyze_c__acquire_sample_rows.html&quot;}, '*');">acquire_sample_rows</a> in</li>

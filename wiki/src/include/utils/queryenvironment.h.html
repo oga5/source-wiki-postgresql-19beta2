@@ -1,0 +1,57 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>src/include/utils/queryenvironment.h.md</title><link rel="stylesheet" href="../../../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../../../source/src/include/utils/queryenvironment.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/utils/queryenvironment.h.html&quot;}, '*');">src/include/utils/queryenvironment.h</a></h1>
+<h2>概要</h2>
+<p>クエリ実行コンテキスト固有の値（一時名前付きリレーション＝ENR）を保持・管理するためのデータ構造と関数群を提供するヘッダーファイルです。主にトリガーの遷移テーブル（delta情報など）の管理に利用されます。</p>
+<h2>モジュール内での役割</h2>
+<p><code>src/include/utils/</code> モジュールに属し、パーサーやプランナー、実行器がクエリローカルなリレーション定義にアクセスするための抽象化レイヤーを提供します。実体処理はペアファイルである <a class="wiki-source-link" href="../../../../source/src/backend/utils/misc/queryenvironment.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/utils/misc/queryenvironment.c.html&quot;}, '*');"><code>src/backend/utils/misc/queryenvironment.c</code></a> に実装されています。</p>
+<h2>責務</h2>
+<ul>
+<li>クエリ環境 (<code>QueryEnvironment</code>) のライフサイクル管理用インターフェースの定義。</li>
+<li>一時名前付きリレーション（ENR）のメタデータおよび実データ構造の定義。</li>
+<li>ENRの登録、検索、削除、およびメタデータからのタプル記述子（TupleDesc）取得関数の宣言。</li>
+</ul>
+<h2>重要なシンボル</h2>
+<ul>
+<li><code>QueryEnvironment</code>: 内部構造が隠蔽された、クエリ固有の環境を表す不透明構造体。</li>
+<li><a class="wiki-source-link" href="../../../../source/src/include/utils/queryenvironment.h.html#L32" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__utils__queryenvironment_h__EphemeralNamedRelationMetadataData.html&quot;}, '*');"><code>EphemeralNamedRelationMetadataData</code></a>: ENRの名前、タプル記述子（または参照元カタログOID）、型、見積もりタプル数を保持するメタデータ構造体。</li>
+<li><a class="wiki-source-link" href="../../../../source/src/include/utils/queryenvironment.h.html#L50" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__utils__queryenvironment_h__EphemeralNamedRelationData.html&quot;}, '*');"><code>EphemeralNamedRelationData</code></a>: メタデータと実行時データポインタを保持し、カタログにない名前付きリレーションを表現する構造体。</li>
+<li><code>create_queryEnv</code>: 新しい <code>QueryEnvironment</code> インスタンスを生成する。</li>
+<li><code>get_ENR</code> / <code>register_ENR</code>: 環境に対するENRの検索および登録を行う。</li>
+</ul>
+<h2>制御フローとデータフロー</h2>
+<p>1. **初期化**: <code>create_queryEnv</code> により空の <code>QueryEnvironment</code> が作成されます。 2. **登録**: <code>register_ENR</code> を用いて、AFTERトリガーの遷移テーブルなどのENRが環境内のリストに追加されます。 3. **参照・解決**: パーサやプランナが <code>get_ENR</code> または <a class="wiki-source-link" href="../../../../source/src/backend/utils/misc/queryenvironment.c.html#L44" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__utils__misc__queryenvironment_c__get_visible_ENR_metadata.html&quot;}, '*');"><code>get_visible_ENR_metadata</code></a> を呼び出して名前からENRを特定します。 4. **型情報取得**: 必要に応じて <a class="wiki-source-link" href="../../../../source/src/backend/utils/misc/queryenvironment.c.html#L124" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__utils__misc__queryenvironment_c__ENRMetadataGetTupDesc.html&quot;}, '*');"><code>ENRMetadataGetTupDesc</code></a> が呼び出され、直接保持された <code>TupleDesc</code> またはカタログOIDから取得した <code>TupleDesc</code> を返します。</p>
+<h2>直接依存</h2>
+<ul>
+<li><code>access/tupdesc.h</code>: タプル記述子（<code>TupleDesc</code>）の定義を利用するため。</li>
+</ul>
+<h2>関連コード</h2>
+<ul>
+<li><a class="wiki-source-link" href="../../../../source/src/backend/utils/misc/queryenvironment.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/utils/misc/queryenvironment.c.html&quot;}, '*');"><code>src/backend/utils/misc/queryenvironment.c</code></a>: ペアとなる実装ファイル。リスト構造を用いたENRの管理ロジックを含みます。</li>
+</ul>
+<h2>読者向けメモ</h2>
+<ul>
+<li><code>QueryEnvironment</code> は外部から内部構造が見えない不透明（opaque）ポインタとして設計されているため、実装詳細を変更しても呼び出し側への影響はありません。</li>
+</ul>
+<h2>シンボルページ</h2>
+<ul>
+<li><a href="../../../symbols/src__include__utils__queryenvironment_h__EphemeralNameRelationType.html" target="wiki-view"><code>EphemeralNameRelationType</code></a></li>
+<li><a href="../../../symbols/src__include__utils__queryenvironment_h__EphemeralNamedRelationMetadataData.html" target="wiki-view"><code>EphemeralNamedRelationMetadataData</code></a></li>
+<li><a href="../../../symbols/src__include__utils__queryenvironment_h__EphemeralNamedRelationMetadata.html" target="wiki-view"><code>EphemeralNamedRelationMetadata</code></a></li>
+<li><a href="../../../symbols/src__include__utils__queryenvironment_h__EphemeralNamedRelationData.html" target="wiki-view"><code>EphemeralNamedRelationData</code></a></li>
+<li><a href="../../../symbols/src__include__utils__queryenvironment_h__EphemeralNamedRelation.html" target="wiki-view"><code>EphemeralNamedRelation</code></a></li>
+<li><a href="../../../symbols/src__include__utils__queryenvironment_h__QueryEnvironment.html" target="wiki-view"><code>QueryEnvironment</code></a></li>
+</ul><script>
+(function() {
+  function notifyParent() {
+    if (parent === window) return;
+    parent.postMessage({type: "frame-location", frame: window.name || "", href: window.location.href}, "*");
+  }
+  document.addEventListener("click", function(event) {
+    const link = event.target.closest("a[data-panel]");
+    if (!link || parent === window) return;
+    parent.postMessage({type: "source-link", panel: link.dataset.panel}, "*");
+  });
+  window.addEventListener("load", notifyParent);
+  window.addEventListener("hashchange", notifyParent);
+})();
+</script></body></html>

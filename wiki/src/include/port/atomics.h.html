@@ -1,0 +1,104 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>src/include/port/atomics.h.md</title><link rel="stylesheet" href="../../../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../../../source/src/include/port/atomics.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/port/atomics.h.html&quot;}, '*');">src/include/port/atomics.h</a></h1>
+<h2>概要</h2>
+<p>ハードウェアおよびコンパイラに依存するアトミック操作とキャッシュ整合性制御を提供するヘッダーファイルである。ロック機構やロックフリーなアルゴリズム・データ構造の実装基盤として使用され、バックエンドコード専用（フロントエンドからのインクルードは禁止）である。</p>
+<h2>モジュール内での役割</h2>
+<p><code>src/include/port</code> サブシステムに属し、アーキテクチャ固有の実装（ARM, x86, PPC）やコンパイラ固有の実装（GCC/Clang, MSVC）を抽象化して統合する。64ビットアトミックが効率的にサポートされない環境向けには、フォールバックとしてスピンロックベースのエミュレーション（ペアファイル <a class="wiki-source-link" href="../../../../source/src/backend/port/atomics.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/port/atomics.c.html&quot;}, '*');"><code>src/backend/port/atomics.c</code></a> で実装）を提供する。</p>
+<h2>責務</h2>
+<ul>
+<li>**メモリバリアとコンパイラバリアの提供**: 命令やメモリアクセスのリオーダリングを防止するマクロ（<a class="wiki-source-link" href="../../../../source/src/include/port/atomics.h.html#L129" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/port/atomics.h.html&quot;}, '*');"><code>pg_compiler_barrier</code></a>, <a class="wiki-source-link" href="../../../../source/src/include/port/atomics.h.html#L141" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/port/atomics.h.html&quot;}, '*');"><code>pg_memory_barrier</code></a>, <a class="wiki-source-link" href="../../../../source/src/include/port/atomics.h.html#L154" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/port/atomics.h.html&quot;}, '*');"><code>pg_read_barrier</code></a>, <a class="wiki-source-link" href="../../../../source/src/include/port/atomics.h.html#L155" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/port/atomics.h.html&quot;}, '*');"><code>pg_write_barrier</code></a>）を定義する。</li>
+<li>**フラグ操作（<a class="wiki-source-link" href="../../../../source/src/include/storage/s_lock.h.html#L131" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/storage/s_lock.h.html&quot;}, '*');">TAS</a>系）の提供**: テスト＆セット操作を行うアトミックフラグの初期化、セット、クリア、ロックフリー状態のテストAPIを提供する。</li>
+<li>**32ビット整数アトミック操作の提供**: 比較交換（CAS）、算術演算（加算、減算、ビット演算）、読込・書込の各APIを保証する。</li>
+<li>**64ビット整数アトミック操作の提供**: 可能な環境ではネイティブに、不可能な環境ではスピンロックシミュレーションで64ビット演算および <a class="wiki-source-link" href="../../../../source/src/include/port/atomics.h.html#L594" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__port__atomics_h__pg_atomic_monotonic_advance_u64.html&quot;}, '*');"><code>pg_atomic_monotonic_advance_u64</code></a> などの高水準操作を提供する。</li>
+</ul>
+<h2>重要なシンボル</h2>
+<h3>バリア・スピン遅延ファミリー</h3>
+<ul>
+<li><code>pg_compiler_barrier()</code>: コンパイラによるメモリアクセスの並び替えを防止する最適化フェンス。</li>
+<li><code>pg_memory_barrier()</code>: CPUおよびコンパイラレベルでの全メモリバリア。</li>
+<li><code>pg_read_barrier()</code> / <code>pg_write_barrier()</code>: 読込または書込に特化した弱いメモリバリア。</li>
+<li><code>pg_spin_delay()</code>: ビジーループ内でCPUの負荷を軽減するための遅延処理。</li>
+</ul>
+<h3>フラグ操作（<a class="wiki-source-link" href="../../../../source/src/include/storage/s_lock.h.html#L131" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/storage/s_lock.h.html&quot;}, '*');">TAS</a>）ファミリー</h3>
+<ul>
+<li><code>pg_atomic_init_flag(volatile pg_atomic_flag *ptr)</code>: フラグを初期化する（バリアなし）。</li>
+<li><code>pg_atomic_test_set_flag(volatile pg_atomic_flag *ptr)</code>: フラグをアトミックにセットし、成功時に真を返す（Acquireセマンティクス）。</li>
+<li><code>pg_atomic_unlocked_test_flag(volatile pg_atomic_flag *ptr)</code>: ロックが解放されているかをチェックする（バリアなし）。</li>
+<li><code>pg_atomic_clear_flag(volatile pg_atomic_flag *ptr)</code>: フラグをクリアする（Releaseセマンティクス）。</li>
+</ul>
+<h3>32ビットアトミック操作ファミリー</h3>
+<ul>
+<li><a class="wiki-source-link" href="../../../../source/src/include/port/atomics.h.html#L218" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__port__atomics_h__pg_atomic_init_u32.html&quot;}, '*');"><code>pg_atomic_init_u32</code></a> / <a class="wiki-source-link" href="../../../../source/src/include/port/atomics.h.html#L236" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__port__atomics_h__pg_atomic_read_u32.html&quot;}, '*');"><code>pg_atomic_read_u32</code></a> / <a class="wiki-source-link" href="../../../../source/src/include/port/atomics.h.html#L273" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__port__atomics_h__pg_atomic_write_u32.html&quot;}, '*');"><code>pg_atomic_write_u32</code></a>: 初期化・読込・書込（非バリア、アライメントチェックあり）。</li>
+<li><a class="wiki-source-link" href="../../../../source/src/include/port/atomics.h.html#L255" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__port__atomics_h__pg_atomic_read_membarrier_u32.html&quot;}, '*');"><code>pg_atomic_read_membarrier_u32</code></a> / <a class="wiki-source-link" href="../../../../source/src/include/port/atomics.h.html#L314" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__port__atomics_h__pg_atomic_write_membarrier_u32.html&quot;}, '*');"><code>pg_atomic_write_membarrier_u32</code></a>: 完全バリアセマンティクスを持つ読込・書込。</li>
+<li><a class="wiki-source-link" href="../../../../source/src/include/port/atomics.h.html#L329" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__port__atomics_h__pg_atomic_exchange_u32.html&quot;}, '*');"><code>pg_atomic_exchange_u32</code></a>: 値を置換し旧値を返す（フルバリア）。</li>
+<li><a class="wiki-source-link" href="../../../../source/src/include/port/atomics.h.html#L348" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__port__atomics_h__pg_atomic_compare_exchange_u32.html&quot;}, '*');"><code>pg_atomic_compare_exchange_u32</code></a>: 期待値と比較し一致すれば新値を書き込むCAS操作（フルバリア）。</li>
+<li><a class="wiki-source-link" href="../../../../source/src/include/port/atomics.h.html#L365" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__port__atomics_h__pg_atomic_fetch_add_u32.html&quot;}, '*');"><code>pg_atomic_fetch_add_u32</code></a> / <a class="wiki-source-link" href="../../../../source/src/include/port/atomics.h.html#L380" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__port__atomics_h__pg_atomic_fetch_sub_u32.html&quot;}, '*');"><code>pg_atomic_fetch_sub_u32</code></a> / <a class="wiki-source-link" href="../../../../source/src/include/port/atomics.h.html#L395" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__port__atomics_h__pg_atomic_fetch_and_u32.html&quot;}, '*');"><code>pg_atomic_fetch_and_u32</code></a> / <a class="wiki-source-link" href="../../../../source/src/include/port/atomics.h.html#L409" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__port__atomics_h__pg_atomic_fetch_or_u32.html&quot;}, '*');"><code>pg_atomic_fetch_or_u32</code></a>: 算術・論理演算を行い旧値を返す。</li>
+<li><a class="wiki-source-link" href="../../../../source/src/include/port/atomics.h.html#L423" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__port__atomics_h__pg_atomic_add_fetch_u32.html&quot;}, '*');"><code>pg_atomic_add_fetch_u32</code></a> / <a class="wiki-source-link" href="../../../../source/src/include/port/atomics.h.html#L438" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__port__atomics_h__pg_atomic_sub_fetch_u32.html&quot;}, '*');"><code>pg_atomic_sub_fetch_u32</code></a>: 演算後の値を返す。</li>
+</ul>
+<h3>64ビットアトミック操作および拡張ファミリー</h3>
+<ul>
+<li><a class="wiki-source-link" href="../../../../source/src/include/port/atomics.h.html#L452" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__port__atomics_h__pg_atomic_init_u64.html&quot;}, '*');"><code>pg_atomic_init_u64</code></a> 〜 <a class="wiki-source-link" href="../../../../source/src/include/port/atomics.h.html#L577" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__port__atomics_h__pg_atomic_sub_fetch_u64.html&quot;}, '*');"><code>pg_atomic_sub_fetch_u64</code></a>: 32ビット版に対応する64ビット版の各操作。シミュレーション時はアライメントアサーションが免除される場合がある。</li>
+<li><code>pg_atomic_monotonic_advance_u64(volatile pg_atomic_uint64 *ptr, uint64 target)</code>: CASループを用いて変数をターゲット値以上に単調増加させる。</li>
+</ul>
+<h2>制御フローとデータフロー</h2>
+<p>1. **プラットフォーム・コンパイラ分岐**:</p>
+<ul>
+<li>ヘッダー読込時に <code>__arm__</code>, <a class="wiki-source-link" href="../../../../source/src/include/port/atomics/arch-x86.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__port__atomics__arch-x86_h____x86_64__.html&quot;}, '*');"><code>__x86_64__</code></a>, <code>__powerpc__</code> などのマクロに基づきアーキテクチャ固有ヘッダーをインクルード。</li>
+<li>続いて <code>__GNUC__</code> / <code>__INTEL_COMPILER</code> または <code>_MSC_VER</code> に応じてジェネリックなコンパイラ別インプリメンテーションを取り込む。</li>
+<p>2. **要求充足チェック**:</p>
+<li><code>PG_HAVE_ATOMIC_U32_SUPPORT</code> やバリア用実装マクロが定義されているか検証し、未定義の場合はコンパイルエラーとする。</li>
+<p>3. **フォールバックと拡張の統合**:</p>
+<li>64ビットアトミックのシミュレーションが必要な場合は <code>port/atomics/fallback.h</code> を経由して <a class="wiki-source-link" href="../../../../source/src/backend/port/atomics.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/port/atomics.c.html&quot;}, '*');"><code>src/backend/port/atomics.c</code></a> 内の <a class="wiki-source-link" href="../../../../source/src/include/storage/spin.h.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__storage__spin_h__SpinLockAcquire.html&quot;}, '*');"><code>SpinLockAcquire</code></a> / <a class="wiki-source-link" href="../../../../source/src/include/storage/spin.h.html#L61" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__storage__spin_h__SpinLockRelease.html&quot;}, '*');"><code>SpinLockRelease</code></a> を用いた排他制御フローに接続する。</li>
+<li>その後、共通のインラインヘルパー関数群（<code>pg_atomic_...</code>）がポインタのアライメント検査（<a class="wiki-source-link" href="../../../../source/src/include/c.h.html#L985" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/c.h.html&quot;}, '*');"><code>AssertPointerAlignment</code></a>）を行った上で、下位のイン実装へディスパッチする。</li>
+</ul>
+<h2>直接依存</h2>
+<ul>
+<li><code>&lt;limits.h&gt;</code></li>
+<li><code>&quot;port/atomics/arch-arm.h&quot;</code>（条件付き）</li>
+<li><code>&quot;port/atomics/arch-x86.h&quot;</code>（条件付き）</li>
+<li><code>&quot;port/atomics/arch-ppc.h&quot;</code>（条件付き）</li>
+<li><code>&quot;port/atomics/generic-gcc.h&quot;</code>（条件付き）</li>
+<li><code>&quot;port/atomics/generic-msvc.h&quot;</code>（条件付き）</li>
+<li><code>&quot;port/atomics/fallback.h&quot;</code></li>
+<li><code>&quot;port/atomics/generic.h&quot;</code></li>
+</ul>
+<h2>関連コード</h2>
+<ul>
+<li><a class="wiki-source-link" href="../../../../source/src/backend/port/atomics.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/port/atomics.c.html&quot;}, '*');"><code>src/backend/port/atomics.c</code></a>: 64ビットシミュレーション時のスピンロックを使った実体実装（<code>pg_atomic_init_u64_impl</code>, <code>pg_atomic_compare_exchange_u64_impl</code>, <code>pg_atomic_fetch_add_u64_impl</code>）。</li>
+<li><a class="wiki-source-link" href="../../../../source/src/backend/storage/lmgr/README.barrier.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/storage/lmgr/README.barrier.html&quot;}, '*');"><code>src/backend/storage/lmgr/README.barrier</code></a>: バックエンド内でのメモリバリア利用に関する解説ドキュメント。</li>
+</ul>
+<h2>読者向けメモ</h2>
+<ul>
+<li>**メモリ安全性とアライメント**: 32ビットアトミック変数は4バイトアラインメント、64ビットアトミック変数は原則8バイトアラインメントが要求され、アサーションで検証される（シミュレーション時を除く）。</li>
+<li>**制限事項**: 減算系関数（<a class="wiki-source-link" href="../../../../source/src/include/port/atomics.h.html#L380" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__port__atomics_h__pg_atomic_fetch_sub_u32.html&quot;}, '*');"><code>pg_atomic_fetch_sub_u32</code></a> や <a class="wiki-source-link" href="../../../../source/src/include/port/atomics.h.html#L540" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__port__atomics_h__pg_atomic_fetch_sub_u64.html&quot;}, '*');"><code>pg_atomic_fetch_sub_u64</code></a> など）において、プラットフォームの制限により <code>INT_MIN</code> または <a class="wiki-source-link" href="../../../../source/src/include/c.h.html#L682" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/c.h.html&quot;}, '*');"><code>PG_INT64_MIN</code></a> を直接サブトラクトすることはアサーションで禁止されている。</li>
+<li>**パフォーマンス**: 可能であれば高水準の同期プリミティブ（<a class="wiki-source-link" href="../../../../source/src/include/storage/lwlock.h.html#L41" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__storage__lwlock_h__LWLock.html&quot;}, '*');">LWLock</a>、スピンロック等）の使用が推奨されており、アトミック操作の直接利用は高度なロックフリーアルゴリズム向けに限定されている。</li>
+</ul>
+<h2>シンボルページ</h2>
+<ul>
+<li><a href="../../../symbols/src__include__port__atomics_h__pg_atomic_init_flag.html" target="wiki-view"><code>pg_atomic_init_flag</code></a></li>
+<li><a href="../../../symbols/src__include__port__atomics_h__pg_atomic_test_set_flag.html" target="wiki-view"><code>pg_atomic_test_set_flag</code></a></li>
+<li><a href="../../../symbols/src__include__port__atomics_h__pg_atomic_unlocked_test_flag.html" target="wiki-view"><code>pg_atomic_unlocked_test_flag</code></a></li>
+<li><a href="../../../symbols/src__include__port__atomics_h__pg_atomic_clear_flag.html" target="wiki-view"><code>pg_atomic_clear_flag</code></a></li>
+<li><a href="../../../symbols/src__include__port__atomics_h__pg_atomic_init_u32.html" target="wiki-view"><code>pg_atomic_init_u32</code></a></li>
+<li><a href="../../../symbols/src__include__port__atomics_h__pg_atomic_read_u32.html" target="wiki-view"><code>pg_atomic_read_u32</code></a></li>
+<li><a href="../../../symbols/src__include__port__atomics_h__pg_atomic_read_membarrier_u32.html" target="wiki-view"><code>pg_atomic_read_membarrier_u32</code></a></li>
+<li><a href="../../../symbols/src__include__port__atomics_h__pg_atomic_write_u32.html" target="wiki-view"><code>pg_atomic_write_u32</code></a></li>
+<li><a href="../../../symbols/src__include__port__atomics_h__pg_atomic_unlocked_write_u32.html" target="wiki-view"><code>pg_atomic_unlocked_write_u32</code></a></li>
+<li><a href="../../../symbols/src__include__port__atomics_h__pg_atomic_write_membarrier_u32.html" target="wiki-view"><code>pg_atomic_write_membarrier_u32</code></a></li>
+<li><a href="../../../symbols/src__include__port__atomics_h__pg_atomic_exchange_u32.html" target="wiki-view"><code>pg_atomic_exchange_u32</code></a></li>
+<li><a href="../../../symbols/src__include__port__atomics_h__pg_atomic_compare_exchange_u32.html" target="wiki-view"><code>pg_atomic_compare_exchange_u32</code></a></li>
+</ul><script>
+(function() {
+  function notifyParent() {
+    if (parent === window) return;
+    parent.postMessage({type: "frame-location", frame: window.name || "", href: window.location.href}, "*");
+  }
+  document.addEventListener("click", function(event) {
+    const link = event.target.closest("a[data-panel]");
+    if (!link || parent === window) return;
+    parent.postMessage({type: "source-link", panel: link.dataset.panel}, "*");
+  });
+  window.addEventListener("load", notifyParent);
+  window.addEventListener("hashchange", notifyParent);
+})();
+</script></body></html>

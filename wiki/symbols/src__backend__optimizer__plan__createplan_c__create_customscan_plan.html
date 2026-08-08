@@ -58,7 +58,7 @@
 <p>/* Likewise, copy the relids that are represented by this custom scan */ cplan-&gt;custom_relids = best_path-&gt;path.parent-&gt;relids;</p>
 <p>/*</p>
 <ul>
-<li>Replace any outer-relation variables with nestloop params in the qual</li>
+<li>Replace any outer-relation variables with nestloop <a class="wiki-source-link" href="../../source/src/include/nodes/params.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__nodes__params_h__params.html&quot;}, '*');">params</a> in the qual</li>
 <li>and custom_exprs expressions.  We do this last so that the custom-<a class="wiki-source-link" href="../../source/src/test/regress/pg_regress.c.html#L164" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/test/regress/pg_regress.c.html&quot;}, '*');">plan</a></li>
 <li>provider doesn&#x27;t have to be involved.  (Note that parts of custom_exprs</li>
 <li>could have come from join clauses, so doing this beforehand on the</li>

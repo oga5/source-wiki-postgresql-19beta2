@@ -3,7 +3,7 @@
 <h2>概要</h2>
 <p><a class="wiki-source-link" href="../../../../source/src/include/access/htup.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/access/htup.h.html&quot;}, '*');"><code>src/include/access/htup.h</code></a> は、PostgreSQLのヒープタプル（行データ）をメモリ上で表現するための基本データ構造と型定義を提供するヘッダーファイルです。ディスク上のバッファやメモリ上に存在するタプルを指し示す共通のインターフェースを定義しています。</p>
 <h2>モジュール内での役割</h2>
-<p><code>src/include/access</code> モジュール内において、本ファイルはテーブルアクセスメソッドやストレージ層が共通して依存するタプル構造の基礎を担います。詳細なヘッダー構造を定義する <a class="wiki-source-link" href="../../../../source/src/include/access/htup_details.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/access/htup_details.h.html&quot;}, '*');"><code>htup_details.h</code></a> と連携し、それらの型定義の前方宣言やインメモリ管理構造を提供します。</p>
+<p><code>src/include/access</code> モジュール内において、本ファイルはテーブルアクセスメソッドやストレージ層が共通して依存するタプル構造の基礎を担います。詳細なヘッダー構造を定義する <a class="wiki-source-link" href="../../../../source/src/include/access/htup_details.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/access/htup_details.h.html&quot;}, '*');"><code>htup_details.h</code></a> と連携し、それらの型定義の前方宣言やインメモリ管理構造を提供します。</p>
 <h2>責務</h2>
 <ul>
 <li>インメモリタプルを抽象化する <a class="wiki-source-link" href="../../../../source/src/include/access/htup.h.html#L62" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__access__htup_h__HeapTupleData.html&quot;}, '*');"><code>HeapTupleData</code></a> および <code>MinimalTupleData</code> 構造体の型定義と前方宣言を行う。</li>
@@ -25,13 +25,13 @@
 </ul>
 <h2>関連コード</h2>
 <ul>
-<li><a class="wiki-source-link" href="../../../../source/src/include/access/htup_details.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/access/htup_details.h.html&quot;}, '*');"><code>src/include/access/htup_details.h</code></a>: <code>HeapTupleHeaderData</code> の具体的な内部レイアウトやフラグ、ビットマスクを定義するファイル。</li>
+<li><a class="wiki-source-link" href="../../../../source/src/include/access/htup_details.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/access/htup_details.h.html&quot;}, '*');"><code>src/include/access/htup_details.h</code></a>: <code>HeapTupleHeaderData</code> の具体的な内部レイアウトやフラグ、ビットマスクを定義するファイル。</li>
 <li><a class="wiki-source-link" href="../../../../source/src/include/access/heapam.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/access/heapam.h.html&quot;}, '*');"><code>src/include/access/heapam.h</code></a>: ヒープアクセスメソッド関連の関数群を定義し、本ファイルの構造体を操作する。</li>
 </ul>
 <h2>読者向けメモ</h2>
 <ul>
 <li><a class="wiki-source-link" href="../../../../source/src/include/access/htup.h.html#L62" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__access__htup_h__HeapTupleData.html&quot;}, '*');"><code>HeapTupleData</code></a> の <a class="wiki-source-link" href="../../../../source/src/include/access/htup.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__access__htup_h__t_data.html&quot;}, '*');"><code>t_data</code></a> が指すメモリの文脈（ディスクバッファ、palloc済みの単一チャンク、最小タプルなど）はコードの文脈に依存するため、所有権やピンの保持状態に注意して読む必要があります。</li>
-<li>実際のタプルヘッダーのビットフィールドや詳細な属性アクセスについては、本ファイルではなく <a class="wiki-source-link" href="../../../../source/src/include/access/htup_details.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/access/htup_details.h.html&quot;}, '*');"><code>htup_details.h</code></a> を参照してください。</li>
+<li>実際のタプルヘッダーのビットフィールドや詳細な属性アクセスについては、本ファイルではなく <a class="wiki-source-link" href="../../../../source/src/include/access/htup_details.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/access/htup_details.h.html&quot;}, '*');"><code>htup_details.h</code></a> を参照してください。</li>
 </ul>
 <h2>シンボルページ</h2>
 <ul>

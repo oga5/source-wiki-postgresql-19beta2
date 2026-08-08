@@ -55,7 +55,7 @@
 <p>*/ <a class="wiki-source-link" href="../../source/src/include/catalog/pg_control.h.html#L97" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__catalog__pg_control_h__DBState.html&quot;}, '*');">DBState</a>		state;			/* see enum above */ <a class="wiki-source-link" href="../../source/src/include/pgtime.h.html#L23" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__pgtime_h__pg_time_t.html&quot;}, '*');">pg_time_t</a>	time;			/* time stamp of last pg_control update */ XLogRecPtr	checkPoint;		/* last check point record ptr */</p>
 </ul>
 <p><a class="wiki-source-link" href="../../source/src/include/catalog/pg_control.h.html#L35" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__catalog__pg_control_h__CheckPoint.html&quot;}, '*');">CheckPoint</a>	checkPointCopy; /* copy of last check point record */</p>
-<p>XLogRecPtr	unloggedLSN;	/* current fake LSN <a class="wiki-source-link" href="../../source/src/interfaces/ecpg/compatlib/informix.c.html#L687" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/ecpg/compatlib/informix.c.html&quot;}, '*');">value</a>, for unlogged rels */</p>
+<p>XLogRecPtr	unloggedLSN;	/* current fake LSN value, for unlogged rels */</p>
 <p>/*</p>
 <ul>
 <li>These two values determine the minimum point we must recover up to</li>

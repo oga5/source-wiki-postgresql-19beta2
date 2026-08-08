@@ -41,8 +41,8 @@
 <li>Restart the worker to let the <a class="wiki-source-link" href="../../source/contrib/sepgsql/launcher.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/contrib/sepgsql/launcher.html&quot;}, '*');">launcher</a> <a class="wiki-source-link" href="../../source/src/backend/regex/rege_dfa.c.html#L739" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__regex__rege_dfa_c__initialize.html&quot;}, '*');">initialize</a></li>
 <li>oldest_nonremovable_xid at startup.</li>
 <p>*</p>
-<li>While it&#x27;s technically possible to derive this <a class="wiki-source-link" href="../../source/src/interfaces/ecpg/compatlib/informix.c.html#L687" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/ecpg/compatlib/informix.c.html&quot;}, '*');">value</a> on-the-fly using</li>
-<li>the conflict detection slot&#x27;s xmin, doing so risks a race condition:</li>
+<li>While it&#x27;s technically possible to derive this value on-the-fly using</li>
+<li>the conflict detection slot&#x27;s <a class="wiki-source-link" href="../../source/src/include/access/sysattr.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__access__sysattr_h__xmin.html&quot;}, '*');">xmin</a>, doing so risks a race condition:</li>
 <li>the <a class="wiki-source-link" href="../../source/contrib/sepgsql/launcher.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/contrib/sepgsql/launcher.html&quot;}, '*');">launcher</a> might clean slot.xmin just after retention resumes. This</li>
 <li>would make oldest_nonremovable_xid unreliable, especially during xid</li>
 <li>wraparound.</li>

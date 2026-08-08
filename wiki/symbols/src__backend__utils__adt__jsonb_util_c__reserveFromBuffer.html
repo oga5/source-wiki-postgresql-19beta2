@@ -34,15 +34,15 @@
 <h2>関連データ構造</h2>
 <p><code>StringInfo</code></p>
 <h2>ソース抜粋</h2>
-<p>~~~c static int <a class="wiki-source-link" href="../../source/src/backend/utils/adt/jsonb_util.c.html#L1604" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__utils__adt__jsonb_util_c__reserveFromBuffer.html&quot;}, '*');">reserveFromBuffer</a>(StringInfo buffer, int len) { int			offset;</p>
-<p>/* Make more room if needed */ <a class="wiki-source-link" href="../../source/src/common/stringinfo.c.html#L336" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__common__stringinfo_c__enlargeStringInfo.html&quot;}, '*');">enlargeStringInfo</a>(buffer, len);</p>
-<p>/* remember current offset */ offset = buffer-&gt;len;</p>
-<p>/* reserve the space */ buffer-&gt;len += len;</p>
+<p>~~~c static int <a class="wiki-source-link" href="../../source/src/backend/utils/adt/jsonb_util.c.html#L1604" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__utils__adt__jsonb_util_c__reserveFromBuffer.html&quot;}, '*');">reserveFromBuffer</a>(StringInfo buffer, int <a class="wiki-source-link" href="../../source/src/include/utils/memutils.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__utils__memutils_h__len.html&quot;}, '*');">len</a>) { int			offset;</p>
+<p>/* Make more room if needed */ <a class="wiki-source-link" href="../../source/src/common/stringinfo.c.html#L336" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__common__stringinfo_c__enlargeStringInfo.html&quot;}, '*');">enlargeStringInfo</a>(buffer, <a class="wiki-source-link" href="../../source/src/include/utils/memutils.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__utils__memutils_h__len.html&quot;}, '*');">len</a>);</p>
+<p>/* remember current offset */ offset = buffer-&gt;<a class="wiki-source-link" href="../../source/src/include/utils/memutils.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__utils__memutils_h__len.html&quot;}, '*');">len</a>;</p>
+<p>/* reserve the space */ buffer-&gt;<a class="wiki-source-link" href="../../source/src/include/utils/memutils.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__utils__memutils_h__len.html&quot;}, '*');">len</a> += <a class="wiki-source-link" href="../../source/src/include/utils/memutils.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__utils__memutils_h__len.html&quot;}, '*');">len</a>;</p>
 <p>/*</p>
 <ul>
 <li>Keep a trailing null in place, even though it&#x27;s not useful for us; it</li>
 <li>seems best to preserve the invariants of StringInfos.</li>
-<p>*/ buffer-&gt;data[buffer-&gt;len] = &#x27;\0&#x27;;</p>
+<p>*/ buffer-&gt;data[buffer-&gt;<a class="wiki-source-link" href="../../source/src/include/utils/memutils.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__utils__memutils_h__len.html&quot;}, '*');">len</a>] = &#x27;\0&#x27;;</p>
 </ul>
 <p>return offset; } ~~~</p>
 <h2>失敗モードと境界条件</h2>

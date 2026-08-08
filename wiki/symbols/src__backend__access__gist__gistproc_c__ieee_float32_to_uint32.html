@@ -65,11 +65,11 @@
 <li>we map floats to unsigned integers like this:</li>
 <p>*</p>
 <li>x &lt; 0 to <a class="wiki-source-link" href="../../source/src/backend/regex/regc_locale.c.html#L411" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__regex__regc_locale_c__range.html&quot;}, '*');">range</a> 0-7FFFFFFF</li>
-<li>x = 0 to <a class="wiki-source-link" href="../../source/src/interfaces/ecpg/compatlib/informix.c.html#L687" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/ecpg/compatlib/informix.c.html&quot;}, '*');">value</a> 8000000 (both positive and negative zero)</li>
+<li>x = 0 to value 8000000 (both positive and negative zero)</li>
 <li>x &gt; 0 to <a class="wiki-source-link" href="../../source/src/backend/regex/regc_locale.c.html#L411" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__regex__regc_locale_c__range.html&quot;}, '*');">range</a> 8000001-FFFFFFFF</li>
 <p>*</p>
 <li>We don&#x27;t care to distinguish different kind of NaNs, so they are all</li>
-<li>mapped to the same arbitrary <a class="wiki-source-link" href="../../source/src/interfaces/ecpg/compatlib/informix.c.html#L687" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/ecpg/compatlib/informix.c.html&quot;}, '*');">value</a>, FFFFFFFF. Because of the IEEE <a class="wiki-source-link" href="../../source/src/backend/utils/adt/varbit.c.html#L390" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__utils__adt__varbit_c__bit.html&quot;}, '*');">bit</a></li>
+<li>mapped to the same arbitrary value, FFFFFFFF. Because of the IEEE <a class="wiki-source-link" href="../../source/src/backend/utils/adt/varbit.c.html#L390" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__utils__adt__varbit_c__bit.html&quot;}, '*');">bit</a></li>
 <li>representation of NaNs, there aren&#x27;t any non-NaN values that would be</li>
 <li>mapped to FFFFFFFF. In fact, there <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> a <a class="wiki-source-link" href="../../source/src/backend/regex/regc_locale.c.html#L411" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__regex__regc_locale_c__range.html&quot;}, '*');">range</a> of unused values on both</li>
 <li>ends of the uint32 space.</li>
@@ -78,7 +78,7 @@
 <p>u.f = f;</p>
 <p>/* Check the sign <a class="wiki-source-link" href="../../source/src/backend/utils/adt/varbit.c.html#L390" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__utils__adt__varbit_c__bit.html&quot;}, '*');">bit</a> */ if ((u.i &amp; 0x80000000) != 0) { /*</p>
 <ul>
-<li>Map the negative <a class="wiki-source-link" href="../../source/src/interfaces/ecpg/compatlib/informix.c.html#L687" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/ecpg/compatlib/informix.c.html&quot;}, '*');">value</a> to <a class="wiki-source-link" href="../../source/src/backend/regex/regc_locale.c.html#L411" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__regex__regc_locale_c__range.html&quot;}, '*');">range</a> 0-7FFFFFFF. This flips the sign</li>
+<li>Map the negative value to <a class="wiki-source-link" href="../../source/src/backend/regex/regc_locale.c.html#L411" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__regex__regc_locale_c__range.html&quot;}, '*');">range</a> 0-7FFFFFFF. This flips the sign</li>
 <p>~~~</p>
 </ul>
 <h2>失敗モードと境界条件</h2>

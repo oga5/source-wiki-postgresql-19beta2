@@ -1,7 +1,7 @@
 <!doctype html>
 <html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>src/include/port/atomics/generic.h.md</title><link rel="stylesheet" href="../../../../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../../../../source/src/include/port/atomics/generic.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/port/atomics/generic.h.html&quot;}, '*');">src/include/port/atomics/generic.h</a></h1>
 <h2>概要</h2>
-<p>低レベルなアトミック操作（コンパイラ組み込み関数やプラットフォーム固有のプリミティブ）を基礎として、より高レベルなアトミック操作やフォールバック実装を提供するヘッダーファイルである。直接インクルードすることは禁止されており、<a class="wiki-source-link" href="../../../../../source/src/include/port/atomics.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/port/atomics.h.html&quot;}, '*');"><code>atomics.h</code></a> を経由してインクルードされる。</p>
+<p>低レベルなアトミック操作（コンパイラ組み込み関数やプラットフォーム固有のプリミティブ）を基礎として、より高レベルなアトミック操作やフォールバック実装を提供するヘッダーファイルである。直接インクルードすることは禁止されており、<a class="wiki-source-link" href="../../../../../source/src/include/port/atomics.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/port/atomics.h.html&quot;}, '*');"><code>atomics.h</code></a> を経由してインクルードされる。</p>
 <h2>モジュール内での役割</h2>
 <p><code>src/include/port/atomics/</code> モジュールの一部として、プラットフォーム固有の低レベル操作が提供していない補助的なアトミック関数（32ビット/64ビットの演算、フラグ操作、メモリバリアのアップグレードなど）を共通のインライン関数として補完する役割を持つ。</p>
 <h2>責務</h2>
@@ -49,13 +49,13 @@
 </ul>
 <h2>直接依存</h2>
 <ul>
-<li><a class="wiki-source-link" href="../../../../../source/src/include/port/atomics.h.html#L45" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/port/atomics.h.html&quot;}, '*');"><code>INSIDE_ATOMICS_H</code></a> マクロ（<a class="wiki-source-link" href="../../../../../source/src/include/port/atomics.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/port/atomics.h.html&quot;}, '*');"><code>atomics.h</code></a> 経由でのインクルードを強制するガード）。</li>
+<li><a class="wiki-source-link" href="../../../../../source/src/include/port/atomics.h.html#L45" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/port/atomics.h.html&quot;}, '*');"><code>INSIDE_ATOMICS_H</code></a> マクロ（<a class="wiki-source-link" href="../../../../../source/src/include/port/atomics.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/port/atomics.h.html&quot;}, '*');"><code>atomics.h</code></a> 経由でのインクルードを強制するガード）。</li>
 </ul>
 <h2>関連コード</h2>
 <ul>
-<li><a class="wiki-source-link" href="../../../../../source/src/include/port/atomics.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/port/atomics.h.html&quot;}, '*');"><code>src/include/port/atomics.h</code></a></li>
+<li><a class="wiki-source-link" href="../../../../../source/src/include/port/atomics.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/port/atomics.h.html&quot;}, '*');"><code>src/include/port/atomics.h</code></a></li>
 <li><a class="wiki-source-link" href="../../../../../source/src/include/port/atomics/generic-gcc.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/port/atomics/generic-gcc.h.html&quot;}, '*');"><code>src/include/port/atomics/generic-gcc.h</code></a></li>
-<li><a class="wiki-source-link" href="../../../../../source/src/include/port/atomics/generic-msvc.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/port/atomics/generic-msvc.h.html&quot;}, '*');"><code>src/include/port/atomics/generic-msvc.h</code></a></li>
+<li><a class="wiki-source-link" href="../../../../../source/src/include/port/atomics/generic-msvc.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/port/atomics/generic-msvc.h.html&quot;}, '*');"><code>src/include/port/atomics/generic-msvc.h</code></a></li>
 </ul>
 <h2>読者向けメモ</h2>
 <ul>

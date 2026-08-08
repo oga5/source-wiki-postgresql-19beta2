@@ -47,7 +47,7 @@
 </ul>
 <p>/*</p>
 <ul>
-<li>Now attach the qual to the proper place: normally <a class="wiki-source-link" href="../../source/src/backend/optimizer/path/allpaths.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__path__allpaths_c__WHERE.html&quot;}, '*');">WHERE</a>, but if the</li>
+<li>Now attach the qual to the proper place: normally WHERE, but if the</li>
 <li>subquery uses grouping or aggregation, put it in <a class="wiki-source-link" href="../../source/src/backend/optimizer/path/allpaths.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__path__allpaths_c__HAVING.html&quot;}, '*');">HAVING</a> (since the</li>
 <li>qual really refers to the group-result rows).</li>
 <p>*/ if (subquery-&gt;hasAggs || subquery-&gt;groupClause || subquery-&gt;groupingSets || subquery-&gt;havingQual) subquery-&gt;havingQual = <a class="wiki-source-link" href="../../source/src/backend/nodes/makefuncs.c.html#L779" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__nodes__makefuncs_c__make_and_qual.html&quot;}, '*');">make_and_qual</a>(subquery-&gt;havingQual, qual); else subquery-&gt;jointree-&gt;quals = <a class="wiki-source-link" href="../../source/src/backend/nodes/makefuncs.c.html#L779" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__nodes__makefuncs_c__make_and_qual.html&quot;}, '*');">make_and_qual</a>(subquery-&gt;jointree-&gt;quals, qual);</p>

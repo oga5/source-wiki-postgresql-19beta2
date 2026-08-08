@@ -29,14 +29,14 @@
 <li>呼び出し元: なし</li>
 <li>呼び出し先: なし</li>
 <li>呼び出し元サイト: なし</li>
-<li>呼び出しサイト: <code>pfree</code> at <code>contrib/bloom/blscan.c:53:3</code> (unresolved, confidence=low), <code>memcpy</code> at <code>contrib/bloom/blscan.c:57:3</code> (unresolved)</li>
+<li>呼び出しサイト: <code>pfree</code> at <code>contrib/bloom/blscan.c:53:3</code> (unresolved, confidence=low), <a class="wiki-source-link" href="../../source/src/include/utils/hsearch.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__utils__hsearch_h__memcpy.html&quot;}, '*');"><code>memcpy</code></a> at <code>contrib/bloom/blscan.c:57:3</code> (unresolved)</li>
 </ul>
 <h2>関連データ構造</h2>
 <p><a class="wiki-source-link" href="../../source/contrib/bloom/bloom.h.html#L172" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/contrib__bloom__bloom_h__BloomScanOpaque.html&quot;}, '*');"><code>BloomScanOpaque</code></a>, <code>IndexScanDesc</code>, <code>ScanKey</code>, <code>ScanKeyData</code></p>
 <h2>ソース抜粋</h2>
 <p>~~~c void <a class="wiki-source-link" href="../../source/contrib/bloom/blscan.c.html#L46" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/contrib__bloom__blscan_c__blrescan.html&quot;}, '*');">blrescan</a>(IndexScanDesc scan, ScanKey scankey, int nscankeys, ScanKey orderbys, int norderbys) { <a class="wiki-source-link" href="../../source/contrib/bloom/bloom.h.html#L172" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/contrib__bloom__bloom_h__BloomScanOpaque.html&quot;}, '*');">BloomScanOpaque</a> so = (<a class="wiki-source-link" href="../../source/contrib/bloom/bloom.h.html#L172" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/contrib__bloom__bloom_h__BloomScanOpaque.html&quot;}, '*');">BloomScanOpaque</a>) scan-&gt;opaque;</p>
 <p>if (so-&gt;sign) pfree(so-&gt;sign); so-&gt;sign = NULL;</p>
-<p>if (scankey &amp;&amp; scan-&gt;numberOfKeys &gt; 0) memcpy(scan-&gt;keyData, scankey, scan-&gt;numberOfKeys * sizeof(ScanKeyData)); } ~~~</p>
+<p>if (scankey &amp;&amp; scan-&gt;numberOfKeys &gt; 0) <a class="wiki-source-link" href="../../source/src/include/utils/hsearch.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__utils__hsearch_h__memcpy.html&quot;}, '*');">memcpy</a>(scan-&gt;keyData, scankey, scan-&gt;numberOfKeys * sizeof(ScanKeyData)); } ~~~</p>
 <h2>失敗モードと境界条件</h2>
 <p>まだ解析していません。</p>
 <h2>保守担当者向けメモ</h2>

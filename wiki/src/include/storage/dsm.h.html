@@ -1,0 +1,66 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>src/include/storage/dsm.h.md</title><link rel="stylesheet" href="../../../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../../../source/src/include/storage/dsm.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/storage/dsm.h.html&quot;}, '*');">src/include/storage/dsm.h</a></h1>
+<h2>概要</h2>
+<p>PostgreSQLの動的共有メモリ（Dynamic Shared Memory: DSM）セグメントを管理するための公開インターフェースを定義するヘッダーファイルです。低レベルな実装を提供する <a class="wiki-source-link" href="../../../../source/src/include/storage/dsm_impl.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/storage/dsm_impl.h.html&quot;}, '*');"><code>dsm_impl.h</code></a> をラップし、リソースオーナーや自動クリーンアップ機能を含んだ使いやすいAPIを提供します。</p>
+<h2>モジュール内での役割</h2>
+<ul>
+<li><a class="wiki-source-link" href="../../../../source/src/include/storage/dsm_impl.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/storage/dsm_impl.h.html&quot;}, '*');"><code>src/include/storage/dsm_impl.h</code></a>（低レベル実装）と連携し、バックエンド固有の状態管理やライフサイクル管理を提供します。</li>
+<li>共有メモリサブシステムの一部として、プロセス間で共有される動的メモリ領域の生成・アタッチ・デタッチの境界を定義します。</li>
+<li>ペアとなる実装ファイル <a class="wiki-source-link" href="../../../../source/src/backend/storage/ipc/dsm.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/storage/ipc/dsm.c.html&quot;}, '*');"><code>src/backend/storage/ipc/dsm.c</code></a> の公開関数と型定義を規定しています。</li>
+</ul>
+<h2>責務</h2>
+<ul>
+<li>動的共有メモリセグメントの作成 (<code>dsm_create</code>) およびアタッチ (<code>dsm_attach</code>)・デタッチ (<code>dsm_detach</code>) のAPI定義。</li>
+<li>セグメントやマッピングのピン留め・ピン解除（寿命の延長）を行うインターフェースの提供。</li>
+<li>セグメント切断時に実行されるデタッチコールバック (<code>on_dsm_detach</code>) 機構の定義。</li>
+<li>ポストマスターの起動・シャットダウン、およびバックエンドの終了時に必要なクリーンアップ関数の宣言。</li>
+</ul>
+<h2>重要なシンボル</h2>
+<ul>
+<li><code>dsm_segment</code>: 動的共有メモリセグメントのバックエンドローカルな状態を表す不透明な構造体（typedef）。</li>
+<li><a class="wiki-source-link" href="../../../../source/src/include/storage/dsm.h.html#L20" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/storage/dsm.h.html&quot;}, '*');"><code>DSM_CREATE_NULL_IF_MAXSEGMENTS</code></a>: 最大セグメント数に達した際にエラーではなくNULLを返すためのフラグマクロ。</li>
+<li><code>dsm_create</code> / <code>dsm_attach</code> / <code>dsm_detach</code>: セグメントの生成、プロセス空間への割り当て、解放を行う主要関数。</li>
+<li><code>dsm_pin_mapping</code> / <code>dsm_pin_segment</code>: リソースオーナーのクリーンアップによる自動解放を防ぎ、セグメントやマッピングの寿命を延長する関数。</li>
+<li><code>on_dsm_detach</code>: セグメントデタッチ時に呼び出されるコールバックを登録する関数。</li>
+</ul>
+<h2>制御フローとデータフロー</h2>
+<ul>
+<li>呼び出し側コードは <code>dsm_create()</code> で新しいDSMセグメントを生成し、返された <code>dsm_segment</code> 構造体を介して操作を行います。</li>
+<li>セグメントのアドレスやハンドルは <code>dsm_segment_address()</code> や <code>dsm_segment_handle()</code> を通じて取得します。</li>
+<li>プロセスが終了するか <code>dsm_detach()</code> が呼ばれると、リソースオーナーを基準にして自動的にマッピングが解除され、参照カウントが減少します。</li>
+<li>必要に応じて登録された <code>on_dsm_detach</code> コールバックが順次実行され、クリーンアップが行われます。</li>
+</ul>
+<h2>直接依存</h2>
+<ul>
+<li><code>storage/dsm_impl.h</code>: 低レベルのプラットフォーム依存DSM実装および <code>dsm_handle</code> などの基本型定義。</li>
+</ul>
+<h2>関連コード</h2>
+<ul>
+<li><a class="wiki-source-link" href="../../../../source/src/backend/storage/ipc/dsm.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/storage/ipc/dsm.c.html&quot;}, '*');"><code>src/backend/storage/ipc/dsm.c</code></a>: このヘッダーで宣言されている関数の実体と、コントロールセグメントの管理ロジックを含むペアファイル。</li>
+<li><a class="wiki-source-link" href="../../../../source/src/include/storage/dsm_registry.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/storage/dsm_registry.h.html&quot;}, '*');"><code>src/include/storage/dsm_registry.h</code></a>: 名前付きDSMセグメントのレジストリ機能を提供する関連モジュール。</li>
+</ul>
+<h2>読者向けメモ</h2>
+<ul>
+<li>マッピングはデフォルトでは作成元のリソースオーナーに結びつけられ、オーナーの解放時に自動クリーンアップされますが、<code>dsm_pin_mapping()</code> を使用するとセッション寿命に変更されます。</li>
+<li>ハードクラッシュ後のリカバリ処理やポストマスターの起動・シャットダウン時のフックが含まれているため、ストレージ層のライフサイクルを理解する上で重要なファイルです。</li>
+</ul>
+<h2>シンボルページ</h2>
+<ul>
+<li><a href="../../../symbols/src__include__storage__dsm_h__dsm_segment.html" target="wiki-view"><code>dsm_segment</code></a></li>
+<li><a href="../../../symbols/src__include__storage__dsm_h__PGShmemHeader.html" target="wiki-view"><code>PGShmemHeader</code></a></li>
+<li><a href="../../../symbols/src__include__storage__dsm_h__Datum.html" target="wiki-view"><code>Datum</code></a></li>
+</ul><script>
+(function() {
+  function notifyParent() {
+    if (parent === window) return;
+    parent.postMessage({type: "frame-location", frame: window.name || "", href: window.location.href}, "*");
+  }
+  document.addEventListener("click", function(event) {
+    const link = event.target.closest("a[data-panel]");
+    if (!link || parent === window) return;
+    parent.postMessage({type: "source-link", panel: link.dataset.panel}, "*");
+  });
+  window.addEventListener("load", notifyParent);
+  window.addEventListener("hashchange", notifyParent);
+})();
+</script></body></html>

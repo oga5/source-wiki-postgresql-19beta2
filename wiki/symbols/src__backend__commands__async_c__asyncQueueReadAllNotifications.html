@@ -51,20 +51,20 @@
 <li>Backend 1:					 Backend 2:</li>
 <p>*</p>
 <li>transaction starts</li>
-<li><a class="wiki-source-link" href="../../source/src/backend/optimizer/prep/preptlist.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__prep__preptlist_c__UPDATE.html&quot;}, '*');">UPDATE</a> foo <a class="wiki-source-link" href="../../source/src/backend/regex/regc_lex.c.html#L43" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/regex/regc_lex.c.html&quot;}, '*');">SET</a> ...;</li>
+<li>UPDATE foo <a class="wiki-source-link" href="../../source/src/backend/regex/regc_lex.c.html#L43" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/regex/regc_lex.c.html&quot;}, '*');">SET</a> ...;</li>
 <li>NOTIFY foo;</li>
 <li>commit starts</li>
 <li>queue the notify message</li>
 <li>transaction starts</li>
 <li>LISTEN foo;  -- first LISTEN in session</li>
-<li>SELECT * FROM foo <a class="wiki-source-link" href="../../source/src/backend/optimizer/path/allpaths.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__path__allpaths_c__WHERE.html&quot;}, '*');">WHERE</a> ...;</li>
+<li><a class="wiki-source-link" href="../../source/src/include/tcop/cmdtaglist.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/tcop/cmdtaglist.h.html&quot;}, '*');">SELECT</a> * FROM foo WHERE ...;</li>
 <li>commit to clog</li>
 <li>commit starts</li>
 <li>add backend 2 to array of listeners</li>
 <li>advance to queue head (this code)</li>
 <li>commit to clog</li>
 <p>*</p>
-<li>Transaction 2&#x27;s SELECT has not seen the <a class="wiki-source-link" href="../../source/src/backend/optimizer/prep/preptlist.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__prep__preptlist_c__UPDATE.html&quot;}, '*');">UPDATE</a>&#x27;s effects, since that</li>
+<li>Transaction 2&#x27;s <a class="wiki-source-link" href="../../source/src/include/tcop/cmdtaglist.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/tcop/cmdtaglist.h.html&quot;}, '*');">SELECT</a> has not seen the UPDATE&#x27;s effects, since that</li>
 <li>wasn&#x27;t committed yet.  Ideally we&#x27;d ensure that client 2 would</li>
 <li>eventually get transaction 1&#x27;s notify message, but there&#x27;s no way</li>
 <li>to do that; until we&#x27;re in the listener array, there&#x27;s no guarantee</li>

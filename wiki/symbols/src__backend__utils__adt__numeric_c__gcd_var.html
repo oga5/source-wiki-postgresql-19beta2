@@ -38,7 +38,7 @@
 <p>res_dscale = Max(var1-&gt;dscale, var2-&gt;dscale);</p>
 <p>/*</p>
 <ul>
-<li>Arrange for var1 to be the number with the greater absolute <a class="wiki-source-link" href="../../source/src/interfaces/ecpg/compatlib/informix.c.html#L687" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/ecpg/compatlib/informix.c.html&quot;}, '*');">value</a>.</li>
+<li>Arrange for var1 to be the number with the greater absolute value.</li>
 <p>*</p>
 <li>This would happen automatically in the loop below, but avoids an</li>
 <li>expensive modulo operation.</li>
@@ -48,7 +48,7 @@
 <p>/*</p>
 <ul>
 <li>Also avoid the taking the modulo if the inputs have the same absolute</li>
-<li><a class="wiki-source-link" href="../../source/src/interfaces/ecpg/compatlib/informix.c.html#L687" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/ecpg/compatlib/informix.c.html&quot;}, '*');">value</a>, or if the smaller input <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> zero.</li>
+<li>value, or if the smaller input <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> zero.</li>
 <p>*/ if (<a class="wiki-source-link" href="../../source/src/backend/regex/regc_locale.c.html#L742" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__regex__regc_locale_c__cmp.html&quot;}, '*');">cmp</a> == 0 || var2-&gt;ndigits == 0) { <a class="wiki-source-link" href="../../source/src/backend/utils/adt/numeric.c.html#L7233" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__utils__adt__numeric_c__set_var_from_var.html&quot;}, '*');">set_var_from_var</a>(var1, <a class="wiki-source-link" href="../../source/src/include/storage/checksum_block_internal.h.html#L18" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/storage/checksum_block_internal.h.html&quot;}, '*');">result</a>); <a class="wiki-source-link" href="../../source/src/include/storage/checksum_block_internal.h.html#L18" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/storage/checksum_block_internal.h.html&quot;}, '*');">result</a>-&gt;sign = NUMERIC_POS; <a class="wiki-source-link" href="../../source/src/include/storage/checksum_block_internal.h.html#L18" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/storage/checksum_block_internal.h.html&quot;}, '*');">result</a>-&gt;dscale = res_dscale; return; }</p>
 </ul>
 <p>init_var(&amp;tmp_arg); init_var(&amp;mod);</p>

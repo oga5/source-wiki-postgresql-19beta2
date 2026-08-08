@@ -15,7 +15,7 @@
 <h2>入力と出力</h2>
 <ul>
 <li>引数: <code>Oid validatorOid</code>, <code>Oid functionOid</code></li>
-<li>戻り値: <code>bool</code></li>
+<li>戻り値: <a class="wiki-source-link" href="../../source/src/include/access/tupmacs.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__access__tupmacs_h__bool.html&quot;}, '*');"><code>bool</code></a></li>
 </ul>
 <h2>前提条件と不変条件</h2>
 <p>まだ解析していません。</p>
@@ -34,7 +34,7 @@
 <h2>関連データ構造</h2>
 <p><a class="wiki-source-link" href="../../source/src/include/utils/acl.h.html#L182" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__utils__acl_h__AclResult.html&quot;}, '*');"><code>AclResult</code></a>, <code>HeapTuple</code>, <a class="wiki-source-link" href="../../source/src/timezone/zic.c.html#L310" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__timezone__zic_c__lookup.html&quot;}, '*');"><code>lookup</code></a>, <code>Oid</code></p>
 <h2>ソース抜粋</h2>
-<p>~~~c bool <a class="wiki-source-link" href="../../source/src/backend/utils/fmgr/fmgr.c.html#L2110" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__utils__fmgr__fmgr_c__CheckFunctionValidatorAccess.html&quot;}, '*');">CheckFunctionValidatorAccess</a>(Oid validatorOid, Oid functionOid) { HeapTuple	procTup; HeapTuple	langTup; Form_pg_proc procStruct; Form_pg_language langStruct; <a class="wiki-source-link" href="../../source/src/include/utils/acl.h.html#L182" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__utils__acl_h__AclResult.html&quot;}, '*');">AclResult</a>	aclresult;</p>
+<p>~~~c <a class="wiki-source-link" href="../../source/src/include/access/tupmacs.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__access__tupmacs_h__bool.html&quot;}, '*');">bool</a> <a class="wiki-source-link" href="../../source/src/backend/utils/fmgr/fmgr.c.html#L2110" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__utils__fmgr__fmgr_c__CheckFunctionValidatorAccess.html&quot;}, '*');">CheckFunctionValidatorAccess</a>(Oid validatorOid, Oid functionOid) { HeapTuple	procTup; HeapTuple	langTup; Form_pg_proc procStruct; Form_pg_language langStruct; <a class="wiki-source-link" href="../../source/src/include/utils/acl.h.html#L182" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__utils__acl_h__AclResult.html&quot;}, '*');">AclResult</a>	aclresult;</p>
 <p>/*</p>
 <ul>
 <li>Get the function&#x27;s pg_proc entry.  Throw a user-facing error for bad</li>

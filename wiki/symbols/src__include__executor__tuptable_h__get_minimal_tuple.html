@@ -1,0 +1,106 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>symbols/src__include__executor__tuptable_h__get_minimal_tuple.md</title><link rel="stylesheet" href="../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../source/src/include/executor/tuptable.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__executor__tuptable_h__get_minimal_tuple.html&quot;}, '*');">get_minimal_tuple</a></h1>
+<h2>定義</h2>
+<ul>
+<li>種別: <code>function</code></li>
+<li>定義箇所: <code>src/include/executor/tuptable.h:1</code></li>
+<li>所属モジュール: <a class="wiki-entity-link" href="../modules/src__include__executor.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/modules/src__include__executor.html&quot;, &quot;source&quot;: &quot;source/src/include/executor/execAsync.h.html&quot;}, '*');"><code>module:src/include/executor</code></a></li>
+</ul>
+<h2>目的</h2>
+<p>静的シンボル索引から生成された初期シンボルページです。</p>
+<h2>シグネチャまたは形状</h2>
+<ul>
+<li>シグネチャ: <code>/*------------------------------------------------------------------------- * * tuptable.h * tuple table support stuff * * * Portions Copyright (c) 1996-2026, PostgreSQL Global Development Group * Portions Copyright (c) 1994, Regents of the University of California * * src/include/executor/tuptable.h * *------------------------------------------------------------------------- */ #ifndef TUPTABLE_H #define TUPTABLE_H #include &quot;access/htup.h&quot; #include &quot;access/sysattr.h&quot; #include &quot;access/tupdesc.h&quot; #include &quot;storage/buf.h&quot; /*---------- * The executor stores tuples in a &quot;tuple table&quot; which is a List of * independent TupleTableSlots. * * There&#x27;s various different types of tuple table slots, each being able to * store different types of tuples. Additional types of slots can be added * without modifying core code. The type of a slot is determined by the * TupleTableSlotOps* passed to the slot creation routine. The builtin types * of slots are * * 1. physical tuple in a disk buffer page (TTSOpsBufferHeapTuple) * 2. physical tuple constructed in palloc&#x27;ed memory (TTSOpsHeapTuple) * 3. &quot;minimal&quot; physical tuple constructed in palloc&#x27;ed memory * (TTSOpsMinimalTuple) * 4. &quot;virtual&quot; tuple consisting of Datum/isnull arrays (TTSOpsVirtual) * * * The first two cases are similar in that they both deal with &quot;materialized&quot; * tuples, but resource management is different. For a tuple in a disk page * we need to hold a pin on the buffer until the TupleTableSlot&#x27;s reference * to the tuple is dropped; while for a palloc&#x27;d tuple we usually want the * tuple pfree&#x27;d when the TupleTableSlot&#x27;s reference is dropped. * * A &quot;minimal&quot; tuple is handled similarly to a palloc&#x27;d regular tuple. * At present, minimal tuples never are stored in buffers, so there is no * parallel to case 1. Note that a minimal tuple has no &quot;system columns&quot;. * * A &quot;virtual&quot; tuple is an optimization used to minimize physical data copying * in a nest of plan nodes. Until materialized pass-by-reference Datums in * the slot point to storage that is not directly associated with the * TupleTableSlot; generally they will point to part of a tuple stored in a * lower plan node&#x27;s output TupleTableSlot, or to a function result * constructed in a plan node&#x27;s per-tuple econtext. It is the responsibility * of the generating plan node to be sure these resources are not released for * as long as the virtual tuple needs to be valid or is materialized. Note * also that a virtual tuple does not have any &quot;system columns&quot;. * * The Datum/isnull arrays of a TupleTableSlot serve double duty. For virtual * slots they are the authoritative data. For the other builtin slots, * the arrays contain data extracted from the tuple. (In this state, any * pass-by-reference Datums point into the physical tuple.) The extracted * information is built &quot;lazily&quot;, ie, only as needed. This serves to avoid * repeated extraction of data from the physical tuple. * * A TupleTableSlot can also be &quot;empty&quot;, indicated by flag TTS_FLAG_EMPTY set * in tts_flags, holding no valid data. This is the only valid state for a * freshly-created slot that has not yet had a tuple descriptor assigned to * it. In this state, TTS_FLAG_SHOULDFREE should not be set in tts_flags and * tts_nvalid should be set to zero. * * The tupleDescriptor is simply referenced, not copied, by the TupleTableSlot * code. The caller of ExecSetSlotDescriptor() is responsible for providing * a descriptor that will live as long as the slot does. (Typically, both * slots and descriptors are in per-query memory and are freed by memory * context deallocation at query end; so it&#x27;s not worth providing any extra * mechanism to do more. However, the slot will increment the tupdesc * reference count if a reference-counted tupdesc is supplied.) * * When TTS_FLAG_SHOULDFREE is set in tts_flags, the physical tuple is &quot;owned&quot; * by the slot and should be freed when the slot&#x27;s reference to the tuple is * dropped. * * tts_values/tts_isnull are allocated either when the slot is created (when * the descriptor is provided), or when a descriptor is assigned to the slot</code></li>
+</ul>
+<h2>入力と出力</h2>
+<p>まだ解析していません。</p>
+<h2>前提条件と不変条件</h2>
+<p>まだ解析していません。</p>
+<h2>アルゴリズムまたは振る舞い</h2>
+<ul>
+<li>複雑度: <code>high</code> (score 17)</li>
+</ul>
+<p>まだ解析していません。</p>
+<h2>呼び出し元と呼び出し先</h2>
+<ul>
+<li>呼び出し元: なし</li>
+<li>呼び出し先: なし</li>
+<li>呼び出し元サイト: なし</li>
+<li>呼び出しサイト: なし</li>
+</ul>
+<h2>関連データ構造</h2>
+<p><a class="wiki-source-link" href="../../source/src/interfaces/ecpg/test/expected/preproc-type.c.html#L36" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__interfaces__ecpg__test__expected__preproc-type_c__access.html&quot;}, '*');"><code>access</code></a>, <code>c</code>, <code>Datum</code>, <code>descriptor</code>, <code>Group</code>, <code>List</code>, <code>state</code>, <code>TupleTableSlot</code>, <code>TupleTableSlotOps</code>, <a class="wiki-source-link" href="../../source/src/interfaces/ecpg/preproc/type.h.html#L89" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__interfaces__ecpg__preproc__type_h__when.html&quot;}, '*');"><code>when</code></a></p>
+<h2>ソース抜粋</h2>
+<p>~~~c /*------------------------------------------------------------------------- *</p>
+<ul>
+<li><a class="wiki-source-link" href="../../source/src/include/executor/tuptable.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/executor/tuptable.h.html&quot;}, '*');">tuptable.h</a></li>
+<li>tuple <a class="wiki-source-link" href="../../source/src/port/pg_localeconv_r.c.html#L63" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/port/pg_localeconv_r.c.html&quot;}, '*');">table</a> support stuff</li>
+<p>* *</p>
+<li>Portions Copyright (c) 1996-2026, PostgreSQL Global Development Group</li>
+<li>Portions Copyright (c) 1994, Regents of the University of California</li>
+<p>*</p>
+<li><a class="wiki-source-link" href="../../source/src/include/executor/tuptable.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/executor/tuptable.h.html&quot;}, '*');">src/include/executor/tuptable.h</a></li>
+<p>* *------------------------------------------------------------------------- */ #ifndef <a class="wiki-source-link" href="../../source/src/include/executor/tuptable.h.html#L15" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/executor/tuptable.h.html&quot;}, '*');">TUPTABLE_H</a> #define <a class="wiki-source-link" href="../../source/src/include/executor/tuptable.h.html#L15" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/executor/tuptable.h.html&quot;}, '*');">TUPTABLE_H</a></p>
+</ul>
+<p>#include &quot;access/htup.h&quot; #include &quot;access/sysattr.h&quot; #include &quot;access/tupdesc.h&quot; #include &quot;storage/buf.h&quot;</p>
+<p>/*----------</p>
+<ul>
+<li>The executor stores tuples in a &quot;tuple <a class="wiki-source-link" href="../../source/src/port/pg_localeconv_r.c.html#L63" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/port/pg_localeconv_r.c.html&quot;}, '*');">table</a>&quot; which <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> a List of</li>
+<li>independent TupleTableSlots.</li>
+<p>*</p>
+<li>There&#x27;s various different <a class="wiki-source-link" href="../../source/src/interfaces/ecpg/preproc/ecpg.c.html#L30" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/ecpg/preproc/ecpg.c.html&quot;}, '*');">types</a> of tuple <a class="wiki-source-link" href="../../source/src/port/pg_localeconv_r.c.html#L63" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/port/pg_localeconv_r.c.html&quot;}, '*');">table</a> slots, each being able to</li>
+<li>store different <a class="wiki-source-link" href="../../source/src/interfaces/ecpg/preproc/ecpg.c.html#L30" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/ecpg/preproc/ecpg.c.html&quot;}, '*');">types</a> of tuples. Additional <a class="wiki-source-link" href="../../source/src/interfaces/ecpg/preproc/ecpg.c.html#L30" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/ecpg/preproc/ecpg.c.html&quot;}, '*');">types</a> of slots can be added</li>
+<li>without modifying core code. The <a class="wiki-source-link" href="../../source/src/include/lib/ilist.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__lib__ilist_h__type.html&quot;}, '*');">type</a> of a slot <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> determined by the</li>
+<li>TupleTableSlotOps* passed to the slot creation routine. The builtin <a class="wiki-source-link" href="../../source/src/interfaces/ecpg/preproc/ecpg.c.html#L30" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/ecpg/preproc/ecpg.c.html&quot;}, '*');">types</a></li>
+<li>of slots are</li>
+<p>*</p>
+<li>1. physical tuple in a disk buffer page (<a class="wiki-source-link" href="../../source/src/backend/executor/execTuples.c.html#L87" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/executor/execTuples.c.html&quot;}, '*');">TTSOpsBufferHeapTuple</a>)</li>
+<li>2. physical tuple constructed in palloc&#x27;ed memory (<a class="wiki-source-link" href="../../source/src/backend/executor/execTuples.c.html#L85" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/executor/execTuples.c.html&quot;}, '*');">TTSOpsHeapTuple</a>)</li>
+<li>3. &quot;minimal&quot; physical tuple constructed in palloc&#x27;ed memory</li>
+<li>(<a class="wiki-source-link" href="../../source/src/backend/executor/execTuples.c.html#L86" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/executor/execTuples.c.html&quot;}, '*');">TTSOpsMinimalTuple</a>)</li>
+<li>4. &quot;virtual&quot; tuple consisting of Datum/isnull arrays (<a class="wiki-source-link" href="../../source/src/backend/executor/execTuples.c.html#L84" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/executor/execTuples.c.html&quot;}, '*');">TTSOpsVirtual</a>)</li>
+<p>* *</p>
+<li>The first two cases are similar in that they both deal with &quot;materialized&quot;</li>
+<li>tuples, but resource management <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> different.  For a tuple in a disk page</li>
+<li>we need to hold a pin on the buffer until the TupleTableSlot&#x27;s reference</li>
+<li>to the tuple <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> dropped; while for a palloc&#x27;d tuple we usually want the</li>
+<li>tuple pfree&#x27;d <a class="wiki-source-link" href="../../source/src/interfaces/ecpg/preproc/type.h.html#L89" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__interfaces__ecpg__preproc__type_h__when.html&quot;}, '*');">when</a> the TupleTableSlot&#x27;s reference <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> dropped.</li>
+<p>*</p>
+<li>A &quot;minimal&quot; tuple <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> handled similarly to a palloc&#x27;d regular tuple.</li>
+<li>At present, minimal tuples never are stored in buffers, so there <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> no</li>
+<li>parallel to case 1.  Note that a minimal tuple has no &quot;<a class="wiki-source-link" href="../../source/src/include/port.h.html#L388" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/port.h.html&quot;}, '*');">system</a> columns&quot;.</li>
+<p>*</p>
+<li>A &quot;virtual&quot; tuple <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> an optimization used to minimize physical data copying</li>
+<li>in a nest of <a class="wiki-source-link" href="../../source/src/test/regress/pg_regress.c.html#L164" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/test/regress/pg_regress.c.html&quot;}, '*');">plan</a> nodes.  Until materialized pass-by-reference Datums in</li>
+<li>the slot point to <a class="wiki-source-link" href="../../source/src/tools/pg_bsd_indent/indent_codes.h.html#L68" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/tools/pg_bsd_indent/indent_codes.h.html&quot;}, '*');">storage</a> that <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> not directly associated with the</li>
+<li>TupleTableSlot; generally they will point to part of a tuple stored in a</li>
+<li>lower <a class="wiki-source-link" href="../../source/src/test/regress/pg_regress.c.html#L164" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/test/regress/pg_regress.c.html&quot;}, '*');">plan</a> node&#x27;s <a class="wiki-source-link" href="../../source/src/bin/pg_test_timing/pg_test_timing.c.html#L357" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__bin__pg_test_timing__pg_test_timing_c__output.html&quot;}, '*');">output</a> TupleTableSlot, or to a function <a class="wiki-source-link" href="../../source/src/include/storage/checksum_block_internal.h.html#L18" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/storage/checksum_block_internal.h.html&quot;}, '*');">result</a></li>
+<li>constructed in a <a class="wiki-source-link" href="../../source/src/test/regress/pg_regress.c.html#L164" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/test/regress/pg_regress.c.html&quot;}, '*');">plan</a> node&#x27;s per-tuple econtext.  It <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> the responsibility</li>
+<li>of the generating <a class="wiki-source-link" href="../../source/src/test/regress/pg_regress.c.html#L164" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/test/regress/pg_regress.c.html&quot;}, '*');">plan</a> node to be sure these resources are not released for</li>
+<li>as <a class="wiki-source-link" href="../../source/src/include/port/win32_port.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__port__win32_port_h__long.html&quot;}, '*');">long</a> as the virtual tuple needs to be valid or <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> materialized.  Note</li>
+<li>also that a virtual tuple does not have any &quot;<a class="wiki-source-link" href="../../source/src/include/port.h.html#L388" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/port.h.html&quot;}, '*');">system</a> columns&quot;.</li>
+<p>*</p>
+<li>The Datum/isnull arrays of a TupleTableSlot serve double duty.  For virtual</li>
+<li>slots they are the authoritative data.  For the other builtin slots,</li>
+<p>~~~</p>
+</ul>
+<h2>失敗モードと境界条件</h2>
+<p>まだ解析していません。</p>
+<h2>保守担当者向けメモ</h2>
+<ul>
+<li>後続フェーズで、ソース本文の文脈と caller/callee 情報を使ってこのページを強化する。</li>
+</ul><script>
+(function() {
+  function notifyParent() {
+    if (parent === window) return;
+    parent.postMessage({type: "frame-location", frame: window.name || "", href: window.location.href}, "*");
+  }
+  document.addEventListener("click", function(event) {
+    const link = event.target.closest("a[data-panel]");
+    if (!link || parent === window) return;
+    parent.postMessage({type: "source-link", panel: link.dataset.panel}, "*");
+  });
+  window.addEventListener("load", notifyParent);
+  window.addEventListener("hashchange", notifyParent);
+})();
+</script></body></html>

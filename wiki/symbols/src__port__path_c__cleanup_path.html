@@ -34,7 +34,7 @@
 <h2>関連データ構造</h2>
 <p>なし</p>
 <h2>ソース抜粋</h2>
-<p>~~~c void <a class="wiki-source-link" href="../../source/src/port/path.c.html#L257" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__port__path_c__cleanup_path.html&quot;}, '*');">cleanup_path</a>(<a class="wiki-source-link" href="../../source/src/include/port/atomics/generic-gcc.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__port__atomics__generic-gcc_h__char.html&quot;}, '*');">char</a> *path) { #ifdef <a class="wiki-source-link" href="../../source/src/include/port/win32.h.html#L9" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/port/win32.h.html&quot;}, '*');">WIN32</a> /*</p>
+<p>~~~c void <a class="wiki-source-link" href="../../source/src/port/path.c.html#L257" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__port__path_c__cleanup_path.html&quot;}, '*');">cleanup_path</a>(char *path) { #ifdef <a class="wiki-source-link" href="../../source/src/include/port/win32.h.html#L9" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/port/win32.h.html&quot;}, '*');">WIN32</a> /*</p>
 <ul>
 <li>GetShortPathName() will fail if the path does not exist, or short names</li>
 <li>are disabled on this file system.  In both cases, we just return the</li>
@@ -42,7 +42,7 @@
 <li>might not exist.</li>
 <p>*/ GetShortPathName(path, path, <a class="wiki-source-link" href="../../source/src/include/pg_config_manual.h.html#L105" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/pg_config_manual.h.html&quot;}, '*');">MAXPGPATH</a> - 1);</p>
 </ul>
-<p>/* Replace &#x27;\&#x27; with &#x27;/&#x27; */ /* All server-safe encodings are alike here, so just use PG_SQL_ASCII */ <a class="wiki-source-link" href="../../source/src/port/path.c.html#L163" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__port__path_c__debackslash_path.html&quot;}, '*');">debackslash_path</a>(path, PG_SQL_ASCII); #endif } ~~~</p>
+<p>/* Replace &#x27;\&#x27; with &#x27;/&#x27; */ /* All server-safe encodings are alike here, so just use <a class="wiki-source-link" href="../../source/src/include/mb/pg_wchar.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__mb__pg_wchar_h__PG_SQL_ASCII.html&quot;}, '*');">PG_SQL_ASCII</a> */ <a class="wiki-source-link" href="../../source/src/port/path.c.html#L163" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__port__path_c__debackslash_path.html&quot;}, '*');">debackslash_path</a>(path, <a class="wiki-source-link" href="../../source/src/include/mb/pg_wchar.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__mb__pg_wchar_h__PG_SQL_ASCII.html&quot;}, '*');">PG_SQL_ASCII</a>); #endif } ~~~</p>
 <h2>失敗モードと境界条件</h2>
 <p>まだ解析していません。</p>
 <h2>保守担当者向けメモ</h2>

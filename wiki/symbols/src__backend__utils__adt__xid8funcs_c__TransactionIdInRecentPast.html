@@ -15,7 +15,7 @@
 <h2>入力と出力</h2>
 <ul>
 <li>引数: <code>FullTransactionId fxid</code>, <code>TransactionId *extracted_xid</code></li>
-<li>戻り値: <code>bool</code></li>
+<li>戻り値: <a class="wiki-source-link" href="../../source/src/include/access/tupmacs.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__access__tupmacs_h__bool.html&quot;}, '*');"><code>bool</code></a></li>
 </ul>
 <h2>前提条件と不変条件</h2>
 <p>まだ解析していません。</p>
@@ -34,7 +34,7 @@
 <h2>関連データ構造</h2>
 <p><code>FullTransactionId</code>, <code>TransactionId</code></p>
 <h2>ソース抜粋</h2>
-<p>~~~c static bool TransactionIdInRecentPast(FullTransactionId fxid, TransactionId *extracted_xid) { TransactionId xid = <a class="wiki-source-link" href="../../source/src/include/access/transam.h.html#L48" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/access/transam.h.html&quot;}, '*');">XidFromFullTransactionId</a>(fxid); FullTransactionId now_fullxid; TransactionId oldest_clog_xid; FullTransactionId oldest_clog_fxid;</p>
+<p>~~~c static <a class="wiki-source-link" href="../../source/src/include/access/tupmacs.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__access__tupmacs_h__bool.html&quot;}, '*');">bool</a> TransactionIdInRecentPast(FullTransactionId fxid, TransactionId *extracted_xid) { TransactionId xid = <a class="wiki-source-link" href="../../source/src/include/access/transam.h.html#L48" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/access/transam.h.html&quot;}, '*');">XidFromFullTransactionId</a>(fxid); FullTransactionId now_fullxid; TransactionId oldest_clog_xid; FullTransactionId oldest_clog_fxid;</p>
 <p>now_fullxid = <a class="wiki-source-link" href="../../source/src/backend/access/transam/varsup.c.html#L282" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__access__transam__varsup_c__ReadNextFullTransactionId.html&quot;}, '*');">ReadNextFullTransactionId</a>();</p>
 <p>if (extracted_xid != NULL) *extracted_xid = xid;</p>
 <p>if (!<a class="wiki-source-link" href="../../source/src/include/access/transam.h.html#L41" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/access/transam.h.html&quot;}, '*');">TransactionIdIsValid</a>(xid)) return <a class="wiki-source-link" href="../../source/src/tools/pg_bsd_indent/indent_globs.h.html#L43" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/tools/pg_bsd_indent/indent_globs.h.html&quot;}, '*');">false</a>;</p>

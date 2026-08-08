@@ -34,13 +34,13 @@
 <h2>関連データ構造</h2>
 <p><code>stat</code></p>
 <h2>ソース抜粋</h2>
-<p>~~~c int <a class="wiki-source-link" href="../../source/src/port/dirmod.c.html#L118" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__port__dirmod_c__pgunlink.html&quot;}, '*');">pgunlink</a>(const <a class="wiki-source-link" href="../../source/src/include/port/atomics/generic-gcc.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__port__atomics__generic-gcc_h__char.html&quot;}, '*');">char</a> *path) { bool		is_lnk; int			loops = 0; struct stat st;</p>
+<p>~~~c int <a class="wiki-source-link" href="../../source/src/port/dirmod.c.html#L118" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__port__dirmod_c__pgunlink.html&quot;}, '*');">pgunlink</a>(const char *path) { <a class="wiki-source-link" href="../../source/src/include/access/tupmacs.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__access__tupmacs_h__bool.html&quot;}, '*');">bool</a>		is_lnk; int			loops = 0; struct stat st;</p>
 <p>/*</p>
 <ul>
 <li>This function might be called for a regular file or for a junction</li>
 <li>point (which we use to emulate symlinks).  The latter must be unlinked</li>
 <li>with rmdir() on Windows.  Before we worry about any of that, let&#x27;s see</li>
-<li>if we can unlink directly, since that&#x27;s expected to be the most common</li>
+<li>if we can unlink directly, since that&#x27;s <a class="wiki-source-link" href="../../source/src/include/port/atomics/generic-msvc.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__port__atomics__generic-msvc_h__expected.html&quot;}, '*');">expected</a> to be the most common</li>
 <li>case.</li>
 <p>*/ if (unlink(path) == 0) return 0; if (errno != EACCES) return -1;</p>
 </ul>

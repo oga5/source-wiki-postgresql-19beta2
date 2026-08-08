@@ -1,0 +1,88 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>src/include/mb/pg_wchar.h.md</title><link rel="stylesheet" href="../../../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../../../source/src/include/mb/pg_wchar.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/mb/pg_wchar.h.html&quot;}, '*');">src/include/mb/pg_wchar.h</a></h1>
+<h2>概要</h2>
+<p>PostgreSQLのマルチバイト文字サポートおよび文字コード変換の基盤となる型、マクロ、データ構造、関数群を定義するヘッダーファイルです。バックエンドとフロントエンド（libpgcommon経由）の両方で使用され、文字エンコーディングの識別子（<a class="wiki-source-link" href="../../../../source/src/include/mb/pg_wchar.h.html#L74" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__mb__pg_wchar_h__pg_enc.html&quot;}, '*');"><code>pg_enc</code></a>）、ワイド文字型（<code>pg_wchar</code>）、文字幅・長さ計算用テーブル構造、およびUTF-8等との相互変換用ラディックスツリーなどを提供します。</p>
+<h2>モジュール内での役割</h2>
+<p><code>src/include/mb</code> モジュールの核心であり、マルチバイト処理や文字エンコーディングに関する共通定義を集約しています。同モジュールの <a class="wiki-source-link" href="../../../../source/src/include/mb/stringinfo_mb.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/mb/stringinfo_mb.h.html&quot;}, '*');"><code>stringinfo_mb.h</code></a> や、実体を提供する共通コード（<a class="wiki-source-link" href="../../../../source/src/common/encnames.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/common/encnames.c.html&quot;}, '*');"><code>src/common/encnames.c</code></a>, <a class="wiki-source-link" href="../../../../source/src/common/wchar.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/common/wchar.c.html&quot;}, '*');"><code>src/common/wchar.c</code></a>）およびバックエンドの文字コード変換処理から参照されます。</p>
+<h2>責務</h2>
+<ul>
+<li>マルチバイト文字およびワイド文字を表す基本型（<code>pg_wchar</code>, <a class="wiki-source-link" href="../../../../source/src/include/mb/pg_wchar.h.html#L74" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__mb__pg_wchar_h__pg_enc.html&quot;}, '*');"><code>pg_enc</code></a>）の定義。</li>
+<li>サポートする全エンコーディング識別子の列挙と、それらが有効であるかを判定するマクロの提供。</li>
+<li>エンコーディングごとの操作関数ポインタを束ねる仮想テーブル風の構造体（<a class="wiki-source-link" href="../../../../source/src/include/mb/pg_wchar.h.html#L229" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__mb__pg_wchar_h__pg_wchar_tbl.html&quot;}, '*');"><code>pg_wchar_tbl</code></a>）および名前解決構造体の定義。</li>
+<li>ローカルエンコーディングとUTF-8間の効率的な変換のためのラディックスツリー（<a class="wiki-source-link" href="../../../../source/src/include/mb/pg_wchar.h.html#L284" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__mb__pg_wchar_h__pg_mb_radix_tree.html&quot;}, '*');"><code>pg_mb_radix_tree</code></a>）や結合文字マップ構造体の提供。</li>
+<li>クライアント・サーバー間のエンコーディング設定・検証関数、文字列長・文字長・表示幅計算関数、および符号変換関数の外部インターフェース宣言。</li>
+</ul>
+<h2>重要なシンボル</h2>
+<ul>
+<li>**基本型・マクロ群**</li>
+<li><code>pg_wchar</code>: ワイド文字型（<code>unsigned int</code>）。</li>
+<li><a class="wiki-source-link" href="../../../../source/src/include/mb/pg_wchar.h.html#L33" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/mb/pg_wchar.h.html&quot;}, '*');"><code>MAX_MULTIBYTE_CHAR_LEN</code></a>: いずれのバックエンドエンコーディングにおける1文字の最大バイト数（<code>4</code>）。</li>
+<li><a class="wiki-source-link" href="../../../../source/src/include/mb/pg_wchar.h.html#L74" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__mb__pg_wchar_h__pg_enc.html&quot;}, '*');"><code>pg_enc</code></a>: サポートするすべてのエンコーディングを列挙する列挙型（<a class="wiki-source-link" href="../../../../source/src/include/mb/pg_wchar.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__mb__pg_wchar_h__PG_SQL_ASCII.html&quot;}, '*');"><code>PG_SQL_ASCII</code></a>, <code>PG_UTF8</code>, <a class="wiki-source-link" href="../../../../source/src/include/mb/pg_wchar.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__mb__pg_wchar_h__PG_EUC_JP.html&quot;}, '*');"><code>PG_EUC_JP</code></a> など）。</li>
+<li>**エンコーディング検証・判定マクロ**</li>
+<li><code>PG_VALID_BE_ENCODING(enc)</code>: 指定エンコーディングが有効なバックエンドエンコーディングか検証。</li>
+<li><code>PG_ENCODING_IS_CLIENT_ONLY(enc)</code>: クライアント専用エンコーディングか判定。</li>
+<li><code>PG_VALID_ENCODING(enc)</code>: 一般的なエンコーディングの妥当性検証。</li>
+<li>**コールバック・テーブル構造体**</li>
+<li><a class="wiki-source-link" href="../../../../source/src/include/mb/pg_wchar.h.html#L229" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__mb__pg_wchar_h__pg_wchar_tbl.html&quot;}, '*');"><code>pg_wchar_tbl</code></a>: <a class="wiki-source-link" href="../../../../source/src/include/mb/pg_wchar.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__mb__pg_wchar_h__mb2wchar_with_len.html&quot;}, '*');"><code>mb2wchar_with_len</code></a>, <a class="wiki-source-link" href="../../../../source/src/include/mb/pg_wchar.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__mb__pg_wchar_h__wchar2mb_with_len.html&quot;}, '*');"><code>wchar2mb_with_len</code></a>, <a class="wiki-source-link" href="../../../../source/src/include/mb/pg_wchar.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__mb__pg_wchar_h__mblen.html&quot;}, '*');"><code>mblen</code></a>, <a class="wiki-source-link" href="../../../../source/src/include/mb/pg_wchar.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__mb__pg_wchar_h__dsplen.html&quot;}, '*');"><code>dsplen</code></a>, <a class="wiki-source-link" href="../../../../source/src/include/mb/pg_wchar.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__mb__pg_wchar_h__mbverifychar.html&quot;}, '*');"><code>mbverifychar</code></a>, <a class="wiki-source-link" href="../../../../source/src/include/mb/pg_wchar.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__mb__pg_wchar_h__mbverifystr.html&quot;}, '*');"><code>mbverifystr</code></a>, <a class="wiki-source-link" href="../../../../source/src/include/mb/pg_wchar.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__mb__pg_wchar_h__maxmblen.html&quot;}, '*');"><code>maxmblen</code></a> を保持するテーブル。</li>
+<li><a class="wiki-source-link" href="../../../../source/src/include/mb/pg_wchar.h.html#L192" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__mb__pg_wchar_h__pg_enc2name.html&quot;}, '*');"><code>pg_enc2name</code></a>: エンコーディング名とID、Windowsのコードページを対応付ける構造体。</li>
+<li>**変換・ラディックスツリー構造体**</li>
+<li><a class="wiki-source-link" href="../../../../source/src/include/mb/pg_wchar.h.html#L284" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__mb__pg_wchar_h__pg_mb_radix_tree.html&quot;}, '*');"><code>pg_mb_radix_tree</code></a>: 1〜4バイトの入力を効率よく変換するための多段ラディックスツリー構造。</li>
+<li><a class="wiki-source-link" href="../../../../source/src/include/mb/pg_wchar.h.html#L330" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__mb__pg_wchar_h__pg_utf_to_local_combined.html&quot;}, '*');"><code>pg_utf_to_local_combined</code></a> / <a class="wiki-source-link" href="../../../../source/src/include/mb/pg_wchar.h.html#L340" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__mb__pg_wchar_h__pg_local_to_utf_combined.html&quot;}, '*');"><code>pg_local_to_utf_combined</code></a>: 結合文字の変換用マップ構造体。</li>
+<li>**インライン・ユーティリティ関数**</li>
+<li><code>is_valid_unicode_codepoint(c)</code>: Unicodeコードポイントの有効性を判定。</li>
+<li><code>utf8_to_unicode(c)</code> / <code>unicode_to_utf8(c, str)</code>: UTF-8バイト列とUnicodeコードポイント間の単一文字変換。</li>
+<li>**公開・外部関数群**</li>
+<li>**エンコーディング名・ID変換**: <code>pg_char_to_encoding</code>, <code>pg_encoding_to_char</code></li>
+<li>**長さ・幅・検証**: <code>pg_encoding_mblen</code>, <code>pg_encoding_dsplen</code>, <code>pg_verify_mbstr</code></li>
+<li>**変換実体**: <code>pg_do_encoding_conversion</code>, <code>UtfToLocal</code>, <code>LocalToUtf</code></li>
+<li>**セッションエンコーディング管理（バックエンド専用）**: <code>SetClientEncoding</code>, <code>GetDatabaseEncoding</code>, <code>InitializeClientEncoding</code> など。</li>
+</ul>
+<h2>制御フローとデータフロー</h2>
+<ul>
+<li>**文字長・幅の計算フロー**: 文字列処理関数（例: <code>pg_encoding_mblen</code> や <a class="wiki-source-link" href="../../../../source/src/backend/utils/mb/mbutils.c.html#L1157" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__utils__mb__mbutils_c__pg_dsplen.html&quot;}, '*');"><code>pg_dsplen</code></a>）は、渡されたエンコーディングIDをもとに <a class="wiki-source-link" href="../../../../source/src/common/wchar.c.html#L1865" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/common/wchar.c.html&quot;}, '*');"><code>pg_wchar_table</code></a> 配列から対応する関数ポインタを引いて処理をディスパッチします。</li>
+<li>**コード変換フロー**: <code>pg_do_encoding_conversion</code> や <code>UtfToLocal</code> / <code>LocalToUtf</code> は、送信元と送信先のエンコーディング間を移行する際、最適化された <a class="wiki-source-link" href="../../../../source/src/include/mb/pg_wchar.h.html#L284" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__mb__pg_wchar_h__pg_mb_radix_tree.html&quot;}, '*');"><code>pg_mb_radix_tree</code></a> や結合文字マップ、あるいはアルゴリズム的変換関数を参照してデータをインプレースまたはバッファ経由で変換します。</li>
+<li>**セッション初期化フロー**: バックエンド起動時やクライアント接続時には、<code>InitializeClientEncoding</code> や <code>SetClientEncoding</code> が呼ばれ、内部のグローバルなエンコーディング状態が更新されます。</li>
+</ul>
+<h2>直接依存</h2>
+<p>このヘッダーファイル自体は他のインクルード文を持たない設計（フロントエンドでの安全なインクルードを維持するため）ですが、概念的には <a class="wiki-source-link" href="../../../../source/src/common/encnames.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/common/encnames.c.html&quot;}, '*');"><code>src/common/encnames.c</code></a> や <a class="wiki-source-link" href="../../../../source/src/common/wchar.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/common/wchar.c.html&quot;}, '*');"><code>src/common/wchar.c</code></a> などの実体定義ファイルと密接に結びついています。</p>
+<h2>関連コード</h2>
+<ul>
+<li><a class="wiki-source-link" href="../../../../source/src/include/mb/stringinfo_mb.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/mb/stringinfo_mb.h.html&quot;}, '*');"><code>src/include/mb/stringinfo_mb.h</code></a>: 文字列バッファに対するマルチバイト対応拡張。</li>
+<li><a class="wiki-source-link" href="../../../../source/src/common/wchar.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/common/wchar.c.html&quot;}, '*');"><code>src/common/wchar.c</code></a>: <a class="wiki-source-link" href="../../../../source/src/common/wchar.c.html#L1865" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/common/wchar.c.html&quot;}, '*');"><code>pg_wchar_table</code></a> や文字長計算の実装。</li>
+<li><a class="wiki-source-link" href="../../../../source/src/common/encnames.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/common/encnames.c.html&quot;}, '*');"><code>src/common/encnames.c</code></a>: <a class="wiki-source-link" href="../../../../source/src/common/encnames.c.html#L308" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/common/encnames.c.html&quot;}, '*');"><code>pg_enc2name_tbl</code></a> などの名前・ID対応テーブルの実装。</li>
+</ul>
+<h2>読者向けメモ</h2>
+<ul>
+<li>**ABIとlibpqに関する注意**: バックエンドのエンコーディングIDは <code>libpq</code> のABI（バージョン5以前の互換性維持のため）と密接に関連しているため、IDの番号付けを変更する際は細心の注意が必要です。</li>
+<li>**マクロの多重定義（Private符号）**: <code>USE_PRIVATE_ENCODING_FUNCS</code> や <code>FRONTEND</code> の定義状況に応じて、<code>pg_char_to_encoding</code> などの関数名が <code>_private</code> サフィックス付きの静的リンク用シンボルにマッピングされます。</li>
+<li>**メモリ制約**: 文字列変換時のバッファ拡張係数として <a class="wiki-source-link" href="../../../../source/src/include/mb/pg_wchar.h.html#L155" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/mb/pg_wchar.h.html&quot;}, '*');"><code>MAX_CONVERSION_GROWTH</code></a>（4倍）が仮定されています。</li>
+</ul>
+<h2>シンボルページ</h2>
+<ul>
+<li><a href="../../../symbols/src__include__mb__pg_wchar_h__pg_wchar.html" target="wiki-view"><code>pg_wchar</code></a></li>
+<li><a href="../../../symbols/src__include__mb__pg_wchar_h__pg_enc.html" target="wiki-view"><code>pg_enc</code></a></li>
+<li><a href="../../../symbols/src__include__mb__pg_wchar_h__pg_enc2name.html" target="wiki-view"><code>pg_enc2name</code></a></li>
+<li><a href="../../../symbols/src__include__mb__pg_wchar_h__mblen_converter.html" target="wiki-view"><code>mblen_converter</code></a></li>
+<li><a href="../../../symbols/src__include__mb__pg_wchar_h__mbdisplaylen_converter.html" target="wiki-view"><code>mbdisplaylen_converter</code></a></li>
+<li><a href="../../../symbols/src__include__mb__pg_wchar_h__mbcharacter_incrementer.html" target="wiki-view"><code>mbcharacter_incrementer</code></a></li>
+<li><a href="../../../symbols/src__include__mb__pg_wchar_h__mbchar_verifier.html" target="wiki-view"><code>mbchar_verifier</code></a></li>
+<li><a href="../../../symbols/src__include__mb__pg_wchar_h__mbstr_verifier.html" target="wiki-view"><code>mbstr_verifier</code></a></li>
+<li><a href="../../../symbols/src__include__mb__pg_wchar_h__pg_wchar_tbl.html" target="wiki-view"><code>pg_wchar_tbl</code></a></li>
+<li><a href="../../../symbols/src__include__mb__pg_wchar_h__pg_mb_radix_tree.html" target="wiki-view"><code>pg_mb_radix_tree</code></a></li>
+<li><a href="../../../symbols/src__include__mb__pg_wchar_h__pg_utf_to_local_combined.html" target="wiki-view"><code>pg_utf_to_local_combined</code></a></li>
+<li><a href="../../../symbols/src__include__mb__pg_wchar_h__pg_local_to_utf_combined.html" target="wiki-view"><code>pg_local_to_utf_combined</code></a></li>
+</ul><script>
+(function() {
+  function notifyParent() {
+    if (parent === window) return;
+    parent.postMessage({type: "frame-location", frame: window.name || "", href: window.location.href}, "*");
+  }
+  document.addEventListener("click", function(event) {
+    const link = event.target.closest("a[data-panel]");
+    if (!link || parent === window) return;
+    parent.postMessage({type: "source-link", panel: link.dataset.panel}, "*");
+  });
+  window.addEventListener("load", notifyParent);
+  window.addEventListener("hashchange", notifyParent);
+})();
+</script></body></html>

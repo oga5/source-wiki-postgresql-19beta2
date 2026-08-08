@@ -28,7 +28,7 @@
 <h2>関連データ構造</h2>
 <p><code>OffsetNumber</code>, <code>TransactionId</code>, <code>uint16</code></p>
 <h2>ソース抜粋</h2>
-<p>~~~c typedef struct <a class="wiki-source-link" href="../../source/src/include/access/spgxlog.h.html#L238" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__access__spgxlog_h__spgxlogVacuumRedirect.html&quot;}, '*');">spgxlogVacuumRedirect</a> { uint16		nToPlaceholder; /* number of redirects to make placeholders */ OffsetNumber firstPlaceholder;	/* first placeholder tuple to remove */ TransactionId snapshotConflictHorizon;	/* newest XID of removed redirects */ bool		isCatalogRel;	/* to handle recovery conflict during logical</p>
+<p>~~~c typedef struct <a class="wiki-source-link" href="../../source/src/include/access/spgxlog.h.html#L238" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__access__spgxlog_h__spgxlogVacuumRedirect.html&quot;}, '*');">spgxlogVacuumRedirect</a> { uint16		nToPlaceholder; /* number of redirects to make placeholders */ OffsetNumber firstPlaceholder;	/* first placeholder tuple to remove */ TransactionId snapshotConflictHorizon;	/* newest XID of removed redirects */ <a class="wiki-source-link" href="../../source/src/include/access/tupmacs.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__access__tupmacs_h__bool.html&quot;}, '*');">bool</a>		isCatalogRel;	/* to handle recovery conflict during logical</p>
 <ul>
 <li>decoding on standby */</li>
 </ul>

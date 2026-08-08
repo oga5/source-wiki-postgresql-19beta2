@@ -1,0 +1,76 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>src/include/port/atomics/generic-msvc.h.md</title><link rel="stylesheet" href="../../../../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../../../../source/src/include/port/atomics/generic-msvc.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/port/atomics/generic-msvc.h.html&quot;}, '*');">src/include/port/atomics/generic-msvc.h</a></h1>
+<h2>概要</h2>
+<p>MSVC（Microsoft Visual C++）環境におけるアトミック操作の実装を提供するヘッダーファイルです。Windows プラットフォーム向けのコンパイラビリティ、メモリバリア、および 32ビット・64ビット整数に対する各種アトミック演算（比較交換、交換、加算）を Win32 インターロック関数（<code>Interlocked*</code>）を使って定義します。</p>
+<h2>モジュール内での役割</h2>
+<p><code>src/include/port/atomics/</code> モジュールの一部として、MSVC コンパイラが選択された場合に汎用アトミック API のバックエンド実装を提供します。直接インクルードすることは禁止されており、上位の <a class="wiki-source-link" href="../../../../../source/src/include/port/atomics.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/port/atomics.h.html&quot;}, '*');"><code>atomics.h</code></a> を経由してインクルードされる設計になっています。</p>
+<h2>責務</h2>
+<ul>
+<li>**コンパイラ・メモリバリアの提供**: <code>_ReadWriteBarrier()</code> と Windows の <code>MemoryBarrier()</code> を用いたバリアのマクロ定義。</li>
+<li>**データ型の定義**: <code>volatile</code> 修飾子と適切なアライメントを持つ 32ビットおよび 64ビットの原子変数型（<code>pg_atomic_uint32</code>, <code>pg_atomic_uint64</code>）の提供。</li>
+<li>**アトミック演算の実装**: MSVC のインロック関数群をラップし、PostgreSQL のアトミック API 規約に適合させるインライン関数の提供。</li>
+</ul>
+<h2>重要なシンボル</h2>
+<h3>型定義とサポートマクロ</h3>
+<ul>
+<li><code>pg_atomic_uint32</code>: <code>volatile uint32 value</code> を保持する 32ビットアトミック構造体。</li>
+<li><code>pg_atomic_uint64</code>: <code>alignas(8)</code> 付きの <code>volatile uint64 value</code> を保持する 64ビットアトミック構造体。</li>
+<li><code>PG_HAVE_ATOMIC_U32_SUPPORT</code> / <code>PG_HAVE_ATOMIC_U64_SUPPORT</code>: それぞれ 32ビットおよび 64ビットアトミック操作のサポートを示すマクロ。</li>
+</ul>
+<h3>32ビットアトミック操作</h3>
+<ul>
+<li><code>pg_atomic_compare_exchange_u32_impl</code>: <a class="wiki-source-link" href="../../../../../source/src/include/port/atomics/generic-msvc.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__port__atomics__generic-msvc_h__InterlockedCompareExchange.html&quot;}, '*');"><code>InterlockedCompareExchange</code></a> を用いた比較・交換操作。期待値と現在値が一致した場合は <code>newval</code> に更新し、一致しない場合は <a class="wiki-source-link" href="../../../../../source/src/include/port/atomics/generic-msvc.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__port__atomics__generic-msvc_h__expected.html&quot;}, '*');"><code>expected</code></a> に現在の値を書き戻して <a class="wiki-source-link" href="../../../../../source/src/tools/pg_bsd_indent/indent_globs.h.html#L43" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/tools/pg_bsd_indent/indent_globs.h.html&quot;}, '*');"><code>false</code></a> を返します。</li>
+<li><code>pg_atomic_exchange_u32_impl</code>: <a class="wiki-source-link" href="../../../../../source/src/include/port/atomics/generic-msvc.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__port__atomics__generic-msvc_h__InterlockedExchange.html&quot;}, '*');"><code>InterlockedExchange</code></a> を用いた値の置換と旧値の取得。</li>
+<li><code>pg_atomic_fetch_add_u32_impl</code>: <a class="wiki-source-link" href="../../../../../source/src/include/port/atomics/generic-msvc.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__port__atomics__generic-msvc_h__InterlockedExchangeAdd.html&quot;}, '*');"><code>InterlockedExchangeAdd</code></a> を用いた加算と加算前の旧値の取得。</li>
+</ul>
+<h3>64ビットアトミック操作</h3>
+<ul>
+<li><code>pg_atomic_compare_exchange_u64_impl</code>: <a class="wiki-source-link" href="../../../../../source/src/include/port/atomics/generic-msvc.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__port__atomics__generic-msvc_h___InterlockedCompareExchange64.html&quot;}, '*');"><code>_InterlockedCompareExchange64</code></a> を用いた 64ビットの比較・交換操作。</li>
+<li><code>pg_atomic_exchange_u64_impl</code> (<a class="wiki-source-link" href="../../../../../source/src/include/port/atomics/generic-msvc.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__port__atomics__generic-msvc_h___WIN64.html&quot;}, '*');"><code>_WIN64</code></a> のみ): <a class="wiki-source-link" href="../../../../../source/src/include/port/atomics/generic-msvc.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__port__atomics__generic-msvc_h___InterlockedExchange64.html&quot;}, '*');"><code>_InterlockedExchange64</code></a> を用いた 64ビットの値の置換。</li>
+<li><code>pg_atomic_fetch_add_u64_impl</code> (<a class="wiki-source-link" href="../../../../../source/src/include/port/atomics/generic-msvc.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__port__atomics__generic-msvc_h___WIN64.html&quot;}, '*');"><code>_WIN64</code></a> のみ): <a class="wiki-source-link" href="../../../../../source/src/include/port/atomics/generic-msvc.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__port__atomics__generic-msvc_h___InterlockedExchangeAdd64.html&quot;}, '*');"><code>_InterlockedExchangeAdd64</code></a> を用いた 64ビットの加算。</li>
+</ul>
+<h2>制御フローとデータフロー</h2>
+<p>1. **比較と交換のフロー**:</p>
+<ul>
+<li>呼び出し元からアトミック変数へのポインタ (<code>ptr</code>)、期待値へのポインタ (<a class="wiki-source-link" href="../../../../../source/src/include/port/atomics/generic-msvc.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__port__atomics__generic-msvc_h__expected.html&quot;}, '*');"><code>expected</code></a>)、新しい値 (<code>newval</code>) が渡されます。</li>
+<li>インロック関数（<a class="wiki-source-link" href="../../../../../source/src/include/port/atomics/generic-msvc.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__port__atomics__generic-msvc_h__InterlockedCompareExchange.html&quot;}, '*');"><code>InterlockedCompareExchange</code></a> または <a class="wiki-source-link" href="../../../../../source/src/include/port/atomics/generic-msvc.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__port__atomics__generic-msvc_h___InterlockedCompareExchange64.html&quot;}, '*');"><code>_InterlockedCompareExchange64</code></a>）を実行し、変数内の現在の値を取得します。</li>
+<li>取得した現在値と <code>*expected</code> を比較し、一致すれば原子的に <code>newval</code> に置き換えます。</li>
+<li><code>*expected</code> には常に最新の現在値が上書きされ、比較結果（一致したかどうか）のブール値が返されます。</li>
+<p>2. **アーキテクチャ依存の分岐**:</p>
+<li>64ビット版の交換および加算関数（<code>pg_atomic_exchange_u64_impl</code>, <code>pg_atomic_fetch_add_u64_impl</code>）は、ビルド環境が 64ビット（<a class="wiki-source-link" href="../../../../../source/src/include/port/atomics/generic-msvc.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__port__atomics__generic-msvc_h___WIN64.html&quot;}, '*');"><code>_WIN64</code></a>）の場合のみコンパイル・有効化されます。</li>
+</ul>
+<h2>直接依存</h2>
+<ul>
+<li><code>&lt;intrin.h&gt;</code>: MSVC のコンパイライントリンシックおよびインタロック関数を利用するためにインクルードされます。</li>
+</ul>
+<h2>読者向けメモ</h2>
+<ul>
+<li>**インクルードガードの制約**: <a class="wiki-source-link" href="../../../../../source/src/include/port/atomics.h.html#L45" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/port/atomics.h.html&quot;}, '*');"><code>INSIDE_ATOMICS_H</code></a> マクロが定義されていない状態で単体インクルードされた場合、ビルドエラーが発生する仕組みになっています。</li>
+<li>**メモリのレイアウトとアライメント**: <code>pg_atomic_uint64</code> には <code>alignas(8)</code> が指定されており、64ビット整数に対するアトミック操作のハードウェア要件を満たしています。</li>
+<li>**最小サポート要件**: コードコメントによると、Windows XP 以降を最小ベースラインとして想定しているため、古い 486 向けの特例処理は省略されています。</li>
+</ul>
+<h2>シンボルページ</h2>
+<ul>
+<li><a href="../../../../symbols/src__include__port__atomics__generic-msvc_h__pg_atomic_uint32.html" target="wiki-view"><code>pg_atomic_uint32</code></a></li>
+<li><a href="../../../../symbols/src__include__port__atomics__generic-msvc_h__pg_atomic_uint64.html" target="wiki-view"><code>pg_atomic_uint64</code></a></li>
+<li><a href="../../../../symbols/src__include__port__atomics__generic-msvc_h__pg_atomic_compare_exchange_u32_impl.html" target="wiki-view"><code>pg_atomic_compare_exchange_u32_impl</code></a></li>
+<li><a href="../../../../symbols/src__include__port__atomics__generic-msvc_h__pg_atomic_exchange_u32_impl.html" target="wiki-view"><code>pg_atomic_exchange_u32_impl</code></a></li>
+<li><a href="../../../../symbols/src__include__port__atomics__generic-msvc_h__pg_atomic_fetch_add_u32_impl.html" target="wiki-view"><code>pg_atomic_fetch_add_u32_impl</code></a></li>
+<li><a href="../../../../symbols/src__include__port__atomics__generic-msvc_h__pg_atomic_compare_exchange_u64_impl.html" target="wiki-view"><code>pg_atomic_compare_exchange_u64_impl</code></a></li>
+<li><a href="../../../../symbols/src__include__port__atomics__generic-msvc_h__pg_atomic_exchange_u64_impl.html" target="wiki-view"><code>pg_atomic_exchange_u64_impl</code></a></li>
+<li><a href="../../../../symbols/src__include__port__atomics__generic-msvc_h__pg_atomic_fetch_add_u64_impl.html" target="wiki-view"><code>pg_atomic_fetch_add_u64_impl</code></a></li>
+</ul><script>
+(function() {
+  function notifyParent() {
+    if (parent === window) return;
+    parent.postMessage({type: "frame-location", frame: window.name || "", href: window.location.href}, "*");
+  }
+  document.addEventListener("click", function(event) {
+    const link = event.target.closest("a[data-panel]");
+    if (!link || parent === window) return;
+    parent.postMessage({type: "source-link", panel: link.dataset.panel}, "*");
+  });
+  window.addEventListener("load", notifyParent);
+  window.addEventListener("hashchange", notifyParent);
+})();
+</script></body></html>

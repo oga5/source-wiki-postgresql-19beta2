@@ -62,7 +62,7 @@
 <h2>読者向けメモ</h2>
 <ul>
 <li>**メモリ管理**: 生成される <code>RestrictInfo</code> およびその内部フィールドは、現在のメモリコンテキスト（通常は Planner のワークスペースコンテキスト）に割り当てられる。</li>
-<li>**クローンとコピー**: <a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/util/restrictinfo.c.html#L349" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__restrictinfo_c__commute_restrictinfo.html&quot;}, '*');"><code>commute_restrictinfo</code></a> などでは <code>memcpy</code> によるフラットコピーを用い、一部のポインタやキャッシュ（関係ビットマップや演算子ID）を適切に反転・再設定するが、サブ構造の一部を共有するため元データの変更には注意が必要である。</li>
+<li>**クローンとコピー**: <a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/util/restrictinfo.c.html#L349" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__restrictinfo_c__commute_restrictinfo.html&quot;}, '*');"><code>commute_restrictinfo</code></a> などでは <a class="wiki-source-link" href="../../../../../source/src/include/utils/hsearch.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__utils__hsearch_h__memcpy.html&quot;}, '*');"><code>memcpy</code></a> によるフラットコピーを用い、一部のポインタやキャッシュ（関係ビットマップや演算子ID）を適切に反転・再設定するが、サブ構造の一部を共有するため元データの変更には注意が必要である。</li>
 <li>**不変条件**: 構築直後の <code>RestrictInfo</code> は、未計算のキャッシュフィールドが <code>-1</code> または <code>InvalidOid</code> で初期化されていることが前提となる。</li>
 </ul>
 <h2>シンボルページ</h2>

@@ -40,17 +40,17 @@
 <ul>
 <li>In typical use, this function would be called <a class="wiki-source-link" href="../../source/src/backend/regex/regc_locale.c.html#L487" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__regex__regc_locale_c__before.html&quot;}, '*');">before</a> generating any</li>
 <li>plans from the <a class="wiki-source-link" href="../../source/src/include/utils/plancache.h.html#L105" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__utils__plancache_h__CachedPlanSource.html&quot;}, '*');">CachedPlanSource</a>.  If there <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> a generic <a class="wiki-source-link" href="../../source/src/test/regress/pg_regress.c.html#L164" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/test/regress/pg_regress.c.html&quot;}, '*');">plan</a>, moving it</li>
-<li>into <a class="wiki-source-link" href="../../source/src/backend/utils/mmgr/mcxt.c.html#L170" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/utils/mmgr/mcxt.c.html&quot;}, '*');">CacheMemoryContext</a> would be pretty risky since it&#x27;s unclear</li>
+<li>into CacheMemoryContext would be pretty risky since it&#x27;s unclear</li>
 <li>whether the caller has taken suitable care with making references</li>
 <li>long-lived.  Best thing to do seems to be to discard the <a class="wiki-source-link" href="../../source/src/test/regress/pg_regress.c.html#L164" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/test/regress/pg_regress.c.html&quot;}, '*');">plan</a>.</li>
 <p>*/ <a class="wiki-source-link" href="../../source/src/backend/utils/cache/plancache.c.html#L619" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__utils__cache__plancache_c__ReleaseGenericPlan.html&quot;}, '*');">ReleaseGenericPlan</a>(plansource);</p>
 </ul>
 <p>/*</p>
 <ul>
-<li>Reparent the source memory context under <a class="wiki-source-link" href="../../source/src/backend/utils/mmgr/mcxt.c.html#L170" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/utils/mmgr/mcxt.c.html&quot;}, '*');">CacheMemoryContext</a> so that it</li>
+<li>Reparent the source memory context under CacheMemoryContext so that it</li>
 <li>will live indefinitely.  The query_context follows along since it&#x27;s</li>
 <li>already a child of the other one.</li>
-<p>*/ <a class="wiki-source-link" href="../../source/src/backend/utils/mmgr/mcxt.c.html#L688" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__utils__mmgr__mcxt_c__MemoryContextSetParent.html&quot;}, '*');">MemoryContextSetParent</a>(plansource-&gt;context, <a class="wiki-source-link" href="../../source/src/backend/utils/mmgr/mcxt.c.html#L170" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/utils/mmgr/mcxt.c.html&quot;}, '*');">CacheMemoryContext</a>);</p>
+<p>*/ <a class="wiki-source-link" href="../../source/src/backend/utils/mmgr/mcxt.c.html#L688" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__utils__mmgr__mcxt_c__MemoryContextSetParent.html&quot;}, '*');">MemoryContextSetParent</a>(plansource-&gt;context, CacheMemoryContext);</p>
 </ul>
 <p>/*</p>
 <ul>

@@ -34,7 +34,7 @@
 <h2>関連データ構造</h2>
 <p><code>List</code>, <code>Plan</code>, <code>Result</code></p>
 <h2>ソース抜粋</h2>
-<p>~~~c Plan * <a class="wiki-source-link" href="../../source/src/backend/optimizer/plan/createplan.c.html#L1991" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__plan__createplan_c__change_plan_targetlist.html&quot;}, '*');">change_plan_targetlist</a>(Plan *subplan, List *tlist, bool tlist_parallel_safe) { /*</p>
+<p>~~~c Plan * <a class="wiki-source-link" href="../../source/src/backend/optimizer/plan/createplan.c.html#L1991" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__plan__createplan_c__change_plan_targetlist.html&quot;}, '*');">change_plan_targetlist</a>(Plan *subplan, List *tlist, <a class="wiki-source-link" href="../../source/src/include/access/tupmacs.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__access__tupmacs_h__bool.html&quot;}, '*');">bool</a> tlist_parallel_safe) { /*</p>
 <ul>
 <li>If the top <a class="wiki-source-link" href="../../source/src/test/regress/pg_regress.c.html#L164" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/test/regress/pg_regress.c.html&quot;}, '*');">plan</a> node can&#x27;t do projections and its existing target list</li>
 <li>isn&#x27;t already what we need, we need to add a Result node to help it</li>

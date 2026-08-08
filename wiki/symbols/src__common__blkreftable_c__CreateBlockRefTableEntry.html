@@ -29,13 +29,13 @@
 <li>呼び出し元: なし</li>
 <li>呼び出し先: なし</li>
 <li>呼び出し元サイト: なし</li>
-<li>呼び出しサイト: <code>palloc0_object</code> at <code>src/common/blkreftable.c:891:30</code> (unresolved), <code>memcpy</code> at <code>src/common/blkreftable.c:893:2</code> (unresolved)</li>
+<li>呼び出しサイト: <code>palloc0_object</code> at <code>src/common/blkreftable.c:891:30</code> (unresolved), <a class="wiki-source-link" href="../../source/src/include/utils/hsearch.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__utils__hsearch_h__memcpy.html&quot;}, '*');"><code>memcpy</code></a> at <code>src/common/blkreftable.c:893:2</code> (unresolved)</li>
 </ul>
 <h2>関連データ構造</h2>
 <p><code>BlockRefTableEntry</code>, <a class="wiki-source-link" href="../../source/src/include/common/relpath.h.html#L56" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__common__relpath_h__ForkNumber.html&quot;}, '*');"><code>ForkNumber</code></a>, <code>RelFileLocator</code></p>
 <h2>ソース抜粋</h2>
 <p>~~~c BlockRefTableEntry * <a class="wiki-source-link" href="../../source/src/common/blkreftable.c.html#L888" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__common__blkreftable_c__CreateBlockRefTableEntry.html&quot;}, '*');">CreateBlockRefTableEntry</a>(RelFileLocator rlocator, <a class="wiki-source-link" href="../../source/src/include/common/relpath.h.html#L56" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__common__relpath_h__ForkNumber.html&quot;}, '*');">ForkNumber</a> forknum) { BlockRefTableEntry *entry = palloc0_object(BlockRefTableEntry);</p>
-<p>memcpy(&amp;entry-&gt;key.rlocator, &amp;rlocator, sizeof(RelFileLocator)); entry-&gt;key.forknum = forknum; entry-&gt;limit_block = InvalidBlockNumber;</p>
+<p><a class="wiki-source-link" href="../../source/src/include/utils/hsearch.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__utils__hsearch_h__memcpy.html&quot;}, '*');">memcpy</a>(&amp;entry-&gt;key.rlocator, &amp;rlocator, sizeof(RelFileLocator)); entry-&gt;key.forknum = forknum; entry-&gt;limit_block = InvalidBlockNumber;</p>
 <p>return entry; } ~~~</p>
 <h2>失敗モードと境界条件</h2>
 <p>まだ解析していません。</p>

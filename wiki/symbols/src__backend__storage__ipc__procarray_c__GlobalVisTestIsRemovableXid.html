@@ -15,7 +15,7 @@
 <h2>入力と出力</h2>
 <ul>
 <li>引数: <code>GlobalVisState *state</code>, <code>TransactionId xid</code>, <code>bool allow_update</code></li>
-<li>戻り値: <code>bool</code></li>
+<li>戻り値: <a class="wiki-source-link" href="../../source/src/include/access/tupmacs.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__access__tupmacs_h__bool.html&quot;}, '*');"><code>bool</code></a></li>
 </ul>
 <h2>前提条件と不変条件</h2>
 <p>まだ解析していません。</p>
@@ -34,14 +34,14 @@
 <h2>関連データ構造</h2>
 <p><a class="wiki-source-link" href="../../source/src/interfaces/ecpg/test/expected/preproc-init.c.html#L82" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__interfaces__ecpg__test__expected__preproc-init_c__e.html&quot;}, '*');"><code>e</code></a>, <code>FullTransactionId</code>, <code>GlobalVisState</code>, <code>state</code>, <code>TransactionId</code></p>
 <h2>ソース抜粋</h2>
-<p>~~~c bool <a class="wiki-source-link" href="../../source/src/backend/storage/ipc/procarray.c.html#L4276" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__storage__ipc__procarray_c__GlobalVisTestIsRemovableXid.html&quot;}, '*');">GlobalVisTestIsRemovableXid</a>(GlobalVisState *state, TransactionId xid, bool allow_update) { FullTransactionId fxid;</p>
+<p>~~~c <a class="wiki-source-link" href="../../source/src/include/access/tupmacs.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__access__tupmacs_h__bool.html&quot;}, '*');">bool</a> <a class="wiki-source-link" href="../../source/src/backend/storage/ipc/procarray.c.html#L4276" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__storage__ipc__procarray_c__GlobalVisTestIsRemovableXid.html&quot;}, '*');">GlobalVisTestIsRemovableXid</a>(GlobalVisState *state, TransactionId xid, <a class="wiki-source-link" href="../../source/src/include/access/tupmacs.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__access__tupmacs_h__bool.html&quot;}, '*');">bool</a> allow_update) { FullTransactionId fxid;</p>
 <p>/*</p>
 <ul>
 <li>Convert 32 <a class="wiki-source-link" href="../../source/src/backend/utils/adt/varbit.c.html#L390" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__utils__adt__varbit_c__bit.html&quot;}, '*');">bit</a> argument to FullTransactionId. We can do so safely</li>
 <li>because we know the xid has to, at the very least, be between</li>
 <li>[<a class="wiki-source-link" href="../../source/src/include/access/transam.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__access__transam_h__oldestXid.html&quot;}, '*');">oldestXid</a>, nextXid), i.e. within 2 billion of xid. To avoid taking a</li>
 <li>lock to determine either, we can just <a class="wiki-source-link" href="../../source/src/backend/optimizer/geqo/geqo_pool.c.html#L144" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__geqo__geqo_pool_c__compare.html&quot;}, '*');">compare</a> with</li>
-<li>state-&gt;definitely_needed, which was based on those <a class="wiki-source-link" href="../../source/src/interfaces/ecpg/compatlib/informix.c.html#L687" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/ecpg/compatlib/informix.c.html&quot;}, '*');">value</a> at the time</li>
+<li>state-&gt;definitely_needed, which was based on those value at the time</li>
 <li>the current snapshot was built.</li>
 <p>*/ fxid = <a class="wiki-source-link" href="../../source/src/backend/storage/ipc/procarray.c.html#L4360" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__storage__ipc__procarray_c__FullXidRelativeTo.html&quot;}, '*');">FullXidRelativeTo</a>(state-&gt;definitely_needed, xid);</p>
 </ul>

@@ -32,7 +32,7 @@
 <p>/*</p>
 <ul>
 <li>name of SLRU.  (This <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> user-visible, pick with care!)</li>
-<p>*/ const <a class="wiki-source-link" href="../../source/src/include/port/atomics/generic-gcc.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__port__atomics__generic-gcc_h__char.html&quot;}, '*');">char</a> *name;</p>
+<p>*/ const char *name;</p>
 </ul>
 <p>/*</p>
 <ul>
@@ -51,14 +51,14 @@
 <p>/*</p>
 <ul>
 <li>PGDATA-relative subdirectory that will contain the files.</li>
-<p>*/ const <a class="wiki-source-link" href="../../source/src/include/port/atomics/generic-gcc.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__port__atomics__generic-gcc_h__char.html&quot;}, '*');">char</a> *Dir;</p>
+<p>*/ const char *Dir;</p>
 </ul>
 <p>/*</p>
 <ul>
 <li>If <a class="wiki-source-link" href="../../source/src/tools/pg_bsd_indent/indent_globs.h.html#L46" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/tools/pg_bsd_indent/indent_globs.h.html&quot;}, '*');">true</a>, use <a class="wiki-source-link" href="../../source/src/include/port/win32_port.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__port__win32_port_h__long.html&quot;}, '*');">long</a> segment file names.  Otherwise, use short file names.</li>
 <p>*</p>
 <li>For details about the file name <a class="wiki-source-link" href="../../source/src/bin/pg_basebackup/pg_basebackup.c.html#L134" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/bin/pg_basebackup/pg_basebackup.c.html&quot;}, '*');">format</a>, see SlruFileName().</li>
-<p>*/ bool		long_segment_names;</p>
+<p>*/ <a class="wiki-source-link" href="../../source/src/include/access/tupmacs.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__access__tupmacs_h__bool.html&quot;}, '*');">bool</a>		long_segment_names;</p>
 </ul>
 <p>/*</p>
 <ul>
@@ -70,12 +70,12 @@
 <li><a class="wiki-source-link" href="../../source/src/backend/access/transam/slru.c.html#L1457" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__access__transam__slru_c__SimpleLruTruncate.html&quot;}, '*');">SimpleLruTruncate</a>(), this must use modular arithmetic.  (For others,</li>
 <li>the behavior of this <a class="wiki-source-link" href="../../source/src/tools/ifaddrs/test_ifaddrs.c.html#L45" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__tools__ifaddrs__test_ifaddrs_c__callback.html&quot;}, '*');">callback</a> has no functional implications.)  Use</li>
 <li>SlruPagePrecedesUnitTests() in SLRUs meeting its criteria.</li>
-<p>*/ bool		(*PagePrecedes) (int64, int64);</p>
+<p>*/ <a class="wiki-source-link" href="../../source/src/include/access/tupmacs.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__access__tupmacs_h__bool.html&quot;}, '*');">bool</a>		(*PagePrecedes) (int64, int64);</p>
 </ul>
 <p>/*</p>
 <ul>
 <li>Callback to provide more details on an I/O error.  This <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> called as</li>
-<li>part of <a class="wiki-source-link" href="../../source/src/include/utils/elog.h.html#L166" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/utils/elog.h.html&quot;}, '*');">ereport</a>(), and the <a class="wiki-source-link" href="../../source/src/tools/ifaddrs/test_ifaddrs.c.html#L45" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__tools__ifaddrs__test_ifaddrs_c__callback.html&quot;}, '*');">callback</a> function <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> expected to call</li>
+<li>part of <a class="wiki-source-link" href="../../source/src/include/utils/elog.h.html#L166" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/utils/elog.h.html&quot;}, '*');">ereport</a>(), and the <a class="wiki-source-link" href="../../source/src/tools/ifaddrs/test_ifaddrs.c.html#L45" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__tools__ifaddrs__test_ifaddrs_c__callback.html&quot;}, '*');">callback</a> function <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> <a class="wiki-source-link" href="../../source/src/include/port/atomics/generic-msvc.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__port__atomics__generic-msvc_h__expected.html&quot;}, '*');">expected</a> to call</li>
 <li><a class="wiki-source-link" href="../../source/src/backend/utils/error/elog.c.html#L1394" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__utils__error__elog_c__errdetail.html&quot;}, '*');">errdetail</a>() to provide more context on the SLRU <a class="wiki-source-link" href="../../source/src/interfaces/ecpg/test/expected/preproc-type.c.html#L36" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__interfaces__ecpg__test__expected__preproc-type_c__access.html&quot;}, '*');">access</a>.</li>
 <p>*</p>
 <li>The opaque_data argument here <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> the argument that was passed to the</li>

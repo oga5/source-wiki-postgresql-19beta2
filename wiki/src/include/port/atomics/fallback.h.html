@@ -1,0 +1,57 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>src/include/port/atomics/fallback.h.md</title><link rel="stylesheet" href="../../../../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../../../../source/src/include/port/atomics/fallback.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/port/atomics/fallback.h.html&quot;}, '*');">src/include/port/atomics/fallback.h</a></h1>
+<h2>概要</h2>
+<p>ネイティブな64ビット不可算操作（アトミック操作）をサポートしていないプラットフォーム向けに、セマフォを用いたフォールバック（シミュレーション）を提供するヘッダーファイルです。</p>
+<h2>モジュール内での役割</h2>
+<ul>
+<li><code>src/include/port/atomics</code> サブシステムの一部として、ハードウェアネイティブな64ビットアトミック機能が欠如している環境を補完します。</li>
+<li><a class="wiki-source-link" href="../../../../../source/src/include/port/atomics.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/port/atomics.h.html&quot;}, '*');"><code>atomics.h</code></a> から直接インクルードされることを前提として設計されており、単体での直接インクルードを防ぐガードを備えています。</li>
+</ul>
+<h2>責務</h2>
+<ul>
+<li>64ビットアトミック操作未サポート環境における <code>pg_atomic_uint64</code> 構造体の定義と、対応するシミュレーション機能のマクロ定義。</li>
+<li>初期化、比較交換、加算フェッチなどの64ビット操作用実装関数（<code>_impl</code>）の宣言。</li>
+</ul>
+<h2>重要なシンボル</h2>
+<ul>
+<li><a class="wiki-source-link" href="../../../../../source/src/include/port/atomics/fallback.h.html#L23" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/port/atomics/fallback.h.html&quot;}, '*');"><code>PG_HAVE_ATOMIC_U64_SIMULATION</code></a>: ネイティブサポートではなくシミュレーションによって64ビットアトミックが有効化されていることを示すマクロ。</li>
+<li><code>pg_atomic_uint64</code>: セマフォと <code>volatile uint64</code> 値を保持し、ロックベースでアトミック性をエミュレートする構造体。</li>
+<li><code>PG_HAVE_ATOMIC_COMPARE_EXCHANGE_U64</code> / <code>PG_HAVE_ATOMIC_FETCH_ADD_U64</code>: フォールバック用の比較交換および加算フェッチ操作の有効化マクロと関数宣言。</li>
+</ul>
+<h2>制御フローとデータフロー</h2>
+<ul>
+<li>プラットフォーム側で <code>PG_HAVE_ATOMIC_U64_SUPPORT</code> が定義されていない場合にのみ条件付きでコンパイルされます。</li>
+<li><code>pg_atomic_uint64</code> への操作要求は、対応する <code>_impl</code> 関数（外部のCソースでセマフォ制御により実装される関数）へとルーティングされます。</li>
+</ul>
+<h2>直接依存</h2>
+<ul>
+<li>ソースコード内に直接の <code>#include</code> 記述はありませんが、<a class="wiki-source-link" href="../../../../../source/src/include/port/atomics.h.html#L45" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/port/atomics.h.html&quot;}, '*');"><code>INSIDE_ATOMICS_H</code></a> マクロによるインクルード元チェックに依存しています。</li>
+</ul>
+<h2>関連コード</h2>
+<ul>
+<li><a class="wiki-source-link" href="../../../../../source/src/include/port/atomics/generic.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/port/atomics/generic.h.html&quot;}, '*');"><code>src/include/port/atomics/generic.h</code></a>: アトミック操作の抽象化レイヤーのエントリーポイント。</li>
+<li><a class="wiki-source-link" href="../../../../../source/src/include/port/atomics.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/port/atomics.h.html&quot;}, '*');"><code>atomics.h</code></a> (親モジュール): 本ファイルを安全にインクルードして全体を束ねるヘッダー。</li>
+</ul>
+<h2>読者向けメモ</h2>
+<ul>
+<li>単体でのインクルードは <code>#error</code> によってコンパイルエラーになるため、必ず <a class="wiki-source-link" href="../../../../../source/src/include/port/atomics.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/port/atomics.h.html&quot;}, '*');"><code>atomics.h</code></a> を経由して読み込んでください。</li>
+<li>ネイティブサポートに比べセマフォを伴うため低速ですが、アトミック保証のない環境での互換性を確保します。</li>
+</ul>
+<h2>シンボルページ</h2>
+<ul>
+<li><a href="../../../../symbols/src__include__port__atomics__fallback_h__pg_atomic_uint64.html" target="wiki-view"><code>pg_atomic_uint64</code></a></li>
+</ul><script>
+(function() {
+  function notifyParent() {
+    if (parent === window) return;
+    parent.postMessage({type: "frame-location", frame: window.name || "", href: window.location.href}, "*");
+  }
+  document.addEventListener("click", function(event) {
+    const link = event.target.closest("a[data-panel]");
+    if (!link || parent === window) return;
+    parent.postMessage({type: "source-link", panel: link.dataset.panel}, "*");
+  });
+  window.addEventListener("load", notifyParent);
+  window.addEventListener("hashchange", notifyParent);
+})();
+</script></body></html>

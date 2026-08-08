@@ -32,7 +32,7 @@
 <li>呼び出しサイト: <a class="wiki-source-link" href="../../source/src/include/c.h.html#L950" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/c.h.html&quot;}, '*');"><code>Assert</code></a> at <code>src/backend/access/common/tupdesc.c:172:2</code> (unresolved), <code>palloc</code> at <code>src/backend/access/common/tupdesc.c:187:21</code> (unresolved, confidence=low)</li>
 </ul>
 <h2>関連データ構造</h2>
-<p><a class="wiki-source-link" href="../../source/src/include/access/tupdesc.h.html#L68" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__access__tupdesc_h__CompactAttribute.html&quot;}, '*');"><code>CompactAttribute</code></a>, <code>descriptor</code>, <code>TupleDesc</code>, <a class="wiki-source-link" href="../../source/src/include/access/tupdesc.h.html#L148" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__access__tupdesc_h__TupleDescData.html&quot;}, '*');"><code>TupleDescData</code></a></p>
+<p><code>CompactAttribute</code>, <code>descriptor</code>, <code>TupleDesc</code>, <a class="wiki-source-link" href="../../source/src/include/access/tupdesc.h.html#L148" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__access__tupdesc_h__TupleDescData.html&quot;}, '*');"><code>TupleDescData</code></a></p>
 <h2>ソース抜粋</h2>
 <p>~~~c TupleDesc <a class="wiki-source-link" href="../../source/src/backend/access/common/tupdesc.c.html#L164" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__access__common__tupdesc_c__CreateTemplateTupleDesc.html&quot;}, '*');">CreateTemplateTupleDesc</a>(int natts) { TupleDesc	desc;</p>
 <p>/*</p>
@@ -42,7 +42,7 @@
 </ul>
 <p>/*</p>
 <ul>
-<li>Allocate enough memory for the tuple descriptor, the <a class="wiki-source-link" href="../../source/src/include/access/tupdesc.h.html#L68" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__access__tupdesc_h__CompactAttribute.html&quot;}, '*');">CompactAttribute</a></li>
+<li>Allocate enough memory for the tuple descriptor, the CompactAttribute</li>
 <li>array and also an array of FormData_pg_attribute.</li>
 <p>*</p>
 <li>Note: the FormData_pg_attribute array stride <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a></li>
@@ -53,14 +53,14 @@
 <li>that much.  In principle that could be less due to trailing padding,</li>
 <li>although with the current definition of pg_attribute there probably</li>
 <li>isn&#x27;t any padding.</li>
-<p>*/ desc = (TupleDesc) palloc(<a class="wiki-source-link" href="../../source/src/include/lib/ilist.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__lib__ilist_h__offsetof.html&quot;}, '*');">offsetof</a>(struct <a class="wiki-source-link" href="../../source/src/include/access/tupdesc.h.html#L148" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__access__tupdesc_h__TupleDescData.html&quot;}, '*');">TupleDescData</a>, compact_attrs) + natts * sizeof(<a class="wiki-source-link" href="../../source/src/include/access/tupdesc.h.html#L68" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__access__tupdesc_h__CompactAttribute.html&quot;}, '*');">CompactAttribute</a>) + natts * sizeof(FormData_pg_attribute));</p>
+<p>*/ desc = (TupleDesc) palloc(<a class="wiki-source-link" href="../../source/src/include/lib/ilist.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__lib__ilist_h__offsetof.html&quot;}, '*');">offsetof</a>(struct <a class="wiki-source-link" href="../../source/src/include/access/tupdesc.h.html#L148" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__access__tupdesc_h__TupleDescData.html&quot;}, '*');">TupleDescData</a>, compact_attrs) + natts * sizeof(CompactAttribute) + natts * sizeof(FormData_pg_attribute));</p>
 </ul>
 <p>/*</p>
 <ul>
 <li><a class="wiki-source-link" href="../../source/src/bin/pg_archivecleanup/pg_archivecleanup.c.html#L57" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__bin__pg_archivecleanup__pg_archivecleanup_c__Initialize.html&quot;}, '*');">Initialize</a> other fields of the tupdesc.</li>
 <p>*/ desc-&gt;natts = natts; desc-&gt;constr = NULL; desc-&gt;tdtypeid = RECORDOID; desc-&gt;tdtypmod = -1; desc-&gt;tdrefcount = -1;		/* assume not reference-counted */</p>
 </ul>
-<p>/* This will be set to the correct <a class="wiki-source-link" href="../../source/src/interfaces/ecpg/compatlib/informix.c.html#L687" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/ecpg/compatlib/informix.c.html&quot;}, '*');">value</a> by <a class="wiki-source-link" href="../../source/src/backend/access/common/tupdesc.c.html#L510" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__access__common__tupdesc_c__TupleDescFinalize.html&quot;}, '*');">TupleDescFinalize</a>() */ desc-&gt;firstNonCachedOffsetAttr = -1; desc-&gt;firstNonGuaranteedAttr = -1;</p>
+<p>/* This will be set to the correct value by <a class="wiki-source-link" href="../../source/src/backend/access/common/tupdesc.c.html#L510" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__access__common__tupdesc_c__TupleDescFinalize.html&quot;}, '*');">TupleDescFinalize</a>() */ desc-&gt;firstNonCachedOffsetAttr = -1; desc-&gt;firstNonGuaranteedAttr = -1;</p>
 <p>return desc; } ~~~</p>
 <h2>失敗モードと境界条件</h2>
 <p>まだ解析していません。</p>

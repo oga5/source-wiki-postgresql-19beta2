@@ -36,22 +36,22 @@
 </ul>
 <p>/*</p>
 <ul>
-<li>Link to an Aggref expr this state <a class="wiki-source-link" href="../../source/src/interfaces/ecpg/compatlib/informix.c.html#L687" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/ecpg/compatlib/informix.c.html&quot;}, '*');">value</a> <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> for.</li>
+<li>Link to an Aggref expr this state value <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> for.</li>
 <p>*</p>
-<li>There can be multiple Aggref&#x27;s sharing the same state <a class="wiki-source-link" href="../../source/src/interfaces/ecpg/compatlib/informix.c.html#L687" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/ecpg/compatlib/informix.c.html&quot;}, '*');">value</a>, so <a class="wiki-source-link" href="../../source/src/include/port/win32_port.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__port__win32_port_h__long.html&quot;}, '*');">long</a> as</li>
+<li>There can be multiple Aggref&#x27;s sharing the same state value, so <a class="wiki-source-link" href="../../source/src/include/port/win32_port.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__port__win32_port_h__long.html&quot;}, '*');">long</a> as</li>
 <li>the inputs and transition <a class="wiki-source-link" href="../../source/src/backend/regex/regcomp.c.html#L358" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/regex/regcomp.c.html&quot;}, '*');">functions</a> are identical and the <a class="wiki-source-link" href="../../source/src/common/hashfn.c.html#L116" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/common/hashfn.c.html&quot;}, '*');">final</a></li>
 <li><a class="wiki-source-link" href="../../source/src/backend/regex/regcomp.c.html#L358" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/regex/regcomp.c.html&quot;}, '*');">functions</a> are not read-write.  This points to the first one of them.</li>
 <p>*/ Aggref	   *aggref;</p>
 </ul>
 <p>/*</p>
 <ul>
-<li>Is this state <a class="wiki-source-link" href="../../source/src/interfaces/ecpg/compatlib/informix.c.html#L687" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/ecpg/compatlib/informix.c.html&quot;}, '*');">value</a> actually being shared by more than one Aggref?</li>
-<p>*/ bool		aggshared;</p>
+<li>Is this state value actually being shared by more than one Aggref?</li>
+<p>*/ <a class="wiki-source-link" href="../../source/src/include/access/tupmacs.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__access__tupmacs_h__bool.html&quot;}, '*');">bool</a>		aggshared;</p>
 </ul>
 <p>/*</p>
 <ul>
 <li>True for ORDER BY and <a class="wiki-source-link" href="../../source/src/backend/optimizer/plan/subselect.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__plan__subselect_c__DISTINCT.html&quot;}, '*');">DISTINCT</a> Aggrefs that are not aggpresorted.</li>
-<p>*/ bool		aggsortrequired;</p>
+<p>*/ <a class="wiki-source-link" href="../../source/src/include/access/tupmacs.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__access__tupmacs_h__bool.html&quot;}, '*');">bool</a>		aggsortrequired;</p>
 </ul>
 <p>/*</p>
 <ul>
@@ -64,13 +64,13 @@
 <ul>
 <li>Number of aggregated input columns to pass to the transfn.  This</li>
 <li>includes the ORDER BY columns for ordered-set aggs, but not for plain</li>
-<li>aggs.  (This doesn&#x27;t count the transition state <a class="wiki-source-link" href="../../source/src/interfaces/ecpg/compatlib/informix.c.html#L687" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/ecpg/compatlib/informix.c.html&quot;}, '*');">value</a>!)</li>
+<li>aggs.  (This doesn&#x27;t count the transition state value!)</li>
 <p>*/ int			numTransInputs;</p>
 </ul>
 <p>/* Oid of the state transition or <a class="wiki-source-link" href="../../source/src/backend/regex/regc_nfa.c.html#L1986" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__regex__regc_nfa_c__combine.html&quot;}, '*');">combine</a> function */ Oid			transfn_oid;</p>
 <p>/* Oid of the serialization function or InvalidOid */ Oid			serialfn_oid;</p>
 <p>/* Oid of the deserialization function or InvalidOid */ Oid			deserialfn_oid;</p>
-<p>/* Oid of state <a class="wiki-source-link" href="../../source/src/interfaces/ecpg/compatlib/informix.c.html#L687" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/ecpg/compatlib/informix.c.html&quot;}, '*');">value</a>&#x27;s datatype */ Oid			aggtranstype;</p>
+<p>/* Oid of state value&#x27;s datatype */ Oid			aggtranstype;</p>
 <p>/*</p>
 <ul>
 <li>fmgr <a class="wiki-source-link" href="../../source/src/timezone/zic.c.html#L310" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__timezone__zic_c__lookup.html&quot;}, '*');">lookup</a> data for transition function or <a class="wiki-source-link" href="../../source/src/backend/regex/regc_nfa.c.html#L1986" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__regex__regc_nfa_c__combine.html&quot;}, '*');">combine</a> function.  Note in</li>

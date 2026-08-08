@@ -51,7 +51,7 @@
 <li>resulting in different pk_attnums[] or fk_attnums[] array contents.)</li>
 <p>*</p>
 <li>We assume struct <a class="wiki-source-link" href="../../source/src/backend/utils/adt/ri_triggers.c.html#L167" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__utils__adt__ri_triggers_c__RI_QueryKey.html&quot;}, '*');">RI_QueryKey</a> contains no padding bytes, else we&#x27;d need</li>
-<li>to use memset to clear them.</li>
+<li>to use memset to <a class="wiki-source-link" href="../../source/src/include/executor/tuptable.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__executor__tuptable_h__clear.html&quot;}, '*');">clear</a> them.</li>
 <p>*/ if (constr_queryno != <a class="wiki-source-link" href="../../source/src/backend/utils/adt/ri_triggers.c.html#L76" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/utils/adt/ri_triggers.c.html&quot;}, '*');">RI_PLAN_CHECK_LOOKUPPK_FROM_PK</a>) key-&gt;constr_id = riinfo-&gt;constraint_root_id; else key-&gt;constr_id = riinfo-&gt;constraint_id; key-&gt;constr_queryno = constr_queryno; } ~~~</p>
 </ul>
 <h2>失敗モードと境界条件</h2>
