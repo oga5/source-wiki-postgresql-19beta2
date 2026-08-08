@@ -1,0 +1,115 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>symbols/src__include__storage__s_lock_h__int.md</title><link rel="stylesheet" href="../../styles.css"></head><body><h1>int</h1>
+<h2>定義</h2>
+<ul>
+<li>種別: <code>function</code></li>
+<li>定義箇所: <code>src/include/storage/s_lock.h:1</code></li>
+<li>所属モジュール: <a class="wiki-entity-link" href="../modules/src__include__storage.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/modules/src__include__storage.html&quot;, &quot;source&quot;: &quot;source/src/include/storage/aio.h.html&quot;}, '*');"><code>module:src/include/storage</code></a></li>
+</ul>
+<h2>目的</h2>
+<p>静的シンボル索引から生成された初期シンボルページです。</p>
+<h2>シグネチャまたは形状</h2>
+<ul>
+<li>シグネチャ: <code>/*------------------------------------------------------------------------- * * s_lock.h * Implementation of spinlocks. * * NOTE: none of the macros in this file are intended to be called directly. * Call them through the macros in spin.h. * * The following hardware-dependent macros must be provided for each * supported platform: * * void S_INIT_LOCK(slock_t *lock) * Initialize a spinlock (to the unlocked state). * * int S_LOCK(slock_t *lock) * Acquire a spinlock, waiting if necessary. * Time out and abort() if unable to acquire the lock in a * &quot;reasonable&quot; amount of time --- typically ~ 1 minute. * Should return number of &quot;delays&quot;; see s_lock.c * * void S_UNLOCK(slock_t *lock) * Unlock a previously acquired lock. * * void SPIN_DELAY(void) * Delay operation to occur inside spinlock wait loop. * * Note to implementors: there are default implementations for all these * macros at the bottom of the file. Check if your platform can use * these or needs to override them. * * Usually, S_LOCK() is implemented in terms of even lower-level macros * TAS() and TAS_SPIN(): * * int TAS(slock_t *lock) * Atomic test-and-set instruction. Attempt to acquire the lock, * but do *not* wait. Returns 0 if successful, nonzero if unable * to acquire the lock. * * int TAS_SPIN(slock_t *lock) * Like TAS(), but this version is used when waiting for a lock * previously found to be contended. By default, this is the * same as TAS(), but on some architectures it&#x27;s better to poll a * contended lock using an unlocked instruction and retry the * atomic test-and-set only when it appears free. * * TAS() and TAS_SPIN() are NOT part of the API, and should never be called * directly. * * CAUTION: on some platforms TAS() and/or TAS_SPIN() may sometimes report * failure to acquire a lock even when the lock is not locked. For example, * on Alpha TAS() will &quot;fail&quot; if interrupted. Therefore a retry loop must * always be used, even if you are certain the lock is free. * * It is the responsibility of these macros to make sure that the compiler * does not re-order accesses to shared memory to precede the actual lock * acquisition, or follow the lock release. Prior to PostgreSQL 9.5, this * was the caller&#x27;s responsibility, which meant that callers had to use * volatile-qualified pointers to refer to both the spinlock itself and the * shared data being accessed within the spinlocked critical section. This * was notationally awkward, easy to forget (and thus error-prone), and * prevented some useful compiler optimizations. For these reasons, we * now require that the macros themselves prevent compiler re-ordering, * so that the caller doesn&#x27;t need to take special precautions. * * On platforms with weak memory ordering, the TAS(), TAS_SPIN(), and * S_UNLOCK() macros must further include hardware-level memory fence * instructions to prevent similar re-ordering at the hardware level. * TAS() and TAS_SPIN() must guarantee that loads and stores issued after * the macro are not executed until the lock has been obtained. Conversely, * S_UNLOCK() must guarantee that loads and stores issued before the macro * have been executed before the lock is released. * * On most supported platforms, TAS() uses a tas() function written * in assembly language to execute a hardware atomic-test-and-set * instruction. Equivalent OS-supplied mutex routines could be used too. * * * Portions Copyright (c) 1996-2026, PostgreSQL Global Development Group * Portions Copyright (c) 1994, Regents of the University of California * * src/include/storage/s_lock.h * *------------------------------------------------------------------------- */ #ifndef S_LOCK_H #define S_LOCK_H #ifdef FRONTEND #error &quot;s_lock.h may not be included from frontend code&quot; #endif #if defined(__GNUC__) || defined(__INTEL_COMPILER) /************************************************************************* * All the gcc inlines * Gcc consistently defines the CPU as __cpu__. * Other compilers use __cpu or __cpu__ so we test for both in those cases. */ /*---------- * Standard gcc asm format (assuming &quot;volatile slock_t *lock&quot;): __asm__ __volatile__( &quot; instruction \n&quot; &quot; instruction \n&quot; &quot; instruction \n&quot; : &quot;=r&quot;(_res), &quot;+m&quot;(*lock) // return register, in/out lock value : &quot;r&quot;(lock) // lock pointer, in input register : &quot;memory&quot;, &quot;cc&quot;); // show clobbered registers here * The output-operands list (after first colon) should always include * &quot;+m&quot;(*lock), whether or not the asm code actually refers to this * operand directly. This ensures that gcc believes the value in the * lock variable is used and set by the asm code. Also, the clobbers * list (after third colon) should always include &quot;memory&quot;; this prevents * gcc from thinking it can cache the values of shared-memory fields * across the asm code. Add &quot;cc&quot; if your asm code changes the condition * code register, and also list any temp registers the code uses. * * If you need branch target labels within the asm block, include &quot;%=&quot; * in the label names to make them distinct across multiple asm blocks * within a source file. *---------- */ #ifdef __i386__ /* 32-bit i386 */ #define HAS_TEST_AND_SET typedef unsigned char slock_t</code></li>
+</ul>
+<h2>入力と出力</h2>
+<p>まだ解析していません。</p>
+<h2>前提条件と不変条件</h2>
+<p>まだ解析していません。</p>
+<h2>アルゴリズムまたは振る舞い</h2>
+<ul>
+<li>複雑度: <code>low</code> (score 3)</li>
+</ul>
+<p>まだ解析していません。</p>
+<h2>呼び出し元と呼び出し先</h2>
+<ul>
+<li>呼び出し元: なし</li>
+<li>呼び出し先: なし</li>
+<li>呼び出し元サイト: なし</li>
+<li>呼び出しサイト: なし</li>
+</ul>
+<h2>関連データ構造</h2>
+<p><code>c</code>, <code>Group</code>, <a class="wiki-source-link" href="../../source/src/include/storage/s_lock.h.html#L129" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__storage__s_lock_h__slock_t.html&quot;}, '*');"><code>slock_t</code></a>, <code>state</code>, <code>variable</code>, <a class="wiki-source-link" href="../../source/src/interfaces/ecpg/preproc/type.h.html#L89" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__interfaces__ecpg__preproc__type_h__when.html&quot;}, '*');"><code>when</code></a></p>
+<h2>ソース抜粋</h2>
+<p>~~~c /*------------------------------------------------------------------------- *</p>
+<ul>
+<li><a class="wiki-source-link" href="../../source/src/include/storage/s_lock.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/storage/s_lock.h.html&quot;}, '*');">s_lock.h</a></li>
+<li>Implementation of spinlocks.</li>
+<p>*</p>
+<li>NOTE: <a class="wiki-source-link" href="../../source/src/backend/optimizer/util/predtest.c.html#L1672" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/backend/optimizer/util/predtest.c.html&quot;}, '*');">none</a> of the macros in this file are intended to be called directly.</li>
+<li>Call them through the macros in spin.h.</li>
+<p>*</p>
+<li>The following hardware-dependent macros must be provided for each</li>
+<li>supported platform:</li>
+<p>*</p>
+<li>void <a class="wiki-source-link" href="../../source/src/include/storage/s_lock.h.html#L693" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/storage/s_lock.h.html&quot;}, '*');">S_INIT_LOCK</a>(<a class="wiki-source-link" href="../../source/src/include/storage/s_lock.h.html#L129" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__storage__s_lock_h__slock_t.html&quot;}, '*');">slock_t</a> *lock)</li>
+<li><a class="wiki-source-link" href="../../source/src/bin/pg_archivecleanup/pg_archivecleanup.c.html#L57" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__bin__pg_archivecleanup__pg_archivecleanup_c__Initialize.html&quot;}, '*');">Initialize</a> a spinlock (to the unlocked state).</li>
+<p>*</p>
+<li>int <a class="wiki-source-link" href="../../source/src/include/storage/s_lock.h.html#L666" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/storage/s_lock.h.html&quot;}, '*');">S_LOCK</a>(<a class="wiki-source-link" href="../../source/src/include/storage/s_lock.h.html#L129" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__storage__s_lock_h__slock_t.html&quot;}, '*');">slock_t</a> *lock)</li>
+<li>Acquire a spinlock, waiting if necessary.</li>
+<li>Time out and abort() if unable to acquire the lock in a</li>
+<li>&quot;reasonable&quot; amount of time --- typically ~ 1 minute.</li>
+<li>Should return number of &quot;<a class="wiki-source-link" href="../../source/src/include/storage/s_lock.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__storage__s_lock_h__delays.html&quot;}, '*');">delays</a>&quot;; see <a class="wiki-source-link" href="../../source/src/backend/storage/lmgr/s_lock.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/storage/lmgr/s_lock.c.html&quot;}, '*');">s_lock.c</a></li>
+<p>*</p>
+<li>void <a class="wiki-source-link" href="../../source/src/include/storage/s_lock.h.html#L264" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/storage/s_lock.h.html&quot;}, '*');">S_UNLOCK</a>(<a class="wiki-source-link" href="../../source/src/include/storage/s_lock.h.html#L129" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__storage__s_lock_h__slock_t.html&quot;}, '*');">slock_t</a> *lock)</li>
+<li>Unlock a previously acquired lock.</li>
+<p>*</p>
+<li>void <a class="wiki-source-link" href="../../source/src/include/storage/s_lock.h.html#L161" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/storage/s_lock.h.html&quot;}, '*');">SPIN_DELAY</a>(void)</li>
+<li>Delay <a class="wiki-source-link" href="../../source/src/backend/postmaster/datachecksum_state.c.html#L380" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/postmaster/datachecksum_state.c.html&quot;}, '*');">operation</a> to occur inside spinlock wait loop.</li>
+<p>*</p>
+<li>Note to implementors: there are default implementations for all these</li>
+<li>macros at the bottom of the file.  Check if your platform can use</li>
+<li>these or needs to override them.</li>
+<p>*</p>
+<li>Usually, <a class="wiki-source-link" href="../../source/src/include/storage/s_lock.h.html#L666" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/storage/s_lock.h.html&quot;}, '*');">S_LOCK</a>() <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> implemented in terms of even lower-level macros</li>
+<li><a class="wiki-source-link" href="../../source/src/include/storage/s_lock.h.html#L131" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/storage/s_lock.h.html&quot;}, '*');">TAS</a>() and <a class="wiki-source-link" href="../../source/src/include/storage/s_lock.h.html#L212" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/storage/s_lock.h.html&quot;}, '*');">TAS_SPIN</a>():</li>
+<p>*</p>
+<li>int <a class="wiki-source-link" href="../../source/src/include/storage/s_lock.h.html#L131" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/storage/s_lock.h.html&quot;}, '*');">TAS</a>(<a class="wiki-source-link" href="../../source/src/include/storage/s_lock.h.html#L129" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__storage__s_lock_h__slock_t.html&quot;}, '*');">slock_t</a> *lock)</li>
+<li>Atomic <a class="wiki-source-link" href="../../source/src/interfaces/ecpg/test/expected/preproc-autoprep.c.html#L26" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__interfaces__ecpg__test__expected__preproc-autoprep_c__test.html&quot;}, '*');">test</a>-and-set instruction.  Attempt to acquire the lock,</li>
+<li>but do *not* wait.	Returns 0 if successful, nonzero if unable</li>
+<li>to acquire the lock.</li>
+<p>*</p>
+<li>int <a class="wiki-source-link" href="../../source/src/include/storage/s_lock.h.html#L212" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/storage/s_lock.h.html&quot;}, '*');">TAS_SPIN</a>(<a class="wiki-source-link" href="../../source/src/include/storage/s_lock.h.html#L129" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__storage__s_lock_h__slock_t.html&quot;}, '*');">slock_t</a> *lock)</li>
+<li>Like <a class="wiki-source-link" href="../../source/src/include/storage/s_lock.h.html#L131" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/storage/s_lock.h.html&quot;}, '*');">TAS</a>(), but this version <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> used <a class="wiki-source-link" href="../../source/src/interfaces/ecpg/preproc/type.h.html#L89" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__interfaces__ecpg__preproc__type_h__when.html&quot;}, '*');">when</a> waiting for a lock</li>
+<li>previously found to be contended.  By default, this <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> the</li>
+<li>same as <a class="wiki-source-link" href="../../source/src/include/storage/s_lock.h.html#L131" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/storage/s_lock.h.html&quot;}, '*');">TAS</a>(), but on some architectures it&#x27;s better to poll a</li>
+<li>contended lock using an unlocked instruction and retry the</li>
+<li>atomic <a class="wiki-source-link" href="../../source/src/interfaces/ecpg/test/expected/preproc-autoprep.c.html#L26" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__interfaces__ecpg__test__expected__preproc-autoprep_c__test.html&quot;}, '*');">test</a>-and-set only <a class="wiki-source-link" href="../../source/src/interfaces/ecpg/preproc/type.h.html#L89" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__interfaces__ecpg__preproc__type_h__when.html&quot;}, '*');">when</a> it appears free.</li>
+<p>*</p>
+<li><a class="wiki-source-link" href="../../source/src/include/storage/s_lock.h.html#L131" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/storage/s_lock.h.html&quot;}, '*');">TAS</a>() and <a class="wiki-source-link" href="../../source/src/include/storage/s_lock.h.html#L212" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/storage/s_lock.h.html&quot;}, '*');">TAS_SPIN</a>() are <a class="wiki-source-link" href="../../source/src/include/nodes/primnodes.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__nodes__primnodes_h__NOT.html&quot;}, '*');">NOT</a> part of the API, and should never be called</li>
+<li>directly.</li>
+<p>*</p>
+<li>CAUTION: on some platforms <a class="wiki-source-link" href="../../source/src/include/storage/s_lock.h.html#L131" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/storage/s_lock.h.html&quot;}, '*');">TAS</a>() and/or <a class="wiki-source-link" href="../../source/src/include/storage/s_lock.h.html#L212" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/storage/s_lock.h.html&quot;}, '*');">TAS_SPIN</a>() may sometimes report</li>
+<li>failure to acquire a lock even <a class="wiki-source-link" href="../../source/src/interfaces/ecpg/preproc/type.h.html#L89" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__interfaces__ecpg__preproc__type_h__when.html&quot;}, '*');">when</a> the lock <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> not locked.  For example,</li>
+<li>on Alpha <a class="wiki-source-link" href="../../source/src/include/storage/s_lock.h.html#L131" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/storage/s_lock.h.html&quot;}, '*');">TAS</a>() will &quot;fail&quot; if interrupted.  Therefore a retry loop must</li>
+<li>always be used, even if you are certain the lock <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> free.</li>
+<p>*</p>
+<li>It <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> the responsibility of these macros to make sure that the compiler</li>
+<li>does not re-order accesses to shared memory to precede the actual lock</li>
+<li>acquisition, or follow the lock release.  Prior to PostgreSQL 9.5, this</li>
+<li>was the caller&#x27;s responsibility, which meant that callers had to use</li>
+<li>volatile-qualified pointers to refer to both the spinlock itself and the</li>
+<li>shared data being accessed within the spinlocked critical section.  This</li>
+<li>was notationally awkward, easy to forget (and thus error-prone), and</li>
+<p>~~~</p>
+</ul>
+<h2>失敗モードと境界条件</h2>
+<p>まだ解析していません。</p>
+<h2>保守担当者向けメモ</h2>
+<ul>
+<li>後続フェーズで、ソース本文の文脈と caller/callee 情報を使ってこのページを強化する。</li>
+</ul><script>
+(function() {
+  function notifyParent() {
+    if (parent === window) return;
+    parent.postMessage({type: "frame-location", frame: window.name || "", href: window.location.href}, "*");
+  }
+  document.addEventListener("click", function(event) {
+    const link = event.target.closest("a[data-panel]");
+    if (!link || parent === window) return;
+    parent.postMessage({type: "source-link", panel: link.dataset.panel}, "*");
+  });
+  window.addEventListener("load", notifyParent);
+  window.addEventListener("hashchange", notifyParent);
+})();
+</script></body></html>

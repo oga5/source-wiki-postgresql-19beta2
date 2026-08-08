@@ -1,0 +1,56 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>src/include/executor/execdesc.h.md</title><link rel="stylesheet" href="../../../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../../../source/src/include/executor/execdesc.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/executor/execdesc.h.html&quot;}, '*');">src/include/executor/execdesc.h</a></h1>
+<h2>概要</h2>
+<p><a class="wiki-source-link" href="../../../../source/src/include/executor/execdesc.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/executor/execdesc.h.html&quot;}, '*');"><code>src/include/executor/execdesc.h</code></a> は、PostgreSQLのクエリ実行エンジンにおいて、実行対象のクエリやプランに関する情報をカプセル化するデータ構造と関連アクセサを定義するヘッダーファイルです。</p>
+<h2>モジュール内での役割</h2>
+<p>executor サブシステムの一部として、プランナーの出力結果とエグゼキューターの実行状態を結びつける役割を持ちます。周辺の実行制御モジュールがクエリのライフサイクル全体で参照する共通のコンテキストを定義しています。</p>
+<h2>責務</h2>
+<ul>
+<li>クエリ実行に必要なあらゆる情報を保持する <code>QueryDesc</code> 構造体の定義。</li>
+<li>クエリ文字列、プランツリー、スナップショット、出力先（<a class="wiki-source-link" href="../../../../source/src/include/tcop/dest.h.html#L113" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__tcop__dest_h__DestReceiver.html&quot;}, '*');"><code>DestReceiver</code></a>）、パラメータ等の保持。</li>
+<li>エグゼキューターのライフサイクル（<code>ExecutorStart</code> 等）で初期化・更新される実行状態フィールドの提供。</li>
+</ul>
+<h2>重要なシンボル</h2>
+<ul>
+<li><code>QueryDesc</code>: クエリ実行に必要な情報を一元管理する核心的な構造体。</li>
+<li><code>CreateQueryDesc</code>: <code>QueryDesc</code> を生成する関数（<a class="wiki-source-link" href="../../../../source/src/backend/tcop/pquery.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/tcop/pquery.c.html&quot;}, '*');"><code>pquery.c</code></a>）。</li>
+<li><code>FreeQueryDesc</code>: <code>QueryDesc</code> および関連リソースを解放する関数（<a class="wiki-source-link" href="../../../../source/src/backend/tcop/pquery.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/tcop/pquery.c.html&quot;}, '*');"><code>pquery.c</code></a>）。</li>
+</ul>
+<h2>制御フローとデータフロー</h2>
+<ul>
+<li><code>CreateQueryDesc</code> により <code>QueryDesc</code> が生成され、クエリ文字列やプラン、スナップショット、出力先が設定されます。</li>
+<li>エグゼキューターの起動時に <code>ExecutorStart</code> が呼び出され、<code>QueryDesc</code> 内の <code>estate</code> や <code>planstate</code>、結果タプルの <code>tupDesc</code> が設定されます。</li>
+<li>実行フェーズおよび終了フェーズにおいて、この記述子を参照しながらタプルの処理と結果の返送が行われます。</li>
+</ul>
+<h2>直接依存</h2>
+<ul>
+<li><code>nodes/execnodes.h</code></li>
+<li><code>tcop/dest.h</code></li>
+</ul>
+<h2>関連コード</h2>
+<ul>
+<li><a class="wiki-source-link" href="../../../../source/src/backend/tcop/pquery.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/tcop/pquery.c.html&quot;}, '*');"><code>src/backend/tcop/pquery.c</code></a></li>
+<li><a class="wiki-source-link" href="../../../../source/src/include/executor/executor.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/executor/executor.h.html&quot;}, '*');"><code>src/include/executor/executor.h</code></a></li>
+</ul>
+<h2>読者向けメモ</h2>
+<ul>
+<li><code>QueryDesc</code> はユーティリティ文を保持することもありますが、エグゼキューターへ直接渡してはならないという制約があります。</li>
+</ul>
+<h2>シンボルページ</h2>
+<ul>
+<li><a href="../../../symbols/src__include__executor__execdesc_h__QueryDesc.html" target="wiki-view"><code>QueryDesc</code></a></li>
+</ul><script>
+(function() {
+  function notifyParent() {
+    if (parent === window) return;
+    parent.postMessage({type: "frame-location", frame: window.name || "", href: window.location.href}, "*");
+  }
+  document.addEventListener("click", function(event) {
+    const link = event.target.closest("a[data-panel]");
+    if (!link || parent === window) return;
+    parent.postMessage({type: "source-link", panel: link.dataset.panel}, "*");
+  });
+  window.addEventListener("load", notifyParent);
+  window.addEventListener("hashchange", notifyParent);
+})();
+</script></body></html>

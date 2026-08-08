@@ -9,14 +9,14 @@
 <li>**メモリバリアの提供**: x86 の強力なメモリ順序付けモデルを活かしつつ、必要に応じたメモリバリア・コンパイラバリアのマクロを提供。</li>
 <li>**アトミックデータ型の定義**: <code>pg_atomic_flag</code>、<code>pg_atomic_uint32</code>、および x86_64 環境では <code>pg_atomic_uint64</code> の型定義と対応機能フラグ（<code>PG_HAVE_ATOMIC_*</code>）の提供。</li>
 <li>**アトミック操作の実装**: テスト・セット、フラグクリア、比較・交換（CAS）、フェッチ加算などのインラインアセンブリによる低レベル実装。</li>
-<li>**スピンロック待機最適化**: ハイパースレッディング環境向けの <a class="wiki-source-link" href="../../../../../source/src/include/port/atomics/arch-x86.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__port__atomics__arch-x86_h__PAUSE.html&quot;}, '*');"><code>PAUSE</code></a>（<code>rep; nop</code> / <code>_mm_pause</code>）命令を用いたスピンディレイ関数の提供。</li>
+<li>**スピンロック待機最適化**: ハイパースレッディング環境向けの <code>PAUSE</code>（<code>rep; nop</code> / <code>_mm_pause</code>）命令を用いたスピンディレイ関数の提供。</li>
 </ul>
 <h2>重要なシンボル</h2>
 <h3>メモリバリア・スピンディレイ群</h3>
 <ul>
 <li><code>pg_memory_barrier_impl()</code>: <code>lock; addl</code> 命令を用いたフルメモリバリア。</li>
 <li><code>pg_read_barrier_impl()</code> / <code>pg_write_barrier_impl()</code>: x86 の TSO（Total Store Order）モデルに基づき、コンパイラバリアにフォールバック。</li>
-<li><code>pg_spin_delay_impl()</code>: スピンウェイトループ内でパイプラインフラッシュを防止するための <a class="wiki-source-link" href="../../../../../source/src/include/port/atomics/arch-x86.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__port__atomics__arch-x86_h__PAUSE.html&quot;}, '*');"><code>PAUSE</code></a> 命令ラッパー。</li>
+<li><code>pg_spin_delay_impl()</code>: スピンウェイトループ内でパイプラインフラッシュを防止するための <code>PAUSE</code> 命令ラッパー。</li>
 </ul>
 <h3>データ型とサポートフラグ</h3>
 <ul>

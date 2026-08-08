@@ -7,7 +7,7 @@
 <h2>責務</h2>
 <ul>
 <li>**メモリバリアとコンパイラバリアの提供**: 命令やメモリアクセスのリオーダリングを防止するマクロ（<a class="wiki-source-link" href="../../../../source/src/include/port/atomics.h.html#L129" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/port/atomics.h.html&quot;}, '*');"><code>pg_compiler_barrier</code></a>, <a class="wiki-source-link" href="../../../../source/src/include/port/atomics.h.html#L141" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/port/atomics.h.html&quot;}, '*');"><code>pg_memory_barrier</code></a>, <a class="wiki-source-link" href="../../../../source/src/include/port/atomics.h.html#L154" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/port/atomics.h.html&quot;}, '*');"><code>pg_read_barrier</code></a>, <a class="wiki-source-link" href="../../../../source/src/include/port/atomics.h.html#L155" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/port/atomics.h.html&quot;}, '*');"><code>pg_write_barrier</code></a>）を定義する。</li>
-<li>**フラグ操作（<a class="wiki-source-link" href="../../../../source/src/include/storage/s_lock.h.html#L131" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/storage/s_lock.h.html&quot;}, '*');">TAS</a>系）の提供**: テスト＆セット操作を行うアトミックフラグの初期化、セット、クリア、ロックフリー状態のテストAPIを提供する。</li>
+<li>**フラグ操作（<a class="wiki-source-link" href="../../../../source/src/include/storage/s_lock.h.html#L131" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/storage/s_lock.h.html&quot;}, '*');">TAS</a>系）の提供**: テスト＆セット操作を行うアトミックフラグの初期化、セット、クリア、ロックフリー状態のテストAPIを提供する。</li>
 <li>**32ビット整数アトミック操作の提供**: 比較交換（CAS）、算術演算（加算、減算、ビット演算）、読込・書込の各APIを保証する。</li>
 <li>**64ビット整数アトミック操作の提供**: 可能な環境ではネイティブに、不可能な環境ではスピンロックシミュレーションで64ビット演算および <a class="wiki-source-link" href="../../../../source/src/include/port/atomics.h.html#L594" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__port__atomics_h__pg_atomic_monotonic_advance_u64.html&quot;}, '*');"><code>pg_atomic_monotonic_advance_u64</code></a> などの高水準操作を提供する。</li>
 </ul>
@@ -19,7 +19,7 @@
 <li><code>pg_read_barrier()</code> / <code>pg_write_barrier()</code>: 読込または書込に特化した弱いメモリバリア。</li>
 <li><code>pg_spin_delay()</code>: ビジーループ内でCPUの負荷を軽減するための遅延処理。</li>
 </ul>
-<h3>フラグ操作（<a class="wiki-source-link" href="../../../../source/src/include/storage/s_lock.h.html#L131" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/storage/s_lock.h.html&quot;}, '*');">TAS</a>）ファミリー</h3>
+<h3>フラグ操作（<a class="wiki-source-link" href="../../../../source/src/include/storage/s_lock.h.html#L131" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/storage/s_lock.h.html&quot;}, '*');">TAS</a>）ファミリー</h3>
 <ul>
 <li><code>pg_atomic_init_flag(volatile pg_atomic_flag *ptr)</code>: フラグを初期化する（バリアなし）。</li>
 <li><code>pg_atomic_test_set_flag(volatile pg_atomic_flag *ptr)</code>: フラグをアトミックにセットし、成功時に真を返す（Acquireセマンティクス）。</li>

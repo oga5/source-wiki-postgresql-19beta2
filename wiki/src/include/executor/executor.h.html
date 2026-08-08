@@ -1,0 +1,70 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>src/include/executor/executor.h.md</title><link rel="stylesheet" href="../../../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../../../source/src/include/executor/executor.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/executor/executor.h.html&quot;}, '*');">src/include/executor/executor.h</a></h1>
+<h2>概要</h2>
+<p>PostgreSQLのエグゼキューターモジュール全体で使用される主要なデータ構造、関数プロトタイプ、インライン関数、および実行時フラグを提供する中心的なヘッダーファイル。プランツリーの初期化、実行、終了処理（<code>ExecutorStart</code> 等）、式評価（<a class="wiki-source-link" href="../../../../source/src/include/executor/executor.h.html#L400" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__executor__executor_h__ExecEvalExpr.html&quot;}, '*');"><code>ExecEvalExpr</code></a> 等）、プランノード操作（<a class="wiki-source-link" href="../../../../source/src/include/executor/executor.h.html#L321" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__executor__executor_h__ExecProcNode.html&quot;}, '*');"><code>ExecProcNode</code></a> 等）、タプルハッシュテーブル操作、およびジャンクフィルタリングなど、エグゼキューター全般のインタフェースを定義している。</p>
+<h2>モジュール内での役割</h2>
+<p><code>src/include/executor</code> モジュールにおけるルート的かつ統合的なヘッダーであり、個別の実行ノード（<a class="wiki-source-link" href="../../../../source/src/include/executor/nodeAgg.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/executor/nodeAgg.h.html&quot;}, '*');"><code>nodeAgg.h</code></a> や <a class="wiki-source-link" href="../../../../source/src/include/executor/nodeSeqscan.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/executor/nodeSeqscan.h.html&quot;}, '*');"><code>nodeSeqscan.h</code></a> など）や実行支援サブシステム（<a class="wiki-source-link" href="../../../../source/src/include/executor/execExpr.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/executor/execExpr.h.html&quot;}, '*');"><code>execExpr.h</code></a>, <a class="wiki-source-link" href="../../../../source/src/include/executor/execdesc.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/executor/execdesc.h.html&quot;}, '*');"><code>execdesc.h</code></a>, <a class="wiki-source-link" href="../../../../source/src/include/executor/tuptable.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/executor/tuptable.h.html&quot;}, '*');"><code>tuptable.h</code></a>）が共通して依存する公開API仕様を宣言する。</p>
+<h2>責務</h2>
+<ul>
+<li>**実行制御ライフサイクル**: <code>ExecutorStart</code>, <a class="wiki-source-link" href="../../../../source/src/backend/executor/execMain.c.html#L307" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__executor__execMain_c__ExecutorRun.html&quot;}, '*');"><code>ExecutorRun</code></a>, <code>ExecutorFinish</code>, <a class="wiki-source-link" href="../../../../source/src/backend/executor/execMain.c.html#L476" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__executor__execMain_c__ExecutorEnd.html&quot;}, '*');"><code>ExecutorEnd</code></a> などの標準エントリポイントおよびプラグインフックの定義。</li>
+<li>**式評価とプロジェクション**: <a class="wiki-source-link" href="../../../../source/src/include/executor/executor.h.html#L400" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__executor__executor_h__ExecEvalExpr.html&quot;}, '*');"><code>ExecEvalExpr</code></a>, <a class="wiki-source-link" href="../../../../source/src/include/executor/executor.h.html#L526" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__executor__executor_h__ExecQual.html&quot;}, '*');"><code>ExecQual</code></a>, <a class="wiki-source-link" href="../../../../source/src/include/executor/executor.h.html#L490" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__executor__executor_h__ExecProject.html&quot;}, '*');"><code>ExecProject</code></a> などのインラインラッパーと初期化関数の提供。</li>
+<li>**プランノードディスパッチ**: <a class="wiki-source-link" href="../../../../source/src/include/executor/executor.h.html#L321" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__executor__executor_h__ExecProcNode.html&quot;}, '*');"><code>ExecProcNode</code></a> インライン関数による子ノードからのタプル取得制御。</li>
+<li>**ハッシュテーブルとグループ化**: <a class="wiki-source-link" href="../../../../source/src/backend/executor/execGrouping.c.html#L183" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__executor__execGrouping_c__BuildTupleHashTable.html&quot;}, '*');"><code>BuildTupleHashTable</code></a>, <a class="wiki-source-link" href="../../../../source/src/backend/executor/execGrouping.c.html#L381" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__executor__execGrouping_c__LookupTupleHashEntry.html&quot;}, '*');"><code>LookupTupleHashEntry</code></a> などのタプルハッシュ・重複排除関連関数の宣言。</li>
+<li>**タプル・ジャンク操作**: ジャンク属性の抽出（<a class="wiki-source-link" href="../../../../source/src/include/executor/executor.h.html#L225" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__executor__executor_h__ExecGetJunkAttribute.html&quot;}, '*');"><code>ExecGetJunkAttribute</code></a>）や出力タプル構築用のユーティリティ。</li>
+</ul>
+<h2>制御フローとデータフロー</h2>
+<ul>
+<li>**ノード実行フロー**: <code>ExecProcNode(PlanState *node)</code> は、ノードの <code>chgParam</code> が非ルールの場合は自動的に <a class="wiki-source-link" href="../../../../source/src/backend/executor/execAmi.c.html#L77" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__executor__execAmi_c__ExecReScan.html&quot;}, '*');"><code>ExecReScan</code></a> を呼び出した上で、各ノード固有の関数ポインタ <code>node-&gt;ExecProcNode(node)</code> を経由してタプル（<code>TupleTableSlot</code>）を上位へ引き渡す。</li>
+<li>**式評価フロー**: <a class="wiki-source-link" href="../../../../source/src/include/executor/executor.h.html#L400" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__executor__executor_h__ExecEvalExpr.html&quot;}, '*');"><code>ExecEvalExpr</code></a> は <code>state-&gt;evalfunc</code> を呼び出して評価結果の <code>Datum</code> と <code>isNull</code> を返す。パフォーマンス最適化のため、通常は一時メモリコンテキスト（<code>econtext-&gt;ecxt_per_tuple_memory</code>）にスイッチして評価を行う <a class="wiki-source-link" href="../../../../source/src/include/executor/executor.h.html#L443" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__executor__executor_h__ExecEvalExprSwitchContext.html&quot;}, '*');"><code>ExecEvalExprSwitchContext</code></a> が活用される。</li>
+<li>**プロジェクション**: <a class="wiki-source-link" href="../../../../source/src/include/executor/executor.h.html#L490" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__executor__executor_h__ExecProject.html&quot;}, '*');"><code>ExecProject</code></a> は入力コンテキストから式を評価し、結果スロットに仮想タプルとして書き込んで返す。</li>
+</ul>
+<h2>直接依存</h2>
+<ul>
+<li><code>access/xlogdefs.h</code></li>
+<li><code>datatype/timestamp.h</code></li>
+<li><code>executor/execdesc.h</code></li>
+<li><a class="wiki-source-link" href="../../../../source/src/include/fmgr.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/fmgr.h.html&quot;}, '*');"><code>fmgr.h</code></a></li>
+<li><code>nodes/lockoptions.h</code></li>
+<li><code>nodes/parsenodes.h</code></li>
+<li><code>utils/memutils.h</code></li>
+</ul>
+<h2>関連コード</h2>
+<ul>
+<li><a class="wiki-source-link" href="../../../../source/src/include/executor/execdesc.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/executor/execdesc.h.html&quot;}, '*');"><code>src/include/executor/execdesc.h</code></a>: 実行記述子やクエリ記述子の構造定義。</li>
+<li><a class="wiki-source-link" href="../../../../source/src/include/executor/execExpr.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/executor/execExpr.h.html&quot;}, '*');"><code>src/include/executor/execExpr.h</code></a>: 式コンパイルと評価ステップの詳細定義。</li>
+<li><a class="wiki-source-link" href="../../../../source/src/include/executor/tuptable.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/executor/tuptable.h.html&quot;}, '*');"><code>src/include/executor/tuptable.h</code></a>: タプルテーブルとスロット構造の定義。</li>
+</ul>
+<h2>読者向けメモ</h2>
+<ul>
+<li>**メモリ所有権**: 式評価やタプルプロジェクションの結果は基本的に仮想タプルであり、一時メモリコンテキストに依存する。長期間保持が必要な場合は <a class="wiki-source-link" href="../../../../source/src/include/executor/tuptable.h.html#L494" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__executor__tuptable_h__ExecMaterializeSlot.html&quot;}, '*');"><code>ExecMaterializeSlot</code></a> による明示的な実体化（Materialize）が必須となる。</li>
+<li>**インライン関数の制約**: フロントエンド環境（<code>FRONTEND</code> が定義されている場合）では、サーバー内部向けのインライン関数（<a class="wiki-source-link" href="../../../../source/src/include/executor/executor.h.html#L321" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__executor__executor_h__ExecProcNode.html&quot;}, '*');"><code>ExecProcNode</code></a>, <a class="wiki-source-link" href="../../../../source/src/include/executor/executor.h.html#L400" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__executor__executor_h__ExecEvalExpr.html&quot;}, '*');"><code>ExecEvalExpr</code></a>, <a class="wiki-source-link" href="../../../../source/src/include/executor/executor.h.html#L192" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__executor__executor_h__TupleHashEntryGetAdditional.html&quot;}, '*');"><code>TupleHashEntryGetAdditional</code></a> など）は除外される。</li>
+</ul>
+<h2>シンボルページ</h2>
+<ul>
+<li><a href="../../../symbols/src__include__executor__executor_h__QueryDesc.html" target="wiki-view"><code>QueryDesc</code></a></li>
+<li><a href="../../../symbols/src__include__executor__executor_h__List.html" target="wiki-view"><code>List</code></a></li>
+<li><a href="../../../symbols/src__include__executor__executor_h__Path.html" target="wiki-view"><code>Path</code></a></li>
+<li><a href="../../../symbols/src__include__executor__executor_h__TupleHashEntrySize.html" target="wiki-view"><code>TupleHashEntrySize</code></a></li>
+<li><a href="../../../symbols/src__include__executor__executor_h__TupleHashEntryGetTuple.html" target="wiki-view"><code>TupleHashEntryGetTuple</code></a></li>
+<li><a href="../../../symbols/src__include__executor__executor_h__TupleHashEntryGetAdditional.html" target="wiki-view"><code>TupleHashEntryGetAdditional</code></a></li>
+<li><a href="../../../symbols/src__include__executor__executor_h__ExecGetJunkAttribute.html" target="wiki-view"><code>ExecGetJunkAttribute</code></a></li>
+<li><a href="../../../symbols/src__include__executor__executor_h__ExecProcNode.html" target="wiki-view"><code>ExecProcNode</code></a></li>
+<li><a href="../../../symbols/src__include__executor__executor_h__ExecQualAndReset.html" target="wiki-view"><code>ExecQualAndReset</code></a></li>
+<li><a href="../../../symbols/src__include__executor__executor_h__ScanState.html" target="wiki-view"><code>ScanState</code></a></li>
+<li><a href="../../../symbols/src__include__executor__executor_h__TupleTableSlot.html" target="wiki-view"><code>TupleTableSlot</code></a></li>
+<li><a href="../../../symbols/src__include__executor__executor_h__TupOutputState.html" target="wiki-view"><code>TupOutputState</code></a></li>
+</ul><script>
+(function() {
+  function notifyParent() {
+    if (parent === window) return;
+    parent.postMessage({type: "frame-location", frame: window.name || "", href: window.location.href}, "*");
+  }
+  document.addEventListener("click", function(event) {
+    const link = event.target.closest("a[data-panel]");
+    if (!link || parent === window) return;
+    parent.postMessage({type: "source-link", panel: link.dataset.panel}, "*");
+  });
+  window.addEventListener("load", notifyParent);
+  window.addEventListener("hashchange", notifyParent);
+})();
+</script></body></html>

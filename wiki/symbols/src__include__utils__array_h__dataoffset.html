@@ -1,0 +1,110 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>symbols/src__include__utils__array_h__dataoffset.md</title><link rel="stylesheet" href="../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../source/src/include/utils/array.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__utils__array_h__dataoffset.html&quot;}, '*');">dataoffset</a></h1>
+<h2>定義</h2>
+<ul>
+<li>種別: <code>function</code></li>
+<li>定義箇所: <code>src/include/utils/array.h:1</code></li>
+<li>所属モジュール: <a class="wiki-entity-link" href="../modules/src__include__utils.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/modules/src__include__utils.html&quot;, &quot;source&quot;: &quot;source/src/include/utils/acl.h.html&quot;}, '*');"><code>module:src/include/utils</code></a></li>
+</ul>
+<h2>目的</h2>
+<p>静的シンボル索引から生成された初期シンボルページです。</p>
+<h2>シグネチャまたは形状</h2>
+<ul>
+<li>シグネチャ: <code>/*------------------------------------------------------------------------- * * array.h * Declarations for Postgres arrays. * * A standard varlena array has the following internal structure: * &lt;vl_len_&gt; - standard varlena header word * &lt;ndim&gt; - number of dimensions of the array * &lt;dataoffset&gt; - offset to stored data, or 0 if no nulls bitmap * &lt;elemtype&gt; - element type OID * &lt;dimensions&gt; - length of each array axis (C array of int) * &lt;lower bnds&gt; - lower boundary of each dimension (C array of int) * &lt;null bitmap&gt; - bitmap showing locations of nulls (OPTIONAL) * &lt;actual data&gt; - whatever is the stored data * * The &lt;dimensions&gt; and &lt;lower bnds&gt; arrays each have ndim elements. * * The &lt;null bitmap&gt; may be omitted if the array contains no NULL elements. * If it is absent, the &lt;dataoffset&gt; field is zero and the offset to the * stored data must be computed on-the-fly. If the bitmap is present, * &lt;dataoffset&gt; is nonzero and is equal to the offset from the array start * to the first data element (including any alignment padding). The bitmap * follows the same conventions as tuple null bitmaps, ie, a 1 indicates * a non-null entry and the LSB of each bitmap byte is used first. * * The actual data starts on a MAXALIGN boundary. Individual items in the * array are aligned as specified by the array element type. They are * stored in row-major order (last subscript varies most rapidly). * * NOTE: it is important that array elements of toastable datatypes NOT be * toasted, since the tupletoaster won&#x27;t know they are there. (We could * support compressed toasted items; only out-of-line items are dangerous. * However, it seems preferable to store such items uncompressed and allow * the toaster to compress the whole array as one input.) * * * The OIDVECTOR and INT2VECTOR datatypes are storage-compatible with * generic arrays, but they support only one-dimensional arrays with no * nulls (and no null bitmap). They don&#x27;t support being toasted, either. * * There are also some &quot;fixed-length array&quot; datatypes, such as NAME and * POINT. These are simply a sequence of a fixed number of items each * of a fixed-length datatype, with no overhead; the item size must be * a multiple of its alignment requirement, because we do no padding. * We support subscripting on these types, but array_in() and array_out() * only work with varlena arrays. * * In addition, arrays are a major user of the &quot;expanded object&quot; TOAST * infrastructure. This allows a varlena array to be converted to a * separate representation that may include &quot;deconstructed&quot; Datum/isnull * arrays holding the elements. * * * Portions Copyright (c) 1996-2026, PostgreSQL Global Development Group * Portions Copyright (c) 1994, Regents of the University of California * * src/include/utils/array.h * *------------------------------------------------------------------------- */ #ifndef ARRAY_H #define ARRAY_H #include &quot;fmgr.h&quot; #include &quot;utils/expandeddatum.h&quot; /* avoid including execnodes.h here */ typedef struct ExprState ExprState</code></li>
+</ul>
+<h2>入力と出力</h2>
+<p>まだ解析していません。</p>
+<h2>前提条件と不変条件</h2>
+<p>まだ解析していません。</p>
+<h2>アルゴリズムまたは振る舞い</h2>
+<ul>
+<li>複雑度: <code>low</code> (score 0)</li>
+</ul>
+<p>まだ解析していません。</p>
+<h2>呼び出し元と呼び出し先</h2>
+<ul>
+<li>呼び出し元: なし</li>
+<li>呼び出し先: なし</li>
+<li>呼び出し元サイト: なし</li>
+<li>呼び出しサイト: なし</li>
+</ul>
+<h2>関連データ構造</h2>
+<p><code>c</code>, <code>Datum</code>, <code>ExprState</code>, <code>Group</code>, <code>varlena</code></p>
+<h2>ソース抜粋</h2>
+<p>~~~c /*------------------------------------------------------------------------- *</p>
+<ul>
+<li><a class="wiki-source-link" href="../../source/src/include/utils/array.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/utils/array.h.html&quot;}, '*');">array.h</a></li>
+<li>Declarations for Postgres arrays.</li>
+<p>*</p>
+<li>A standard varlena array has the following internal structure:</li>
+<li>&lt;<a class="wiki-source-link" href="../../source/src/include/utils/array.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__utils__array_h__vl_len_.html&quot;}, '*');">vl_len_</a>&gt;		- standard varlena header <a class="wiki-source-link" href="../../source/src/backend/regex/regcomp.c.html#L1476" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__regex__regcomp_c__word.html&quot;}, '*');">word</a></li>
+<li>&lt;<a class="wiki-source-link" href="../../source/src/include/utils/array.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__utils__array_h__ndim.html&quot;}, '*');">ndim</a>&gt;		- number of dimensions of the array</li>
+<li>&lt;<a class="wiki-source-link" href="../../source/src/include/utils/array.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__utils__array_h__dataoffset.html&quot;}, '*');">dataoffset</a>&gt;	- offset to stored data, or 0 if no nulls bitmap</li>
+<li>&lt;<a class="wiki-source-link" href="../../source/src/include/utils/array.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__utils__array_h__elemtype.html&quot;}, '*');">elemtype</a>&gt;	- <a class="wiki-source-link" href="../../source/src/backend/regex/regc_locale.c.html#L375" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__regex__regc_locale_c__element.html&quot;}, '*');">element</a> <a class="wiki-source-link" href="../../source/src/include/lib/ilist.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__lib__ilist_h__type.html&quot;}, '*');">type</a> OID</li>
+<li>&lt;dimensions&gt;	- length of each array axis (C array of int)</li>
+<li>&lt;lower bnds&gt;	- lower boundary of each dimension (C array of int)</li>
+<li>&lt;null bitmap&gt; - bitmap showing locations of nulls (OPTIONAL)</li>
+<li>&lt;actual data&gt; - whatever <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> the stored data</li>
+<p>*</p>
+<li>The &lt;dimensions&gt; and &lt;lower bnds&gt; arrays each have <a class="wiki-source-link" href="../../source/src/include/utils/array.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__utils__array_h__ndim.html&quot;}, '*');">ndim</a> elements.</li>
+<p>*</p>
+<li>The &lt;null bitmap&gt; may be omitted if the array contains no NULL elements.</li>
+<li>If it <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> absent, the &lt;<a class="wiki-source-link" href="../../source/src/include/utils/array.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__utils__array_h__dataoffset.html&quot;}, '*');">dataoffset</a>&gt; field <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> zero and the offset to the</li>
+<li>stored data must be computed on-the-fly.  If the bitmap <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> present,</li>
+<li>&lt;<a class="wiki-source-link" href="../../source/src/include/utils/array.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__utils__array_h__dataoffset.html&quot;}, '*');">dataoffset</a>&gt; <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> nonzero and <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> <a class="wiki-source-link" href="../../source/src/backend/nodes/equalfuncs.c.html#L222" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__nodes__equalfuncs_c__equal.html&quot;}, '*');">equal</a> to the offset from the array start</li>
+<li>to the first data <a class="wiki-source-link" href="../../source/src/backend/regex/regc_locale.c.html#L375" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__regex__regc_locale_c__element.html&quot;}, '*');">element</a> (including any alignment padding).  The bitmap</li>
+<li>follows the same conventions as tuple null bitmaps, ie, a 1 indicates</li>
+<li>a non-null entry and the LSB of each bitmap byte <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> used first.</li>
+<p>*</p>
+<li>The actual data starts on a MAXALIGN boundary.  Individual <a class="wiki-source-link" href="../../source/src/test/modules/test_tidstore/test_tidstore.c.html#L48" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/test/modules/test_tidstore/test_tidstore.c.html&quot;}, '*');">items</a> in the</li>
+<li>array are aligned as specified by the array <a class="wiki-source-link" href="../../source/src/backend/regex/regc_locale.c.html#L375" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__regex__regc_locale_c__element.html&quot;}, '*');">element</a> <a class="wiki-source-link" href="../../source/src/include/lib/ilist.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__lib__ilist_h__type.html&quot;}, '*');">type</a>.  They are</li>
+<li>stored in row-major order (last subscript varies most rapidly).</li>
+<p>*</p>
+<li>NOTE: it <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> important that array elements of toastable datatypes <a class="wiki-source-link" href="../../source/src/include/nodes/primnodes.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__nodes__primnodes_h__NOT.html&quot;}, '*');">NOT</a> be</li>
+<li>toasted, since the tupletoaster won&#x27;t know they are there.  (We could</li>
+<li>support compressed toasted <a class="wiki-source-link" href="../../source/src/test/modules/test_tidstore/test_tidstore.c.html#L48" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/test/modules/test_tidstore/test_tidstore.c.html&quot;}, '*');">items</a>; only out-of-line <a class="wiki-source-link" href="../../source/src/test/modules/test_tidstore/test_tidstore.c.html#L48" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/test/modules/test_tidstore/test_tidstore.c.html&quot;}, '*');">items</a> are dangerous.</li>
+<li>However, it seems preferable to store such <a class="wiki-source-link" href="../../source/src/test/modules/test_tidstore/test_tidstore.c.html#L48" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/test/modules/test_tidstore/test_tidstore.c.html&quot;}, '*');">items</a> uncompressed and allow</li>
+<li>the toaster to compress the whole array as one input.)</li>
+<p>* *</p>
+<li>The OIDVECTOR and INT2VECTOR datatypes are storage-compatible with</li>
+<li>generic arrays, but they support only one-dimensional arrays with no</li>
+<li>nulls (and no null bitmap).  They don&#x27;t support being toasted, either.</li>
+<p>*</p>
+<li>There are also some &quot;fixed-length array&quot; datatypes, such as NAME and</li>
+<li>POINT.  These are simply a sequence of a fixed number of <a class="wiki-source-link" href="../../source/src/test/modules/test_tidstore/test_tidstore.c.html#L48" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/test/modules/test_tidstore/test_tidstore.c.html&quot;}, '*');">items</a> each</li>
+<li>of a fixed-length datatype, with no overhead; the item <a class="wiki-source-link" href="../../source/src/backend/optimizer/geqo/geqo_eval.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__geqo__geqo_eval_c__size.html&quot;}, '*');">size</a> must be</li>
+<li>a multiple of its alignment requirement, because we do no padding.</li>
+<li>We support subscripting on these <a class="wiki-source-link" href="../../source/src/interfaces/ecpg/preproc/ecpg.c.html#L30" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/ecpg/preproc/ecpg.c.html&quot;}, '*');">types</a>, but <a class="wiki-source-link" href="../../source/src/backend/utils/adt/arrayfuncs.c.html#L180" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__utils__adt__arrayfuncs_c__array_in.html&quot;}, '*');">array_in</a>() and <a class="wiki-source-link" href="../../source/src/backend/utils/adt/arrayfuncs.c.html#L1020" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__utils__adt__arrayfuncs_c__array_out.html&quot;}, '*');">array_out</a>()</li>
+<li>only work with varlena arrays.</li>
+<p>*</p>
+<li>In addition, arrays are a major <a class="wiki-source-link" href="../../source/src/test/regress/pg_regress.c.html#L121" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/test/regress/pg_regress.c.html&quot;}, '*');">user</a> of the &quot;expanded object&quot; TOAST</li>
+<li>infrastructure.  This allows a varlena array to be converted to a</li>
+<li>separate representation that may include &quot;deconstructed&quot; Datum/isnull</li>
+<li>arrays holding the elements.</li>
+<p>* *</p>
+<li>Portions Copyright (c) 1996-2026, PostgreSQL Global Development Group</li>
+<li>Portions Copyright (c) 1994, Regents of the University of California</li>
+<p>*</p>
+<li><a class="wiki-source-link" href="../../source/src/include/utils/array.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/utils/array.h.html&quot;}, '*');">src/include/utils/array.h</a></li>
+<p>* *------------------------------------------------------------------------- */ ~~~</p>
+</ul>
+<h2>失敗モードと境界条件</h2>
+<p>まだ解析していません。</p>
+<h2>保守担当者向けメモ</h2>
+<ul>
+<li>後続フェーズで、ソース本文の文脈と caller/callee 情報を使ってこのページを強化する。</li>
+</ul><script>
+(function() {
+  function notifyParent() {
+    if (parent === window) return;
+    parent.postMessage({type: "frame-location", frame: window.name || "", href: window.location.href}, "*");
+  }
+  document.addEventListener("click", function(event) {
+    const link = event.target.closest("a[data-panel]");
+    if (!link || parent === window) return;
+    parent.postMessage({type: "source-link", panel: link.dataset.panel}, "*");
+  });
+  window.addEventListener("load", notifyParent);
+  window.addEventListener("hashchange", notifyParent);
+})();
+</script></body></html>

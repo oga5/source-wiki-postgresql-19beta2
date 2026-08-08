@@ -1,0 +1,56 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>src/include/storage/spin.h.md</title><link rel="stylesheet" href="../../../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../../../source/src/include/storage/spin.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/storage/spin.h.html&quot;}, '*');">src/include/storage/spin.h</a></h1>
+<h2>概要</h2>
+<p>PostgreSQLのストレージサブシステムにおけるスピンロック（<a class="wiki-source-link" href="../../../../source/src/include/storage/s_lock.h.html#L129" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__storage__s_lock_h__slock_t.html&quot;}, '*');"><code>slock_t</code></a>）の公開APIを定義するヘッダーファイルです。ハードウェア依存の実装を抽象化し、極めて短期間保持する軽量な排他制御のインターフェースを提供します。</p>
+<h2>モジュール内での役割</h2>
+<ul>
+<li><code>src/include/storage</code> ディレクトリに属し、より上位のロック機構（<a class="wiki-source-link" href="../../../../source/src/include/storage/lwlock.h.html#L41" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__storage__lwlock_h__LWLock.html&quot;}, '*');">LWLock</a>等）や共有メモリデータ構造の基礎プリミティブを提供します。</li>
+<li>ハードウェア依存のプリミティブを定義する <code>storage/s_lock.h</code> と、それを利用するポータブルなコード層との間の薄いラッパーとして機能します。</li>
+</ul>
+<h2>責務</h2>
+<ul>
+<li>スピンロックの初期化、取得、解放を行うインライン関数の提供。</li>
+<li>コンパイラバリアによる、スピンロック操作前後のロード／ストア命令の再順序化防止。</li>
+<li>スピンロック保持中の割り込み禁止や長時間保持の禁止といったコーディングルールの適用根拠の提示。</li>
+</ul>
+<h2>重要なシンボル</h2>
+<ul>
+<li><a class="wiki-source-link" href="../../../../source/src/include/storage/spin.h.html#L49" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__storage__spin_h__SpinLockInit.html&quot;}, '*');"><code>SpinLockInit</code></a>: スピンロック変数を未取得状態に初期化する。</li>
+<li><a class="wiki-source-link" href="../../../../source/src/include/storage/spin.h.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__storage__spin_h__SpinLockAcquire.html&quot;}, '*');"><code>SpinLockAcquire</code></a>: スピンロックを取得する。取得できるまで待機し、長期間取得できない場合は異常終了する。</li>
+<li><a class="wiki-source-link" href="../../../../source/src/include/storage/spin.h.html#L61" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__storage__spin_h__SpinLockRelease.html&quot;}, '*');"><code>SpinLockRelease</code></a>: 取得済みのスピンロックを解放する。</li>
+</ul>
+<h2>制御フローとデータフロー</h2>
+<p>1. 呼び出し元が <code>volatile slock_t *lock</code> 変数を準備し、<code>SpinLockInit(lock)</code> で初期化します。 2. 共有リソースへの排他アクセスが必要な際、<code>SpinLockAcquire(lock)</code> を呼び出してビジーウェイトによるロック取得を行います。 3. クリティカルセクション（数命令程度の極めて短い処理）を実行後、<code>SpinLockRelease(lock)</code> を呼び出してロックを解放します。 4. 各関数は実体として <code>storage/s_lock.h</code> が提供するハードウェア依存のマクロ（<a class="wiki-source-link" href="../../../../source/src/include/storage/s_lock.h.html#L693" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/storage/s_lock.h.html&quot;}, '*');"><code>S_INIT_LOCK</code></a>, <a class="wiki-source-link" href="../../../../source/src/include/storage/s_lock.h.html#L666" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/storage/s_lock.h.html&quot;}, '*');"><code>S_LOCK</code></a>, <a class="wiki-source-link" href="../../../../source/src/include/storage/s_lock.h.html#L264" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/storage/s_lock.h.html&quot;}, '*');"><code>S_UNLOCK</code></a>）を直接実行します。</p>
+<h2>直接依存</h2>
+<ul>
+<li><code>storage/s_lock.h</code>: ハードウェア依存のスピンロックマクロ（<a class="wiki-source-link" href="../../../../source/src/include/storage/s_lock.h.html#L129" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__storage__s_lock_h__slock_t.html&quot;}, '*');"><code>slock_t</code></a> や <a class="wiki-source-link" href="../../../../source/src/include/storage/s_lock.h.html#L666" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/storage/s_lock.h.html&quot;}, '*');"><code>S_LOCK</code></a> など）の定義元。</li>
+</ul>
+<h2>関連コード</h2>
+<ul>
+<li><a class="wiki-source-link" href="../../../../source/src/include/storage/lwlock.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/storage/lwlock.h.html&quot;}, '*');"><code>src/include/storage/lwlock.h</code></a>: スピンロックを内部で利用して構築される、より高度な軽量ロック（<a class="wiki-source-link" href="../../../../source/src/include/storage/lwlock.h.html#L41" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__storage__lwlock_h__LWLock.html&quot;}, '*');">LWLock</a>）の定義。</li>
+</ul>
+<h2>読者向けメモ</h2>
+<ul>
+<li>スピンロックは数命令程度のごく短時間のみ保持することを前提としており、保持中に割り込みチェック（<code>CHECK_FOR_INTERRUPTS()</code>）等を行ってはなりません。</li>
+<li>PostgreSQL 9.5 以降、スピロックで保護されたデータにアクセスする際の <code>volatile</code> 修飾は不要となりましたが、関数引数には引き続き <code>volatile slock_t *</code> が使用されています。</li>
+</ul>
+<h2>シンボルページ</h2>
+<ul>
+<li><a href="../../../symbols/src__include__storage__spin_h__SpinLockInit.html" target="wiki-view"><code>SpinLockInit</code></a></li>
+<li><a href="../../../symbols/src__include__storage__spin_h__SpinLockAcquire.html" target="wiki-view"><code>SpinLockAcquire</code></a></li>
+<li><a href="../../../symbols/src__include__storage__spin_h__SpinLockRelease.html" target="wiki-view"><code>SpinLockRelease</code></a></li>
+</ul><script>
+(function() {
+  function notifyParent() {
+    if (parent === window) return;
+    parent.postMessage({type: "frame-location", frame: window.name || "", href: window.location.href}, "*");
+  }
+  document.addEventListener("click", function(event) {
+    const link = event.target.closest("a[data-panel]");
+    if (!link || parent === window) return;
+    parent.postMessage({type: "source-link", panel: link.dataset.panel}, "*");
+  });
+  window.addEventListener("load", notifyParent);
+  window.addEventListener("hashchange", notifyParent);
+})();
+</script></body></html>

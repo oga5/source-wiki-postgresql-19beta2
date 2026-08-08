@@ -48,7 +48,7 @@
 <li>take those even though GetLocaleInfoEx() won&#x27;t, so we end up here.</li>
 <li>In that case, just return what&#x27;s after the last dot and hope we can</li>
 <li><a class="wiki-source-link" href="../../source/src/backend/regex/regexec.c.html#L420" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__regex__regexec_c__find.html&quot;}, '*');">find</a> it in our table.</li>
-<p>*/ codepage = strrchr(ctype, &#x27;.&#x27;); if (codepage != NULL) { size_t		ln;</p>
+<p>*/ codepage = strrchr(ctype, &#x27;.&#x27;); if (codepage != NULL) { <a class="wiki-source-link" href="../../source/src/include/common/int.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__common__int_h__size_t.html&quot;}, '*');">size_t</a>		ln;</p>
 </ul>
 <p>codepage++; ln = strlen(codepage); r = <a class="wiki-source-link" href="../../source/src/include/snowball/snowball_runtime.h.html#L50" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/snowball/snowball_runtime.h.html&quot;}, '*');">malloc</a>(ln + 3); if (r != NULL) { if (strspn(codepage, &quot;0123456789&quot;) == ln) sprintf(r, &quot;CP%s&quot;, codepage); else strcpy(r, codepage); } } }</p>
 <p>return r; } ~~~</p>

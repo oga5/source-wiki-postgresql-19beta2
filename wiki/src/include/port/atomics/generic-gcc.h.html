@@ -8,7 +8,7 @@
 <ul>
 <li>**バリアの実装**: コンパイラバリアおよびメモリフェンス（Acquire/Release/SeqCst）を提供する。</li>
 <li>**データ型の定義**: <code>pg_atomic_flag</code>、<code>pg_atomic_uint32</code>、<code>pg_atomic_uint64</code> の定義とアライメント（64ビット型では8バイトアライメント）の確保。</li>
-<li>**フラグ操作の実装**: テスト・アンド・セット（<a class="wiki-source-link" href="../../../../../source/src/include/storage/s_lock.h.html#L131" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/storage/s_lock.h.html&quot;}, '*');">TAS</a>）、ロッククリア、初期化などのフラグ操作をインライン関数で提供。</li>
+<li>**フラグ操作の実装**: テスト・アンド・セット（<a class="wiki-source-link" href="../../../../../source/src/include/storage/s_lock.h.html#L131" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/storage/s_lock.h.html&quot;}, '*');">TAS</a>）、ロッククリア、初期化などのフラグ操作をインライン関数で提供。</li>
 <li>**算術・比較交換操作の実装**: 32ビットおよび64ビット整数に対する Compare-And-Swap (CAS)、Exchange、Fetch-and-Add/Sub/And/Or 操作の実装。</li>
 </ul>
 <h2>重要なシンボル</h2>

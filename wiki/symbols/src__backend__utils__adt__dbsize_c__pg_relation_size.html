@@ -39,7 +39,7 @@
 <p>/*</p>
 <ul>
 <li>Before 9.2, we used to throw an error if the relation didn&#x27;t exist, but</li>
-<li>that makes queries like &quot;<a class="wiki-source-link" href="../../source/src/include/tcop/cmdtaglist.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/tcop/cmdtaglist.h.html&quot;}, '*');">SELECT</a> <a class="wiki-source-link" href="../../source/src/backend/utils/adt/dbsize.c.html#L363" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__utils__adt__dbsize_c__pg_relation_size.html&quot;}, '*');">pg_relation_size</a>(oid) FROM pg_class&quot;</li>
+<li>that makes queries like &quot;<a class="wiki-source-link" href="../../source/src/include/tcop/cmdtaglist.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__tcop__cmdtaglist_h__SELECT.html&quot;}, '*');">SELECT</a> <a class="wiki-source-link" href="../../source/src/backend/utils/adt/dbsize.c.html#L363" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__utils__adt__dbsize_c__pg_relation_size.html&quot;}, '*');">pg_relation_size</a>(oid) FROM pg_class&quot;</li>
 <li>less robust, because while we scan pg_class with an MVCC snapshot,</li>
 <li>someone else might drop the table. It&#x27;s better to return NULL for</li>
 <li>already-dropped tables than throw an error and abort the whole query.</li>

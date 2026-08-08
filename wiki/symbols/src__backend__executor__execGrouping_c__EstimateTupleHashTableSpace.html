@@ -53,12 +53,12 @@
 </ul>
 <p>/*</p>
 <ul>
-<li>Check for size_t overflow.  This coding <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> trickier than it may appear,</li>
+<li>Check for <a class="wiki-source-link" href="../../source/src/include/common/int.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__common__int_h__size_t.html&quot;}, '*');">size_t</a> overflow.  This coding <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> trickier than it may appear,</li>
 <li>because on 64-bit machines SIZE_MAX cannot be represented exactly as a</li>
 <li>double.  We must cast it explicitly to suppress compiler <a class="wiki-source-link" href="../../source/src/timezone/zic.c.html#L184" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/timezone/zic.c.html&quot;}, '*');">warnings</a> about</li>
 <li>an inexact conversion, and we must trust that any double value that</li>
 <li>compares strictly less than &quot;(double) SIZE_MAX&quot; will cast to a</li>
-<li>representable size_t value.</li>
+<li>representable <a class="wiki-source-link" href="../../source/src/include/common/int.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__common__int_h__size_t.html&quot;}, '*');">size_t</a> value.</li>
 <p>*/ if (sh_space + tuples_space &gt;= (double) SIZE_MAX) return SIZE_MAX;</p>
 </ul>
 <p>/* We don&#x27;t bother estimating <a class="wiki-source-link" href="../../source/src/backend/optimizer/geqo/geqo_eval.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__geqo__geqo_eval_c__size.html&quot;}, '*');">size</a> of the miscellaneous overhead data */ return (Size) (sh_space + tuples_space); } ~~~</p>

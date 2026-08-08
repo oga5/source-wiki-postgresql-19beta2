@@ -29,7 +29,7 @@
 <li>呼び出し元: なし</li>
 <li>呼び出し先: なし</li>
 <li>呼び出し元サイト: なし</li>
-<li>呼び出しサイト: <a class="wiki-source-link" href="../../source/src/include/executor/executor.h.html#L659" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/executor/executor.h.html&quot;}, '*');"><code>ResetExprContext</code></a> at <code>src/backend/executor/nodeForeignscan.c:91:2</code> (macro), <code>fdwroutine-&gt;RecheckForeignScan</code> at <code>src/backend/executor/nodeForeignscan.c:102:4</code> (indirect), <a class="wiki-source-link" href="../../source/src/include/executor/executor.h.html#L526" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__executor__executor_h__ExecQual.html&quot;}, '*');"><code>ExecQual</code></a> at <code>src/backend/executor/nodeForeignscan.c:105:9</code> (unresolved)</li>
+<li>呼び出しサイト: <a class="wiki-source-link" href="../../source/src/include/executor/executor.h.html#L659" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/executor/executor.h.html&quot;}, '*');"><code>ResetExprContext</code></a> at <code>src/backend/executor/nodeForeignscan.c:91:2</code> (macro), <code>fdwroutine-&gt;RecheckForeignScan</code> at <code>src/backend/executor/nodeForeignscan.c:102:4</code> (indirect), <a class="wiki-source-link" href="../../source/src/include/executor/executor.h.html#L526" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__executor__executor_h__ExecQual.html&quot;}, '*');"><code>ExecQual</code></a> at <code>src/backend/executor/nodeForeignscan.c:105:9</code> (unresolved)</li>
 </ul>
 <h2>関連データ構造</h2>
 <p><code>ExprContext</code>, <a class="wiki-source-link" href="../../source/src/include/foreign/fdwapi.h.html#L208" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__foreign__fdwapi_h__FdwRoutine.html&quot;}, '*');"><code>FdwRoutine</code></a>, <code>ForeignScanState</code>, <code>TupleTableSlot</code></p>
@@ -41,7 +41,7 @@
 <p>*/ econtext = node-&gt;ss.ps.ps_ExprContext;</p>
 </ul>
 <p>/* Does the tuple meet the remote qual condition? */ econtext-&gt;ecxt_scantuple = slot;</p>
-<p><a class="wiki-source-link" href="../../source/src/include/executor/executor.h.html#L659" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/executor/executor.h.html&quot;}, '*');">ResetExprContext</a>(econtext);</p>
+<p><a class="wiki-source-link" href="../../source/src/include/executor/executor.h.html#L659" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/executor/executor.h.html&quot;}, '*');">ResetExprContext</a>(econtext);</p>
 <p>/*</p>
 <ul>
 <li>If an outer join <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> pushed down, RecheckForeignScan may need to store a</li>

@@ -1,5 +1,5 @@
 <!doctype html>
-<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>src/backend/optimizer/README</title><link rel="stylesheet" href="../../../../../styles.css"></head><body><h1>Japanese translation</h1><p><code>src/backend/optimizer/README</code></p><p><a href="../../../../../source/src/backend/optimizer/README.html" target="source-view">View original document</a></p><p class="document-translation-progress document-translation-incomplete">Translation in progress: 6/8 chunks complete. Pending chunks show their original text below.</p><div class="document-translation-body"><section class="document-translation-chunk translated" data-chunk-order="0"><p>src/backend/optimizer/README</p>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>src/backend/optimizer/README</title><link rel="stylesheet" href="../../../../../styles.css"></head><body><h1>Japanese translation</h1><p><code>src/backend/optimizer/README</code></p><p><a href="../../../../../source/src/backend/optimizer/README.html" target="source-view">View original document</a></p><p class="document-translation-progress document-translation-incomplete">Translation in progress: 7/8 chunks complete. Pending chunks show their original text below.</p><div class="document-translation-body"><section class="document-translation-chunk translated" data-chunk-order="0"><p>src/backend/optimizer/README</p>
 <p>Optimizer =========</p>
 <p>これらのディレクトリは、パーサーから返されたQuery構造体を受け取り、エグゼキューターが使用するプランを生成します。/planディレクトリは実際の出力プランを生成し、/pathコードはテーブルを結合するためのすべての可能な方法を生成し、/prepは特殊なケースに対するさまざまな前処理ステップを処理します。/utilはユーティリティ関係です。/geqoは個別の「遺伝的最適化」プランナーです。これは、可能な結合ツリーをすべて網羅的に検討するのではなく、結合ツリー空間を半ランダムに検索します（ただし、/geqoによって検討される各結合は、パスを作成するために/pathに渡されるため、GEQOモードでも、特定の結合ペアごとに可能なすべての実装パスが検討されます）。</p>
 <p>Paths and Join Pairs --------------------</p>
@@ -83,216 +83,35 @@
 <p>Path           - every way to generate a RelOptInfo(sequential,index,joins) A plain Path node can represent several simple plans, per its pathtype: T_SeqScan   - sequential scan T_SampleScan - tablesample scan T_FunctionScan - function-in-FROM scan T_TableFuncScan - table function scan T_ValuesScan - VALUES scan T_CteScan   - CTE (WITH) scan T_NamedTuplestoreScan - ENR scan T_WorkTableScan - scan worktable of a recursive CTE T_Result    - childless Result plan node (used for FROM-less SELECT) IndexPath     - index scan BitmapHeapPath - top of a bitmapped index scan TidPath       - scan by CTID TidRangePath  - scan a contiguous range of CTIDs SubqueryScanPath - scan a subquery-in-FROM ForeignPath   - scan a foreign table, foreign join or foreign upper-relation CustomPath    - for custom scan providers AppendPath    - append multiple subpaths together MergeAppendPath - merge multiple subpaths, preserving their common sort order GroupResultPath - childless Result plan node (used for degenerate grouping) MaterialPath  - a Material plan node MemoizePath   - a Memoize plan node for caching tuples from sub-paths GatherPath    - collect the results of parallel workers GatherMergePath - collect parallel results, preserving their common sort order ProjectionPath - a Result plan node with child (used for projection) ProjectSetPath - a ProjectSet plan node applied to some sub-path SortPath      - a Sort plan node applied to some sub-path IncrementalSortPath - an IncrementalSort plan node applied to some sub-path GroupPath     - a Group plan node applied to some sub-path UniquePath    - a Unique plan node applied to some sub-path AggPath       - an Agg plan node applied to some sub-path GroupingSetsPath - an Agg plan node used to implement GROUPING SETS MinMaxAggPath - a Result plan node with subplans performing MIN/MAX WindowAggPath - a WindowAgg plan node applied to some sub-path SetOpPath     - a SetOp plan node applied to two sub-paths RecursiveUnionPath - a RecursiveUnion plan node applied to two sub-paths LockRowsPath  - a LockRows plan node applied to some sub-path ModifyTablePath - a ModifyTable plan node applied to some sub-path(s) LimitPath     - a Limit plan node applied to some sub-path NestPath      - nested-loop joins MergePath     - merge joins HashPath      - hash joins</p>
 <p>EquivalenceClass - a data structure representing a set of values known equal</p>
 <p>PathKey        - a data structure representing the sort ordering of a path</p>
-<p>The optimizer spends a good deal of its time worrying about the ordering of the tuples returned by a path.  The reason this is useful is that by knowing the sort ordering of a path, we may be able to use that path as the left or right input of a mergejoin and avoid an explicit sort step. Nestloops and hash joins don&#x27;t really care what the order of their inputs is, but mergejoin needs suitably ordered inputs.  Therefore, all paths generated during the optimization process are marked with their sort order (to the extent that it is known) for possible use by a higher-level merge.</p></section><section class="document-translation-chunk pending" data-chunk-order="3"><h2>Chunk 4: translation pending</h2><p>This chunk has not been translated yet. Original text:</p><pre class="document-translation-text">It is also possible to avoid an explicit sort step to implement a user&#x27;s
-ORDER BY clause if the final path has the right ordering already, so the
-sort ordering is of interest even at the top level.  grouping_planner() will
-look for the cheapest path with a sort order matching the desired order,
-then compare its cost to the cost of using the cheapest-overall path and
-doing an explicit sort on that.
-
-When we are generating paths for a particular RelOptInfo, we discard a path
-if it is more expensive than another known path that has the same or better
-sort order.  We will never discard a path that is the only known way to
-achieve a given sort order (without an explicit sort, that is).  In this
-way, the next level up will have the maximum freedom to build mergejoins
-without sorting, since it can pick from any of the paths retained for its
-inputs.
-
-
-EquivalenceClasses
-------------------
-
-During the deconstruct_jointree() scan of the query&#x27;s qual clauses, we
-look for mergejoinable equality clauses A = B.  When we find one, we
-create an EquivalenceClass containing the expressions A and B to record
-that they are equal.  If we later find another equivalence clause B = C,
-we add C to the existing EquivalenceClass for {A B}; this may require
-merging two existing EquivalenceClasses.  At the end of the scan, we have
-sets of values that are known all transitively equal to each other.  We can
-therefore use a comparison of any pair of the values as a restriction or
-join clause (when these values are available at the scan or join, of
-course); furthermore, we need test only one such comparison, not all of
-them.  Therefore, equivalence clauses are removed from the standard qual
-distribution process.  Instead, when preparing a restriction or join clause
-list, we examine each EquivalenceClass to see if it can contribute a
-clause, and if so we select an appropriate pair of values to compare.  For
-example, if we are trying to join A&#x27;s relation to C&#x27;s, we can generate the
-clause A = C, even though this appeared nowhere explicitly in the original
-query.  This may allow us to explore join paths that otherwise would have
-been rejected as requiring Cartesian-product joins.
-
-Sometimes an EquivalenceClass may contain a pseudo-constant expression
-(i.e., one not containing Vars or Aggs of the current query level, nor
-volatile functions).  In this case we do not follow the policy of
-dynamically generating join clauses: instead, we dynamically generate
-restriction clauses &quot;var = const&quot; wherever one of the variable members of
-the class can first be computed.  For example, if we have A = B and B = 42,
-we effectively generate the restriction clauses A = 42 and B = 42, and then
-we need not bother with explicitly testing the join clause A = B when the
-relations are joined.  In effect, all the class members can be tested at
-relation-scan level and there&#x27;s never a need for join tests.
-
-The precise technical interpretation of an EquivalenceClass is that it
-asserts that at any plan node where more than one of its member values
-can be computed, output rows in which the values are not all equal may
-be discarded without affecting the query result.  (We require all levels
-of the plan to enforce EquivalenceClasses, hence a join need not recheck
-equality of values that were computable by one of its children.)
-
-Outer joins complicate this picture quite a bit, however.  While we could
-theoretically use mergejoinable equality clauses that appear in outer-join
-conditions as sources of EquivalenceClasses, there&#x27;s a serious difficulty:
-the resulting deductions are not valid everywhere.  For example, given
-
-	SELECT * FROM a LEFT JOIN b ON (a.x = b.y AND a.x = 42);
-
-we can safely derive b.y = 42 and use that in the scan of B, because B
-rows not having b.y = 42 will not contribute to the join result.  However,
-we cannot apply a.x = 42 at the scan of A, or we will remove rows that
-should appear in the join result.  We could apply a.x = 42 as an outer join
-condition (and then it would be unnecessary to also check a.x = b.y).
-This is not yet implemented, however.
-
-A related issue is that constants appearing below an outer join are
-less constant than they appear.  Ordinarily, if we find &quot;A = 1&quot; and
-&quot;B = 1&quot;, it&#x27;s okay to put A and B into the same EquivalenceClass.
-But consider
-
-	SELECT * FROM a
-	  LEFT JOIN (SELECT * FROM b WHERE b.z = 1) b ON (a.x = b.y)
-	WHERE a.x = 1;
-
-It would be a serious error to conclude that a.x = b.z, so we cannot
-form a single EquivalenceClass {a.x b.z 1}.
-
-This leads to considering EquivalenceClasses as applying within &quot;join
-domains&quot;, which are sets of relations that are inner-joined to each other.
-(We can treat semijoins as if they were inner joins for this purpose.)
-There is a top-level join domain, and then each outer join in the query
-creates a new join domain comprising its nullable side.  Full joins create
-two join domains, one for each side.  EquivalenceClasses generated from
-WHERE are associated with the top-level join domain.  EquivalenceClasses
-generated from the ON clause of an outer join are associated with the
-domain created by that outer join.  EquivalenceClasses generated from the
-ON clause of an inner or semi join are associated with the syntactically
-most closely nested join domain.
-
-Having defined these domains, we can fix the not-so-constant-constants
-problem by considering that constants only match EquivalenceClass members
-when they come from clauses within the same join domain.  In the above
-example, this means we keep {a.x 1} and {b.z 1} as separate
-EquivalenceClasses and don&#x27;t erroneously merge them.  We don&#x27;t have to
-worry about this for Vars (or expressions containing Vars), because
-references to the &quot;same&quot; column from different join domains will have
-different varnullingrels and thus won&#x27;t be equal() anyway.
-
-In the future, the join-domain concept may allow us to treat mergejoinable
-outer-join conditions as sources of EquivalenceClasses.  The idea would be
-that conditions derived from such classes could only be enforced at scans
-or joins that are within the appropriate join domain.  This is not
-implemented yet, however, as the details are trickier than they appear.
-
-Another instructive example is:
-
-	SELECT *
-	  FROM a LEFT JOIN
-	       (SELECT * FROM b JOIN c ON b.y = c.z WHERE b.y = 10) ss
-	       ON a.x = ss.y
-	  ORDER BY ss.y;
-
-We can form the EquivalenceClass {b.y c.z 10} and thereby apply c.z = 10
-while scanning C, as well as b.y = 10 while scanning B, so that no clause
-needs to be checked at the inner join.  The left-join clause &quot;a.x = ss.y&quot;
-(really &quot;a.x = b.y&quot;) is not considered an equivalence clause, so we do
-not insert a.x into that same EquivalenceClass; if we did, we&#x27;d falsely
-conclude a.x = 10.  In the future though we might be able to do that,
-if we can keep from applying a.x = 10 at the scan of A, which in principle
-we could do by noting that the EquivalenceClass only applies within the
-{B,C} join domain.
-
-Also notice that ss.y in the ORDER BY is really b.y* (that is, the
-possibly-nulled form of b.y), so we will not confuse it with the b.y member
-of the lower EquivalenceClass.  Thus, we won&#x27;t mistakenly conclude that
-that ss.y is equal to a constant, which if true would lead us to think that
-sorting for the ORDER BY is unnecessary (see discussion of PathKeys below).
-Instead, there will be a separate EquivalenceClass containing only b.y*,
-which will form the basis for the PathKey describing the required sort
-order.
-
-Also consider this variant:
-
-	SELECT *
-	  FROM a LEFT JOIN
-	       (SELECT * FROM b JOIN c ON b.y = c.z WHERE b.y = 10) ss
-	       ON a.x = ss.y
-	  WHERE a.x = 42;
-
-We still form the EquivalenceClass {b.y c.z 10}, and additionally
-we have an EquivalenceClass {a.x 42} belonging to a different join domain.
-We cannot use &quot;a.x = b.y&quot; to merge these classes.  However, we can compare
-that outer join clause to the existing EquivalenceClasses and form the
-derived clause &quot;b.y = 42&quot;, which we can treat as a valid equivalence
-within the lower join domain (since no row of that domain not having
-b.y = 42 can contribute to the outer-join result).  That makes the lower
-EquivalenceClass {42 b.y c.z 10}, resulting in the contradiction 10 = 42,
-which lets the planner deduce that the B/C join need not be computed at
-all: the result of that whole join domain can be forced to empty.
-(This gets implemented as a gating Result filter, since more usually the
-potential contradiction involves Param values rather than just Consts, and
-thus it has to be checked at runtime.  We can use the join domain to
-determine the join level at which to place the gating condition.)
-
-There is an additional complication when re-ordering outer joins according
-to identity 3.  Recall that the two choices we consider for such joins are
-
-	A leftjoin (B leftjoin C on (Pbc)) on (Pab)
-	(A leftjoin B on (Pab)) leftjoin C on (Pb*c)
-
-where the star denotes varnullingrels markers on B&#x27;s Vars.  When Pbc
-is (or includes) a mergejoinable clause, we have something like
-
-	A leftjoin (B leftjoin C on (b.b = c.c)) on (Pab)
-	(A leftjoin B on (Pab)) leftjoin C on (b.b* = c.c)
-
-We could generate an EquivalenceClause linking b.b and c.c, but if we
-then also try to link b.b* and c.c, we end with a nonsensical conclusion
-that b.b and b.b* are equal (at least in some parts of the plan tree).
-In any case, the conclusions we could derive from such a thing would be
-largely duplicative.  Conditions involving b.b* can&#x27;t be computed below
-this join nest, while any conditions that can be computed would be
-duplicative of what we&#x27;d get from the b.b/c.c combination.  Therefore,
-we choose to generate an EquivalenceClause linking b.b and c.c, but
-&quot;b.b* = c.c&quot; is handled as just an ordinary clause.
-
-To aid in determining the sort ordering(s) that can work with a mergejoin,
-we mark each mergejoinable clause with the EquivalenceClasses of its left
-and right inputs.  For an equivalence clause, these are of course the same
-EquivalenceClass.  For a non-equivalence mergejoinable clause (such as an
-outer-join qualification), we generate two separate EquivalenceClasses for
-the left and right inputs.  This may result in creating single-item
-equivalence &quot;classes&quot;, though of course these are still subject to merging
-if other equivalence clauses are later found to bear on the same
-expressions.
-
-Another way that we may form a single-item EquivalenceClass is in creation
-of a PathKey to represent a desired sort order (see below).  This happens
-if an ORDER BY or GROUP BY key is not mentioned in any equivalence
-clause.  We need to reason about sort orders in such queries, and our
-representation of sort ordering is a PathKey which depends on an
-EquivalenceClass, so we have to make an EquivalenceClass.  This is a bit
-different from the above cases because such an EquivalenceClass might
-contain an aggregate function or volatile expression.  (A clause containing
-a volatile function will never be considered mergejoinable, even if its top
-operator is mergejoinable, so there is no way for a volatile expression to
-get into EquivalenceClasses otherwise.  Aggregates are disallowed in WHERE
-altogether, so will never be found in a mergejoinable clause.)  This is just
-a convenience to maintain a uniform PathKey representation: such an
-EquivalenceClass will never be merged with any other.  Note in particular
-that a single-item EquivalenceClass {a.x} is *not* meant to imply an
-assertion that a.x = a.x; the practical effect of this is that a.x could
-be NULL.
-
-</pre></section><section class="document-translation-chunk pending" data-chunk-order="4"><h2>Chunk 5: translation pending</h2><p>This chunk has not been translated yet. Original text:</p><pre class="document-translation-text">An EquivalenceClass also contains a list of btree opfamily OIDs, which
+<p>The optimizer spends a good deal of its time worrying about the ordering of the tuples returned by a path.  The reason this is useful is that by knowing the sort ordering of a path, we may be able to use that path as the left or right input of a mergejoin and avoid an explicit sort step. Nestloops and hash joins don&#x27;t really care what the order of their inputs is, but mergejoin needs suitably ordered inputs.  Therefore, all paths generated during the optimization process are marked with their sort order (to the extent that it is known) for possible use by a higher-level merge.</p></section><section class="document-translation-chunk translated" data-chunk-order="3"><p>最終的なパスがすでに適切な順序になっている場合、ユーザーの ORDER BY 句を実装するために明示的なソートステップを回避することも可能です。 そのため、ソート順序はトップレベルにおいても重要です。 grouping_planner() は、希望する順序に一致するソート順序を持つ最もコストの低いパスを探し、 そのコストと、全体で最もコストの低いパスを使用してその上で明示的なソートを行った場合のコストを比較します。</p>
+<p>特定の RelOptInfo のパスを生成する際、同じまたはより良いソート順序を持つ別の既知のパスよりも コストが高い場合、そのパスは破棄されます。 （明示的なソートなしで）特定のソート順序を実現する唯一既知の方法であるパスは、決して破棄されません。 このようにして、上のレベルでは、入力用に保持された任意のパスから選択できるため、 ソートなしでマージ結合を構築する自由度が最大になります。</p>
+<p>EquivalenceClasses ------------------</p>
+<p>クエリの条件（qual）句に対する deconstruct_jointree() のスキャン中に、 マージ結合可能な等価句 A = B を探します。 見つかった場合、それらが等しいことを記録するために、式 A と B を含む EquivalenceClass を作成します。 後で別の等価句 B = C が見つかった場合は、{A B} の既存の EquivalenceClass に C を追加します。 これにより、2つの既存の EquivalenceClasses をマージする必要が生じる場合があります。 スキャンの終了時には、互いに推移的に等しいことが既知である値のセットが得られます。 したがって、任意のペアの値を制限句または結合句としての比較に使用できます（もちろん、 これらの値がスキャンまたは結合時に利用可能な場合）。 さらに、それらすべてをテストする必要はなく、そのような比較を1つだけテストすれば十分です。 したがって、等価句は標準的な条件（qual）分散プロセスから削除されます。 代わりに、制限句または結合句のリストを準備するときに、各 EquivalenceClass を調べて 句に寄与できるかどうかを確認し、可能であれば比較する値の適切なペアを選択します。 たとえば、A のリレーションと C のリレーションを結合しようとしている場合、 元のクエリのどこにも明示的に現れていなかったとしても、句 A = C を生成できます。 これにより、デカルト積結合を必要とするとして本来なら拒否されていたであろう結合パスを探索できるようになります。</p>
+<p>EquivalenceClass に擬似定数式（つまり、現在のクエリレベルの Vars や Aggs、 または変動関数を含まない式）が含まれている場合があります。 この場合、結合句を動的に生成する方針には従わず、代わりに、 クラスの変数メンバーのいずれかを最初に計算できる場所に制限句「var = const」を動的に生成します。 たとえば、A = B および B = 42 がある場合、効果的に制限句 A = 42 および B = 42 を生成し、 その後、リレーションが結合されるときに結合句 A = B を明示的にテストする手間を省くことができます。 実質的に、すべてのクラスメンバーをリレーションスキャンレベルでテストできるため、結合テストの必要はまったくありません。</p>
+<p>EquivalenceClass の正確な技術的解釈は、 そのメンバー値のうち複数の値を計算できるどのプランノードにおいても、 値がすべて等しくない出力行はクエリ結果に影響を与えることなく破棄できる、ということを主張するものです。 （プランのすべてのレベルで EquivalenceClasses を強制することを要求しているため、 子孫のいずれかによって計算可能であった値の等価性を結合が再チェックする必要はありません。）</p>
+<p>ただし、外部結合はこの状況をかなり複雑にします。 理論的には、外部結合条件に現れるマージ結合可能な等価句を EquivalenceClasses のソースとして使用できますが、 深刻な困難があります。それは、結果として得られる推論がどこでも有効であるとは限らないということです。 たとえば、次のような場合です。</p>
+<p>SELECT * FROM a LEFT JOIN b ON (a.x = b.y AND a.x = 42);</p>
+<p>b.y = 42 を安全に導出し、それを B のスキャンで使用できます。なぜなら、 b.y = 42 を持たない B の行は結合結果に寄与しないためです。 しかし、A のスキャンで a.x = 42 を適用することはできません。 適用すると、結合結果に現れるべき行が削除されてしまうためです。 a.x = 42 を外部結合条件として適用することはできます（その場合、a.x = b.y もチェックする必要はなくなります）。 しかし、これはまだ実装されていません。</p>
+<p>関連する問題として、外部結合の下に現れる定数は、見た目ほど定数ではないということがあります。 通常、「A = 1」と「B = 1」が見つかった場合、A と B を同じ EquivalenceClass に入れても問題ありません。 しかし、次を考えてみてください。</p>
+<p>SELECT * FROM a LEFT JOIN (SELECT * FROM b WHERE b.z = 1) b ON (a.x = b.y) WHERE a.x = 1;</p>
+<p>a.x = b.z と結論付けるのは重大な誤りであるため、単一の EquivalenceClass {a.x b.z 1} を形成することはできません。</p>
+<p>これにより、EquivalenceClasses が「結合ドメイン（join domains）」内で適用されるものと見なすようになります。 結合ドメインとは、互いに内部結合されているリレーションのセットです。 （この目的のために、セミジョインは内部結合であるかのように扱うことができます。） トップレベルの結合 domain があり、クエリ内の各外部結合が、 その NULL 許容側を含む新しい結合ドメインを作成します。 フル結合は、各側に1つずつ、合計2つの結合ドメインを作成します。 WHERE から生成された EquivalenceClasses は、トップレベルの結合ドメインに関連付けられます。 外部結合の ON 句から生成された EquivalenceClasses は、その外部結合によって作成されたドメインに関連付けられます。 内部結合またはセミ結合の ON 句から生成された EquivalenceClasses は、 構文的に最もネストが深い結合ドメインに関連付けられます。</p>
+<p>これらのドメインを定義することで、定数が同じ結合ドメイン内の句から来ている場合にのみ EquivalenceClass メンバーと一致すると見なすことにより、 「あまり定数ではない定数」の問題を解決できます。 上記の例では、これは {a.x 1} と {b.z 1} を別々の EquivalenceClasses として保持し、 誤ってマージしないことを意味します。 Vars（または Vars を含む式）については、これについて心配する必要はありません。 なぜなら、異なる結合ドメインからの「同じ」カラムへの参照は異なる varnullingrels を持つため、 いずれにせよ equal() にならないからです。</p>
+<p>将来的に、結合ドメインの概念により、マージ結合可能な外部結合条件を EquivalenceClasses のソースとして扱うことができるようになるかもしれません。 そのアイデアは、そのようなクラスから派生した条件は、 適切な結合ドメイン内にあるスキャンまたは結合においてのみ強制できるというものです。 ただし、詳細が見た目よりも難しいため、これはまだ実装されていません。</p>
+<p>もう一つの教育的な例は次のとおりです。</p>
+<p>SELECT * FROM a LEFT JOIN (SELECT * FROM b JOIN c ON b.y = c.z WHERE b.y = 10) ss ON a.x = ss.y ORDER BY ss.y;</p>
+<p>EquivalenceClass {b.y c.z 10} を形成し、それにより C のスキャン時に c.z = 10 を適用し、 また B のスキャン時に b.y = 10 を適用できるため、内部結合でチェックする必要のある句はなくなります。 左側結合の句「a.x = ss.y」（実際には「a.x = b.y」）は等価句とは見なされないため、 a.x をその同じ EquivalenceClass に挿入しません。 もし挿入した場合、a.x = 10 と誤って結論付けてしまいます。 ただし、A のスキャン時に a.x = 10 を適用することを避けられれば、将来的にそれが可能になるかもしれません。 原則として、EquivalenceClass が {B,C} 結合ドメイン内のみで適用されることに注目することで、それが可能です。</p>
+<p>また、ORDER BY 内の ss.y は実際には b.y*（つまり、b.y の NULL 化された可能性のある形式）であるため、 下位の EquivalenceClass の b.y メンバーと混同されないことにも注意してください。 したがって、ss.y が定数に等しいと誤って結論付けることはありません。 もしそれが真であれば、ORDER BY のためのソートが不要であると思い込ませることになります （以下の PathKeys の議論を参照してください）。 代わりに、b.y* のみを含む個別の EquivalenceClass が存在し、 それが要求されるソート順序を記述する PathKey の基礎を形成します。</p>
+<p>このバリアントも考慮してください。</p>
+<p>SELECT * FROM a LEFT JOIN (SELECT * FROM b JOIN c ON b.y = c.z WHERE b.y = 10) ss ON a.x = ss.y WHERE a.x = 42;</p>
+<p>依然として EquivalenceClass {b.y c.z 10} が形成され、さらに 異なる結合ドメインに属する EquivalenceClass {a.x 42} が存在します。 「a.x = b.y」を使用してこれらのクラスをマージすることはできません。 ただし、その外部結合句を既存の EquivalenceClasses と比較して、 派生句「b.y = 42」を形成することができます。 これを下位の結合ドメイン内での有効な等価性として扱うことができます （そのドメインの行で b.y = 42 を持たないものは外部結合の結果に寄与できないため）。 これにより、下位の EquivalenceClass は {42 b.y c.z 10} となり、 10 = 42 という矛盾が生じます。 これにより、プランナーは B/C 結合をまったく計算する必要がないと推論できます。 その結合ドメイン全体の 結果を空に強制することができます。 （これはゲーティング Result フィルターとして実装されます。通常、 潜在的な矛盾は単なる Const ではなく Param 値を伴うため、 実行時にチェックする必要があるためです。 結合ドメインを使用して、ゲーティング条件を配置する結合レベルを決定できます。）</p>
+<p>ID 3 に従って外部結合を並べ替える際には、追加の複雑さがあります。 そのような結合について考慮する2つの選択肢を思い出してください。</p>
+<p>A leftjoin (B leftjoin C on (Pbc)) on (Pab) (A leftjoin B on (Pab)) leftjoin C on (Pb*c)</p>
+<p>ここで、アスタリスクは B の Vars上の varnullingrels マーカーを示します。 Pbc がマージ結合可能な句である（またはそれを含む）場合、次のようなものになります。</p>
+<p>A leftjoin (B leftjoin C on (b.b = c.c)) on (Pab) (A leftjoin B on (Pab)) leftjoin C on (b.b* = c.c)</p>
+<p>b.b と c.c を結ぶ EquivalenceClause を生成できますが、 その後 b.b* と c.c も結ぼうとすると、 b.b と b.b* が等しいという（プランツリーの一部において少なくとも）無意味な結論に至ってしまいます。 いずれにせよ、そのようなものから導き出せる結論は、大部分が重複するものです。 b.b* を含む条件はこの結合ネスティングの下で計算することはできませんが、 計算できる条件は、b.b/c.c の組み合わせから得られるものと重複します。 したがって、b.b と c.c を結ぶ EquivalenceClause を生成することを選択しますが、 「b.b* = c.c」は単なる通常の句として処理されます。</p>
+<p>マージ結合で機能するソート順序を決定するのを助けるために、 各マージ結合可能な句に、その左側および右側の入力の EquivalenceClasses の印を付けます。 等価句の場合、これらは当然同じ EquivalenceClass です。 等価句ではないマージ結合可能な句（外部結合条件など）の場合、 左側および右側の入力用に2つの別個の EquivalenceClasses を生成します。 これにより、単一アイテムの等価「クラス」が作成される可能性がありますが、 他の等価句が後で同じ式に関係していることが判明した場合は、 もちろんこれらは依然としてマージの対象となります。</p>
+<p>単一アイテムの EquivalenceClass を形成するもう1つの方法は、 希望するソート順序を表す PathKey の作成時です（下記参照）。 これは、ORDER BY または GROUP BY キーがどの等価句にも言及されていない場合に発生します。 そのようなクエリでソート順序について推論する必要があり、 ソート順序の表現は EquivalenceClass に依存する PathKey であるため、 EquivalenceClass を作成する必要があります。 これは上記の場合とは少し異なります。 なぜなら、そのような EquivalenceClass には集約関数や変動関数が含まれている可能性があるためです。 （変動関数を含む句は、そのトップオペレータがマージ結合可能であっても、 マージ結合可能とは見なされないため、 変動関数が他の方法で EquivalenceClasses に入り込む方法はありません。 集約は WHERE では完全に禁止されているため、 マージ結合可能な句に見つかることはありません。） これは、一貫した PathKey 表現を維持するための単なる利便性であり、 そのような EquivalenceClass が他のものとマージされることはありません。 特に、単一アイテムの EquivalenceClass {a.x} は、 a.x = a.x という主張を意味するものでは*ない*ことに注意してください。 これの実用的な影響は、a.x が NULL になり得るということです。</p></section><section class="document-translation-chunk pending" data-chunk-order="4"><h2>Chunk 5: translation pending</h2><p>This chunk has not been translated yet. Original text:</p><pre class="document-translation-text">An EquivalenceClass also contains a list of btree opfamily OIDs, which
 determines what the equalities it represents actually &quot;mean&quot;.  All the
 equivalence clauses that contribute to an EquivalenceClass must have
 equality operators that belong to the same set of opfamilies.  (Note: most

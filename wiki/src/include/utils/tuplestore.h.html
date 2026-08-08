@@ -1,0 +1,56 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>src/include/utils/tuplestore.h.md</title><link rel="stylesheet" href="../../../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../../../source/src/include/utils/tuplestore.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/utils/tuplestore.h.html&quot;}, '*');">src/include/utils/tuplestore.h</a></h1>
+<h2>概要</h2>
+<p><a class="wiki-source-link" href="../../../../source/src/include/utils/tuplestore.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/utils/tuplestore.h.html&quot;}, '*');"><code>src/include/utils/tuplestore.h</code></a> は、PostgreSQL における一時的なタプル列の格納・読み出し機能（Tuplestore）の公開インターフェースを定義するヘッダーファイルです。ソートを行わない点を除けば <a class="wiki-source-link" href="../../../../source/src/backend/utils/sort/tuplesort.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/utils/sort/tuplesort.c.html&quot;}, '*');"><code>tuplesort.c</code></a> の簡易版に相当し、Materialize ノードやハッシュジョインのバッチファイルなどで利用されます。</p>
+<h2>モジュール内での役割</h2>
+<p><code>src/include/utils</code> モジュール内において、実行時の一時データ保持を抽象化するユーティリティの一つです。詳細な実装はペアファイルである <a class="wiki-source-link" href="../../../../source/src/backend/utils/sort/tuplestore.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/utils/sort/tuplestore.c.html&quot;}, '*');"><code>src/backend/utils/sort/tuplestore.c</code></a> に隠蔽されており、このヘッダーファイルは外部のモジュール（エグゼキューターやアクセス手法など）に対して操作関数と不透明構造体の定義を提供します。</p>
+<h2>責務</h2>
+<ul>
+<li>タプル群をメモリ上または一時ファイルに順次蓄積し、書き込み完了前であっても読み出しを開始できるAPIの提供。</li>
+<li>単一または複数の独立した読み取りポインタの管理（ランダムアクセス、巻き戻し、マーク・復元操作）。</li>
+<li><a class="wiki-source-link" href="../../../../source/src/include/access/htup.h.html#L27" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__access__htup_h__MinimalTuple.html&quot;}, '*');"><code>MinimalTuple</code></a> 形式をベースにした効率的なタプルの保持と、<code>TupleTableSlot</code> や <code>HeapTuple</code> を介した入出力インターフェースの公開。</li>
+</ul>
+<h2>重要なシンボル</h2>
+<ul>
+<li><code>Tuplestorestate</code>: 内部状態を隠蔽するための不透明な構造体（Opaque <a class="wiki-source-link" href="../../../../source/src/include/lib/ilist.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__lib__ilist_h__type.html&quot;}, '*');">type</a>）。</li>
+<li><code>tuplestore_begin_heap</code>: ヒープタプルを格納するための Tuplestore インスタンスを生成する。</li>
+<li><code>tuplestore_puttupleslot</code> / <code>tuplestore_puttuple</code> / <code>tuplestore_putvalues</code>: 各種形式のタプルをストアへ書き込む。</li>
+<li><code>tuplestore_gettupleslot</code>: ストアから指定された方向（前方/後方）へタプルを取り出す。</li>
+<li><code>tuplestore_alloc_read_pointer</code> / <code>tuplestore_select_read_pointer</code>: 複数の独立した読み取りポインタの割り当てと切り替えを行う。</li>
+<li><code>tuplestore_end</code>: ストアが使用しているメモリや一時ファイルを解放し、ライフサイクルを終了する。</li>
+</ul>
+<h2>制御フローとデータフロー</h2>
+<p>本ファイルはインターフェース定義のみであり実行コードは持ちませんが、想定されるデータフローは以下の通りです。 1. <code>tuplestore_begin_heap</code> により、指定されたメモリ上限 (<code>maxKBytes</code>) とランダムアクセスの要否を指定して状態を初期化。 2. 実行時、<code>tuplestore_put...</code> 系関数を介してタプルが順次入力される。データ量がメモリ上限を超えた場合、自動的にバックエンドの一時ファイルへ書き込み先が切り替わる。 3. <code>tuplestore_gettupleslot</code> などの読み出し系関数により、初期化時に作成または追加された読み取りポインタを基準にしてタプルが順次または任意の位置から取得される。 4. 処理終了後、<code>tuplestore_end</code> によりリソースがクリーンアップされる。</p>
+<h2>直接依存</h2>
+<ul>
+<li><code>executor/tuptable.h</code>: <code>TupleTableSlot</code> 構造体の定義を利用するためにインクルード。</li>
+</ul>
+<h2>関連コード</h2>
+<ul>
+<li><a class="wiki-source-link" href="../../../../source/src/backend/utils/sort/tuplestore.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/utils/sort/tuplestore.c.html&quot;}, '*');"><code>src/backend/utils/sort/tuplestore.c</code></a>: ペアとなる実装ファイル。実際の状態遷移（インメモリ、書き込みファイル、読み込みファイル）やファイル入出力ロジックを含む。</li>
+<li><a class="wiki-source-link" href="../../../../source/src/include/utils/tuplesort.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/utils/tuplesort.h.html&quot;}, '*');"><code>src/include/utils/tuplesort.h</code></a>: ソート処理を行う類似のユーティリティヘッダー。</li>
+<li><a class="wiki-source-link" href="../../../../source/src/include/utils/sharedtuplestore.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/utils/sharedtuplestore.h.html&quot;}, '*');"><code>src/include/utils/sharedtuplestore.h</code></a>: 複数プロセス間で共有される Tuplestore のヘッダー。</li>
+</ul>
+<h2>読者向けメモ</h2>
+<ul>
+<li>格納されるデータの実体は主に <a class="wiki-source-link" href="../../../../source/src/include/access/htup.h.html#L27" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__access__htup_h__MinimalTuple.html&quot;}, '*');"><code>MinimalTuple</code></a> であり、システム列は保証されないため、呼び出し側は取得時に <code>TupleTableSlot</code> を経由してアクセスする必要があります。</li>
+<li>後方スキャンやリワインドの可否は、タプルを投入する前または適切なタイミングで設定フラグ (<a class="wiki-source-link" href="../../../../source/src/backend/utils/sort/tuplestore.c.html#L371" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__utils__sort__tuplestore_c__tuplestore_set_eflags.html&quot;}, '*');"><code>tuplestore_set_eflags</code></a>) や専用関数によって制御する必要があります。</li>
+</ul>
+<h2>シンボルページ</h2>
+<ul>
+<li><a href="../../../symbols/src__include__utils__tuplestore_h__Tuplestorestate.html" target="wiki-view"><code>Tuplestorestate</code></a></li>
+</ul><script>
+(function() {
+  function notifyParent() {
+    if (parent === window) return;
+    parent.postMessage({type: "frame-location", frame: window.name || "", href: window.location.href}, "*");
+  }
+  document.addEventListener("click", function(event) {
+    const link = event.target.closest("a[data-panel]");
+    if (!link || parent === window) return;
+    parent.postMessage({type: "source-link", panel: link.dataset.panel}, "*");
+  });
+  window.addEventListener("load", notifyParent);
+  window.addEventListener("hashchange", notifyParent);
+})();
+</script></body></html>

@@ -1,0 +1,85 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>src/include/portability/instr_time.h.md</title><link rel="stylesheet" href="../../../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../../../source/src/include/portability/instr_time.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/portability/instr_time.h.html&quot;}, '*');">src/include/portability/instr_time.h</a></h1>
+<h2>概要</h2>
+<p>ポータブルな高精度インターバル計測のための抽象化レイヤーを提供するヘッダーファイルです。Unix 系システムでは <code>clock_gettime()</code>、Windows では <code>QueryPerformanceCounter()</code>、x86-64 アーキテクチャでは <code>RDTSC</code>/<code>RDTSCP</code> 命令を直接利用して時間を計測します。計測値は不透明な型 <a class="wiki-source-link" href="../../../../source/src/include/portability/instr_time.h.html#L76" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__portability__instr_time_h__instr_time.html&quot;}, '*');"><code>instr_time</code></a> として隠蔽され、マクロを通じてゼロ初期化、加算、減算、比較、単位変換などの操作を行います。</p>
+<h2>モジュール内での役割</h2>
+<p><code>src/include/portability</code> サブシステムの一部として、プラットフォーム固有のタイマー API の差異を吸収し、バックエンドおよびフロントエンドプログラム共通の高精度計測基盤を提供します。</p>
+<h2>責務</h2>
+<ul>
+<li>**データ型定義**: 計測値を格納する不透明な <a class="wiki-source-link" href="../../../../source/src/include/portability/instr_time.h.html#L76" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__portability__instr_time_h__instr_time.html&quot;}, '*');"><code>instr_time</code></a> 構造体の提供。</li>
+<li>**プラットフォーム非依存のマクロ API**: 計測の開始・停止・加算・差分計算・単位変換を行う <code>INSTR_TIME_*</code> マクロ群の定義。</li>
+<li>**クロックソース管理**: システムクロックとハードウェア TSC（Time Stamp Counter）の切り替え管理、およびナノ秒単位へのスケーリング制御。</li>
+<li>**低レベル計測関数**: ターゲットアーキテクチャに応じた最適な命令（<code>clock_gettime</code>, <code>QueryPerformanceCounter</code>, <code>RDTSC</code>, <code>RDTSCP</code>）のインラインラッパー提供。</li>
+</ul>
+<h2>重要なシンボル</h2>
+<h3>型・データ構造</h3>
+<ul>
+<li><a class="wiki-source-link" href="../../../../source/src/include/portability/instr_time.h.html#L76" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__portability__instr_time_h__instr_time.html&quot;}, '*');"><code>instr_time</code></a>: 内部にプラットフォーム固有の <a class="wiki-source-link" href="../../../../source/src/include/portability/instr_time.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__portability__instr_time_h__ticks.html&quot;}, '*');"><code>ticks</code></a>（<code>int64</code>）を保持する不透明な計測値構造体。</li>
+<li><a class="wiki-source-link" href="../../../../source/src/include/portability/instr_time.h.html#L123" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__portability__instr_time_h__TimingClockSourceType.html&quot;}, '*');"><code>TimingClockSourceType</code></a>: クロックソースの種類を表す列挙型（<a class="wiki-source-link" href="../../../../source/src/include/portability/instr_time.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__portability__instr_time_h__TIMING_CLOCK_SOURCE_AUTO.html&quot;}, '*');"><code>TIMING_CLOCK_SOURCE_AUTO</code></a>, <a class="wiki-source-link" href="../../../../source/src/include/portability/instr_time.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__portability__instr_time_h__TIMING_CLOCK_SOURCE_SYSTEM.html&quot;}, '*');"><code>TIMING_CLOCK_SOURCE_SYSTEM</code></a>, <a class="wiki-source-link" href="../../../../source/src/include/portability/instr_time.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__portability__instr_time_h__TIMING_CLOCK_SOURCE_TSC.html&quot;}, '*');"><code>TIMING_CLOCK_SOURCE_TSC</code></a>）。</li>
+<li><a class="wiki-source-link" href="../../../../source/src/include/portability/instr_time.h.html#L168" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__portability__instr_time_h__TscClockSourceInfo.html&quot;}, '*');"><code>TscClockSourceInfo</code></a>: TSC クロスの周波数やソース情報を保持する構造体（<a class="wiki-source-link" href="../../../../source/src/include/portability/instr_time.h.html#L100" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/portability/instr_time.h.html&quot;}, '*');"><code>PG_INSTR_TSC_CLOCK</code></a> 有効時のみ）。</li>
+</ul>
+<h3>初期化・制御関数</h3>
+<ul>
+<li><code>pg_initialize_timing(void)</code>: タイミングインフラストラクチャを初期化する。</li>
+<li><code>pg_set_timing_clock_source(TimingClockSourceType source)</code>: 使用するクロックソースを設定する。</li>
+<li><code>pg_current_timing_clock_source(void)</code>: 現在有効なクロックソースを返すインライン関数。</li>
+</ul>
+<h3>変換・取得ヘルパー</h3>
+<ul>
+<li><code>pg_get_ticks(void)</code> / <code>pg_get_ticks_fast(void)</code>: 現在時刻を <a class="wiki-source-link" href="../../../../source/src/include/portability/instr_time.h.html#L76" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__portability__instr_time_h__instr_time.html&quot;}, '*');"><code>instr_time</code></a> として取得する（必要に応じて OOO ウィンドウの完了を待機）。</li>
+<li><code>pg_ticks_to_ns(int64 ticks)</code>: プラットフォーム固有の <a class="wiki-source-link" href="../../../../source/src/include/portability/instr_time.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__portability__instr_time_h__ticks.html&quot;}, '*');">ticks</a> をナノ秒に変換する。</li>
+<li><code>pg_ns_to_ticks(int64 ns)</code>: ナノ秒をプラットフォーム固有の <a class="wiki-source-link" href="../../../../source/src/include/portability/instr_time.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__portability__instr_time_h__ticks.html&quot;}, '*');">ticks</a> に変換する。</li>
+<li><code>pg_rdtsc(void)</code> / <code>pg_rdtscp(void)</code>: x86 の <a class="wiki-source-link" href="../../../../source/src/include/portability/instr_time.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__portability__instr_time_h__rdtsc.html&quot;}, '*');"><code>rdtsc</code></a>/<a class="wiki-source-link" href="../../../../source/src/include/portability/instr_time.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__portability__instr_time_h__rdtscp.html&quot;}, '*');"><code>rdtscp</code></a> 命令のインラインラッパー。</li>
+</ul>
+<h2>制御フローとデータフロー</h2>
+<p>1. **初期化**: ユーザーコードやシステム起動時に <code>pg_initialize_timing()</code> が呼ばれ、プラットフォームに応じたシステムクロックの初期設定が行われます。 2. **計測 (<a class="wiki-source-link" href="../../../../source/src/include/portability/instr_time.h.html#L434" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/portability/instr_time.h.html&quot;}, '*');"><code>INSTR_TIME_SET_CURRENT</code></a>)**:</p>
+<ul>
+<li><code>pg_get_ticks()</code> が呼び出され、<a class="wiki-source-link" href="../../../../source/src/common/instr_time.c.html#L66" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/common/instr_time.c.html&quot;}, '*');"><code>timing_tsc_enabled</code></a> が真であれば <code>pg_rdtscp()</code>（または高速版の <code>pg_rdtsc()</code>）により CPU の TSC を直接読み込みます。</li>
+<li>偽であれば <code>pg_get_ticks_system()</code> を経由して <code>clock_gettime()</code> または <code>QueryPerformanceCounter()</code> の値を読み込みます。</li>
+<p>3. **変換と計算**:</p>
+<li>測定値は <code>instr_time.ticks</code> に格納され、累積や差分計算は整数演算（加算・減算）で高速に行われます。</li>
+<li>最終的な出力時に <code>pg_ticks_to_ns()</code> が呼ばれ、必要に応じて固定小数点シフト（<a class="wiki-source-link" href="../../../../source/src/include/portability/instr_time.h.html#L89" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/portability/instr_time.h.html&quot;}, '*');"><code>TICKS_TO_NS_SHIFT</code></a>）とスケーリング値（<a class="wiki-source-link" href="../../../../source/src/common/instr_time.c.html#L61" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/common/instr_time.c.html&quot;}, '*');"><code>ticks_per_ns_scaled</code></a>）を用いたオーバーフロー防止付きのスケーリング演算を経てナノ秒に変換されます。</li>
+</ul>
+<h2>直接依存</h2>
+<ul>
+<li><code>&lt;time.h&gt;</code>: ポータブルなシステムクロック（<code>clock_gettime</code>）を利用する場合の定義。</li>
+<li><code>&lt;intrin.h&gt;</code>: MSVC 環境で x86 組み込み関数（<code>__rdtsc</code> 等）を利用する場合の定義。</li>
+</ul>
+<h2>関連コード</h2>
+<ul>
+<li><a class="wiki-source-link" href="../../../../source/src/common/instr_time.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/common/instr_time.c.html&quot;}, '*');"><code>src/common/instr_time.c</code></a>: 非インラインのタイミング初期化およびスケーリング因子の計算を実装するペアファイル。</li>
+</ul>
+<h2>読者向けメモ</h2>
+<ul>
+<li>**メモリ安全性とライフサイクル**: <a class="wiki-source-link" href="../../../../source/src/include/portability/instr_time.h.html#L76" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__portability__instr_time_h__instr_time.html&quot;}, '*');"><code>instr_time</code></a> は値型として扱われ、スタックや構造体のメンバーとして直接保持されます。明示的な解放処理は不要です。</li>
+<li>**インライン最適化**: 頻繁に呼び出される <a class="wiki-source-link" href="../../../../source/src/include/portability/instr_time.h.html#L379" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__portability__instr_time_h__pg_get_ticks.html&quot;}, '*');"><code>pg_get_ticks</code></a> および <a class="wiki-source-link" href="../../../../source/src/include/portability/instr_time.h.html#L393" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__portability__instr_time_h__pg_get_ticks_fast.html&quot;}, '*');"><code>pg_get_ticks_fast</code></a> は、コンパイラの最適化ヒューリスティックの制限を回避するため <a class="wiki-source-link" href="../../../../source/src/include/c.h.html#L303" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/c.h.html&quot;}, '*');"><code>pg_always_inline</code></a> が付与されています。</li>
+<li>**GUC 変更時の注意**: タイミング計測中にグローバルなクロックソースやスケーリング係数を変更すると不正な計測結果を生むため、計測中の変更は想定されていません。</li>
+</ul>
+<h2>シンボルページ</h2>
+<ul>
+<li><a href="../../../symbols/src__include__portability__instr_time_h__instr_time.html" target="wiki-view"><code>instr_time</code></a></li>
+<li><a href="../../../symbols/src__include__portability__instr_time_h__TimingClockSourceType.html" target="wiki-view"><code>TimingClockSourceType</code></a></li>
+<li><a href="../../../symbols/src__include__portability__instr_time_h__TscClockSourceInfo.html" target="wiki-view"><code>TscClockSourceInfo</code></a></li>
+<li><a href="../../../symbols/src__include__portability__instr_time_h__pg_current_timing_clock_source.html" target="wiki-view"><code>pg_current_timing_clock_source</code></a></li>
+<li><a href="../../../symbols/src__include__portability__instr_time_h__pg_get_ticks_system.html" target="wiki-view"><code>pg_get_ticks_system</code></a></li>
+<li><a href="../../../symbols/src__include__portability__instr_time_h__pg_ticks_to_ns.html" target="wiki-view"><code>pg_ticks_to_ns</code></a></li>
+<li><a href="../../../symbols/src__include__portability__instr_time_h__pg_ns_to_ticks.html" target="wiki-view"><code>pg_ns_to_ticks</code></a></li>
+<li><a href="../../../symbols/src__include__portability__instr_time_h__pg_rdtsc.html" target="wiki-view"><code>pg_rdtsc</code></a></li>
+<li><a href="../../../symbols/src__include__portability__instr_time_h__pg_rdtscp.html" target="wiki-view"><code>pg_rdtscp</code></a></li>
+<li><a href="../../../symbols/src__include__portability__instr_time_h__pg_get_ticks.html" target="wiki-view"><code>pg_get_ticks</code></a></li>
+<li><a href="../../../symbols/src__include__portability__instr_time_h__pg_get_ticks_fast.html" target="wiki-view"><code>pg_get_ticks_fast</code></a></li>
+</ul><script>
+(function() {
+  function notifyParent() {
+    if (parent === window) return;
+    parent.postMessage({type: "frame-location", frame: window.name || "", href: window.location.href}, "*");
+  }
+  document.addEventListener("click", function(event) {
+    const link = event.target.closest("a[data-panel]");
+    if (!link || parent === window) return;
+    parent.postMessage({type: "source-link", panel: link.dataset.panel}, "*");
+  });
+  window.addEventListener("load", notifyParent);
+  window.addEventListener("hashchange", notifyParent);
+})();
+</script></body></html>

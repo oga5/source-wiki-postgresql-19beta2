@@ -1,5 +1,5 @@
 <!doctype html>
-<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>src/backend/regex/README</title><link rel="stylesheet" href="../../../../../styles.css"></head><body><h1>Japanese translation</h1><p><code>src/backend/regex/README</code></p><p><a href="../../../../../source/src/backend/regex/README.html" target="source-view">View original document</a></p><p class="document-translation-progress document-translation-incomplete">Translation in progress: 2/3 chunks complete. Pending chunks show their original text below.</p><div class="document-translation-body"><section class="document-translation-chunk translated" data-chunk-order="0"><p>Henry Spencer の正規表現ライブラリに関する実装ノート ========================================================</p>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>src/backend/regex/README</title><link rel="stylesheet" href="../../../../../styles.css"></head><body><h1>Japanese translation</h1><p><code>src/backend/regex/README</code></p><p><a href="../../../../../source/src/backend/regex/README.html" target="source-view">View original document</a></p><p class="document-translation-progress document-translation-complete">Translation complete.</p><div class="document-translation-body"><section class="document-translation-chunk translated" data-chunk-order="0"><p>Henry Spencer の正規表現ライブラリに関する実装ノート ========================================================</p>
 <p>Henry が内部ドキュメントを残していたとしても、それは公開されていませんでした。 そのため、このファイルはいくつかのドキュメントをリバースエンジニアリングしようとする試みです。</p>
 <p>ソースファイルの一般的な構成 --------------------------</p>
 <p>個別にコンパイル可能なソースファイルが 6 つあり、そのうちの 5 つは それぞれ正確に 1 つのエクスポートされた関数を公開しています。 regcomp.c: pg_regcomp regexec.c: pg_regexec regerror.c: pg_regerror regfree.c: pg_regfree regprefix.c: pg_regprefix (pg_ 接頭辞は、このライブラリのバージョンを、特定のシステムに存在するかもしれない 同様のものと区別するために Postgres プロジェクトによって追加されました。 ライブラリのスタンドアロン版では、これらを削除するか置き換える必要があります。)</p>
@@ -60,67 +60,13 @@
 <p>&#x27;$&#x27; アーク。入力終了制約を指定します。これらは、それぞれ文字列の末尾および行の末尾の制約に対して &quot;$0-&gt;to_state&quot; または &quot;$1-&gt;to_state&quot; としてダンプされます。</p>
 <p>LACON 制約。&quot;(?=re)&quot;, &quot;(?!re)&quot;, &quot;(?&lt;=re)&quot;, &quot;(?&lt;!re)&quot; の制約を表します。つまり、この時点で開始/終了する入力は指定されたサブ RE にマッチする (またはマッチしない) 必要がありますが、マッチした入力は消費されません。これらは &quot;:subtree_number:-&gt;to_state&quot; としてダンプされます。</p>
 <p>アークの表示にその他のもの (特に疑問符) が表示されている場合は、それはアークに疑わしい点があることを伝えようとする dumpnfa() の試みです。ソースコードを参照してください。</p>
-<p>正規表現エグゼキュータは、PLAIN および LACON の遷移のみを処理できます。正規表現の optimize() 関数は、他のすべての種類のアークを取り除くために、パーサーの出力を変換する責任を負います。特に、不可能としてドロップされない ^ および $ アークは、常にそれぞれプリ状態またはポスト状態に隣接することになり、その後、BOS、BOL、EOS、または EOL の特殊な「色」に言及する PLAIN アークに変換されます。</p></section><section class="document-translation-chunk pending" data-chunk-order="2"><h2>Chunk 3: translation pending</h2><p>This chunk has not been translated yet. Original text:</p><pre class="document-translation-text">To decide whether a thus-transformed NFA matches a given substring of the
-input string, the executor essentially follows these rules:
-1. Start the NFA &quot;looking at&quot; the character *before* the given substring,
-or if the substring is at the start of the input, prepend an imaginary BOS
-character instead.
-2. Run the NFA until it has consumed the character *after* the given
-substring, or an imaginary following EOS character if the substring is at
-the end of the input.
-3. If the NFA is (or can be) in the goal state at this point, it matches.
-
-This definition is necessary to support regexes that begin or end with
-constraints such as \m and \M, which imply requirements on the adjacent
-character if any.  The executor implements that by checking if the
-adjacent character (or BOS/BOL/EOS/EOL pseudo-character) is of the
-right color, and it does that in the same loop that checks characters
-within the match.
-
-So one can mentally execute an untransformed NFA by taking ^ and $ as
-ordinary constraints that match at start and end of input; but plain
-arcs out of the start state should be taken as matches for the character
-before the target substring, and similarly, plain arcs leading to the
-post state are matches for the character after the target substring.
-After the optimize() transformation, there are explicit arcs mentioning
-BOS/BOL/EOS/EOL adjacent to the pre-state and post-state.  So a finished
-NFA for a pattern without anchors or adjacent-character constraints will
-have pre-state outarcs for RAINBOW (all possible character colors) as well
-as BOS and BOL, and likewise post-state inarcs for RAINBOW, EOS, and EOL.
-Also note that LACON arcs will never connect to the pre-state
-or post-state.
-
-
-Look-around constraints (LACONs)
---------------------------------
-
-The regex compiler doesn&#x27;t have much intelligence about LACONs; it just
-constructs a sub-NFA representing the pattern that the constraint says to
-match or not match, and puts a LACON arc referencing that sub-NFA into the
-main NFA.  At runtime, the executor applies the sub-NFA at each point in
-the string where the constraint is relevant, and then traverses or doesn&#x27;t
-traverse the arc.  (&quot;Traversal&quot; means including the arc&#x27;s to-state in the
-set of NFA states that are considered active at the next character.)
-
-The actual basic matching cycle of the executor is
-1.  Identify the color of the next input character, then advance over it.
-2.  Apply the DFA to follow all the matching &quot;plain&quot; arcs of the NFA.
-    (Notionally, the previous DFA state represents the set of states the
-    NFA could have been in before the character, and the new DFA state
-    represents the set of states the NFA could be in after the character.)
-3.  If there are any LACON arcs leading out of any of the new NFA states,
-    apply each LACON constraint starting from the new next input character
-    (while not actually consuming any input).  For each successful LACON,
-    add its to-state to the current set of NFA states.  If any such
-    to-state has outgoing LACON arcs, process those in the same way.
-    (Mathematically speaking, we compute the transitive closure of the
-    set of states reachable by successful LACONs.)
-
-Thus, LACONs are always checked immediately after consuming a character
-via a plain arc.  This is okay because the NFA&#x27;s &quot;pre&quot; state only has
-plain out-arcs, so we can always consume a character (possibly a BOS
-pseudo-character as described above) before we need to worry about LACONs.
-</pre></section></div><script>
+<p>正規表現エグゼキュータは、PLAIN および LACON の遷移のみを処理できます。正規表現の optimize() 関数は、他のすべての種類のアークを取り除くために、パーサーの出力を変換する責任を負います。特に、不可能としてドロップされない ^ および $ アークは、常にそれぞれプリ状態またはポスト状態に隣接することになり、その後、BOS、BOL、EOS、または EOL の特殊な「色」に言及する PLAIN アークに変換されます。</p></section><section class="document-translation-chunk translated" data-chunk-order="2"><p>このように変換された NFA が入力文字列の特定のサブストリングに一致するかどうかを判定するために、エグゼキュータは基本的に次のルールに従います。 1. 指定されたサブストリングの**前**の文字を「指している」状態で NFA を開始します。サブストリングが入力の先頭にある場合は、代わりに仮想的な BOS 文字を先頭に付加します。 2. 指定されたサブストリングの**後**の文字、またはサブストリングが入力の末尾にある場合は仮想的な後続の EOS 文字を消費するまで、NFA を実行します。 3. この時点で NFA が目標状態にある（またはなり得る）場合、それは一致します。</p>
+<p>この定義は、隣接する文字（存在する場合）に対する要件を暗黙的に示す \m や \M などの制約で始まる、または終わる正規表現をサポートするために必要です。エグゼキュータは、隣接する文字（または BOS/BOL/EOS/EOL 擬似文字）が適切な色であるかどうかを確認することによってそれを実装し、一致内の文字を確認するのと同じループ内でそれを行います。</p>
+<p>したがって、^ と $ を入力の先頭と末尾に一致する通常の制約として捉えることで、変換されていない NFA を頭の中で実行することができます。しかし、開始状態からの通常の円弧はターゲットサブストリングの前の文字の一致として捉えるべきであり、同様に、ポスト状態につながる通常の円弧はターゲットサブストリングの後の文字の一致です。optimize() 変換の後には、プレ状態とポスト状態に隣接する BOS/BOL/EOS/EOL を明示する円弧が存在します。そのため、アンカーや隣接文字の制約を持たないパターンの完成した NFA は、RAINBOW（取り得るすべての文字色）に対するプレ状態からの出力円弧だけでなく、BOS および BOL に対する出力円弧も持ち、同様に、ポスト状態への入力円弧として RAINBOW、EOS、EOL を持ちます。また、LACON の円弧がプレ状態やポスト状態に接続されることは決してないことにも注意してください。</p>
+<p>先読み制約 (LACON) --------------------------------</p>
+<p>正規表現コンパイラは LACON について多くの知見を持っているわけではなく、制約が一致または不一致を示すパターンを表すサブ NFA を構築し、そのサブ NFA を参照する LACON 円弧をメインの NFA に配置するだけです。実行時に、エグゼキュータはその制約に関連する文字列内の各ポイントでサブ NFA を適用し、円弧をたどるか、たどらないかを決定します。（「たどる」とは、次の文字でアクティブとみなされる NFA 状態のセットに、円弧の遷移先状態を含めることを意味します。）</p>
+<p>エグゼキュータの実際の基本的な一致サイクルは次のとおりです。 1. 次の入力文字の色を特定し、その文字を進めます。 2. DFA を適用して、NFA の一致するすべての「通常の」円弧をたどります。 （概念的には、前の DFA 状態は文字の前に NFA があった可能性のある状態のセットを表し、新しい DFA 状態は文字の後に NFA がある可能性のある状態のセットを表します。） 3. 新しい NFA 状態のいずれかから伸びる LACON 円弧がある場合は、次の入力文字の位置から各 LACON 制約を適用します（実際には入力は消費しません）。成功した LACON ごとに、その遷移先状態を現在の NFA 状態のセットに追加します。そのような遷移先状態に出力 LACON 円弧がある場合は、同様にそれらを処理します。 （数学的に言えば、成功した LACON によって到達可能な状態のセットの推移閉包を計算します。）</p>
+<p>したがって、LACON は常に通常の円弧を介して文字を消費した直後にチェックされます。NFA の「pre」状態には通常の出力円弧しかないため、LACON について心配する必要が生じる前に、常に文字を消費できる（上記で説明したように、おそらく BOS 擬似文字である）ため、これで問題ありません。</p></section></div><script>
 (function() {
   function notifyParent() {
     if (parent === window) return;
