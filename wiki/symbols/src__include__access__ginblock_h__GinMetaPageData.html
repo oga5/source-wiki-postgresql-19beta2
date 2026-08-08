@@ -30,14 +30,14 @@
 <h2>ソース抜粋</h2>
 <p>~~~c typedef struct <a class="wiki-source-link" href="../../source/src/include/access/ginblock.h.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__access__ginblock_h__GinMetaPageData.html&quot;}, '*');">GinMetaPageData</a> { /*</p>
 <ul>
-<li>Pointers to head and tail of pending list, which consists of <a class="wiki-source-link" href="../../source/src/include/access/ginblock.h.html#L45" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/access/ginblock.h.html&quot;}, '*');">GIN_LIST</a></li>
+<li>Pointers to <a class="wiki-source-link" href="../../source/src/include/storage/proclist_types.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/storage/proclist_types.h.html&quot;}, '*');">head</a> and <a class="wiki-source-link" href="../../source/src/include/storage/proclist_types.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/storage/proclist_types.h.html&quot;}, '*');">tail</a> of pending list, which consists of <a class="wiki-source-link" href="../../source/src/include/access/ginblock.h.html#L45" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/access/ginblock.h.html&quot;}, '*');">GIN_LIST</a></li>
 <li>pages.  These store fast-inserted entries that haven&#x27;t yet been moved</li>
 <li>into the regular GIN structure.</li>
-<p>*/ BlockNumber head; BlockNumber tail;</p>
+<p>*/ BlockNumber <a class="wiki-source-link" href="../../source/src/include/storage/proclist_types.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/storage/proclist_types.h.html&quot;}, '*');">head</a>; BlockNumber <a class="wiki-source-link" href="../../source/src/include/storage/proclist_types.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/storage/proclist_types.h.html&quot;}, '*');">tail</a>;</p>
 </ul>
 <p>/*</p>
 <ul>
-<li>Free space in bytes in the pending list&#x27;s tail page.</li>
+<li>Free space in bytes in the pending list&#x27;s <a class="wiki-source-link" href="../../source/src/include/storage/proclist_types.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/storage/proclist_types.h.html&quot;}, '*');">tail</a> page.</li>
 <p>*/ uint32		tailFreeSize;</p>
 </ul>
 <p>/*</p>

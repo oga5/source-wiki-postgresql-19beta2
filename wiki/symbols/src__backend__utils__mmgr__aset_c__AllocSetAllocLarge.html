@@ -48,7 +48,7 @@
 <ul>
 <li>Stick the new block underneath the active allocation block, if any, so</li>
 <li>that we don&#x27;t lose the use of the space remaining therein.</li>
-<p>*/ if (set-&gt;blocks != NULL) { block-&gt;<a class="wiki-source-link" href="../../source/src/include/lib/ilist.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__lib__ilist_h__prev.html&quot;}, '*');">prev</a> = set-&gt;blocks; block-&gt;next = set-&gt;blocks-&gt;next; if (block-&gt;next) block-&gt;next-&gt;<a class="wiki-source-link" href="../../source/src/include/lib/ilist.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__lib__ilist_h__prev.html&quot;}, '*');">prev</a> = block; set-&gt;blocks-&gt;next = block; ~~~</p>
+<p>*/ if (set-&gt;blocks != NULL) { block-&gt;prev = set-&gt;blocks; block-&gt;next = set-&gt;blocks-&gt;next; if (block-&gt;next) block-&gt;next-&gt;prev = block; set-&gt;blocks-&gt;next = block; ~~~</p>
 </ul>
 <h2>失敗モードと境界条件</h2>
 <p>まだ解析していません。</p>

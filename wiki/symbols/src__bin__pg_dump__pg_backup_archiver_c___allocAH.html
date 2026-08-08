@@ -53,7 +53,7 @@
 </ul>
 <p>AH-&gt;currUser = NULL;		/* unknown */ AH-&gt;currSchema = NULL;		/* ditto */ AH-&gt;currTablespace = NULL;	/* ditto */ AH-&gt;currTableAm = NULL;		/* ditto */</p>
 <p>AH-&gt;toc = <a class="wiki-source-link" href="../../source/src/include/common/fe_memutils.h.html#L62" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/common/fe_memutils.h.html&quot;}, '*');">pg_malloc0_object</a>(TocEntry);</p>
-<p>AH-&gt;toc-&gt;next = AH-&gt;toc; AH-&gt;toc-&gt;<a class="wiki-source-link" href="../../source/src/include/lib/ilist.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__lib__ilist_h__prev.html&quot;}, '*');">prev</a> = AH-&gt;toc;</p>
+<p>AH-&gt;toc-&gt;next = AH-&gt;toc; AH-&gt;toc-&gt;prev = AH-&gt;toc;</p>
 <p>AH-&gt;<a class="wiki-source-link" href="../../source/src/bin/pg_checksums/pg_checksums.c.html#L56" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/bin/pg_checksums/pg_checksums.c.html&quot;}, '*');">mode</a> = <a class="wiki-source-link" href="../../source/src/bin/pg_checksums/pg_checksums.c.html#L56" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/bin/pg_checksums/pg_checksums.c.html&quot;}, '*');">mode</a>; AH-&gt;compression_spec = compression_spec; AH-&gt;dosync = dosync; AH-&gt;sync_method = sync_method;</p>
 <p>~~~</p>
 <h2>失敗モードと境界条件</h2>

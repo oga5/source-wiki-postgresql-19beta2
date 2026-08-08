@@ -1,5 +1,5 @@
 <!doctype html>
-<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>symbols/src__port__pg_strong_random_c__pg_strong_random.md</title><link rel="stylesheet" href="../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../source/src/port/pg_strong_random.c.html#L63" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__port__pg_strong_random_c__pg_strong_random.html&quot;}, '*');">pg_strong_random</a></h1>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>symbols/src__port__pg_strong_random_c__pg_strong_random.md</title><link rel="stylesheet" href="../../styles.css"></head><body><h1>pg_strong_random</h1>
 <h2>定義</h2>
 <ul>
 <li>種別: <code>function</code></li>
@@ -34,7 +34,7 @@
 <h2>関連データ構造</h2>
 <p>なし</p>
 <h2>ソース抜粋</h2>
-<p>~~~c <a class="wiki-source-link" href="../../source/src/include/access/tupmacs.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__access__tupmacs_h__bool.html&quot;}, '*');">bool</a> <a class="wiki-source-link" href="../../source/src/port/pg_strong_random.c.html#L63" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__port__pg_strong_random_c__pg_strong_random.html&quot;}, '*');">pg_strong_random</a>(void *buf, <a class="wiki-source-link" href="../../source/src/include/common/int.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__common__int_h__size_t.html&quot;}, '*');">size_t</a> <a class="wiki-source-link" href="../../source/src/include/utils/memutils.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__utils__memutils_h__len.html&quot;}, '*');">len</a>) { int			i;</p>
+<p>~~~c <a class="wiki-source-link" href="../../source/src/include/access/tupmacs.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__access__tupmacs_h__bool.html&quot;}, '*');">bool</a> pg_strong_random(void *buf, <a class="wiki-source-link" href="../../source/src/include/common/int.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__common__int_h__size_t.html&quot;}, '*');">size_t</a> <a class="wiki-source-link" href="../../source/src/include/utils/memutils.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__utils__memutils_h__len.html&quot;}, '*');">len</a>) { int			i;</p>
 <p>/*</p>
 <ul>
 <li>Check that OpenSSL&#x27;s CSPRNG has been sufficiently seeded, and if not</li>
@@ -42,7 +42,7 @@
 <li>OpenSSL, it may be necessary to call RAND_poll() a number of times.  If</li>
 <li>RAND_poll() fails to generate seed data within the given amount of</li>
 <li>retries, subsequent RAND_bytes() calls will fail, but we allow that to</li>
-<li>happen to let <a class="wiki-source-link" href="../../source/src/port/pg_strong_random.c.html#L63" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__port__pg_strong_random_c__pg_strong_random.html&quot;}, '*');">pg_strong_random</a>() callers handle that with appropriate</li>
+<li>happen to let pg_strong_random() callers handle that with appropriate</li>
 <li>error handling.</li>
 <p>*/ #define <a class="wiki-source-link" href="../../source/src/port/pg_strong_random.c.html#L77" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/port/pg_strong_random.c.html&quot;}, '*');">NUM_RAND_POLL_RETRIES</a> 8</p>
 </ul>

@@ -1,0 +1,69 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>src/include/funcapi.h.md</title><link rel="stylesheet" href="../../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../../source/src/include/funcapi.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/funcapi.h.html&quot;}, '*');">src/include/funcapi.h</a></h1>
+<h2>概要</h2>
+<p>PostgreSQL の関数マネージャ（fmgr）において、集合返却関数（SRF: Set Returning Function）、複合型を返す関数、および可変長引数（<code>VARIADIC</code>）を処理するためのデータ構造、マクロ、関数宣言を提供するヘッダーファイル。</p>
+<h2>モジュール内での役割</h2>
+<p><code>src/include</code> サブシステムの一部として、C言語で記述された拡張関数や内部関数が PostgreSQL の型システムやエグゼキュータと安全に連携するための公開インターフェースを定義する。実装ファイルである <a class="wiki-source-link" href="../../../source/src/backend/utils/fmgr/funcapi.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/utils/fmgr/funcapi.c.html&quot;}, '*');"><code>src/backend/utils/fmgr/funcapi.c</code></a> とペアをなし、関数結果の型解決やステート管理の共通基盤を提供する。</p>
+<h2>責務</h2>
+<ul>
+<li>複合型（レコードや行）を C の文字列配列から構築するための <a class="wiki-source-link" href="../../../source/src/include/funcapi.h.html#L35" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__funcapi_h__AttInMetadata.html&quot;}, '*');"><code>AttInMetadata</code></a> 構造体の定義。</li>
+<li>値を呼び出し間で維持しながら集合を返す Value-Per-Call モードのための <a class="wiki-source-link" href="../../../source/src/include/funcapi.h.html#L57" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__funcapi_h__FuncCallContext.html&quot;}, '*');"><code>FuncCallContext</code></a> 構造体と、制御用マクロ群（<a class="wiki-source-link" href="../../../source/src/include/funcapi.h.html#L307" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/funcapi.h.html&quot;}, '*');"><code>SRF_FIRSTCALL_INIT</code></a> 等）の提供。</li>
+<li>関数や式の戻り値の型情報を解析・分類する API（<a class="wiki-source-link" href="../../../source/src/backend/utils/fmgr/funcapi.c.html#L275" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__utils__fmgr__funcapi_c__get_call_result_type.html&quot;}, '*');"><code>get_call_result_type</code></a> 等）の宣言。</li>
+<li>可変長引数（<code>VARIADIC</code>）を解析・抽出する <a class="wiki-source-link" href="../../../source/src/backend/utils/fmgr/funcapi.c.html#L2010" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__utils__fmgr__funcapi_c__extract_variadic_args.html&quot;}, '*');"><code>extract_variadic_args</code></a> の宣言。</li>
+</ul>
+<h2>重要なシンボル</h2>
+<ul>
+<li><a class="wiki-source-link" href="../../../source/src/include/funcapi.h.html#L57" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__funcapi_h__FuncCallContext.html&quot;}, '*');"><code>FuncCallContext</code></a>: SRF の呼び出し間でカウンターやユーザ定義コンテキストを保持するための構造体。</li>
+<li><a class="wiki-source-link" href="../../../source/src/include/funcapi.h.html#L35" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__funcapi_h__AttInMetadata.html&quot;}, '*');"><code>AttInMetadata</code></a>: C 文字列からタプルを構築するために必要な属性メタデータや入力関数情報を保持する構造体。</li>
+<li><a class="wiki-source-link" href="../../../source/src/include/funcapi.h.html#L146" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__funcapi_h__TypeFuncClass.html&quot;}, '*');"><code>TypeFuncClass</code></a>: 関数や式の戻り値の型分類（スカラー、複合、レコード等）を表す列挙型。</li>
+<li><a class="wiki-source-link" href="../../../source/src/include/funcapi.h.html#L307" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/funcapi.h.html&quot;}, '*');"><code>SRF_FIRSTCALL_INIT</code></a> / <a class="wiki-source-link" href="../../../source/src/include/funcapi.h.html#L311" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/funcapi.h.html&quot;}, '*');"><code>SRF_RETURN_NEXT</code></a> / <a class="wiki-source-link" href="../../../source/src/include/funcapi.h.html#L329" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/funcapi.h.html&quot;}, '*');"><code>SRF_RETURN_DONE</code></a>: SRF のライフサイクル（初期化、次要素返却、終了）を記述するための標準マクロ群。</li>
+<li><code>InitMaterializedSRF</code>: 一括マテリアライズドモードの SRF を初期化するためのヘルパー関数。</li>
+</ul>
+<h2>制御フローとデータフロー</h2>
+<p>1. **関数呼び出しの初期化**:</p>
+<ul>
+<li>SRF の初回の呼び出しでは <code>SRF_IS_FIRSTCALL()</code> が真を返し、<code>SRF_FIRSTCALL_INIT()</code>（内部で <a class="wiki-source-link" href="../../../source/src/backend/utils/fmgr/funcapi.c.html#L132" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__utils__fmgr__funcapi_c__init_MultiFuncCall.html&quot;}, '*');"><code>init_MultiFuncCall</code></a> を呼び出し）によって <a class="wiki-source-link" href="../../../source/src/include/funcapi.h.html#L57" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__funcapi_h__FuncCallContext.html&quot;}, '*');"><code>FuncCallContext</code></a> とマルチコール用メモリコンテキストが初期化される。</li>
+<p>2. **データ生成と返却**:</p>
+<li>2回目以降の呼び出しでは <code>SRF_PERCALL_SETUP()</code> により既存のコンテキストが復元される。</li>
+<li>ユーザー関数はループまたはカウンターに基づき、<a class="wiki-source-link" href="../../../source/src/include/funcapi.h.html#L311" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/funcapi.h.html&quot;}, '*');"><code>SRF_RETURN_NEXT</code></a> を用いて 1 行ずつ <code>Datum</code> を返却する。</li>
+<p>3. **終了処理**:</p>
+<li>すべての行を返し終えた場合、<a class="wiki-source-link" href="../../../source/src/include/funcapi.h.html#L329" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/funcapi.h.html&quot;}, '*');"><code>SRF_RETURN_DONE</code></a> を呼び出して <a class="wiki-source-link" href="../../../source/src/backend/utils/fmgr/funcapi.c.html#L219" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__utils__fmgr__funcapi_c__end_MultiFuncCall.html&quot;}, '*');"><code>end_MultiFuncCall</code></a> を実行し、割り当てられたコンテキストのクリーンアップと終了状態（<code>ExprEndResult</code>）の設定を行う。</li>
+</ul>
+<h2>直接依存</h2>
+<ul>
+<li><code>access/tupdesc.h</code>: タプル記述子（<code>TupleDesc</code>）の定義と操作。</li>
+<li><code>executor/executor.h</code>: エグゼキュータ関連の型（<code>FunctionCallInfo</code> 等）。</li>
+<li><code>executor/tuptable.h</code>: タプルテーブル関連の定義。</li>
+<li><a class="wiki-source-link" href="../../../source/src/include/fmgr.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/fmgr.h.html&quot;}, '*');"><code>fmgr.h</code></a>: 関数マネージャの基本定義（<code>Datum</code>, <code>PG_FUNCTION_ARGS</code> 等）。</li>
+</ul>
+<h2>関連コード</h2>
+<ul>
+<li><a class="wiki-source-link" href="../../../source/src/backend/utils/fmgr/funcapi.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/utils/fmgr/funcapi.c.html&quot;}, '*');"><code>src/backend/utils/fmgr/funcapi.c</code></a>: <a class="wiki-source-link" href="../../../source/src/include/funcapi.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/funcapi.h.html&quot;}, '*');"><code>funcapi.h</code></a> で宣言された関数の実体を実装するペアファイル。</li>
+<li><a class="wiki-source-link" href="../../../source/src/include/windowapi.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/windowapi.h.html&quot;}, '*');"><code>src/include/windowapi.h</code></a>: ウィンドウ関数用の類似したAPI定義。</li>
+</ul>
+<h2>読者向けメモ</h2>
+<ul>
+<li>Value-Per-Call モードの SRF はクエリの途中で中断される可能性がある（<code>LIMIT</code> 句など）ため、メモリコンテキスト外の非メモリリソース（ファイルディスクリプタ等）を呼び出し間で維持しないこと。</li>
+<li>一括マテリアライズドモードが必要な場合は、<code>InitMaterializedSRF</code> と <code>tuplestore</code> を使用する設計が推奨される。</li>
+</ul>
+<h2>シンボルページ</h2>
+<ul>
+<li><a href="../../symbols/src__include__funcapi_h__AttInMetadata.html" target="wiki-view"><code>AttInMetadata</code></a></li>
+<li><a href="../../symbols/src__include__funcapi_h__FuncCallContext.html" target="wiki-view"><code>FuncCallContext</code></a></li>
+<li><a href="../../symbols/src__include__funcapi_h__TypeFuncClass.html" target="wiki-view"><code>TypeFuncClass</code></a></li>
+<li><a href="../../symbols/src__include__funcapi_h__HeapTupleGetDatum.html" target="wiki-view"><code>HeapTupleGetDatum</code></a></li>
+</ul><script>
+(function() {
+  function notifyParent() {
+    if (parent === window) return;
+    parent.postMessage({type: "frame-location", frame: window.name || "", href: window.location.href}, "*");
+  }
+  document.addEventListener("click", function(event) {
+    const link = event.target.closest("a[data-panel]");
+    if (!link || parent === window) return;
+    parent.postMessage({type: "source-link", panel: link.dataset.panel}, "*");
+  });
+  window.addEventListener("load", notifyParent);
+  window.addEventListener("hashchange", notifyParent);
+})();
+</script></body></html>

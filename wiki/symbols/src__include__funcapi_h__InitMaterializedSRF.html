@@ -1,0 +1,82 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>symbols/src__include__funcapi_h__InitMaterializedSRF.md</title><link rel="stylesheet" href="../../styles.css"></head><body><h1>InitMaterializedSRF</h1>
+<h2>定義</h2>
+<ul>
+<li>種別: <code>function</code></li>
+<li>定義箇所: <code>src/include/funcapi.h:1</code></li>
+<li>所属モジュール: <a class="wiki-entity-link" href="../modules/src__include.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/modules/src__include.html&quot;, &quot;source&quot;: &quot;source/src/include/c.h.html&quot;}, '*');"><code>module:src/include</code></a></li>
+</ul>
+<h2>目的</h2>
+<p>静的シンボル索引から生成された初期シンボルページです。</p>
+<h2>シグネチャまたは形状</h2>
+<ul>
+<li>シグネチャ: <code>/*------------------------------------------------------------------------- * * funcapi.h * Definitions for functions which return composite type and/or sets * or work on VARIADIC inputs. * * This file must be included by all Postgres modules that either define * or call FUNCAPI-callable functions or macros. * * * Copyright (c) 2002-2026, PostgreSQL Global Development Group * * src/include/funcapi.h * *------------------------------------------------------------------------- */ #ifndef FUNCAPI_H #define FUNCAPI_H #include &quot;access/tupdesc.h&quot; #include &quot;executor/executor.h&quot; #include &quot;executor/tuptable.h&quot; #include &quot;fmgr.h&quot; /*------------------------------------------------------------------------- * Support to ease writing Functions returning composite types *------------------------------------------------------------------------- * * This struct holds arrays of individual attribute information * needed to create a tuple from raw C strings. It also requires * a copy of the TupleDesc. The information carried here * is derived from the TupleDesc, but it is stored here to * avoid redundant cpu cycles on each call to an SRF. */ typedef struct AttInMetadata</code></li>
+</ul>
+<h2>入力と出力</h2>
+<p>まだ解析していません。</p>
+<h2>前提条件と不変条件</h2>
+<p>まだ解析していません。</p>
+<h2>アルゴリズムまたは振る舞い</h2>
+<ul>
+<li>複雑度: <code>low</code> (score 2)</li>
+</ul>
+<p>まだ解析していません。</p>
+<h2>呼び出し元と呼び出し先</h2>
+<ul>
+<li>呼び出し元: なし</li>
+<li>呼び出し先: なし</li>
+<li>呼び出し元サイト: なし</li>
+<li>呼び出しサイト: なし</li>
+</ul>
+<h2>関連データ構造</h2>
+<p><a class="wiki-source-link" href="../../source/src/interfaces/ecpg/test/expected/preproc-type.c.html#L36" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__interfaces__ecpg__test__expected__preproc-type_c__access.html&quot;}, '*');"><code>access</code></a>, <a class="wiki-source-link" href="../../source/src/include/funcapi.h.html#L35" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__funcapi_h__AttInMetadata.html&quot;}, '*');"><code>AttInMetadata</code></a>, <code>c</code>, <code>FmgrInfo</code>, <code>Group</code>, <code>int32</code>, <code>Oid</code>, <code>TupleDesc</code></p>
+<h2>ソース抜粋</h2>
+<p>~~~c /*------------------------------------------------------------------------- *</p>
+<ul>
+<li><a class="wiki-source-link" href="../../source/src/include/funcapi.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/funcapi.h.html&quot;}, '*');">funcapi.h</a></li>
+<li>Definitions for <a class="wiki-source-link" href="../../source/src/backend/regex/regcomp.c.html#L358" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/regex/regcomp.c.html&quot;}, '*');">functions</a> which return composite <a class="wiki-source-link" href="../../source/src/include/lib/ilist.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__lib__ilist_h__type.html&quot;}, '*');">type</a> and/or sets</li>
+<li>or work on VARIADIC inputs.</li>
+<p>*</p>
+<li>This file must be included by all Postgres modules that either define</li>
+<li>or call FUNCAPI-callable <a class="wiki-source-link" href="../../source/src/backend/regex/regcomp.c.html#L358" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/regex/regcomp.c.html&quot;}, '*');">functions</a> or macros.</li>
+<p>* *</p>
+<li>Copyright (c) 2002-2026, PostgreSQL Global Development Group</li>
+<p>*</p>
+<li><a class="wiki-source-link" href="../../source/src/include/funcapi.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/funcapi.h.html&quot;}, '*');">src/include/funcapi.h</a></li>
+<p>* *------------------------------------------------------------------------- */ #ifndef <a class="wiki-source-link" href="../../source/src/include/funcapi.h.html#L18" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/funcapi.h.html&quot;}, '*');">FUNCAPI_H</a> #define <a class="wiki-source-link" href="../../source/src/include/funcapi.h.html#L18" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/funcapi.h.html&quot;}, '*');">FUNCAPI_H</a></p>
+</ul>
+<p>#include &quot;access/tupdesc.h&quot; #include &quot;executor/executor.h&quot; #include &quot;executor/tuptable.h&quot; #include &quot;<a class="wiki-source-link" href="../../source/src/include/fmgr.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/fmgr.h.html&quot;}, '*');">fmgr.h</a>&quot;</p>
+<p>/*-------------------------------------------------------------------------</p>
+<ul>
+<li>Support to ease writing Functions returning composite <a class="wiki-source-link" href="../../source/src/interfaces/ecpg/preproc/ecpg.c.html#L30" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/ecpg/preproc/ecpg.c.html&quot;}, '*');">types</a></li>
+<p>*------------------------------------------------------------------------- *</p>
+<li>This struct holds arrays of individual attribute information</li>
+<li>needed to create a tuple from raw C strings. It also requires</li>
+<li>a copy of the TupleDesc. The information carried here</li>
+<li><a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> derived from the TupleDesc, but it <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> stored here to</li>
+<li>avoid redundant cpu cycles on each call to an SRF.</li>
+<p>*/ typedef struct <a class="wiki-source-link" href="../../source/src/include/funcapi.h.html#L35" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__funcapi_h__AttInMetadata.html&quot;}, '*');">AttInMetadata</a> { /* full TupleDesc */ TupleDesc	tupdesc;</p>
+</ul>
+<p>/* array of attribute <a class="wiki-source-link" href="../../source/src/include/lib/ilist.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__lib__ilist_h__type.html&quot;}, '*');">type</a> input function finfo */ FmgrInfo   *attinfuncs;</p>
+<p>/* array of attribute <a class="wiki-source-link" href="../../source/src/include/lib/ilist.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__lib__ilist_h__type.html&quot;}, '*');">type</a> i/o parameter OIDs */ Oid		   *attioparams;</p>
+<p>/* array of attribute typmod */ int32	   *atttypmods; } <a class="wiki-source-link" href="../../source/src/include/funcapi.h.html#L35" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__funcapi_h__AttInMetadata.html&quot;}, '*');">AttInMetadata</a>; ~~~</p>
+<h2>失敗モードと境界条件</h2>
+<p>まだ解析していません。</p>
+<h2>保守担当者向けメモ</h2>
+<ul>
+<li>後続フェーズで、ソース本文の文脈と caller/callee 情報を使ってこのページを強化する。</li>
+</ul><script>
+(function() {
+  function notifyParent() {
+    if (parent === window) return;
+    parent.postMessage({type: "frame-location", frame: window.name || "", href: window.location.href}, "*");
+  }
+  document.addEventListener("click", function(event) {
+    const link = event.target.closest("a[data-panel]");
+    if (!link || parent === window) return;
+    parent.postMessage({type: "source-link", panel: link.dataset.panel}, "*");
+  });
+  window.addEventListener("load", notifyParent);
+  window.addEventListener("hashchange", notifyParent);
+})();
+</script></body></html>

@@ -1,5 +1,5 @@
 <!doctype html>
-<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>src/backend/optimizer/README</title><link rel="stylesheet" href="../../../../../styles.css"></head><body><h1>Japanese translation</h1><p><code>src/backend/optimizer/README</code></p><p><a href="../../../../../source/src/backend/optimizer/README.html" target="source-view">View original document</a></p><p class="document-translation-progress document-translation-incomplete">Translation in progress: 7/8 chunks complete. Pending chunks show their original text below.</p><div class="document-translation-body"><section class="document-translation-chunk translated" data-chunk-order="0"><p>src/backend/optimizer/README</p>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>src/backend/optimizer/README</title><link rel="stylesheet" href="../../../../../styles.css"></head><body><h1>Japanese translation</h1><p><code>src/backend/optimizer/README</code></p><p><a href="../../../../../source/src/backend/optimizer/README.html" target="source-view">View original document</a></p><p class="document-translation-progress document-translation-complete">Translation complete.</p><div class="document-translation-body"><section class="document-translation-chunk translated" data-chunk-order="0"><p>src/backend/optimizer/README</p>
 <p>Optimizer =========</p>
 <p>これらのディレクトリは、パーサーから返されたQuery構造体を受け取り、エグゼキューターが使用するプランを生成します。/planディレクトリは実際の出力プランを生成し、/pathコードはテーブルを結合するためのすべての可能な方法を生成し、/prepは特殊なケースに対するさまざまな前処理ステップを処理します。/utilはユーティリティ関係です。/geqoは個別の「遺伝的最適化」プランナーです。これは、可能な結合ツリーをすべて網羅的に検討するのではなく、結合ツリー空間を半ランダムに検索します（ただし、/geqoによって検討される各結合は、パスを作成するために/pathに渡されるため、GEQOモードでも、特定の結合ペアごとに可能なすべての実装パスが検討されます）。</p>
 <p>Paths and Join Pairs --------------------</p>
@@ -73,17 +73,17 @@
 <p>As usual, outer join identity 3 complicates matters.  If we start with (A leftjoin B on (Pab)) leftjoin C on (Pbc) then the parser will have marked any C Vars appearing above these joins with the RT index of the B/C join.  If we now transform to A leftjoin (B leftjoin C on (Pbc)) on (Pab) then it would appear that a clause using only such Vars could be pushed down and applied as a filter clause (not a join clause) at the lower B/C join.  But *this might not give the right answer* since the clause might see a non-null value for the C Var that will be replaced by null once the A/B join is performed.  We handle this by saying that the pushed-down join hasn&#x27;t completely performed the work of the B/C join and hence is not entitled to include that outer join relid in its relid set.  When we form the A/B join, both outer joins&#x27; relids will be added to its relid set, and then the upper clause will be applied at the correct join level.  (Note there is no problem when identity 3 is applied in the other direction: if we started with the second form then upper C Vars are marked with both outer join relids, so they cannot drop below whichever join is applied second.)  Similarly, Vars representing the output of a pushed-down join do not acquire nullingrel bits for that join until after the upper join is performed.</p>
 <p>There is one additional complication for qual clause placement, which occurs when we have made multiple versions of an outer-join clause as described previously (that is, we have both &quot;Pbc&quot; and &quot;Pb*c&quot; forms of the same clause seen in outer join identity 3).  When forming an outer join we only want to apply one of the redundant versions of the clause. If we are forming the B/C join without having yet computed the A/B join, it&#x27;s easy to reject the &quot;Pb*c&quot; form since its required relid set includes the A/B join relid which is not in the input.  However, if we form B/C after A/B, then both forms of the clause are applicable so far as that test can tell.  We have to look more closely to notice that the &quot;Pbc&quot; clause form refers to relation B which is no longer directly accessible.  While such a check could be performed using the per-relation RelOptInfo.nulling_relids data, it would be annoyingly expensive to do over and over as we consider different join paths. To make this simple and reliable, we compute an &quot;incompatible_relids&quot; set for each variant version (clone) of a redundant clause.  A clone clause should not be applied if any of the outer-join relids listed in incompatible_relids has already been computed below the current join.</p>
 <p>Optimizer Functions -------------------</p>
-<p>The primary entry point is planner().</p>
-<p>planner() set up for recursive handling of subqueries -subquery_planner() pull up sublinks and subqueries from rangetable, if possible canonicalize qual Attempt to simplify WHERE clause to the most useful form; this includes flattening nested AND/ORs and detecting clauses that are duplicated in different branches of an OR. simplify constant expressions process sublinks convert Vars of outer query levels into Params --grouping_planner() preprocess target list for non-SELECT queries handle UNION/INTERSECT/EXCEPT, GROUP BY, HAVING, aggregates, ORDER BY, DISTINCT, LIMIT ---query_planner() make list of base relations used in query split up the qual into restrictions (a=1) and joins (b=c) find qual clauses that enable merge and hash joins ----make_one_rel() set_base_rel_pathlists() find seqscan and all index paths for each base relation find selectivity of columns used in joins make_rel_from_joinlist() hand off join subproblems to a plugin, GEQO, or standard_join_search() ------standard_join_search() call join_search_one_level() for each level of join tree needed join_search_one_level(): For each joinrel of the prior level, do make_rels_by_clause_joins() if it has join clauses, or make_rels_by_clauseless_joins() if not. Also generate &quot;bushy plan&quot; joins between joinrels of lower levels. Back at standard_join_search(), generate gather paths if needed for each newly constructed joinrel, then apply set_cheapest() to extract the cheapest path for it. Loop back if this wasn&#x27;t the top join level. Back at grouping_planner: do grouping (GROUP BY) and aggregation do window functions make unique (DISTINCT) do sorting (ORDER BY) do limit (LIMIT/OFFSET) Back at planner(): convert finished Path tree into a Plan tree do final cleanup after planning</p>
+<p>プライマリのエントリポイントは planner() です。</p>
+<p>planner() subqueries の再帰的処理の準備 -subquery_planner() rangetable から sublink と subquery をプルアップする（可能な場合） qual の正準化 (canonicalize) WHERE 句をもっとも有用な形式に単純化する。これには、 入れ子の AND/OR のフラット化や、OR の異なるブランチで 重複している句の検出が含まれます。 定数式の単純化 sublink の処理 外側クエリレベルの Var を Param に変換 --grouping_planner() 非 SELECT クエリに対するターゲットリストの前処理 UNION/INTERSECT/EXCEPT、GROUP BY、HAVING、集約、 ORDER BY、DISTINCT、LIMIT の処理 ---query_planner() クエリで使用されるベース関係のリストを作成 qual を制限 (a=1) と結合 (b=c) に分割 マージ結合およびハッシュ結合を可能にする qual 句を検索 ----make_one_rel() set_base_rel_pathlists() 各ベース関係のシーケンシャルスキャンおよびすべてのインデックスパスを検索 結合で使用される列の選択度を検索 make_rel_from_joinlist() 結合のサブ問題をプラグイン、GEQO、または standard_join_search() に委譲 ------standard_join_search() 必要な結合ツリーの各レベルに対して join_search_one_level() を呼び出す join_search_one_level(): 前のレベルの各 joinrel について、結合句を持つ場合は make_rels_by_clause_joins() を実行し、持たない場合は make_rels_by_clauseless_joins() を実行する。 また、下位レベルの joinrel 間で「bushy plan」結合を生成する。 standard_join_search() に戻り、新しく構築された各 joinrel に対して 必要に応じて gather パスを生成し、set_cheapest() を適用して その中で最も安価なパスを抽出する。 トップの結合レベルでなかった場合はループして戻る。 grouping_planner に戻る: グループ化 (GROUP BY) と集約の実行 ウィンドウ関数の実行 重複排除 (DISTINCT) の実行 ソート (ORDER BY) の実行 リミット (LIMIT/OFFSET) の実行 planner() に戻る: 完成した Path ツリーを Plan ツリーに変換 プランニング後の最終クリーンアップの実行</p>
 <p>Optimizer Data Structures -------------------------</p>
-<p>PlannerGlobal   - global information for a single planner invocation</p>
-<p>PlannerInfo     - information for planning a particular Query (we make a separate PlannerInfo node for each sub-Query)</p>
-<p>RelOptInfo      - a relation or joined relations</p>
-<p>RestrictInfo   - WHERE clauses, like &quot;x = 3&quot; or &quot;y = z&quot; (note the same structure is used for restriction and join clauses)</p>
-<p>Path           - every way to generate a RelOptInfo(sequential,index,joins) A plain Path node can represent several simple plans, per its pathtype: T_SeqScan   - sequential scan T_SampleScan - tablesample scan T_FunctionScan - function-in-FROM scan T_TableFuncScan - table function scan T_ValuesScan - VALUES scan T_CteScan   - CTE (WITH) scan T_NamedTuplestoreScan - ENR scan T_WorkTableScan - scan worktable of a recursive CTE T_Result    - childless Result plan node (used for FROM-less SELECT) IndexPath     - index scan BitmapHeapPath - top of a bitmapped index scan TidPath       - scan by CTID TidRangePath  - scan a contiguous range of CTIDs SubqueryScanPath - scan a subquery-in-FROM ForeignPath   - scan a foreign table, foreign join or foreign upper-relation CustomPath    - for custom scan providers AppendPath    - append multiple subpaths together MergeAppendPath - merge multiple subpaths, preserving their common sort order GroupResultPath - childless Result plan node (used for degenerate grouping) MaterialPath  - a Material plan node MemoizePath   - a Memoize plan node for caching tuples from sub-paths GatherPath    - collect the results of parallel workers GatherMergePath - collect parallel results, preserving their common sort order ProjectionPath - a Result plan node with child (used for projection) ProjectSetPath - a ProjectSet plan node applied to some sub-path SortPath      - a Sort plan node applied to some sub-path IncrementalSortPath - an IncrementalSort plan node applied to some sub-path GroupPath     - a Group plan node applied to some sub-path UniquePath    - a Unique plan node applied to some sub-path AggPath       - an Agg plan node applied to some sub-path GroupingSetsPath - an Agg plan node used to implement GROUPING SETS MinMaxAggPath - a Result plan node with subplans performing MIN/MAX WindowAggPath - a WindowAgg plan node applied to some sub-path SetOpPath     - a SetOp plan node applied to two sub-paths RecursiveUnionPath - a RecursiveUnion plan node applied to two sub-paths LockRowsPath  - a LockRows plan node applied to some sub-path ModifyTablePath - a ModifyTable plan node applied to some sub-path(s) LimitPath     - a Limit plan node applied to some sub-path NestPath      - nested-loop joins MergePath     - merge joins HashPath      - hash joins</p>
-<p>EquivalenceClass - a data structure representing a set of values known equal</p>
-<p>PathKey        - a data structure representing the sort ordering of a path</p>
-<p>The optimizer spends a good deal of its time worrying about the ordering of the tuples returned by a path.  The reason this is useful is that by knowing the sort ordering of a path, we may be able to use that path as the left or right input of a mergejoin and avoid an explicit sort step. Nestloops and hash joins don&#x27;t really care what the order of their inputs is, but mergejoin needs suitably ordered inputs.  Therefore, all paths generated during the optimization process are marked with their sort order (to the extent that it is known) for possible use by a higher-level merge.</p></section><section class="document-translation-chunk translated" data-chunk-order="3"><p>最終的なパスがすでに適切な順序になっている場合、ユーザーの ORDER BY 句を実装するために明示的なソートステップを回避することも可能です。 そのため、ソート順序はトップレベルにおいても重要です。 grouping_planner() は、希望する順序に一致するソート順序を持つ最もコストの低いパスを探し、 そのコストと、全体で最もコストの低いパスを使用してその上で明示的なソートを行った場合のコストを比較します。</p>
+<p>PlannerGlobal   - 単一のプランナー呼び出しに関するグローバル情報</p>
+<p>PlannerInfo     - 特定の Query をプランニングするための情報（サブ Query ごとに 個別の PlannerInfo ノードが作成されます）</p>
+<p>RelOptInfo      - 関係または結合された関係</p>
+<p>RestrictInfo   - &quot;x = 3&quot; や &quot;y = z&quot; のような WHERE 句 （同じ構造が制限句と結合句の両方に使用されることに 注意してください）</p>
+<p>Path           - RelOptInfo を生成するすべての方法（シーケンシャル、インデックス、結合） 通常の Path ノードは、その pathtype に従って複数の単純なプランを表すことができます： T_SeqScan   - シーケンシャルスキャン T_SampleScan - tablesample スキャン T_FunctionScan - FROM 内関数スキャン T_TableFuncScan - テーブル関数スキャン T_ValuesScan - VALUES スキャン T_CteScan   - CTE (WITH) スキャン T_NamedTuplestoreScan - ENR スキャン T_WorkTableScan - 再帰的 CTE のワークテーブルスキャン T_Result    - 子を持たない Result プランノード（FROM なし SELECT 用） IndexPath     - インデックススキャン BitmapHeapPath - ビットマップインデックススキャンのトップ TidPath       - CTID によるスキャン TidRangePath  - CTID の連続範囲のスキャン SubqueryScanPath - FROM 内サブクエリのスキャン ForeignPath   - 外部テーブル、外部結合、または外部上位関係のスキャン CustomPath    - カスタムスキャンプロバイダ用 AppendPath    - 複数のサブパスを結合（append）する MergeAppendPath - 共通のソート順を維持しながら複数のサブパスをマージする GroupResultPath - 子を持たない Result プランノード（縮退したグループ化用） MaterialPath  - Material プランノード MemoizePath   - サブパスからのタプルをキャッシュするための Memoize プランノード GatherPath    - 並列ワーカーの結果を収集する GatherMergePath - 共通のソート順を維持しながら並列結果を収集する ProjectionPath - 子を持つ Result プランノード（プロジェクション用） ProjectSetPath - 一部のサブパスに適用される ProjectSet プランノード SortPath      - 一部のサブパスに適用される Sort プランノード IncrementalSortPath - 一部のサブパスに適用される IncrementalSort プランノード GroupPath     - 一部のサブパスに適用される Group プランノード UniquePath    - 一部のサブパスに適用される Unique プランノード AggPath       - 一部のサブパスに適用される Agg プランノード GroupingSetsPath - GROUPING SETS を実装するために使用される Agg プランノード MinMaxAggPath - MIN/MAX を実行するサブプランを持つ Result プランノード WindowAggPath - 一部のサブパスに適用される WindowAgg プランノード SetOpPath     - 2つのサブパスに適用される SetOp プランノード RecursiveUnionPath - 2つのサブパスに適用される RecursiveUnion プランノード LockRowsPath  - 一部のサブパスに適用される LockRows プランノード ModifyTablePath - 1つ以上のサブパスに適用される ModifyTable プランノード LimitPath     - 一部のサブパスに適用される Limit プランノード NestPath      - ネストループ結合 MergePath     - マージ結合 HashPath      - ハッシュ結合</p>
+<p>EquivalenceClass - 等しいことが既知の値のセットを表すデータ構造</p>
+<p>PathKey        - パスのソート順を表すデータ構造</p>
+<p>オプティマイザは、パスによって返されるタプルの順序の考慮に多くの時間を費やします。 これが有用である理由は、パスのソート順を知ることで、そのパスを マージ結合の左側または右側の入力として使用し、明示的なソートステップを 回避できる場合があるからです。 ネストループやハッシュ結合は入力の順序をあまり気にしませんが、 マージ結合には適切に順序付けられた入力が必要です。 したがって、最適化プロセスの過程で生成されるすべてのパスには、 上位のマージでの使用の可能性に備えて、（既知の範囲で） ソート順がマークされます。</p></section><section class="document-translation-chunk translated" data-chunk-order="3"><p>最終的なパスがすでに適切な順序になっている場合、ユーザーの ORDER BY 句を実装するために明示的なソートステップを回避することも可能です。 そのため、ソート順序はトップレベルにおいても重要です。 grouping_planner() は、希望する順序に一致するソート順序を持つ最もコストの低いパスを探し、 そのコストと、全体で最もコストの低いパスを使用してその上で明示的なソートを行った場合のコストを比較します。</p>
 <p>特定の RelOptInfo のパスを生成する際、同じまたはより良いソート順序を持つ別の既知のパスよりも コストが高い場合、そのパスは破棄されます。 （明示的なソートなしで）特定のソート順序を実現する唯一既知の方法であるパスは、決して破棄されません。 このようにして、上のレベルでは、入力用に保持された任意のパスから選択できるため、 ソートなしでマージ結合を構築する自由度が最大になります。</p>
 <p>EquivalenceClasses ------------------</p>
 <p>クエリの条件（qual）句に対する deconstruct_jointree() のスキャン中に、 マージ結合可能な等価句 A = B を探します。 見つかった場合、それらが等しいことを記録するために、式 A と B を含む EquivalenceClass を作成します。 後で別の等価句 B = C が見つかった場合は、{A B} の既存の EquivalenceClass に C を追加します。 これにより、2つの既存の EquivalenceClasses をマージする必要が生じる場合があります。 スキャンの終了時には、互いに推移的に等しいことが既知である値のセットが得られます。 したがって、任意のペアの値を制限句または結合句としての比較に使用できます（もちろん、 これらの値がスキャンまたは結合時に利用可能な場合）。 さらに、それらすべてをテストする必要はなく、そのような比較を1つだけテストすれば十分です。 したがって、等価句は標準的な条件（qual）分散プロセスから削除されます。 代わりに、制限句または結合句のリストを準備するときに、各 EquivalenceClass を調べて 句に寄与できるかどうかを確認し、可能であれば比較する値の適切なペアを選択します。 たとえば、A のリレーションと C のリレーションを結合しようとしている場合、 元のクエリのどこにも明示的に現れていなかったとしても、句 A = C を生成できます。 これにより、デカルト積結合を必要とするとして本来なら拒否されていたであろう結合パスを探索できるようになります。</p>
@@ -111,234 +111,42 @@
 <p>A leftjoin (B leftjoin C on (b.b = c.c)) on (Pab) (A leftjoin B on (Pab)) leftjoin C on (b.b* = c.c)</p>
 <p>b.b と c.c を結ぶ EquivalenceClause を生成できますが、 その後 b.b* と c.c も結ぼうとすると、 b.b と b.b* が等しいという（プランツリーの一部において少なくとも）無意味な結論に至ってしまいます。 いずれにせよ、そのようなものから導き出せる結論は、大部分が重複するものです。 b.b* を含む条件はこの結合ネスティングの下で計算することはできませんが、 計算できる条件は、b.b/c.c の組み合わせから得られるものと重複します。 したがって、b.b と c.c を結ぶ EquivalenceClause を生成することを選択しますが、 「b.b* = c.c」は単なる通常の句として処理されます。</p>
 <p>マージ結合で機能するソート順序を決定するのを助けるために、 各マージ結合可能な句に、その左側および右側の入力の EquivalenceClasses の印を付けます。 等価句の場合、これらは当然同じ EquivalenceClass です。 等価句ではないマージ結合可能な句（外部結合条件など）の場合、 左側および右側の入力用に2つの別個の EquivalenceClasses を生成します。 これにより、単一アイテムの等価「クラス」が作成される可能性がありますが、 他の等価句が後で同じ式に関係していることが判明した場合は、 もちろんこれらは依然としてマージの対象となります。</p>
-<p>単一アイテムの EquivalenceClass を形成するもう1つの方法は、 希望するソート順序を表す PathKey の作成時です（下記参照）。 これは、ORDER BY または GROUP BY キーがどの等価句にも言及されていない場合に発生します。 そのようなクエリでソート順序について推論する必要があり、 ソート順序の表現は EquivalenceClass に依存する PathKey であるため、 EquivalenceClass を作成する必要があります。 これは上記の場合とは少し異なります。 なぜなら、そのような EquivalenceClass には集約関数や変動関数が含まれている可能性があるためです。 （変動関数を含む句は、そのトップオペレータがマージ結合可能であっても、 マージ結合可能とは見なされないため、 変動関数が他の方法で EquivalenceClasses に入り込む方法はありません。 集約は WHERE では完全に禁止されているため、 マージ結合可能な句に見つかることはありません。） これは、一貫した PathKey 表現を維持するための単なる利便性であり、 そのような EquivalenceClass が他のものとマージされることはありません。 特に、単一アイテムの EquivalenceClass {a.x} は、 a.x = a.x という主張を意味するものでは*ない*ことに注意してください。 これの実用的な影響は、a.x が NULL になり得るということです。</p></section><section class="document-translation-chunk pending" data-chunk-order="4"><h2>Chunk 5: translation pending</h2><p>This chunk has not been translated yet. Original text:</p><pre class="document-translation-text">An EquivalenceClass also contains a list of btree opfamily OIDs, which
-determines what the equalities it represents actually &quot;mean&quot;.  All the
-equivalence clauses that contribute to an EquivalenceClass must have
-equality operators that belong to the same set of opfamilies.  (Note: most
-of the time, a particular equality operator belongs to only one family, but
-it&#x27;s possible that it belongs to more than one.  We keep track of all the
-families to ensure that we can make use of an index belonging to any one of
-the families for mergejoin purposes.)
-
-For the same sort of reason, an EquivalenceClass is also associated
-with a particular collation, if its datatype(s) care about collation.
-
-An EquivalenceClass can contain &quot;em_is_child&quot; members, which are copies
-of members that contain appendrel parent relation Vars, transposed to
-contain the equivalent child-relation variables or expressions.  These
-members are *not* full-fledged members of the EquivalenceClass and do not
-affect the class&#x27;s overall properties at all.  They are kept only to
-simplify matching of child-relation expressions to EquivalenceClasses.
-Most operations on EquivalenceClasses needn&#x27;t look at child members.
-
-
-PathKeys
---------
-
-The PathKeys data structure represents what is known about the sort order
-of the tuples generated by a particular Path.  A path&#x27;s pathkeys field is a
-list of PathKey nodes, where the n&#x27;th item represents the n&#x27;th sort key of
-the result.  Each PathKey contains these fields:
-
-	* a reference to an EquivalenceClass
-	* a btree opfamily OID (must match one of those in the EC)
-	* a sort direction (ascending or descending)
-	* a nulls-first-or-last flag
-
-The EquivalenceClass represents the value being sorted on.  Since the
-various members of an EquivalenceClass are known equal according to the
-opfamily, we can consider a path sorted by any one of them to be sorted by
-any other too; this is what justifies referencing the whole
-EquivalenceClass rather than just one member of it.
-
-In single/base relation RelOptInfo&#x27;s, the Paths represent various ways
-of scanning the relation and the resulting ordering of the tuples.
-Sequential scan Paths have NIL pathkeys, indicating no known ordering.
-Index scans have Path.pathkeys that represent the chosen index&#x27;s ordering,
-if any.  A single-key index would create a single-PathKey list, while a
-multi-column index generates a list with one element per key index column.
-Non-key columns specified in the INCLUDE clause of covering indexes don&#x27;t
-have corresponding PathKeys in the list, because they have no influence on
-index ordering.  (Actually, since an index can be scanned either forward or
-backward, there are two possible sort orders and two possible PathKey lists
-it can generate.)
-
-Note that a bitmap scan has NIL pathkeys since we can say nothing about
-the overall order of its result.  Also, an indexscan on an unordered type
-of index generates NIL pathkeys.  However, we can always create a pathkey
-by doing an explicit sort.  The pathkeys for a Sort plan&#x27;s output just
-represent the sort key fields and the ordering operators used.
-
-Things get more interesting when we consider joins.  Suppose we do a
-mergejoin between A and B using the mergeclause A.X = B.Y.  The output
-of the mergejoin is sorted by X --- but it is also sorted by Y.  Again,
-this can be represented by a PathKey referencing an EquivalenceClass
-containing both X and Y.
-
-With a little further thought, it becomes apparent that nestloop joins
-can also produce sorted output.  For example, if we do a nestloop join
-between outer relation A and inner relation B, then any pathkeys relevant
-to A are still valid for the join result: we have not altered the order of
-the tuples from A.  Even more interesting, if there was an equivalence clause
-A.X=B.Y, and A.X was a pathkey for the outer relation A, then we can assert
-that B.Y is a pathkey for the join result; X was ordered before and still
-is, and the joined values of Y are equal to the joined values of X, so Y
-must now be ordered too.  This is true even though we used neither an
-explicit sort nor a mergejoin on Y.  (Note: hash joins cannot be counted
-on to preserve the order of their outer relation, because the executor
-might decide to &quot;batch&quot; the join, so we always set pathkeys to NIL for
-a hashjoin path.)
-
-An outer join doesn&#x27;t preserve the ordering of its nullable input
-relation(s), because it might insert nulls at random points in the
-ordering.  We don&#x27;t need to think about this explicitly in the PathKey
-representation, because a PathKey representing a post-join variable
-will contain varnullingrel bits, making it not equal to a PathKey
-representing the pre-join value.
-
-In general, we can justify using EquivalenceClasses as the basis for
-pathkeys because, whenever we scan a relation containing multiple
-EquivalenceClass members or join two relations each containing
-EquivalenceClass members, we apply restriction or join clauses derived from
-the EquivalenceClass.  This guarantees that any two values listed in the
-EquivalenceClass are in fact equal in all tuples emitted by the scan or
-join, and therefore that if the tuples are sorted by one of the values,
-they can be considered sorted by any other as well.  It does not matter
-whether the test clause is used as a mergeclause, or merely enforced
-after-the-fact as a qpqual filter.
-
-Note that there is no particular difficulty in labeling a path&#x27;s sort
-order with a PathKey referencing an EquivalenceClass that contains
-variables not yet joined into the path&#x27;s output.  We can simply ignore
-such entries as not being relevant (yet).  This makes it possible to
-use the same EquivalenceClasses throughout the join planning process.
-In fact, by being careful not to generate multiple identical PathKey
-objects, we can reduce comparison of EquivalenceClasses and PathKeys
-to simple pointer comparison, which is a huge savings because add_path
-has to make a large number of PathKey comparisons in deciding whether
-competing Paths are equivalently sorted.
-
-Pathkeys are also useful to represent an ordering that we wish to achieve,
-since they are easily compared to the pathkeys of a potential candidate
-path.  So, SortGroupClause lists are turned into pathkeys lists for use
-inside the optimizer.
-
-An additional refinement we can make is to insist that canonical pathkey
-lists (sort orderings) do not mention the same EquivalenceClass more than
-once.  For example, in all these cases the second sort column is redundant,
-because it cannot distinguish values that are the same according to the
-first sort column:
-	SELECT ... ORDER BY x, x
-	SELECT ... ORDER BY x, x DESC
-	SELECT ... WHERE x = y ORDER BY x, y
-Although a user probably wouldn&#x27;t write &quot;ORDER BY x,x&quot; directly, such
-redundancies are more probable once equivalence classes have been
-considered.  Also, the system may generate redundant pathkey lists when
-computing the sort ordering needed for a mergejoin.  By eliminating the
-redundancy, we save time and improve planning, since the planner will more
-easily recognize equivalent orderings as being equivalent.
-
-Another interesting property is that if the underlying EquivalenceClass
-contains a constant, then the pathkey is completely redundant and need not
-be sorted by at all!  Every interesting row must contain the same value,
-so there&#x27;s no need to sort.  This might seem pointless because users
-are unlikely to write &quot;... WHERE x = 42 ORDER BY x&quot;, but it allows us to
-recognize when particular index columns are irrelevant to the sort order:
-if we have &quot;... WHERE x = 42 ORDER BY y&quot;, scanning an index on (x,y)
-produces correctly ordered data without a sort step.  We used to have very
-ugly ad-hoc code to recognize that in limited contexts, but discarding
-constant ECs from pathkeys makes it happen cleanly and automatically.
-
-
-Order of processing for EquivalenceClasses and PathKeys
--------------------------------------------------------
-
-As alluded to above, there is a specific sequence of phases in the
-processing of EquivalenceClasses and PathKeys during planning.  During the
-initial scanning of the query&#x27;s quals (deconstruct_jointree followed by
-reconsider_outer_join_clauses), we construct EquivalenceClasses based on
-mergejoinable clauses found in the quals.  At the end of this process,
-we know all we can know about equivalence of different variables, so
-subsequently there will be no further merging of EquivalenceClasses.
-At that point it is possible to consider the EquivalenceClasses as
-&quot;canonical&quot; and build canonical PathKeys that reference them.  At this
-time we construct PathKeys for the query&#x27;s ORDER BY and related clauses.
-(Any ordering expressions that do not appear elsewhere will result in
-the creation of new EquivalenceClasses, but this cannot result in merging
-existing classes, so canonical-ness is not lost.)
-
-Because all the EquivalenceClasses are known before we begin path
-generation, we can use them as a guide to which indexes are of interest:
-if an index&#x27;s column is not mentioned in any EquivalenceClass then that
-index&#x27;s sort order cannot possibly be helpful for the query.  This allows
-short-circuiting of much of the processing of create_index_paths() for
-irrelevant indexes.
-
-There are some cases where planner.c constructs additional
-EquivalenceClasses and PathKeys after query_planner has completed.
-In these cases, the extra ECs/PKs are needed to represent sort orders
-that were not considered during query_planner.  Such situations should be
-minimized since it is impossible for query_planner to return a plan
-producing such a sort order, meaning an explicit sort will always be needed.
-Currently this happens only for queries involving multiple window functions
-with different orderings, for which extra sorts are needed anyway.
-
-
-Parameterized Paths
--------------------
-
-The naive way to join two relations using a clause like WHERE A.X = B.Y
-is to generate a nestloop plan like this:
-
-	NestLoop
-		Filter: A.X = B.Y
-		-&gt; Seq Scan on A
-		-&gt; Seq Scan on B
-
-We can make this better by using a merge or hash join, but it still
-requires scanning all of both input relations.  If A is very small and B is
-very large, but there is an index on B.Y, it can be enormously better to do
-something like this:
-
-	NestLoop
-		-&gt; Seq Scan on A
-		-&gt; Index Scan using B_Y_IDX on B
-			Index Condition: B.Y = A.X
-
-Here, we are expecting that for each row scanned from A, the nestloop
-plan node will pass down the current value of A.X into the scan of B.
-That allows the indexscan to treat A.X as a constant for any one
-invocation, and thereby use it as an index key.  This is the only plan type
-that can avoid fetching all of B, and for small numbers of rows coming from
-A, that will dominate every other consideration.  (As A gets larger, this
-gets less attractive, and eventually a merge or hash join will win instead.
-So we have to cost out all the alternatives to decide what to do.)
-
-It can be useful for the parameter value to be passed down through
-intermediate layers of joins, for example:
-
-	NestLoop
-		-&gt; Seq Scan on A
-		Hash Join
-			Join Condition: B.Y = C.W
-			-&gt; Seq Scan on B
-			-&gt; Index Scan using C_Z_IDX on C
-				Index Condition: C.Z = A.X
-
-If all joins are plain inner joins then this is usually unnecessary,
-because it&#x27;s possible to reorder the joins so that a parameter is used
-immediately below the nestloop node that provides it.  But in the
-presence of outer joins, such join reordering may not be possible.
-
-Also, the bottom-level scan might require parameters from more than one
-other relation.  In principle we could join the other relations first
-so that all the parameters are supplied from a single nestloop level.
-But if those other relations have no join clause in common (which is
-common in star-schema queries for instance), the planner won&#x27;t consider
-joining them directly to each other.  In such a case we need to be able
-to create a plan like
-
-</pre></section><section class="document-translation-chunk translated" data-chunk-order="5"><p>NestLoop -&gt; Seq Scan on SmallTable1 A NestLoop -&gt; Seq Scan on SmallTable2 B -&gt; Index Scan using XYIndex on LargeTable C Index Condition: C.X = A.AID and C.Y = B.BID</p>
+<p>単一アイテムの EquivalenceClass を形成するもう1つの方法は、 希望するソート順序を表す PathKey の作成時です（下記参照）。 これは、ORDER BY または GROUP BY キーがどの等価句にも言及されていない場合に発生します。 そのようなクエリでソート順序について推論する必要があり、 ソート順序の表現は EquivalenceClass に依存する PathKey であるため、 EquivalenceClass を作成する必要があります。 これは上記の場合とは少し異なります。 なぜなら、そのような EquivalenceClass には集約関数や変動関数が含まれている可能性があるためです。 （変動関数を含む句は、そのトップオペレータがマージ結合可能であっても、 マージ結合可能とは見なされないため、 変動関数が他の方法で EquivalenceClasses に入り込む方法はありません。 集約は WHERE では完全に禁止されているため、 マージ結合可能な句に見つかることはありません。） これは、一貫した PathKey 表現を維持するための単なる利便性であり、 そのような EquivalenceClass が他のものとマージされることはありません。 特に、単一アイテムの EquivalenceClass {a.x} は、 a.x = a.x という主張を意味するものでは*ない*ことに注意してください。 これの実用的な影響は、a.x が NULL になり得るということです。</p></section><section class="document-translation-chunk translated" data-chunk-order="4"><p>An EquivalenceClass also contains a list of btree opfamily OIDs, which determines what the equalities it represents actually &quot;mean&quot;.  All the equivalence clauses that contribute to an EquivalenceClass must have equality operators that belong to the same set of opfamilies.  (Note: most of the time, a particular equality operator belongs to only one family, but it&#x27;s possible that it belongs to more than one.  We keep track of all the families to ensure that we can make use of an index belonging to any one of the families for mergejoin purposes.)</p>
+<p>同様の理由から、EquivalenceClassのデータ型が照合順序（collation）を考慮する場合、EquivalenceClassは特定の照合順序にも関連付けられます。</p>
+<p>An EquivalenceClass can contain &quot;em_is_child&quot; members, which are copies of members that contain appendrel parent relation Vars, transposed to contain the equivalent child-relation variables or expressions.  These members are *not* full-fledged members of the EquivalenceClass and do not affect the class&#x27;s overall properties at all.  They are kept only to simplify matching of child-relation expressions to EquivalenceClasses. Most operations on EquivalenceClasses needn&#x27;t look at child members.</p>
+<p>PathKeys --------</p>
+<p>PathKeysデータ構造は、特定のPathによって生成されるタプルのソート順序に関して既知の情報を表します。パスのpathkeysフィールドはPathKeyノードのリストであり、n番目の項目は結果のn番目のソートキーを表します。各PathKeyには以下のフィールドが含まれます。</p>
+<ul>
+<li>EquivalenceClassへの参照</li>
+<li>btree opfamily OID（EC内のいずれかと一致する必要があります）</li>
+<li>ソート方向（昇順または降順）</li>
+<li>nulls-first-or-lastフラグ</li>
+</ul>
+<p>EquivalenceClassは、ソート対象の値を表します。EquivalenceClassの様々なメンバーは、演算子ファミリーに従って等価であることが分かっているため、そのうちのいずれか1つでソートされたパスは、他のいずれかでソートされたパスでもあるとみなすことができます。これが、単一のメンバーではなくEquivalenceClass全体を参照することの正当性です。</p>
+<p>単一/ベースリレーションのRelOptInfoにおいて、Pathはリレーションをスキャンする様々な方法と、その結果得られるタプルの順序を表します。シーケンシャルスキャン（Sequential scan）のPathはNILのpathkeysを持ち、これは既知の順序がないことを示します。インデックススキャンは、選択されたインデックスの順序（存在する場合）を表すPath.pathkeysを持ちます。単一キーのインデックスは単一のPathKeyリストを作成しますが、複数列のインデックスはキーインデックス列ごとに1つの要素を持つリストを生成します。カバリングインデックスのINCLUDE句で指定された非キー列は、インデックスの順序に影響を与えないため、リストに対応するPathKeyを持ちません。（実際には、インデックスは前方または後方のいずれの方向にもスキャンできるため、生成可能なソート順序は2つあり、生成可能なPathKeyリストも2つあります。）</p>
+<p>ビットマップスキャン（bitmap scan）は、その結果の全体的な順序について何も言えないため、NILのpathkeysを持つことに注意してください。また、順序付けられていないタイプのインデックスに対するインデックススキャンもNILのpathkeysを生成します。ただし、明示的なソートを行うことで、いつでもpathkeyを作成できます。Sortプランの出力に対するpathkeysは、使用されたソートキーフィールドと順序付け演算子を表すだけです。</p>
+<p>ジョインを考慮すると、話はより面白くなります。mergeclause A.X = B.Yを使用してAとBの間でマージジョイン（mergejoin）を行うと仮定します。マージジョインの出力はXでソートされますが、同時にYでもソートされます。これも、XとYの両方を含むEquivalenceClassを参照するPathKeyによって表すことができます。</p>
+<p>もう少し深く考えると、ネステッドループジョイン（nestloop joins）もソートされた出力を生成できることが明らかになります。例えば、外部リレーションAと内部リレーションBの間でネステッドループジョインを行う場合、Aに関連するすべてのpathkeysはジョイン結果に対しても依然として有効です。Aからのタプルの順序は変更されていないからです。さらに興味深いことに、等価句A.X=B.Yが存在し、A.Xが外部リレーションAのpathkeyであった場合、B.Yがジョイン結果のpathkeyであると主張できます。Xは以前から順序付けられており、現在もそうであり、ジョインされたYの値はジョインされたXの値と等しいため、Yも順序付けられている必要があります。これは、Yに対して明示的なソートもマージジョインも使用していない場合でも真です。（注意：ハッシュジョイン（hash joins）は、エグゼキュータがジョインを「バッチ処理」することを決定する可能性があるため、外部リレーションの順序を維持することは期待できません。そのため、ハッシュジョインパスのpathkeysは常にNILに設定します。）</p>
+<p>外部ジョイン（outer join）は、順序のランダムな位置にNULLを挿入する可能性があるため、NULLになり得る入力リレーションの順序を維持しません。PathKeyの表現においてこれを明示的に考慮する必要はありません。ジョイン後の変数を表すPathKeyはvarnullingrelビットを含むため、ジョイン前の値を表すPathKeyとは等しくなくなるからです。</p>
+<p>一般に、pathkeysの基礎としてEquivalenceClassesを使用することは正当化されます。なぜなら、複数のEquivalenceClassメンバーを含むリレーションをスキャンしたり、それぞれがEquivalenceClassメンバーを含む2つのリレーションをジョインしたりするときはいつでも、EquivalenceClassから派生した制約句またはジョイン句を適用するからです。これにより、EquivalenceClassにリストされている任意の2つの値が、スキャンまたはジョインによって出力されるすべてのタプルにおいて実際に等しいことが保証されます。したがって、タプルが値の1つによってソートされている場合、他のいずれの値によってもソートされているとみなすことができます。テスト句がmergeclauseとして使用されるか、単に事後的にqpqualフィルタとして適用されるかは関係ありません。</p>
+<p>パスの出力にまだジョインされていない変数を含むEquivalenceClassを参照するPathKeyを使用して、パスのソート順序にラベルを付けることには、特に困難はありません。そのようなエントリは（まだ）関連性がないものとして単に無視することができます。これにより、ジョイン計画のプロセス全体で同じEquivalenceClassesを使用することが可能になります。実際、複数の同一 of PathKeyオブジェクトを生成しないように注意することで、EquivalenceClassesとPathKeysの比較を単純なポインタ比較に削減できます。これは、競合するPathが同等にソートされているかどうかを決定する際に、add_pathが多数のPathKey比較を行う必要があるため、大幅な節約になります。</p>
+<p>Pathkeysは、達成したい順序を表すのにも便利です。潜在的な候補パスのpathkeysと簡単に比較できるからです。そのため、SortGroupClauseリストはオプティマイザ内部で使用するためにpathkeysリストに変換されます。</p>
+<p>私たちができるさらなる洗練は、正規のpathkeyリスト（ソート順序）が同じEquivalenceClassを複数回言及しないようにすることです。例えば、以下のすべてのケースにおいて、2番目のソート列は冗長です。なぜなら、最初のソート列に従って同じである値を区別できないからです。 SELECT ... ORDER BY x, x SELECT ... ORDER BY x, x DESC SELECT ... WHERE x = y ORDER BY x, y ユーザーが直接「ORDER BY x,x」と書くことはおそらくないでしょうが、等価クラスが考慮されると、このような冗長性が発生する可能性が高くなります。また、システムはマージジョインに必要なソート順序を計算する際に、冗長なpathkeyリストを生成することがあります。冗長性を排除することで、プランナが同等の順序を同等であるとより容易に認識できるようになるため、時間を節約し、計画を改善できます。</p>
+<p>もう1つの興味深い性質は、基礎となるEquivalenceClassに定数が含まれている場合、pathkeyは完全に冗長であり、ソートする必要がまったくないということです。関心のあるすべての行は同じ値を含んでいるはずなので、ソートする必要はありません。ユーザーが「... WHERE x = 42 ORDER BY x」と書く可能性は低いため、これは無意味に思えるかもしれませんが、特定のインデックス列がソート順序に関係ない場合を認識できるようになります。例えば、「... WHERE x = 42 ORDER BY y」がある場合、(x,y)のインデックスをスキャンすると、ソートステップなしで正しくソートされたデータが生成されます。以前は、限られたコンテキストでこれを認識するために非常に見苦しいアドホックなコードがありましたが、pathkeysから定数ECを破棄することで、これがクリーンかつ自動的に行われるようになります。</p>
+<p>EquivalenceClassesとPathKeysの処理順序 -------------------------------------------------------</p>
+<p>上で言及したように、計画中のEquivalenceClassesとPathKeysの処理には特定のフェーズのシーケンスがあります。クエリのqualsの初期スキャン（deconstruct_jointreeに続くreconsider_outer_join_clauses）の間に、qualsで見つかったマージジョイン可能な句に基づいてEquivalenceClassesを構築します。このプロセスの終了時点で、異なる変数の等価性について知ることができるすべてのことが分かっているため、その後EquivalenceClassesがさらにマージされることはありません。その時点で、EquivalenceClassesを「正規（canonical）」とみなし、それらを参照する正規のPathKeysを構築することが可能です。このときに、クエリのORDER BYおよび関連する句のPathKeysを構築します。（他に出現しない順序付け式は、新しいEquivalenceClassesの作成につながりますが、これにより既存のクラスがマージされることはないため、正規性は失われません。）</p>
+<p>パス生成を開始する前にすべてのEquivalenceClassesが分かっているため、それらをどのインデックスに関心があるかのガイドとして使用できます。インデックスの列がいずれのEquivalenceClassでも言及されていない場合、そのインデックスのソート順序がクエリに役立つ可能性はありません。これにより、無関係なインデックスに対するcreate_index_paths()の処理の多くをショートサーキット（早期終了）させることができます。</p>
+<p>query_plannerが完了した後に、planner.cが追加のEquivalenceClassesとPathKeysを構築するケースがいくつかあります。これらのケースでは、query_plannerの間に考慮されなかったソート順序を表すために、追加のEC/PKが必要になります。query_plannerがそのようなソート順序を生成するプランを返すことは不可能であり、常に明示的なソートが必要になることを意味するため、このような状況は最小限に抑える必要があります。現在、これは異なる順序を持つ複数のウィンドウ関数を含むクエリでのみ発生し、いずれにせよ追加のソートが必要になります。</p>
+<p>パラメータ化されたパス (Parameterized Paths) -------------------</p>
+<p>WHERE A.X = B.Yのような句を使用して2つのリレーションをジョインする素朴な方法は、以下のようなネステッドループ（nestloop）プランを生成することです。</p>
+<p>NestLoop Filter: A.X = B.Y -&gt; Seq Scan on A -&gt; Seq Scan on B</p>
+<p>マージジョインやハッシュジョインを使用することでこれを改善できますが、それでも両方の入力リレーションのすべてをスキャンする必要があります。Aが非常に小さく、Bが非常に大きいが、B.Yにインデックスがある場合、以下のような処理を行う方がはるかに優れている可能性があります。</p>
+<p>NestLoop -&gt; Seq Scan on A -&gt; Index Scan using B_Y_IDX on B Index Condition: B.Y = A.X</p>
+<p>ここでは、Aからスキャンされた各行について、ネステッドループプランノードがA.Xの現在の値をBのスキャンに引き渡すことを期待しています。これにより、インデックススキャンは任意の1回の呼び出しにおいてA.Xを定数として扱うことができ、それによってインデックスキーとして使用できます。これはBのすべてを取得することを回避できる唯一のプランタイプであり、Aから取得される行数が少ない場合、他のすべての考慮事項よりもこれが最優先されます。（Aが大きくなるにつれて、これは魅力的ではなくなり、最終的にはマージジョインまたはハッシュジョインが代わりに有利になります。したがって、何を行うかを決定するために、すべての代替案のコストを計算する必要があります。）</p>
+<p>パラメータ値がジョインの中間レイヤーを介して引き渡されることが有用な場合があります。例えば：</p>
+<p>NestLoop -&gt; Seq Scan on A Hash Join Join Condition: B.Y = C.W -&gt; Seq Scan on B -&gt; Index Scan using C_Z_IDX on C Index Condition: C.Z = A.X</p>
+<p>すべてのジョインが単純な内部ジョイン（inner joins）である場合、これは通常不要です。パラメータを提供するネステッドループノードの直下でパラメータが使用されるようにジョインを並べ替えることが可能だからです。しかし、外部ジョインが存在する場合、そのようなジョインの並べ替えは不可能な場合があります。</p>
+<p>また、最下レベルのスキャンが複数の他のリレーションからのパラメータを必要とする場合があります。原理的には、すべてのパラメータが単一のネステッドループレベルから供給されるように、最初に他のリレーションをジョインすることができます。しかし、それらの他のリレーションに共通のジョイン句がない場合（例えば、スタースキーマクエリでは一般的です）、プランナはそれらを直接ジョインすることを考慮しません。このような場合、以下のようなプランを作成できる必要があります。</p></section><section class="document-translation-chunk translated" data-chunk-order="5"><p>NestLoop -&gt; Seq Scan on SmallTable1 A NestLoop -&gt; Seq Scan on SmallTable2 B -&gt; Index Scan using XYIndex on LargeTable C Index Condition: C.X = A.AID and C.Y = B.BID</p>
 <p>したがって、プランをこのように見せるような結合順序の制約がない場合でも、結合を介して A.AID を渡すことをいとわないはずです。</p>
 <p>バージョン 9.2 より前では、Postgres はこのような種類のネストループクエリの計画と実行にアドホックな手法を使用しており、それらの手法では複数の結合レベルにわたってパラメータを下方に渡すことを処理できませんでした。</p>
 <p>このようなクエリを計画するために、現在では「パラメータ化されたパス（parameterized path）」という概念を使用しています。これは、パスによってスキャンされないリレーションへの結合句を利用するパスです。上の 2 つ目の例では、次のような処理を行う可能性を表すパスを構築します。</p>

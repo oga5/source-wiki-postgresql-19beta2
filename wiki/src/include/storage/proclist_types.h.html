@@ -1,0 +1,56 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>src/include/storage/proclist_types.h.md</title><link rel="stylesheet" href="../../../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../../../source/src/include/storage/proclist_types.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/storage/proclist_types.h.html&quot;}, '*');">src/include/storage/proclist_types.h</a></h1>
+<h2>概要</h2>
+<p><a class="wiki-source-link" href="../../../../source/src/include/storage/proclist_types.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/storage/proclist_types.h.html&quot;}, '*');"><code>src/include/storage/proclist_types.h</code></a> は、プロセス番号 (<code>ProcNumber</code>) をベースにした双方向連結リストのデータ構造と型定義を提供するヘッダーファイルである。実際のリスト操作関数は <a class="wiki-source-link" href="../../../../source/src/include/storage/proclist.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/storage/proclist.h.html&quot;}, '*');"><code>proclist.h</code></a> に分離されている。</p>
+<h2>モジュール内での役割</h2>
+<ul>
+<li>PostgreSQLのストレージ・プロセス管理サブシステムにおいて、プロセス間連携や待機キューなどで使用される軽量なプロセスリストの型定義を担う。</li>
+<li>ポインタの代わりにプロセス番号 (<code>ProcNumber</code>) を利用することで、共有メモリ領域やプロセス間での効率的なリスト構造の共有を実現する。</li>
+</ul>
+<h2>責務</h2>
+<ul>
+<li>プロセスリストのノード、ヘッダー、およびイテレータのデータ構造を定義する。</li>
+<li>リスト構造の状態（未所属時の初期値や終端状態など）を表現するための仕様を規定する。</li>
+</ul>
+<h2>重要なシンボル</h2>
+<ul>
+<li><code>struct proclist_node</code>: リストのノード。次のプロセスと前のプロセスの <code>ProcNumber</code>（<code>next</code>, <code>prev</code>）を保持する。</li>
+<li><code>struct proclist_head</code>: リストのヘッダー。リストの先頭と末尾の <code>ProcNumber</code>（<a class="wiki-source-link" href="../../../../source/src/include/storage/proclist_types.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/storage/proclist_types.h.html&quot;}, '*');"><code>head</code></a>, <a class="wiki-source-link" href="../../../../source/src/include/storage/proclist_types.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/storage/proclist_types.h.html&quot;}, '*');"><code>tail</code></a>）を保持する。</li>
+<li><code>struct proclist_mutable_iter</code>: 走査中のリスト変更を安全に行うための可変イテレータ。</li>
+</ul>
+<h2>制御フローとデータフロー</h2>
+<p>本ファイルは型定義のみを提供するヘッダーであり、実行コードや制御フローは含まない。データの流れとしては、<a class="wiki-source-link" href="../../../../source/src/include/storage/proclist.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/storage/proclist.h.html&quot;}, '*');"><code>proclist.h</code></a> の関数群がここで定義された <a class="wiki-source-link" href="../../../../source/src/include/storage/proclist_types.h.html#L38" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__storage__proclist_types_h__proclist_head.html&quot;}, '*');"><code>proclist_head</code></a> や <a class="wiki-source-link" href="../../../../source/src/include/storage/proclist_types.h.html#L28" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__storage__proclist_types_h__proclist_node.html&quot;}, '*');"><code>proclist_node</code></a> を介して、各プロセスのインデックスを操作する。</p>
+<h2>直接依存</h2>
+<ul>
+<li><code>storage/procnumber.h</code>: プロセス番号の型定義 (<code>ProcNumber</code>) を取得するためにインクルードしている。</li>
+</ul>
+<h2>関連コード</h2>
+<ul>
+<li><a class="wiki-source-link" href="../../../../source/src/include/storage/proclist.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/storage/proclist.h.html&quot;}, '*');"><code>src/include/storage/proclist.h</code></a>: 本ファイルで定義された型に対する操作関数を提供する対のヘッダーファイル。</li>
+<li><a class="wiki-source-link" href="../../../../source/src/include/storage/procnumber.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/storage/procnumber.h.html&quot;}, '*');"><code>src/include/storage/procnumber.h</code></a>: プロセス番号の定義元。</li>
+</ul>
+<h2>読者向けメモ</h2>
+<ul>
+<li>未所属のノードは <code>next == prev == 0</code> に初期化される規約があるため、ポインタベースのリストのNULL初期化とは異なる点に注意が必要。</li>
+<li>空のリストは <code>head == tail == INVALID_PROC_NUMBER</code> として表現される。</li>
+</ul>
+<h2>シンボルページ</h2>
+<ul>
+<li><a href="../../../symbols/src__include__storage__proclist_types_h__proclist_node.html" target="wiki-view"><code>proclist_node</code></a></li>
+<li><a href="../../../symbols/src__include__storage__proclist_types_h__proclist_head.html" target="wiki-view"><code>proclist_head</code></a></li>
+<li><a href="../../../symbols/src__include__storage__proclist_types_h__proclist_mutable_iter.html" target="wiki-view"><code>proclist_mutable_iter</code></a></li>
+</ul><script>
+(function() {
+  function notifyParent() {
+    if (parent === window) return;
+    parent.postMessage({type: "frame-location", frame: window.name || "", href: window.location.href}, "*");
+  }
+  document.addEventListener("click", function(event) {
+    const link = event.target.closest("a[data-panel]");
+    if (!link || parent === window) return;
+    parent.postMessage({type: "source-link", panel: link.dataset.panel}, "*");
+  });
+  window.addEventListener("load", notifyParent);
+  window.addEventListener("hashchange", notifyParent);
+})();
+</script></body></html>
