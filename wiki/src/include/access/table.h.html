@@ -1,0 +1,60 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>src/include/access/table.h.md</title><link rel="stylesheet" href="../../../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../../../source/src/include/access/table.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/access/table.h.html&quot;}, '*');">src/include/access/table.h</a></h1>
+<h2>概要</h2>
+<p><a class="wiki-source-link" href="../../../../source/src/include/access/table.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/access/table.h.html&quot;}, '*');"><code>src/include/access/table.h</code></a> は、特定のテーブルアクセスメソッド（Table AM）に依存しない、テーブル全般のオープンやクローズなどの汎用ルーチンを提供します。</p>
+<h2>モジュール内での役割</h2>
+<p>本ファイルは <code>src/include/access</code> サブシステムの構成要素であり、インデックスや複合型を除外して、リレーションがテーブルとして正しく扱えるかを検証しながら開閉する共通インターフェースを定義しています。実体実装はペアファイルである <a class="wiki-source-link" href="../../../../source/src/backend/access/table/table.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/access/table/table.c.html&quot;}, '*');"><code>src/backend/access/table/table.c</code></a> に存在します。</p>
+<h2>責務</h2>
+<ul>
+<li>テーブルリレーションのオープンおよびクローズ関数（<code>table_open</code>, <code>table_close</code> 等）の宣言。</li>
+<li><code>RangeVar</code> やリレーション OID を用いた柔軟なテーブルオープン手段（拡張版や存在しない場合のエラー抑制を含む）の提供。</li>
+<li>開かれたリレーションがインデックス等ではないテーブル系のオブジェクトであるかの種別検証。</li>
+</ul>
+<h2>重要なシンボル</h2>
+<ul>
+<li><code>table_open</code>: Oid とロックモードを指定してテーブルリレーションを開く。</li>
+<li><code>try_table_open</code>: 存在しない場合にエラーとせず <code>NULL</code> を返す、<code>table_open</code> の安全版。</li>
+<li><code>table_openrv</code>: <code>RangeVar</code> ノードを指定してテーブルを開く。</li>
+<li><code>table_openrv_extended</code>: <code>RangeVar</code> ノードと <a class="wiki-source-link" href="../../../../source/src/include/access/table.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__access__table_h__missing_ok.html&quot;}, '*');"><code>missing_ok</code></a> フラグを指定して拡張オープンを行う。</li>
+<li><code>table_close</code>: 指定したロックモードでテーブルリレーションを閉じる。</li>
+</ul>
+<h2>制御フローとデータフロー</h2>
+<p>1. 呼び出し元が OID または <code>RangeVar</code> とロックモードを指定して <code>table_open</code> または関連関数を呼び出します。 2. ペアファイル側の実体処理が下位のリレーション機構（<a class="wiki-source-link" href="../../../../source/src/backend/access/common/relation.c.html#L47" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__access__common__relation_c__relation_open.html&quot;}, '*');"><code>relation_open</code></a> 等）を呼び出してリレーション構造体（<code>Relation</code>）を取得します。 3. 取得したリレーションに対して <a class="wiki-source-link" href="../../../../source/src/backend/access/table/table.c.html#L138" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__access__table__table_c__validate_relation_as_table.html&quot;}, '*');"><code>validate_relation_as_table</code></a> 内で <code>relkind</code> を検証し、テーブル、シーケンス、ビュー、外部テーブル等として有効であるか確認します。 4. 検証に成功した <code>Relation</code> ポインタを呼び出し元に返却します。エラー時は <code>ereport(ERROR)</code> が発生します。</p>
+<h2>直接依存</h2>
+<ul>
+<li><code>nodes/primnodes.h</code> (<code>RangeVar</code> 等の定義のため)</li>
+<li><code>storage/lockdefs.h</code> (<code>LOCKMODE</code> の定義のため)</li>
+<li><code>utils/relcache.h</code> (<code>Relation</code> の定義のため)</li>
+</ul>
+<h2>関連コード</h2>
+<ul>
+<li><a class="wiki-source-link" href="../../../../source/src/backend/access/table/table.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/access/table/table.c.html&quot;}, '*');"><code>src/backend/access/table/table.c</code></a>: 本ヘッダーで宣言されている関数の実装ファイル。</li>
+</ul>
+<h2>読者向けメモ</h2>
+<ul>
+<li>本ファイルで定義される関数は、通常のインデックスオープン関数とは異なり、対象がテーブル（およびビューやパーティション等）であることを保証するための検証ステップを含んでいます。</li>
+</ul>
+<h2>シンボルページ</h2>
+<ul>
+<li><a href="../../../symbols/src__include__access__table_h__RangeVar.html" target="wiki-view"><code>RangeVar</code></a></li>
+<li><a href="../../../symbols/src__include__access__table_h__missing_ok.html" target="wiki-view"><code>missing_ok</code></a></li>
+<li><a href="../../../symbols/src__include__access__table_h__table_close.html" target="wiki-view"><code>table_close</code></a></li>
+<li><a href="../../../symbols/src__include__access__table_h__table_open.html" target="wiki-view"><code>table_open</code></a></li>
+<li><a href="../../../symbols/src__include__access__table_h__table_openrv.html" target="wiki-view"><code>table_openrv</code></a></li>
+<li><a href="../../../symbols/src__include__access__table_h__table_openrv_extended.html" target="wiki-view"><code>table_openrv_extended</code></a></li>
+<li><a href="../../../symbols/src__include__access__table_h__try_table_open.html" target="wiki-view"><code>try_table_open</code></a></li>
+</ul><script>
+(function() {
+  function notifyParent() {
+    if (parent === window) return;
+    parent.postMessage({type: "frame-location", frame: window.name || "", href: window.location.href}, "*");
+  }
+  document.addEventListener("click", function(event) {
+    const link = event.target.closest("a[data-panel]");
+    if (!link || parent === window) return;
+    parent.postMessage({type: "source-link", panel: link.dataset.panel}, "*");
+  });
+  window.addEventListener("load", notifyParent);
+  window.addEventListener("hashchange", notifyParent);
+})();
+</script></body></html>

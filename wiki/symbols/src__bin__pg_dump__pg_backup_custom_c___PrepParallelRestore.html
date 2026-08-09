@@ -38,7 +38,7 @@
 <p>/*</p>
 <ul>
 <li>Knowing that the data <a class="wiki-source-link" href="../../source/src/test/modules/test_tidstore/test_tidstore.c.html#L48" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/test/modules/test_tidstore/test_tidstore.c.html&quot;}, '*');">items</a> were dumped out in TOC order, we can</li>
-<li>reconstruct the length of each item as the delta to the start offset of</li>
+<li>reconstruct the <a class="wiki-source-link" href="../../source/src/include/nodes/pg_list.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/nodes/pg_list.h.html&quot;}, '*');">length</a> of each item as the delta to the start offset of</li>
 <li>the next data item.</li>
 <p>*/ for (te = AH-&gt;toc-&gt;next; te != AH-&gt;toc; te = te-&gt;next) { lclTocEntry *tctx = (lclTocEntry *) te-&gt;formatData;</p>
 </ul>
@@ -49,9 +49,9 @@
 <li>of them, and we&#x27;ll end up with no <a class="wiki-source-link" href="../../source/src/backend/optimizer/geqo/geqo_eval.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__geqo__geqo_eval_c__size.html&quot;}, '*');">size</a> estimates.</li>
 <p>*/ if (tctx-&gt;dataState != <a class="wiki-source-link" href="../../source/src/bin/pg_dump/pg_backup_archiver.h.html#L87" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/bin/pg_dump/pg_backup_archiver.h.html&quot;}, '*');">K_OFFSET_POS_SET</a>) continue;</p>
 </ul>
-<p>/* Compute previous data item&#x27;s length */ if (prev_te) { if (tctx-&gt;dataPos &gt; prev_tctx-&gt;dataPos) prev_te-&gt;dataLength = tctx-&gt;dataPos - prev_tctx-&gt;dataPos; }</p>
+<p>/* Compute previous data item&#x27;s <a class="wiki-source-link" href="../../source/src/include/nodes/pg_list.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/nodes/pg_list.h.html&quot;}, '*');">length</a> */ if (prev_te) { if (tctx-&gt;dataPos &gt; prev_tctx-&gt;dataPos) prev_te-&gt;dataLength = tctx-&gt;dataPos - prev_tctx-&gt;dataPos; }</p>
 <p>prev_te = te; prev_tctx = tctx; }</p>
-<p>/* If OK to seek, we can determine the length of the last item */ if (prev_te &amp;&amp; ctx-&gt;hasSeek) { pgoff_t		endpos;</p>
+<p>/* If OK to seek, we can determine the <a class="wiki-source-link" href="../../source/src/include/nodes/pg_list.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/nodes/pg_list.h.html&quot;}, '*');">length</a> of the last item */ if (prev_te &amp;&amp; ctx-&gt;hasSeek) { pgoff_t		endpos;</p>
 <p>if (<a class="wiki-source-link" href="../../source/src/include/port/win32_port.h.html#L202" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/port/win32_port.h.html&quot;}, '*');">fseeko</a>(AH-&gt;FH, 0, SEEK_END) != 0) pg_fatal(&quot;error during file seek: %m&quot;); endpos = <a class="wiki-source-link" href="../../source/src/include/port/win32_port.h.html#L203" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/port/win32_port.h.html&quot;}, '*');">ftello</a>(AH-&gt;FH); if (endpos &gt; prev_tctx-&gt;dataPos) prev_te-&gt;dataLength = endpos - prev_tctx-&gt;dataPos; } } ~~~</p>
 <h2>失敗モードと境界条件</h2>
 <p>まだ解析していません。</p>

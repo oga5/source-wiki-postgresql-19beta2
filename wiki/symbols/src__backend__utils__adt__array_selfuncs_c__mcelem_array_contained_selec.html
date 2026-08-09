@@ -39,7 +39,7 @@
 <ul>
 <li>There should be three more Numbers than Values in the MCELEM slot,</li>
 <li>because the last three cells should hold minimal and maximal frequency</li>
-<li><a class="wiki-source-link" href="../../source/src/include/snowball/libstemmer/snowball_runtime.h.html#L47" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__snowball__libstemmer__snowball_runtime_h__among.html&quot;}, '*');">among</a> the non-null elements, and then the frequency of null elements.</li>
+<li><a class="wiki-source-link" href="../../source/src/include/snowball/libstemmer/snowball_runtime.h.html#L47" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__snowball__libstemmer__snowball_runtime_h__among.html&quot;}, '*');">among</a> the non-null <a class="wiki-source-link" href="../../source/src/include/nodes/pg_list.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/nodes/pg_list.h.html&quot;}, '*');">elements</a>, and then the frequency of null <a class="wiki-source-link" href="../../source/src/include/nodes/pg_list.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/nodes/pg_list.h.html&quot;}, '*');">elements</a>.</li>
 <li>Punt if not right, because we can&#x27;t do much without the <a class="wiki-source-link" href="../../source/src/backend/regex/regc_locale.c.html#L375" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__regex__regc_locale_c__element.html&quot;}, '*');">element</a> freqs.</li>
 <p>*/ if (numbers == NULL || nnumbers != nmcelem + 3) return <a class="wiki-source-link" href="../../source/src/backend/utils/adt/array_selfuncs.c.html#L30" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/utils/adt/array_selfuncs.c.html&quot;}, '*');">DEFAULT_CONTAIN_SEL</a>;</p>
 </ul>
@@ -47,15 +47,15 @@
 <p>/*</p>
 <ul>
 <li>Grab some of the summary statistics that <a class="wiki-source-link" href="../../source/src/backend/utils/adt/array_typanalyze.c.html#L215" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__utils__adt__array_typanalyze_c__compute_array_stats.html&quot;}, '*');">compute_array_stats</a>() stores:</li>
-<li>lowest MCE frequency, frequency of null elements, and average distinct</li>
+<li>lowest MCE frequency, frequency of null <a class="wiki-source-link" href="../../source/src/include/nodes/pg_list.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/nodes/pg_list.h.html&quot;}, '*');">elements</a>, and average distinct</li>
 <li><a class="wiki-source-link" href="../../source/src/backend/regex/regc_locale.c.html#L375" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__regex__regc_locale_c__element.html&quot;}, '*');">element</a> count.</li>
 <p>*/ minfreq = numbers[nmcelem]; nullelem_freq = numbers[nmcelem + 2]; avg_count = hist[nhist - 1];</p>
 </ul>
 <p>/*</p>
 <ul>
-<li>&quot;rest&quot; will be the sum of the frequencies of all elements not</li>
+<li>&quot;rest&quot; will be the sum of the frequencies of all <a class="wiki-source-link" href="../../source/src/include/nodes/pg_list.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/nodes/pg_list.h.html&quot;}, '*');">elements</a> not</li>
 <li>represented in MCELEM.  The average distinct <a class="wiki-source-link" href="../../source/src/backend/regex/regc_locale.c.html#L375" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__regex__regc_locale_c__element.html&quot;}, '*');">element</a> count <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> the sum</li>
-<li>of the frequencies of *all* elements.  Begin with that; we will proceed</li>
+<li>of the frequencies of *all* <a class="wiki-source-link" href="../../source/src/include/nodes/pg_list.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/nodes/pg_list.h.html&quot;}, '*');">elements</a>.  Begin with that; we will proceed</li>
 <li>to subtract the MCELEM frequencies.</li>
 <p>*/ rest = avg_count;</p>
 </ul>
@@ -67,7 +67,7 @@
 </ul>
 <p>/*</p>
 <ul>
-<li>elem_selec <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> array of estimated frequencies for elements in the</li>
+<li>elem_selec <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> <a class="wiki-source-link" href="../../source/src/include/utils/jsonb.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__utils__jsonb_h__array.html&quot;}, '*');">array</a> of estimated frequencies for <a class="wiki-source-link" href="../../source/src/include/nodes/pg_list.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/nodes/pg_list.h.html&quot;}, '*');">elements</a> in the</li>
 <li>constant.</li>
 <p>~~~</p>
 </ul>

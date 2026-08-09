@@ -37,7 +37,7 @@
 <p>~~~c void <a class="wiki-source-link" href="../../source/src/backend/executor/nodeFunctionscan.c.html#L532" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__executor__nodeFunctionscan_c__ExecEndFunctionScan.html&quot;}, '*');">ExecEndFunctionScan</a>(<a class="wiki-source-link" href="../../source/src/include/nodes/execnodes.h.html#L1962" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__nodes__execnodes_h__FunctionScanState.html&quot;}, '*');">FunctionScanState</a> *node) { int			i;</p>
 <p>/*</p>
 <ul>
-<li>Release slots and tuplestore resources</li>
+<li>Release slots and <a class="wiki-source-link" href="../../source/src/backend/utils/adt/jsonfuncs.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__utils__adt__jsonfuncs_c__tuplestore.html&quot;}, '*');">tuplestore</a> resources</li>
 <p>*/ for (i = 0; i &lt; node-&gt;nfuncs; i++) { <a class="wiki-source-link" href="../../source/src/backend/executor/nodeFunctionscan.c.html#L36" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__executor__nodeFunctionscan_c__FunctionScanPerFuncState.html&quot;}, '*');">FunctionScanPerFuncState</a> *fs = &amp;node-&gt;funcstates[i];</p>
 </ul>
 <p>if (fs-&gt;tstore != NULL) { tuplestore_end(node-&gt;funcstates[i].tstore); fs-&gt;tstore = NULL; } } } ~~~</p>

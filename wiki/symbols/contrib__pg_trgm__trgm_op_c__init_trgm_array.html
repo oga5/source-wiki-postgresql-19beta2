@@ -53,7 +53,7 @@
 <li>overflow in the multiplications.)</li>
 <p>*/ if (init_size &gt; MaxAllocSize / sizeof(<a class="wiki-source-link" href="../../source/contrib/pg_trgm/trgm.h.html#L41" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/contrib__pg_trgm__trgm_h__trgm.html&quot;}, '*');">trgm</a>)) <a class="wiki-source-link" href="../../source/src/include/utils/elog.h.html#L166" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/utils/elog.h.html&quot;}, '*');">ereport</a>(ERROR, (errcode(ERRCODE_PROGRAM_LIMIT_EXCEEDED), errmsg(&quot;out of memory&quot;)));</p>
 </ul>
-<p>arr-&gt;datum = palloc(CALCGTSIZE(ARRKEY, init_size)); arr-&gt;allocated = init_size; arr-&gt;length = 0; } ~~~</p>
+<p>arr-&gt;datum = palloc(CALCGTSIZE(ARRKEY, init_size)); arr-&gt;allocated = init_size; arr-&gt;<a class="wiki-source-link" href="../../source/src/include/nodes/pg_list.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/nodes/pg_list.h.html&quot;}, '*');">length</a> = 0; } ~~~</p>
 <h2>失敗モードと境界条件</h2>
 <p>まだ解析していません。</p>
 <h2>保守担当者向けメモ</h2>

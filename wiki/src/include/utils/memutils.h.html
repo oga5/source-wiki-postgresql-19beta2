@@ -1,69 +1,73 @@
 <!doctype html>
 <html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>src/include/utils/memutils.h.md</title><link rel="stylesheet" href="../../../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../../../source/src/include/utils/memutils.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/utils/memutils.h.html&quot;}, '*');">src/include/utils/memutils.h</a></h1>
 <h2>概要</h2>
-<p>PostgreSQLのメモリ管理サブシステムにおける、<a class="wiki-source-link" href="../../../../source/src/include/utils/palloc.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/utils/palloc.h.html&quot;}, '*');"><code>palloc.h</code></a> ほど広範には使われないもののパブリックAPIの一部を構成する、高度なメモリ割り当ておよびコンテキスト操作のユーティリティ関数群、マクロ群、定数群を宣言するヘッダーファイルです。</p>
+<p>PostgreSQLのメモリ管理サブシステムにおける、アロケーション関連のユーティリティ関数、マクロ、主要な標準メモリコンテキストの外部公開宣言を提供するヘッダーファイルです。<code>utils/palloc.h</code> よりも広範ではないものの、メモリ管理APIの核心をなす機能群を定義しています。</p>
 <h2>モジュール内での役割</h2>
-<p><code>src/include/utils/</code> モジュール内に位置し、基底のメモリノード定義 (<code>nodes/memnodes.h</code>) と、<a class="wiki-source-link" href="../../../../source/src/backend/utils/mmgr/mcxt.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/utils/mmgr/mcxt.c.html&quot;}, '*');"><code>mcxt.c</code></a>、<a class="wiki-source-link" href="../../../../source/src/backend/utils/mmgr/aset.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/utils/mmgr/aset.c.html&quot;}, '*');"><code>aset.c</code></a>、<a class="wiki-source-link" href="../../../../source/src/backend/utils/mmgr/slab.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/utils/mmgr/slab.c.html&quot;}, '*');"><code>slab.c</code></a>、<a class="wiki-source-link" href="../../../../source/src/backend/utils/mmgr/generation.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/utils/mmgr/generation.c.html&quot;}, '*');"><code>generation.c</code></a>、<a class="wiki-source-link" href="../../../../source/src/backend/utils/mmgr/bump.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/utils/mmgr/bump.c.html&quot;}, '*');"><code>bump.c</code></a> といった各メモリコンテキストの実装を結ぶブリッジとして機能します。</p>
+<p><code>src/include/utils</code> モジュール配下において、メモリ管理の型非依存な制御関数（<a class="wiki-source-link" href="../../../../source/src/backend/utils/mmgr/mcxt.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/utils/mmgr/mcxt.c.html&quot;}, '*');"><code>mcxt.c</code></a> 連携）や、各種アロケータ（<a class="wiki-source-link" href="../../../../source/src/backend/utils/mmgr/aset.c.html#L173" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__utils__mmgr__aset_c__AllocSet.html&quot;}, '*');">AllocSet</a>、Slab、Generation、Bump）ごとのコンテキスト生成関数を束ねるインターフェースとして機能します。また、<code>nodes/memnodes.h</code> をインクルードし、メモリノード階層と連携します。</p>
 <h2>責務</h2>
 <ul>
-<li>アロケーションサイズの制限値 (<code>MaxAllocSize</code>, <a class="wiki-source-link" href="../../../../source/src/include/utils/memutils.h.html#L45" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/utils/memutils.h.html&quot;}, '*');"><code>MaxAllocHugeSize</code></a>) および検証用マクロの提供。</li>
-<li>標準的なトップレベルメモリコンテキスト（<code>TopMemoryContext</code>, <code>ErrorContext</code>, <code>PortalContext</code> など）の外部公開。</li>
-<li>メモリコンテキスト非依存の共通操作関数（生成、削除、統計、識別子の設定など）の宣言。</li>
-<li>各種コンテキスト型特異的な作成関数（<a class="wiki-source-link" href="../../../../source/src/backend/utils/mmgr/aset.c.html#L173" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__utils__mmgr__aset_c__AllocSet.html&quot;}, '*');">AllocSet</a>, Slab, Generation, Bump）および推奨パラメータマクロの定義。</li>
-<li>指定メモリ領域がすべてゼロで埋められているかを効率的に判定するインライン関数 (<a class="wiki-source-link" href="../../../../source/src/include/utils/memutils.h.html#L218" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__utils__memutils_h__pg_memory_is_all_zeros.html&quot;}, '*');"><code>pg_memory_is_all_zeros</code></a>) の提供。</li>
+<li>**アロケーション制限の定義**: 割り当てサイズの上限（<code>MaxAllocSize</code>、<a class="wiki-source-link" href="../../../../source/src/include/utils/memutils.h.html#L45" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/utils/memutils.h.html&quot;}, '*');"><code>MaxAllocHugeSize</code></a>）およびバリデーションマクロの提供。</li>
+<li>**標準グローバルコンテキストの宣言**: <code>TopMemoryContext</code> や <code>ErrorContext</code> などの標準トップレベルメモリコンテキスト変数の外部公開。</li>
+<li>**メモリコンテキスト操作APIの宣言**: リセット、削除、統計情報取得、安全性制御など、コンテキスト型に依存しない操作関数の提供。</li>
+<li>**アルゴリズム特化型コンテキスト生成関数の宣言**: <a class="wiki-source-link" href="../../../../source/src/backend/utils/mmgr/aset.c.html#L173" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__utils__mmgr__aset_c__AllocSet.html&quot;}, '*');"><code>AllocSet</code></a>、<code>Slab</code>、<code>Generation</code>、<code>Bump</code> の各アロケータに対応する作成関数の提供。</li>
+<li>**ゼロ埋め検証インライン関数の提供**: 指定されたメモリ領域がすべてゼロで埋められているかを効率的に判定する <a class="wiki-source-link" href="../../../../source/src/include/utils/memutils.h.html#L218" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__utils__memutils_h__pg_memory_is_all_zeros.html&quot;}, '*');"><code>pg_memory_is_all_zeros</code></a> の実装。</li>
 </ul>
 <h2>重要なシンボル</h2>
-<h3>アロケーション制約</h3>
+<h3>アロケーション制限とマクロ</h3>
 <ul>
-<li><code>MaxAllocSize</code>: 通常の割り当てサイズの上限（1ギガバイト - 1）。TOASTやvarlenaの制限に由来します。</li>
-<li><code>AllocSizeIsValid(size)</code>: 指定サイズが <code>MaxAllocSize</code> 以下であるかを検証するマクロ。</li>
-<li><a class="wiki-source-link" href="../../../../source/src/include/utils/memutils.h.html#L45" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/utils/memutils.h.html&quot;}, '*');"><code>MaxAllocHugeSize</code></a>: 巨大割り当ての許容上限（<code>SIZE_MAX / 2</code>）。</li>
-<li><code>AllocHugeSizeIsValid(size)</code>: 巨大割り当てサイズを検証するマクロ。</li>
+<li><code>MaxAllocSize</code>: 通常のアロケーションにおける制限値（1ギガバイト - 1）。TOASTの varlena オブジェクトサイズや整数インデックスでの扱いを考慮して選択されています。</li>
+<li><a class="wiki-source-link" href="../../../../source/src/include/utils/memutils.h.html#L45" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/utils/memutils.h.html&quot;}, '*');"><code>MaxAllocHugeSize</code></a>: 巨大アロケーションにおける制限値（<code>SIZE_MAX / 2</code>）。</li>
+<li><a class="wiki-source-link" href="../../../../source/src/include/utils/memutils.h.html#L42" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/utils/memutils.h.html&quot;}, '*');"><code>AllocSizeIsValid</code></a> / <a class="wiki-source-link" href="../../../../source/src/include/utils/memutils.h.html#L49" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/utils/memutils.h.html&quot;}, '*');"><code>AllocHugeSizeIsValid</code></a>: 指定サイズがそれぞれの制限内であるかを検証するマクロ。</li>
 </ul>
-<h3>標準メモリコンテキスト</h3>
+<h3>標準グローバルメモリコンテキスト</h3>
 <ul>
-<li><code>TopMemoryContext</code>: バックエンドの最上位コンテキスト。</li>
-<li><code>ErrorContext</code>: エラー回復時にのみ使用される、安全確保用のコンテキスト。</li>
-<li><code>PostmasterContext</code>, <code>CacheMemoryContext</code>, <code>MessageContext</code>, <code>TopTransactionContext</code>, <code>CurTransactionContext</code>, <code>PortalContext</code>: ライフサイクルごとの標準コンテキスト群。</li>
+<li><code>TopMemoryContext</code>: バックエンド全体の最上位に位置するメモリコンテキスト。</li>
+<li><code>ErrorContext</code>: エラー発生時の復旧処理（<a class="wiki-source-link" href="../../../../source/src/include/utils/elog.h.html#L58" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/utils/elog.h.html&quot;}, '*');">PANIC</a>時など）で安全に割り当てを行うための専用コンテキスト。</li>
+<li><code>PostmasterContext</code>: ポストマスタープロセスが保持する永続的なコンテキスト。</li>
+<li><code>CacheMemoryContext</code>: キャッシュ関連データ（シスキャッシュなど）を保持するコンテキスト。</li>
+<li><code>MessageContext</code>: クライアントからのコマンドメッセージ処理用のコンテキスト。</li>
+<li><code>TopTransactionContext</code>: 現在のトランザクション全体で維持されるコンテキスト。</li>
+<li><code>CurTransactionContext</code>: 現在のトランザクションのサブフェーズや短期オブジェクト用のコンテキスト。</li>
+<li><code>PortalContext</code>: アクティブなポータルに一時的にリンクされるメモリコンテキスト。</li>
 </ul>
-<h3>メモリコンテキスト操作関数（非依存）</h3>
+<h3>コンテキスト生成関数</h3>
 <ul>
-<li><code>MemoryContextInit()</code>: メモリ管理システム全体を初期化。</li>
-<li><code>MemoryContextReset(context)</code> / <code>MemoryContextDelete(context)</code>: コンテキストの解放およびリセット。</li>
-<li><code>MemoryContextSetIdentifier(context, id)</code>: コンテキストへ可変識別文字列を設定。</li>
-<li><code>MemoryContextCopyAndSetIdentifier(cxt, id)</code>: 文字列を複製して識別子に設定する便利マクロ。</li>
-</ul>
-<h3>コンテキスト型特異的作成関数</h3>
-<ul>
-<li><a class="wiki-source-link" href="../../../../source/src/include/utils/memutils.h.html#L124" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/utils/memutils.h.html&quot;}, '*');"><code>AllocSetContextCreate</code></a> / <code>AllocSetContextCreateInternal</code>: <a class="wiki-source-link" href="../../../../source/src/backend/utils/mmgr/aset.c.html#L173" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__utils__mmgr__aset_c__AllocSet.html&quot;}, '*');">AllocSet</a>コンテキストの生成（定数名チェック機構を含む）。</li>
-<li><code>SlabContextCreate</code>: Slabコンテキストの生成。</li>
-<li><code>GenerationContextCreate</code>: Generationコンテキストの生成。</li>
-<li><code>BumpContextCreate</code>: Bumpコンテキストの生成。</li>
-</ul>
-<h3>ユーティリティインライン関数</h3>
-<ul>
-<li><code>pg_memory_is_all_zeros(ptr, len)</code>: 指定ポインタから <a class="wiki-source-link" href="../../../../source/src/include/utils/memutils.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__utils__memutils_h__len.html&quot;}, '*');"><code>len</code></a> バイトの領域がすべて0であるかを、アライメントとSIMD最適化を考慮して安全かつ高速に走査・判定。</li>
+<li><code>AllocSetContextCreateInternal</code>: 標準的な可変ブロックアロケータである <a class="wiki-source-link" href="../../../../source/src/backend/utils/mmgr/aset.c.html#L173" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__utils__mmgr__aset_c__AllocSet.html&quot;}, '*');">AllocSet</a> 方式のメモリコンテキストを作成する内部関数。</li>
+<li><code>SlabContextCreate</code>: 固定長チャンクを効率的に割り当てる Slab 方式のメモリコンテキストを作成する関数。</li>
+<li><code>GenerationContextCreate</code>: 世代ベースのガベージコレクション／一括解放を効率化する Generation 方式のメモリコンテキストを作成する関数。</li>
+<li><code>BumpContextCreate</code>: 単調増加（バンプ）方式で高速に領域を切り出す Bump 方式のメモリコンテキストを作成する関数。</li>
 </ul>
 <h2>制御フローとデータフロー</h2>
-<p>1. **初期化フロー**: バックエンド起動時に <code>MemoryContextInit()</code> が呼ばれ、<code>TopMemoryContext</code> と <code>ErrorContext</code> が実体化されます。 2. **コンテキスト生成フロー**: 呼び出し元が <a class="wiki-source-link" href="../../../../source/src/include/utils/memutils.h.html#L124" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/utils/memutils.h.html&quot;}, '*');"><code>AllocSetContextCreate</code></a> などの作成関数に親コンテキスト、名前、サイズパラメータを渡すことで、特定の割り当て戦略を持つサブコンテキスト階層が構築されます。 3. **ゼロ埋め検証フロー**: <a class="wiki-source-link" href="../../../../source/src/include/utils/memutils.h.html#L218" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__utils__memutils_h__pg_memory_is_all_zeros.html&quot;}, '*');"><code>pg_memory_is_all_zeros</code></a> は、サイズに応じてバイト単位、<a class="wiki-source-link" href="../../../../source/src/include/common/int.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__common__int_h__size_t.html&quot;}, '*');"><code>size_t</code></a> 単位、および8倍の <a class="wiki-source-link" href="../../../../source/src/include/common/int.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__common__int_h__size_t.html&quot;}, '*');"><code>size_t</code></a> 単位（ビット単位ORの累積による非短絡評価でコンパイラのSIMD化を誘導）に分岐してメモリ走査を行い、非ゼロバイトを発見した時点で即座に <a class="wiki-source-link" href="../../../../source/src/tools/pg_bsd_indent/indent_globs.h.html#L43" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/tools/pg_bsd_indent/indent_globs.h.html&quot;}, '*');"><code>false</code></a> を返します。</p>
+<ul>
+<li>**メモリコンテキスト初期化とツリー構造**: バックエンド起動時に <code>MemoryContextInit()</code> が呼ばれ、<code>TopMemoryContext</code> と <code>ErrorContext</code> が初期化されます。以降に作成される各コンテキストは親コンテキストを指定して階層ツリーを形成します。</li>
+<li>**生成とエイリアス**: <a class="wiki-source-link" href="../../../../source/src/include/utils/memutils.h.html#L124" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/utils/memutils.h.html&quot;}, '*');"><code>AllocSetContextCreate</code></a> マクロはコンテキスト名が定数文字列であるかをコンパイル時に検証した上で、実体である <code>AllocSetContextCreateInternal</code> を呼び出します。</li>
+<li>**ゼロ埋め検証 (<a class="wiki-source-link" href="../../../../source/src/include/utils/memutils.h.html#L218" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__utils__memutils_h__pg_memory_is_all_zeros.html&quot;}, '*');"><code>pg_memory_is_all_zeros</code></a>)**:</li>
+<li><code>len &lt; sizeof(size_t)</code> の場合はバイト単位で直接比較します。</li>
+<li><code>len</code> が中規模・大規模の場合、ポインタが <a class="wiki-source-link" href="../../../../source/src/include/common/int.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__common__int_h__size_t.html&quot;}, '*');"><code>size_t</code></a> 境界に整列するまでバイト単位で比較したのち、<a class="wiki-source-link" href="../../../../source/src/include/common/int.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__common__int_h__size_t.html&quot;}, '*');"><code>size_t</code></a> 単位（大規模時はビット単位のORを組み合わせてSIMD最適化を誘導）で高速にブロック比較を行い、不一致があれば早期に <a class="wiki-source-link" href="../../../../source/src/tools/pg_bsd_indent/indent_globs.h.html#L43" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/tools/pg_bsd_indent/indent_globs.h.html&quot;}, '*');"><code>false</code></a> を返します。</li>
+</ul>
 <h2>直接依存</h2>
 <ul>
-<li><code>nodes/memnodes.h</code>: <code>MemoryContext</code> 型や内部ノード構造体の基本定義。</li>
-</ul>
-<h2>関連コード</h2>
-<ul>
-<li><code>src/backend/utils/mmcxt/mcxt.c</code>: 独立関数の実体。</li>
-<li><code>src/backend/utils/mmcxt/aset.c</code>: <a class="wiki-source-link" href="../../../../source/src/backend/utils/mmgr/aset.c.html#L173" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__utils__mmgr__aset_c__AllocSet.html&quot;}, '*');">AllocSet</a>の具体的な割り当て戦略。</li>
-<li><a class="wiki-source-link" href="../../../../source/src/include/utils/palloc.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/utils/palloc.h.html&quot;}, '*');"><code>src/include/utils/palloc.h</code></a>: 基本的な <code>palloc</code>/<code>pfree</code> API。</li>
+<li><code>nodes/memnodes.h</code>: メモリコンテキストの基本データ構造および型定義 (<code>MemoryContext</code> 等) の提供元。</li>
 </ul>
 <h2>読者向けメモ</h2>
 <ul>
-<li><a class="wiki-source-link" href="../../../../source/src/include/utils/memutils.h.html#L124" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/utils/memutils.h.html&quot;}, '*');"><code>AllocSetContextCreate</code></a> はコンパイル時定数以外の文字列を名前として渡すとマクロレベルで静的アサートエラーになるよう制限されています（動的識別子には <a class="wiki-source-link" href="../../../../source/src/backend/utils/mmgr/mcxt.c.html#L663" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__utils__mmgr__mcxt_c__MemoryContextSetIdentifier.html&quot;}, '*');"><code>MemoryContextSetIdentifier</code></a> を使用してください）。</li>
-<li><a class="wiki-source-link" href="../../../../source/src/include/utils/memutils.h.html#L218" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__utils__memutils_h__pg_memory_is_all_zeros.html&quot;}, '*');"><code>pg_memory_is_all_zeros</code></a> の引数 <code>ptr</code> は非NULLであることが呼び出し側の責任となります。</li>
+<li>**文字列リテラルの制約**: <a class="wiki-source-link" href="../../../../source/src/include/utils/memutils.h.html#L124" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/utils/memutils.h.html&quot;}, '*');"><code>AllocSetContextCreate</code></a> に渡すコンテキスト名は、定数文字列であることがコンパイル時に強制されます。動的な識別子を付与したい場合は、生成後に <code>MemoryContextSetIdentifier()</code> または <a class="wiki-source-link" href="../../../../source/src/include/utils/memutils.h.html#L101" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/utils/memutils.h.html&quot;}, '*');"><code>MemoryContextCopyAndSetIdentifier</code></a> を使用してください。</li>
+<li>**メモリ安全性**: <a class="wiki-source-link" href="../../../../source/src/include/utils/memutils.h.html#L218" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__utils__memutils_h__pg_memory_is_all_zeros.html&quot;}, '*');"><code>pg_memory_is_all_zeros</code></a> の呼び出し元は、渡すポインタ <code>ptr</code> が <code>NULL</code> でないことを保証する責務があります。</li>
 </ul>
 <h2>シンボルページ</h2>
 <ul>
-<li><a href="../../../symbols/src__include__utils__memutils_h__pg_memory_is_all_zeros.html" target="wiki-view"><code>pg_memory_is_all_zeros</code></a></li>
+<li><a href="../../../symbols/src__include__utils__memutils_h__AllocSetContextCreateInternal.html" target="wiki-view"><code>AllocSetContextCreateInternal</code></a></li>
+<li><a href="../../../symbols/src__include__utils__memutils_h__BumpContextCreate.html" target="wiki-view"><code>BumpContextCreate</code></a></li>
+<li><a href="../../../symbols/src__include__utils__memutils_h__CacheMemoryContext.html" target="wiki-view"><code>CacheMemoryContext</code></a></li>
+<li><a href="../../../symbols/src__include__utils__memutils_h__CurTransactionContext.html" target="wiki-view"><code>CurTransactionContext</code></a></li>
+<li><a href="../../../symbols/src__include__utils__memutils_h__ErrorContext.html" target="wiki-view"><code>ErrorContext</code></a></li>
+<li><a href="../../../symbols/src__include__utils__memutils_h__GenerationContextCreate.html" target="wiki-view"><code>GenerationContextCreate</code></a></li>
+<li><a href="../../../symbols/src__include__utils__memutils_h__MessageContext.html" target="wiki-view"><code>MessageContext</code></a></li>
+<li><a href="../../../symbols/src__include__utils__memutils_h__PortalContext.html" target="wiki-view"><code>PortalContext</code></a></li>
+<li><a href="../../../symbols/src__include__utils__memutils_h__PostmasterContext.html" target="wiki-view"><code>PostmasterContext</code></a></li>
+<li><a href="../../../symbols/src__include__utils__memutils_h__SlabContextCreate.html" target="wiki-view"><code>SlabContextCreate</code></a></li>
+<li><a href="../../../symbols/src__include__utils__memutils_h__TopMemoryContext.html" target="wiki-view"><code>TopMemoryContext</code></a></li>
+<li><a href="../../../symbols/src__include__utils__memutils_h__TopTransactionContext.html" target="wiki-view"><code>TopTransactionContext</code></a></li>
 </ul><script>
 (function() {
   function notifyParent() {

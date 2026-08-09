@@ -42,7 +42,7 @@
 <p>/*</p>
 <ul>
 <li>Create working memory for expression evaluation in this context.</li>
-<p>*/ econtext-&gt;ecxt_per_tuple_memory = <a class="wiki-source-link" href="../../source/src/include/utils/memutils.h.html#L124" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/utils/memutils.h.html&quot;}, '*');">AllocSetContextCreate</a>(estate-&gt;es_query_cxt, &quot;ExprContext&quot;, minContextSize, initBlockSize, maxBlockSize);</p>
+<p>*/ econtext-&gt;<a class="wiki-source-link" href="../../source/src/include/executor/executor.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/executor/executor.h.html&quot;}, '*');">ecxt_per_tuple_memory</a> = <a class="wiki-source-link" href="../../source/src/include/utils/memutils.h.html#L124" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/utils/memutils.h.html&quot;}, '*');">AllocSetContextCreate</a>(estate-&gt;es_query_cxt, &quot;ExprContext&quot;, minContextSize, initBlockSize, maxBlockSize);</p>
 </ul>
 <p>econtext-&gt;ecxt_param_exec_vals = estate-&gt;es_param_exec_vals; econtext-&gt;ecxt_param_list_info = estate-&gt;es_param_list_info;</p>
 <p>econtext-&gt;ecxt_aggvalues = NULL; econtext-&gt;ecxt_aggnulls = NULL;</p>

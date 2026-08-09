@@ -36,7 +36,7 @@
 <p>~~~c static Size <a class="wiki-source-link" href="../../source/src/backend/utils/activity/pgstat_shmem.c.html#L113" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__utils__activity__pgstat_shmem_c__pgstat_dsa_init_size.html&quot;}, '*');">pgstat_dsa_init_size</a>(void) { Size		sz;</p>
 <p>/*</p>
 <ul>
-<li>The dshash header / initial buckets array needs to fit into &quot;plain&quot;</li>
+<li>The dshash header / initial buckets <a class="wiki-source-link" href="../../source/src/include/utils/jsonb.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__utils__jsonb_h__array.html&quot;}, '*');">array</a> needs to fit into &quot;plain&quot;</li>
 <li>shared memory, but it&#x27;s beneficial to not need dsm segments</li>
 <li>immediately. A <a class="wiki-source-link" href="../../source/src/backend/optimizer/geqo/geqo_eval.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__geqo__geqo_eval_c__size.html&quot;}, '*');">size</a> of 256kB seems works well and <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> not</li>
 <li>disproportional compared to other constant sized shared memory</li>

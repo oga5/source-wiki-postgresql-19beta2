@@ -1,0 +1,44 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>doc/src/sgml/images/README</title><link rel="stylesheet" href="../../../../../../styles.css"></head><body><h1>Japanese translation</h1><p><code>doc/src/sgml/images/README</code></p><p><a href="../../../../../../source/doc/src/sgml/images/README.html" target="source-view">View original document</a></p><p class="document-translation-progress document-translation-complete">Translation complete.</p><div class="document-translation-body"><section class="document-translation-chunk translated" data-chunk-order="0"><p>画像 ====</p>
+<p>このディレクトリには、ドキュメントで使用する画像が含まれています。</p>
+<p>画像の作成 ----------</p>
+<p>画像の作成には、さまざまなツールを使用できます。適切な選択は画像の性質によって異なります。私たちは、diff（差分）が取りやすいソースファイルを使用するワークフローを好みます。</p>
+<p>以下のツールが使用可能です。</p>
+<ul>
+<li>Graphviz (https://graphviz.org/)</li>
+<li>Ditaa v0.11.0以降 (https://github.com/stathissideris/ditaa)</li>
+</ul>
+<p>ドキュメントの最終的な出力フォーマット（HTML、PDFなど）に画像を統合するためのフォーマットとして、SVGを使用します。したがって、使用するツールはSVGを出力できる必要があります。</p>
+<p>このディレクトリには、一般的な入力フォーマットから共通のスタイリングを適用してSVGをビルドするためのmakefileおよびmesonルールが含まれています。</p>
+<p>fixup-svg.xslは、これらの外部ツールによって生成されたSVGファイルにいくつかの後処理を適用し、さまざまな問題に対処します。そこにあるコメントを参照し、必要に応じて調整および拡張してください。</p>
+<p>ソースファイルと出力されるSVGファイルの両方がこのディレクトリにコミットされます。これにより、すべての開発者がすべてのツールをインストールしておく必要がなくなります。特定のツールによってはSVG出力に不要な差分が生じる可能性があることは許容しますが、それを監視し、最小限に抑えるようにしましょう。</p>
+<p>DocBookでの画像の使用 ---------------------</p>
+<p>DocBookで画像を使用する例を以下に示します。</p>
+<p>&lt;figure id=&quot;gin-internals-figure&quot;&gt; &lt;title&gt;GIN Internals&lt;/title&gt; &lt;mediaobject&gt; &lt;imageobject&gt; &lt;imagedata fileref=&quot;images/gin.svg&quot; format=&quot;SVG&quot; width=&quot;100%&quot;/&gt; &lt;/imageobject&gt; &lt;/mediaobject&gt; &lt;/figure&gt;</p>
+<p>注意：</p>
+<ul>
+<li>実際の処理は &lt;mediaobject&gt; 要素で行われますが、通常はそれを &lt;figure&gt; で囲み、テキストのどこかにその図への &lt;xref&gt; を配置する必要があります。リンクや説明なしに、単に画像をドキュメントに配置することは避けてください。</li>
+</ul>
+<ul>
+<li>異なる出力フォーマットであっても、1つの &lt;imagedata&gt; 要素のみが必要となるように設定されています。</li>
+</ul>
+<ul>
+<li>属性 format=&quot;SVG&quot; が必須です。省略しても動作するように見えますが、画像が明示的にSVGとして宣言されている方が、スタイルシートがより適切に処理を行います。</li>
+</ul>
+<ul>
+<li>width は何らかの値に設定する必要があります。これにより、PDF出力で画像がページに収まるようにスケーリングされます。（100% 以外の幅が適切な場合もあります。）</li>
+</ul></section></div><script>
+(function() {
+  function notifyParent() {
+    if (parent === window) return;
+    parent.postMessage({type: "frame-location", frame: window.name || "", href: window.location.href}, "*");
+  }
+  document.addEventListener("click", function(event) {
+    const link = event.target.closest("a[data-panel]");
+    if (!link || parent === window) return;
+    parent.postMessage({type: "source-link", panel: link.dataset.panel}, "*");
+  });
+  window.addEventListener("load", notifyParent);
+  window.addEventListener("hashchange", notifyParent);
+})();
+</script></body></html>

@@ -48,15 +48,15 @@
 </ul>
 <p>/*</p>
 <ul>
-<li>Sort on object subId.</li>
+<li>Sort on <a class="wiki-source-link" href="../../source/src/include/utils/jsonb.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__utils__jsonb_h__object.html&quot;}, '*');">object</a> subId.</li>
 <p>*</p>
-<li>We <a class="wiki-source-link" href="../../source/contrib/intarray/_int_op.c.html#L198" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/contrib__intarray___int_op_c__sort.html&quot;}, '*');">sort</a> the subId as an unsigned int so that 0 (the whole object) will</li>
+<li>We <a class="wiki-source-link" href="../../source/contrib/intarray/_int_op.c.html#L198" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/contrib__intarray___int_op_c__sort.html&quot;}, '*');">sort</a> the subId as an unsigned int so that 0 (the whole <a class="wiki-source-link" href="../../source/src/include/utils/jsonb.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__utils__jsonb_h__object.html&quot;}, '*');">object</a>) will</li>
 <li>come first.</li>
 <p>*/ if ((unsigned int) obja-&gt;object.objectSubId &lt; (unsigned int) objb-&gt;object.objectSubId) return -1; if ((unsigned int) obja-&gt;object.objectSubId &gt; (unsigned int) objb-&gt;object.objectSubId) return 1;</p>
 </ul>
 <p>/*</p>
 <ul>
-<li>Last, <a class="wiki-source-link" href="../../source/contrib/intarray/_int_op.c.html#L198" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/contrib__intarray___int_op_c__sort.html&quot;}, '*');">sort</a> on deptype, in case the same object has multiple dependency</li>
+<li>Last, <a class="wiki-source-link" href="../../source/contrib/intarray/_int_op.c.html#L198" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/contrib__intarray___int_op_c__sort.html&quot;}, '*');">sort</a> on deptype, in case the same <a class="wiki-source-link" href="../../source/src/include/utils/jsonb.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__utils__jsonb_h__object.html&quot;}, '*');">object</a> has multiple dependency</li>
 <li>types.  (Note that there&#x27;s no need to consider objtype, as that&#x27;s</li>
 <li>determined by the catalog OID.)</li>
 <p>*/ if (obja-&gt;deptype &lt; objb-&gt;deptype) return -1; if (obja-&gt;deptype &gt; objb-&gt;deptype) return 1;</p>

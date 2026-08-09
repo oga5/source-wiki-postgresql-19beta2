@@ -28,7 +28,7 @@
 <h2>関連データ構造</h2>
 <p><code>Aggref</code>, <a class="wiki-source-link" href="../../source/src/interfaces/ecpg/preproc/type.h.html#L198" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__interfaces__ecpg__preproc__type_h__arguments.html&quot;}, '*');"><code>arguments</code></a>, <code>AttrNumber</code>, <code>Datum</code>, <code>descriptor</code>, <code>ExprState</code>, <code>FmgrInfo</code>, <code>FunctionCallInfo</code>, <code>int16</code>, <a class="wiki-source-link" href="../../source/src/timezone/zic.c.html#L310" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__timezone__zic_c__lookup.html&quot;}, '*');"><code>lookup</code></a>, <code>Oid</code>, <code>state</code>, <code>TupleDesc</code>, <code>Tuplesortstate</code>, <code>TupleTableSlot</code>, <a class="wiki-source-link" href="../../source/src/interfaces/ecpg/preproc/type.h.html#L89" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__interfaces__ecpg__preproc__type_h__when.html&quot;}, '*');"><code>when</code></a></p>
 <h2>ソース抜粋</h2>
-<p>~~~c typedef struct <a class="wiki-source-link" href="../../source/src/include/executor/nodeAgg.h.html#L30" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__executor__nodeAgg_h__AggStatePerTransData.html&quot;}, '*');">AggStatePerTransData</a> { /*</p>
+<p>~~~c <a class="wiki-source-link" href="../../source/src/include/fmgr.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/fmgr.h.html&quot;}, '*');">typedef</a> struct <a class="wiki-source-link" href="../../source/src/include/executor/nodeAgg.h.html#L30" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__executor__nodeAgg_h__AggStatePerTransData.html&quot;}, '*');">AggStatePerTransData</a> { /*</p>
 <ul>
 <li>These values are set up during <a class="wiki-source-link" href="../../source/src/backend/executor/nodeAgg.c.html#L3280" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__executor__nodeAgg_c__ExecInitAgg.html&quot;}, '*');">ExecInitAgg</a>() and do not change</li>
 <li>thereafter:</li>
@@ -46,12 +46,12 @@
 <p>/*</p>
 <ul>
 <li>Is this state value actually being shared by more than one Aggref?</li>
-<p>*/ <a class="wiki-source-link" href="../../source/src/include/access/tupmacs.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__access__tupmacs_h__bool.html&quot;}, '*');">bool</a>		aggshared;</p>
+<p>*/ bool		aggshared;</p>
 </ul>
 <p>/*</p>
 <ul>
-<li>True for ORDER BY and <a class="wiki-source-link" href="../../source/src/backend/optimizer/plan/subselect.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__plan__subselect_c__DISTINCT.html&quot;}, '*');">DISTINCT</a> Aggrefs that are not aggpresorted.</li>
-<p>*/ <a class="wiki-source-link" href="../../source/src/include/access/tupmacs.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__access__tupmacs_h__bool.html&quot;}, '*');">bool</a>		aggsortrequired;</p>
+<li>True for ORDER BY and DISTINCT Aggrefs that are not aggpresorted.</li>
+<p>*/ bool		aggsortrequired;</p>
 </ul>
 <p>/*</p>
 <ul>

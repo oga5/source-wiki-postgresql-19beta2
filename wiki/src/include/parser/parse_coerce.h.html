@@ -1,0 +1,56 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>src/include/parser/parse_coerce.h.md</title><link rel="stylesheet" href="../../../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../../../source/src/include/parser/parse_coerce.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/parser/parse_coerce.h.html&quot;}, '*');">src/include/parser/parse_coerce.h</a></h1>
+<h2>概要</h2>
+<p>PostgreSQLのパーサモジュールにおいて、式やデータ型の型変換（<a class="wiki-source-link" href="../../../../source/src/include/parser/parse_type.h.html#L20" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__parser__parse_type_h__Type.html&quot;}, '*');">Type</a> Coercion）、キャスト、および多相型（Polymorphic <a class="wiki-source-link" href="../../../../source/src/include/parser/parse_type.h.html#L20" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__parser__parse_type_h__Type.html&quot;}, '*');">Type</a>）の整合性検証に関する関数群とデータ構造を定義するヘッダーファイルです。</p>
+<h2>モジュール内での役割</h2>
+<p><code>src/include/parser/</code> 配下において、型解決や式変換を担当するコアコンポーネントの一つです。ペアとなる実装ファイル <a class="wiki-source-link" href="../../../../source/src/backend/parser/parse_coerce.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/parser/parse_coerce.c.html&quot;}, '*');"><code>src/backend/parser/parse_coerce.c</code></a> に対する外部インターフェースを提供し、意味解析（Semantic Analysis）や関数・演算子の解決プロセスを支えます。</p>
+<h2>責務</h2>
+<ul>
+<li>型変換のパス種別（<a class="wiki-source-link" href="../../../../source/src/include/parser/parse_coerce.h.html#L24" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__parser__parse_coerce_h__CoercionPathType.html&quot;}, '*');"><code>CoercionPathType</code></a>）や型カテゴリ（<a class="wiki-source-link" href="../../../../source/src/include/parser/parse_coerce.h.html#L21" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__parser__parse_coerce_h__TYPCATEGORY.html&quot;}, '*');"><code>TYPCATEGORY</code></a>）の定義。</li>
+<li>式をターゲット型へ強制変換、または共通型へ統一するための公開APIの宣言。</li>
+<li>バイナリ互換性やプレファレンス型の判定関数の提供。</li>
+<li>多相型（Polymorphic <a class="wiki-source-link" href="../../../../source/src/include/parser/parse_type.h.html#L20" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__parser__parse_type_h__Type.html&quot;}, '*');">Type</a>）のシグネチャ整合性検証および共通型・共通型モッドの選択。</li>
+</ul>
+<h2>重要なシンボル</h2>
+<ul>
+<li><a class="wiki-source-link" href="../../../../source/src/include/parser/parse_coerce.h.html#L24" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__parser__parse_coerce_h__CoercionPathType.html&quot;}, '*');"><code>CoercionPathType</code></a>: 変換経路の種類（関数適用、バイナリ互換、配列変換、I/O変換など）を表す列挙型。</li>
+<li><a class="wiki-source-link" href="../../../../source/src/include/parser/parse_coerce.h.html#L21" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__parser__parse_coerce_h__TYPCATEGORY.html&quot;}, '*');"><code>TYPCATEGORY</code></a>: <a class="wiki-source-link" href="../../../../source/src/include/catalog/pg_type.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/catalog/pg_type.h.html&quot;}, '*');"><code>pg_type.h</code></a> の型カテゴリに対応する文字型エイリアス。</li>
+<li><code>coerce_to_target_type</code>: 任意の式を指定された型と<a class="wiki-source-link" href="../../../../source/src/backend/utils/adt/jsonfuncs.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/backend/utils/adt/jsonfuncs.c.html&quot;}, '*');">typmod</a>へ変換する汎用エントリーポイント。</li>
+<li><code>find_coercion_pathway</code>: ソース型からターゲット型への変換経路と必要な関数を探索する関数。</li>
+<li><code>select_common_type</code>: 複数の式から共通のデータ型を選択する関数。</li>
+</ul>
+<h2>制御フローとデータフロー</h2>
+<p>本ファイルはインターフェース定義のため実処理を持ちませんが、対応する <a class="wiki-source-link" href="../../../../source/src/backend/parser/parse_coerce.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/parser/parse_coerce.c.html&quot;}, '*');"><code>parse_coerce.c</code></a> を通じて以下のフローに関与します： 1. パーサが式や関数引数を処理する際、<a class="wiki-source-link" href="../../../../source/src/backend/parser/parse_coerce.c.html#L557" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__parser__parse_coerce_c__can_coerce_type.html&quot;}, '*');"><code>can_coerce_type</code></a> や <code>coerce_to_target_type</code> が呼び出され変換可能性を評価する。 2. <code>find_coercion_pathway</code> により最適な変換パス（<a class="wiki-source-link" href="../../../../source/src/include/parser/parse_coerce.h.html#L24" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__parser__parse_coerce_h__CoercionPathType.html&quot;}, '*');"><code>CoercionPathType</code></a>）が決定される。 3. 変換関数やキャストノードが適用された式ツリーが構築され、後続の最適化・実行フェーズへ渡される。</p>
+<h2>直接依存</h2>
+<ul>
+<li><code>parser/parse_node.h</code>: 解析状態やノード定義の基本型を利用するためにインクルード。</li>
+</ul>
+<h2>関連コード</h2>
+<ul>
+<li><a class="wiki-source-link" href="../../../../source/src/backend/parser/parse_coerce.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/parser/parse_coerce.c.html&quot;}, '*');"><code>src/backend/parser/parse_coerce.c</code></a>: 本ヘッダーで宣言された関数の実体を実装するペアファイル。</li>
+<li><a class="wiki-source-link" href="../../../../source/src/include/parser/parse_type.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/parser/parse_type.h.html&quot;}, '*');"><code>src/include/parser/parse_type.h</code></a>: 型情報やルックアップ関数を提供する関連ヘッダー。</li>
+<li><a class="wiki-source-link" href="../../../../source/src/include/catalog/pg_type.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/catalog/pg_type.h.html&quot;}, '*');"><code>src/include/catalog/pg_type.h</code></a>: 型システムのカタログ定義。</li>
+</ul>
+<h2>読者向けメモ</h2>
+<ul>
+<li>型変換のエラー処理は直接 <a class="wiki-source-link" href="../../../../source/src/include/utils/elog.h.html#L166" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/utils/elog.h.html&quot;}, '*');"><code>ereport</code></a> せず、失敗時に <code>NULL</code> を返す設計の関数が多く存在するため、呼び出し側でのコンテキストに応じたエラーハンドリングに注意してください。</li>
+</ul>
+<h2>シンボルページ</h2>
+<ul>
+<li><a href="../../../symbols/src__include__parser__parse_coerce_h__TYPCATEGORY.html" target="wiki-view"><code>TYPCATEGORY</code></a></li>
+<li><a href="../../../symbols/src__include__parser__parse_coerce_h__CoercionPathType.html" target="wiki-view"><code>CoercionPathType</code></a></li>
+</ul><script>
+(function() {
+  function notifyParent() {
+    if (parent === window) return;
+    parent.postMessage({type: "frame-location", frame: window.name || "", href: window.location.href}, "*");
+  }
+  document.addEventListener("click", function(event) {
+    const link = event.target.closest("a[data-panel]");
+    if (!link || parent === window) return;
+    parent.postMessage({type: "source-link", panel: link.dataset.panel}, "*");
+  });
+  window.addEventListener("load", notifyParent);
+  window.addEventListener("hashchange", notifyParent);
+})();
+</script></body></html>

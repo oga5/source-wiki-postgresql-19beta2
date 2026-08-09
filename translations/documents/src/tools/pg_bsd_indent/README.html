@@ -1,0 +1,53 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>src/tools/pg_bsd_indent/README</title><link rel="stylesheet" href="../../../../../styles.css"></head><body><h1>Japanese translation</h1><p><code>src/tools/pg_bsd_indent/README</code></p><p><a href="../../../../../source/src/tools/pg_bsd_indent/README.html" target="source-view">View original document</a></p><p class="document-translation-progress document-translation-complete">Translation complete.</p><div class="document-translation-body"><section class="document-translation-chunk translated" data-chunk-order="0"><p>src/tools/pg_bsd_indent/README</p>
+<p>これは、FreeBSD プロジェクトによってメンテナンスされている &quot;indent&quot; プログラムを軽微に修正したものです。修正の大部分は BSD 系以外のプラットフォームへ移植しやすくするためのものですが、アップストリーム側に取り込んでもらえなかったフォーマット用のスイッチが 1 つだけ含まれています。</p>
+<p>ビルドするには、周囲の Postgres ソースツリーを configure してから、このディレクトリで &quot;make&quot; を実行します。 オプションとして、簡単なテストを実行するために &quot;make test&quot; を実行することもできます。</p>
+<p>使用する前に、PATH の通った場所に pg_bsd_indent をインストールする必要があります。開発者であれば、おそらく周辺の Postgres のビルドがインストールされるのと同じ場所に配置したくはないでしょう。したがって、この手順は以下のように実行します。</p>
+<p>make install prefix=/usr/local</p>
+<p>ビルドに Meson を使用している場合、標準のビルドターゲットで pg_bsd_indent のビルドとテストが行われますが、現在のところ任意の場所へインストールする仕組みはありません。ビルドされた実行ファイルを build/src/tools/pg_bsd_indent/pg_bsd_indent から配置したい場所へ手動でコピーしてください。</p>
+<p>もし indent のソースコードをハッキングする機会があるなら、既存のインデントスタイルに最も近い設定は以下のようになります。</p>
+<p>./pg_bsd_indent -i4 -l79 -di12 -nfc1 -nlp -sac somefile.c</p>
+<p>もっとも、これが厳密に守られているわけではありません。 （靴職人の子供についての格言はどんなものだったでしょうか？） Postgres スタイルに再インデントする予定はありません。なぜなら、そうすると FreeBSD のソースとの比較が難しくなるためです。</p>
+<p>----------</p>
+<p>このディレクトリ内のファイルの FreeBSD オリジナル版には、BSD ライセンスの「4条項」版が適用されています。UC バークレーの以下の指示に従い、「広告」条項を削除しました。 ftp://ftp.cs.berkeley.edu/pub/4bsd/README.Impt.License.Change 内容は以下の通りです。</p>
+<p>1999年7月22日</p>
+<p>すべてのライセンシー、および BSD のあらゆるバージョンの配布者各位：</p>
+<p>ご存知の通り、カリフォルニア大学バークレー校（UC Berkeley）のソフトウェア配布（&quot;BSD&quot;）ソースコードファイルの一部では、ソフトウェアの全部または一部を含む製品のさらなる配布を行う際、それらの広告資料において、当該製品に UC Berkeley およびその協力者によって開発されたソフトウェアが含まれていることを謝辞として記載することが求められています。</p>
+<p>具体的には、その規定は以下の通りです。</p>
+<p>&quot;     * 3. 本ソフトウェアの機能または使用について言及するすべての広告資料は、</p>
+<ul>
+<li>以下の謝辞を表示しなければならない：</li>
+<li>本製品には、カリフォルニア大学バークレー校およびその協力者によって</li>
+<li>開発されたソフトウェアが含まれています。&quot;</li>
+</ul>
+<p>直ちに発効するものとして、ライセンシーおよび配布者は、広告資料内にこの謝辞を含めることがもはや要求されません。したがって、これを含んでいた BSD Unix ファイルの上記の段落は、ここにその全体が削除されます。</p>
+<p>ウィリアム・ホスキンス（William Hoskins） 技術ライセンスオフィス ディレクター カリフォルニア大学バークレー校</p>
+<p>----------</p>
+<p>以下に続くのは、FreeBSD indent によってメンテナンスされている README ファイルです。</p>
+<p>----------</p>
+<p>$FreeBSD: head/usr.bin/indent/README 105244 2002-10-16 13:58:39Z charnier $</p>
+<p>これは C 言語のインデントツールであり、元々は PDP-11 Unix 用のいくつかの配布テープを介してイリノイ大学から提供されたものです。その後、CMU のジェームズ・ゴスリング（James Gosling）によって手を加えられました。あまり洗練されておらず、実際には完全に作り直す必要がありますが、おそらく現存する中で最も優れた C 言語のプリフィッター（整形プログラム）です。</p>
+<p>「カーネル正規形式（Kernel Normal Form）」を提供するためのさらなる追加は、サン・マイクロシステムズ（Sun Microsystems）の人々によって貢献されました。</p>
+<p>++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ &gt; From mnetor!yunexus!oz@uunet.UU.NET Wed Mar  9 15:30:55 1988 &gt; Date: Tue, 8 Mar 88 18:36:25 EST &gt; From: yunexus!oz@uunet.UU.NET (Ozan Yigit) &gt; To: bostic@okeeffe.berkeley.edu &gt; Cc: ccvaxa!willcox@uunet.UU.NET, jag@sun.com, rsalz@uunet.UU.NET &gt; In-Reply-To: Keith Bostic&#x27;s message of Tue, 16 Feb 88 16:09:06 PST &gt; Subject: Re: Indent...</p>
+<p>indent に関するご返答ありがとうございます。私の最初の観察（あるいは誤った観察 :-）は間違っていました。UCB はイリノイ大学の著作権をそのまま保持していました。</p>
+<p>問題は依然として、私たちが indent を配布できるかどうか、そしてできるのであればどのバージョンかという点です。作者であるデヴィッド・ウィルコックス（David Willcox）は次のように述べています：</p>
+<p>| indent がパブリックドメインにあると私が主張する根拠について、何人もの人から尋ねられました。 | そんな投稿をしたことを後悔するだろうと分かっていました。 | | 少し歴史を振り返ります。1976年当時、私がイリノイ大学高度計算センター（Center for Advanced Computation）で取り組んでいたプロジェクトでは、 | C コードのフォーマット方法を巡って大喧嘩がありました。1週間ほど言い争った後、私はうんざりして、 | C コードを再フォーマットするための indent と呼ぶプログラムを書きました。 | それには、出力を好みの形式にフォーマットできるさまざまなオプションがありました。 | 特に、支持されていたすべての異なるフォーマットがサポートされていました。 | | それは私の初めての大きな C プログラムでした。醜いものでした。設計されたわけではなく、 | なんとなく成長していったものです。しかし、それはほぼ期待通りに動作し、言い争いのほとんどを終わらせました。 | | 形式として、私はイリノイ大学の著作権表示を含めました。しかし私の認識では、 | その作業は ARPA の契約下で行われたものであるため、パブリックドメインでした。 | | 時は流れ、何年か後、indent は初期の emacs のディストリビューションの 1 つに現れました。 | | さらにその後、UC バークレーの誰かがイリノイ大学に電話をかけ、indent がパブリックドメインにあるかどうかを尋ねました。 | 彼らは emacs のものと一緒に、自分たちの UNIX ディストリビューションに含めたかったのです。 | 私はもはやイリノイ大学にはいませんでしたが、そこにいたロブ・コルスタッド（Rob Kolstad）が私にそれについて尋ねました。 | 私は使ってもらっても構わないと答え、それ以来それは BSD ディストリビューションに含まれてきました。 | | その過程のどこかで、他の何人かの名前の挙がらない人々がそれに手を加えました。 | バージョン 7 の C を理解できるように変換されました（オリジナルはバージョン 6 でした）。 | 元のフィルターインターフェースから、現在の「ユーザーのファイルを吹き飛ばす」インターフェースへと変換されました。 | $HOME/.indent.pro ファイルの解析が追加されました。さらにいくつかのフォーマットオプションが追加されました。 | | 私が現在持っているソースには 2 つの著作権表示があります。1つはイリノイ大学からのオリジナルです。 | もう1つはバークレーからのものです。 | | 私は弁護士ではなく、著作権法を確かに理解しているわけでもありません。 | 私に関する限り、このプログラムの大部分、イリノイ大学の著作権でカバーされているすべてのものはパブリックドメインであり、 | その価値は十分にあります。バークレーの著作権は彼らの変更のみをカバーすべきであり、 | それを送信することについて彼らがどう感じているのかは私には分かりません。</p>
+<p>いずれにせよ、その著作権を明確化・変更する人物はイリノイ大学にはいないようですが、（作者の言に基づき）コードは著作権を保持したその現状のままで配布可能であり、法的な問題を引き起こすことはないと確信しています。</p>
+<p>したがって、問題は comp.sources.unix を通じて「どれを」配布するかという点に帰着します。皆さんの許可が得られるのであれば（一部に著作権があることを考慮して）、最も最新のバージョンと思われる indent の 4.3 バージョンを配布することを提案します。 私は、作者から unix テープへの最初の提出物、その後の G-Emacs バージョン、あらゆる 4.n バージョン、サン版、Unipress 版を含む、知られている限りのほぼすべてのバージョンの indent を偶然にも持っています。 それでもなお、私たちが「過去に逆戻り」して、あなた方が行ったすべての作業をやり直す必要はないと考えています。</p>
+<p>これについてどう思われるか、お返事をお待ちしております。もちろん 4.3 バージョンをモデレーターに直接送っていただいても構いませんし、許可をお知らせいただければ私がソースを送ることもできます。あるいは 4.3 バージョンがNGであると知らせていただければ、その場合はおそらく古いバージョンに戻さざるを得なくなるでしょう。いずれにせよ、何らかのバージョンの indent を comp.sources.unix に届けたいと思っています。</p>
+<p>敬具..	oz</p>
+<p>cc: ccvaxa!willcox sun.com!jar uunet!rsalz</p></section></div><script>
+(function() {
+  function notifyParent() {
+    if (parent === window) return;
+    parent.postMessage({type: "frame-location", frame: window.name || "", href: window.location.href}, "*");
+  }
+  document.addEventListener("click", function(event) {
+    const link = event.target.closest("a[data-panel]");
+    if (!link || parent === window) return;
+    parent.postMessage({type: "source-link", panel: link.dataset.panel}, "*");
+  });
+  window.addEventListener("load", notifyParent);
+  window.addEventListener("hashchange", notifyParent);
+})();
+</script></body></html>

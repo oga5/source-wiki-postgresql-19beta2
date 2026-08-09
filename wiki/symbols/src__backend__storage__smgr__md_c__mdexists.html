@@ -15,7 +15,7 @@
 <h2>入力と出力</h2>
 <ul>
 <li>引数: <code>SMgrRelation reln</code>, <code>ForkNumber forknum</code></li>
-<li>戻り値: <a class="wiki-source-link" href="../../source/src/include/access/tupmacs.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__access__tupmacs_h__bool.html&quot;}, '*');"><code>bool</code></a></li>
+<li>戻り値: <code>bool</code></li>
 </ul>
 <h2>前提条件と不変条件</h2>
 <p>まだ解析していません。</p>
@@ -34,7 +34,7 @@
 <h2>関連データ構造</h2>
 <p><a class="wiki-source-link" href="../../source/src/include/common/relpath.h.html#L56" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__common__relpath_h__ForkNumber.html&quot;}, '*');"><code>ForkNumber</code></a>, <code>SMgrRelation</code>, <a class="wiki-source-link" href="../../source/src/interfaces/ecpg/preproc/type.h.html#L89" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__interfaces__ecpg__preproc__type_h__when.html&quot;}, '*');"><code>when</code></a></p>
 <h2>ソース抜粋</h2>
-<p>~~~c <a class="wiki-source-link" href="../../source/src/include/access/tupmacs.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__access__tupmacs_h__bool.html&quot;}, '*');">bool</a> <a class="wiki-source-link" href="../../source/src/backend/storage/smgr/md.c.html#L203" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__storage__smgr__md_c__mdexists.html&quot;}, '*');">mdexists</a>(SMgrRelation reln, <a class="wiki-source-link" href="../../source/src/include/common/relpath.h.html#L56" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__common__relpath_h__ForkNumber.html&quot;}, '*');">ForkNumber</a> forknum) { /*</p>
+<p>~~~c bool <a class="wiki-source-link" href="../../source/src/backend/storage/smgr/md.c.html#L203" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__storage__smgr__md_c__mdexists.html&quot;}, '*');">mdexists</a>(SMgrRelation reln, <a class="wiki-source-link" href="../../source/src/include/common/relpath.h.html#L56" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__common__relpath_h__ForkNumber.html&quot;}, '*');">ForkNumber</a> forknum) { /*</p>
 <ul>
 <li>Close it first, to ensure that we notice if the fork has been unlinked</li>
 <li>since we opened it.  As an optimization, we can skip that in recovery,</li>

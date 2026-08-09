@@ -34,7 +34,7 @@
 <h2>関連データ構造</h2>
 <p><code>Oid</code>, <code>Snapshot</code>, <code>state</code></p>
 <h2>ソース抜粋</h2>
-<p>~~~c Snapshot <a class="wiki-source-link" href="../../source/src/backend/utils/time/snapmgr.c.html#L384" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__utils__time__snapmgr_c__GetCatalogSnapshot.html&quot;}, '*');">GetCatalogSnapshot</a>(Oid <a class="wiki-source-link" href="../../source/src/backend/optimizer/util/relnode.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__relnode_c__relid.html&quot;}, '*');">relid</a>) { /*</p>
+<p>~~~c Snapshot <a class="wiki-source-link" href="../../source/src/backend/utils/time/snapmgr.c.html#L384" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__utils__time__snapmgr_c__GetCatalogSnapshot.html&quot;}, '*');">GetCatalogSnapshot</a>(Oid relid) { /*</p>
 <ul>
 <li>Return historic snapshot while we&#x27;re doing logical decoding, so we can</li>
 <li>see the appropriate state of the catalog.</li>
@@ -43,7 +43,7 @@
 <li>finishing decoding.</li>
 <p>*/ if (<a class="wiki-source-link" href="../../source/src/backend/utils/time/snapmgr.c.html#L1691" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__utils__time__snapmgr_c__HistoricSnapshotActive.html&quot;}, '*');">HistoricSnapshotActive</a>()) return <a class="wiki-source-link" href="../../source/src/backend/utils/time/snapmgr.c.html#L152" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/utils/time/snapmgr.c.html&quot;}, '*');">HistoricSnapshot</a>;</p>
 </ul>
-<p>return <a class="wiki-source-link" href="../../source/src/backend/utils/time/snapmgr.c.html#L406" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__utils__time__snapmgr_c__GetNonHistoricCatalogSnapshot.html&quot;}, '*');">GetNonHistoricCatalogSnapshot</a>(<a class="wiki-source-link" href="../../source/src/backend/optimizer/util/relnode.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__relnode_c__relid.html&quot;}, '*');">relid</a>); } ~~~</p>
+<p>return <a class="wiki-source-link" href="../../source/src/backend/utils/time/snapmgr.c.html#L406" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__utils__time__snapmgr_c__GetNonHistoricCatalogSnapshot.html&quot;}, '*');">GetNonHistoricCatalogSnapshot</a>(relid); } ~~~</p>
 <h2>失敗モードと境界条件</h2>
 <p>まだ解析していません。</p>
 <h2>保守担当者向けメモ</h2>

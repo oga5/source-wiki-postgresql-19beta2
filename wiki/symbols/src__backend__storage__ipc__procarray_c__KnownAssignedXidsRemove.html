@@ -40,7 +40,7 @@
 <ul>
 <li>Note: we cannot consider it an error to remove an XID that&#x27;s not</li>
 <li>present.  We intentionally remove subxact IDs while processing</li>
-<li><a class="wiki-source-link" href="../../source/src/include/access/xact.h.html#L175" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/access/xact.h.html&quot;}, '*');">XLOG_XACT_ASSIGNMENT</a>, to avoid array overflow.  Then those XIDs will be</li>
+<li><a class="wiki-source-link" href="../../source/src/include/access/xact.h.html#L175" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/access/xact.h.html&quot;}, '*');">XLOG_XACT_ASSIGNMENT</a>, to avoid <a class="wiki-source-link" href="../../source/src/include/utils/jsonb.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__utils__jsonb_h__array.html&quot;}, '*');">array</a> overflow.  Then those XIDs will be</li>
 <li>removed again <a class="wiki-source-link" href="../../source/src/interfaces/ecpg/preproc/type.h.html#L89" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__interfaces__ecpg__preproc__type_h__when.html&quot;}, '*');">when</a> the top-level xact commits or aborts.</li>
 <p>*</p>
 <li>It might be possible to track such XIDs to distinguish this case from</li>

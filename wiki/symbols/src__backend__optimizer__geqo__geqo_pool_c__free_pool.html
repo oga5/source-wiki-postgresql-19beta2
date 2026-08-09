@@ -1,48 +1,40 @@
 <!doctype html>
 <html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>symbols/src__backend__optimizer__geqo__geqo_pool_c__free_pool.md</title><link rel="stylesheet" href="../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../source/src/backend/optimizer/geqo/geqo_pool.c.html#L68" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__geqo__geqo_pool_c__free_pool.html&quot;}, '*');">free_pool</a></h1>
-<h2>定義</h2>
+<h2>現在のソース事実</h2>
 <ul>
 <li>種別: <code>function</code></li>
 <li>定義箇所: <code>src/backend/optimizer/geqo/geqo_pool.c:68</code></li>
-<li>所属モジュール: <a class="wiki-entity-link" href="../modules/src__backend__optimizer__geqo.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/modules/src__backend__optimizer__geqo.html&quot;, &quot;source&quot;: &quot;source/src/backend/optimizer/geqo/geqo_copy.c.html&quot;}, '*');"><code>module:src/backend/optimizer/geqo</code></a></li>
-</ul>
-<h2>目的</h2>
-<p>静的シンボル索引から生成された初期シンボルページです。</p>
-<h2>シグネチャまたは形状</h2>
-<ul>
 <li>シグネチャ: <code>void free_pool(PlannerInfo *root, Pool *pool)</code></li>
-</ul>
-<h2>入力と出力</h2>
-<ul>
-<li>引数: <code>PlannerInfo *root</code>, <code>Pool *pool</code></li>
-<li>戻り値: <code>void</code></li>
-</ul>
-<h2>前提条件と不変条件</h2>
-<p>まだ解析していません。</p>
-<h2>アルゴリズムまたは振る舞い</h2>
-<ul>
-<li>複雑度: <code>medium</code> (score 8)</li>
-</ul>
-<p>まだ解析していません。</p>
-<h2>呼び出し元と呼び出し先</h2>
-<ul>
 <li>呼び出し元: <a class="wiki-source-link" href="../../source/src/backend/optimizer/geqo/geqo_main.c.html#L74" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__geqo__geqo_main_c__geqo.html&quot;}, '*');"><code>geqo</code></a></li>
 <li>呼び出し先: なし</li>
 <li>呼び出し元サイト: <a class="wiki-source-link" href="../../source/src/backend/optimizer/geqo/geqo_main.c.html#L74" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__geqo__geqo_main_c__geqo.html&quot;}, '*');"><code>geqo</code></a> at <code>src/backend/optimizer/geqo/geqo_main.c:313:2</code> (direct, confidence=high, resolved=<a class="wiki-entity-link" href="src__backend__optimizer__geqo__geqo_pool_c__free_pool.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__geqo__geqo_pool_c__free_pool.html&quot;, &quot;source&quot;: &quot;source/src/backend/optimizer/geqo/geqo_pool.c.html#L68&quot;}, '*');"><code>symbol:src/backend/optimizer/geqo/geqo_pool.c#free_pool</code></a>)</li>
 <li>呼び出しサイト: <code>pfree</code> at <code>src/backend/optimizer/geqo/geqo_pool.c:77:3</code> (unresolved, confidence=low), <code>pfree</code> at <code>src/backend/optimizer/geqo/geqo_pool.c:80:2</code> (unresolved, confidence=low), <code>pfree</code> at <code>src/backend/optimizer/geqo/geqo_pool.c:83:2</code> (unresolved, confidence=low)</li>
+<li>関連型: <code>Chromosome</code>, <code>PlannerInfo</code>, <code>Pool</code>, <code>string</code></li>
+<li>複雑度: <code>medium</code> (score 8)</li>
 </ul>
-<h2>関連データ構造</h2>
-<p><code>Chromosome</code>, <code>PlannerInfo</code>, <code>Pool</code>, <code>string</code></p>
-<h2>ソース抜粋</h2>
+<h3>ソース抜粋</h3>
 <p>~~~c void <a class="wiki-source-link" href="../../source/src/backend/optimizer/geqo/geqo_pool.c.html#L68" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__geqo__geqo_pool_c__free_pool.html&quot;}, '*');">free_pool</a>(PlannerInfo *<a class="wiki-source-link" href="../../source/src/backend/optimizer/util/var.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__var_c__root.html&quot;}, '*');">root</a>, Pool *pool) { Chromosome *chromo; int			i;</p>
 <p>/* all gene */ chromo = (Chromosome *) pool-&gt;data; /* vector of all chromos */ for (i = 0; i &lt; pool-&gt;<a class="wiki-source-link" href="../../source/src/backend/optimizer/geqo/geqo_eval.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__geqo__geqo_eval_c__size.html&quot;}, '*');">size</a>; i++) pfree(chromo[i].string);</p>
 <p>/* all chromosome */ pfree(pool-&gt;data);</p>
 <p>/* pool */ pfree(pool); } ~~~</p>
-<h2>失敗モードと境界条件</h2>
-<p>まだ解析していません。</p>
-<h2>保守担当者向けメモ</h2>
+<h2>目的</h2>
+<p>遺伝的アルゴリズム（GEQO）の個体群プール (<code>Pool</code>) が保持するすべての遺伝子文字列、染色体配列、およびプール構造体自身のメモリを解放する。</p>
+<h2>入力と出力</h2>
 <ul>
-<li>後続フェーズで、ソース本文の文脈と caller/callee 情報を使ってこのページを強化する。</li>
+<li>引数: </li>
+<li><code>PlannerInfo *root</code>: プランナーのグローバル情報（未使用）</li>
+<li><code>Pool *pool</code>: 解放対象のプール構造体ポインタ</li>
+<li>戻り値: なし（<code>void</code>）</li>
+</ul>
+<h2>前提条件と不変条件</h2>
+<ul>
+<li>引数 <code>pool</code> および <code>pool-&gt;data</code> が有効なメモリ領域を指していること。</li>
+</ul>
+<h2>アルゴリズムまたは振る舞い</h2>
+<p>1. <code>pool-&gt;data</code> を染色体の配列（<code>Chromosome *</code>）としてキャストする。 2. ループを用いて、プール内の各染色体が保持する遺伝子文字列（<code>chromo[i].string</code>）を順次 <code>pfree</code> で解放する。 3. すべての染色体データを格納していた配列領域（<code>pool-&gt;data</code>）を <code>pfree</code> で解放する。 4. 最後に <code>Pool</code> 構造体自身を <code>pfree</code> で解放する。</p>
+<h2>失敗モードと境界条件</h2>
+<ul>
+<li>解放順序を誤ると、配下のメモリ（遺伝子文字列や染色体配列）にアクセスできなくなるため、内側から外側へ順に解放する。</li>
 </ul><script>
 (function() {
   function notifyParent() {

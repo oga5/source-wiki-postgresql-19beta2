@@ -1,50 +1,45 @@
 <!doctype html>
 <html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>symbols/src__backend__optimizer__geqo__geqo_main_c__gimme_pool_size.md</title><link rel="stylesheet" href="../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../source/src/backend/optimizer/geqo/geqo_main.c.html#L328" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__geqo__geqo_main_c__gimme_pool_size.html&quot;}, '*');">gimme_pool_size</a></h1>
-<h2>定義</h2>
+<h2>現在のソース事実</h2>
 <ul>
 <li>種別: <code>function</code></li>
 <li>定義箇所: <code>src/backend/optimizer/geqo/geqo_main.c:328</code></li>
-<li>所属モジュール: <a class="wiki-entity-link" href="../modules/src__backend__optimizer__geqo.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/modules/src__backend__optimizer__geqo.html&quot;, &quot;source&quot;: &quot;source/src/backend/optimizer/geqo/geqo_copy.c.html&quot;}, '*');"><code>module:src/backend/optimizer/geqo</code></a></li>
-</ul>
-<h2>目的</h2>
-<p>静的シンボル索引から生成された初期シンボルページです。</p>
-<h2>シグネチャまたは形状</h2>
-<ul>
 <li>シグネチャ: <code>static int gimme_pool_size(int nr_rel)</code></li>
-</ul>
-<h2>入力と出力</h2>
-<ul>
-<li>引数: <code>int nr_rel</code></li>
-<li>戻り値: <code>int</code></li>
-</ul>
-<h2>前提条件と不変条件</h2>
-<p>まだ解析していません。</p>
-<h2>アルゴリズムまたは振る舞い</h2>
-<ul>
-<li>複雑度: <code>medium</code> (score 9)</li>
-</ul>
-<p>まだ解析していません。</p>
-<h2>呼び出し元と呼び出し先</h2>
-<ul>
 <li>呼び出し元: <a class="wiki-source-link" href="../../source/src/backend/optimizer/geqo/geqo_main.c.html#L74" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__geqo__geqo_main_c__geqo.html&quot;}, '*');"><code>geqo</code></a></li>
 <li>呼び出し先: なし</li>
 <li>呼び出し元サイト: <a class="wiki-source-link" href="../../source/src/backend/optimizer/geqo/geqo_main.c.html#L74" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__geqo__geqo_main_c__geqo.html&quot;}, '*');"><code>geqo</code></a> at <code>src/backend/optimizer/geqo/geqo_main.c:118:14</code> (direct, confidence=high, resolved=<a class="wiki-entity-link" href="src__backend__optimizer__geqo__geqo_main_c__gimme_pool_size.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__geqo__geqo_main_c__gimme_pool_size.html&quot;, &quot;source&quot;: &quot;source/src/backend/optimizer/geqo/geqo_main.c.html#L328&quot;}, '*');"><code>symbol:src/backend/optimizer/geqo/geqo_main.c#gimme_pool_size</code></a>)</li>
 <li>呼び出しサイト: <code>pow</code> at <code>src/backend/optimizer/geqo/geqo_main.c:339:9</code> (unresolved), <code>ceil</code> at <code>src/backend/optimizer/geqo/geqo_main.c:349:15</code> (unresolved)</li>
+<li>関連型: なし</li>
+<li>複雑度: <code>medium</code> (score 9)</li>
 </ul>
-<h2>関連データ構造</h2>
-<p>なし</p>
-<h2>ソース抜粋</h2>
+<h3>ソース抜粋</h3>
 <p>~~~c static int <a class="wiki-source-link" href="../../source/src/backend/optimizer/geqo/geqo_main.c.html#L328" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__geqo__geqo_main_c__gimme_pool_size.html&quot;}, '*');">gimme_pool_size</a>(int nr_rel) { double		<a class="wiki-source-link" href="../../source/src/backend/optimizer/geqo/geqo_eval.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__geqo__geqo_eval_c__size.html&quot;}, '*');">size</a>; int			minsize; int			maxsize;</p>
 <p>/* Legal pool <a class="wiki-source-link" href="../../source/src/backend/optimizer/geqo/geqo_eval.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__geqo__geqo_eval_c__size.html&quot;}, '*');">size</a> *must* be at least 2, so ignore attempt to <a class="wiki-source-link" href="../../source/src/include/port/win32_port.h.html#L500" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/port/win32_port.h.html&quot;}, '*');">select</a> 1 */ if (<a class="wiki-source-link" href="../../source/src/backend/optimizer/geqo/geqo_main.c.html#L46" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/backend/optimizer/geqo/geqo_main.c.html&quot;}, '*');">Geqo_pool_size</a> &gt;= 2) return <a class="wiki-source-link" href="../../source/src/backend/optimizer/geqo/geqo_main.c.html#L46" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/backend/optimizer/geqo/geqo_main.c.html&quot;}, '*');">Geqo_pool_size</a>;</p>
 <p><a class="wiki-source-link" href="../../source/src/backend/optimizer/geqo/geqo_eval.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__geqo__geqo_eval_c__size.html&quot;}, '*');">size</a> = pow(2.0, nr_rel + 1.0);</p>
 <p>maxsize = 50 * <a class="wiki-source-link" href="../../source/src/backend/optimizer/geqo/geqo_main.c.html#L45" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/backend/optimizer/geqo/geqo_main.c.html&quot;}, '*');">Geqo_effort</a>; /* 50 to 500 individuals */ if (<a class="wiki-source-link" href="../../source/src/backend/optimizer/geqo/geqo_eval.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__geqo__geqo_eval_c__size.html&quot;}, '*');">size</a> &gt; maxsize) return maxsize;</p>
 <p>minsize = 10 * <a class="wiki-source-link" href="../../source/src/backend/optimizer/geqo/geqo_main.c.html#L45" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/backend/optimizer/geqo/geqo_main.c.html&quot;}, '*');">Geqo_effort</a>; /* 10 to 100 individuals */ if (<a class="wiki-source-link" href="../../source/src/backend/optimizer/geqo/geqo_eval.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__geqo__geqo_eval_c__size.html&quot;}, '*');">size</a> &lt; minsize) return minsize;</p>
 <p>return (int) ceil(<a class="wiki-source-link" href="../../source/src/backend/optimizer/geqo/geqo_eval.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__geqo__geqo_eval_c__size.html&quot;}, '*');">size</a>); } ~~~</p>
-<h2>失敗モードと境界条件</h2>
-<p>まだ解析していません。</p>
-<h2>保守担当者向けメモ</h2>
+<h2>目的</h2>
+<p>遺伝的クエリ最適化（GEQO）で使用する個体プールサイズを決定します。</p>
+<h2>入力と出力</h2>
 <ul>
-<li>後続フェーズで、ソース本文の文脈と caller/callee 情報を使ってこのページを強化する。</li>
+<li>入力: クエリ内のリレーション数を表す <code>int nr_rel</code>。</li>
+<li>出力: 計算されたプールサイズを表す <code>int</code>。</li>
+</ul>
+<h2>前提条件と不変条件</h2>
+<ul>
+<li>有効なプールサイズは必ず 2 以上でなければならないため、1 以下の選択は無視されます。</li>
+</ul>
+<h2>アルゴリズムまたは振る舞い</h2>
+<ul>
+<li>グローバル変数 <a class="wiki-source-link" href="../../source/src/backend/optimizer/geqo/geqo_main.c.html#L46" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/backend/optimizer/geqo/geqo_main.c.html&quot;}, '*');"><code>Geqo_pool_size</code></a> が 2 以上に設定されている場合は、その設定値をそのまま返します。</li>
+<li>そうでない場合、<code>2.0</code> の <code>nr_rel + 1.0</code> 乗を計算して基礎サイズを算出します。</li>
+<li>グローバル変数 <a class="wiki-source-link" href="../../source/src/backend/optimizer/geqo/geqo_main.c.html#L45" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/backend/optimizer/geqo/geqo_main.c.html&quot;}, '*');"><code>Geqo_effort</code></a> に基づいて許容される最大サイズ（<code>50 * Geqo_effort</code>）および最小サイズ（<code>10 * Geqo_effort</code>）の制限を適用し、計算値が上限を超えた場合は最大サイズを、下限を下回った場合は最小サイズを返します。</li>
+<li>上記のいずれの境界にも該当しない場合は、算出されたサイズを <code>ceil</code> で切り上げて整数に変換した値を返します。</li>
+</ul>
+<h2>失敗モードと境界条件</h2>
+<ul>
+<li>1 以下の不正なプールサイズ指定は <a class="wiki-source-link" href="../../source/src/backend/optimizer/geqo/geqo_main.c.html#L46" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/backend/optimizer/geqo/geqo_main.c.html&quot;}, '*');"><code>Geqo_pool_size</code></a> のチェックにより無視されます。</li>
 </ul><script>
 (function() {
   function notifyParent() {

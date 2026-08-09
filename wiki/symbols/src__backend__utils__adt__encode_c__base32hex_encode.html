@@ -38,7 +38,7 @@
 <p>for (i = 0; i &lt; srclen; i++) { /* Add 8 bits to the buffer */ bits_buffer = (bits_buffer &lt;&lt; 8) | data[i]; bits_in_buffer += 8;</p>
 <p>/* Extract 5-bit chunks while we have enough bits */ while (bits_in_buffer &gt;= 5) { bits_in_buffer -= 5; /* Extract top 5 bits */ dst[output_pos++] = <a class="wiki-source-link" href="../../source/src/backend/utils/adt/encode.c.html#L832" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/utils/adt/encode.c.html&quot;}, '*');">base32hex_table</a>[(bits_buffer &gt;&gt; bits_in_buffer) &amp; 0x1F]; /* Clear the extracted bits by masking */ bits_buffer &amp;= ((1U &lt;&lt; bits_in_buffer) - 1); } }</p>
 <p>/* Handle remaining bits (if any) */ if (bits_in_buffer &gt; 0) dst[output_pos++] = <a class="wiki-source-link" href="../../source/src/backend/utils/adt/encode.c.html#L832" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/utils/adt/encode.c.html&quot;}, '*');">base32hex_table</a>[(bits_buffer &lt;&lt; (5 - bits_in_buffer)) &amp; 0x1F];</p>
-<p>/* Add padding to make length a multiple of 8 (per RFC 4648) */ while (output_pos % 8 != 0) dst[output_pos++] = &#x27;=&#x27;;</p>
+<p>/* Add padding to make <a class="wiki-source-link" href="../../source/src/include/nodes/pg_list.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/nodes/pg_list.h.html&quot;}, '*');">length</a> a multiple of 8 (per RFC 4648) */ while (output_pos % 8 != 0) dst[output_pos++] = &#x27;=&#x27;;</p>
 <p>return output_pos; } ~~~</p>
 <h2>失敗モードと境界条件</h2>
 <p>まだ解析していません。</p>

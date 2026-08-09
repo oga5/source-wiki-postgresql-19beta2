@@ -1,0 +1,58 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>src/include/catalog/pg_statistic.h.md</title><link rel="stylesheet" href="../../../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../../../source/src/include/catalog/pg_statistic.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/catalog/pg_statistic.h.html&quot;}, '*');">src/include/catalog/pg_statistic.h</a></h1>
+<h2>概要</h2>
+<p>PostgreSQLのオプティマイザが使用する統計情報カタログ <code>pg_statistic</code> のスキーマを定義するヘッダーファイルです。テーブル列のデータ分布、null割合、および各種統計スロット（ヒストグラムや最頻値など）の構造を規定します。</p>
+<h2>モジュール内での役割</h2>
+<p><code>src/include/catalog</code> ディレクトリに属し、<a class="wiki-source-link" href="../../../../source/src/backend/catalog/Catalog.pm.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/catalog/Catalog.pm.html&quot;}, '*');"><code>Catalog.pm</code></a> モジュールによってパースされることで、バックエンドコードやシステムキャッシュ、BKI初期化スクリプトに必要なデータ構造を自動生成するための定義を提供します。</p>
+<h2>責務</h2>
+<ul>
+<li>システムカタログ <code>pg_statistic</code> のリRelation構造（<a class="wiki-source-link" href="../../../../source/src/include/catalog/pg_statistic.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__catalog__pg_statistic_h__FormData_pg_statistic.html&quot;}, '*');"><code>FormData_pg_statistic</code></a>）を定義する。</li>
+<li>統計情報スロットの最大数（<a class="wiki-source-link" href="../../../../source/src/include/catalog/pg_statistic.h.html#L131" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/catalog/pg_statistic.h.html&quot;}, '*');"><code>STATISTIC_NUM_SLOTS</code></a>）や、各スロット種別を表すマクロ（<code>STATISTIC_KIND_*</code>）をクライアントコード向けに公開する。</li>
+<li>一意制約インデックス、TOASTストレージ、システムキャッシュ（SysCache）、および <code>pg_attribute</code> への外部キー制約を宣言する。</li>
+</ul>
+<h2>重要なシンボル</h2>
+<ul>
+<li><a class="wiki-source-link" href="../../../../source/src/include/catalog/pg_statistic.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__catalog__pg_statistic_h__FormData_pg_statistic.html&quot;}, '*');"><code>FormData_pg_statistic</code></a> / <a class="wiki-source-link" href="../../../../source/src/include/catalog/pg_statistic.h.html#L139" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__catalog__pg_statistic_h__Form_pg_statistic.html&quot;}, '*');"><code>Form_pg_statistic</code></a>: カタログタプルおよびそのポインタの型定義。</li>
+<li><a class="wiki-source-link" href="../../../../source/src/include/catalog/pg_statistic.h.html#L131" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/catalog/pg_statistic.h.html&quot;}, '*');"><code>STATISTIC_NUM_SLOTS</code></a>: 1つの列に対して保持できる統計スロットの最大数（5）。</li>
+<li><a class="wiki-source-link" href="../../../../source/src/include/catalog/pg_statistic.h.html#L194" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/catalog/pg_statistic.h.html&quot;}, '*');"><code>STATISTIC_KIND_MCV</code></a>: 最頻値（Most Common Values）スロット種別を表すマクロ。</li>
+<li><a class="wiki-source-link" href="../../../../source/src/include/catalog/pg_statistic.h.html#L214" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/catalog/pg_statistic.h.html&quot;}, '*');"><code>STATISTIC_KIND_HISTOGRAM</code></a>: スカラー値の分布ヒストグラムを表すマクロ。</li>
+<li><a class="wiki-source-link" href="../../../../source/src/include/catalog/pg_statistic.h.html#L226" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/catalog/pg_statistic.h.html&quot;}, '*');"><code>STATISTIC_KIND_CORRELATION</code></a>: 物理タプル順序とデータ順序の相関を表すマクロ。</li>
+<li><a class="wiki-source-link" href="../../../../source/src/include/catalog/pg_statistic.h.html#L255" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/catalog/pg_statistic.h.html&quot;}, '*');"><code>STATISTIC_KIND_MCELEM</code></a> / <a class="wiki-source-link" href="../../../../source/src/include/catalog/pg_statistic.h.html#L269" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/catalog/pg_statistic.h.html&quot;}, '*');"><code>STATISTIC_KIND_DECHIST</code></a> / <a class="wiki-source-link" href="../../../../source/src/include/catalog/pg_statistic.h.html#L281" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/catalog/pg_statistic.h.html&quot;}, '*');"><code>STATISTIC_KIND_RANGE_LENGTH_HISTOGRAM</code></a> / <a class="wiki-source-link" href="../../../../source/src/include/catalog/pg_statistic.h.html#L292" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/catalog/pg_statistic.h.html&quot;}, '*');"><code>STATISTIC_KIND_BOUNDS_HISTOGRAM</code></a>: 配列・レンジ型向けの特殊統計スロット種別。</li>
+</ul>
+<h2>制御フローとデータフロー</h2>
+<p>本ファイルは純粋なデータ構造の宣言とメタデータ定義のため、直接的な実行コードを含みません。データフローとしては、<code>ANALYZE</code> コマンドが収集した統計データを <code>pg_statistic</code> テーブルに書き込み、オプティマイザがプラン作成時に <code>get_attstatsslot()</code> などのヘルパー関数経由で本ファイルで定義されたスロット構造を読み取って利用します。</p>
+<h2>直接依存</h2>
+<ul>
+<li><code>catalog/genbki.h</code>: BKI構築マクロ (<a class="wiki-source-link" href="../../../../source/src/include/catalog/genbki.h.html#L34" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/catalog/genbki.h.html&quot;}, '*');"><code>BEGIN_CATALOG_STRUCT</code></a>, <code>CATALOG</code>, <a class="wiki-source-link" href="../../../../source/src/include/catalog/genbki.h.html#L82" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/catalog/genbki.h.html&quot;}, '*');"><code>DECLARE_TOAST</code></a> 等) の提供。</li>
+<li><code>catalog/pg_statistic_d.h</code>: 定数やID定義の読込（IWYU pragma: export）。</li>
+</ul>
+<h2>関連コード</h2>
+<ul>
+<li><a class="wiki-source-link" href="../../../../source/src/include/catalog/pg_class.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/catalog/pg_class.h.html&quot;}, '*');"><code>src/include/catalog/pg_class.h</code></a>: 統計情報が属するリレーションの親カタログ。</li>
+<li><a class="wiki-source-link" href="../../../../source/src/include/catalog/pg_attribute.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/catalog/pg_attribute.h.html&quot;}, '*');"><code>src/include/catalog/pg_attribute.h</code></a>: 統計対象の列を特定するための外部キー参照先。</li>
+<li><a class="wiki-source-link" href="../../../../source/src/backend/commands/analyze.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/commands/analyze.c.html&quot;}, '*');"><code>src/backend/commands/analyze.c</code></a>: 統計情報を実際に計算し、<code>pg_statistic</code> を更新する実装モジュール。</li>
+</ul>
+<h2>読者向けメモ</h2>
+<ul>
+<li>スロットの順序に依存してはならず、コードは <code>stakindN</code> フィールドを走査して目的の統計種別を探す必要があります。</li>
+<li><a class="wiki-source-link" href="../../../../source/src/include/catalog/pg_type.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__catalog__pg_type_h__EXPOSE_TO_CLIENT_CODE.html&quot;}, '*');"><code>EXPOSE_TO_CLIENT_CODE</code></a> マクロによって、バックエンド内部だけでなく拡張モジュールやクライアント側コードでも統計種別の定数が利用できるようになっています。</li>
+</ul>
+<h2>シンボルページ</h2>
+<ul>
+<li><a href="../../../symbols/src__include__catalog__pg_statistic_h__CATALOG.html" target="wiki-view"><code>CATALOG</code></a></li>
+<li><a href="../../../symbols/src__include__catalog__pg_statistic_h__Form_pg_statistic.html" target="wiki-view"><code>Form_pg_statistic</code></a></li>
+</ul><script>
+(function() {
+  function notifyParent() {
+    if (parent === window) return;
+    parent.postMessage({type: "frame-location", frame: window.name || "", href: window.location.href}, "*");
+  }
+  document.addEventListener("click", function(event) {
+    const link = event.target.closest("a[data-panel]");
+    if (!link || parent === window) return;
+    parent.postMessage({type: "source-link", panel: link.dataset.panel}, "*");
+  });
+  window.addEventListener("load", notifyParent);
+  window.addEventListener("hashchange", notifyParent);
+})();
+</script></body></html>

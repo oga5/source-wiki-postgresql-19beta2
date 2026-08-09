@@ -15,7 +15,7 @@
 <h2>入力と出力</h2>
 <ul>
 <li>引数: <code>HeapTuple sourceTuple</code>, <code>TupleDesc tupleDesc</code></li>
-<li>戻り値: <a class="wiki-source-link" href="../../source/src/include/access/htup.h.html#L27" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__access__htup_h__MinimalTuple.html&quot;}, '*');"><code>MinimalTuple</code></a></li>
+<li>戻り値: <code>MinimalTuple</code></li>
 </ul>
 <h2>前提条件と不変条件</h2>
 <p>まだ解析していません。</p>
@@ -32,9 +32,9 @@
 <li>呼び出しサイト: <a class="wiki-source-link" href="../../source/src/backend/access/common/heaptuple.c.html#L737" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__access__common__heaptuple_c__expand_tuple.html&quot;}, '*');"><code>expand_tuple</code></a> at <code>src/backend/access/common/heaptuple.c:966:2</code> (direct, confidence=high, resolved=<a class="wiki-entity-link" href="src__backend__access__common__heaptuple_c__expand_tuple.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__access__common__heaptuple_c__expand_tuple.html&quot;, &quot;source&quot;: &quot;source/src/backend/access/common/heaptuple.c.html#L737&quot;}, '*');"><code>symbol:src/backend/access/common/heaptuple.c#expand_tuple</code></a>)</li>
 </ul>
 <h2>関連データ構造</h2>
-<p><code>HeapTuple</code>, <a class="wiki-source-link" href="../../source/src/include/access/htup.h.html#L27" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__access__htup_h__MinimalTuple.html&quot;}, '*');"><code>MinimalTuple</code></a>, <code>TupleDesc</code></p>
+<p><code>HeapTuple</code>, <code>MinimalTuple</code>, <code>TupleDesc</code></p>
 <h2>ソース抜粋</h2>
-<p>~~~c <a class="wiki-source-link" href="../../source/src/include/access/htup.h.html#L27" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__access__htup_h__MinimalTuple.html&quot;}, '*');">MinimalTuple</a> <a class="wiki-source-link" href="../../source/src/backend/access/common/heaptuple.c.html#L961" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__access__common__heaptuple_c__minimal_expand_tuple.html&quot;}, '*');">minimal_expand_tuple</a>(HeapTuple sourceTuple, TupleDesc tupleDesc) { <a class="wiki-source-link" href="../../source/src/include/access/htup.h.html#L27" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__access__htup_h__MinimalTuple.html&quot;}, '*');">MinimalTuple</a> minimalTuple;</p>
+<p>~~~c MinimalTuple <a class="wiki-source-link" href="../../source/src/backend/access/common/heaptuple.c.html#L961" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__access__common__heaptuple_c__minimal_expand_tuple.html&quot;}, '*');">minimal_expand_tuple</a>(HeapTuple sourceTuple, TupleDesc tupleDesc) { MinimalTuple minimalTuple;</p>
 <p><a class="wiki-source-link" href="../../source/src/backend/access/common/heaptuple.c.html#L737" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__access__common__heaptuple_c__expand_tuple.html&quot;}, '*');">expand_tuple</a>(NULL, &amp;minimalTuple, sourceTuple, tupleDesc); return minimalTuple; } ~~~</p>
 <h2>失敗モードと境界条件</h2>
 <p>まだ解析していません。</p>

@@ -1,0 +1,114 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>symbols/src__backend__executor__nodeHashjoin_c__HashJoinState.md</title><link rel="stylesheet" href="../../styles.css"></head><body><h1>HashJoinState</h1>
+<h2>定義</h2>
+<ul>
+<li>種別: <code>function</code></li>
+<li>定義箇所: <code>src/backend/executor/nodeHashjoin.c:1</code></li>
+<li>所属モジュール: <a class="wiki-entity-link" href="../modules/src__backend__executor.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/modules/src__backend__executor.html&quot;, &quot;source&quot;: &quot;source/src/backend/executor/execAmi.c.html&quot;}, '*');"><code>module:src/backend/executor</code></a></li>
+</ul>
+<h2>目的</h2>
+<p>静的シンボル索引から生成された初期シンボルページです。</p>
+<h2>シグネチャまたは形状</h2>
+<ul>
+<li>シグネチャ: <code>/*------------------------------------------------------------------------- * * nodeHashjoin.c * Routines to handle hash join nodes * * Portions Copyright (c) 1996-2026, PostgreSQL Global Development Group * Portions Copyright (c) 1994, Regents of the University of California * * * IDENTIFICATION * src/backend/executor/nodeHashjoin.c * * HASH JOIN * * This is based on the &quot;hybrid hash join&quot; algorithm described shortly in the * following page * * https://en.wikipedia.org/wiki/Hash_join#Hybrid_hash_join * * and in detail in the referenced paper: * * &quot;An Adaptive Hash Join Algorithm for Multiuser Environments&quot; * Hansjörg Zeller; Jim Gray (1990). Proceedings of the 16th VLDB conference. * Brisbane: 186–197. * * If the inner side tuples of a hash join do not fit in memory, the hash join * can be executed in multiple batches. * * If the statistics on the inner side relation are accurate, planner chooses a * multi-batch strategy and estimates the number of batches. * * The query executor measures the real size of the hashtable and increases the * number of batches if the hashtable grows too large. * * The number of batches is always a power of two, so an increase in the number * of batches doubles it. * * Serial hash join measures batch size lazily -- waiting until it is loading a * batch to determine if it will fit in memory. While inserting tuples into the * hashtable, serial hash join will, if that tuple were to exceed work_mem, * dump out the hashtable and reassign them either to other batch files or the * current batch resident in the hashtable. * * Parallel hash join, on the other hand, completes all changes to the number * of batches during the build phase. If it increases the number of batches, it * dumps out all the tuples from all batches and reassigns them to entirely new * batch files. Then it checks every batch to ensure it will fit in the space * budget for the query. * * In both parallel and serial hash join, the executor currently makes a best * effort. If a particular batch will not fit in memory, it tries doubling the * number of batches. If after a batch increase, there is a batch which * retained all or none of its tuples, the executor disables growth in the * number of batches globally. After growth is disabled, all batches that would * have previously triggered an increase in the number of batches instead * exceed the space allowed. * * PARALLELISM * * Hash joins can participate in parallel query execution in several ways. A * parallel-oblivious hash join is one where the node is unaware that it is * part of a parallel plan. In this case, a copy of the inner plan is used to * build a copy of the hash table in every backend, and the outer plan could * either be built from a partial or complete path, so that the results of the * hash join are correspondingly either partial or complete. A parallel-aware * hash join is one that behaves differently, coordinating work between * backends, and appears as Parallel Hash Join in EXPLAIN output. A Parallel * Hash Join always appears with a Parallel Hash node. * * Parallel-aware hash joins use the same per-backend state machine to track * progress through the hash join algorithm as parallel-oblivious hash joins. * In a parallel-aware hash join, there is also a shared state machine that * co-operating backends use to synchronize their local state machines and * program counters. The shared state machine is managed with a Barrier IPC * primitive. When all attached participants arrive at a barrier, the phase * advances and all waiting participants are released. * * When a participant begins working on a parallel hash join, it must first * figure out how much progress has already been made, because participants * don&#x27;t wait for each other to begin. For this reason there are switch * statements at key points in the code where we have to synchronize our local * state machine with the phase, and then jump to the correct part of the * algorithm so that we can get started. * * One barrier called build_barrier is used to coordinate the hashing phases. * The phase is represented by an integer which begins at zero and increments * one by one, but in the code it is referred to by symbolic names as follows. * An asterisk indicates a phase that is performed by a single arbitrarily * chosen process. * * PHJ_BUILD_ELECT -- initial state * PHJ_BUILD_ALLOCATE* -- one sets up the batches and table 0 * PHJ_BUILD_HASH_INNER -- all hash the inner rel * PHJ_BUILD_HASH_OUTER -- (multi-batch only) all hash the outer * PHJ_BUILD_RUN -- building done, probing can begin * PHJ_BUILD_FREE* -- all work complete, one frees batches * * While in the phase PHJ_BUILD_HASH_INNER a separate pair of barriers may * be used repeatedly as required to coordinate expansions in the number of * batches or buckets. Their phases are as follows: * * PHJ_GROW_BATCHES_ELECT -- initial state * PHJ_GROW_BATCHES_REALLOCATE* -- one allocates new batches * PHJ_GROW_BATCHES_REPARTITION -- all repartition * PHJ_GROW_BATCHES_DECIDE* -- one detects skew and cleans up * PHJ_GROW_BATCHES_FINISH -- finished one growth cycle * * PHJ_GROW_BUCKETS_ELECT -- initial state * PHJ_GROW_BUCKETS_REALLOCATE* -- one allocates new buckets * PHJ_GROW_BUCKETS_REINSERT -- all insert tuples * * If the planner got the number of batches and buckets right, those won&#x27;t be * necessary, but on the other hand we might finish up needing to expand the * buckets or batches multiple times while hashing the inner relation to stay * within our memory budget and load factor target. For that reason it&#x27;s a * separate pair of barriers using circular phases. * * The PHJ_BUILD_HASH_OUTER phase is required only for multi-batch joins, * because we need to divide the outer relation into batches up front in order * to be able to process batches entirely independently. In contrast, the * parallel-oblivious algorithm simply throws tuples &#x27;forward&#x27; to &#x27;later&#x27; * batches whenever it encounters them while scanning and probing, which it * can do because it processes batches in serial order. * * Once PHJ_BUILD_RUN is reached, backends then split up and process * different batches, or gang up and work together on probing batches if there * aren&#x27;t enough to go around. For each batch there is a separate barrier * with the following phases: * * PHJ_BATCH_ELECT -- initial state * PHJ_BATCH_ALLOCATE* -- one allocates buckets * PHJ_BATCH_LOAD -- all load the hash table from disk * PHJ_BATCH_PROBE -- all probe * PHJ_BATCH_SCAN* -- one does right/right-anti/full unmatched scan * PHJ_BATCH_FREE* -- one frees memory * * Batch 0 is a special case, because it starts out in phase * PHJ_BATCH_PROBE; populating batch 0&#x27;s hash table is done during * PHJ_BUILD_HASH_INNER so we can skip loading. * * Initially we try to plan for a single-batch hash join using the combined * hash_mem of all participants to create a large shared hash table. If that * turns out either at planning or execution time to be impossible then we * fall back to regular hash_mem sized hash tables. * * To avoid deadlocks, we never wait for any barrier unless it is known that * all other backends attached to it are actively executing the node or have * finished. Practically, that means that we never emit a tuple while attached * to a barrier, unless the barrier has reached a phase that means that no * process will wait on it again. We emit tuples while attached to the build * barrier in phase PHJ_BUILD_RUN, and to a per-batch barrier in phase * PHJ_BATCH_PROBE. These are advanced to PHJ_BUILD_FREE and PHJ_BATCH_SCAN * respectively without waiting, using BarrierArriveAndDetach() and * BarrierArriveAndDetachExceptLast() respectively. The last to detach * receives a different return value so that it knows that it&#x27;s safe to * clean up. Any straggler process that attaches after that phase is reached * will see that it&#x27;s too late to participate or access the relevant shared * memory objects. * *------------------------------------------------------------------------- */ #include &quot;postgres.h&quot; #include &quot;access/htup_details.h&quot; #include &quot;access/parallel.h&quot; #include &quot;executor/executor.h&quot; #include &quot;executor/hashjoin.h&quot; #include &quot;executor/instrument.h&quot; #include &quot;executor/nodeHash.h&quot; #include &quot;executor/nodeHashjoin.h&quot; #include &quot;miscadmin.h&quot; #include &quot;utils/lsyscache.h&quot; #include &quot;utils/sharedtuplestore.h&quot; #include &quot;utils/tuplestore.h&quot; #include &quot;utils/wait_event.h&quot; /* * States of the ExecHashJoin state machine */ #define HJ_BUILD_HASHTABLE 1 #define HJ_NEED_NEW_OUTER 2 #define HJ_SCAN_BUCKET 3 #define HJ_FILL_OUTER_TUPLE 4 #define HJ_FILL_INNER_TUPLES 5 #define HJ_FILL_OUTER_NULL_TUPLES 6 #define HJ_FILL_INNER_NULL_TUPLES 7 #define HJ_NEED_NEW_BATCH 8 /* Returns true if doing null-fill on outer relation */ #define HJ_FILL_OUTER(hjstate) ((hjstate)-&gt;hj_NullInnerTupleSlot != NULL) /* Returns true if doing null-fill on inner relation */ #define HJ_FILL_INNER(hjstate) ((hjstate)-&gt;hj_NullOuterTupleSlot != NULL) static TupleTableSlot *ExecHashJoinOuterGetTuple(PlanState *outerNode, HashJoinState *hjstate, uint32 *hashvalue)</code></li>
+</ul>
+<h2>入力と出力</h2>
+<p>まだ解析していません。</p>
+<h2>前提条件と不変条件</h2>
+<p>まだ解析していません。</p>
+<h2>アルゴリズムまたは振る舞い</h2>
+<ul>
+<li>複雑度: <code>medium</code> (score 7)</li>
+</ul>
+<p>まだ解析していません。</p>
+<h2>呼び出し元と呼び出し先</h2>
+<ul>
+<li>呼び出し元: なし</li>
+<li>呼び出し先: なし</li>
+<li>呼び出し元サイト: なし</li>
+<li>呼び出しサイト: なし</li>
+</ul>
+<h2>関連データ構造</h2>
+<p><a class="wiki-source-link" href="../../source/src/interfaces/ecpg/test/expected/preproc-type.c.html#L36" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__interfaces__ecpg__test__expected__preproc-type_c__access.html&quot;}, '*');"><code>access</code></a>, <a class="wiki-source-link" href="../../source/src/include/storage/barrier.h.html#L25" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__storage__barrier_h__Barrier.html&quot;}, '*');"><code>Barrier</code></a>, <code>c</code>, <code>Group</code>, <code>Hash</code>, <a class="wiki-source-link" href="../../source/src/include/nodes/plannodes.h.html#L984" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__nodes__plannodes_h__Join.html&quot;}, '*');"><code>Join</code></a>, <code>PlanState</code>, <code>state</code>, <code>TupleTableSlot</code>, <code>uint32</code></p>
+<h2>ソース抜粋</h2>
+<p>~~~c /*------------------------------------------------------------------------- *</p>
+<ul>
+<li><a class="wiki-source-link" href="../../source/src/backend/executor/nodeHashjoin.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/backend/executor/nodeHashjoin.c.html&quot;}, '*');">nodeHashjoin.c</a></li>
+<li>Routines to handle <a class="wiki-source-link" href="../../source/src/backend/regex/rege_dfa.c.html#L723" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__regex__rege_dfa_c__hash.html&quot;}, '*');">hash</a> join nodes</li>
+<p>*</p>
+<li>Portions Copyright (c) 1996-2026, PostgreSQL Global Development Group</li>
+<li>Portions Copyright (c) 1994, Regents of the University of California</li>
+<p>* *</p>
+<li>IDENTIFICATION</li>
+<li><a class="wiki-source-link" href="../../source/src/backend/executor/nodeHashjoin.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/backend/executor/nodeHashjoin.c.html&quot;}, '*');">src/backend/executor/nodeHashjoin.c</a></li>
+<p>*</p>
+<li>HASH <a class="wiki-source-link" href="../../source/src/include/nodes/primnodes.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/nodes/primnodes.h.html&quot;}, '*');">JOIN</a></li>
+<p>*</p>
+<li>This <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> based on the &quot;hybrid <a class="wiki-source-link" href="../../source/src/backend/regex/rege_dfa.c.html#L723" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__regex__rege_dfa_c__hash.html&quot;}, '*');">hash</a> join&quot; algorithm described shortly in the</li>
+<li>following page</li>
+<p>*</p>
+<li>https://en.wikipedia.org/wiki/Hash_join#Hybrid_hash_join</li>
+<p>*</p>
+<li>and in detail in the referenced paper:</li>
+<p>*</p>
+<li>&quot;An Adaptive Hash <a class="wiki-source-link" href="../../source/src/include/nodes/plannodes.h.html#L984" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__nodes__plannodes_h__Join.html&quot;}, '*');">Join</a> Algorithm for Multiuser Environments&quot;</li>
+<li>Hansjörg Zeller; Jim Gray (1990). Proceedings of the 16th VLDB conference.</li>
+<li>Brisbane: 186–197.</li>
+<p>*</p>
+<li>If the inner side tuples of a <a class="wiki-source-link" href="../../source/src/backend/regex/rege_dfa.c.html#L723" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__regex__rege_dfa_c__hash.html&quot;}, '*');">hash</a> join do not fit in memory, the <a class="wiki-source-link" href="../../source/src/backend/regex/rege_dfa.c.html#L723" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__regex__rege_dfa_c__hash.html&quot;}, '*');">hash</a> join</li>
+<li>can be executed in multiple batches.</li>
+<p>*</p>
+<li>If the statistics on the inner side relation are accurate, <a class="wiki-source-link" href="../../source/src/backend/optimizer/plan/planner.c.html#L327" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__plan__planner_c__planner.html&quot;}, '*');">planner</a> chooses a</li>
+<li>multi-batch strategy and estimates the number of batches.</li>
+<p>*</p>
+<li>The query executor measures the real <a class="wiki-source-link" href="../../source/src/backend/optimizer/geqo/geqo_eval.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__geqo__geqo_eval_c__size.html&quot;}, '*');">size</a> of the hashtable and increases the</li>
+<li>number of batches if the hashtable grows too large.</li>
+<p>*</p>
+<li>The number of batches <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> always a power of two, so an increase in the number</li>
+<li>of batches doubles it.</li>
+<p>*</p>
+<li>Serial <a class="wiki-source-link" href="../../source/src/backend/regex/rege_dfa.c.html#L723" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__regex__rege_dfa_c__hash.html&quot;}, '*');">hash</a> join measures batch <a class="wiki-source-link" href="../../source/src/backend/optimizer/geqo/geqo_eval.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__geqo__geqo_eval_c__size.html&quot;}, '*');">size</a> lazily -- waiting until it <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> loading a</li>
+<li>batch to determine if it will fit in memory. While inserting tuples into the</li>
+<li>hashtable, serial <a class="wiki-source-link" href="../../source/src/backend/regex/rege_dfa.c.html#L723" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__regex__rege_dfa_c__hash.html&quot;}, '*');">hash</a> join will, if that tuple were to exceed work_mem,</li>
+<li><a class="wiki-source-link" href="../../source/src/backend/regex/regcomp.c.html#L2494" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__regex__regcomp_c__dump.html&quot;}, '*');">dump</a> out the hashtable and reassign them either to other batch files or the</li>
+<li>current batch resident in the hashtable.</li>
+<p>*</p>
+<li>Parallel <a class="wiki-source-link" href="../../source/src/backend/regex/rege_dfa.c.html#L723" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__regex__rege_dfa_c__hash.html&quot;}, '*');">hash</a> join, on the other hand, completes all changes to the number</li>
+<li>of batches during the build phase. If it increases the number of batches, it</li>
+<li>dumps out all the tuples from all batches and reassigns them to entirely new</li>
+<li>batch files. Then it checks every batch to ensure it will fit in the space</li>
+<li>budget for the query.</li>
+<p>*</p>
+<li>In both parallel and serial <a class="wiki-source-link" href="../../source/src/backend/regex/rege_dfa.c.html#L723" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__regex__rege_dfa_c__hash.html&quot;}, '*');">hash</a> join, the executor currently makes a best</li>
+<li>effort. If a particular batch will not fit in memory, it tries doubling the</li>
+<li>number of batches. If after a batch increase, there <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> a batch which</li>
+<li>retained all or <a class="wiki-source-link" href="../../source/src/backend/optimizer/util/predtest.c.html#L1672" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/backend/optimizer/util/predtest.c.html&quot;}, '*');">none</a> of its tuples, the executor disables growth in the</li>
+<li>number of batches globally. After growth <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> disabled, all batches that would</li>
+<li>have previously triggered an increase in the number of batches instead</li>
+<li>exceed the space allowed.</li>
+<p>*</p>
+<li>PARALLELISM</li>
+<p>*</p>
+<li>Hash joins can participate in parallel query execution in several ways.  A</li>
+<p>~~~</p>
+</ul>
+<h2>失敗モードと境界条件</h2>
+<p>まだ解析していません。</p>
+<h2>保守担当者向けメモ</h2>
+<ul>
+<li>後続フェーズで、ソース本文の文脈と caller/callee 情報を使ってこのページを強化する。</li>
+</ul><script>
+(function() {
+  function notifyParent() {
+    if (parent === window) return;
+    parent.postMessage({type: "frame-location", frame: window.name || "", href: window.location.href}, "*");
+  }
+  document.addEventListener("click", function(event) {
+    const link = event.target.closest("a[data-panel]");
+    if (!link || parent === window) return;
+    parent.postMessage({type: "source-link", panel: link.dataset.panel}, "*");
+  });
+  window.addEventListener("load", notifyParent);
+  window.addEventListener("hashchange", notifyParent);
+})();
+</script></body></html>

@@ -30,8 +30,8 @@
 <h2>ソース抜粋</h2>
 <p>~~~c struct SnapBuild { /* how far are we along building our first full snapshot */ <a class="wiki-source-link" href="../../source/src/include/replication/snapbuild.h.html#L30" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__replication__snapbuild_h__SnapBuildState.html&quot;}, '*');">SnapBuildState</a> state;</p>
 <p>/* private memory context used to allocate memory for this module. */ MemoryContext context;</p>
-<p>/* all transactions &lt; than this have committed/aborted */ TransactionId <a class="wiki-source-link" href="../../source/src/include/access/sysattr.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__access__sysattr_h__xmin.html&quot;}, '*');">xmin</a>;</p>
-<p>/* all transactions &gt;= than this are uncommitted */ TransactionId <a class="wiki-source-link" href="../../source/src/include/access/sysattr.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__access__sysattr_h__xmax.html&quot;}, '*');">xmax</a>;</p>
+<p>/* all transactions &lt; than this have committed/aborted */ TransactionId xmin;</p>
+<p>/* all transactions &gt;= than this are uncommitted */ TransactionId xmax;</p>
 <p>/*</p>
 <ul>
 <li>Don&#x27;t replay commits from an LSN &lt; this LSN. This can be set externally</li>
@@ -55,14 +55,14 @@
 <li>indicates there are no running xids with an xid smaller than this.</li>
 <p>*/ TransactionId initial_xmin_horizon;</p>
 </ul>
-<p>/* Indicates if we are building full snapshot or just catalog one. */ <a class="wiki-source-link" href="../../source/src/include/access/tupmacs.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__access__tupmacs_h__bool.html&quot;}, '*');">bool</a>		building_full_snapshot;</p>
+<p>/* Indicates if we are building full snapshot or just catalog one. */ bool		building_full_snapshot;</p>
 <p>/*</p>
 <ul>
 <li>Indicates if we are using the snapshot builder for the creation of a</li>
 <li>logical replication slot. If it&#x27;s <a class="wiki-source-link" href="../../source/src/tools/pg_bsd_indent/indent_globs.h.html#L46" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/tools/pg_bsd_indent/indent_globs.h.html&quot;}, '*');">true</a>, the start point for decoding</li>
 <li>changes <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> not determined yet. <a class="wiki-source-link" href="../../source/src/common/md5.c.html#L110" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/common/md5.c.html&quot;}, '*');">So</a> we skip snapshot restores to properly</li>
 <li><a class="wiki-source-link" href="../../source/src/backend/regex/regexec.c.html#L420" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__regex__regexec_c__find.html&quot;}, '*');">find</a> the start point. See <a class="wiki-source-link" href="../../source/src/backend/replication/logical/snapbuild.c.html#L1241" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__replication__logical__snapbuild_c__SnapBuildFindSnapshot.html&quot;}, '*');">SnapBuildFindSnapshot</a>() for details.</li>
-<p>*/ <a class="wiki-source-link" href="../../source/src/include/access/tupmacs.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__access__tupmacs_h__bool.html&quot;}, '*');">bool</a>		in_slot_creation;</p>
+<p>*/ bool		in_slot_creation;</p>
 </ul>
 <p>/*</p>
 <ul>

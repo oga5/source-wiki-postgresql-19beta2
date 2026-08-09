@@ -34,7 +34,7 @@
 <h2>関連データ構造</h2>
 <p>なし</p>
 <h2>ソース抜粋</h2>
-<p>~~~c void AtEOXact_HashTables(<a class="wiki-source-link" href="../../source/src/include/access/tupmacs.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__access__tupmacs_h__bool.html&quot;}, '*');">bool</a> isCommit) { /*</p>
+<p>~~~c void AtEOXact_HashTables(bool isCommit) { /*</p>
 <ul>
 <li>During abort cleanup, <a class="wiki-source-link" href="../../source/src/include/port.h.html#L366" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/port.h.html&quot;}, '*');">open</a> scans are <a class="wiki-source-link" href="../../source/src/include/port/atomics/generic-msvc.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__port__atomics__generic-msvc_h__expected.html&quot;}, '*');">expected</a>; just silently clean &#x27;em</li>
 <li>out.  An <a class="wiki-source-link" href="../../source/src/include/port.h.html#L366" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/port.h.html&quot;}, '*');">open</a> scan at commit means someone forgot a hash_seq_term()</li>

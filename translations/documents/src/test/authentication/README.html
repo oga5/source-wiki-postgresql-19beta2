@@ -1,0 +1,23 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>src/test/authentication/README</title><link rel="stylesheet" href="../../../../../styles.css"></head><body><h1>Japanese translation</h1><p><code>src/test/authentication/README</code></p><p><a href="../../../../../source/src/test/authentication/README.html" target="source-view">View original document</a></p><p class="document-translation-progress document-translation-complete">Translation complete.</p><div class="document-translation-body"><section class="document-translation-chunk translated" data-chunk-order="0"><p>src/test/authentication/README</p>
+<p>認証の回帰テスト ===================================</p>
+<p>このディレクトリには、認証用のテストスイートが含まれています。SSL証明書 認証のテストは、より複雑であり、マルチユーザーシステムで実行するのが 安全ではないため、src/test/ssl/ に分けて置かれています。</p>
+<p>テストの実行 =================</p>
+<p>注意: configure に --enable-tap-tests 引数を指定しておく必要があります。</p>
+<p>以下を実行します。 make check または make installcheck 以前に &quot;make install&quot; を実行している場合は、&quot;make installcheck&quot; を使用できます。 その場合、インストールツリー内のコードがテストされます。&quot;make check&quot; では、 現在のソースから一時的なインストールツリーが構築され、テストされます。</p>
+<p>どちらの方法でも、このテストはテスト用の Postgres クラスターを初期化、 起動、および停止します。</p>
+<p>これらのテストの実行に関する詳細については、src/test/perl/README を参照してください。</p></section></div><script>
+(function() {
+  function notifyParent() {
+    if (parent === window) return;
+    parent.postMessage({type: "frame-location", frame: window.name || "", href: window.location.href}, "*");
+  }
+  document.addEventListener("click", function(event) {
+    const link = event.target.closest("a[data-panel]");
+    if (!link || parent === window) return;
+    parent.postMessage({type: "source-link", panel: link.dataset.panel}, "*");
+  });
+  window.addEventListener("load", notifyParent);
+  window.addEventListener("hashchange", notifyParent);
+})();
+</script></body></html>

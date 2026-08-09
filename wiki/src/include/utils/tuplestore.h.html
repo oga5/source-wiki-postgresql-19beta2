@@ -8,7 +8,7 @@
 <ul>
 <li>タプル群をメモリ上または一時ファイルに順次蓄積し、書き込み完了前であっても読み出しを開始できるAPIの提供。</li>
 <li>単一または複数の独立した読み取りポインタの管理（ランダムアクセス、巻き戻し、マーク・復元操作）。</li>
-<li><a class="wiki-source-link" href="../../../../source/src/include/access/htup.h.html#L27" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__access__htup_h__MinimalTuple.html&quot;}, '*');"><code>MinimalTuple</code></a> 形式をベースにした効率的なタプルの保持と、<code>TupleTableSlot</code> や <code>HeapTuple</code> を介した入出力インターフェースの公開。</li>
+<li><code>MinimalTuple</code> 形式をベースにした効率的なタプルの保持と、<code>TupleTableSlot</code> や <code>HeapTuple</code> を介した入出力インターフェースの公開。</li>
 </ul>
 <h2>重要なシンボル</h2>
 <ul>
@@ -29,11 +29,11 @@
 <ul>
 <li><a class="wiki-source-link" href="../../../../source/src/backend/utils/sort/tuplestore.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/utils/sort/tuplestore.c.html&quot;}, '*');"><code>src/backend/utils/sort/tuplestore.c</code></a>: ペアとなる実装ファイル。実際の状態遷移（インメモリ、書き込みファイル、読み込みファイル）やファイル入出力ロジックを含む。</li>
 <li><a class="wiki-source-link" href="../../../../source/src/include/utils/tuplesort.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/utils/tuplesort.h.html&quot;}, '*');"><code>src/include/utils/tuplesort.h</code></a>: ソート処理を行う類似のユーティリティヘッダー。</li>
-<li><a class="wiki-source-link" href="../../../../source/src/include/utils/sharedtuplestore.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/utils/sharedtuplestore.h.html&quot;}, '*');"><code>src/include/utils/sharedtuplestore.h</code></a>: 複数プロセス間で共有される Tuplestore のヘッダー。</li>
+<li><a class="wiki-source-link" href="../../../../source/src/include/utils/sharedtuplestore.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/utils/sharedtuplestore.h.html&quot;}, '*');"><code>src/include/utils/sharedtuplestore.h</code></a>: 複数プロセス間で共有される Tuplestore のヘッダー。</li>
 </ul>
 <h2>読者向けメモ</h2>
 <ul>
-<li>格納されるデータの実体は主に <a class="wiki-source-link" href="../../../../source/src/include/access/htup.h.html#L27" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__access__htup_h__MinimalTuple.html&quot;}, '*');"><code>MinimalTuple</code></a> であり、システム列は保証されないため、呼び出し側は取得時に <code>TupleTableSlot</code> を経由してアクセスする必要があります。</li>
+<li>格納されるデータの実体は主に <code>MinimalTuple</code> であり、システム列は保証されないため、呼び出し側は取得時に <code>TupleTableSlot</code> を経由してアクセスする必要があります。</li>
 <li>後方スキャンやリワインドの可否は、タプルを投入する前または適切なタイミングで設定フラグ (<a class="wiki-source-link" href="../../../../source/src/backend/utils/sort/tuplestore.c.html#L371" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__utils__sort__tuplestore_c__tuplestore_set_eflags.html&quot;}, '*');"><code>tuplestore_set_eflags</code></a>) や専用関数によって制御する必要があります。</li>
 </ul>
 <h2>シンボルページ</h2>

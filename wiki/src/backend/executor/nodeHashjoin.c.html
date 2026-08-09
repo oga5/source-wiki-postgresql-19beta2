@@ -1,0 +1,97 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>src/backend/executor/nodeHashjoin.c.md</title><link rel="stylesheet" href="../../../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../../../source/src/backend/executor/nodeHashjoin.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/backend/executor/nodeHashjoin.c.html&quot;}, '*');">src/backend/executor/nodeHashjoin.c</a></h1>
+<h2>概要</h2>
+<p>ハイブリッドハッシュジョイン（Hybrid Hash <a class="wiki-source-link" href="../../../../source/src/include/nodes/plannodes.h.html#L984" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__nodes__plannodes_h__Join.html&quot;}, '*');">Join</a>）アルゴリズムを実装する実行ノードソースファイルです。内側（インナー）リレーションからハッシュテーブルを構築し、外側（アウター）リレーションのタプルをスキャンしてハッシュルックアップや外部結合の補完を行います。シリアル実行（parallel-oblivious）と並列実行（parallel-aware / Parallel Hash）の両方をサポートし、メモリ制限（<code>work_mem</code>）を超える場合に備えたマルチバッチ処理やスキューバッチの最適化、バリア同期機構を備えています。</p>
+<h2>モジュール内での役割</h2>
+<p><code>src/backend/executor</code> モジュール内において、結合演算（<a class="wiki-source-link" href="../../../../source/src/include/nodes/plannodes.h.html#L984" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__nodes__plannodes_h__Join.html&quot;}, '*');">Join</a>）のうちハッシュ結合を担当する独立した実行ノードです。内側の子ノードである <a class="wiki-source-link" href="../../../../source/src/backend/executor/nodeHash.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/backend/executor/nodeHash.c.html&quot;}, '*');"><code>nodeHash.c</code></a> と緊密に連携し、ハッシュテーブルの構築・管理（<code>ExecHashTableCreate</code>, <code>ExecHashTableInsert</code> 等）を委譲・利用しながら、実行時のタプル照合・射影を行います。</p>
+<h2>責務</h2>
+<ul>
+<li>**ハッシュ結合の状態管理**: <a class="wiki-source-link" href="../../../../source/src/backend/executor/nodeHashjoin.c.html#L224" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__executor__nodeHashjoin_c__ExecHashJoinImpl.html&quot;}, '*');"><code>ExecHashJoinImpl</code></a> によるステートマシン（ビルド、バッチ遷移、バケツスキャン、外部/内部結合の欠損行補完）の駆動。</li>
+<li>**並列およびシリアル実行の抽象化**: 同一のロジックをインライン関数 <a class="wiki-source-link" href="../../../../source/src/backend/executor/nodeHashjoin.c.html#L224" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__executor__nodeHashjoin_c__ExecHashJoinImpl.html&quot;}, '*');"><code>ExecHashJoinImpl</code></a> で共有し、シリアル(<a class="wiki-source-link" href="../../../../source/src/backend/executor/nodeHashjoin.c.html#L801" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__executor__nodeHashjoin_c__ExecHashJoin.html&quot;}, '*');"><code>ExecHashJoin</code></a>)および並列(<a class="wiki-source-link" href="../../../../source/src/backend/executor/nodeHashjoin.c.html#L817" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__executor__nodeHashjoin_c__ExecParallelHashJoin.html&quot;}, '*');"><code>ExecParallelHashJoin</code></a>)のエントリポイントを提供。</li>
+<li>**マルチバッチおよびメモリ超過のハンドリング**: メモリに収まらない場合のバッチ分割（<a class="wiki-source-link" href="../../../../source/src/backend/executor/nodeHashjoin.c.html#L1278" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__executor__nodeHashjoin_c__ExecHashJoinNewBatch.html&quot;}, '*');"><code>ExecHashJoinNewBatch</code></a>, <a class="wiki-source-link" href="../../../../source/src/backend/executor/nodeHashjoin.c.html#L1419" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__executor__nodeHashjoin_c__ExecParallelHashJoinNewBatch.html&quot;}, '*');"><code>ExecParallelHashJoinNewBatch</code></a>）と一時ファイル（<code>BufFile</code> / <code>SharedTuplestore</code>）へのスピル処理。</li>
+<li>**結合種別に応じた null 補完**: LEFT, RIGHT, FULL, ANTI, SEMI 等の各種結合セマンティクスに基づく、マッチしなかった行や null キー行の補完・出力。</li>
+</ul>
+<h2>重要なシンボル</h2>
+<ul>
+<li>**実行エントリポイント / ステートマシン**:</li>
+<li><code>ExecHashJoin(PlanState *pstate)</code>: シリアル実行用エントリポイント。</li>
+<li><code>ExecParallelHashJoin(PlanState *pstate)</code>: 並列実行用エントリポイント。</li>
+<li><code>ExecHashJoinImpl(PlanState *pstate, bool parallel)</code>: 核心のハイブリッドハッシュジョインアルゴリズムを実装するインライン関数。</li>
+<li>**ライフサイクル / 初期化・終了**:</li>
+<li><code>ExecInitHashJoin(...)</code>: <code>HashJoinState</code> の構築、ハッシュ関数の設定、結合種別に応じた null スロットやハッシュ式（<code>ExecBuildHash32Expr</code>）の初期化。</li>
+<li><code>ExecEndHashJoin(...)</code>: ハッシュテーブルや一時タプルストアの破棄、子ノードの終了。</li>
+<li><code>ExecReScanHashJoin(...)</code>: 再スキャン時のハンドリング（シングルバッチ時のハッシュテーブル再利用または破棄と再構築）。</li>
+<li>**並列共有メモリ（DSM）管理**:</li>
+<li><code>ExecHashJoinEstimate</code>, <code>ExecHashJoinInitializeDSM</code>, <a class="wiki-source-link" href="../../../../source/src/backend/executor/nodeHashjoin.c.html#L1907" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__executor__nodeHashjoin_c__ExecHashJoinReInitializeDSM.html&quot;}, '*');"><code>ExecHashJoinReInitializeDSM</code></a>, <code>ExecHashJoinInitializeWorker</code>: 並列クエリ実行時の <code>ParallelHashJoinState</code> およびバリア・ファイルセットの初期化・再初期化。</li>
+<li>**補助関数**:</li>
+<li><a class="wiki-source-link" href="../../../../source/src/backend/executor/nodeHashjoin.c.html#L1109" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__executor__nodeHashjoin_c__ExecHashJoinOuterGetTuple.html&quot;}, '*');"><code>ExecHashJoinOuterGetTuple</code></a>, <a class="wiki-source-link" href="../../../../source/src/backend/executor/nodeHashjoin.c.html#L1196" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__executor__nodeHashjoin_c__ExecParallelHashJoinOuterGetTuple.html&quot;}, '*');"><code>ExecParallelHashJoinOuterGetTuple</code></a>: 外側リレーションからのタプル取得（初回の直実行またはバッチ一時ファイルからの読み出し）。</li>
+<li><a class="wiki-source-link" href="../../../../source/src/backend/executor/nodeHashjoin.c.html#L1278" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__executor__nodeHashjoin_c__ExecHashJoinNewBatch.html&quot;}, '*');"><code>ExecHashJoinNewBatch</code></a>, <a class="wiki-source-link" href="../../../../source/src/backend/executor/nodeHashjoin.c.html#L1419" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__executor__nodeHashjoin_c__ExecParallelHashJoinNewBatch.html&quot;}, '*');"><code>ExecParallelHashJoinNewBatch</code></a>: 次のバッチへの切り替えと内側バッチのハッシュテーブル再ロード。</li>
+<li><code>ExecHashJoinSaveTuple</code>: メモリからあふれたタプルを一時ファイルへ保存する。</li>
+</ul>
+<h2>制御フローとデータフロー</h2>
+<p>1. **初期化 (<code>ExecInitHashJoin</code>)**:</p>
+<ul>
+<li>結合条件（<a class="wiki-source-link" href="../../../../source/src/include/nodes/plannodes.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__nodes__plannodes_h__joinqual.html&quot;}, '*');"><code>joinqual</code></a>）、フィルタ条件（<code>otherqual</code>）、ハッシュキーとハッシュ関数を初期化します。</li>
+<li><a class="wiki-source-link" href="../../../../source/src/include/nodes/plannodes.h.html#L267" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/nodes/plannodes.h.html&quot;}, '*');"><code>outerPlan</code></a> と <a class="wiki-source-link" href="../../../../source/src/include/nodes/plannodes.h.html#L266" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/nodes/plannodes.h.html&quot;}, '*');"><code>innerPlan</code></a>（Hashノード）を初期化し、必要に応じて欠損行（null <a class="wiki-source-link" href="../../../../source/src/interfaces/libpq/fe-print.c.html#L785" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__interfaces__libpq__fe-print_c__fill.html&quot;}, '*');">fill</a>）用のスロットを割り当てます。</li>
+<p>2. **実行ループ (<a class="wiki-source-link" href="../../../../source/src/backend/executor/nodeHashjoin.c.html#L224" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__executor__nodeHashjoin_c__ExecHashJoinImpl.html&quot;}, '*');"><code>ExecHashJoinImpl</code></a> のステートマシン)**:</p>
+<li><a class="wiki-source-link" href="../../../../source/src/backend/executor/nodeHashjoin.c.html#L182" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/backend/executor/nodeHashjoin.c.html&quot;}, '*');"><code>HJ_BUILD_HASHTABLE</code></a>: 初回のみ、Hashノードを実行してハッシュテーブルを構築します。並列の場合はバリア（<code>build_barrier</code>）を用いて協調動作します。</li>
+<li><a class="wiki-source-link" href="../../../../source/src/backend/executor/nodeHashjoin.c.html#L183" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/backend/executor/nodeHashjoin.c.html&quot;}, '*');"><code>HJ_NEED_NEW_OUTER</code></a>: 外側リレーションからタプルを取得し、ハッシュ値を計算します。現在のバッチに属さない場合は一時ファイルへスポート（<code>ExecHashJoinSaveTuple</code>）し、次の外側タプルへ進みます。</li>
+<li><a class="wiki-source-link" href="../../../../source/src/backend/executor/nodeHashjoin.c.html#L184" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/backend/executor/nodeHashjoin.c.html&quot;}, '*');"><code>HJ_SCAN_BUCKET</code></a>: ハッシュテーブルの対応するバケツをスキャンして候補タプルを探し、結合条件（<a class="wiki-source-link" href="../../../../source/src/include/nodes/plannodes.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__nodes__plannodes_h__joinqual.html&quot;}, '*');"><code>joinqual</code></a>）および非結合条件（<code>otherqual</code>）を評価してマッチすれば射影結果（<a class="wiki-source-link" href="../../../../source/src/include/executor/executor.h.html#L490" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__executor__executor_h__ExecProject.html&quot;}, '*');"><code>ExecProject</code></a>）を返します。</li>
+<li><a class="wiki-source-link" href="../../../../source/src/backend/executor/nodeHashjoin.c.html#L185" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/backend/executor/nodeHashjoin.c.html&quot;}, '*');"><code>HJ_FILL_OUTER_TUPLE</code></a> / <a class="wiki-source-link" href="../../../../source/src/backend/executor/nodeHashjoin.c.html#L186" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/backend/executor/nodeHashjoin.c.html&quot;}, '*');"><code>HJ_FILL_INNER_TUPLES</code></a> / <a class="wiki-source-link" href="../../../../source/src/backend/executor/nodeHashjoin.c.html#L187" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/backend/executor/nodeHashjoin.c.html&quot;}, '*');"><code>HJ_FILL_OUTER_NULL_TUPLES</code></a> / <a class="wiki-source-link" href="../../../../source/src/backend/executor/nodeHashjoin.c.html#L188" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/backend/executor/nodeHashjoin.c.html&quot;}, '*');"><code>HJ_FILL_INNER_NULL_TUPLES</code></a>: 外部結合やアンチ結合において、マッチしなかった行や null キー行を補完・出力します。</li>
+<li><a class="wiki-source-link" href="../../../../source/src/backend/executor/nodeHashjoin.c.html#L189" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/backend/executor/nodeHashjoin.c.html&quot;}, '*');"><code>HJ_NEED_NEW_BATCH</code></a>: 現在のバッチが終了した場合、次のバッチが存在すれば <a class="wiki-source-link" href="../../../../source/src/backend/executor/nodeHashjoin.c.html#L1278" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__executor__nodeHashjoin_c__ExecHashJoinNewBatch.html&quot;}, '*');"><code>ExecHashJoinNewBatch</code></a>（または並列版）を呼び出して次の内側バッチをハッシュテーブルに再ロードし、外側ファイルを開き直します。</li>
+</ul>
+<h2>直接依存</h2>
+<ul>
+<li><a class="wiki-source-link" href="../../../../source/src/include/postgres.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/postgres.h.html&quot;}, '*');"><code>postgres.h</code></a></li>
+<li><code>access/htup_details.h</code></li>
+<li><code>access/parallel.h</code></li>
+<li><code>executor/executor.h</code></li>
+<li><code>executor/hashjoin.h</code></li>
+<li><code>executor/instrument.h</code></li>
+<li><code>executor/nodeHash.h</code></li>
+<li><code>executor/nodeHashjoin.h</code></li>
+<li><a class="wiki-source-link" href="../../../../source/src/include/miscadmin.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/miscadmin.h.html&quot;}, '*');"><code>miscadmin.h</code></a></li>
+<li><code>utils/lsyscache.h</code></li>
+<li><code>utils/sharedtuplestore.h</code></li>
+<li><code>utils/tuplestore.h</code></li>
+<li><code>utils/wait_event.h</code></li>
+</ul>
+<h2>関連コード</h2>
+<ul>
+<li><a class="wiki-source-link" href="../../../../source/src/backend/executor/nodeHash.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/backend/executor/nodeHash.c.html&quot;}, '*');"><code>src/backend/executor/nodeHash.c</code></a>: 内側の Hash ノードおよびハッシュテーブルの構築・管理ロジック。</li>
+<li><a class="wiki-source-link" href="../../../../source/src/include/executor/nodeHashjoin.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/executor/nodeHashjoin.h.html&quot;}, '*');"><code>src/include/executor/nodeHashjoin.h</code></a>: 外部公開される構造体や関数プロトタイプ宣言。</li>
+</ul>
+<h2>読者向けメモ</h2>
+<ul>
+<li>**メモリ管理とライフサイクル**: ハッシュテーブルやスピル用の一時ファイルは、専用のメモリコンテキスト（<a class="wiki-source-link" href="../../../../source/src/backend/executor/nodeHash.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__executor__nodeHash_c__hashCxt.html&quot;}, '*');"><code>hashCxt</code></a>, <a class="wiki-source-link" href="../../../../source/src/backend/executor/nodeHash.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__executor__nodeHash_c__spillCxt.html&quot;}, '*');"><code>spillCxt</code></a>）上で管理され、クエリ終了時や <code>ExecEndHashJoin</code> / <a class="wiki-source-link" href="../../../../source/src/backend/executor/nodeHash.c.html#L980" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__executor__nodeHash_c__ExecHashTableDestroy.html&quot;}, '*');"><code>ExecHashTableDestroy</code></a> で明示的に解放されます。</li>
+<li>**並列処理のデッドロック回避**: デッドロックを防ぐため、他のバックエンドが待機しないことが保証されるフェーズ（<a class="wiki-source-link" href="../../../../source/src/include/executor/hashjoin.h.html#L284" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/executor/hashjoin.h.html&quot;}, '*');"><code>PHJ_BUILD_RUN</code></a> や <a class="wiki-source-link" href="../../../../source/src/include/executor/hashjoin.h.html#L291" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/executor/hashjoin.h.html&quot;}, '*');"><code>PHJ_BATCH_PROBE</code></a>）以外では、バリア待機中にタプルを emit しない設計になっています。</li>
+</ul>
+<h2>シンボルページ</h2>
+<ul>
+<li><a href="../../../symbols/src__backend__executor__nodeHashjoin_c__ExecHashJoinImpl.html" target="wiki-view"><code>ExecHashJoinImpl</code></a></li>
+<li><a href="../../../symbols/src__backend__executor__nodeHashjoin_c__ExecHashJoin.html" target="wiki-view"><code>ExecHashJoin</code></a></li>
+<li><a href="../../../symbols/src__backend__executor__nodeHashjoin_c__ExecParallelHashJoin.html" target="wiki-view"><code>ExecParallelHashJoin</code></a></li>
+<li><a href="../../../symbols/src__backend__executor__nodeHashjoin_c__ExecInitHashJoin.html" target="wiki-view"><code>ExecInitHashJoin</code></a></li>
+<li><a href="../../../symbols/src__backend__executor__nodeHashjoin_c__ExecEndHashJoin.html" target="wiki-view"><code>ExecEndHashJoin</code></a></li>
+<li><a href="../../../symbols/src__backend__executor__nodeHashjoin_c__ExecHashJoinOuterGetTuple.html" target="wiki-view"><code>ExecHashJoinOuterGetTuple</code></a></li>
+<li><a href="../../../symbols/src__backend__executor__nodeHashjoin_c__ExecParallelHashJoinOuterGetTuple.html" target="wiki-view"><code>ExecParallelHashJoinOuterGetTuple</code></a></li>
+<li><a href="../../../symbols/src__backend__executor__nodeHashjoin_c__ExecHashJoinNewBatch.html" target="wiki-view"><code>ExecHashJoinNewBatch</code></a></li>
+<li><a href="../../../symbols/src__backend__executor__nodeHashjoin_c__ExecParallelHashJoinNewBatch.html" target="wiki-view"><code>ExecParallelHashJoinNewBatch</code></a></li>
+<li><a href="../../../symbols/src__backend__executor__nodeHashjoin_c__ExecHashJoinInitializeDSM.html" target="wiki-view"><code>ExecHashJoinInitializeDSM</code></a></li>
+<li><a href="../../../symbols/src__backend__executor__nodeHashjoin_c__ExecHashJoinReInitializeDSM.html" target="wiki-view"><code>ExecHashJoinReInitializeDSM</code></a></li>
+<li><a href="../../../symbols/src__backend__executor__nodeHashjoin_c__ExecHashJoinInitializeWorker.html" target="wiki-view"><code>ExecHashJoinInitializeWorker</code></a></li>
+</ul><script>
+(function() {
+  function notifyParent() {
+    if (parent === window) return;
+    parent.postMessage({type: "frame-location", frame: window.name || "", href: window.location.href}, "*");
+  }
+  document.addEventListener("click", function(event) {
+    const link = event.target.closest("a[data-panel]");
+    if (!link || parent === window) return;
+    parent.postMessage({type: "source-link", panel: link.dataset.panel}, "*");
+  });
+  window.addEventListener("load", notifyParent);
+  window.addEventListener("hashchange", notifyParent);
+})();
+</script></body></html>

@@ -34,8 +34,8 @@
 <h2>関連データ構造</h2>
 <p>なし</p>
 <h2>ソース抜粋</h2>
-<p>~~~c int pg_valid_server_encoding(const char *name) { int			enc;</p>
-<p>if ((enc = pg_char_to_encoding(name)) &lt; 0) return -1;</p>
+<p>~~~c int pg_valid_server_encoding(const char *<a class="wiki-source-link" href="../../source/src/include/mb/pg_wchar.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/mb/pg_wchar.h.html&quot;}, '*');">name</a>) { int			enc;</p>
+<p>if ((enc = pg_char_to_encoding(<a class="wiki-source-link" href="../../source/src/include/mb/pg_wchar.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/mb/pg_wchar.h.html&quot;}, '*');">name</a>)) &lt; 0) return -1;</p>
 <p>if (!<a class="wiki-source-link" href="../../source/src/include/mb/pg_wchar.h.html#L134" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/mb/pg_wchar.h.html&quot;}, '*');">PG_VALID_BE_ENCODING</a>(enc)) return -1;</p>
 <p>return enc; } ~~~</p>
 <h2>失敗モードと境界条件</h2>

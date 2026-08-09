@@ -35,14 +35,14 @@
 <li>Until we reach a CONSISTENT state, we record commits of all</li>
 <li>transactions, not just the catalog changing ones. Record <a class="wiki-source-link" href="../../source/src/interfaces/ecpg/preproc/type.h.html#L89" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__interfaces__ecpg__preproc__type_h__when.html&quot;}, '*');">when</a> that</li>
 <li>changes so we know we cannot export a snapshot safely anymore.</li>
-<p>*/ <a class="wiki-source-link" href="../../source/src/include/access/tupmacs.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__access__tupmacs_h__bool.html&quot;}, '*');">bool</a>		includes_all_transactions;</p>
+<p>*/ bool		includes_all_transactions;</p>
 </ul>
 <p>/*</p>
 <ul>
 <li>Array of committed transactions that have modified the catalog.</li>
 <p>*</p>
-<li>As this array <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> frequently modified we do *not* keep it in</li>
-<li><a class="wiki-source-link" href="../../source/src/backend/utils/adt/xid.c.html#L151" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__utils__adt__xid_c__xidComparator.html&quot;}, '*');">xidComparator</a> order. Instead we <a class="wiki-source-link" href="../../source/contrib/intarray/_int_op.c.html#L198" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/contrib__intarray___int_op_c__sort.html&quot;}, '*');">sort</a> the array <a class="wiki-source-link" href="../../source/src/interfaces/ecpg/preproc/type.h.html#L89" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__interfaces__ecpg__preproc__type_h__when.html&quot;}, '*');">when</a> building &amp;</li>
+<li>As this <a class="wiki-source-link" href="../../source/src/include/utils/jsonb.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__utils__jsonb_h__array.html&quot;}, '*');">array</a> <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> frequently modified we do *not* keep it in</li>
+<li><a class="wiki-source-link" href="../../source/src/backend/utils/adt/xid.c.html#L151" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__utils__adt__xid_c__xidComparator.html&quot;}, '*');">xidComparator</a> order. Instead we <a class="wiki-source-link" href="../../source/contrib/intarray/_int_op.c.html#L198" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/contrib__intarray___int_op_c__sort.html&quot;}, '*');">sort</a> the <a class="wiki-source-link" href="../../source/src/include/utils/jsonb.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__utils__jsonb_h__array.html&quot;}, '*');">array</a> <a class="wiki-source-link" href="../../source/src/interfaces/ecpg/preproc/type.h.html#L89" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__interfaces__ecpg__preproc__type_h__when.html&quot;}, '*');">when</a> building &amp;</li>
 <li>distributing a snapshot.</li>
 <p>*</p>
 <li>TODO: It&#x27;s unclear whether that reasoning has much merit. Every</li>
@@ -51,7 +51,7 @@
 <li>potentially also make it easier to purge (but more complicated wrt</li>
 <li>wraparound?). Should be improved if sorting while building the</li>
 <li>snapshot shows up in profiles.</li>
-<p>*/ TransactionId *xip; }			committed; ~~~</p>
+<p>*/ TransactionId *<a class="wiki-source-link" href="../../source/src/include/utils/snapshot.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__utils__snapshot_h__xip.html&quot;}, '*');">xip</a>; }			committed; ~~~</p>
 </ul>
 <h2>失敗モードと境界条件</h2>
 <p>まだ解析していません。</p>

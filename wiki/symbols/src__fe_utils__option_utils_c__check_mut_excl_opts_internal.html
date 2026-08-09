@@ -36,7 +36,7 @@
 <h2>ソース抜粋</h2>
 <p>~~~c void <a class="wiki-source-link" href="../../source/src/fe_utils/option_utils.c.html#L124" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__fe_utils__option_utils_c__check_mut_excl_opts_internal.html&quot;}, '*');">check_mut_excl_opts_internal</a>(int n, ...) { char	   *first = NULL; va_list		args;</p>
 <p><a class="wiki-source-link" href="../../source/src/include/c.h.html#L950" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/c.h.html&quot;}, '*');">Assert</a>(n % 2 == 0);</p>
-<p>va_start(args, n); for (int i = 0; i &lt; n; i += 2) { <a class="wiki-source-link" href="../../source/src/include/access/tupmacs.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__access__tupmacs_h__bool.html&quot;}, '*');">bool</a>		set = va_arg(args, int); char	   *opt = va_arg(args, char *);</p>
+<p>va_start(args, n); for (int i = 0; i &lt; n; i += 2) { bool		set = va_arg(args, int); char	   *opt = va_arg(args, char *);</p>
 <p>if (set &amp;&amp; first) pg_fatal(&quot;options %s and %s cannot be used together&quot;, first, opt);</p>
 <p>if (set) first = opt; } va_end(args); } ~~~</p>
 <h2>失敗モードと境界条件</h2>

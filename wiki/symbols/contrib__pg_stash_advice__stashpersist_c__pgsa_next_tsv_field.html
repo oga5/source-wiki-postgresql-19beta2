@@ -32,13 +32,13 @@
 <li>呼び出しサイト: なし</li>
 </ul>
 <h2>関連データ構造</h2>
-<p><a class="wiki-source-link" href="../../source/src/interfaces/ecpg/preproc/type.h.html#L138" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__interfaces__ecpg__preproc__type_h__cursor.html&quot;}, '*');"><code>cursor</code></a></p>
+<p><code>cursor</code></p>
 <h2>ソース抜粋</h2>
-<p>~~~c static char * <a class="wiki-source-link" href="../../source/contrib/pg_stash_advice/stashpersist.c.html#L610" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/contrib__pg_stash_advice__stashpersist_c__pgsa_next_tsv_field.html&quot;}, '*');">pgsa_next_tsv_field</a>(char **<a class="wiki-source-link" href="../../source/src/interfaces/ecpg/preproc/type.h.html#L138" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__interfaces__ecpg__preproc__type_h__cursor.html&quot;}, '*');">cursor</a>) { char	   *start = *<a class="wiki-source-link" href="../../source/src/interfaces/ecpg/preproc/type.h.html#L138" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__interfaces__ecpg__preproc__type_h__cursor.html&quot;}, '*');">cursor</a>; char	   *p = start;</p>
+<p>~~~c static char * <a class="wiki-source-link" href="../../source/contrib/pg_stash_advice/stashpersist.c.html#L610" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/contrib__pg_stash_advice__stashpersist_c__pgsa_next_tsv_field.html&quot;}, '*');">pgsa_next_tsv_field</a>(char **cursor) { char	   *start = *cursor; char	   *p = start;</p>
 <p>if (*p == &#x27;\0&#x27;) return NULL;</p>
 <p>while (*p != &#x27;\0&#x27; &amp;&amp; *p != &#x27;\t&#x27;) p++;</p>
 <p>if (*p == &#x27;\t&#x27;) *p++ = &#x27;\0&#x27;;</p>
-<p>*<a class="wiki-source-link" href="../../source/src/interfaces/ecpg/preproc/type.h.html#L138" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__interfaces__ecpg__preproc__type_h__cursor.html&quot;}, '*');">cursor</a> = p; return start; } ~~~</p>
+<p>*cursor = p; return start; } ~~~</p>
 <h2>失敗モードと境界条件</h2>
 <p>まだ解析していません。</p>
 <h2>保守担当者向けメモ</h2>

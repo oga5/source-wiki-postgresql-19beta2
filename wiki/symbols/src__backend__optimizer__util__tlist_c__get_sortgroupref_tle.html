@@ -13,12 +13,12 @@
 <li>複雑度: <code>medium</code> (score 7)</li>
 </ul>
 <h3>ソース抜粋</h3>
-<p>~~~c TargetEntry * <a class="wiki-source-link" href="../../source/src/backend/optimizer/util/tlist.c.html#L353" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__tlist_c__get_sortgroupref_tle.html&quot;}, '*');">get_sortgroupref_tle</a>(Index sortref, List *targetList) { <a class="wiki-source-link" href="../../source/src/include/nodes/pg_list.h.html#L45" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__nodes__pg_list_h__ListCell.html&quot;}, '*');">ListCell</a>   *l;</p>
-<p><a class="wiki-source-link" href="../../source/src/include/nodes/pg_list.h.html#L405" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/nodes/pg_list.h.html&quot;}, '*');">foreach</a>(l, targetList) { TargetEntry *tle = (TargetEntry *) <a class="wiki-source-link" href="../../source/src/include/nodes/pg_list.h.html#L172" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/nodes/pg_list.h.html&quot;}, '*');">lfirst</a>(l);</p>
+<p>~~~c TargetEntry * <a class="wiki-source-link" href="../../source/src/backend/optimizer/util/tlist.c.html#L353" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__tlist_c__get_sortgroupref_tle.html&quot;}, '*');">get_sortgroupref_tle</a>(Index sortref, List *<a class="wiki-source-link" href="../../source/src/include/nodes/primnodes.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/nodes/primnodes.h.html&quot;}, '*');">targetList</a>) { <a class="wiki-source-link" href="../../source/src/include/nodes/pg_list.h.html#L45" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__nodes__pg_list_h__ListCell.html&quot;}, '*');">ListCell</a>   *l;</p>
+<p><a class="wiki-source-link" href="../../source/src/include/nodes/pg_list.h.html#L405" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/nodes/pg_list.h.html&quot;}, '*');">foreach</a>(l, <a class="wiki-source-link" href="../../source/src/include/nodes/primnodes.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/nodes/primnodes.h.html&quot;}, '*');">targetList</a>) { TargetEntry *tle = (TargetEntry *) <a class="wiki-source-link" href="../../source/src/include/nodes/pg_list.h.html#L172" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/nodes/pg_list.h.html&quot;}, '*');">lfirst</a>(l);</p>
 <p>if (tle-&gt;ressortgroupref == sortref) return tle; }</p>
-<p><a class="wiki-source-link" href="../../source/src/include/utils/elog.h.html#L242" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/utils/elog.h.html&quot;}, '*');">elog</a>(ERROR, &quot;ORDER/GROUP BY expression not found in targetlist&quot;); return NULL;				/* keep compiler quiet */ } ~~~</p>
+<p><a class="wiki-source-link" href="../../source/src/include/utils/elog.h.html#L242" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/utils/elog.h.html&quot;}, '*');">elog</a>(ERROR, &quot;ORDER/GROUP BY expression not found in <a class="wiki-source-link" href="../../source/src/include/nodes/plannodes.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/nodes/plannodes.h.html&quot;}, '*');">targetlist</a>&quot;); return NULL;				/* keep compiler quiet */ } ~~~</p>
 <h2>目的</h2>
-<p>指定されたソート・グループ化参照番号（<code>sortref</code>）に一致する <code>TargetEntry</code> をターゲットリスト（<code>targetList</code>）から検索して返します。</p>
+<p>指定されたソート・グループ化参照番号（<code>sortref</code>）に一致する <code>TargetEntry</code> をターゲットリスト（<a class="wiki-source-link" href="../../source/src/include/nodes/primnodes.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/nodes/primnodes.h.html&quot;}, '*');"><code>targetList</code></a>）から検索して返します。</p>
 <h2>入力と出力</h2>
 <ul>
 <li>入力:</li>
@@ -29,11 +29,11 @@
 </ul>
 <h2>前提条件と不変条件</h2>
 <ul>
-<li><code>targetList</code> 内の各要素は <code>TargetEntry *</code> 型である必要があります。</li>
+<li><a class="wiki-source-link" href="../../source/src/include/nodes/primnodes.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/nodes/primnodes.h.html&quot;}, '*');"><code>targetList</code></a> 内の各要素は <code>TargetEntry *</code> 型である必要があります。</li>
 </ul>
 <h2>アルゴリズムまたは振る舞い</h2>
 <ul>
-<li><code>targetList</code> を先頭から順に走査し、各 <code>TargetEntry</code> の <code>ressortgroupref</code> フィールドと引数の <code>sortref</code> を比較します。</li>
+<li><a class="wiki-source-link" href="../../source/src/include/nodes/primnodes.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/nodes/primnodes.h.html&quot;}, '*');"><code>targetList</code></a> を先頭から順に走査し、各 <code>TargetEntry</code> の <code>ressortgroupref</code> フィールドと引数の <code>sortref</code> を比較します。</li>
 <li>一致する <code>ressortgroupref</code> を持つエントリが見つかった場合、その <code>TargetEntry</code> を直ちに返します。</li>
 </ul>
 <h2>失敗モードと境界条件</h2>

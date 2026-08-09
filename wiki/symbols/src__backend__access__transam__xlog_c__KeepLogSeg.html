@@ -40,7 +40,7 @@
 <p>/*</p>
 <ul>
 <li>Account for max_slot_wal_keep_size to avoid keeping more than</li>
-<li>configured.  However, don&#x27;t do that during a binary upgrade: if</li>
+<li>configured.  However, don&#x27;t do that during a <a class="wiki-source-link" href="../../source/src/include/utils/jsonb.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__utils__jsonb_h__binary.html&quot;}, '*');">binary</a> upgrade: if</li>
 <li>slots were to be invalidated because of this, it would not be</li>
 <li>possible to preserve logical ones during the upgrade.</li>
 <p>*/ if (<a class="wiki-source-link" href="../../source/src/backend/access/transam/xlog.c.html#L142" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/access/transam/xlog.c.html&quot;}, '*');">max_slot_wal_keep_size_mb</a> &gt;= 0 &amp;&amp; !<a class="wiki-source-link" href="../../source/src/backend/utils/init/globals.c.html#L123" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/utils/init/globals.c.html&quot;}, '*');">IsBinaryUpgrade</a>) { uint64		slot_keep_segs;</p>

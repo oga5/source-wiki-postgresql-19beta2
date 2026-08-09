@@ -42,14 +42,14 @@
 </ul>
 <p>/*</p>
 <ul>
-<li>Enlarge freeBlocks array if full.</li>
+<li>Enlarge freeBlocks <a class="wiki-source-link" href="../../source/src/include/utils/jsonb.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__utils__jsonb_h__array.html&quot;}, '*');">array</a> if full.</li>
 <p>*/ if (lts-&gt;nFreeBlocks &gt;= lts-&gt;freeBlocksLen) { /*</p>
 <li>If the freelist becomes very large, just return and leak this <a class="wiki-source-link" href="../../source/src/include/snowball/snowball_runtime.h.html#L65" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/snowball/snowball_runtime.h.html&quot;}, '*');">free</a></li>
 <li>block.</li>
 <p>*/ if (lts-&gt;freeBlocksLen * 2 * sizeof(int64) &gt; MaxAllocSize) return;</p>
 </ul>
 <p>lts-&gt;freeBlocksLen *= 2; lts-&gt;freeBlocks = (int64 *) repalloc(lts-&gt;freeBlocks, lts-&gt;freeBlocksLen * sizeof(int64)); }</p>
-<p>/* create a &quot;hole&quot; at end of minheap array */ heap = lts-&gt;freeBlocks; holepos = lts-&gt;nFreeBlocks; lts-&gt;nFreeBlocks++;</p>
+<p>/* create a &quot;hole&quot; at end of minheap <a class="wiki-source-link" href="../../source/src/include/utils/jsonb.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__utils__jsonb_h__array.html&quot;}, '*');">array</a> */ heap = lts-&gt;freeBlocks; holepos = lts-&gt;nFreeBlocks; lts-&gt;nFreeBlocks++;</p>
 <p>/* sift up to insert blocknum */ while (holepos != 0) { uint64		parent = parent_offset(holepos);</p>
 <p>if (heap[parent] &lt; blocknum) break;</p>
 <p>heap[holepos] = heap[parent]; holepos = parent; } heap[holepos] = blocknum; } ~~~</p>

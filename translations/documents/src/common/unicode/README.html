@@ -1,0 +1,31 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>src/common/unicode/README</title><link rel="stylesheet" href="../../../../../styles.css"></head><body><h1>Japanese translation</h1><p><code>src/common/unicode/README</code></p><p><a href="../../../../../source/src/common/unicode/README.html" target="source-view">View original document</a></p><p class="document-translation-progress document-translation-complete">Translation complete.</p><div class="document-translation-body"><section class="document-translation-chunk translated" data-chunk-order="0"><p>このディレクトリには、新しいUnicodeデータファイルをダウンロードし、静的テーブルを生成するためのツールが含まれています。これらのテーブルは、Unicodeデータの正規化や、さまざまなプロパティの判定に使用されます。</p>
+<p>生成されたヘッダーファイルは src/include/common/ にコピーされ、ソースツリーに含まれるため、通常、PostgreSQLのビルドにこれらのツールは必要ありません。</p>
+<p>Unicodeバージョンの更新 ----------------------</p>
+<p>src/Makefile.global.in と src/common/unicode/meson.build を編集して、UNICODE_VERSION と CLDR_VERSION を更新します。</p>
+<p>その後、以下を実行して新しいヘッダーファイルを生成します。</p>
+<p>make update-unicode</p>
+<p>または、mesonを使用している場合：</p>
+<p>ninja update-unicode</p>
+<p>これらはソースツリーのトップレベルから実行します。結果を確認して、変更内容が妥当であること（つまり、差分のサイズと範囲が前回の更新以降のUnicodeの変更に見合っていること）を確認し、コミットします。</p>
+<p>テスト -----</p>
+<p>正規化テスト：</p>
+<p>Unicodeコンソーシアムは、NormalizationTest.txt というファイルで、正規化アルゴリズムの包括的なテストスイートを公開しています。このディレクトリには、NormalizationTest.txt 内のすべてのテスト文字列を使用して、私たちの正規化コードを実行するためのPerlスクリプトとCコードも含まれています。NormalizationTest.txt をダウンロードしてテストを実行するには、以下のようにします。</p>
+<p>make normalization-check</p>
+<p>これは update-unicode ターゲットの一部としても実行されます。</p>
+<p>カテゴリ、プロパティ、大文字小文字のテスト：</p>
+<p>case_test.c と category_test.c ファイルは、ICUとの結果を網羅的に比較することで、Unicodeのカテゴリ、プロパティ、大文字小文字のマッピングをテストします。これらのテストを効果的に行うには、Unicodeデータファイルのバージョンが、ICUがベースにしているUnicodeのバージョンと類似している必要があります。Unicodeのバージョンが一致していない場合、一方のバージョンで割り当てられていて他方では割り当てられていないコードポイントがテストでスキップされ、誤って失敗が報告される可能性があります。このテストは update-unicode ターゲットの一部として実行されます。</p></section></div><script>
+(function() {
+  function notifyParent() {
+    if (parent === window) return;
+    parent.postMessage({type: "frame-location", frame: window.name || "", href: window.location.href}, "*");
+  }
+  document.addEventListener("click", function(event) {
+    const link = event.target.closest("a[data-panel]");
+    if (!link || parent === window) return;
+    parent.postMessage({type: "source-link", panel: link.dataset.panel}, "*");
+  });
+  window.addEventListener("load", notifyParent);
+  window.addEventListener("hashchange", notifyParent);
+})();
+</script></body></html>

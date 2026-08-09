@@ -1,0 +1,61 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>src/include/utils/sharedtuplestore.h.md</title><link rel="stylesheet" href="../../../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../../../source/src/include/utils/sharedtuplestore.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/utils/sharedtuplestore.h.html&quot;}, '*');">src/include/utils/sharedtuplestore.h</a></h1>
+<h2>概要</h2>
+<p>複数バックエンド間でタプルを共有するためのパラレル認識型テンポラリタプルストア（<code>SharedTuplestore</code>）の公開インターフェース定義です。</p>
+<h2>モジュール内での役割</h2>
+<p><code>src/include/utils/</code> ディレクトリに位置し、通常の <a class="wiki-source-link" href="../../../../source/src/include/utils/tuplestore.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/utils/tuplestore.h.html&quot;}, '*');"><code>tuplestore.h</code></a> の機能を拡張・並列化対応させた共有ストレージ機構のデータ構造と関数プロトタイプを提供します。ペアとなる実装ファイルは <a class="wiki-source-link" href="../../../../source/src/backend/utils/sort/sharedtuplestore.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/utils/sort/sharedtuplestore.c.html&quot;}, '*');"><code>src/backend/utils/sort/sharedtuplestore.c</code></a> です。</p>
+<h2>責務</h2>
+<ul>
+<li>複数バックエンドからの並行書き込みと、その後のパラレルスキャンを抽象化する構造体の定義。</li>
+<li><code>SharedTuplestore</code>（共有メモリ常駐の制御構造体）および <code>SharedTuplestoreAccessor</code>（バックエンドローカルな操作コンテキスト）の型宣言。</li>
+<li>タプルのストア初期化、書き込み終了、再初期化、パラレルスキャンの開始・終了、およびタプル入出力関数の外部インターフェース提供。</li>
+</ul>
+<h2>重要なシンボル</h2>
+<ul>
+<li><code>SharedTuplestore</code>: 複数バックエンド間で共有されるタプルストア全体の制御構造体。</li>
+<li><code>SharedTuplestoreAccessor</code>: 各バックエンドが保持するローカルな操作用アクセサ構造体。</li>
+<li><a class="wiki-source-link" href="../../../../source/src/include/utils/sharedtuplestore.h.html#L30" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/utils/sharedtuplestore.h.html&quot;}, '*');"><code>SHARED_TUPLESTORE_SINGLE_PASS</code></a>: 単一パススキャンを示し、バッキングファイルを早期に削除可能にするフラグ。</li>
+<li><code>sts_initialize</code> / <code>sts_attach</code>: 共有タプルストアの初期化および既存ストアへのアタッチを行う関数。</li>
+<li><code>sts_puttuple</code> / <code>sts_parallel_scan_next</code>: タプルの書き込みおよびパラレルスキャンによる読み込みを行う関数。</li>
+</ul>
+<h2>制御フローとデータフロー</h2>
+<ul>
+<li>呼び出し側バックエンドは <a class="wiki-source-link" href="../../../../source/src/backend/utils/sort/sharedtuplestore.c.html#L102" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__utils__sort__sharedtuplestore_c__sts_estimate.html&quot;}, '*');"><code>sts_estimate</code></a> で必要サイズを計算し、共有メモリ上に <code>SharedTuplestore</code> を確保します。</li>
+<li>各参加バックエンドは <code>sts_initialize</code> または <code>sts_attach</code> により <code>SharedTuplestoreAccessor</code> を作成します。</li>
+<li>書き込み側は <code>sts_puttuple</code> で <a class="wiki-source-link" href="../../../../source/src/include/storage/sharedfileset.h.html#L26" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__storage__sharedfileset_h__SharedFileSet.html&quot;}, '*');"><code>SharedFileSet</code></a> と連携しながらチャンク単位でデータを格納し、書き込み完了後に <a class="wiki-source-link" href="../../../../source/src/backend/utils/sort/sharedtuplestore.c.html#L211" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__utils__sort__sharedtuplestore_c__sts_end_write.html&quot;}, '*');"><code>sts_end_write</code></a> を呼びます。</li>
+<li>読み込み側は <a class="wiki-source-link" href="../../../../source/src/backend/utils/sort/sharedtuplestore.c.html#L251" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__utils__sort__sharedtuplestore_c__sts_begin_parallel_scan.html&quot;}, '*');"><code>sts_begin_parallel_scan</code></a> の後、<code>sts_parallel_scan_next</code> を用いて並列にタプルをスキャン・取得します。</li>
+</ul>
+<h2>直接依存</h2>
+<ul>
+<li><code>access/htup.h</code>: ヒープタプル操作に関する定義。</li>
+<li><code>storage/fd.h</code>: ファイル記述子およびストレージ関連の定義。</li>
+<li><code>storage/sharedfileset.h</code>: 複数バックエンド間で一時ファイルを共有するための仕組み。</li>
+</ul>
+<h2>関連コード</h2>
+<ul>
+<li><a class="wiki-source-link" href="../../../../source/src/backend/utils/sort/sharedtuplestore.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/utils/sort/sharedtuplestore.c.html&quot;}, '*');"><code>src/backend/utils/sort/sharedtuplestore.c</code></a>: 本ヘッダーに対応する実処理の実装ファイル。</li>
+<li><a class="wiki-source-link" href="../../../../source/src/include/utils/tuplestore.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/utils/tuplestore.h.html&quot;}, '*');"><code>src/include/utils/tuplestore.h</code></a>: 非共有型の標準的なタプルストア定義。</li>
+</ul>
+<h2>読者向けメモ</h2>
+<ul>
+<li>本モジュールは主に Parallel Hash などの並列処理クエリ実行時に、バックエンド間で中間タプルを効率よく共有する目的で使用されます。</li>
+</ul>
+<h2>シンボルページ</h2>
+<ul>
+<li><a href="../../../symbols/src__include__utils__sharedtuplestore_h__SharedTuplestore.html" target="wiki-view"><code>SharedTuplestore</code></a></li>
+<li><a href="../../../symbols/src__include__utils__sharedtuplestore_h__SharedTuplestoreAccessor.html" target="wiki-view"><code>SharedTuplestoreAccessor</code></a></li>
+</ul><script>
+(function() {
+  function notifyParent() {
+    if (parent === window) return;
+    parent.postMessage({type: "frame-location", frame: window.name || "", href: window.location.href}, "*");
+  }
+  document.addEventListener("click", function(event) {
+    const link = event.target.closest("a[data-panel]");
+    if (!link || parent === window) return;
+    parent.postMessage({type: "source-link", panel: link.dataset.panel}, "*");
+  });
+  window.addEventListener("load", notifyParent);
+  window.addEventListener("hashchange", notifyParent);
+})();
+</script></body></html>

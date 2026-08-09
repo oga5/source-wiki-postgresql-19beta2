@@ -44,7 +44,7 @@
 <p>/*</p>
 <ul>
 <li>XXX Ideally we&#x27;d do this via <a class="wiki-source-link" href="../../source/src/backend/utils/misc/guc.c.html#L4233" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__utils__misc__guc_c__SetConfigOption.html&quot;}, '*');">SetConfigOption</a>(&quot;session_authorization&quot;),</li>
-<li>but we lack the role name needed to do that, and we can&#x27;t fetch it</li>
+<li>but we lack the role <a class="wiki-source-link" href="../../source/src/include/mb/pg_wchar.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/mb/pg_wchar.h.html&quot;}, '*');">name</a> needed to do that, and we can&#x27;t fetch it</li>
 <li>because one reason for this special case <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> to be able to start up even</li>
 <li>if something&#x27;s happened to the BOOTSTRAP_SUPERUSERID&#x27;s pg_authid row.</li>
 <li>Since we don&#x27;t set the GUC itself, C code will see the value as NULL,</li>

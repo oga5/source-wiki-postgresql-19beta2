@@ -1,9 +1,9 @@
 <!doctype html>
 <html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>src/test/regress/sql/jsonb.sql.md</title><link rel="stylesheet" href="../../../../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../../../../source/src/test/regress/sql/jsonb.sql.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/test/regress/sql/jsonb.sql.html&quot;}, '*');">src/test/regress/sql/jsonb.sql</a></h1>
 <h2>概要</h2>
-<p>PostgreSQLの <code>jsonb</code> データ型および関連する演算子、関数、集約、型キャスト、インデックス（GIN、B-tree）、全文検索（tsvector/<a class="wiki-source-link" href="../../../../../source/src/backend/tsearch/wparser.c.html#L347" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__tsearch__wparser_c__ts_headline.html&quot;}, '*');">ts_headline</a>）、レコード/配列へのマッピング機能に対する総合的な回帰テストスイート。</p>
+<p>PostgreSQLの <a class="wiki-source-link" href="../../../../../source/src/backend/utils/adt/jsonfuncs.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/backend/utils/adt/jsonfuncs.c.html&quot;}, '*');"><code>jsonb</code></a> データ型および関連する演算子、関数、集約、型キャスト、インデックス（GIN、B-tree）、全文検索（tsvector/<a class="wiki-source-link" href="../../../../../source/src/backend/tsearch/wparser.c.html#L347" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__tsearch__wparser_c__ts_headline.html&quot;}, '*');">ts_headline</a>）、レコード/配列へのマッピング機能に対する総合的な回帰テストスイート。</p>
 <h2>モジュール内での役割</h2>
-<p><code>src/test/regress/sql/</code> ディレクトリに位置し、<code>pg_regress</code> テストハーネスによって実行される SQL スクリプト群の一つ。C言語で実装された <code>jsonb</code> バックエンド機能（パース、バイナリ表現、演算子、インデックス演算子クラス）の仕様適合性と堅牢性を検証する。</p>
+<p><code>src/test/regress/sql/</code> ディレクトリに位置し、<code>pg_regress</code> テストハーネスによって実行される SQL スクリプト群の一つ。C言語で実装された <a class="wiki-source-link" href="../../../../../source/src/backend/utils/adt/jsonfuncs.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/backend/utils/adt/jsonfuncs.c.html&quot;}, '*');"><code>jsonb</code></a> バックエンド機能（パース、バイナリ表現、演算子、インデックス演算子クラス）の仕様適合性と堅牢性を検証する。</p>
 <h2>責務</h2>
 <ul>
 <li>**構文検証**: 文字列、数値、配列、オブジェクト、真偽値、null、および不正な JSON 構文に対するエラー報告の確認。</li>
@@ -16,14 +16,14 @@
 <h2>制御フローとデータフロー</h2>
 <ul>
 <li>外部ファイル <code>data/jsonb.data</code> を <code>COPY</code> コマンドで一時テーブル <code>testjsonb</code> にロードし、以降の検索・インデックス・集約テストの共通データソースとして利用。</li>
-<li>各テストケースは単発の <a class="wiki-source-link" href="../../../../../source/src/include/tcop/cmdtaglist.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__tcop__cmdtaglist_h__SELECT.html&quot;}, '*');"><code>SELECT</code></a>、<code>UPDATE</code>、<code>INSERT</code> 文で構成され、期待される出力結果は対応する <code>.out</code> ファイルと比較される。</li>
+<li>各テストケースは単発の <code>SELECT</code>、<code>UPDATE</code>、<code>INSERT</code> 文で構成され、期待される出力結果は対応する <code>.out</code> ファイルと比較される。</li>
 <li>インデックス性能・挙動テストでは <code>enable_seqscan = off</code> などを一時的に設定し、GIN（標準および path_ops）や B-tree インデックススキャンが強制的に使われるパスを通す。</li>
 <li><a class="wiki-source-link" href="../../../../../source/src/backend/utils/misc/stack_depth.c.html#L26" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/utils/misc/stack_depth.c.html&quot;}, '*');"><code>max_stack_depth</code></a> を一時的に縮小（<code>100kB</code>）して、過度にネストした JSONB の再帰パース時にスタックオーバーフローエラーが正しく発生するかを検証する制御フローを含む。</li>
 </ul>
 <h2>直接依存</h2>
 <ul>
 <li><code>PG_ABS_SRCDIR/data/jsonb.data</code>: テスト用の実データファイル。</li>
-<li>PostgreSQL バックエンドの <code>jsonb</code> データ型ハンドラおよび関連関数群。</li>
+<li>PostgreSQL バックエンドの <a class="wiki-source-link" href="../../../../../source/src/backend/utils/adt/jsonfuncs.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/backend/utils/adt/jsonfuncs.c.html&quot;}, '*');"><code>jsonb</code></a> データ型ハンドラおよび関連関数群。</li>
 </ul>
 <h2>関連コード</h2>
 <ul>

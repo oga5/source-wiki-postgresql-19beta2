@@ -1,47 +1,24 @@
 <!doctype html>
 <html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>symbols/src__backend__optimizer__prep__prepagg_c__GetAggInitVal.md</title><link rel="stylesheet" href="../../styles.css"></head><body><h1>GetAggInitVal</h1>
-<h2>定義</h2>
+<h2>現在のソース事実</h2>
 <ul>
 <li>種別: <code>function</code></li>
 <li>定義箇所: <code>src/backend/optimizer/prep/prepagg.c:520</code></li>
-<li>所属モジュール: <a class="wiki-entity-link" href="../modules/src__backend__optimizer__prep.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/modules/src__backend__optimizer__prep.html&quot;, &quot;source&quot;: &quot;source/src/backend/optimizer/prep/prepagg.c.html&quot;}, '*');"><code>module:src/backend/optimizer/prep</code></a></li>
-</ul>
-<h2>目的</h2>
-<p>静的シンボル索引から生成された初期シンボルページです。</p>
-<h2>シグネチャまたは形状</h2>
-<ul>
 <li>シグネチャ: <code>static Datum GetAggInitVal(Datum textInitVal, Oid transtype)</code></li>
-</ul>
-<h2>入力と出力</h2>
-<ul>
-<li>引数: <code>Datum textInitVal</code>, <code>Oid transtype</code></li>
-<li>戻り値: <code>Datum</code></li>
-</ul>
-<h2>前提条件と不変条件</h2>
-<p>まだ解析していません。</p>
-<h2>アルゴリズムまたは振る舞い</h2>
-<ul>
-<li>複雑度: <code>low</code> (score 3)</li>
-</ul>
-<p>まだ解析していません。</p>
-<h2>呼び出し元と呼び出し先</h2>
-<ul>
 <li>呼び出し元: <a class="wiki-source-link" href="../../source/src/backend/optimizer/prep/prepagg.c.html#L115" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__prep__prepagg_c__preprocess_aggref.html&quot;}, '*');"><code>preprocess_aggref</code></a></li>
 <li>呼び出し先: <a class="wiki-source-link" href="../../source/src/backend/utils/cache/lsyscache.c.html#L3189" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__utils__cache__lsyscache_c__getTypeInputInfo.html&quot;}, '*');"><code>getTypeInputInfo</code></a>, <a class="wiki-source-link" href="../../source/src/backend/utils/fmgr/fmgr.c.html#L1754" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__utils__fmgr__fmgr_c__OidInputFunctionCall.html&quot;}, '*');"><code>OidInputFunctionCall</code></a></li>
 <li>呼び出し元サイト: <a class="wiki-source-link" href="../../source/src/backend/optimizer/prep/prepagg.c.html#L115" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__prep__prepagg_c__preprocess_aggref.html&quot;}, '*');"><code>preprocess_aggref</code></a> at <code>src/backend/optimizer/prep/prepagg.c:214:15</code> (direct, confidence=high, resolved=<a class="wiki-entity-link" href="src__backend__optimizer__prep__prepagg_c__GetAggInitVal.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__prep__prepagg_c__GetAggInitVal.html&quot;, &quot;source&quot;: &quot;source/src/backend/optimizer/prep/prepagg.c.html#L520&quot;}, '*');"><code>symbol:src/backend/optimizer/prep/prepagg.c#GetAggInitVal</code></a>)</li>
 <li>呼び出しサイト: <a class="wiki-source-link" href="../../source/src/backend/utils/cache/lsyscache.c.html#L3189" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__utils__cache__lsyscache_c__getTypeInputInfo.html&quot;}, '*');"><code>getTypeInputInfo</code></a> at <code>src/backend/optimizer/prep/prepagg.c:528:2</code> (direct, confidence=high, resolved=<a class="wiki-entity-link" href="src__backend__utils__cache__lsyscache_c__getTypeInputInfo.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__utils__cache__lsyscache_c__getTypeInputInfo.html&quot;, &quot;source&quot;: &quot;source/src/backend/utils/cache/lsyscache.c.html#L3189&quot;}, '*');"><code>symbol:src/backend/utils/cache/lsyscache.c#getTypeInputInfo</code></a>), <a class="wiki-source-link" href="../../source/src/include/utils/builtins.h.html#L99" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/utils/builtins.h.html&quot;}, '*');"><code>TextDatumGetCString</code></a> at <code>src/backend/optimizer/prep/prepagg.c:529:15</code> (macro), <a class="wiki-source-link" href="../../source/src/backend/utils/fmgr/fmgr.c.html#L1754" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__utils__fmgr__fmgr_c__OidInputFunctionCall.html&quot;}, '*');"><code>OidInputFunctionCall</code></a> at <code>src/backend/optimizer/prep/prepagg.c:530:12</code> (direct, confidence=high, resolved=<a class="wiki-entity-link" href="src__backend__utils__fmgr__fmgr_c__OidInputFunctionCall.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__utils__fmgr__fmgr_c__OidInputFunctionCall.html&quot;, &quot;source&quot;: &quot;source/src/backend/utils/fmgr/fmgr.c.html#L1754&quot;}, '*');"><code>symbol:src/backend/utils/fmgr/fmgr.c#OidInputFunctionCall</code></a>), <code>pfree</code> at <code>src/backend/optimizer/prep/prepagg.c:532:2</code> (unresolved, confidence=low)</li>
+<li>関連型: <code>Datum</code>, <code>Oid</code></li>
+<li>複雑度: <code>low</code> (score 3)</li>
 </ul>
-<h2>関連データ構造</h2>
-<p><code>Datum</code>, <code>Oid</code></p>
-<h2>ソース抜粋</h2>
+<h3>ソース抜粋</h3>
 <p>~~~c static Datum GetAggInitVal(Datum textInitVal, Oid transtype) { Oid			typinput, typioparam; char	   *strInitVal; Datum		initVal;</p>
 <p><a class="wiki-source-link" href="../../source/src/backend/utils/cache/lsyscache.c.html#L3189" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__utils__cache__lsyscache_c__getTypeInputInfo.html&quot;}, '*');">getTypeInputInfo</a>(transtype, &amp;typinput, &amp;typioparam); strInitVal = <a class="wiki-source-link" href="../../source/src/include/utils/builtins.h.html#L99" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/utils/builtins.h.html&quot;}, '*');">TextDatumGetCString</a>(textInitVal); initVal = <a class="wiki-source-link" href="../../source/src/backend/utils/fmgr/fmgr.c.html#L1754" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__utils__fmgr__fmgr_c__OidInputFunctionCall.html&quot;}, '*');">OidInputFunctionCall</a>(typinput, strInitVal, typioparam, -1); pfree(strInitVal); return initVal; } ~~~</p>
-<h2>失敗モードと境界条件</h2>
-<p>まだ解析していません。</p>
-<h2>保守担当者向けメモ</h2>
-<ul>
-<li>後続フェーズで、ソース本文の文脈と caller/callee 情報を使ってこのページを強化する。</li>
-</ul><script>
+<h2>目的</h2>
+<p>テキスト形式で表現された集約の初期値を、指定された遷移型（<code>transtype</code>）の <code>Datum</code> に変換する。</p>
+<h2>アルゴリズムまたは振る舞い</h2>
+<p>1. <a class="wiki-source-link" href="../../source/src/backend/utils/cache/lsyscache.c.html#L3189" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__utils__cache__lsyscache_c__getTypeInputInfo.html&quot;}, '*');"><code>getTypeInputInfo</code></a> を使用して、指定された <code>transtype</code> の入力関数（<code>typinput</code>）およびそのパラメータ（<code>typioparam</code>）を取得する。 2. <a class="wiki-source-link" href="../../source/src/include/utils/builtins.h.html#L99" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/utils/builtins.h.html&quot;}, '*');"><code>TextDatumGetCString</code></a> を呼び出して <code>textInitVal</code> から C 文字列（<code>strInitVal</code>）を取り出す。 3. <a class="wiki-source-link" href="../../source/src/backend/utils/fmgr/fmgr.c.html#L1754" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__utils__fmgr__fmgr_c__OidInputFunctionCall.html&quot;}, '*');"><code>OidInputFunctionCall</code></a> を実行し、入力関数を用いて C 文字列を該当型の <code>Datum</code>（<code>initVal</code>）に変換する。 4. 一時的に割り当てた C 文字列バッファを <code>pfree</code> で解放し、変換済みの <code>initVal</code> を返す。</p><script>
 (function() {
   function notifyParent() {
     if (parent === window) return;

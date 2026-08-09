@@ -1,0 +1,84 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>symbols/src__backend__optimizer__plan__createplan_c__MergePath.md</title><link rel="stylesheet" href="../../styles.css"></head><body><h1>MergePath</h1>
+<h2>定義</h2>
+<ul>
+<li>種別: <code>function</code></li>
+<li>定義箇所: <code>src/backend/optimizer/plan/createplan.c:1</code></li>
+<li>所属モジュール: <a class="wiki-entity-link" href="../modules/src__backend__optimizer__plan.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/modules/src__backend__optimizer__plan.html&quot;, &quot;source&quot;: &quot;source/src/backend/optimizer/plan/analyzejoins.c.html&quot;}, '*');"><code>module:src/backend/optimizer/plan</code></a></li>
+</ul>
+<h2>目的</h2>
+<p>静的シンボル索引から生成された初期シンボルページです。</p>
+<h2>シグネチャまたは形状</h2>
+<ul>
+<li>シグネチャ: <code>/*------------------------------------------------------------------------- * * createplan.c * Routines to create the desired plan for processing a query. * Planning is complete, we just need to convert the selected * Path into a Plan. * * Portions Copyright (c) 1996-2026, PostgreSQL Global Development Group * Portions Copyright (c) 1994, Regents of the University of California * * * IDENTIFICATION * src/backend/optimizer/plan/createplan.c * *------------------------------------------------------------------------- */ #include &quot;postgres.h&quot; #include &quot;access/sysattr.h&quot; #include &quot;access/transam.h&quot; #include &quot;catalog/pg_class.h&quot; #include &quot;foreign/fdwapi.h&quot; #include &quot;miscadmin.h&quot; #include &quot;nodes/extensible.h&quot; #include &quot;nodes/makefuncs.h&quot; #include &quot;nodes/nodeFuncs.h&quot; #include &quot;optimizer/clauses.h&quot; #include &quot;optimizer/cost.h&quot; #include &quot;optimizer/optimizer.h&quot; #include &quot;optimizer/paramassign.h&quot; #include &quot;optimizer/pathnode.h&quot; #include &quot;optimizer/paths.h&quot; #include &quot;optimizer/placeholder.h&quot; #include &quot;optimizer/plancat.h&quot; #include &quot;optimizer/planmain.h&quot; #include &quot;optimizer/prep.h&quot; #include &quot;optimizer/restrictinfo.h&quot; #include &quot;optimizer/subselect.h&quot; #include &quot;optimizer/tlist.h&quot; #include &quot;parser/parse_clause.h&quot; #include &quot;parser/parsetree.h&quot; #include &quot;partitioning/partprune.h&quot; #include &quot;tcop/tcopprot.h&quot; #include &quot;utils/lsyscache.h&quot; /* * Flag bits that can appear in the flags argument of create_plan_recurse(). * These can be OR-ed together. * * CP_EXACT_TLIST specifies that the generated plan node must return exactly * the tlist specified by the path&#x27;s pathtarget (this overrides both * CP_SMALL_TLIST and CP_LABEL_TLIST, if those are set). Otherwise, the * plan node is allowed to return just the Vars and PlaceHolderVars needed * to evaluate the pathtarget. * * CP_SMALL_TLIST specifies that a narrower tlist is preferred. This is * passed down by parent nodes such as Sort and Hash, which will have to * store the returned tuples. * * CP_LABEL_TLIST specifies that the plan node must return columns matching * any sortgrouprefs specified in its pathtarget, with appropriate * ressortgroupref labels. This is passed down by parent nodes such as Sort * and Group, which need these values to be available in their inputs. * * CP_IGNORE_TLIST specifies that the caller plans to replace the targetlist, * and therefore it doesn&#x27;t matter a bit what target list gets generated. */ #define CP_EXACT_TLIST 0x0001 /* Plan must return specified tlist */ #define CP_SMALL_TLIST 0x0002 /* Prefer narrower tlists */ #define CP_LABEL_TLIST 0x0004 /* tlist must contain sortgrouprefs */ #define CP_IGNORE_TLIST 0x0008 /* caller will replace tlist */ static Plan *create_plan_recurse(PlannerInfo *root, Path *best_path, int flags)</code></li>
+</ul>
+<h2>入力と出力</h2>
+<p>まだ解析していません。</p>
+<h2>前提条件と不変条件</h2>
+<p>まだ解析していません。</p>
+<h2>アルゴリズムまたは振る舞い</h2>
+<ul>
+<li>複雑度: <code>low</code> (score 3)</li>
+</ul>
+<p>まだ解析していません。</p>
+<h2>呼び出し元と呼び出し先</h2>
+<ul>
+<li>呼び出し元: なし</li>
+<li>呼び出し先: なし</li>
+<li>呼び出し元サイト: なし</li>
+<li>呼び出しサイト: なし</li>
+</ul>
+<h2>関連データ構造</h2>
+<p><a class="wiki-source-link" href="../../source/src/interfaces/ecpg/test/expected/preproc-type.c.html#L36" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__interfaces__ecpg__test__expected__preproc-type_c__access.html&quot;}, '*');"><code>access</code></a>, <code>c</code>, <code>Group</code>, <code>Hash</code>, <code>Path</code>, <code>Plan</code>, <code>PlannerInfo</code>, <a class="wiki-source-link" href="../../source/src/interfaces/ecpg/preproc/type.h.html#L109" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__interfaces__ecpg__preproc__type_h__prep.html&quot;}, '*');"><code>prep</code></a>, <code>Sort</code></p>
+<h2>ソース抜粋</h2>
+<p>~~~c /*------------------------------------------------------------------------- *</p>
+<ul>
+<li><a class="wiki-source-link" href="../../source/src/backend/optimizer/plan/createplan.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/backend/optimizer/plan/createplan.c.html&quot;}, '*');">createplan.c</a></li>
+<li>Routines to create the desired <a class="wiki-source-link" href="../../source/src/test/regress/pg_regress.c.html#L164" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/test/regress/pg_regress.c.html&quot;}, '*');">plan</a> for processing a query.</li>
+<li>Planning <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> complete, we just need to <a class="wiki-source-link" href="../../source/src/timezone/zic.c.html#L1993" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__timezone__zic_c__convert.html&quot;}, '*');">convert</a> the selected</li>
+<li>Path into a Plan.</li>
+<p>*</p>
+<li>Portions Copyright (c) 1996-2026, PostgreSQL Global Development Group</li>
+<li>Portions Copyright (c) 1994, Regents of the University of California</li>
+<p>* *</p>
+<li>IDENTIFICATION</li>
+<li><a class="wiki-source-link" href="../../source/src/backend/optimizer/plan/createplan.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/backend/optimizer/plan/createplan.c.html&quot;}, '*');">src/backend/optimizer/plan/createplan.c</a></li>
+<p>* *------------------------------------------------------------------------- */ #include &quot;<a class="wiki-source-link" href="../../source/src/include/postgres.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/postgres.h.html&quot;}, '*');">postgres.h</a>&quot;</p>
+</ul>
+<p>#include &quot;access/sysattr.h&quot; #include &quot;access/transam.h&quot; #include &quot;catalog/pg_class.h&quot; #include &quot;foreign/fdwapi.h&quot; #include &quot;<a class="wiki-source-link" href="../../source/src/include/miscadmin.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/miscadmin.h.html&quot;}, '*');">miscadmin.h</a>&quot; #include &quot;nodes/extensible.h&quot; #include &quot;nodes/makefuncs.h&quot; #include &quot;nodes/nodeFuncs.h&quot; #include &quot;optimizer/clauses.h&quot; #include &quot;optimizer/cost.h&quot; #include &quot;optimizer/optimizer.h&quot; #include &quot;optimizer/paramassign.h&quot; #include &quot;optimizer/pathnode.h&quot; #include &quot;optimizer/paths.h&quot; #include &quot;optimizer/placeholder.h&quot; #include &quot;optimizer/plancat.h&quot; #include &quot;optimizer/planmain.h&quot; #include &quot;optimizer/prep.h&quot; #include &quot;optimizer/restrictinfo.h&quot; #include &quot;optimizer/subselect.h&quot; #include &quot;optimizer/tlist.h&quot; #include &quot;parser/parse_clause.h&quot; #include &quot;parser/parsetree.h&quot; #include &quot;partitioning/partprune.h&quot; #include &quot;tcop/tcopprot.h&quot; #include &quot;utils/lsyscache.h&quot;</p>
+<p>/*</p>
+<ul>
+<li>Flag bits that can appear in the <a class="wiki-source-link" href="../../source/src/backend/optimizer/util/var.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__var_c__flags.html&quot;}, '*');">flags</a> argument of <a class="wiki-source-link" href="../../source/src/backend/optimizer/plan/createplan.c.html#L389" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__plan__createplan_c__create_plan_recurse.html&quot;}, '*');">create_plan_recurse</a>().</li>
+<li>These can be OR-ed together.</li>
+<p>*</p>
+<li><a class="wiki-source-link" href="../../source/src/backend/optimizer/plan/createplan.c.html#L69" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/backend/optimizer/plan/createplan.c.html&quot;}, '*');">CP_EXACT_TLIST</a> specifies that the generated <a class="wiki-source-link" href="../../source/src/test/regress/pg_regress.c.html#L164" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/test/regress/pg_regress.c.html&quot;}, '*');">plan</a> node must return exactly</li>
+<li>the tlist specified by the path&#x27;s pathtarget (this overrides both</li>
+<li><a class="wiki-source-link" href="../../source/src/backend/optimizer/plan/createplan.c.html#L70" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/backend/optimizer/plan/createplan.c.html&quot;}, '*');">CP_SMALL_TLIST</a> and <a class="wiki-source-link" href="../../source/src/backend/optimizer/plan/createplan.c.html#L71" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/backend/optimizer/plan/createplan.c.html&quot;}, '*');">CP_LABEL_TLIST</a>, if those are set).  Otherwise, the</li>
+<li><a class="wiki-source-link" href="../../source/src/test/regress/pg_regress.c.html#L164" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/test/regress/pg_regress.c.html&quot;}, '*');">plan</a> node <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> allowed to return just the Vars and PlaceHolderVars needed</li>
+<li>to evaluate the pathtarget.</li>
+<p>*</p>
+<li><a class="wiki-source-link" href="../../source/src/backend/optimizer/plan/createplan.c.html#L70" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/backend/optimizer/plan/createplan.c.html&quot;}, '*');">CP_SMALL_TLIST</a> specifies that a narrower tlist <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> preferred.  This <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a></li>
+<li>passed down by parent nodes such as Sort and Hash, which will have to</li>
+<li>store the returned tuples.</li>
+<p>* ~~~</p>
+</ul>
+<h2>失敗モードと境界条件</h2>
+<p>まだ解析していません。</p>
+<h2>保守担当者向けメモ</h2>
+<ul>
+<li>後続フェーズで、ソース本文の文脈と caller/callee 情報を使ってこのページを強化する。</li>
+</ul><script>
+(function() {
+  function notifyParent() {
+    if (parent === window) return;
+    parent.postMessage({type: "frame-location", frame: window.name || "", href: window.location.href}, "*");
+  }
+  document.addEventListener("click", function(event) {
+    const link = event.target.closest("a[data-panel]");
+    if (!link || parent === window) return;
+    parent.postMessage({type: "source-link", panel: link.dataset.panel}, "*");
+  });
+  window.addEventListener("load", notifyParent);
+  window.addEventListener("hashchange", notifyParent);
+})();
+</script></body></html>

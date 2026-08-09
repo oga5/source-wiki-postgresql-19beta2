@@ -1,0 +1,59 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>src/include/utils/numeric.h.md</title><link rel="stylesheet" href="../../../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../../../source/src/include/utils/numeric.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/utils/numeric.h.html&quot;}, '*');">src/include/utils/numeric.h</a></h1>
+<h2>概要</h2>
+<p>PostgreSQLの厳密な数値データ型（<a class="wiki-source-link" href="../../../../source/src/include/utils/numeric.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__utils__numeric_h__NUMERIC.html&quot;}, '*');"><code>NUMERIC</code></a>）のための公開インターフェース定義ヘッダーファイルです。</p>
+<h2>モジュール内での役割</h2>
+<p><code>src/include/utils</code> モジュールの一部として、任意の精度を持つ数値型を扱うための型定義、制約マクロ、および関数プロトタイプをバックエンド全体に提供します。内部構造の詳細は隠蔽し、関数マネージャ（FMGR）向けのインライン変換マクロを定義しています。</p>
+<h2>責務</h2>
+<ul>
+<li><a class="wiki-source-link" href="../../../../source/src/include/utils/numeric.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__utils__numeric_h__NUMERIC.html&quot;}, '*');"><code>NUMERIC</code></a> 型の精度（precision）およびスケール（<a class="wiki-source-link" href="../../../../source/src/bin/pgbench/pgbench.c.html#L182" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/bin/pgbench/pgbench.c.html&quot;}, '*');">scale</a>）に関する制限値マクロの定義。</li>
+<li><a class="wiki-source-link" href="../../../../source/src/include/utils/numeric.h.html#L57" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__utils__numeric_h__Numeric.html&quot;}, '*');"><code>Numeric</code></a> 型の不透明ポインタ定義 (<code>struct NumericData</code>)。</li>
+<li><code>Datum</code> と <a class="wiki-source-link" href="../../../../source/src/include/utils/numeric.h.html#L57" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__utils__numeric_h__Numeric.html&quot;}, '*');"><code>Numeric</code></a> 間の変換および FMGR 引数取得のためのインライン関数・マクロの提供。</li>
+<li><code>numeric.c</code> で実装される算術・変換・ユーティリティ関数の外部公開。</li>
+</ul>
+<h2>重要なシンボル</h2>
+<ul>
+<li><a class="wiki-source-link" href="../../../../source/src/include/utils/numeric.h.html#L57" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__utils__numeric_h__Numeric.html&quot;}, '*');"><code>Numeric</code></a>: <code>NumericData</code> へのポインタ型（<a class="wiki-source-link" href="../../../../source/src/include/utils/numeric.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__utils__numeric_h__NUMERIC.html&quot;}, '*');"><code>NUMERIC</code></a> 値の抽象表現）。</li>
+<li><code>NUMERIC_MAX_PRECISION</code>: <a class="wiki-source-link" href="../../../../source/src/include/utils/numeric.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__utils__numeric_h__NUMERIC.html&quot;}, '*');"><code>NUMERIC</code></a> 型の最大精度（1000）。</li>
+<li><a class="wiki-source-link" href="../../../../source/src/include/utils/numeric.h.html#L63" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__utils__numeric_h__DatumGetNumeric.html&quot;}, '*');"><code>DatumGetNumeric</code></a> / <a class="wiki-source-link" href="../../../../source/src/include/utils/numeric.h.html#L75" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__utils__numeric_h__NumericGetDatum.html&quot;}, '*');"><code>NumericGetDatum</code></a>: <code>Datum</code> と <a class="wiki-source-link" href="../../../../source/src/include/utils/numeric.h.html#L57" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__utils__numeric_h__Numeric.html&quot;}, '*');"><code>Numeric</code></a> 間の相互変換用インライン関数。</li>
+<li><a class="wiki-source-link" href="../../../../source/src/include/utils/numeric.h.html#L81" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/utils/numeric.h.html&quot;}, '*');"><code>PG_GETARG_NUMERIC</code></a> / <a class="wiki-source-link" href="../../../../source/src/include/utils/numeric.h.html#L83" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/utils/numeric.h.html&quot;}, '*');"><code>PG_RETURN_NUMERIC</code></a>: 関数呼び出し時の引数取得・返却マクロ。</li>
+<li><code>numeric_add_safe</code> / <code>numeric_mul_safe</code> 等: オーバーフロー等を安全に処理する算術関数群。</li>
+</ul>
+<h2>制御フローとデータフロー</h2>
+<p>本ファイルはヘッダーのため直接の制御フローは持ちませんが、以下のデータ変換フローを規定しています： 1. SQL関数や演算子が呼び出されると、<code>PG_GETARG_NUMERIC(n)</code> を通じて渡された <code>Datum</code> を <a class="wiki-source-link" href="../../../../source/src/include/utils/numeric.h.html#L63" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__utils__numeric_h__DatumGetNumeric.html&quot;}, '*');"><code>DatumGetNumeric</code></a> でデトーストおよびキャストして <a class="wiki-source-link" href="../../../../source/src/include/utils/numeric.h.html#L57" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__utils__numeric_h__Numeric.html&quot;}, '*');"><code>Numeric</code></a> 型を取得します。 2. 計算や変換処理はペアファイルである <a class="wiki-source-link" href="../../../../source/src/backend/utils/adt/numeric.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/utils/adt/numeric.c.html&quot;}, '*');"><code>src/backend/utils/adt/numeric.c</code></a> に委譲されます。 3. 結果は <a class="wiki-source-link" href="../../../../source/src/include/utils/numeric.h.html#L75" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__utils__numeric_h__NumericGetDatum.html&quot;}, '*');"><code>NumericGetDatum</code></a> と <a class="wiki-source-link" href="../../../../source/src/include/utils/numeric.h.html#L83" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/utils/numeric.h.html&quot;}, '*');"><code>PG_RETURN_NUMERIC</code></a> を経由して PostgreSQL の実行エンジンに返却されます。</p>
+<h2>直接依存</h2>
+<ul>
+<li><code>common/pg_prng.h</code>: 乱数生成状態（<a class="wiki-source-link" href="../../../../source/src/include/common/pg_prng.h.html#L19" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__common__pg_prng_h__pg_prng_state.html&quot;}, '*');"><code>pg_prng_state</code></a>）の定義のため。</li>
+<li><a class="wiki-source-link" href="../../../../source/src/include/fmgr.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/fmgr.h.html&quot;}, '*');"><code>fmgr.h</code></a>: 関数マネージャの <code>Datum</code> 型および関連マクロのため。</li>
+</ul>
+<h2>関連コード</h2>
+<ul>
+<li><a class="wiki-source-link" href="../../../../source/src/backend/utils/adt/numeric.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/utils/adt/numeric.c.html&quot;}, '*');"><code>src/backend/utils/adt/numeric.c</code></a>: <a class="wiki-source-link" href="../../../../source/src/include/utils/numeric.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/utils/numeric.h.html&quot;}, '*');"><code>numeric.h</code></a> で宣言されたすべての関数と数値演算アルゴリズムの実装本体。</li>
+</ul>
+<h2>読者向けメモ</h2>
+<ul>
+<li><a class="wiki-source-link" href="../../../../source/src/include/utils/numeric.h.html#L57" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__utils__numeric_h__Numeric.html&quot;}, '*');"><code>Numeric</code></a> の内部データ構造（ショート形式、ロング形式、特殊値など）は <code>numeric.c</code> にカプセル化されており、このヘッダーからは隠蔽されています。</li>
+<li>算術演算や型変換には <code>_safe</code> サフィックスがついたエラーコンテキスト（<code>Node *escontext</code>）を受け取る安全なインターフェースが用意されています。</li>
+</ul>
+<h2>シンボルページ</h2>
+<ul>
+<li><a href="../../../symbols/src__include__utils__numeric_h__Node.html" target="wiki-view"><code>Node</code></a></li>
+<li><a href="../../../symbols/src__include__utils__numeric_h__Numeric.html" target="wiki-view"><code>Numeric</code></a></li>
+<li><a href="../../../symbols/src__include__utils__numeric_h__DatumGetNumeric.html" target="wiki-view"><code>DatumGetNumeric</code></a></li>
+<li><a href="../../../symbols/src__include__utils__numeric_h__DatumGetNumericCopy.html" target="wiki-view"><code>DatumGetNumericCopy</code></a></li>
+<li><a href="../../../symbols/src__include__utils__numeric_h__NumericGetDatum.html" target="wiki-view"><code>NumericGetDatum</code></a></li>
+</ul><script>
+(function() {
+  function notifyParent() {
+    if (parent === window) return;
+    parent.postMessage({type: "frame-location", frame: window.name || "", href: window.location.href}, "*");
+  }
+  document.addEventListener("click", function(event) {
+    const link = event.target.closest("a[data-panel]");
+    if (!link || parent === window) return;
+    parent.postMessage({type: "source-link", panel: link.dataset.panel}, "*");
+  });
+  window.addEventListener("load", notifyParent);
+  window.addEventListener("hashchange", notifyParent);
+})();
+</script></body></html>

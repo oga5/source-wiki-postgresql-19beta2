@@ -44,16 +44,16 @@
 </ul>
 <p>/*</p>
 <ul>
-<li>Grow the array as needed.  Note that we try to grow the array</li>
+<li>Grow the <a class="wiki-source-link" href="../../source/src/include/utils/jsonb.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__utils__jsonb_h__array.html&quot;}, '*');">array</a> as needed.  Note that we try to grow the <a class="wiki-source-link" href="../../source/src/include/utils/jsonb.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__utils__jsonb_h__array.html&quot;}, '*');">array</a></li>
 <li><a class="wiki-source-link" href="../../source/src/interfaces/ecpg/preproc/type.h.html#L89" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__interfaces__ecpg__preproc__type_h__when.html&quot;}, '*');">when</a> there <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> still one <a class="wiki-source-link" href="../../source/src/include/snowball/snowball_runtime.h.html#L65" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/snowball/snowball_runtime.h.html&quot;}, '*');">free</a> slot remaining --- if we fail,</li>
 <li>there&#x27;ll still be room to store the incoming tuple, and then</li>
 <li>we&#x27;ll switch to tape-based operation.</li>
 <p>*/ if (state-&gt;memtupcount &gt;= state-&gt;memtupsize - 1) { (void) grow_memtuples(state); <a class="wiki-source-link" href="../../source/src/include/c.h.html#L950" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/c.h.html&quot;}, '*');">Assert</a>(state-&gt;memtupcount &lt; state-&gt;memtupsize); }</p>
 </ul>
-<p>/* Stash the tuple in the in-memory array */ state-&gt;memtuples[state-&gt;memtupcount++] = tuple;</p>
+<p>/* Stash the tuple in the in-memory <a class="wiki-source-link" href="../../source/src/include/utils/jsonb.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__utils__jsonb_h__array.html&quot;}, '*');">array</a> */ state-&gt;memtuples[state-&gt;memtupcount++] = tuple;</p>
 <p>/*</p>
 <ul>
-<li>Done if we still fit in available memory and have array slots.</li>
+<li>Done if we still fit in available memory and have <a class="wiki-source-link" href="../../source/src/include/utils/jsonb.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__utils__jsonb_h__array.html&quot;}, '*');">array</a> slots.</li>
 <p>*/ if (state-&gt;memtupcount &lt; state-&gt;memtupsize &amp;&amp; !LACKMEM(state)) return;</p>
 </ul>
 <p>/*</p>
@@ -62,7 +62,7 @@
 <li>the temp file(s) are created in suitable temp tablespaces.</li>
 <p>*/ <a class="wiki-source-link" href="../../source/src/backend/commands/tablespace.c.html#L1344" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__commands__tablespace_c__PrepareTempTablespaces.html&quot;}, '*');">PrepareTempTablespaces</a>();</p>
 </ul>
-<p>/* <a class="wiki-source-link" href="../../source/src/timezone/zic.c.html#L1185" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__timezone__zic_c__associate.html&quot;}, '*');">associate</a> the file with the store&#x27;s resource owner */ oldowner = <a class="wiki-source-link" href="../../source/src/backend/utils/resowner/resowner.c.html#L173" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/utils/resowner/resowner.c.html&quot;}, '*');">CurrentResourceOwner</a>; <a class="wiki-source-link" href="../../source/src/backend/utils/resowner/resowner.c.html#L173" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/utils/resowner/resowner.c.html&quot;}, '*');">CurrentResourceOwner</a> = state-&gt;resowner;</p>
+<p>/* <a class="wiki-source-link" href="../../source/src/timezone/zic.c.html#L1185" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__timezone__zic_c__associate.html&quot;}, '*');">associate</a> the file with the store&#x27;s resource owner */ oldowner = CurrentResourceOwner; CurrentResourceOwner = state-&gt;resowner;</p>
 <p>/*</p>
 <ul>
 <li>We switch out of the state-&gt;context as this <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> a generation</li>

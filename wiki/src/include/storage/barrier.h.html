@@ -1,0 +1,58 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>src/include/storage/barrier.h.md</title><link rel="stylesheet" href="../../../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../../../source/src/include/storage/barrier.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/storage/barrier.h.html&quot;}, '*');">src/include/storage/barrier.h</a></h1>
+<h2>概要</h2>
+<p>協調動作する複数のプロセス間で同期をとるためのバリア機構（プロセス間バリア）を提供するヘッダーファイルです。POSIXの <a class="wiki-source-link" href="../../../../source/src/include/port/pg_pthread.h.html#L24" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__port__pg_pthread_h__pthread_barrier_t.html&quot;}, '*');"><code>pthread_barrier_t</code></a> に似た静的パーティション構成と、Javaの <code>java.util.concurrent.Phaser</code> に似た動的パーティション構成の両方をサポートします。</p>
+<h2>モジュール内での役割</h2>
+<p><code>src/include/storage</code> サブシステムの一部として、プロセス間の同期プリミティブを定義します。実体コードである <a class="wiki-source-link" href="../../../../source/src/backend/storage/ipc/barrier.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/storage/ipc/barrier.c.html&quot;}, '*');"><code>src/backend/storage/ipc/barrier.c</code></a> とペアになっており、ストレージおよびプロセス管理周辺で並列処理のフェーズ制御を行う機能のインターフェースとなります。</p>
+<h2>責務</h2>
+<ul>
+<li>プロセス間バリアの状態を管理するデータ構造 <a class="wiki-source-link" href="../../../../source/src/include/storage/barrier.h.html#L25" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__storage__barrier_h__Barrier.html&quot;}, '*');"><code>Barrier</code></a> の定義。</li>
+<li>バリアの初期化、アタッチ、デタッチ、到着、待機に関する関数シグネチャの公開。</li>
+<li>スピンロックとコンディション変数を用いた安全なマルチプロセス同期APIの提供。</li>
+</ul>
+<h2>重要なシンボル</h2>
+<ul>
+<li><a class="wiki-source-link" href="../../../../source/src/include/storage/barrier.h.html#L25" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__storage__barrier_h__Barrier.html&quot;}, '*');"><code>Barrier</code></a>: バリアの状態（位相、参加者数、到着数、スピンロック、コンディション変数）を保持する構造体。</li>
+<li><code>BarrierInit</code>: バリア構造体を初期化し、参加者数を設定する。</li>
+<li><code>BarrierArriveAndWait</code>: バリアに到着し、全参加者が揃うまで待機する。</li>
+<li><code>BarrierAttach</code> / <code>BarrierDetach</code>: 動的バリアへの参加および離脱を行う。</li>
+<li><code>BarrierPhase</code> / <code>BarrierParticipants</code>: 現在のフェーズや参加者数を取得する。</li>
+</ul>
+<h2>制御フローとデータフロー</h2>
+<ul>
+<li>クライアントコードは、静的バリアでは <code>BarrierInit</code> 後に各プロセスが <code>BarrierArriveAndWait</code> を呼び出してフェーズを進めます。</li>
+<li>動的バリアでは、プロセスが <code>BarrierAttach</code> で参加して返却されたフェーズ番号をもとに処理の分岐（スイッチ文など）を行い、<code>BarrierArriveAndWait</code> や <code>BarrierDetach</code> で同期と離脱を行います。</li>
+<li>内部的には <a class="wiki-source-link" href="../../../../source/src/include/storage/s_lock.h.html#L129" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__storage__s_lock_h__slock_t.html&quot;}, '*');"><code>slock_t</code></a> による排他制御と <a class="wiki-source-link" href="../../../../source/src/include/storage/condition_variable.h.html#L28" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__storage__condition_variable_h__ConditionVariable.html&quot;}, '*');"><code>ConditionVariable</code></a> を組み合わせた待機解除フローが <a class="wiki-source-link" href="../../../../source/src/backend/storage/ipc/barrier.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/storage/ipc/barrier.c.html&quot;}, '*');"><code>barrier.c</code></a> 側で実装されています。</li>
+</ul>
+<h2>直接依存</h2>
+<ul>
+<li><code>storage/condition_variable.h</code>: プロセスがバリア到達待ちを行うためのコンディション変数機能。</li>
+<li><code>storage/spin.h</code>: バリア構造体の内部状態を保護するためのスピンロック型 (<a class="wiki-source-link" href="../../../../source/src/include/storage/s_lock.h.html#L129" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__storage__s_lock_h__slock_t.html&quot;}, '*');"><code>slock_t</code></a>)。</li>
+</ul>
+<h2>関連コード</h2>
+<ul>
+<li><a class="wiki-source-link" href="../../../../source/src/backend/storage/ipc/barrier.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/storage/ipc/barrier.c.html&quot;}, '*');"><code>src/backend/storage/ipc/barrier.c</code></a>: バリア機構の実際のロジックが実装されているペアファイル。</li>
+<li><a class="wiki-source-link" href="../../../../source/src/include/storage/condition_variable.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/storage/condition_variable.h.html&quot;}, '*');"><code>src/include/storage/condition_variable.h</code></a>: 依存関係にあるコンディション変数の定義。</li>
+</ul>
+<h2>読者向けメモ</h2>
+<ul>
+<li>原子演算やコンパイラバリア、メモリバリアを目的とする場合は、本ファイルではなく <code>port/atomics.h</code> をインクルードしてください。</li>
+</ul>
+<h2>シンボルページ</h2>
+<ul>
+<li><a href="../../../symbols/src__include__storage__barrier_h__Barrier.html" target="wiki-view"><code>Barrier</code></a></li>
+</ul><script>
+(function() {
+  function notifyParent() {
+    if (parent === window) return;
+    parent.postMessage({type: "frame-location", frame: window.name || "", href: window.location.href}, "*");
+  }
+  document.addEventListener("click", function(event) {
+    const link = event.target.closest("a[data-panel]");
+    if (!link || parent === window) return;
+    parent.postMessage({type: "source-link", panel: link.dataset.panel}, "*");
+  });
+  window.addEventListener("load", notifyParent);
+  window.addEventListener("hashchange", notifyParent);
+})();
+</script></body></html>

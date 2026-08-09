@@ -1,155 +1,88 @@
 <!doctype html>
 <html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>src/backend/optimizer/plan/createplan.c.md</title><link rel="stylesheet" href="../../../../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/plan/createplan.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/backend/optimizer/plan/createplan.c.html&quot;}, '*');">src/backend/optimizer/plan/createplan.c</a></h1>
 <h2>概要</h2>
-<p><a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/plan/createplan.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/backend/optimizer/plan/createplan.c.html&quot;}, '*');"><code>createplan.c</code></a> は、PostgreSQLのオプティマイザが選択した最適なアクセスパス（<code>Path</code> ツリー）を、実行エンジン（Executor）が解釈・実行可能な計画（<code>Plan</code> ツリー）へと変換する再帰的ビルダーです。 プランニングフェーズの最終段階として、物理的なスキャン、結合、ソート、集約などの各実行ノードを生成し、ターゲットリスト（tlist）やフィルタ条件（quals）を適切に配置・調整する極めて重要な役割を担っています。</p>
+<p>クエリの最適化フェーズにおいて選択された最適な <code>Path</code> ツリーを、実際の実行エンジンが処理可能な <code>Plan</code> ツリーへ変換するルーチン群を提供します。</p>
 <h2>モジュール内での役割</h2>
-<p>本ファイルは <code>src/backend/optimizer/plan</code> ディレクトリに属し、<a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/plan/planner.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/backend/optimizer/plan/planner.c.html&quot;}, '*');"><code>planner.c</code></a> が決定した「最も低コストなパス（<code>best_path</code>）」を入力として受け取ります。 ここで生成される <code>Plan</code> ツリー内の変数参照（<code>Var</code>）は、まだパーサが解析した時点の番号（<code>varno</code>）を維持しています。これらは後続の <a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/plan/setrefs.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/backend/optimizer/plan/setrefs.c.html&quot;}, '*');"><code>setrefs.c</code></a> フェーズによって、実行時に適切なタプルスロットを指す参照（<code>OUTER_VAR</code> や <code>INNER_VAR</code> など）へと書き換えられます。</p>
+<p><code>src/backend/optimizer/plan</code> サブシステムの一部であり、オプティマイザのコストベース選択（<a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/plan/planner.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/backend/optimizer/plan/planner.c.html&quot;}, '*');"><code>planner.c</code></a> や各種パス生成）と、最終的な実行用ツリーの参照解決・最適化（<a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/plan/setrefs.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/backend/optimizer/plan/setrefs.c.html&quot;}, '*');"><code>setrefs.c</code></a>）の間に位置します。</p>
 <h2>責務</h2>
-<p><a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/plan/createplan.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/backend/optimizer/plan/createplan.c.html&quot;}, '*');"><code>createplan.c</code></a> の膨大なロジックは、以下の役割グループに整理されます。</p>
-<h3>1. 計画ツリーの再帰的ディスパッチ</h3>
 <ul>
-<li>入力された <code>Path</code> の <code>pathtype</code>（ノード種別）を判別し、対応するプラン生成関数へ処理を振り分けます。</li>
-<li>スタックオーバーフローを防ぐための深度チェック（<code>check_stack_depth()</code>）を走査の起点で行います。</li>
+<li>**プラン再帰的生成**: <code>Path</code> ノードのタグを判定し、対応する <code>Plan</code> ノードをボトムアップまたはトップダウン的に構築する。</li>
+<li>**ターゲットリスト（tlist）の管理**: 必要な列のみを伝播させる最適化や、<a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/plan/createplan.c.html#L69" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/backend/optimizer/plan/createplan.c.html&quot;}, '*');"><code>CP_EXACT_TLIST</code></a>・<a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/plan/createplan.c.html#L70" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/backend/optimizer/plan/createplan.c.html&quot;}, '*');"><code>CP_SMALL_TLIST</code></a>・<a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/plan/createplan.c.html#L71" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/backend/optimizer/plan/createplan.c.html&quot;}, '*');"><code>CP_LABEL_TLIST</code></a>・<a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/plan/createplan.c.html#L72" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/backend/optimizer/plan/createplan.c.html&quot;}, '*');"><code>CP_IGNORE_TLIST</code></a> フラグを通じた射影要件の伝達。</li>
+<li>**スキャン・結合・修飾の統合**: 各種ベーススキャン、結合（Nested Loop, Merge <a class="wiki-source-link" href="../../../../../source/src/include/nodes/plannodes.h.html#L984" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__nodes__plannodes_h__Join.html&quot;}, '*');">Join</a>, Hash <a class="wiki-source-link" href="../../../../../source/src/include/nodes/plannodes.h.html#L984" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__nodes__plannodes_h__Join.html&quot;}, '*');">Join</a>）、集約、ソートなどのプランノードへの変換と、擬似定数（pseudoconstant）条件に対するゲーティング（Gating）Result ノードの挿入。</li>
+<li>**インデックスおよびネストループパラメータの解決**: インデックス参照変数の置換や、ラテラル結合・ネストループ用の <code>Param</code> 割り当て。</li>
 </ul>
-<h3>2. ターゲットリスト（tlist）と射影（Projection）の最適化</h3>
-<ul>
-<li>呼び出し元が要求するフラグ（<a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/plan/createplan.c.html#L69" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/backend/optimizer/plan/createplan.c.html&quot;}, '*');"><code>CP_EXACT_TLIST</code></a>, <a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/plan/createplan.c.html#L70" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/backend/optimizer/plan/createplan.c.html&quot;}, '*');"><code>CP_SMALL_TLIST</code></a>, <a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/plan/createplan.c.html#L71" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/backend/optimizer/plan/createplan.c.html&quot;}, '*');"><code>CP_LABEL_TLIST</code></a>, <a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/plan/createplan.c.html#L72" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/backend/optimizer/plan/createplan.c.html&quot;}, '*');"><code>CP_IGNORE_TLIST</code></a>）に基づき、不要な列の評価や転送を削減します。</li>
-<li>物理的なタプル構造をそのまま利用できる場合（<a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/plan/createplan.c.html#L856" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__plan__createplan_c__use_physical_tlist.html&quot;}, '*');"><code>use_physical_tlist</code></a> が真の場合）は、不要な射影処理をバイパスしてエグゼキュータのオーバーヘッドを削減します。</li>
-<li>射影能力を持たない実行ノード（<code>Sort</code> や <a class="wiki-source-link" href="../../../../../source/src/include/nodes/plannodes.h.html#L1082" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__nodes__plannodes_h__Material.html&quot;}, '*');"><code>Material</code></a> など）の直前で射影が必要になった場合、<code>Result</code> ノードを動的に挿入（<a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/plan/createplan.c.html#L1959" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__plan__createplan_c__inject_projection_plan.html&quot;}, '*');"><code>inject_projection_plan</code></a>）します。</li>
-</ul>
-<h3>3. スキャン・結合・集約プランの具現化</h3>
-<ul>
-<li>**スキャン**: <a class="wiki-source-link" href="../../../../../source/src/include/nodes/plannodes.h.html#L551" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__nodes__plannodes_h__SeqScan.html&quot;}, '*');"><code>SeqScan</code></a>, <a class="wiki-source-link" href="../../../../../source/src/include/nodes/plannodes.h.html#L604" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__nodes__plannodes_h__IndexScan.html&quot;}, '*');"><code>IndexScan</code></a>, <a class="wiki-source-link" href="../../../../../source/src/include/nodes/plannodes.h.html#L710" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__nodes__plannodes_h__BitmapHeapScan.html&quot;}, '*');"><code>BitmapHeapScan</code></a>, <a class="wiki-source-link" href="../../../../../source/src/include/nodes/plannodes.h.html#L890" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__nodes__plannodes_h__ForeignScan.html&quot;}, '*');"><code>ForeignScan</code></a>, <a class="wiki-source-link" href="../../../../../source/src/include/nodes/plannodes.h.html#L932" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__nodes__plannodes_h__CustomScan.html&quot;}, '*');"><code>CustomScan</code></a> などの具体的なスキャン計画を構築します。</li>
-<li>**結合**: <code>NestLoop</code>, <code>MergeJoin</code>, <code>HashJoin</code> の各結合プランを構築し、内側・外側の子プランを再帰的に生成します。</li>
-<li>**集約・ウィンドウ**: <code>Agg</code>（Grouping Sets を含む）、<a class="wiki-source-link" href="../../../../../source/src/include/nodes/plannodes.h.html#L1251" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__nodes__plannodes_h__WindowAgg.html&quot;}, '*');"><code>WindowAgg</code></a>、<code>Group</code> などのプランを構築し、ソート順やグループ化キーのメタデータを設定します。</li>
-</ul>
-<h3>4. 条件式（Quals）の整理とパラメータ置換</h3>
-<ul>
-<li>実行時に一度だけ評価すればよい擬似定数条件（Pseudoconstant Quals）を検出し、プランの上部にゲーティング用の <code>Result</code> ノードを挿入（<a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/plan/createplan.c.html#L1013" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__plan__createplan_c__create_gating_plan.html&quot;}, '*');"><code>create_gating_plan</code></a>）します。</li>
-<li>ネストループ結合の内側プランにおいて、外側リレーションの変数をパラメータ（<code>Param</code>）に置き換える処理（<a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/plan/createplan.c.html#L4881" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__plan__createplan_c__replace_nestloop_params.html&quot;}, '*');"><code>replace_nestloop_params</code></a>）を制御します。</li>
-<li>インデックススキャンにおいて、テーブルの属性参照をインデックスの属性参照（<code>INDEX_VAR</code>）に書き換えます（<a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/plan/createplan.c.html#L4966" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__plan__createplan_c__fix_indexqual_references.html&quot;}, '*');"><code>fix_indexqual_references</code></a>）。</li>
-</ul>
-<h3>5. 物理ノードの構築（<code>make_xxx</code> 関数群）</h3>
-<ul>
-<li>各 <code>Plan</code> ノード（<a class="wiki-source-link" href="../../../../../source/src/include/nodes/plannodes.h.html#L551" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__nodes__plannodes_h__SeqScan.html&quot;}, '*');"><code>SeqScan</code></a>, <a class="wiki-source-link" href="../../../../../source/src/include/nodes/plannodes.h.html#L604" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__nodes__plannodes_h__IndexScan.html&quot;}, '*');"><code>IndexScan</code></a>, <code>NestLoop</code>, <code>HashJoin</code> など）のメモリ領域を確保し、実行に必要なフィールドを初期化する低レベルなビルダー群を提供します。</li>
-</ul>
-<p>---</p>
 <h2>重要なシンボル</h2>
-<h3>エントリポイントとディスパッチャ</h3>
+<h3>エントリポイントとトップレベル制御</h3>
 <ul>
-<li><code>Plan *create_plan(PlannerInfo *root, Path *best_path)</code></li>
-<li>外部（主に <a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/plan/planner.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/backend/optimizer/plan/planner.c.html&quot;}, '*');"><code>planner.c</code></a>）から呼ばれるメインエントリポイント。最上位プランの生成後、ターゲットリストの装飾情報の復元（<code>apply_tlist_labeling</code>）や <a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/plan/createplan.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__plan__createplan_c__initPlan.html&quot;}, '*');"><code>initPlan</code></a> のアタッチ（<code>SS_attach_initplans</code>）を行います。</li>
-<li><code>static Plan *create_plan_recurse(PlannerInfo *root, Path *best_path, int flags)</code></li>
-<li>再帰処理の中核。<code>best_path-&gt;pathtype</code> に応じて適切な <a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/plan/createplan.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__plan__createplan_c__create_xxx_plan.html&quot;}, '*');"><code>create_xxx_plan</code></a> 関数を呼び出します。</li>
+<li>function <a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/plan/createplan.c.html#L338" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__plan__createplan_c__create_plan.html&quot;}, '*');"><code>create_plan</code></a>: クエリ全体に対するプラン生成のエントリポイント。<code>root-&gt;plan_params</code> の初期化、最上位での <code>apply_tlist_labeling</code> や <code>SS_attach_initplans</code> の適用を行う。</li>
+<li>function <a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/plan/createplan.c.html#L389" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__plan__createplan_c__create_plan_recurse.html&quot;}, '*');"><code>create_plan_recurse</code></a>: <code>best_path-&gt;pathtype</code> に応じて適切なプラン生成関数へディスパッチする再帰関数。</li>
 </ul>
-<h3>ターゲットリスト制御フラグ</h3>
+<h3>結合プラン生成</h3>
 <ul>
-<li><a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/plan/createplan.c.html#L69" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/backend/optimizer/plan/createplan.c.html&quot;}, '*');"><code>CP_EXACT_TLIST</code></a> (0x0001): パスのターゲットリストと完全に一致する tlist の生成を要求します。</li>
-<li><a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/plan/createplan.c.html#L70" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/backend/optimizer/plan/createplan.c.html&quot;}, '*');"><code>CP_SMALL_TLIST</code></a> (0x0002): メモリ消費を抑えるため、必要最小限の列（幅の狭い tlist）を優先します（<code>Sort</code> や <code>Hash</code> で使用）。</li>
-<li><a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/plan/createplan.c.html#L71" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/backend/optimizer/plan/createplan.c.html&quot;}, '*');"><code>CP_LABEL_TLIST</code></a> (0x0004): ソートやグループ化に必要な <code>sortgroupref</code> ラベルの付与を要求します。</li>
-<li><a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/plan/createplan.c.html#L72" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/backend/optimizer/plan/createplan.c.html&quot;}, '*');"><code>CP_IGNORE_TLIST</code></a> (0x0008): 呼び出し側が後で tlist を差し替えるため、tlist の生成をスキップします。</li>
+<li>function <code>HashJoin</code>: <code>HashPath</code> から <code>HashJoin</code> プランノードを構築する関数。</li>
+<li>function <code>MergeJoin</code>: <code>MergePath</code> から <code>MergeJoin</code> プランノードを構築する関数。</li>
+<li>function <code>NestLoop</code>: <code>NestPath</code> から <code>NestLoop</code> プランノードを構築する関数。</li>
 </ul>
-<h3>主要なプラン生成ヘルパー</h3>
+<h3>基本スキャンおよび補助プラン</h3>
 <ul>
-<li><code>static Plan *create_scan_plan(PlannerInfo *root, Path *best_path, int flags)</code></li>
-<li>ベースリレーションに対する各種スキャンプランの生成を統括します。</li>
-<li><code>static Plan *create_join_plan(PlannerInfo *root, JoinPath *best_path)</code></li>
-<li><code>NestLoop</code>, <code>MergeJoin</code>, <code>HashJoin</code> の生成をディスパッチします。</li>
-<li><code>static Plan *create_projection_plan(PlannerInfo *root, ProjectionPath *best_path, int flags)</code></li>
-<li>射影を行うプランを生成します。不要な場合は子プランに tlist を直接割り当て、必要な場合は <code>Result</code> ノードを挿入します。</li>
+<li>function <code>Hash</code>: <code>HashJoin</code> の内側用ハッシュテーブル構築プランノードを生成する。</li>
+<li>function <code>Sort</code>: ソート処理を行う <code>Sort</code> プランノードを構築・調整する。</li>
+<li>function <code>Result</code>: 射影や単一ローの返却、ゲーティング条件の評価を行う <code>Result</code> ノードを作成する。</li>
+<li>struct <a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/plan/createplan.c.html#L5268" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__plan__createplan_c__QualItem.html&quot;}, '*');"><code>QualItem</code></a>: <a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/plan/createplan.c.html#L5265" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__plan__createplan_c__order_qual_clauses.html&quot;}, '*');"><code>order_qual_clauses</code></a> 内で修飾句の評価コストやセキュリティレベルを保持するために用いる内部構造体。</li>
 </ul>
-<h3>パラメータ・参照調整</h3>
+<h3>変数および参照解決</h3>
 <ul>
-<li><code>static Node *replace_nestloop_params(PlannerInfo *root, Node *expr)</code></li>
-<li>式の中にある外側リレーションの <code>Var</code> や <code>PlaceHolderVar</code> を <code>Param</code> に置換します。</li>
-<li><code>static void fix_indexqual_references(...)</code></li>
-<li>インデックス条件式内のテーブル変数参照を、インデックス列の相対位置（<code>INDEX_VAR</code>）に変換します。</li>
+<li>function <code>Var</code>: クエリツリー内の変数ノードを表す。</li>
+<li>function <code>Param</code>: 実行時に渡されるパラメータノード。</li>
+<li>function <code>PlaceHolderVar</code>: 結合の過程で保持されるプレースホルダ変数。</li>
+<li>function <code>INDEX_VAR</code>: インデックススキャン時における特殊な <code>varno</code> 識別子。</li>
+<li>function <code>SS_attach_initplans</code>: クエリレベルで生成された InitPlan を最上位プランノードにアタッチする。</li>
 </ul>
-<p>---</p>
 <h2>制御フローとデータフロー</h2>
-<h3>1. 全体制御フロー</h3>
-<p><a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/plan/createplan.c.html#L338" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__plan__createplan_c__create_plan.html&quot;}, '*');"><code>create_plan</code></a> から始まる再帰的なツリー変換のフローは以下の通りです。</p>
-<pre><code>[planner.c]
-     │
-     ▼
-[create_plan] ──(初期化)
-     │
-     ▼
-[create_plan_recurse] &lt;───────────────────────────────┐ (再帰呼び出し)
-     │                                                │
-     ├─► [create_scan_plan] ──────────────────────────┤
-     │                                                │
-     ├─► [create_join_plan]                           │
-     │    ├─► [create_nestloop_plan] ──► [recurse] ───┤
-     │    ├─► [create_mergejoin_plan] ─► [recurse] ───┤
-     │    └─► [create_hashjoin_plan] ──► [recurse] ───┤
-     │                                                │
-     ├─► [create_append_plan] ─────────► [recurse] ───┤
-     └─► [create_projection_plan] ─────► [recurse] ───┘
-     │
-     ▼
-(最上位プランの調整)
- ├─► apply_tlist_labeling (列名などの装飾情報を復元)
- └─► SS_attach_initplans (initPlan のアタッチ)
-     │
-     ▼
-[Plan ツリーの返却]</code></pre>
-<h3>2. データフローと主要なデータ構造の相互作用</h3>
+<p>1. **初期化**: <a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/plan/createplan.c.html#L338" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__plan__createplan_c__create_plan.html&quot;}, '*');"><code>create_plan</code></a> が呼び出され、<code>root-&gt;curOuterRels</code> や <code>root-&gt;curOuterParams</code> を初期化した上で <a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/plan/createplan.c.html#L389" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__plan__createplan_c__create_plan_recurse.html&quot;}, '*');"><code>create_plan_recurse</code></a> を <a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/plan/createplan.c.html#L69" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/backend/optimizer/plan/createplan.c.html&quot;}, '*');"><code>CP_EXACT_TLIST</code></a> フラグ付きで起動します。 2. **再帰的ディスパッチ**: <a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/plan/createplan.c.html#L389" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__plan__createplan_c__create_plan_recurse.html&quot;}, '*');"><code>create_plan_recurse</code></a> は <code>best_path-&gt;pathtype</code>（スキャン、結合、集約など）をスイッチ文で評価し、対応する <a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/plan/createplan.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__plan__createplan_c__create_xxx_plan.html&quot;}, '*');"><code>create_xxx_plan</code></a> ヘルパーへ処理を委譲します。 3. **ターゲットリストと制約の伝播**:</p>
 <ul>
-<li>**<code>Path</code> から <code>Plan</code> へのコスト情報の引き継ぎ**:</li>
-<li><code>copy_generic_path_info(Plan *dest, Path *src)</code> を使用して、<code>Path</code> 構築時に計算済みのコスト（<code>startup_cost</code>, <code>total_cost</code>）、行数（<code>rows</code>）、幅（<code>width</code>）、並列実行フラグ（<code>parallel_safe</code>, <code>parallel_aware</code>）を <code>Plan</code> ノードにそのままコピーします。**本ファイル内でコストの再計算は行いません。**</li>
-<li>**ネストループパラメータの伝播**:</li>
-<li><code>NestLoop</code> プラン生成時、<a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/util/paramassign.c.html#L621" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__paramassign_c__identify_current_nestloop_params.html&quot;}, '*');"><code>identify_current_nestloop_params</code></a> によって必要なパラメータ（<code>NestLoopParam</code>）が特定され、<code>root-&gt;curOuterParams</code> から消費されます。</li>
-<li>パラメータ化されたインナースキャン側では、<a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/plan/createplan.c.html#L4881" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__plan__createplan_c__replace_nestloop_params.html&quot;}, '*');"><code>replace_nestloop_params</code></a> が式中の該当変数を <code>Param</code> ノードに書き換えます。</li>
-<li>**インデックス参照の書き換え**:</li>
-<li><code>IndexPath</code> から <a class="wiki-source-link" href="../../../../../source/src/include/nodes/plannodes.h.html#L604" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__nodes__plannodes_h__IndexScan.html&quot;}, '*');"><code>IndexScan</code></a> または <code>IndexOnlyScan</code> を生成する際、<a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/plan/createplan.c.html#L4966" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__plan__createplan_c__fix_indexqual_references.html&quot;}, '*');"><code>fix_indexqual_references</code></a> がインデックスキーを <code>varno = INDEX_VAR</code>、<code>varattno = (インデックス列番号 + 1)</code> の <code>Var</code> ノードに変換し、エグゼキュータがインデックス物理タプルから直接値を抽出できるようにします。</li>
+<li>スキャン系では <a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/plan/createplan.c.html#L856" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__plan__createplan_c__use_physical_tlist.html&quot;}, '*');"><code>use_physical_tlist</code></a> により物理タプル構造をそのまま返すか、<a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/plan/createplan.c.html#L816" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__plan__createplan_c__build_path_tlist.html&quot;}, '*');"><code>build_path_tlist</code></a> で必要な式を組み立てます。</li>
+<li>結合やソート、ウィンドウ関数などの親ノードは、必要に応じて <a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/plan/createplan.c.html#L70" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/backend/optimizer/plan/createplan.c.html&quot;}, '*');"><code>CP_SMALL_TLIST</code></a> や <a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/plan/createplan.c.html#L71" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/backend/optimizer/plan/createplan.c.html&quot;}, '*');"><code>CP_LABEL_TLIST</code></a> などのフラグを子へ伝えます。</li>
+<p>4. **パラメータと修飾句の調整**: <a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/plan/createplan.c.html#L4881" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__plan__createplan_c__replace_nestloop_params.html&quot;}, '*');"><code>replace_nestloop_params</code></a> や <a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/plan/createplan.c.html#L4966" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__plan__createplan_c__fix_indexqual_references.html&quot;}, '*');"><code>fix_indexqual_references</code></a> により、外部リレーションの変数やインデックス列の参照位置が実行時パラメータや <code>INDEX_VAR</code> に書き換えられます。 5. **最終仕上げ**: 最上位に到達したプランに対して <code>apply_tlist_labeling</code> や <code>SS_attach_initplans</code> が適用され、実行エンジンへ引き渡される <code>Plan</code> ツリーが完成します。</p>
 </ul>
-<p>---</p>
 <h2>直接依存</h2>
-<p>本ファイルは、オプティマイザの他のサブシステムやパーサ、カタログ情報に深く依存しています。</p>
 <ul>
-<li><code>optimizer/restrictinfo.h</code>: 制限条件（<code>RestrictInfo</code>）の解析と操作。</li>
-<li><code>optimizer/tlist.h</code>: ターゲットリストの操作（<a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/util/plancat.c.html#L2041" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__plancat_c__build_physical_tlist.html&quot;}, '*');"><code>build_physical_tlist</code></a> など）。</li>
-<li><code>optimizer/paramassign.h</code>: パラメータIDの割り当て。</li>
-<li><code>optimizer/subselect.h</code>: <a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/plan/createplan.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__plan__createplan_c__initPlan.html&quot;}, '*');"><code>initPlan</code></a> や <code>SubPlan</code> の作成・アタッチ（<code>SS_attach_initplans</code>）。</li>
-<li><code>nodes/makefuncs.h</code>: <a class="wiki-source-link" href="../../../../../source/src/include/nodes/nodes.h.html#L159" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/nodes/nodes.h.html&quot;}, '*');"><code>makeNode</code></a> や各種 <code>make_xxx</code> による物理ノード生成。</li>
+<li><a class="wiki-source-link" href="../../../../../source/src/include/postgres.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/postgres.h.html&quot;}, '*');"><code>postgres.h</code></a></li>
+<li><code>access/sysattr.h</code>, <code>access/transam.h</code></li>
+<li><code>catalog/pg_class.h</code></li>
+<li><code>foreign/fdwapi.h</code></li>
+<li><a class="wiki-source-link" href="../../../../../source/src/include/miscadmin.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/miscadmin.h.html&quot;}, '*');"><code>miscadmin.h</code></a></li>
+<li><code>nodes/extensible.h</code>, <code>nodes/makefuncs.h</code>, <code>nodes/nodeFuncs.h</code></li>
+<li><code>optimizer/clauses.h</code>, <code>optimizer/cost.h</code>, <code>optimizer/optimizer.h</code>, <code>optimizer/paramassign.h</code>, <code>optimizer/pathnode.h</code>, <code>optimizer/paths.h</code>, <code>optimizer/placeholder.h</code>, <code>optimizer/plancat.h</code>, <code>optimizer/planmain.h</code>, <code>optimizer/prep.h</code>, <code>optimizer/restrictinfo.h</code>, <code>optimizer/subselect.h</code>, <code>optimizer/tlist.h</code></li>
+<li><code>parser/parse_clause.h</code>, <code>parser/parsetree.h</code></li>
+<li><code>partitioning/partprune.h</code></li>
+<li><code>tcop/tcopprot.h</code></li>
+<li><code>utils/lsyscache.h</code></li>
 </ul>
-<p>---</p>
 <h2>関連コード</h2>
 <ul>
-<li><a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/plan/planner.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/backend/optimizer/plan/planner.c.html&quot;}, '*');"><code>src/backend/optimizer/plan/planner.c</code></a>: 本ファイルの呼び出し元。</li>
-<li><a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/plan/setrefs.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/backend/optimizer/plan/setrefs.c.html&quot;}, '*');"><code>src/backend/optimizer/plan/setrefs.c</code></a>: 本ファイルが生成した <code>Plan</code> ツリーの変数参照（<code>varno</code>/<code>varattno</code>）を最終的に解決する後続フェーズ。</li>
-<li><code>src/backend/optimizer/path/</code>: 最適な <code>Path</code> ツリーを探索・生成するモジュール群。</li>
+<li><a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/plan/planner.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/backend/optimizer/plan/planner.c.html&quot;}, '*');"><code>src/backend/optimizer/plan/planner.c</code></a>: クエリ最適化全体のオーケストレーション。</li>
+<li><a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/plan/setrefs.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/backend/optimizer/plan/setrefs.c.html&quot;}, '*');"><code>src/backend/optimizer/plan/setrefs.c</code></a>: 生成された <code>Plan</code> ツリー内の変数参照番号やプレースホルダ、Varno の最終解決を行う。</li>
+<li><code>src/backend/optimizer/path/</code>: パス（Path）ノードの構築を行うモジュール群。</li>
 </ul>
-<p>---</p>
 <h2>読者向けメモ</h2>
-<h3>メモリ所有権とライフタイム</h3>
 <ul>
-<li>本ファイル内で生成されるすべての <code>Plan</code> ノード、ターゲットリスト、および修飾式（quals）は、プランナーのメモリコンテキスト（通常は <code>PlannerContext</code>）に割り当てられます。</li>
-<li>これらのメモリ領域は、クエリのプランニングが完了し、ポータル（<a class="wiki-source-link" href="../../../../../source/src/include/utils/portal.h.html#L113" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__utils__portal_h__Portal.html&quot;}, '*');">Portal</a>）または実行エンジンにプランが引き渡されて実行が終了するまで保持されます。</li>
-</ul>
-<h3>重要な不変条件（Invariants）</h3>
-<ul>
-<li>**コスト計算の禁止**: <code>make_xxx</code> 関数群やプラン生成ヘルパーは、独自のコスト計算ロジックを持ってはなりません。コストはすべて <code>Path</code> 段階で確定している必要があり、ここでは単にコピー（<a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/plan/createplan.c.html#L5359" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__plan__createplan_c__copy_generic_path_info.html&quot;}, '*');"><code>copy_generic_path_info</code></a>）するか、ソートなどの一部の例外的な動的挿入ノードに対して <a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/path/costsize.c.html#L2200" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__path__costsize_c__cost_sort.html&quot;}, '*');"><code>cost_sort</code></a> などのコスト算出関数を呼び出してラベル付け（<a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/plan/createplan.c.html#L5398" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__plan__createplan_c__label_sort_with_costsize.html&quot;}, '*');"><code>label_sort_with_costsize</code></a>）するのみに留めます。</li>
-<li>**変数参照の未解決性**: 生成された <code>Plan</code> 内の <code>Var</code> ノードは、依然として範囲テーブル（<a class="wiki-source-link" href="../../../../../source/src/backend/utils/adt/geo_spgist.c.html#L103" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__utils__adt__geo_spgist_c__Range.html&quot;}, '*');">Range</a> Table）のインデックスを保持しており、実行時にアウター/インナータプルを指す <code>OUTER_VAR</code> (65000) や <code>INNER_VAR</code> (65001) にはなっていません。この変換は必ず <a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/plan/setrefs.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/backend/optimizer/plan/setrefs.c.html&quot;}, '*');"><code>setrefs.c</code></a> で行われます。</li>
-</ul>
-<h3>省略された領域について</h3>
-<ul>
-<li>個々の <code>make_xxx</code> 関数（例: <a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/plan/createplan.c.html#L5683" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__plan__createplan_c__make_functionscan.html&quot;}, '*');"><code>make_functionscan</code></a>, <a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/plan/createplan.c.html#L5723" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__plan__createplan_c__make_valuesscan.html&quot;}, '*');"><code>make_valuesscan</code></a> など）の内部における、構造体メンバーへの単純な代入処理の詳細は、定型的かつ自明なノード初期化であるため、本ドキュメントでは説明を省略しています。</li>
+<li>**メモリ管理**: 本ファイル内の構築関数は基本的に現在のメモリコンテキスト（<code>CurrentMemoryContext</code>）上で <code>palloc</code> を使用してメモリを割り当てます。生存期間はプランニングフェーズ全体に依存します。</li>
+<li>**未解決のインデックス参照**: ここで生成されるツリー時点では、変数はパーサ番号のまま残されており、実際の実行前に関係番号のオフセットや参照解決が <a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/plan/setrefs.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/backend/optimizer/plan/setrefs.c.html&quot;}, '*');"><code>setrefs.c</code></a> によって行われます。</li>
 </ul>
 <h2>シンボルページ</h2>
 <ul>
-<li><a href="../../../../symbols/src__backend__optimizer__plan__createplan_c__create_plan.html" target="wiki-view"><code>create_plan</code></a></li>
-<li><a href="../../../../symbols/src__backend__optimizer__plan__createplan_c__create_plan_recurse.html" target="wiki-view"><code>create_plan_recurse</code></a></li>
-<li><a href="../../../../symbols/src__backend__optimizer__plan__createplan_c__create_scan_plan.html" target="wiki-view"><code>create_scan_plan</code></a></li>
-<li><a href="../../../../symbols/src__backend__optimizer__plan__createplan_c__build_path_tlist.html" target="wiki-view"><code>build_path_tlist</code></a></li>
-<li><a href="../../../../symbols/src__backend__optimizer__plan__createplan_c__use_physical_tlist.html" target="wiki-view"><code>use_physical_tlist</code></a></li>
-<li><a href="../../../../symbols/src__backend__optimizer__plan__createplan_c__get_gating_quals.html" target="wiki-view"><code>get_gating_quals</code></a></li>
-<li><a href="../../../../symbols/src__backend__optimizer__plan__createplan_c__create_gating_plan.html" target="wiki-view"><code>create_gating_plan</code></a></li>
-<li><a href="../../../../symbols/src__backend__optimizer__plan__createplan_c__create_join_plan.html" target="wiki-view"><code>create_join_plan</code></a></li>
-<li><a href="../../../../symbols/src__backend__optimizer__plan__createplan_c__mark_async_capable_plan.html" target="wiki-view"><code>mark_async_capable_plan</code></a></li>
-<li><a href="../../../../symbols/src__backend__optimizer__plan__createplan_c__create_append_plan.html" target="wiki-view"><code>create_append_plan</code></a></li>
-<li><a href="../../../../symbols/src__backend__optimizer__plan__createplan_c__create_merge_append_plan.html" target="wiki-view"><code>create_merge_append_plan</code></a></li>
+<li><a href="../../../../symbols/src__backend__optimizer__plan__createplan_c__Hash.html" target="wiki-view"><code>Hash</code></a></li>
+<li><a href="../../../../symbols/src__backend__optimizer__plan__createplan_c__HashJoin.html" target="wiki-view"><code>HashJoin</code></a></li>
+<li><a href="../../../../symbols/src__backend__optimizer__plan__createplan_c__INDEX_VAR.html" target="wiki-view"><code>INDEX_VAR</code></a></li>
+<li><a href="../../../../symbols/src__backend__optimizer__plan__createplan_c__MergeJoin.html" target="wiki-view"><code>MergeJoin</code></a></li>
+<li><a href="../../../../symbols/src__backend__optimizer__plan__createplan_c__NestLoop.html" target="wiki-view"><code>NestLoop</code></a></li>
+<li><a href="../../../../symbols/src__backend__optimizer__plan__createplan_c__Param.html" target="wiki-view"><code>Param</code></a></li>
+<li><a href="../../../../symbols/src__backend__optimizer__plan__createplan_c__PlaceHolderVar.html" target="wiki-view"><code>PlaceHolderVar</code></a></li>
+<li><a href="../../../../symbols/src__backend__optimizer__plan__createplan_c__Result.html" target="wiki-view"><code>Result</code></a></li>
+<li><a href="../../../../symbols/src__backend__optimizer__plan__createplan_c__SS_attach_initplans.html" target="wiki-view"><code>SS_attach_initplans</code></a></li>
+<li><a href="../../../../symbols/src__backend__optimizer__plan__createplan_c__Sort.html" target="wiki-view"><code>Sort</code></a></li>
+<li><a href="../../../../symbols/src__backend__optimizer__plan__createplan_c__Var.html" target="wiki-view"><code>Var</code></a></li>
 <li><a href="../../../../symbols/src__backend__optimizer__plan__createplan_c__QualItem.html" target="wiki-view"><code>QualItem</code></a></li>
 </ul><script>
 (function() {

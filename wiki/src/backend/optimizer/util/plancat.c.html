@@ -1,156 +1,83 @@
 <!doctype html>
 <html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>src/backend/optimizer/util/plancat.c.md</title><link rel="stylesheet" href="../../../../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/util/plancat.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/backend/optimizer/util/plancat.c.html&quot;}, '*');">src/backend/optimizer/util/plancat.c</a></h1>
 <h2>概要</h2>
-<p><a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/util/plancat.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/backend/optimizer/util/plancat.c.html&quot;}, '*');"><code>src/backend/optimizer/util/plancat.c</code></a> は、PostgreSQLのオプティマイザが実行計画（プラン）の作成やコスト見積もりを行うために、システムカタログ（リレーション、インデックス、制約、拡張統計情報、パーティショニング情報など）から必要なメタデータを安全に参照・抽出し、プランナ用のデータ構造に変換するためのインターフェースを提供するソースファイルです。</p>
+<p><a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/util/plancat.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/backend/optimizer/util/plancat.c.html&quot;}, '*');"><code>src/backend/optimizer/util/plancat.c</code></a> は、PostgreSQLのオプティマイザ（Planner）がプラン作成時に必要とするカタログ情報（リレーション定義、インデックス、制約、拡張統計情報、パーティショニングスキーマ、および関数や演算子の選択性・コスト）をストレージ/リキャッシュから取得・抽象化して提供する中核ソースファイルである。</p>
 <h2>モジュール内での役割</h2>
-<p>本ファイルは <code>src/backend/optimizer/util</code> ディレクトリに位置し、オプティマイザの各フェーズ（パス生成、コスト見積もり、制約除外など）と、データベースのメタデータを管理するリレーションキャッシュ（Relcache）やシステムカタログとの間の仲介役（ラッパー）として機能します。</p>
-<p>プランナの上流プロセスから呼び出され、カタログの生データをプランナが扱いやすい構造体（<code>RelOptInfo</code>、<code>IndexOptInfo</code>、<a class="wiki-source-link" href="../../../../../source/src/include/nodes/pathnodes.h.html#L1510" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__nodes__pathnodes_h__StatisticExtInfo.html&quot;}, '*');"><code>StatisticExtInfo</code></a> など）にロード・初期化して引き渡す役割を担います。</p>
+<p><code>src/backend/optimizer/util</code> ディレクトリ配下に位置し、主にリレーションやインデックスのメタデータを <code>RelOptInfo</code> や <code>IndexOptInfo</code> などのプランナ内部データ構造へ結びつけるインターフェースとして機能する。<a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/path/costsize.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/backend/optimizer/path/costsize.c.html&quot;}, '*');"><code>costsize.c</code></a> や <a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/path/indxpath.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/backend/optimizer/path/indxpath.c.html&quot;}, '*');"><code>indxpath.c</code></a> などの他のオプティマイザモジュール群が必要とする物理的・統計的特性を供給する。</p>
 <h2>責務</h2>
-<p>本ファイルの所有する責務は、以下の4つの役割グループに大別されます。</p>
-<h3>1. リレーションおよびインデックスのメタデータ構築</h3>
 <ul>
-<li>**基本情報のロード**: 指定されたリレーションOIDから、属性範囲（<code>min_attr</code>, <code>max_attr</code>）、テーブルスペース、並列ワーカー数などの基本属性を <code>RelOptInfo</code> に設定します。</li>
-<li>**インデックス情報の構築**: テーブルに定義された有効なインデックスを走査し、キー属性、演算子クラス、ソート順序、インデックス式、インデックス述語などを格納した <code>IndexOptInfo</code> のリストを構築します。</li>
-<li>**外部キー情報の収集**: 他のリレーションとの結合最適化に利用するため、有効な外部キー制約（<a class="wiki-source-link" href="../../../../../source/src/include/nodes/pathnodes.h.html#L1460" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__nodes__pathnodes_h__ForeignKeyOptInfo.html&quot;}, '*');"><code>ForeignKeyOptInfo</code></a>）をロードして <code>PlannerInfo-&gt;fkey_list</code> に追加します。</li>
-</ul>
-<h3>2. 制約およびパーティション情報の抽出と評価</h3>
-<ul>
-<li>**制約の抽出と正規化**: チェック制約や <code>NOT NULL</code> 制約を抽出し、定数式畳み込み（<a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/util/clauses.c.html#L2515" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__clauses_c__eval_const_expressions.html&quot;}, '*');"><code>eval_const_expressions</code></a>）や変数番号の付け替え（<a class="wiki-source-link" href="../../../../../source/src/backend/rewrite/rewriteManip.c.html#L733" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__rewrite__rewriteManip_c__ChangeVarNodes.html&quot;}, '*');"><code>ChangeVarNodes</code></a>）を行ってプランナが比較可能な形式に正規化します。</li>
-<li>**制約除外（<a class="wiki-source-link" href="../../../../../source/src/include/nodes/parsenodes.h.html#L2936" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__nodes__parsenodes_h__Constraint.html&quot;}, '*');">Constraint</a> Exclusion）の判定**: クエリの制限事項（<code>baserestrictinfo</code>）とテーブルの制約が矛盾しているかを評価し、矛盾している場合はそのリレーションのスキャンをスキップ可能と判定します。</li>
-<li>**パーティション情報のセットアップ**: パーティションテーブルに対して、パーティションスキーマ、境界情報、パーティションキー式、パーティション制約をロードして <code>RelOptInfo</code> に設定します。</li>
-</ul>
-<h3>3. 一意インデックスの推論（ON CONFLICT）</h3>
-<ul>
-<li>**アービタイザインデックスの特定**: <code>ON CONFLICT</code> 句で指定された属性リストや制約名に基づき、競合解決の判断基準として使用可能な一意インデックス（または除外制約インデックス）をカタログから推論・特定します。</li>
-</ul>
-<h3>4. コスト・選択率・行数の見積もり支援</h3>
-<ul>
-<li>**サイズ見積もり**: テーブルやインデックスの物理ページ数、タプル数、および可視マップに基づく全可視ページ割合（<code>allvisfrac</code>）を見積もります。</li>
-<li>**選択率の計算**: 制限演算子、結合演算子、またはブーリアン関数の選択率（Selectivity）を、カタログに登録されたオプティマイザサポート関数や選択率見積もり関数を呼び出して計算します。</li>
-<li>**関数コストと行数の取得**: 関数の実行コスト（起動コストおよびタプルごとのコスト）や、セット返却関数（SRF）が返す見積もり行数を取得します。</li>
+<li>**リレーションメタデータの構築**: リレーション（通常表、外部表、パーティション表）を開き、属性範囲、サイズ、並列ワーカー数、インデックス一覧、拡張統計情報、外部キー情報を <code>RelOptInfo</code> に設定する。</li>
+<li>**インデックス情報の収集**: テーブル上の有効なインデックスを走査し、B-tree演算子族、式、述語、一意性フラグなどを解決して <code>IndexOptInfo</code> リストを構築する。</li>
+<li>**制約と<a class="wiki-source-link" href="../../../../../source/src/include/nodes/primnodes.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__nodes__primnodes_h__NOT.html&quot;}, '*');">NOT</a> NULLの処理**: チェック制約や <code>NOT NULL</code> 制約を取得し、プランナでの比較用に <code>varno</code> の書き換えや定数畳み込み、正規化を行う。</li>
+<li>**制約除外（<a class="wiki-source-link" href="../../../../../source/src/include/nodes/parsenodes.h.html#L2936" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__nodes__parsenodes_h__Constraint.html&quot;}, '*');">Constraint</a> Exclusion）の判定**: リレーションの制約やベース制限句を用いて、スキャンが不要かを判定する。</li>
+<li>**一意インデックスの推論（Arbiter Inference）**: <code>ON CONFLICT</code> 句（UPSERT）の指定に基づき、仕様に合致する一意インデックスを特定する。</li>
+<li>**選択性・コスト・行数の見積もり**: 演算子、関数、ジョブ、リストに関する選択性関数（<code>oprrest</code> / <code>oprjoin</code>）やサポート関数を呼び出してコスト・行数・選択性を推計する。</li>
 </ul>
 <h2>重要なシンボル</h2>
-<h3>リレーション・インデックス情報取得</h3>
+<h3>リレーションおよびインデックス情報構築</h3>
 <ul>
-<li>**<a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/util/plancat.c.html#L120" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__plancat_c__get_relation_info.html&quot;}, '*');"><code>get_relation_info</code></a>** (関数)</li>
-<p>リレーションのカタログ情報を取得し、<code>RelOptInfo</code> のフィールド（インデックスリスト、拡張統計情報、FDWルーチン、並列ワーカー数など）を初期化する中核エントリーポイント。</p>
-<li>**<a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/util/plancat.c.html#L1304" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__plancat_c__estimate_rel_size.html&quot;}, '*');"><code>estimate_rel_size</code></a>** (関数)</li>
-<p>テーブル、インデックス、または外部テーブルの物理ページ数、タプル数、および可視化率を見積もる。</p>
-<li>**<a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/util/plancat.c.html#L689" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__plancat_c__get_relation_notnullatts.html&quot;}, '*');"><code>get_relation_notnullatts</code></a>** / **<a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/util/plancat.c.html#L762" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__plancat_c__find_relation_notnullatts.html&quot;}, '*');"><code>find_relation_notnullatts</code></a>** (関数)</li>
-<p>リレーションの <code>NOT NULL</code> 制約が定義された列番号のビットマップを抽出し、プランニングスコープ内のハッシュテーブルでキャッシュ・検索する。</p>
-<li>**<a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/util/plancat.c.html#L60" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__plancat_c__NotnullHashEntry.html&quot;}, '*');"><code>NotnullHashEntry</code></a>** (構造体)</li>
-<p><code>NOT NULL</code> 列ビットマップをリレーションOIDごとにキャッシュするためのハッシュエントリ。</p>
+<li><code>RelOptInfo</code>: プランナがクエリ内の各リレーションに関して保持する最適化情報構造体。本ファイルで基本属性・インデックス・統計情報・パーティション情報が埋め込まれる。</li>
+<li><code>TargetEntry</code>: クエリやターゲットリスト内の個々の式に対応するノード構造体。</li>
+<li><a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/util/plancat.c.html#L120" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__plancat_c__get_relation_info.html&quot;}, '*');"><code>get_relation_info</code></a>: 指定されたリレーションのOIDと <code>RelOptInfo</code> を受け取り、属性範囲、インデックス、統計情報、外部キー、パーティション情報を一括取得して設定する。</li>
+<li><a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/util/plancat.c.html#L1304" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__plancat_c__estimate_rel_size.html&quot;}, '*');"><code>estimate_rel_size</code></a>: テーブル、インデックス、外部テーブルのページ数、タプル数、全可視フラクション（<a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/util/plancat.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/backend/optimizer/util/plancat.c.html&quot;}, '*');"><code>allvisfrac</code></a>）を推計する。</li>
+<li><a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/util/plancat.c.html#L1429" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__plancat_c__get_rel_data_width.html&quot;}, '*');"><code>get_rel_data_width</code></a>: リレーションの平均タプルデータ幅を計算し、キャッシュ（<a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/util/plancat.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/backend/optimizer/util/plancat.c.html&quot;}, '*');"><code>attr_widths</code></a>）を利用・更新する。</li>
+<li><a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/util/plancat.c.html#L1471" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__plancat_c__get_relation_data_width.html&quot;}, '*');"><code>get_relation_data_width</code></a>: <a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/util/plancat.c.html#L1429" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__plancat_c__get_rel_data_width.html&quot;}, '*');"><code>get_rel_data_width</code></a> の外部API版。リレーションを一時的にオープンして幅を計算する。</li>
 </ul>
-<h3>一意性・制約評価</h3>
+<h3>制約・NULL制約・除外処理</h3>
 <ul>
-<li>**<a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/util/plancat.c.html#L801" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__plancat_c__infer_arbiter_indexes.html&quot;}, '*');"><code>infer_arbiter_indexes</code></a>** (関数)</li>
-<p><code>ON CONFLICT</code> 句の競合解決で使用する一意インデックスを推論・決定する。</p>
-<li>**<a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/util/plancat.c.html#L1851" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__plancat_c__relation_excluded_by_constraints.html&quot;}, '*');"><code>relation_excluded_by_constraints</code></a>** (関数)</li>
-<p>制約除外（<a class="wiki-source-link" href="../../../../../source/src/include/nodes/parsenodes.h.html#L2936" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__nodes__parsenodes_h__Constraint.html&quot;}, '*');">Constraint</a> Exclusion）を適用し、クエリの制限事項とテーブル制約の矛盾からスキャンを省略可能か判定する。</p>
-<li>**<a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/util/plancat.c.html#L1512" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__plancat_c__get_relation_constraints.html&quot;}, '*');"><code>get_relation_constraints</code></a>** (関数)</li>
-<p>検証済みのチェック制約、<code>NOT NULL</code> 制約、およびパーティション制約を収集し、プランナ用に正規化したリストを返す。</p>
+<li><a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/util/plancat.c.html#L60" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__plancat_c__NotnullHashEntry.html&quot;}, '*');"><code>NotnullHashEntry</code></a>: リレーションIDと <code>NOT NULL</code> カラムのビットマップ（<a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/util/plancat.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/backend/optimizer/util/plancat.c.html&quot;}, '*');"><code>notnullattnums</code></a>）を紐付けるハッシュエントリ構造体。</li>
+<li><a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/util/plancat.c.html#L689" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__plancat_c__get_relation_notnullatts.html&quot;}, '*');"><code>get_relation_notnullatts</code></a>: リレーションの <code>NOT NULL</code> 制約情報をスキャンし、<code>PlannerInfo</code> のハッシュテーブルにキャッシュする。</li>
+<li><a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/util/plancat.c.html#L762" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__plancat_c__find_relation_notnullatts.html&quot;}, '*');"><code>find_relation_notnullatts</code></a>: キャッシュから指定リレーションの <code>NOT NULL</code> 属性ビットマップを検索・返却する。</li>
+<li><a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/util/plancat.c.html#L1851" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__plancat_c__relation_excluded_by_constraints.html&quot;}, '*');"><code>relation_excluded_by_constraints</code></a>: 制限句や制約条件を基に、矛盾や制約違反によりリレーションスキャン自体を省略可能か判定する。</li>
 </ul>
-<h3>ターゲットリスト構築</h3>
+<h3>UPSERT推論</h3>
 <ul>
-<li>**<a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/util/plancat.c.html#L2041" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__plancat_c__build_physical_tlist.html&quot;}, '*');"><code>build_physical_tlist</code></a>** (関数)</li>
-<p>リレーション、サブクエリ、関数、CTEなどの物理的な列順序に一致するターゲットリスト（<code>TargetEntry</code> のリスト）を構築する。</p>
-<li>**<a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/util/plancat.c.html#L2162" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__plancat_c__build_index_tlist.html&quot;}, '*');"><code>build_index_tlist</code></a>** (関数)</li>
-<p>インデックスの列（単純な列または式）に対応するターゲットリストを構築する。</p>
-</ul>
-<h3>選択率・コスト計算</h3>
-<ul>
-<li>**<a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/util/plancat.c.html#L2224" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__plancat_c__restriction_selectivity.html&quot;}, '*');"><code>restriction_selectivity</code></a>** / **<a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/util/plancat.c.html#L2263" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__plancat_c__join_selectivity.html&quot;}, '*');"><code>join_selectivity</code></a>** / **<a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/util/plancat.c.html#L2303" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__plancat_c__function_selectivity.html&quot;}, '*');"><code>function_selectivity</code></a>** (関数)</li>
-<p>演算子や関数の選択率を、システムカタログに登録された制限・結合選択率関数やサポート関数を呼び出して取得する。</p>
-<li>**<a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/util/plancat.c.html#L2357" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__plancat_c__add_function_cost.html&quot;}, '*');"><code>add_function_cost</code></a>** / **<a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/util/plancat.c.html#L2418" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__plancat_c__get_function_rows.html&quot;}, '*');"><code>get_function_rows</code></a>** (関数)</li>
-<p>関数の実行コストや、セット返却関数が返す行数を見積もる。</p>
+<li><a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/util/plancat.c.html#L801" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__plancat_c__infer_arbiter_indexes.html&quot;}, '*');"><code>infer_arbiter_indexes</code></a>: <code>ON CONFLICT</code> 句の競合解決（Arbiter）仕様に一致する一意インデックス群のOIDリストを決定・返却する。</li>
+<li><a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/util/plancat.c.html#L1222" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__plancat_c__infer_collation_opclass_match.html&quot;}, '*');"><code>infer_collation_opclass_match</code></a>: インデックスの属性や式が、推論指定された照合順序（Collation）および演算子クラス（Opclass）に合致するか検証する。</li>
 </ul>
 <h2>制御フローとデータフロー</h2>
-<h3>1. リレーション情報構築フロー (<a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/util/plancat.c.html#L120" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__plancat_c__get_relation_info.html&quot;}, '*');"><code>get_relation_info</code></a>)</h3>
-<p><a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/util/plancat.c.html#L120" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__plancat_c__get_relation_info.html&quot;}, '*');"><code>get_relation_info</code></a> が呼び出されると、以下の流れで <code>RelOptInfo</code> が構築されます。</p>
-<pre><code>[get_relation_info]
-  │
-  ├── 1. table_open(relationObjectId, NoLock)
-  │      (リカバリ中の臨時/ログなしテーブルへのアクセス制限などの安全性をチェック)
-  │
-  ├── 2. estimate_rel_size() ──&gt; ページ数、タプル数、可視化率を見積もり RelOptInfo に設定
-  │
-  ├── 3. find_relation_notnullatts() ──&gt; NOT NULL 列のビットマップをロード
-  │
-  ├── 4. RelationGetIndexList() ──&gt; インデックス OID リストを取得
-  │      │
-  │      └── 各インデックスについてループ:
-  │            ├── index_open(indexoid, rellockmode)
-  │            ├── 有効性チェック (indisvalid, indcheckxmin)
-  │            ├── IndexOptInfo 構造体の割り当てと初期化
-  │            ├── インデックスキー、演算子家族、順序情報のコピー
-  │            ├── ChangeVarNodes() &amp; eval_const_expressions()
-  │            │     (インデックス式・述語の変数番号を親テーブルの varno に書き換え、定数畳み込み)
-  │            ├── build_index_tlist() ──&gt; インデックスのターゲットリストを構築
-  │            ├── インデックスサイズの見積もり (RelationGetNumberOfBlocks / estimate_rel_size)
-  │            └── index_close(..., NoLock)
-  │
-  ├── 5. get_relation_statistics() ──&gt; 拡張統計情報 (StatisticExtInfo) のロード
-  │
-  ├── 6. get_relation_foreign_keys() ──&gt; 外部キー情報をロードし root-&gt;fkey_list に追加
-  │
-  ├── 7. (パーティションテーブルの場合) set_relation_partition_info()
-  │      └── パーティションスキーマ、境界情報、キー式、パーティション制約を設定
-  │
-  └── 8. table_close(relation, NoLock)</code></pre>
-<h3>2. 制約除外フロー (<a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/util/plancat.c.html#L1851" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__plancat_c__relation_excluded_by_constraints.html&quot;}, '*');"><code>relation_excluded_by_constraints</code></a>)</h3>
-<p>クエリの制限事項とテーブル制約を比較し、スキャンをスキップできるかを判定します。</p>
-<pre><code>[relation_excluded_by_constraints]
-  │
-  ├── 1. baserestrictinfo に定数 FALSE または NULL が含まれているかチェック
-  │      └── 含まれていれば即座に true (スキャン不要) を返す
-  │
-  ├── 2. constraint_exclusion GUC パラメータのチェック
-  │      └── OFF の場合、または PARTITION で対象がパーティション以外の場合は false を返す
-  │
-  ├── 3. 制限事項から揮発性（mutable）関数を含むものを除外し、
-  │      predicate_refuted_by(safe_restrictions, safe_restrictions, true) で自己矛盾をチェック
-  │
-  ├── 4. get_relation_constraints() を呼び出して、適用可能な制約式リストを取得
-  │      (チェック制約、NOT NULL 制約、パーティション制約を収集・正規化)
-  │
-  ├── 5. 制約式から揮発性関数を含むものを除外 (safe_constraints)
-  │
-  ├── 6. predicate_refuted_by(safe_constraints, rel-&gt;baserestrictinfo, false) を実行
-  │      (制約条件がクエリの制限事項によって完全に否定されるかを強い否定で検証)
-  │
-  └── 7. 矛盾が証明されれば true、そうでなければ false を返す</code></pre>
-<h2>直接依存</h2>
-<p>本ファイルは、PostgreSQLの内部カタログ、ストレージ、およびプランナの広範なヘッダーに直接依存しています。主要な依存先は以下の通りです。</p>
+<p>1. **リレーション情報のロード (<a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/util/plancat.c.html#L120" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__plancat_c__get_relation_info.html&quot;}, '*');"><code>get_relation_info</code></a>)**:</p>
 <ul>
-<li>**アクセス・ストレージ層**: <code>access/table.h</code>, <code>access/genam.h</code>, <code>access/tableam.h</code>, <code>utils/rel.h</code>, <code>storage/bufmgr.h</code></li>
-<li>**システムカタログ**: <code>catalog/catalog.h</code>, <code>catalog/pg_proc.h</code>, <code>catalog/pg_statistic_ext.h</code></li>
-<li>**プランナノード・ユーティリティ**: <code>nodes/pathnodes.h</code>, <code>nodes/nodeFuncs.h</code>, <code>optimizer/optimizer.h</code>, <code>optimizer/cost.h</code></li>
-<li>**パーティショニング**: <code>partitioning/partdesc.h</code>, <code>utils/partcache.h</code></li>
+<li><code>table_open</code> でリレーションの relcache エントリーを取得し、回復処理中の一時・非永続テーブルアクセスなどの安全性を検証する。</li>
+<li><a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/util/plancat.c.html#L1304" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__plancat_c__estimate_rel_size.html&quot;}, '*');"><code>estimate_rel_size</code></a> を呼び出してページ数・タプル数を見積もり、有効なインデックス群を走査して <code>IndexOptInfo</code> を構築・連結する。</li>
+<li>外部表（<code>RELKIND_FOREIGN_TABLE</code>）やパーティションテーブルの場合は、対応する FDW ルーチンやパーティション記述子・制約を設定する。</li>
+<p>2. **制約除外 (<a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/util/plancat.c.html#L1851" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__plancat_c__relation_excluded_by_constraints.html&quot;}, '*');"><code>relation_excluded_by_constraints</code></a>)**:</p>
+<li>リレーションのベース制限句（<code>baserestrictinfo</code>）に矛盾する定数（<code>FALSE</code> や <code>NULL</code>）が含まれていないか走査する。</li>
+<li><a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/util/predtest.c.html#L223" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__predtest_c__predicate_refuted_by.html&quot;}, '*');"><code>predicate_refuted_by</code></a> を用いて、制限句同士またはテーブルのチェック制約・<code>NOT NULL</code> 制約と制限句の間の矛盾を論理的に検証し、スキャン除外の可否を決定する。</li>
+<p>3. **インデックス推論 (<a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/util/plancat.c.html#L801" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__plancat_c__infer_arbiter_indexes.html&quot;}, '*');"><code>infer_arbiter_indexes</code></a>)**:</p>
+<li><code>onConflict-&gt;arbiterElems</code> または命名された制約からターゲットの属性・式を抽出し、対象テーブルの有効なインデックス一覧を走査する。</li>
+<li>式の一致、<a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/util/plancat.c.html#L1222" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__plancat_c__infer_collation_opclass_match.html&quot;}, '*');"><code>infer_collation_opclass_match</code></a> による照合順序/演算子クラスの一致、部分インデックスの述語包含関係（<a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/util/predtest.c.html#L153" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__predtest_c__predicate_implied_by.html&quot;}, '*');"><code>predicate_implied_by</code></a>）を検証して適合するインデックスを決定する。</li>
+</ul>
+<h2>直接依存</h2>
+<ul>
+<li><a class="wiki-source-link" href="../../../../../source/src/include/postgres.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/postgres.h.html&quot;}, '*');"><code>postgres.h</code></a>, <code>math.h</code></li>
+<li><code>access/genam.h</code>, <code>access/htup_details.h</code>, <code>access/nbtree.h</code>, <code>access/sysattr.h</code>, <code>access/table.h</code>, <code>access/tableam.h</code>, <code>access/transam.h</code>, <code>access/xlog.h</code></li>
+<li><code>catalog/catalog.h</code>, <code>catalog/heap.h</code>, <code>catalog/pg_am.h</code>, <code>catalog/pg_proc.h</code>, <code>catalog/pg_statistic_ext.h</code>, <code>catalog/pg_statistic_ext_data.h</code></li>
+<li><code>foreign/fdwapi.h</code>, <a class="wiki-source-link" href="../../../../../source/src/include/miscadmin.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/miscadmin.h.html&quot;}, '*');"><code>miscadmin.h</code></a></li>
+<li><code>nodes/makefuncs.h</code>, <code>nodes/nodeFuncs.h</code>, <code>nodes/supportnodes.h</code></li>
+<li><code>optimizer/cost.h</code>, <code>optimizer/optimizer.h</code>, <code>optimizer/plancat.h</code></li>
+<li><code>parser/parse_relation.h</code>, <code>parser/parsetree.h</code></li>
+<li><code>partitioning/partdesc.h</code></li>
+<li><code>rewrite/rewriteHandler.h</code>, <code>rewrite/rewriteManip.h</code></li>
+<li><code>statistics/statistics.h</code>, <code>storage/bufmgr.h</code>, <code>tcop/tcopprot.h</code></li>
+<li><code>utils/builtins.h</code>, <code>utils/lsyscache.h</code>, <code>utils/partcache.h</code>, <code>utils/rel.h</code>, <code>utils/snapmgr.h</code>, <code>utils/syscache.h</code></li>
 </ul>
 <h2>関連コード</h2>
 <ul>
-<li><a class="wiki-source-link" href="../../../../../source/src/include/optimizer/plancat.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/optimizer/plancat.h.html&quot;}, '*');"><code>src/include/optimizer/plancat.h</code></a>: 本ファイルの公開関数のプロトタイプ宣言。</li>
-<li><a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/path/indxpath.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/backend/optimizer/path/indxpath.c.html&quot;}, '*');"><code>src/backend/optimizer/path/indxpath.c</code></a>: <a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/util/plancat.c.html#L120" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__plancat_c__get_relation_info.html&quot;}, '*');"><code>get_relation_info</code></a> で構築された <code>IndexOptInfo</code> や <a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/path/indxpath.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__path__indxpath_c__indrestrictinfo.html&quot;}, '*');"><code>indrestrictinfo</code></a> を使用して、インデックススキャンパスを生成する。</li>
-<li><a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/util/predtest.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/backend/optimizer/util/predtest.c.html&quot;}, '*');"><code>src/backend/optimizer/util/predtest.c</code></a>: 制約除外の判定で呼び出される <a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/util/predtest.c.html#L223" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__predtest_c__predicate_refuted_by.html&quot;}, '*');"><code>predicate_refuted_by</code></a> や <a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/util/predtest.c.html#L153" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__predtest_c__predicate_implied_by.html&quot;}, '*');"><code>predicate_implied_by</code></a> の実装。</li>
+<li><a class="wiki-source-link" href="../../../../../source/src/include/optimizer/plancat.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/optimizer/plancat.h.html&quot;}, '*');"><code>src/include/optimizer/plancat.h</code></a>: 本ファイルの関数プロトタイプ定義</li>
+<li><a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/path/indxpath.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/backend/optimizer/path/indxpath.c.html&quot;}, '*');"><code>src/backend/optimizer/path/indxpath.c</code></a>: インデックスパス生成時に <code>IndexOptInfo</code> を消費するモジュール</li>
+<li><code>src/backend/optimizer/plan/costsize.c</code>: コスト見積もりの際にサイズやデータ幅関数を利用するモジュール</li>
 </ul>
 <h2>読者向けメモ</h2>
-<h3>メモリ管理とライフサイクル</h3>
 <ul>
-<li><a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/util/plancat.c.html#L120" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__plancat_c__get_relation_info.html&quot;}, '*');"><code>get_relation_info</code></a> や <a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/util/plancat.c.html#L801" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__plancat_c__infer_arbiter_indexes.html&quot;}, '*');"><code>infer_arbiter_indexes</code></a> などの内部で割り当てられる各種構造体（<code>IndexOptInfo</code>、<a class="wiki-source-link" href="../../../../../source/src/include/nodes/pathnodes.h.html#L1460" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__nodes__pathnodes_h__ForeignKeyOptInfo.html&quot;}, '*');"><code>ForeignKeyOptInfo</code></a>、<a class="wiki-source-link" href="../../../../../source/src/include/nodes/pathnodes.h.html#L1510" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__nodes__pathnodes_h__StatisticExtInfo.html&quot;}, '*');"><code>StatisticExtInfo</code></a> など）やリストは、プランナのメモリコンテキスト（<code>CurrentMemoryContext</code>）で確保されます。これらはクエリのプランニングが完了するまで保持され、プランニング終了時に一括して解放されます。</li>
-</ul>
-<h3>ロックの不変条件</h3>
-<ul>
-<li>本ファイル内の関数（<a class="wiki-source-link" href="../../../../../source/src/backend/access/table/table.c.html#L39" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__access__table__table_c__table_open.html&quot;}, '*');"><code>table_open</code></a> や <a class="wiki-source-link" href="../../../../../source/src/backend/access/index/indexam.c.html#L133" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__access__index__indexam_c__index_open.html&quot;}, '*');"><code>index_open</code></a> など）でリレーションやインデックスをオープンする際、原則として **<a class="wiki-source-link" href="../../../../../source/src/include/storage/lockdefs.h.html#L34" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/storage/lockdefs.h.html&quot;}, '*');"><code>NoLock</code></a>** または呼び出し元から引き継いだロックモード（<code>rellockmode</code>）を使用します。</li>
-<li>これは、パーサ、リライタ、あるいはプランナの上流フェーズ（<a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/util/inherit.c.html#L87" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__inherit_c__expand_inherited_rtentry.html&quot;}, '*');"><code>expand_inherited_rtentry</code></a> など）で、対象リレーションに対する適切なロックが既に取得されているという強い前提に基づいています。関数内での明示的なロック解放（<a class="wiki-source-link" href="../../../../../source/src/backend/access/table/table.c.html#L125" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__access__table__table_c__table_close.html&quot;}, '*');"><code>table_close</code></a> や <a class="wiki-source-link" href="../../../../../source/src/backend/access/index/indexam.c.html#L177" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__access__index__indexam_c__index_close.html&quot;}, '*');"><code>index_close</code></a> でのロック解除）は行われません。</li>
-</ul>
-<h3>エッジケースと制限事項</h3>
-<ul>
-<li>**リカバリ中の制限**: スタンバイ（リカバリ中）サーバでは、一時テーブル（temporary）やログなしテーブル（unlogged）はディスク上の状態が不確定であるため、アクセスしようとすると <code>ERRCODE_FEATURE_NOT_SUPPORTED</code> エラーをスローします。</li>
-<li>**ON CONFLICT でのインデックス有効性**: <code>ON CONFLICT</code> のアービタイザ推論（<a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/util/plancat.c.html#L801" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__plancat_c__infer_arbiter_indexes.html&quot;}, '*');"><code>infer_arbiter_indexes</code></a>）では、同時実行中の <code>REINDEX CONCURRENTLY</code> を考慮するため、<code>indisvalid</code> が偽であっても <code>indisready</code> が真であれば候補として評価します。ただし、最終的な候補リストの中に少なくとも1つは有効な（<code>indisvalid</code> が真の）インデックスが含まれている必要があります。</li>
-<li>**省略された領域**: 本ファイルはカタログからの「情報取得」に特化しているため、取得したインデックス情報を用いた具体的なパス生成ロジック（<a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/path/indxpath.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/backend/optimizer/path/indxpath.c.html&quot;}, '*');"><code>indxpath.c</code></a>）や、詳細なコスト計算アルゴリズム（<a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/path/costsize.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/backend/optimizer/path/costsize.c.html&quot;}, '*');"><code>costsize.c</code></a>）の具体的な実装は含まれておらず、それらは各専門モジュールに委ねられています。</li>
+<li>**メモリ所有権**: <a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/util/plancat.c.html#L120" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__plancat_c__get_relation_info.html&quot;}, '*');"><code>get_relation_info</code></a> 等で構築される <code>IndexOptInfo</code>, <code>RelOptInfo</code> の各種配列やリストは、通常プランナのメモリコンテキスト（<code>PlannerInfo</code> が紐づくコンテキスト）上に割り当てられ、プランナのライフサイクルに従う。</li>
+<li>**ロックの前提**: 呼び出し元がすでにリリースのリレーションに対する適切なロック（リライターや <code>expand_inherited_rtentry</code> によって取得済み）を保持しているため、本ファイル内の多くの関数は <a class="wiki-source-link" href="../../../../../source/src/include/storage/lockdefs.h.html#L34" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/storage/lockdefs.h.html&quot;}, '*');"><code>NoLock</code></a> で <code>table_open</code> を行っている。</li>
+<li>**インデックス順序の歴史的理由**: <a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/util/plancat.c.html#L120" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__plancat_c__get_relation_info.html&quot;}, '*');"><code>get_relation_info</code></a> 内のインデックスリスト追加には <code>lcons()</code> が使われており、同一評価のインデックス間でのプランナ挙動の互換性を維持している。</li>
 </ul>
 <h2>シンボルページ</h2>
 <ul>
+<li><a href="../../../../symbols/src__backend__optimizer__util__plancat_c__RelOptInfo.html" target="wiki-view"><code>RelOptInfo</code></a></li>
+<li><a href="../../../../symbols/src__backend__optimizer__util__plancat_c__TargetEntry.html" target="wiki-view"><code>TargetEntry</code></a></li>
 <li><a href="../../../../symbols/src__backend__optimizer__util__plancat_c__NotnullHashEntry.html" target="wiki-view"><code>NotnullHashEntry</code></a></li>
 <li><a href="../../../../symbols/src__backend__optimizer__util__plancat_c__get_relation_info.html" target="wiki-view"><code>get_relation_info</code></a></li>
 <li><a href="../../../../symbols/src__backend__optimizer__util__plancat_c__get_relation_foreign_keys.html" target="wiki-view"><code>get_relation_foreign_keys</code></a></li>
@@ -161,8 +88,6 @@
 <li><a href="../../../../symbols/src__backend__optimizer__util__plancat_c__estimate_rel_size.html" target="wiki-view"><code>estimate_rel_size</code></a></li>
 <li><a href="../../../../symbols/src__backend__optimizer__util__plancat_c__get_rel_data_width.html" target="wiki-view"><code>get_rel_data_width</code></a></li>
 <li><a href="../../../../symbols/src__backend__optimizer__util__plancat_c__get_relation_data_width.html" target="wiki-view"><code>get_relation_data_width</code></a></li>
-<li><a href="../../../../symbols/src__backend__optimizer__util__plancat_c__get_relation_constraints.html" target="wiki-view"><code>get_relation_constraints</code></a></li>
-<li><a href="../../../../symbols/src__backend__optimizer__util__plancat_c__get_relation_statistics_worker.html" target="wiki-view"><code>get_relation_statistics_worker</code></a></li>
 </ul><script>
 (function() {
   function notifyParent() {

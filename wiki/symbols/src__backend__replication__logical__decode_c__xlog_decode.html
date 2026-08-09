@@ -42,9 +42,9 @@
 <ul>
 <li>a RUNNING_XACTS record will have been logged near to this, we</li>
 <li>can restart from there.</li>
-<p>*/ break; case XLOG_LOGICAL_DECODING_STATUS_CHANGE: { <a class="wiki-source-link" href="../../source/src/include/access/tupmacs.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__access__tupmacs_h__bool.html&quot;}, '*');">bool</a>		logical_decoding;</p>
+<p>*/ break; case XLOG_LOGICAL_DECODING_STATUS_CHANGE: { bool		logical_decoding;</p>
 </ul>
-<p><a class="wiki-source-link" href="../../source/src/include/utils/hsearch.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__utils__hsearch_h__memcpy.html&quot;}, '*');">memcpy</a>(&amp;logical_decoding, <a class="wiki-source-link" href="../../source/src/include/access/xlogreader.h.html#L415" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/access/xlogreader.h.html&quot;}, '*');">XLogRecGetData</a>(buf-&gt;record), sizeof(<a class="wiki-source-link" href="../../source/src/include/access/tupmacs.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__access__tupmacs_h__bool.html&quot;}, '*');">bool</a>));</p>
+<p><a class="wiki-source-link" href="../../source/src/include/utils/hsearch.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__utils__hsearch_h__memcpy.html&quot;}, '*');">memcpy</a>(&amp;logical_decoding, <a class="wiki-source-link" href="../../source/src/include/access/xlogreader.h.html#L415" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/access/xlogreader.h.html&quot;}, '*');">XLogRecGetData</a>(buf-&gt;record), sizeof(bool));</p>
 <p>/*</p>
 <ul>
 <li>Error out as we should not decode this WAL record.</li>

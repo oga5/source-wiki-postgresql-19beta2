@@ -1,0 +1,61 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>src/include/executor/instrument.h.md</title><link rel="stylesheet" href="../../../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../../../source/src/include/executor/instrument.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/executor/instrument.h.html&quot;}, '*');">src/include/executor/instrument.h</a></h1>
+<h2>概要</h2>
+<p>クエリ実行のランタイム統計情報（実行時間、バッファヒット／ミス、WAL生成量など）を収集するためのデータ構造と関数群を定義するヘッダーファイルです。主に <code>EXPLAIN (ANALYZE)</code> などの機能や拡張機能で利用されます。</p>
+<h2>モジュール内での役割</h2>
+<p><code>src/include/executor</code> サブシステムの一部として、プランノードの実行性能計測基盤を提供します。ペアとなる実装ファイル <a class="wiki-source-link" href="../../../../source/src/backend/executor/instrument.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/executor/instrument.c.html&quot;}, '*');"><code>src/backend/executor/instrument.c</code></a> と連携し、実行エンジンの各ノードにおける統計計測の共通インターフェースを規定します。</p>
+<h2>責務</h2>
+<ul>
+<li>バッファアクセス統計 (<code>BufferUsage</code>) とWAL生成統計 (<code>WalUsage</code>) のデータ構造定義。</li>
+<li>汎用計測 (<code>Instrumentation</code>) およびプランノード特化計測 (<code>NodeInstrumentation</code>) の構造体提供。</li>
+<li>計測の開始 (<a class="wiki-source-link" href="../../../../source/src/backend/executor/instrument.c.html#L52" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__executor__instrument_c__InstrStart.html&quot;}, '*');"><code>InstrStart</code></a>, <a class="wiki-source-link" href="../../../../source/src/backend/executor/instrument.c.html#L131" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__executor__instrument_c__InstrStartNode.html&quot;}, '*');"><code>InstrStartNode</code></a>) と停止 (<a class="wiki-source-link" href="../../../../source/src/backend/executor/instrument.c.html#L102" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__executor__instrument_c__InstrStop.html&quot;}, '*');"><code>InstrStop</code></a>, <a class="wiki-source-link" href="../../../../source/src/backend/executor/instrument.c.html#L138" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__executor__instrument_c__InstrStopNode.html&quot;}, '*');"><code>InstrStopNode</code></a>) を行う関数の宣言。</li>
+<li>パラレルクエリやトリガー実行時の統計収集をサポートするAPIの提供。</li>
+</ul>
+<h2>重要なシンボル</h2>
+<ul>
+<li><code>BufferUsage</code>: 共有バッファ、ローカルバッファ、一時ファイルのヒット／リード／ライトおよび所要時間を保持する構造体。</li>
+<li><code>WalUsage</code>: 生成されたWALレコード数、FPI数、バイト数、バッファフル回数を追跡する構造体。</li>
+<li><a class="wiki-source-link" href="../../../../source/src/include/executor/instrument.h.html#L61" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__executor__instrument_h__InstrumentOption.html&quot;}, '*');"><code>InstrumentOption</code></a>: 計測オプション（タイマー、バッファ、行数、WAL、I/O）を指定するビットマスク列挙型。</li>
+<li><code>Instrumentation</code>: タイマー、バッファ、WALの使用量を統合して計測するための汎用構造体。</li>
+<li><code>NodeInstrumentation</code>: プランノードの起動時間、ループ回数、フィルタリングされたタプル数などを追跡するノード特化構造体。</li>
+</ul>
+<h2>制御フローとデータフロー</h2>
+<p>1. **初期化**: 実行木の構築時に <a class="wiki-source-link" href="../../../../source/src/backend/executor/instrument.c.html#L35" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__executor__instrument_c__InstrAlloc.html&quot;}, '*');"><code>InstrAlloc</code></a> または <a class="wiki-source-link" href="../../../../source/src/backend/executor/instrument.c.html#L111" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__executor__instrument_c__InstrAllocNode.html&quot;}, '*');"><code>InstrAllocNode</code></a> が呼ばれ、有効にする計測オプション（<a class="wiki-source-link" href="../../../../source/src/include/executor/instrument.h.html#L61" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__executor__instrument_h__InstrumentOption.html&quot;}, '*');"><code>InstrumentOption</code></a>）に応じて構造体が初期化されます。 2. **ノード実行前**: <a class="wiki-source-link" href="../../../../source/src/backend/executor/instrument.c.html#L131" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__executor__instrument_c__InstrStartNode.html&quot;}, '*');"><code>InstrStartNode</code></a>（内部で <a class="wiki-source-link" href="../../../../source/src/backend/executor/instrument.c.html#L52" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__executor__instrument_c__InstrStart.html&quot;}, '*');"><code>InstrStart</code></a>）が呼び出され、現在の時刻、バッファ使用量、WAL使用量のスナップショットが記録されます。 3. **ノード実行後**: <a class="wiki-source-link" href="../../../../source/src/backend/executor/instrument.c.html#L138" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__executor__instrument_c__InstrStopNode.html&quot;}, '*');"><code>InstrStopNode</code></a> や <a class="wiki-source-link" href="../../../../source/src/backend/executor/instrument.c.html#L102" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__executor__instrument_c__InstrStop.html&quot;}, '*');"><code>InstrStop</code></a> が呼び出され、終了時の値との差分を計算して累積統計（<code>total</code>, <code>counter</code>, <code>bufusage</code>, <code>walusage</code> 等）に加算します。 4. **集約**: ループの終了時や並列クエリの終了時に、ワーカー間やループ間での統計データが <a class="wiki-source-link" href="../../../../source/src/backend/executor/instrument.c.html#L203" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__executor__instrument_c__InstrEndLoop.html&quot;}, '*');"><code>InstrEndLoop</code></a> や <a class="wiki-source-link" href="../../../../source/src/backend/executor/instrument.c.html#L296" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__executor__instrument_c__InstrAccumParallelQuery.html&quot;}, '*');"><code>InstrAccumParallelQuery</code></a> によって集約されます。</p>
+<h2>直接依存</h2>
+<ul>
+<li><code>portability/instr_time.h</code>: 高精度な経過時間を計測するための <a class="wiki-source-link" href="../../../../source/src/include/portability/instr_time.h.html#L76" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__portability__instr_time_h__instr_time.html&quot;}, '*');"><code>instr_time</code></a> 型と関連マクロ。</li>
+</ul>
+<h2>関連コード</h2>
+<ul>
+<li><a class="wiki-source-link" href="../../../../source/src/backend/executor/instrument.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/executor/instrument.c.html&quot;}, '*');"><code>src/backend/executor/instrument.c</code></a>: 本ヘッダーで宣言された関数群の実装ファイル。</li>
+<li><a class="wiki-source-link" href="../../../../source/src/include/executor/executor.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/executor/executor.h.html&quot;}, '*');"><code>src/include/executor/executor.h</code></a>: エグゼキューター全体の共通定義。</li>
+<li><a class="wiki-source-link" href="../../../../source/src/include/executor/instrument_node.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/executor/instrument_node.h.html&quot;}, '*');"><code>src/include/executor/instrument_node.h</code></a>: ノード計測に関連する補助的定義（範囲/マルチレンジ等）。</li>
+</ul>
+<h2>読者向けメモ</h2>
+<ul>
+<li><code>BufferUsage</code> と <code>WalUsage</code> のカウンターは無限にインクリメントされ、ゼロにリセットされない設計になっています。任意の期間の差分を算出するためにこの仕様が維持されています。</li>
+</ul>
+<h2>シンボルページ</h2>
+<ul>
+<li><a href="../../../symbols/src__include__executor__instrument_h__BufferUsage.html" target="wiki-view"><code>BufferUsage</code></a></li>
+<li><a href="../../../symbols/src__include__executor__instrument_h__WalUsage.html" target="wiki-view"><code>WalUsage</code></a></li>
+<li><a href="../../../symbols/src__include__executor__instrument_h__InstrumentOption.html" target="wiki-view"><code>InstrumentOption</code></a></li>
+<li><a href="../../../symbols/src__include__executor__instrument_h__Instrumentation.html" target="wiki-view"><code>Instrumentation</code></a></li>
+<li><a href="../../../symbols/src__include__executor__instrument_h__NodeInstrumentation.html" target="wiki-view"><code>NodeInstrumentation</code></a></li>
+<li><a href="../../../symbols/src__include__executor__instrument_h__WorkerNodeInstrumentation.html" target="wiki-view"><code>WorkerNodeInstrumentation</code></a></li>
+<li><a href="../../../symbols/src__include__executor__instrument_h__TriggerInstrumentation.html" target="wiki-view"><code>TriggerInstrumentation</code></a></li>
+</ul><script>
+(function() {
+  function notifyParent() {
+    if (parent === window) return;
+    parent.postMessage({type: "frame-location", frame: window.name || "", href: window.location.href}, "*");
+  }
+  document.addEventListener("click", function(event) {
+    const link = event.target.closest("a[data-panel]");
+    if (!link || parent === window) return;
+    parent.postMessage({type: "source-link", panel: link.dataset.panel}, "*");
+  });
+  window.addEventListener("load", notifyParent);
+  window.addEventListener("hashchange", notifyParent);
+})();
+</script></body></html>

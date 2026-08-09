@@ -1,0 +1,47 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>src/test/isolation/specs/tuplelock-update.spec.md</title><link rel="stylesheet" href="../../../../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../../../../source/src/test/isolation/specs/tuplelock-update.spec.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/test/isolation/specs/tuplelock-update.spec.html&quot;}, '*');">src/test/isolation/specs/tuplelock-update.spec</a></h1>
+<h2>概要</h2>
+<p>PostgreSQLの分離テストスイート（isolation tester）で使用されるテスト仕様ファイルです。複数セッション間でタプルロック（<code>FOR KEY SHARE</code>）と通常更新（<code>UPDATE</code>）が競合する際の挙動、およびアドバイザリロックを介した実行順序の制御を検証します。</p>
+<h2>モジュール内での役割</h2>
+<p><code>src/test/isolation/specs/</code> ディレクトリに配置される他の <code>.spec</code> ファイルと同様に、PostgreSQLの同時実行制御（Concurrency Control）とロック獲得・解放の正当性をテストするための入力定義です。isolation テストランナーによって解析され、C言語のテストドライバプログラムへと変換・実行されます。</p>
+<h2>責務</h2>
+<ul>
+<li>テスト用テーブル <code>pktab</code> の作成と初期データの投入（<a class="wiki-source-link" href="../../../../../source/src/bin/pg_upgrade/pg_upgrade.c.html#L361" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__bin__pg_upgrade__pg_upgrade_c__setup.html&quot;}, '*');"><code>setup</code></a>）およびクリーンアップ（<code>teardown</code>）。</li>
+<li>4つの独立したセッション（<a class="wiki-source-link" href="../../../../../source/src/include/common/pg_prng.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__common__pg_prng_h__s1.html&quot;}, '*');"><code>s1</code></a> から <code>s4</code>）におけるSQLステップの定義。</li>
+<li>アドバイザリロックとブロッカーアノテーションを活用した、非決定的な動作を防ぐための厳密な実行順序（<code>permutation</code>）の定義。</li>
+</ul>
+<h2>制御フローとデータフロー</h2>
+<ul>
+<li>初期状態：<code>pktab</code> テーブルに主キー <code>id = 1</code> の行が1件存在します。</li>
+<li>セッション1 (<a class="wiki-source-link" href="../../../../../source/src/include/common/pg_prng.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__common__pg_prng_h__s1.html&quot;}, '*');"><code>s1</code></a>) はアドバイザリロックの取得、<code>UPDATE</code>、トランザクション開始、および <code>FOR KEY SHARE</code> によるキー共有ロックの取得を行います。</li>
+<li>セッション2〜4 (<code>s2</code>, <code>s3</code>, <code>s4</code>) は、それぞれ異なるアドバイザリ共有ロックの取得を伴う <code>UPDATE</code> ステップを実行し、セッション1のロックや更新処理と競合・待機状態を作ります。</li>
+<li>順序制御：<code>permutation</code> において、<code>s1_advunlock1(s2_update)</code> のようにブロッカーアノテーションを指定することで、セッション2の更新が確実に完了してからセッション1のアドバイザリロック解除が進むよう同期をとります。これにより、テスト出力の安定性を保証します。</li>
+</ul>
+<h2>直接依存</h2>
+<ul>
+<li>ソースファイル内にC言語のインクルードや直接のファイル依存はありません。PostgreSQLのisolationテスト仕様書フォーマットに依存しています。</li>
+</ul>
+<h2>関連コード</h2>
+<ul>
+<li><code>src/test/isolation/</code>: 本テストファイルを実行する isolation テストランナーおよびその他の並行性テスト仕様群。</li>
+<li>PostgreSQLのロックマネージャ関連ソースコード（<code>src/backend/storage/lmgr/</code>）：タプルロックやアドバイザリロックの実装本体。</li>
+</ul>
+<h2>読者向けメモ</h2>
+<ul>
+<li>このファイルは直接実行されるスクリプトではなく、isolation テストスイートのビルドプロセスにおいてパースされるDSL（ドメイン固有言語）ファイルです。</li>
+<li><code>s1_advunlockN</code> に付与されているブロッカーアノテーション（例: <code>(s2_update)</code>）の仕組みを理解することが、テストの意図（どの競合状態を意図的に再現・検証しているか）を読み解くカギとなります。</li>
+</ul><script>
+(function() {
+  function notifyParent() {
+    if (parent === window) return;
+    parent.postMessage({type: "frame-location", frame: window.name || "", href: window.location.href}, "*");
+  }
+  document.addEventListener("click", function(event) {
+    const link = event.target.closest("a[data-panel]");
+    if (!link || parent === window) return;
+    parent.postMessage({type: "source-link", panel: link.dataset.panel}, "*");
+  });
+  window.addEventListener("load", notifyParent);
+  window.addEventListener("hashchange", notifyParent);
+})();
+</script></body></html>

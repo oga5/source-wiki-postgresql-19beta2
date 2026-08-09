@@ -1,75 +1,65 @@
 <!doctype html>
 <html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>src/include/varatt.h.md</title><link rel="stylesheet" href="../../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../../source/src/include/varatt.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/varatt.h.html&quot;}, '*');">src/include/varatt.h</a></h1>
 <h2>概要</h2>
-<p>PostgreSQL における可変長データ型（<code>varlena</code>）および TOAST（The Oversized-Attribute Storage Technique）機構の基礎構造と操作マクロを定義するヘッダーファイルです。タプル内外における可変長データのレイアウト、圧縮状態、外部参照（TOASTポインタ）、インメモリ参照、および展開オブジェクト（Expanded Object）の識別を担います。</p>
+<p>PostgreSQL の可変長データ型（<code>varlena</code>）および TOAST（The Oversized-Attribute Storage Technique）機構をサポートするためのヘッダーファイル。インライン圧縮、ショートヘッダー、および各種外部参照ポインタ（TOAST ポインタ）のレイアウト、マクロ、インライン関数を定義する。</p>
 <h2>モジュール内での役割</h2>
-<p><code>src/include</code> モジュール内において、データ型ストレージとタプルフォーマットの根幹を支える低水準ヘッダーとして機能します。ディスク上の物理表現とメモリ上の論理表現を橋渡しし、データアクセス基盤（<code>access/tupdesc.h</code> やエグゼキュータ等）から参照されます。</p>
+<p><a class="wiki-source-link" href="../../../source/src/include/postgres.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/postgres.h.html&quot;}, '*');"><code>src/include/postgres.h</code></a> やその他のデータ型定義の基盤として機能し、データがタプル内でどのように格納・参照されているかを解釈するための共通インターフェースを提供する。</p>
 <h2>責務</h2>
 <ul>
-<li>**可変長データ構造の定義**: 4バイト長、1バイト長（短縮形）、圧縮インライン、および外部ポインタの各ヘッダー構造体を定義する。</li>
-<li>**エンディアン依存のビット操作**: ビッグエンディアンおよびリトルエンディアン環境に対応した、ヘッダーフラグのマスク・シフト処理を提供する。</li>
-<li>**TOASTポインタの分類**: ディスク上（ONDISK）、インメモリ間接（INDIRECT）、および展開済みオブジェクト（RO/RW）のタグとサイズを管理する。</li>
-<li>**アクセサとインライン関数群**: あらゆる形式の <code>varlena</code> データに対するサイズ取得、データポインタ取得、圧縮状態判定、形式変換を行う。</li>
+<li>**可変長ヘッダーの定義**: 4バイト（通常および圧縮済み）、1バイト（ショート）、1バイト＋タグ（TOAST ポインタ）の各データ構造のレイアウト定義。</li>
+<li>**エンディアン依存のビット操作**: ビッグエンディアンおよびリトルエンディアン環境におけるヘッダーフラグのマスク・シフト処理の隠蔽。</li>
+<li>**TOAST ポインタの分類と管理**: オンディスク、インメモリ（間接参照）、および展開済みオブジェクト（RO/RW）のタグ付けとサイズ計算。</li>
+<li>**アクセサおよびセッターの提供**: データのサイズ、データ本体へのポインタ、圧縮状態を安全に取得・設定するインライン関数の提供。</li>
 </ul>
 <h2>重要なシンボル</h2>
-<h3>外部ポインタおよび展開オブジェクト関連</h3>
+<h3>TOAST ポインタとタグ関連</h3>
 <ul>
-<li><code>struct varatt_external</code>: ディスク上のTOASTテーブルに格納されたデータへのポインタ構造体。パディングを含まず、<code>memcmp</code> による比較が可能。</li>
-<li><code>struct varatt_indirect</code>: メモリ上の別領域にある <code>varlena</code> への間接ポインタ。</li>
-<li><code>struct varatt_expanded</code>: ค゚ンプテーション用に展開されたオブジェクト（<code>ExpandedObjectHeader</code>）へのポインタ。</li>
-<li><code>enum vartag_external</code>: TOASTポインタの種別タグ（<a class="wiki-source-link" href="../../../source/src/include/varatt.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__varatt_h__VARTAG_INDIRECT.html&quot;}, '*');"><code>VARTAG_INDIRECT</code></a>, <a class="wiki-source-link" href="../../../source/src/include/varatt.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__varatt_h__VARTAG_EXPANDED_RO.html&quot;}, '*');"><code>VARTAG_EXPANDED_RO</code></a>, <a class="wiki-source-link" href="../../../source/src/include/varatt.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__varatt_h__VARTAG_EXPANDED_RW.html&quot;}, '*');"><code>VARTAG_EXPANDED_RW</code></a>, <a class="wiki-source-link" href="../../../source/src/include/varatt.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__varatt_h__VARTAG_ONDISK.html&quot;}, '*');"><code>VARTAG_ONDISK</code></a>）。</li>
-<li><code>VARTAG_IS_EXPANDED()</code>: 指定タグが展開オブジェクトであるかを判定するインライン関数。</li>
-<li><code>VARTAG_SIZE()</code>: タグ種別に応じたポインタデータのサイズを返すインライン関数。</li>
+<li><code>function VARTAG_EXPANDED_RO</code>: 読み取り専用の展開済みオブジェクト用 TOAST ポインタタグ。</li>
+<li><code>function VARTAG_EXPANDED_RW</code>: 読み取り読み書き可能な展開済みオブジェクト用 TOAST ポインタタグ。</li>
+<li><code>function VARTAG_INDIRECT</code>: メモリ上の別領域を指す間接参照ポインタのタグ。</li>
+<li><code>enum vartag_external</code>: TOAST ポインタの種類を表す列挙型（<a class="wiki-source-link" href="../../../source/src/include/varatt.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__varatt_h__VARTAG_INDIRECT.html&quot;}, '*');"><code>VARTAG_INDIRECT</code></a>, <a class="wiki-source-link" href="../../../source/src/include/varatt.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__varatt_h__VARTAG_EXPANDED_RO.html&quot;}, '*');"><code>VARTAG_EXPANDED_RO</code></a>, <a class="wiki-source-link" href="../../../source/src/include/varatt.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__varatt_h__VARTAG_EXPANDED_RW.html&quot;}, '*');"><code>VARTAG_EXPANDED_RW</code></a>, <a class="wiki-source-link" href="../../../source/src/include/varatt.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__varatt_h__VARTAG_ONDISK.html&quot;}, '*');"><code>VARTAG_ONDISK</code></a>）。</li>
 </ul>
-<h3>可変長ヘッダーおよびストレージ構造</h3>
+<h3>データ構造とレイアウト</h3>
 <ul>
-<li><a class="wiki-source-link" href="../../../source/src/include/varatt.h.html#L126" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__varatt_h__varattrib_4b.html&quot;}, '*');"><code>varattrib_4b</code></a>: 通常の4バイト長、またはインライン圧縮データのユニオン。</li>
-<li><a class="wiki-source-link" href="../../../source/src/include/varatt.h.html#L142" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__varatt_h__varattrib_1b.html&quot;}, '*');"><code>varattrib_1b</code></a>: 1バイト長（短縮形）のデータ構造体。</li>
-<li><a class="wiki-source-link" href="../../../source/src/include/varatt.h.html#L149" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__varatt_h__varattrib_1b_e.html&quot;}, '*');"><code>varattrib_1b_e</code></a>: 1バイト長ヘッダーを持つ TOAST ポインタの構造体（タグバイトを含む）。</li>
-</ul>
-<h3>判定・アクセサ関数ファミリー</h3>
-<ul>
-<li><code>VARSIZE()</code>, <code>VARDATA()</code>: 既知の非トースト4バイトデータ用アクセサ。</li>
-<li><code>VARSIZE_SHORT()</code>, <code>VARDATA_SHORT()</code>: 短縮形1バイトデータ用アクセサ。</li>
-<li><code>VARSIZE_ANY()</code>, <code>VARDATA_ANY()</code>: 任意の形式の <code>varlena</code> に安全に対応するサイズ・データ取得アクセサ。</li>
-<li><code>VARATT_IS_COMPRESSED()</code>, <code>VARATT_IS_EXTERNAL()</code>, <code>VARATT_IS_SHORT()</code>: データの格納形式を判定するインライン関数群。</li>
-<li><code>VARATT_IS_EXTERNAL_ONDISK()</code>, <code>VARATT_IS_EXTERNAL_INDIRECT()</code>, <code>VARATT_IS_EXTERNAL_EXPANDED()</code>: 外部ポインタの細目種別を判定するインライン関数群。</li>
-<li><code>SET_VARSIZE()</code>, <code>SET_VARSIZE_SHORT()</code>, <code>SET_VARSIZE_COMPRESSED()</code>: 各種ヘッダーのサイズとフラグを設定するインライン関数。</li>
+<li><code>struct varatt_external</code>: ディスク上の TOAST テーブルに格納された値へのポインタ（生データサイズ、拡張サイズ・圧縮法、値ID、TOASTリレーションIDを含む）。パディングなし。</li>
+<li><code>struct varatt_indirect</code>: インメモリの <code>varlena</code> へのポインタを保持する構造体。</li>
+<li><code>struct ExpandedObjectHeader</code>: 展開済みオブジェクトヘッダーの前方宣言（実体は <a class="wiki-source-link" href="../../../source/src/include/utils/expandeddatum.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/utils/expandeddatum.h.html&quot;}, '*');"><code>src/include/utils/expandeddatum.h</code></a>）。</li>
+<li><code>struct varatt_expanded</code>: 展開済みオブジェクトヘッダーへのポインタ (<code>ExpandedObjectHeader *eohptr</code>) を保持する構造体。</li>
+<li><code>struct varattrib_4b</code>: 4バイトヘッダーを持つ通常またはインライン圧縮された varlena のユニオン構造。</li>
+<li><code>struct uint32</code>: （文脈上のプリミティブ型定義の補助）。</li>
+<li><code>struct varattrib_1b</code>: 1バイトヘッダーを持つショート varlena の構造体。</li>
+<li><code>struct varattrib_1b_e</code>: 1バイトヘッダーとタグバイトを持つ外部 TOAST ポインタの構造体。</li>
 </ul>
 <h2>制御フローとデータフロー</h2>
 <ul>
-<li>**任意の varlena データの解析フロー**:</li>
-<p>1. <code>VARATT_IS_1B_E(PTR)</code> で外部 TOAST ポインタか判定し、真なら <a class="wiki-source-link" href="../../../source/src/include/varatt.h.html#L332" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__varatt_h__VARSIZE_EXTERNAL.html&quot;}, '*');"><code>VARSIZE_EXTERNAL</code></a> / <a class="wiki-source-link" href="../../../source/src/include/varatt.h.html#L339" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__varatt_h__VARDATA_EXTERNAL.html&quot;}, '*');"><code>VARDATA_EXTERNAL</code></a> を適用する。 2. <code>VARATT_IS_1B(PTR)</code> で1バイト短縮形か判定し、真なら <a class="wiki-source-link" href="../../../source/src/include/varatt.h.html#L211" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/varatt.h.html&quot;}, '*');"><code>VARSIZE_1B</code></a> / <a class="wiki-source-link" href="../../../source/src/include/varatt.h.html#L263" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/varatt.h.html&quot;}, '*');"><code>VARDATA_1B</code></a> を適用する。 3. それ以外の場合は4バイト標準／圧縮フォーマットとして扱い、<a class="wiki-source-link" href="../../../source/src/include/varatt.h.html#L209" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/varatt.h.html&quot;}, '*');"><code>VARSIZE_4B</code></a> / <a class="wiki-source-link" href="../../../source/src/include/varatt.h.html#L261" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/varatt.h.html&quot;}, '*');"><code>VARDATA_4B</code></a> を適用する。</p>
-<li>**圧縮情報の抽出**:</li>
-<p>インライン圧縮データでは <code>va_tcinfo</code> から、外部ポインタでは <code>va_extinfo</code> から、ビットシフトとマスク（<a class="wiki-source-link" href="../../../source/src/include/varatt.h.html#L46" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/varatt.h.html&quot;}, '*');"><code>VARLENA_EXTSIZE_MASK</code></a>）によって元の生データサイズと圧縮方式ID（PGLZ / LZ4）を分離・取得します。</p>
+<li>**データ型判定のフロー**: <code>VARATT_IS_EXTERNAL(PTR)</code> により外部ポインタか判定され、外部である場合は <code>VARTAG_EXTERNAL(PTR)</code> でタグを取得して <code>VARTAG_SIZE()</code> でサイズを決定する。非外部の場合は <code>VARATT_IS_SHORT(PTR)</code> に応じて 4 バイトまたは 1 バイトのヘッダー解析に分岐する。</li>
+<li>**アライメントとメモリコピー**: <a class="wiki-source-link" href="../../../source/src/include/varatt.h.html#L32" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__varatt_h__varatt_external.html&quot;}, '*');"><code>varatt_external</code></a> や <a class="wiki-source-link" href="../../../source/src/include/varatt.h.html#L57" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__varatt_h__varatt_indirect.html&quot;}, '*');"><code>varatt_indirect</code></a> などの構造体はタプル内でアライメントされていないため、フィールドにアクセスする前にローカル変数へ <a class="wiki-source-link" href="../../../source/src/include/utils/hsearch.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__utils__hsearch_h__memcpy.html&quot;}, '*');"><code>memcpy</code></a> する必要がある（等価性比較には <code>memcmp</code> が利用される）。</li>
 </ul>
 <h2>直接依存</h2>
-<p>直接的なインクルード文はありませんが、マクロおよびインライン関数はコンパイル時の定義（<code>WORDS_BIGENDIAN</code> や <a class="wiki-source-link" href="../../../source/src/include/c.h.html#L565" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/c.h.html&quot;}, '*');"><code>FLEXIBLE_ARRAY_MEMBER</code></a> 等、通常 <a class="wiki-source-link" href="../../../source/src/include/c.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/c.h.html&quot;}, '*');"><code>c.h</code></a> / <a class="wiki-source-link" href="../../../source/src/include/postgres.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/postgres.h.html&quot;}, '*');"><code>postgres.h</code></a> から提供されるもの）に依存します。</p>
+<p>（ソース内に <code>#include</code> ディレクティブは存在しない）</p>
 <h2>関連コード</h2>
 <ul>
-<li><a class="wiki-source-link" href="../../../source/src/include/postgres.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/postgres.h.html&quot;}, '*');"><code>src/include/postgres.h</code></a>: 基本的な型定義やアラインメントマクロ。</li>
-<li><a class="wiki-source-link" href="../../../source/src/include/utils/expandeddatum.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/utils/expandeddatum.h.html&quot;}, '*');"><code>src/include/utils/expandeddatum.h</code></a>: 展開オブジェクトヘッダー（<code>ExpandedObjectHeader</code>）の定義元。</li>
-<li>TOAST関連の実装ファイル（例: <a class="wiki-source-link" href="../../../source/src/backend/access/common/toast_internals.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/access/common/toast_internals.c.html&quot;}, '*');"><code>src/backend/access/common/toast_internals.c</code></a> など）。</li>
+<li><a class="wiki-source-link" href="../../../source/src/include/utils/expandeddatum.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/utils/expandeddatum.h.html&quot;}, '*');"><code>src/include/utils/expandeddatum.h</code></a>: 展開済みオブジェクトヘッダー (<code>ExpandedObjectHeader</code>) の定義元。</li>
 </ul>
 <h2>読者向けメモ</h2>
 <ul>
-<li>**メモリ配置とアラインメント**: <a class="wiki-source-link" href="../../../source/src/include/varatt.h.html#L32" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__varatt_h__varatt_external.html&quot;}, '*');"><code>varatt_external</code></a>、<a class="wiki-source-link" href="../../../source/src/include/varatt.h.html#L57" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__varatt_h__varatt_indirect.html&quot;}, '*');"><code>varatt_indirect</code></a>、<a class="wiki-source-link" href="../../../source/src/include/varatt.h.html#L74" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__varatt_h__varatt_expanded.html&quot;}, '*');"><code>varatt_expanded</code></a> はタプル内で非アライン（unaligned）で格納される場合があります。そのため、フィールドにアクセスする前にローカル変数へ <a class="wiki-source-link" href="../../../source/src/include/utils/hsearch.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__utils__hsearch_h__memcpy.html&quot;}, '*');"><code>memcpy</code></a> する必要があります。</li>
-<li>**パディングの不変条件**: パディングバイトは必ずゼロで埋められることが要求されます。これにより、1バイト長ワードがゼロでない性質を利用して、パディングと未アラインデータ先頭を区別しています。</li>
+<li>**メモリ配置**: <a class="wiki-source-link" href="../../../source/src/include/varatt.h.html#L32" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__varatt_h__varatt_external.html&quot;}, '*');"><code>varatt_external</code></a> や TOAST ポインタはタプル内で非アライメント（unaligned）に格納されるため、直接構造体キャストしてマルチバイトフィールドを読み取ることはアライメント違反を引き起こす可能性がある点に注意。</li>
+<li>**エンディアン**: ヘッダーのフラグビットはビッグエンディアンとリトルエンディアンで配置が異なり、マクロによって切り替えられる。</li>
 </ul>
 <h2>シンボルページ</h2>
 <ul>
+<li><a href="../../symbols/src__include__varatt_h__VARTAG_EXPANDED_RO.html" target="wiki-view"><code>VARTAG_EXPANDED_RO</code></a></li>
+<li><a href="../../symbols/src__include__varatt_h__VARTAG_EXPANDED_RW.html" target="wiki-view"><code>VARTAG_EXPANDED_RW</code></a></li>
+<li><a href="../../symbols/src__include__varatt_h__VARTAG_INDIRECT.html" target="wiki-view"><code>VARTAG_INDIRECT</code></a></li>
 <li><a href="../../symbols/src__include__varatt_h__varatt_external.html" target="wiki-view"><code>varatt_external</code></a></li>
 <li><a href="../../symbols/src__include__varatt_h__varatt_indirect.html" target="wiki-view"><code>varatt_indirect</code></a></li>
 <li><a href="../../symbols/src__include__varatt_h__ExpandedObjectHeader.html" target="wiki-view"><code>ExpandedObjectHeader</code></a></li>
 <li><a href="../../symbols/src__include__varatt_h__varatt_expanded.html" target="wiki-view"><code>varatt_expanded</code></a></li>
 <li><a href="../../symbols/src__include__varatt_h__vartag_external.html" target="wiki-view"><code>vartag_external</code></a></li>
-<li><a href="../../symbols/src__include__varatt_h__VARTAG_IS_EXPANDED.html" target="wiki-view"><code>VARTAG_IS_EXPANDED</code></a></li>
-<li><a href="../../symbols/src__include__varatt_h__VARTAG_SIZE.html" target="wiki-view"><code>VARTAG_SIZE</code></a></li>
 <li><a href="../../symbols/src__include__varatt_h__varattrib_4b.html" target="wiki-view"><code>varattrib_4b</code></a></li>
 <li><a href="../../symbols/src__include__varatt_h__uint32.html" target="wiki-view"><code>uint32</code></a></li>
 <li><a href="../../symbols/src__include__varatt_h__varattrib_1b.html" target="wiki-view"><code>varattrib_1b</code></a></li>
 <li><a href="../../symbols/src__include__varatt_h__varattrib_1b_e.html" target="wiki-view"><code>varattrib_1b_e</code></a></li>
-<li><a href="../../symbols/src__include__varatt_h__VARSIZE_SHORT.html" target="wiki-view"><code>VARSIZE_SHORT</code></a></li>
 </ul><script>
 (function() {
   function notifyParent() {

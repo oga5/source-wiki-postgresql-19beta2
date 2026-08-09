@@ -34,7 +34,7 @@
 <h2>関連データ構造</h2>
 <p><a class="wiki-source-link" href="../../source/src/interfaces/ecpg/test/expected/preproc-init.c.html#L82" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__interfaces__ecpg__test__expected__preproc-init_c__e.html&quot;}, '*');"><code>e</code></a>, <code>stat</code></p>
 <h2>ソース抜粋</h2>
-<p>~~~c static int <a class="wiki-source-link" href="../../source/src/port/mkdtemp.c.html#L93" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__port__mkdtemp_c__GETTEMP.html&quot;}, '*');">GETTEMP</a>(char *path, int *doopen, int domkdir) { char	   *start, *trv; struct stat sbuf; u_int		pid;</p>
+<p>~~~c static int <a class="wiki-source-link" href="../../source/src/port/mkdtemp.c.html#L93" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__port__mkdtemp_c__GETTEMP.html&quot;}, '*');">GETTEMP</a>(char *path, int *doopen, int domkdir) { char	   *start, *trv; struct stat sbuf; u_int		<a class="wiki-source-link" href="../../source/src/include/c.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/c.h.html&quot;}, '*');">pid</a>;</p>
 <p>/*</p>
 <ul>
 <li>To guarantee multiple calls generate unique names even if the file <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a></li>
@@ -43,10 +43,10 @@
 <p>*/ static char xtra[2] = &quot;aa&quot;; int			xcnt = 0;</p>
 </ul>
 <p><a class="wiki-source-link" href="../../source/src/port/mkdtemp.c.html#L21" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/port/mkdtemp.c.html&quot;}, '*');">_DIAGASSERT</a>(path != NULL); /* doopen may be NULL */</p>
-<p>pid = getpid();</p>
+<p><a class="wiki-source-link" href="../../source/src/include/c.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/c.h.html&quot;}, '*');">pid</a> = getpid();</p>
 <p>/* Move to end of path and count trailing X&#x27;s. */ for (trv = path; *trv; ++trv) if (*trv == &#x27;X&#x27;) xcnt++; else xcnt = 0;</p>
 <p>/* Use at least one from xtra.  Use 2 if more than 6 X&#x27;s. */ if (xcnt &gt; 0) { *--trv = xtra[0]; xcnt--; } if (xcnt &gt; 5) { *--trv = xtra[1]; xcnt--; }</p>
-<p>/* Set remaining X&#x27;s to pid digits with 0&#x27;s to the left. */ for (; xcnt &gt; 0; xcnt--) { *--trv = (pid % 10) + &#x27;0&#x27;; pid /= 10; }</p>
+<p>/* Set remaining X&#x27;s to <a class="wiki-source-link" href="../../source/src/include/c.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/c.h.html&quot;}, '*');">pid</a> digits with 0&#x27;s to the left. */ for (; xcnt &gt; 0; xcnt--) { *--trv = (<a class="wiki-source-link" href="../../source/src/include/c.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/c.h.html&quot;}, '*');">pid</a> % 10) + &#x27;0&#x27;; <a class="wiki-source-link" href="../../source/src/include/c.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/c.h.html&quot;}, '*');">pid</a> /= 10; }</p>
 <p>/* update xtra for next call. */ if (xtra[0] != &#x27;z&#x27;) xtra[0]++; else { xtra[0] = &#x27;a&#x27;; if (xtra[1] != &#x27;z&#x27;) xtra[1]++; else xtra[1] = &#x27;a&#x27;; }</p>
 <p>/* ~~~</p>
 <h2>失敗モードと境界条件</h2>

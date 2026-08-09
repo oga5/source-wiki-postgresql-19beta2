@@ -15,7 +15,7 @@
 <h2>入力と出力</h2>
 <ul>
 <li>引数: <code>const char *fn</code></li>
-<li>戻り値: <a class="wiki-source-link" href="../../source/src/include/access/tupmacs.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__access__tupmacs_h__bool.html&quot;}, '*');"><code>bool</code></a></li>
+<li>戻り値: <code>bool</code></li>
 </ul>
 <h2>前提条件と不変条件</h2>
 <p>まだ解析していません。</p>
@@ -34,7 +34,7 @@
 <h2>関連データ構造</h2>
 <p>なし</p>
 <h2>ソース抜粋</h2>
-<p>~~~c static <a class="wiki-source-link" href="../../source/src/include/access/tupmacs.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__access__tupmacs_h__bool.html&quot;}, '*');">bool</a> <a class="wiki-source-link" href="../../source/src/bin/pg_checksums/pg_checksums.c.html#L157" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__bin__pg_checksums__pg_checksums_c__skipfile.html&quot;}, '*');">skipfile</a>(const char *fn) { int			excludeIdx;</p>
+<p>~~~c static bool <a class="wiki-source-link" href="../../source/src/bin/pg_checksums/pg_checksums.c.html#L157" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__bin__pg_checksums__pg_checksums_c__skipfile.html&quot;}, '*');">skipfile</a>(const char *fn) { int			excludeIdx;</p>
 <p>for (excludeIdx = 0; skip[excludeIdx].name != NULL; excludeIdx++) { int			cmplen = strlen(skip[excludeIdx].name);</p>
 <p>if (!skip[excludeIdx].match_prefix) cmplen++; if (<a class="wiki-source-link" href="../../source/src/include/utils/hsearch.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__utils__hsearch_h__strncmp.html&quot;}, '*');">strncmp</a>(skip[excludeIdx].name, fn, cmplen) == 0) return <a class="wiki-source-link" href="../../source/src/tools/pg_bsd_indent/indent_globs.h.html#L46" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/tools/pg_bsd_indent/indent_globs.h.html&quot;}, '*');">true</a>; }</p>
 <p>return <a class="wiki-source-link" href="../../source/src/tools/pg_bsd_indent/indent_globs.h.html#L43" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/tools/pg_bsd_indent/indent_globs.h.html&quot;}, '*');">false</a>; } ~~~</p>

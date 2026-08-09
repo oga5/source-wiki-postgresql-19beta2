@@ -28,7 +28,7 @@
 <h2>関連データ構造</h2>
 <p><a class="wiki-source-link" href="../../source/src/include/storage/bufmgr.h.html#L26" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__storage__bufmgr_h__Block.html&quot;}, '*');"><code>Block</code></a>, <code>BlockRefTable</code>, <code>JsonManifestParseIncrementalState</code>, <code>List</code>, <code>MemoryContext</code>, <a class="wiki-source-link" href="../../source/src/include/lib/stringinfo.h.html#L46" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__lib__stringinfo_h__StringInfoData.html&quot;}, '*');"><code>StringInfoData</code></a></p>
 <h2>ソース抜粋</h2>
-<p>~~~c struct IncrementalBackupInfo { /* Memory context for this object and its subsidiary objects. */ MemoryContext mcxt;</p>
+<p>~~~c struct IncrementalBackupInfo { /* Memory context for this <a class="wiki-source-link" href="../../source/src/include/utils/jsonb.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__utils__jsonb_h__object.html&quot;}, '*');">object</a> and its subsidiary objects. */ MemoryContext mcxt;</p>
 <p>/* Temporary buffer for storing the <a class="wiki-source-link" href="../../source/src/bin/pg_basebackup/pg_basebackup.c.html#L154" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/bin/pg_basebackup/pg_basebackup.c.html&quot;}, '*');">manifest</a> while parsing it. */ <a class="wiki-source-link" href="../../source/src/include/lib/stringinfo.h.html#L46" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__lib__stringinfo_h__StringInfoData.html&quot;}, '*');">StringInfoData</a> buf;</p>
 <p>/* WAL ranges extracted from the backup <a class="wiki-source-link" href="../../source/src/bin/pg_basebackup/pg_basebackup.c.html#L154" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/bin/pg_basebackup/pg_basebackup.c.html&quot;}, '*');">manifest</a>. */ List	   *manifest_wal_ranges;</p>
 <p>/*</p>
@@ -38,7 +38,7 @@
 <li>We don&#x27;t really need this information, because we use WAL summaries to</li>
 <li>figure out what&#x27;s changed. It would be unsafe to just rely on the list</li>
 <li>of files that existed <a class="wiki-source-link" href="../../source/src/backend/regex/regc_locale.c.html#L487" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__regex__regc_locale_c__before.html&quot;}, '*');">before</a>, because it&#x27;s possible for a file to be</li>
-<li>removed and a new one created with the same name and different</li>
+<li>removed and a new one created with the same <a class="wiki-source-link" href="../../source/src/include/mb/pg_wchar.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/mb/pg_wchar.h.html&quot;}, '*');">name</a> and different</li>
 <li>contents. In such cases, the whole file must still be sent. We can tell</li>
 <li>from the WAL summaries whether that happened, but not from the file</li>
 <li>list.</li>
@@ -70,7 +70,7 @@
 </ul>
 <p>/*</p>
 <ul>
-<li>State object for incremental JSON parsing</li>
+<li>State <a class="wiki-source-link" href="../../source/src/include/utils/jsonb.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__utils__jsonb_h__object.html&quot;}, '*');">object</a> for incremental JSON parsing</li>
 <p>*/ JsonManifestParseIncrementalState *inc_state; }; ~~~</p>
 </ul>
 <h2>失敗モードと境界条件</h2>

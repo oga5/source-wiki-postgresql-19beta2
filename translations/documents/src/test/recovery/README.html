@@ -1,0 +1,24 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>src/test/recovery/README</title><link rel="stylesheet" href="../../../../../styles.css"></head><body><h1>Japanese translation</h1><p><code>src/test/recovery/README</code></p><p><a href="../../../../../source/src/test/recovery/README.html" target="source-view">View original document</a></p><p class="document-translation-progress document-translation-complete">Translation complete.</p><div class="document-translation-body"><section class="document-translation-chunk translated" data-chunk-order="0"><p>src/test/recovery/README</p>
+<p>リカバリとレプリケーションの回帰テスト =============================================</p>
+<p>このディレクトリには、リカバリとレプリケーションのテストスイートが含まれています。</p>
+<p>テストの実行 =================</p>
+<p>注意: configureに--enable-tap-tests引数を与えている必要があります。 また、&quot;make installcheck&quot;を使用するには、コアコードに加えて contrib/pg_prewarm、contrib/pg_stat_statements、およびcontrib/test_decoding をビルドしてインストールしておく必要があります。</p>
+<p>以下を実行します。 make check または make installcheck 事前に&quot;make install&quot;を行っている場合は、&quot;make installcheck&quot;を使用できます。 その場合、インストールツリー内のコードがテストされます。&quot;make check&quot;を使用すると、 現在のソースから一時的なインストールツリーが構築され、それがテストされます。</p>
+<p>どちらの方法でも、このテストは複数のテスト用Postgresクラスターを初期化、起動、および停止します。</p>
+<p>WALの一貫性チェックをテストしたい場合は、&quot;make&quot;コマンドに PG_TEST_EXTRA=wal_consistency_checking を追加してください。これはリソースを大量に消費するため、デフォルトでは行われません。</p>
+<p>これらのテストの実行に関する詳細については、src/test/perl/READMEを参照してください。</p></section></div><script>
+(function() {
+  function notifyParent() {
+    if (parent === window) return;
+    parent.postMessage({type: "frame-location", frame: window.name || "", href: window.location.href}, "*");
+  }
+  document.addEventListener("click", function(event) {
+    const link = event.target.closest("a[data-panel]");
+    if (!link || parent === window) return;
+    parent.postMessage({type: "source-link", panel: link.dataset.panel}, "*");
+  });
+  window.addEventListener("load", notifyParent);
+  window.addEventListener("hashchange", notifyParent);
+})();
+</script></body></html>

@@ -28,21 +28,21 @@
 <h2>関連データ構造</h2>
 <p><a class="wiki-source-link" href="../../source/src/include/nodes/queryjumble.h.html#L22" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__nodes__queryjumble_h__LocationLen.html&quot;}, '*');"><code>LocationLen</code></a>, <code>Size</code></p>
 <h2>ソース抜粋</h2>
-<p>~~~c typedef struct JumbleState { /* Jumble of current query tree */ unsigned char *jumble;</p>
+<p>~~~c <a class="wiki-source-link" href="../../source/src/include/fmgr.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/fmgr.h.html&quot;}, '*');">typedef</a> struct JumbleState { /* Jumble of current query tree */ unsigned char *jumble;</p>
 <p>/* Number of bytes used in jumble[] */ Size		jumble_len;</p>
 <p>/* Array of locations of constants that should be removed */ <a class="wiki-source-link" href="../../source/src/include/nodes/queryjumble.h.html#L22" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__nodes__queryjumble_h__LocationLen.html&quot;}, '*');">LocationLen</a> *clocations;</p>
-<p>/* Allocated length of clocations array */ int			clocations_buf_size;</p>
-<p>/* Current number of valid entries in clocations array */ int			clocations_count;</p>
+<p>/* Allocated <a class="wiki-source-link" href="../../source/src/include/nodes/pg_list.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/nodes/pg_list.h.html&quot;}, '*');">length</a> of clocations <a class="wiki-source-link" href="../../source/src/include/utils/jsonb.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__utils__jsonb_h__array.html&quot;}, '*');">array</a> */ int			clocations_buf_size;</p>
+<p>/* Current number of valid entries in clocations <a class="wiki-source-link" href="../../source/src/include/utils/jsonb.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__utils__jsonb_h__array.html&quot;}, '*');">array</a> */ int			clocations_count;</p>
 <p>/*</p>
 <ul>
-<li>ID of the highest <a class="wiki-source-link" href="../../source/src/include/nodes/params.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__nodes__params_h__PARAM_EXTERN.html&quot;}, '*');">PARAM_EXTERN</a> parameter we&#x27;ve seen in the query; used</li>
+<li>ID of the highest PARAM_EXTERN parameter we&#x27;ve seen in the query; used</li>
 <li>to start normalization correctly.  However, if there are any squashed</li>
 <li>lists in the query, we disregard query-supplied parameter numbers and</li>
 <li>renumber everything.  This <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> to avoid possible gaps caused by</li>
 <li>squashing in case any <a class="wiki-source-link" href="../../source/src/include/nodes/params.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__nodes__params_h__params.html&quot;}, '*');">params</a> are in squashed lists.</li>
 <p>*/ int			highest_extern_param_id;</p>
 </ul>
-<p>/* Whether squashable lists are present */ <a class="wiki-source-link" href="../../source/src/include/access/tupmacs.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__access__tupmacs_h__bool.html&quot;}, '*');">bool</a>		has_squashed_lists;</p>
+<p>/* Whether squashable lists are present */ bool		has_squashed_lists;</p>
 <p>/*</p>
 <ul>
 <li>Count of the number of NULL nodes seen since last appending a value.</li>

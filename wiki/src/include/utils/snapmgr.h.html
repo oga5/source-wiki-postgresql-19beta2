@@ -1,0 +1,60 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>src/include/utils/snapmgr.h.md</title><link rel="stylesheet" href="../../../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../../../source/src/include/utils/snapmgr.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/utils/snapmgr.h.html&quot;}, '*');">src/include/utils/snapmgr.h</a></h1>
+<h2>概要</h2>
+<p>PostgreSQLのトランザクションおよびクエリ実行におけるスナップショットの管理を行うヘッダーファイルです。可視性判定（MVCC）に利用されるスナップショットの取得、アクティブスナップショットスタックの操作、リソースオーナーを介した登録・解放、およびエクスポート／インポート機能のインターフェースを定義します。</p>
+<h2>モジュール内での役割</h2>
+<p><code>src/include/utils</code> モジュールおよびアクセスメソッドレイヤーに属し、タプル可視性チェックの前提となるスナップショット状態を全バックエンドプロセスに提供します。実体や複雑なライフサイクル管理はペアとなる <a class="wiki-source-link" href="../../../../source/src/backend/utils/time/snapmgr.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/utils/time/snapmgr.c.html&quot;}, '*');"><code>src/backend/utils/time/snapmgr.c</code></a> に委譲されています。</p>
+<h2>責務</h2>
+<ul>
+<li>トランザクションスナップショット、カタログスナップショット、最新スナップショットなどの取得インターフェースの公開。</li>
+<li><code>PushActiveSnapshot</code> や <code>PopActiveSnapshot</code> によるアクティブスナップショットスタックの維持管理。</li>
+<li><a class="wiki-source-link" href="../../../../source/src/backend/utils/time/snapmgr.c.html#L823" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__utils__time__snapmgr_c__RegisterSnapshot.html&quot;}, '*');"><code>RegisterSnapshot</code></a> 等を通じた持続的メモリ上のスナップショット参照カウントとリソースオーナー連携の定義。</li>
+<li><a class="wiki-source-link" href="../../../../source/src/include/utils/snapmgr.h.html#L32" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/utils/snapmgr.h.html&quot;}, '*');"><code>SnapshotSelf</code></a> や <a class="wiki-source-link" href="../../../../source/src/include/utils/snapmgr.h.html#L33" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/utils/snapmgr.h.html&quot;}, '*');"><code>SnapshotAny</code></a> といった特殊スナップショット、および <a class="wiki-source-link" href="../../../../source/src/include/utils/snapmgr.h.html#L42" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/utils/snapmgr.h.html&quot;}, '*');"><code>InitDirtySnapshot</code></a> 等の初期化マクロの提供。</li>
+</ul>
+<h2>重要なシンボル</h2>
+<ul>
+<li><code>GetTransactionSnapshot</code>: トランザクションの最初の可視性を決めるMVCCスナップショットを取得。</li>
+<li><code>GetActiveSnapshot</code>: 現在実行中のクエリやポータルで参照されるアクティブなスナップショットを返す。</li>
+<li><code>PushActiveSnapshot</code> / <code>PopActiveSnapshot</code>: アクティブスナップショットスタックへのプッシュおよびポップを行う。</li>
+<li><code>GlobalVisState</code>: プロックアレイ内容と密接にリンクした大域的可視性テストの状態構造体。</li>
+</ul>
+<h2>制御フローとデータフロー</h2>
+<p>1. **トランザクション開始時**: <code>GetTransactionSnapshot()</code> により、トランザクション全体で共有されるベースラインMVCCスナップショットが初期化・取得されます。 2. **実行コンテキスト切替時**: プランノードやポータルの実行階層が変わるたびに <code>PushActiveSnapshot()</code> で新しいスナップショットがスタックに積まれ、完了時に <code>PopActiveSnapshot()</code> で復元されます。 3. **可視性判定**: タプルアクセス時、テーブルアクセスメソッド等はアクティブスナップショットや特殊スナップショット（<a class="wiki-source-link" href="../../../../source/src/include/utils/snapmgr.h.html#L32" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/utils/snapmgr.h.html&quot;}, '*');"><code>SnapshotSelf</code></a> 等）を参照し、<a class="wiki-source-link" href="../../../../source/src/backend/utils/time/snapmgr.c.html#L1868" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__utils__time__snapmgr_c__XidInMVCCSnapshot.html&quot;}, '*');"><code>XidInMVCCSnapshot</code></a> などのヘルパーで可視性を評価します。</p>
+<h2>直接依存</h2>
+<ul>
+<li><code>access/transam.h</code></li>
+<li><code>utils/relcache.h</code></li>
+<li><code>utils/resowner.h</code></li>
+<li><code>utils/snapshot.h</code></li>
+</ul>
+<h2>関連コード</h2>
+<ul>
+<li><a class="wiki-source-link" href="../../../../source/src/backend/utils/time/snapmgr.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/utils/time/snapmgr.c.html&quot;}, '*');"><code>src/backend/utils/time/snapmgr.c</code></a>: スナップショット管理の実装本体。</li>
+<li><a class="wiki-source-link" href="../../../../source/src/backend/storage/ipc/procarray.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/storage/ipc/procarray.c.html&quot;}, '*');"><code>src/backend/storage/ipc/procarray.c</code></a>: プロセスの可視性と大域的ビジビリティ（<code>GlobalVisState</code>）の関連処理。</li>
+</ul>
+<h2>読者向けメモ</h2>
+<ul>
+<li>スタックから返されるスナップショット参照は静的に割り当てられた領域を指すため、直接保持せず <code>PushActiveSnapshot</code> や <a class="wiki-source-link" href="../../../../source/src/backend/utils/time/snapmgr.c.html#L823" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__utils__time__snapmgr_c__RegisterSnapshot.html&quot;}, '*');"><code>RegisterSnapshot</code></a> で生存期間を延長する必要があります。</li>
+</ul>
+<h2>シンボルページ</h2>
+<ul>
+<li><a href="../../../symbols/src__include__utils__snapmgr_h__GetActiveSnapshot.html" target="wiki-view"><code>GetActiveSnapshot</code></a></li>
+<li><a href="../../../symbols/src__include__utils__snapmgr_h__GetTransactionSnapshot.html" target="wiki-view"><code>GetTransactionSnapshot</code></a></li>
+<li><a href="../../../symbols/src__include__utils__snapmgr_h__PopActiveSnapshot.html" target="wiki-view"><code>PopActiveSnapshot</code></a></li>
+<li><a href="../../../symbols/src__include__utils__snapmgr_h__PushActiveSnapshot.html" target="wiki-view"><code>PushActiveSnapshot</code></a></li>
+<li><a href="../../../symbols/src__include__utils__snapmgr_h__GlobalVisState.html" target="wiki-view"><code>GlobalVisState</code></a></li>
+</ul><script>
+(function() {
+  function notifyParent() {
+    if (parent === window) return;
+    parent.postMessage({type: "frame-location", frame: window.name || "", href: window.location.href}, "*");
+  }
+  document.addEventListener("click", function(event) {
+    const link = event.target.closest("a[data-panel]");
+    if (!link || parent === window) return;
+    parent.postMessage({type: "source-link", panel: link.dataset.panel}, "*");
+  });
+  window.addEventListener("load", notifyParent);
+  window.addEventListener("hashchange", notifyParent);
+})();
+</script></body></html>

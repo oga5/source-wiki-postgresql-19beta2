@@ -3,7 +3,7 @@
 <h2>概要</h2>
 <p>PostgreSQL のシステムカタログ <code>pg_attribute</code> のスキーマ定義を行います。テーブルやリレーションの各列（属性）のメタデータを保持し、コンパイル時に <a class="wiki-source-link" href="../../../../source/src/backend/catalog/genbki.pl.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/catalog/genbki.pl.html&quot;}, '*');"><code>genbki.pl</code></a> によって BKI ファイルへ変換されます。</p>
 <h2>モジュール内での役割</h2>
-<p><code>src/include/catalog/</code> ディレクトリに位置し、各リレーションの列構成を定義する基盤カタログの一つです。<code>pg_class</code> や <code>pg_type</code> と密接に連携し、タプルディスクリプタ（TupleDesc）のベース構造を提供します。</p>
+<p><code>src/include/catalog/</code> ディレクトリに位置し、各リレーションの列構成を定義する基盤カタログの一つです。<a class="wiki-source-link" href="../../../../source/src/include/catalog/pg_class.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__catalog__pg_class_h__pg_class.html&quot;}, '*');"><code>pg_class</code></a> や <code>pg_type</code> と密接に連携し、タプルディスクリプタ（TupleDesc）のベース構造を提供します。</p>
 <h2>責務</h2>
 <ul>
 <li><code>pg_attribute</code> カタログの物理・論理レイアウト（<code>FormData_pg_attribute</code>）を定義する。</li>
@@ -29,7 +29,7 @@
 <ul>
 <li><a class="wiki-source-link" href="../../../../source/src/backend/catalog/genbki.pl.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/catalog/genbki.pl.html&quot;}, '*');"><code>src/backend/catalog/genbki.pl</code></a>: 本ヘッダーファイルを読み込んで BKI を生成するスクリプト</li>
 <li><a class="wiki-source-link" href="../../../../source/src/include/access/htup.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/access/htup.h.html&quot;}, '*');"><code>src/include/access/htup.h</code></a>: タプルディスクリプタとリレーション構造の定義</li>
-<li><a class="wiki-source-link" href="../../../../source/src/include/catalog/pg_class.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/catalog/pg_class.h.html&quot;}, '*');"><code>src/include/catalog/pg_class.h</code></a>: 親リレーションを定義するカタログ</li>
+<li><a class="wiki-source-link" href="../../../../source/src/include/catalog/pg_class.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/catalog/pg_class.h.html&quot;}, '*');"><code>src/include/catalog/pg_class.h</code></a>: 親リレーションを定義するカタログ</li>
 </ul>
 <h2>読者向けメモ</h2>
 <ul>

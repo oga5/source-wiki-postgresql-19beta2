@@ -1,0 +1,64 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>src/include/utils/jsonfuncs.h.md</title><link rel="stylesheet" href="../../../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../../../source/src/include/utils/jsonfuncs.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/utils/jsonfuncs.h.html&quot;}, '*');">src/include/utils/jsonfuncs.h</a></h1>
+<h2>概要</h2>
+<p>PostgreSQL の JSON および JSONB データ型を操作・処理するための関数群、型定義、マクロを提供するヘッダーファイルです。</p>
+<h2>モジュール内での役割</h2>
+<p><code>src/include/utils/</code> ディレクトリ配下に位置し、JSON サブシステムにおいて型変換、値の走査、構文解析、およびエラーハンドリングの共通インターフェースを公開します。</p>
+<h2>責務</h2>
+<ul>
+<li>JSON の字句解析コンテキスト（<a class="wiki-source-link" href="../../../../source/src/include/common/jsonapi.h.html#L100" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__common__jsonapi_h__JsonLexContext.html&quot;}, '*');"><code>JsonLexContext</code></a>）の生成・管理機能の宣言。</li>
+<li>JSON および JSONB 文書内の特定の要素を走査（iterate）または変換（transform）するためのコールバック型と関数の提供。</li>
+<li>SQL データ型と JSON 型の間での相互変換、および型カテゴリ分類（<code>JsonTypeCategory</code>）の定義。</li>
+<li>パースエラー時に安全なエラー通知や例外送出を行う機構の提供。</li>
+</ul>
+<h2>重要なシンボル</h2>
+<ul>
+<li><code>JsonToIndex</code>: 走査時に対象とする JSON 要素の種類（キー、文字列、数値、真偽値、すべて）を指定する列挙型。</li>
+<li><a class="wiki-source-link" href="../../../../source/src/include/utils/jsonfuncs.h.html#L35" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__utils__jsonfuncs_h__JsonIterateStringValuesAction.html&quot;}, '*');"><code>JsonIterateStringValuesAction</code></a>: 各 JSON 値を走査する際に適用されるアクション関数の型。</li>
+<li><a class="wiki-source-link" href="../../../../source/src/include/utils/jsonfuncs.h.html#L38" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__utils__jsonfuncs_h__JsonTransformStringValuesAction.html&quot;}, '*');"><code>JsonTransformStringValuesAction</code></a>: 各 JSON 値を変換する際に適用されるアクション関数の型。</li>
+<li><code>JsonTypeCategory</code>: <code>json_categorize_type</code> が返す、SQL 型を JSON 変換用に分類する列挙型。</li>
+<li><a class="wiki-source-link" href="../../../../source/src/include/utils/jsonfuncs.h.html#L47" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/utils/jsonfuncs.h.html&quot;}, '*');"><code>pg_parse_json_or_ereport</code></a>: 内部の <code>pg_parse_json_or_errsave</code> をラップし、パース失敗時にエラーを報告するマクロ。</li>
+</ul>
+<h2>制御フローとデータフロー</h2>
+<ul>
+<li>入力された <code>text</code> 型または <a class="wiki-source-link" href="../../../../source/src/include/utils/jsonb.h.html#L214" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__utils__jsonb_h__Jsonb.html&quot;}, '*');"><code>Jsonb</code></a> 型のデータに対し、<a class="wiki-source-link" href="../../../../source/src/backend/utils/adt/jsonfuncs.c.html#L542" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__utils__adt__jsonfuncs_c__makeJsonLexContext.html&quot;}, '*');"><code>makeJsonLexContext</code></a> やパース関数を用いて構文解析の準備を行います。</li>
+<li><a class="wiki-source-link" href="../../../../source/src/backend/utils/adt/jsonfuncs.c.html#L5697" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__utils__adt__jsonfuncs_c__iterate_json_values.html&quot;}, '*');"><code>iterate_json_values</code></a> や <a class="wiki-source-link" href="../../../../source/src/backend/utils/adt/jsonfuncs.c.html#L5817" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__utils__adt__jsonfuncs_c__transform_json_string_values.html&quot;}, '*');"><code>transform_json_string_values</code></a> などの関数は、指定されたフラグ（<code>JsonToIndex</code>）に基づいて文書内を巡回し、各要素に対してコールバック関数（Action）を適用します。</li>
+<li><a class="wiki-source-link" href="../../../../source/src/backend/utils/adt/json.c.html#L731" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__utils__adt__json_c__datum_to_json.html&quot;}, '*');"><code>datum_to_json</code></a> / <a class="wiki-source-link" href="../../../../source/src/backend/utils/adt/jsonb.c.html#L1116" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__utils__adt__jsonb_c__datum_to_jsonb.html&quot;}, '*');"><code>datum_to_jsonb</code></a> や <a class="wiki-source-link" href="../../../../source/src/backend/utils/adt/jsonfuncs.c.html#L3344" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__utils__adt__jsonfuncs_c__json_populate_type.html&quot;}, '*');"><code>json_populate_type</code></a> は、<code>JsonTypeCategory</code> を参照して対応する型変換関数（outfuncoid）を呼び出し、Datum と JSON 間の相互変換データフローを実現します。</li>
+</ul>
+<h2>直接依存</h2>
+<ul>
+<li><code>common/jsonapi.h</code>: 基本的な JSON の字句解析およびセマンティクス解析構造体。</li>
+<li><code>nodes/nodes.h</code>: PostgreSQL のノード基底定義（エラーコンテキスト用）。</li>
+<li><code>utils/jsonb.h</code>: JSONB 固有のデータ構造と操作関数。</li>
+</ul>
+<h2>関連コード</h2>
+<ul>
+<li><a class="wiki-source-link" href="../../../../source/src/backend/utils/adt/jsonfuncs.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/backend/utils/adt/jsonfuncs.c.html&quot;}, '*');"><code>src/backend/utils/adt/jsonfuncs.c</code></a>: 本ヘッダーで宣言されている関数の実装本体。</li>
+<li><a class="wiki-source-link" href="../../../../source/src/include/utils/json.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/utils/json.h.html&quot;}, '*');"><code>src/include/utils/json.h</code></a>: 標準 JSON 型を扱うその他の公開関数群。</li>
+<li><a class="wiki-source-link" href="../../../../source/src/include/utils/jsonpath.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/utils/jsonpath.h.html&quot;}, '*');"><code>src/include/utils/jsonpath.h</code></a>: JSONPath 式を評価するための関連モジュール。</li>
+</ul>
+<h2>読者向けメモ</h2>
+<ul>
+<li>本ファイルは関数宣言とインタフェース定義が中心です。具体的なアルゴリズムや状態構造体（<a class="wiki-source-link" href="../../../../source/src/backend/utils/adt/jsonfuncs.c.html#L58" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__utils__adt__jsonfuncs_c__OkeysState.html&quot;}, '*');"><code>OkeysState</code></a>, <a class="wiki-source-link" href="../../../../source/src/backend/utils/adt/jsonfuncs.c.html#L89" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__utils__adt__jsonfuncs_c__GetState.html&quot;}, '*');"><code>GetState</code></a> など）を確認する場合は、対となる <a class="wiki-source-link" href="../../../../source/src/backend/utils/adt/jsonfuncs.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/backend/utils/adt/jsonfuncs.c.html&quot;}, '*');"><code>src/backend/utils/adt/jsonfuncs.c</code></a> を参照してください。</li>
+</ul>
+<h2>シンボルページ</h2>
+<ul>
+<li><a href="../../../symbols/src__include__utils__jsonfuncs_h__JsonToIndex.html" target="wiki-view"><code>JsonToIndex</code></a></li>
+<li><a href="../../../symbols/src__include__utils__jsonfuncs_h__JsonIterateStringValuesAction.html" target="wiki-view"><code>JsonIterateStringValuesAction</code></a></li>
+<li><a href="../../../symbols/src__include__utils__jsonfuncs_h__JsonTransformStringValuesAction.html" target="wiki-view"><code>JsonTransformStringValuesAction</code></a></li>
+<li><a href="../../../symbols/src__include__utils__jsonfuncs_h__JsonTypeCategory.html" target="wiki-view"><code>JsonTypeCategory</code></a></li>
+</ul><script>
+(function() {
+  function notifyParent() {
+    if (parent === window) return;
+    parent.postMessage({type: "frame-location", frame: window.name || "", href: window.location.href}, "*");
+  }
+  document.addEventListener("click", function(event) {
+    const link = event.target.closest("a[data-panel]");
+    if (!link || parent === window) return;
+    parent.postMessage({type: "source-link", panel: link.dataset.panel}, "*");
+  });
+  window.addEventListener("load", notifyParent);
+  window.addEventListener("hashchange", notifyParent);
+})();
+</script></body></html>

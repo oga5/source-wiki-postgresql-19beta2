@@ -1,59 +1,73 @@
 <!doctype html>
 <html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>src/include/utils/syscache.h.md</title><link rel="stylesheet" href="../../../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../../../source/src/include/utils/syscache.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/utils/syscache.h.html&quot;}, '*');">src/include/utils/syscache.h</a></h1>
 <h2>概要</h2>
-<p>PostgreSQL のパーサー、プランナー、エグゼキューターがシステムカタログの内容を高速にルックアップするためのシステムキャッシュインターフェースを定義するヘッダーファイルです。</p>
+<p><a class="wiki-source-link" href="../../../../source/src/include/utils/syscache.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/utils/syscache.h.html&quot;}, '*');"><code>src/include/utils/syscache.h</code></a> は、PostgreSQLのパーサ、プランナ、エグゼキュータがシステムカタログへの高速な参照を行うためのシステムカタログキャッシュ（SysCache）インターフェースを定義するヘッダーファイルである。ペアとなる実装ファイルは <a class="wiki-source-link" href="../../../../source/src/backend/utils/cache/syscache.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/utils/cache/syscache.c.html&quot;}, '*');"><code>src/backend/utils/cache/syscache.c</code></a> である。</p>
 <h2>モジュール内での役割</h2>
-<p><a class="wiki-source-link" href="../../../../source/src/include/utils/syscache.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/utils/syscache.h.html&quot;}, '*');"><code>src/include/utils/syscache.h</code></a> は、カタログキャッシュ（<a class="wiki-source-link" href="../../../../source/src/include/utils/catcache.h.html#L44" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__utils__catcache_h__CatCache.html&quot;}, '*');">CatCache</a>）の実装詳細を隠蔽しつつ、外部のサブシステムに対してインデックスベースのシステムキャッシュ検索、属性取得、無効化、および関連する便利関数を提供する公開ヘッダーです。実体は対応するバックエンド実装 <a class="wiki-source-link" href="../../../../source/src/backend/utils/cache/syscache.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/utils/cache/syscache.c.html&quot;}, '*');"><code>src/backend/utils/cache/syscache.c</code></a> および <a class="wiki-source-link" href="../../../../source/src/include/utils/catcache.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/utils/catcache.h.html&quot;}, '*');"><code>catcache.h</code></a> に紐づいています。</p>
+<p><code>src/include/utils</code> サブシステムの一部として、カタログキャッシュの公開APIを提供する。内部の詳細なデータ構造（<code>utils/catcache.h</code>）をヘッダーからは意図的に隠蔽しつつ、最大4つのキーによる検索やコピー、存在確認、OID取得、ハッシュ値計算、およびリレーションとSysCacheの関連性を判定する関数群を宣言している。また、キー数に応じたマクロラッパーを提供して呼び出しを簡素化している。</p>
 <h2>責務</h2>
 <ul>
-<li>システムカタログのキャッシュ識別子と検索関数の宣言を提供する。</li>
-<li>キー数に応じた型安全かつ効率的な検索・コピー・存在確認のマクロおよび関数を提供する。</li>
-<li>キャッシュされたタプルからの属性値取得や、Oid・ハッシュ値の算出インターフェースを公開する。</li>
-<li>リレーション単位のキャッシュ有無の判定およびキャッシュ無効化ルーチンを宣言する。</li>
+<li>システムカタログキャッシュの初期化ライフサイクル関数（<code>InitCatalogCache</code>, <code>InitCatalogCachePhase2</code>）の宣言。</li>
+<li>1つから4つの <code>Datum</code> キーを用いたキャッシュ検索関数群（<code>SearchSysCache</code>, <code>SearchSysCache1</code> から <code>SearchSysCache4</code>）の公開。</li>
+<li>取得したタプルの解放（<code>ReleaseSysCache</code>）およびリスト検索・解放（<code>SearchSysCacheList</code>, <code>ReleaseCatCacheList</code> / <a class="wiki-source-link" href="../../../../source/src/include/utils/syscache.h.html#L134" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/utils/syscache.h.html&quot;}, '*');"><code>ReleaseSysCacheList</code></a>）のインターフェース提供。</li>
+<li>キャッシュされたタプルからの属性値抽出（<code>SysCacheGetAttr</code>, <code>SysCacheGetAttrNotNull</code>）とハッシュ値計算（<code>GetSysCacheHashValue</code>）。</li>
+<li>特定のリレーションがSysCacheを持つか、あるいはサポートしているかを判定するユーティリティ関数の提供。</li>
 </ul>
 <h2>重要なシンボル</h2>
+<h3>キャッシュ初期化とライフサイクル</h3>
 <ul>
-<li>**初期化・管理**:</li>
-<li><code>InitCatalogCache</code>, <code>InitCatalogCachePhase2</code>: カタログキャッシュの初期化を行う。</li>
-<li>**検索ファミリー**:</li>
-<li><code>SearchSysCache</code>, <code>SearchSysCache1</code>, <code>SearchSysCache2</code>, <code>SearchSysCache3</code>, <code>SearchSysCache4</code>: 指定されたキャッシュIDとキーでタプルを検索する。</li>
-<li><code>SearchSysCacheLocked1</code>: ロック付きでタプルを検索する。</li>
-<li>**便利関数・コピーファミリー**:</li>
-<li><code>ReleaseSysCache</code>: 取得したキャッシュタプルを解放する。</li>
-<li><code>SearchSysCacheCopy</code>, <a class="wiki-source-link" href="../../../../source/src/include/utils/syscache.h.html#L91" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/utils/syscache.h.html&quot;}, '*');"><code>SearchSysCacheCopy1</code></a>〜<code>4</code>: キャッシュタプルのコピーを返却する。</li>
-<li><code>SearchSysCacheExists</code>, <a class="wiki-source-link" href="../../../../source/src/include/utils/syscache.h.html#L100" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/utils/syscache.h.html&quot;}, '*');"><code>SearchSysCacheExists1</code></a>〜<code>4</code>: キャッシュエントリの存在有無をブール値で返す。</li>
-<li><code>GetSysCacheOid</code>, <a class="wiki-source-link" href="../../../../source/src/include/utils/syscache.h.html#L109" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/utils/syscache.h.html&quot;}, '*');"><code>GetSysCacheOid1</code></a>〜<code>4</code>: キャッシュエントリから特定のOid列の値を取得する。</li>
-<li>**属性名・属性番号による検索**:</li>
-<li><code>SearchSysCacheAttName</code>, <code>SearchSysCacheCopyAttName</code>, <code>SearchSysCacheExistsAttName</code></li>
-<li><code>SearchSysCacheAttNum</code>, <code>SearchSysCacheCopyAttNum</code></li>
-<li>**属性値取得**:</li>
-<li><code>SysCacheGetAttr</code>, <code>SysCacheGetAttrNotNull</code>: キャッシュされたタプルから指定属性のDatumを取得する。</li>
-<li>**ハッシュ・リスト検索**:</li>
-<li><code>GetSysCacheHashValue</code>, <a class="wiki-source-link" href="../../../../source/src/include/utils/syscache.h.html#L118" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/utils/syscache.h.html&quot;}, '*');"><code>GetSysCacheHashValue1</code></a>〜<code>4</code></li>
-<li><code>SearchSysCacheList</code>, <a class="wiki-source-link" href="../../../../source/src/include/utils/syscache.h.html#L127" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/utils/syscache.h.html&quot;}, '*');"><code>SearchSysCacheList1</code></a>〜<code>3</code></li>
-<li><a class="wiki-source-link" href="../../../../source/src/include/utils/syscache.h.html#L134" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/utils/syscache.h.html&quot;}, '*');"><code>ReleaseSysCacheList</code></a>（<code>ReleaseCatCacheList</code>へのマクロ）</li>
-<li>**無効化・リレーション判定**:</li>
-<li><code>SysCacheInvalidate</code>: キャッシュを無効化する。</li>
-<li><code>RelationInvalidatesSnapshotsOnly</code>, <code>RelationHasSysCache</code>, <code>RelationSupportsSysCache</code></li>
+<li><code>InitCatalogCache</code>: キャッシュ構造体のメモリ割り当てと初期化を行う。データベースへのアクセスは行わず、初回使用時に初期化が完了する。</li>
+<li><code>InitCatalogCachePhase2</code>: キャッシュの初期化フェーズの第2段階を実行する。</li>
+</ul>
+<h3>キャッシュ検索と操作</h3>
+<ul>
+<li><code>SearchSysCache</code>: 最大4つのキーを用いてシステムカタログキャッシュを検索し、一致する <code>HeapTuple</code> を返す。</li>
+<li><code>SearchSysCache1</code>, <code>SearchSysCache2</code>, <code>SearchSysCache3</code>, <code>SearchSysCache4</code>: キーの数に特化した検索関数群。動的な引数オーバーヘッドを避け、静的な型・引数チェックと高速化を実現する。</li>
+<li><code>ReleaseSysCache</code>: 取得したシステムキャッシュタプルの参照カウントをデクリメントし、不要になったリソースを解放する。</li>
+<li><code>GetSysCacheHashValue</code>: 指定されたキャッシュIDと最大4つのキーから、内部ハッシュ値を計算して返す。</li>
+</ul>
+<h3>リレーションとキャッシュの関連判定</h3>
+<ul>
+<li><code>RelationHasSysCache</code>: 指定されたリレーションに対応するシステムカタログキャッシュが存在するかを判定する。</li>
+<li><code>RelationSupportsSysCache</code>: 指定されたリレーションがシステムカタログキャッシュによってサポートされているかを判定する。</li>
+<li><code>RelationInvalidatesSnapshotsOnly</code>: リレーションの変更がスナップショットの無効化のみを必要とするかを判定する。</li>
+</ul>
+<h3>リスト検索と管理</h3>
+<ul>
+<li><code>ReleaseCatCacheList</code> (<a class="wiki-source-link" href="../../../../source/src/include/utils/syscache.h.html#L134" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/utils/syscache.h.html&quot;}, '*');"><code>ReleaseSysCacheList</code></a>): <code>SearchSysCacheList</code> で取得したカタログキャッシュリストを解放する。</li>
 </ul>
 <h2>制御フローとデータフロー</h2>
-<p>外部モジュールは <code>SearchSysCache*</code> や <code>SearchSysCacheCopy*</code> などの公開関数およびマクロを呼び出し、内部でカタログキャッシュを参照します。 データフローとしては、呼び出し側から渡された最大4つまでの <code>Datum</code> キーを元にキャッシュ内を走査し、ヒットした場合は <code>HeapTuple</code> を返却またはコピーします。ヒットしない場合はバックエンドのカタログストレージからフェッチされキャッシュに組み込まれます。不要になった <code>HeapTuple</code> は <code>ReleaseSysCache</code> またはコピー用のメモリ管理機構により解放されます。</p>
+<p>1. **検索フロー**: 呼び出し側は <code>SearchSysCache1</code>〜<code>4</code> または一般の <code>SearchSysCache</code> に <code>SysCacheIdentifier</code> と最大4つの <code>Datum</code> キーを渡す。 2. **ハッシュ計算とヒット確認**: 内部では <code>GetSysCacheHashValue</code> を用いてハッシュ値を算出し、対応する <a class="wiki-source-link" href="../../../../source/src/include/utils/catcache.h.html#L44" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__utils__catcache_h__CatCache.html&quot;}, '*');"><code>CatCache</code></a> エントリを引く。 3. **ライフサイクル管理**: キャッシュから返された <code>HeapTuple</code> は、使用後に <code>ReleaseSysCache</code> を通じて参照カウントが解放される必要がある。あるいは、<code>SearchSysCacheCopy</code> 系マクロを使用してメモリコンテキスト内にコピーされたタプルを取得することも可能。</p>
 <h2>直接依存</h2>
 <ul>
 <li><code>access/attnum.h</code>: 属性番号（AttrNumber）の定義。</li>
-<li><code>access/htup.h</code>: ヒープタプル構造体の定義。</li>
-<li><code>catalog/syscache_ids.h</code>: システムキャッシュ識別子の定義。</li>
+<li><code>access/htup.h</code>: ヒープタプル（HeapTuple）構造体の定義。</li>
+<li><code>catalog/syscache_ids.h</code>: キャッシュ識別子（SysCacheIdentifier）の定義。</li>
 </ul>
 <h2>関連コード</h2>
 <ul>
-<li><a class="wiki-source-link" href="../../../../source/src/backend/utils/cache/syscache.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/utils/cache/syscache.c.html&quot;}, '*');"><code>src/backend/utils/cache/syscache.c</code></a>: 実装本体。</li>
-<li><a class="wiki-source-link" href="../../../../source/src/include/utils/catcache.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/utils/catcache.h.html&quot;}, '*');"><code>src/include/utils/catcache.h</code></a>: キャッシュリスト等の内部構造定義。</li>
-<li><a class="wiki-source-link" href="../../../../source/src/include/utils/lsyscache.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/utils/lsyscache.h.html&quot;}, '*');"><code>src/include/utils/lsyscache.h</code></a>: より特化した共通キャッシュルックアップの便利ルーチン群。</li>
+<li><a class="wiki-source-link" href="../../../../source/src/backend/utils/cache/syscache.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/utils/cache/syscache.c.html&quot;}, '*');"><code>src/backend/utils/cache/syscache.c</code></a>: ペアとなる実装ファイル。</li>
+<li><a class="wiki-source-link" href="../../../../source/src/include/utils/catcache.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/utils/catcache.h.html&quot;}, '*');"><code>src/include/utils/catcache.h</code></a>: キャッシュの内部構造（<code>catclist</code> 等）を定義。</li>
+<li><a class="wiki-source-link" href="../../../../source/src/include/utils/lsyscache.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/utils/lsyscache.h.html&quot;}, '*');"><code>src/include/utils/lsyscache.h</code></a>: 頻繁に使用されるキャッシュルックアップの便利関数群。</li>
 </ul>
 <h2>読者向けメモ</h2>
 <ul>
-<li>ヘッダー内では <code>utils/catcache.h</code> のインクルード意図的な除外が行われており、リスト検索等を使用するコードのみが個別にインクルードする必要があります。</li>
-<li>キー数に応じたラッパーマクロ（<a class="wiki-source-link" href="../../../../source/src/include/utils/syscache.h.html#L91" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/utils/syscache.h.html&quot;}, '*');"><code>SearchSysCacheCopy1</code></a> など）を使用することで、未使用のキー引数にデフォルト値（<code>0</code>）が自動補完され、将来的なシグネチャ変更に対する耐性が高められています。</li>
+<li>ヘッダー内では <code>utils/catcache.h</code> を意図的にインクルードせず、前方宣言（<code>struct catclist;</code>）のみを行っているため、リスト検索を使用する場合は呼び出し側で <a class="wiki-source-link" href="../../../../source/src/include/utils/catcache.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/utils/catcache.h.html&quot;}, '*');"><code>catcache.h</code></a> を明示的にインクルードする必要がある。</li>
+<li>最大キー数は4つに制限されており、これを超えるような複雑な検索には専用のカタログスキャンが必要となる。</li>
+</ul>
+<h2>シンボルページ</h2>
+<ul>
+<li><a href="../../../symbols/src__include__utils__syscache_h__GetSysCacheHashValue.html" target="wiki-view"><code>GetSysCacheHashValue</code></a></li>
+<li><a href="../../../symbols/src__include__utils__syscache_h__GetSysCacheOid.html" target="wiki-view"><code>GetSysCacheOid</code></a></li>
+<li><a href="../../../symbols/src__include__utils__syscache_h__InitCatalogCache.html" target="wiki-view"><code>InitCatalogCache</code></a></li>
+<li><a href="../../../symbols/src__include__utils__syscache_h__InitCatalogCachePhase2.html" target="wiki-view"><code>InitCatalogCachePhase2</code></a></li>
+<li><a href="../../../symbols/src__include__utils__syscache_h__RelationHasSysCache.html" target="wiki-view"><code>RelationHasSysCache</code></a></li>
+<li><a href="../../../symbols/src__include__utils__syscache_h__RelationSupportsSysCache.html" target="wiki-view"><code>RelationSupportsSysCache</code></a></li>
+<li><a href="../../../symbols/src__include__utils__syscache_h__ReleaseCatCacheList.html" target="wiki-view"><code>ReleaseCatCacheList</code></a></li>
+<li><a href="../../../symbols/src__include__utils__syscache_h__ReleaseSysCache.html" target="wiki-view"><code>ReleaseSysCache</code></a></li>
+<li><a href="../../../symbols/src__include__utils__syscache_h__SearchSysCache.html" target="wiki-view"><code>SearchSysCache</code></a></li>
+<li><a href="../../../symbols/src__include__utils__syscache_h__SearchSysCache1.html" target="wiki-view"><code>SearchSysCache1</code></a></li>
+<li><a href="../../../symbols/src__include__utils__syscache_h__SearchSysCache2.html" target="wiki-view"><code>SearchSysCache2</code></a></li>
+<li><a href="../../../symbols/src__include__utils__syscache_h__SearchSysCache3.html" target="wiki-view"><code>SearchSysCache3</code></a></li>
 </ul><script>
 (function() {
   function notifyParent() {

@@ -15,7 +15,7 @@
 <h2>入力と出力</h2>
 <ul>
 <li>引数: <code>Relation rel</code>, <code>TransactionId xid</code></li>
-<li>戻り値: <a class="wiki-source-link" href="../../source/src/include/access/tupmacs.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__access__tupmacs_h__bool.html&quot;}, '*');"><code>bool</code></a></li>
+<li>戻り値: <code>bool</code></li>
 </ul>
 <h2>前提条件と不変条件</h2>
 <p>まだ解析していません。</p>
@@ -34,7 +34,7 @@
 <h2>関連データ構造</h2>
 <p><code>GlobalVisState</code>, <code>Relation</code>, <code>state</code>, <code>TransactionId</code></p>
 <h2>ソース抜粋</h2>
-<p>~~~c <a class="wiki-source-link" href="../../source/src/include/access/tupmacs.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__access__tupmacs_h__bool.html&quot;}, '*');">bool</a> <a class="wiki-source-link" href="../../source/src/backend/storage/ipc/procarray.c.html#L4339" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__storage__ipc__procarray_c__GlobalVisCheckRemovableXid.html&quot;}, '*');">GlobalVisCheckRemovableXid</a>(Relation rel, TransactionId xid) { GlobalVisState *state;</p>
+<p>~~~c bool <a class="wiki-source-link" href="../../source/src/backend/storage/ipc/procarray.c.html#L4339" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__storage__ipc__procarray_c__GlobalVisCheckRemovableXid.html&quot;}, '*');">GlobalVisCheckRemovableXid</a>(Relation rel, TransactionId xid) { GlobalVisState *state;</p>
 <p>state = <a class="wiki-source-link" href="../../source/src/backend/storage/ipc/procarray.c.html#L4113" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__storage__ipc__procarray_c__GlobalVisTestFor.html&quot;}, '*');">GlobalVisTestFor</a>(rel);</p>
 <p>return <a class="wiki-source-link" href="../../source/src/backend/storage/ipc/procarray.c.html#L4276" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__storage__ipc__procarray_c__GlobalVisTestIsRemovableXid.html&quot;}, '*');">GlobalVisTestIsRemovableXid</a>(state, xid, <a class="wiki-source-link" href="../../source/src/tools/pg_bsd_indent/indent_globs.h.html#L46" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/tools/pg_bsd_indent/indent_globs.h.html&quot;}, '*');">true</a>); } ~~~</p>
 <h2>失敗モードと境界条件</h2>

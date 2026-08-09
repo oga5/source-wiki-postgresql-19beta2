@@ -15,7 +15,7 @@
 <h2>入力と出力</h2>
 <ul>
 <li>引数: <code>TransactionId xid</code></li>
-<li>戻り値: <a class="wiki-source-link" href="../../source/src/include/access/tupmacs.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__access__tupmacs_h__bool.html&quot;}, '*');"><code>bool</code></a></li>
+<li>戻り値: <code>bool</code></li>
 </ul>
 <h2>前提条件と不変条件</h2>
 <p>まだ解析していません。</p>
@@ -34,7 +34,7 @@
 <h2>関連データ構造</h2>
 <p><code>c</code>, <code>state</code>, <code>TransactionId</code>, <a class="wiki-source-link" href="../../source/src/backend/access/transam/xact.c.html#L223" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__access__transam__xact_c__TransactionState.html&quot;}, '*');"><code>TransactionState</code></a>, <a class="wiki-source-link" href="../../source/src/interfaces/ecpg/preproc/type.h.html#L89" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__interfaces__ecpg__preproc__type_h__when.html&quot;}, '*');"><code>when</code></a></p>
 <h2>ソース抜粋</h2>
-<p>~~~c <a class="wiki-source-link" href="../../source/src/include/access/tupmacs.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__access__tupmacs_h__bool.html&quot;}, '*');">bool</a> <a class="wiki-source-link" href="../../source/src/backend/access/transam/xact.c.html#L942" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__access__transam__xact_c__TransactionIdIsCurrentTransactionId.html&quot;}, '*');">TransactionIdIsCurrentTransactionId</a>(TransactionId xid) { <a class="wiki-source-link" href="../../source/src/backend/access/transam/xact.c.html#L223" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__access__transam__xact_c__TransactionState.html&quot;}, '*');">TransactionState</a> s;</p>
+<p>~~~c bool <a class="wiki-source-link" href="../../source/src/backend/access/transam/xact.c.html#L942" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__access__transam__xact_c__TransactionIdIsCurrentTransactionId.html&quot;}, '*');">TransactionIdIsCurrentTransactionId</a>(TransactionId xid) { <a class="wiki-source-link" href="../../source/src/backend/access/transam/xact.c.html#L223" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__access__transam__xact_c__TransactionState.html&quot;}, '*');">TransactionState</a> s;</p>
 <p>/*</p>
 <ul>
 <li>We always say that <a class="wiki-source-link" href="../../source/src/include/access/transam.h.html#L32" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/access/transam.h.html&quot;}, '*');">BootstrapTransactionId</a> <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> &quot;not my transaction ID&quot;</li>
@@ -45,7 +45,7 @@
 <li>only <a class="wiki-source-link" href="../../source/src/bin/pg_dump/pg_dumpall.c.html#L93" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/bin/pg_dump/pg_dumpall.c.html&quot;}, '*');">inserts</a> tuples, it never updates or deletes them, so all tuples</li>
 <li>can be presumed good immediately.)</li>
 <p>*</p>
-<li>Likewise, <a class="wiki-source-link" href="../../source/src/include/access/transam.h.html#L31" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/access/transam.h.html&quot;}, '*');">InvalidTransactionId</a> and <a class="wiki-source-link" href="../../source/src/include/access/transam.h.html#L33" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/access/transam.h.html&quot;}, '*');">FrozenTransactionId</a> are certainly</li>
+<li>Likewise, <a class="wiki-source-link" href="../../source/src/include/access/transam.h.html#L31" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/access/transam.h.html&quot;}, '*');">InvalidTransactionId</a> and FrozenTransactionId are certainly</li>
 <li>not my transaction ID, so we can just return &quot;<a class="wiki-source-link" href="../../source/src/tools/pg_bsd_indent/indent_globs.h.html#L43" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/tools/pg_bsd_indent/indent_globs.h.html&quot;}, '*');">false</a>&quot; immediately for</li>
 <li>any non-normal XID.</li>
 <p>*/ if (!<a class="wiki-source-link" href="../../source/src/include/access/transam.h.html#L42" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/access/transam.h.html&quot;}, '*');">TransactionIdIsNormal</a>(xid)) return <a class="wiki-source-link" href="../../source/src/tools/pg_bsd_indent/indent_globs.h.html#L43" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/tools/pg_bsd_indent/indent_globs.h.html&quot;}, '*');">false</a>;</p>
@@ -55,7 +55,7 @@
 <ul>
 <li>In parallel workers, the XIDs we must consider as current are stored in</li>
 <li>ParallelCurrentXids rather than the transaction-state stack.  Note that</li>
-<li>the XIDs in this array are sorted numerically rather than according to</li>
+<li>the XIDs in this <a class="wiki-source-link" href="../../source/src/include/utils/jsonb.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__utils__jsonb_h__array.html&quot;}, '*');">array</a> are sorted numerically rather than according to</li>
 <li>transactionIdPrecedes order.</li>
 <p>*/ if (<a class="wiki-source-link" href="../../source/src/backend/access/transam/xact.c.html#L128" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/access/transam/xact.c.html&quot;}, '*');">nParallelCurrentXids</a> &gt; 0) { int			low, high;</p>
 </ul>
@@ -64,8 +64,8 @@
 <p>/*</p>
 <ul>
 <li>We will return <a class="wiki-source-link" href="../../source/src/tools/pg_bsd_indent/indent_globs.h.html#L46" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/tools/pg_bsd_indent/indent_globs.h.html&quot;}, '*');">true</a> for the Xid of the current subtransaction, any of</li>
-<li>its subcommitted children, any of its parents, or any of their</li>
-<li>previously subcommitted children.  However, a transaction being aborted</li>
+<li>its subcommitted <a class="wiki-source-link" href="../../source/src/include/utils/jsonb.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__utils__jsonb_h__children.html&quot;}, '*');">children</a>, any of its parents, or any of their</li>
+<li>previously subcommitted <a class="wiki-source-link" href="../../source/src/include/utils/jsonb.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__utils__jsonb_h__children.html&quot;}, '*');">children</a>.  However, a transaction being aborted</li>
 <li><a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> no longer &quot;current&quot;, even though it may still have an entry on the</li>
 <li>state stack.</li>
 <p>~~~</p>

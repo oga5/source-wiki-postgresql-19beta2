@@ -1,0 +1,56 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>src/include/executor/nodeHashjoin.h.md</title><link rel="stylesheet" href="../../../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../../../source/src/include/executor/nodeHashjoin.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/executor/nodeHashjoin.h.html&quot;}, '*');">src/include/executor/nodeHashjoin.h</a></h1>
+<h2>概要</h2>
+<p>PostgreSQLのクエリ実行エンジンにおいて、ハッシュ結合（Hash <a class="wiki-source-link" href="../../../../source/src/include/nodes/plannodes.h.html#L984" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__nodes__plannodes_h__Join.html&quot;}, '*');">Join</a>）ノードの初期化、実行終了、再スキャン、および並列処理をサポートするための関数プロトタイプを定義するヘッダーファイルです。</p>
+<h2>モジュール内での役割</h2>
+<p><code>src/include/executor</code> モジュールの一部として、プランツリーのハッシュ結合演算子に対応する実行時インターフェースを提供します。実処理を担う <a class="wiki-source-link" href="../../../../source/src/backend/executor/nodeHashjoin.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/backend/executor/nodeHashjoin.c.html&quot;}, '*');"><code>src/backend/executor/nodeHashjoin.c</code></a> とペアで機能します。</p>
+<h2>責務</h2>
+<ul>
+<li><code>HashJoinState</code> ノードのライフサイクル管理関数（初期化、終了、再スキャン）を公開する。</li>
+<li>並列クエリ実行時におけるハッシュ結合の協調動作（DSM初期化、ワーカー設定、見積もり）のための関数を宣言する。</li>
+<li>ハッシュテーブル構築時のバッチ処理やタプル退避を補助する内部ユーティリティ関数のプロトタイプを提供する。</li>
+</ul>
+<h2>重要なシンボル</h2>
+<ul>
+<li><code>ExecInitHashJoin</code>: ハッシュ結合ノードの実行時状態（<code>HashJoinState</code>）を初期化する。</li>
+<li><code>ExecEndHashJoin</code>: ハッシュ結合ノードが使用しているリソースを解放する。</li>
+<li><code>ExecReScanHashJoin</code>: ハッシュ結合の状態をリセットし、再スキャンを実行可能にする。</li>
+<li><code>ExecShutdownHashJoin</code>: 並列実行時のバックグラウンドワーカーや共有リソースのシャットダウンを行う。</li>
+<li><code>ExecHashJoinEstimate</code> / <code>ExecHashJoinInitializeDSM</code> / <code>ExecHashJoinInitializeWorker</code>: 並列ハッシュ結合のためのDSM（Dynamic Shared Memory）見積もり・初期化・ワーカー登録を行う。</li>
+<li><code>ExecHashJoinSaveTuple</code>: メモリに収まらない内側のタプルをバッチファイルに退避させる。</li>
+</ul>
+<h2>制御フローとデータフロー</h2>
+<ul>
+<li>クエリ実行の初期化フェーズにおいて、プランノード <code>HashJoin</code> が <code>ExecInitHashJoin</code> に渡され、実行時状態の構築とハッシュ関連の構造体割り当てが行われます。</li>
+<li>実行中、外部からのタプル供給に応じて <a class="wiki-source-link" href="../../../../source/src/backend/executor/nodeHashjoin.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/backend/executor/nodeHashjoin.c.html&quot;}, '*');"><code>nodeHashjoin.c</code></a> 内のステートマシンが駆動され、必要に応じて <code>ExecHashJoinSaveTuple</code> を経由して <code>BufFile</code> へあふれたタプルが書き出されます。</li>
+<li>並列実行時は、<code>ExecHashJoinEstimate</code> と DSM 初期化関数群を介してバックエンド間で同期・共有メモリ領域がセットアップされます。</li>
+</ul>
+<h2>直接依存</h2>
+<ul>
+<li><code>access/parallel.h</code>: 並列クエリ実行および <code>ParallelContext</code> などの構造体定義。</li>
+<li><code>nodes/execnodes.h</code>: <code>HashJoin</code> や <code>HashJoinState</code> などの実行ノード用ノード定義。</li>
+<li><code>storage/buffile.h</code>: メモリ不足時にタプルを一時保存するためのバッファファイル管理機能。</li>
+</ul>
+<h2>関連コード</h2>
+<ul>
+<li><a class="wiki-source-link" href="../../../../source/src/backend/executor/nodeHashjoin.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/backend/executor/nodeHashjoin.c.html&quot;}, '*');"><code>src/backend/executor/nodeHashjoin.c</code></a>: 本ヘッダーで宣言されている関数の実体を実装するペアファイル。</li>
+<li><a class="wiki-source-link" href="../../../../source/src/include/executor/hashjoin.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/executor/hashjoin.h.html&quot;}, '*');"><code>src/include/executor/hashjoin.h</code></a>: ハッシュ結合およびハッシュテーブル構築に関する共通データ構造やマクロの定義。</li>
+</ul>
+<h2>読者向けメモ</h2>
+<ul>
+<li>本ファイルは純粋なインターフェース定義であり、実際のハイブリッドハッシュ結合アルゴリズムや並列同期の詳細は <a class="wiki-source-link" href="../../../../source/src/backend/executor/nodeHashjoin.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/backend/executor/nodeHashjoin.c.html&quot;}, '*');"><code>nodeHashjoin.c</code></a> および <a class="wiki-source-link" href="../../../../source/src/include/executor/hashjoin.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/executor/hashjoin.h.html&quot;}, '*');"><code>hashjoin.h</code></a> を参照してください。</li>
+</ul><script>
+(function() {
+  function notifyParent() {
+    if (parent === window) return;
+    parent.postMessage({type: "frame-location", frame: window.name || "", href: window.location.href}, "*");
+  }
+  document.addEventListener("click", function(event) {
+    const link = event.target.closest("a[data-panel]");
+    if (!link || parent === window) return;
+    parent.postMessage({type: "source-link", panel: link.dataset.panel}, "*");
+  });
+  window.addEventListener("load", notifyParent);
+  window.addEventListener("hashchange", notifyParent);
+})();
+</script></body></html>

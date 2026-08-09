@@ -1,0 +1,31 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>src/test/README</title><link rel="stylesheet" href="../../../../styles.css"></head><body><h1>Japanese translation</h1><p><code>src/test/README</code></p><p><a href="../../../../source/src/test/README.html" target="source-view">View original document</a></p><p class="document-translation-progress document-translation-complete">Translation complete.</p><div class="document-translation-body"><section class="document-translation-chunk translated" data-chunk-order="0"><p>PostgreSQLのテスト ================</p>
+<p>このディレクトリには、さまざまなテストインフラストラクチャと、PostgreSQLのテストの一部が含まれています。すべてのテストがここにあるわけではありません。特に、個々の contrib/ モジュールや src/bin にもテストがあります。</p>
+<p>これらのテストすべてが &quot;make check&quot; によって実行されるわけではありません。どのテストが自動的に実行されるかについては、src/test/Makefile を確認してください。</p>
+<p>authentication/ 認証用のテスト（ただし以下も参照）</p>
+<p>examples/ &quot;make check&quot; を介した回帰テストを兼ねた libpq のデモンストレーションプログラム</p>
+<p>isolation/ SQLレベルでの並行動作のテスト</p>
+<p>kerberos/ Kerberos/GSSAPI認証および暗号化のテスト</p>
+<p>ldap/ LDAPベースの認証のテスト</p>
+<p>locale/ ロケールデータ、エンコーディングなどのサニティチェック</p>
+<p>mb/ マルチバイトエンコーディング（UTF-8）サポートのテスト</p>
+<p>modules/ テスト目的のみ、または主にテスト目的で使用される拡張機能。一般に本番データベースへのインストールには適していません。</p>
+<p>perl/ PerlベースのTAPテスト用インフラストラクチャ</p>
+<p>recovery/ リカバリおよびレプリケーションのテストスイート</p>
+<p>regress/ PostgreSQLのメインの回帰テストスイート、pg_regress</p>
+<p>ssl/ SSL証明書の処理を実行および検証するためのテスト</p>
+<p>subscription/ ロジカルレプリケーションのテスト</p></section></div><script>
+(function() {
+  function notifyParent() {
+    if (parent === window) return;
+    parent.postMessage({type: "frame-location", frame: window.name || "", href: window.location.href}, "*");
+  }
+  document.addEventListener("click", function(event) {
+    const link = event.target.closest("a[data-panel]");
+    if (!link || parent === window) return;
+    parent.postMessage({type: "source-link", panel: link.dataset.panel}, "*");
+  });
+  window.addEventListener("load", notifyParent);
+  window.addEventListener("hashchange", notifyParent);
+})();
+</script></body></html>

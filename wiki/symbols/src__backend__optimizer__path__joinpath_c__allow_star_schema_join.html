@@ -1,5 +1,24 @@
 <!doctype html>
 <html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>symbols/src__backend__optimizer__path__joinpath_c__allow_star_schema_join.md</title><link rel="stylesheet" href="../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../source/src/backend/optimizer/path/joinpath.c.html#L399" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__path__joinpath_c__allow_star_schema_join.html&quot;}, '*');">allow_star_schema_join</a></h1>
+<h2>現在のソース事実</h2>
+<ul>
+<li>種別: <code>function</code></li>
+<li>定義箇所: <code>src/backend/optimizer/path/joinpath.c:399</code></li>
+<li>シグネチャ: <code>static inline bool allow_star_schema_join(PlannerInfo *root, Relids outerrelids, Relids inner_paramrels)</code></li>
+<li>呼び出し元: <a class="wiki-source-link" href="../../source/src/backend/optimizer/path/joinpath.c.html#L877" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__path__joinpath_c__try_nestloop_path.html&quot;}, '*');"><code>try_nestloop_path</code></a></li>
+<li>呼び出し先: <a class="wiki-source-link" href="../../source/src/backend/nodes/bitmapset.c.html#L633" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__nodes__bitmapset_c__bms_nonempty_difference.html&quot;}, '*');"><code>bms_nonempty_difference</code></a>, <a class="wiki-source-link" href="../../source/src/backend/nodes/bitmapset.c.html#L574" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__nodes__bitmapset_c__bms_overlap.html&quot;}, '*');"><code>bms_overlap</code></a></li>
+<li>呼び出し元サイト: <a class="wiki-source-link" href="../../source/src/backend/optimizer/path/joinpath.c.html#L877" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__path__joinpath_c__try_nestloop_path.html&quot;}, '*');"><code>try_nestloop_path</code></a> at <code>src/backend/optimizer/path/joinpath.c:933:4</code> (direct, confidence=high, resolved=<a class="wiki-entity-link" href="src__backend__optimizer__path__joinpath_c__allow_star_schema_join.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__path__joinpath_c__allow_star_schema_join.html&quot;, &quot;source&quot;: &quot;source/src/backend/optimizer/path/joinpath.c.html#L399&quot;}, '*');"><code>symbol:src/backend/optimizer/path/joinpath.c#allow_star_schema_join</code></a>)</li>
+<li>呼び出しサイト: <a class="wiki-source-link" href="../../source/src/backend/nodes/bitmapset.c.html#L574" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__nodes__bitmapset_c__bms_overlap.html&quot;}, '*');"><code>bms_overlap</code></a> at <code>src/backend/optimizer/path/joinpath.c:408:10</code> (direct, confidence=high, resolved=<a class="wiki-entity-link" href="src__backend__nodes__bitmapset_c__bms_overlap.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__nodes__bitmapset_c__bms_overlap.html&quot;, &quot;source&quot;: &quot;source/src/backend/nodes/bitmapset.c.html#L574&quot;}, '*');"><code>symbol:src/backend/nodes/bitmapset.c#bms_overlap</code></a>), <a class="wiki-source-link" href="../../source/src/backend/nodes/bitmapset.c.html#L633" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__nodes__bitmapset_c__bms_nonempty_difference.html&quot;}, '*');"><code>bms_nonempty_difference</code></a> at <code>src/backend/optimizer/path/joinpath.c:409:4</code> (direct, confidence=high, resolved=<a class="wiki-entity-link" href="src__backend__nodes__bitmapset_c__bms_nonempty_difference.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__nodes__bitmapset_c__bms_nonempty_difference.html&quot;, &quot;source&quot;: &quot;source/src/backend/nodes/bitmapset.c.html#L633&quot;}, '*');"><code>symbol:src/backend/nodes/bitmapset.c#bms_nonempty_difference</code></a>)</li>
+<li>関連型: <code>PlannerInfo</code>, <code>Relids</code></li>
+<li>複雑度: <code>low</code> (score 1)</li>
+</ul>
+<h3>ソース抜粋</h3>
+<p>~~~c static <a class="wiki-source-link" href="../../source/src/include/c.h.html#L116" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/c.h.html&quot;}, '*');">inline</a> bool <a class="wiki-source-link" href="../../source/src/backend/optimizer/path/joinpath.c.html#L399" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__path__joinpath_c__allow_star_schema_join.html&quot;}, '*');">allow_star_schema_join</a>(PlannerInfo *<a class="wiki-source-link" href="../../source/src/backend/optimizer/util/var.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__var_c__root.html&quot;}, '*');">root</a>, Relids outerrelids, Relids inner_paramrels) { /*</p>
+<ul>
+<li>It&#x27;s a star-schema case if the outer rel provides some but not all of</li>
+<li>the inner rel&#x27;s parameterization.</li>
+<p>*/ return (<a class="wiki-source-link" href="../../source/src/backend/nodes/bitmapset.c.html#L574" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__nodes__bitmapset_c__bms_overlap.html&quot;}, '*');">bms_overlap</a>(inner_paramrels, outerrelids) &amp;&amp; <a class="wiki-source-link" href="../../source/src/backend/nodes/bitmapset.c.html#L633" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__nodes__bitmapset_c__bms_nonempty_difference.html&quot;}, '*');">bms_nonempty_difference</a>(inner_paramrels, outerrelids)); } ~~~</p>
+</ul>
 <h2>定義</h2>
 <ul>
 <li>種別: <code>function</code></li>
@@ -7,45 +26,36 @@
 <li>所属モジュール: <a class="wiki-entity-link" href="../modules/src__backend__optimizer__path.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/modules/src__backend__optimizer__path.html&quot;, &quot;source&quot;: &quot;source/src/backend/optimizer/path/allpaths.c.html&quot;}, '*');"><code>module:src/backend/optimizer/path</code></a></li>
 </ul>
 <h2>目的</h2>
-<p>静的シンボル索引から生成された初期シンボルページです。</p>
+<p>外側リレーションがインナーリレーションのパラメータ化の一部を提供しつつ全ては提供していない、いわゆるスタースキーマのケースに該当するかどうかを判定する。</p>
 <h2>シグネチャまたは形状</h2>
 <ul>
 <li>シグネチャ: <code>static inline bool allow_star_schema_join(PlannerInfo *root, Relids outerrelids, Relids inner_paramrels)</code></li>
 </ul>
 <h2>入力と出力</h2>
 <ul>
-<li>引数: <code>PlannerInfo *root</code>, <code>Relids outerrelids</code>, <code>Relids inner_paramrels</code></li>
-<li>戻り値: <a class="wiki-source-link" href="../../source/src/include/access/tupmacs.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__access__tupmacs_h__bool.html&quot;}, '*');"><code>bool</code></a></li>
+<li>引数:</li>
+<li><code>PlannerInfo *root</code>: プランナのグローバル情報</li>
+<li><code>Relids outerrelids</code>: 外側リレーションの識別子集合</li>
+<li><code>Relids inner_paramrels</code>: インナーリレーションのパラメータ化識別子集合</li>
+<li>戻り値: <code>bool</code> （スタースキーマの条件を満たす場合は真、それ以外は偽）</li>
 </ul>
 <h2>前提条件と不変条件</h2>
-<p>まだ解析していません。</p>
+<ul>
+<li>外側のリレーション集合がインナーリレーションのパラメータ化に対して一部重複しており、かつすべてを含んではいない（差分が空ではない）関係にあることを前提とする。</li>
+</ul>
 <h2>アルゴリズムまたは振る舞い</h2>
 <ul>
-<li>複雑度: <code>low</code> (score 1)</li>
+<li><code>bms_overlap(inner_paramrels, outerrelids)</code> により、インナーのパラメータ化リレーションと外側リレーション集合が重複しているかを判定する。</li>
+<li><code>bms_nonempty_difference(inner_paramrels, outerrelids)</code> により、インナーのパラメータ化リレーションのうち外側リレーションに含まれない要素（差分）が存在するかを判定する。</li>
+<li>両方の条件が同時に満たされる場合に <a class="wiki-source-link" href="../../source/src/tools/pg_bsd_indent/indent_globs.h.html#L46" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/tools/pg_bsd_indent/indent_globs.h.html&quot;}, '*');"><code>true</code></a> を返す。</li>
 </ul>
-<p>まだ解析していません。</p>
 <h2>呼び出し元と呼び出し先</h2>
 <ul>
 <li>呼び出し元: <a class="wiki-source-link" href="../../source/src/backend/optimizer/path/joinpath.c.html#L877" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__path__joinpath_c__try_nestloop_path.html&quot;}, '*');"><code>try_nestloop_path</code></a></li>
-<li>呼び出し先: <a class="wiki-source-link" href="../../source/src/backend/nodes/bitmapset.c.html#L633" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__nodes__bitmapset_c__bms_nonempty_difference.html&quot;}, '*');"><code>bms_nonempty_difference</code></a>, <a class="wiki-source-link" href="../../source/src/backend/nodes/bitmapset.c.html#L574" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__nodes__bitmapset_c__bms_overlap.html&quot;}, '*');"><code>bms_overlap</code></a></li>
-<li>呼び出し元サイト: <a class="wiki-source-link" href="../../source/src/backend/optimizer/path/joinpath.c.html#L877" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__path__joinpath_c__try_nestloop_path.html&quot;}, '*');"><code>try_nestloop_path</code></a> at <code>src/backend/optimizer/path/joinpath.c:933:4</code> (direct, confidence=high, resolved=<a class="wiki-entity-link" href="src__backend__optimizer__path__joinpath_c__allow_star_schema_join.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__path__joinpath_c__allow_star_schema_join.html&quot;, &quot;source&quot;: &quot;source/src/backend/optimizer/path/joinpath.c.html#L399&quot;}, '*');"><code>symbol:src/backend/optimizer/path/joinpath.c#allow_star_schema_join</code></a>)</li>
-<li>呼び出しサイト: <a class="wiki-source-link" href="../../source/src/backend/nodes/bitmapset.c.html#L574" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__nodes__bitmapset_c__bms_overlap.html&quot;}, '*');"><code>bms_overlap</code></a> at <code>src/backend/optimizer/path/joinpath.c:408:10</code> (direct, confidence=high, resolved=<a class="wiki-entity-link" href="src__backend__nodes__bitmapset_c__bms_overlap.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__nodes__bitmapset_c__bms_overlap.html&quot;, &quot;source&quot;: &quot;source/src/backend/nodes/bitmapset.c.html#L574&quot;}, '*');"><code>symbol:src/backend/nodes/bitmapset.c#bms_overlap</code></a>), <a class="wiki-source-link" href="../../source/src/backend/nodes/bitmapset.c.html#L633" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__nodes__bitmapset_c__bms_nonempty_difference.html&quot;}, '*');"><code>bms_nonempty_difference</code></a> at <code>src/backend/optimizer/path/joinpath.c:409:4</code> (direct, confidence=high, resolved=<a class="wiki-entity-link" href="src__backend__nodes__bitmapset_c__bms_nonempty_difference.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__nodes__bitmapset_c__bms_nonempty_difference.html&quot;, &quot;source&quot;: &quot;source/src/backend/nodes/bitmapset.c.html#L633&quot;}, '*');"><code>symbol:src/backend/nodes/bitmapset.c#bms_nonempty_difference</code></a>)</li>
+<li>呼び出し先: <a class="wiki-source-link" href="../../source/src/backend/nodes/bitmapset.c.html#L574" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__nodes__bitmapset_c__bms_overlap.html&quot;}, '*');"><code>bms_overlap</code></a>, <a class="wiki-source-link" href="../../source/src/backend/nodes/bitmapset.c.html#L633" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__nodes__bitmapset_c__bms_nonempty_difference.html&quot;}, '*');"><code>bms_nonempty_difference</code></a></li>
 </ul>
 <h2>関連データ構造</h2>
-<p><code>PlannerInfo</code>, <code>Relids</code></p>
-<h2>ソース抜粋</h2>
-<p>~~~c static <a class="wiki-source-link" href="../../source/src/include/c.h.html#L116" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/c.h.html&quot;}, '*');">inline</a> <a class="wiki-source-link" href="../../source/src/include/access/tupmacs.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__access__tupmacs_h__bool.html&quot;}, '*');">bool</a> <a class="wiki-source-link" href="../../source/src/backend/optimizer/path/joinpath.c.html#L399" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__path__joinpath_c__allow_star_schema_join.html&quot;}, '*');">allow_star_schema_join</a>(PlannerInfo *<a class="wiki-source-link" href="../../source/src/backend/optimizer/util/var.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__var_c__root.html&quot;}, '*');">root</a>, Relids outerrelids, Relids inner_paramrels) { /*</p>
-<ul>
-<li>It&#x27;s a star-schema case if the outer rel provides some but not all of</li>
-<li>the inner rel&#x27;s parameterization.</li>
-<p>*/ return (<a class="wiki-source-link" href="../../source/src/backend/nodes/bitmapset.c.html#L574" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__nodes__bitmapset_c__bms_overlap.html&quot;}, '*');">bms_overlap</a>(inner_paramrels, outerrelids) &amp;&amp; <a class="wiki-source-link" href="../../source/src/backend/nodes/bitmapset.c.html#L633" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__nodes__bitmapset_c__bms_nonempty_difference.html&quot;}, '*');">bms_nonempty_difference</a>(inner_paramrels, outerrelids)); } ~~~</p>
-</ul>
-<h2>失敗モードと境界条件</h2>
-<p>まだ解析していません。</p>
-<h2>保守担当者向けメモ</h2>
-<ul>
-<li>後続フェーズで、ソース本文の文脈と caller/callee 情報を使ってこのページを強化する。</li>
-</ul><script>
+<p><code>PlannerInfo</code>, <code>Relids</code> &lt;!-- source-evidence: source:<a class="wiki-source-link" href="../../source/src/backend/optimizer/path/joinpath.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/backend/optimizer/path/joinpath.c.html&quot;}, '*');">src/backend/optimizer/path/joinpath.c</a>:400-402</p><script>
 (function() {
   function notifyParent() {
     if (parent === window) return;

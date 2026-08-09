@@ -34,9 +34,9 @@
 <h2>関連データ構造</h2>
 <p>なし</p>
 <h2>ソース抜粋</h2>
-<p>~~~c static int <a class="wiki-source-link" href="../../source/src/common/wchar.c.html#L1227" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__common__wchar_c__pg_sjis_verifychar.html&quot;}, '*');">pg_sjis_verifychar</a>(const unsigned char *s, int <a class="wiki-source-link" href="../../source/src/include/utils/memutils.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__utils__memutils_h__len.html&quot;}, '*');">len</a>) { int			l, mbl; unsigned char c1, c2;</p>
+<p>~~~c static int <a class="wiki-source-link" href="../../source/src/common/wchar.c.html#L1227" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__common__wchar_c__pg_sjis_verifychar.html&quot;}, '*');">pg_sjis_verifychar</a>(const unsigned char *s, int len) { int			l, mbl; unsigned char c1, c2;</p>
 <p>l = mbl = pg_sjis_mblen(s);</p>
-<p>if (<a class="wiki-source-link" href="../../source/src/include/utils/memutils.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__utils__memutils_h__len.html&quot;}, '*');">len</a> &lt; l) return -1;</p>
+<p>if (len &lt; l) return -1;</p>
 <p>if (l == 1)					/* pg_sjis_mblen already verified it */ return mbl;</p>
 <p>c1 = *s++; c2 = *s; if (!<a class="wiki-source-link" href="../../source/src/include/mb/pg_wchar.h.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/mb/pg_wchar.h.html&quot;}, '*');">ISSJISHEAD</a>(c1) || !<a class="wiki-source-link" href="../../source/src/include/mb/pg_wchar.h.html#L56" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/mb/pg_wchar.h.html&quot;}, '*');">ISSJISTAIL</a>(c2)) return -1; return mbl; } ~~~</p>
 <h2>失敗モードと境界条件</h2>

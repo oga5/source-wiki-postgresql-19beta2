@@ -34,7 +34,7 @@
 <h2>関連データ構造</h2>
 <p><code>int64</code></p>
 <h2>ソース抜粋</h2>
-<p>~~~c static char * AddPostgresIntPart(char *cp, int64 value, const char *units, <a class="wiki-source-link" href="../../source/src/include/access/tupmacs.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__access__tupmacs_h__bool.html&quot;}, '*');">bool</a> *is_zero, <a class="wiki-source-link" href="../../source/src/include/access/tupmacs.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__access__tupmacs_h__bool.html&quot;}, '*');">bool</a> *is_before) { if (value == 0) return cp; sprintf(cp, &quot;%s%s%&quot; PRId64 &quot; %s%s&quot;, (!*is_zero) ? &quot; &quot; : &quot;&quot;, (*is_before &amp;&amp; value &gt; 0) ? &quot;+&quot; : &quot;&quot;, value, units, (value != 1) ? &quot;s&quot; : &quot;&quot;);</p>
+<p>~~~c static char * AddPostgresIntPart(char *cp, int64 value, const char *units, bool *is_zero, bool *is_before) { if (value == 0) return cp; sprintf(cp, &quot;%s%s%&quot; PRId64 &quot; %s%s&quot;, (!*is_zero) ? &quot; &quot; : &quot;&quot;, (*is_before &amp;&amp; value &gt; 0) ? &quot;+&quot; : &quot;&quot;, value, units, (value != 1) ? &quot;s&quot; : &quot;&quot;);</p>
 <p>/*</p>
 <ul>
 <li>Each nonzero field sets is_before for (only) the next one.  This <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> a</li>

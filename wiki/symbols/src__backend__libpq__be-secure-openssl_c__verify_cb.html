@@ -39,7 +39,7 @@
 <p>/* Pull all the information we have on the verification failure. */ depth = X509_STORE_CTX_get_error_depth(ctx); errcode = X509_STORE_CTX_get_error(ctx); errstring = X509_verify_cert_error_string(errcode);</p>
 <p>/*</p>
 <ul>
-<li>Extract the current SSL and <a class="wiki-source-link" href="../../source/src/backend/libpq/be-secure-openssl.c.html#L135" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__libpq__be-secure-openssl_c__CallbackErr.html&quot;}, '*');">CallbackErr</a> object to use for passing error</li>
+<li>Extract the current SSL and <a class="wiki-source-link" href="../../source/src/backend/libpq/be-secure-openssl.c.html#L135" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__libpq__be-secure-openssl_c__CallbackErr.html&quot;}, '*');">CallbackErr</a> <a class="wiki-source-link" href="../../source/src/include/utils/jsonb.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__utils__jsonb_h__object.html&quot;}, '*');">object</a> to use for passing error</li>
 <li>detail back from the callback.</li>
 <p>*/ ssl = X509_STORE_CTX_get_ex_data(ctx, SSL_get_ex_data_X509_STORE_CTX_idx()); cb_err = (struct <a class="wiki-source-link" href="../../source/src/backend/libpq/be-secure-openssl.c.html#L135" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__libpq__be-secure-openssl_c__CallbackErr.html&quot;}, '*');">CallbackErr</a> *) SSL_get_ex_data(ssl, 0);</p>
 </ul>

@@ -46,14 +46,14 @@
 <ul>
 <li>The allowed syntaxes are:</li>
 <p>*</p>
-<li>A		A = parameter name</li>
-<li>A.B		A = function name, B = parameter name</li>
-<li>OR: A = record-typed parameter name, B = field name</li>
+<li>A		A = parameter <a class="wiki-source-link" href="../../source/src/include/mb/pg_wchar.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/mb/pg_wchar.h.html&quot;}, '*');">name</a></li>
+<li>A.B		A = function <a class="wiki-source-link" href="../../source/src/include/mb/pg_wchar.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/mb/pg_wchar.h.html&quot;}, '*');">name</a>, B = parameter <a class="wiki-source-link" href="../../source/src/include/mb/pg_wchar.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/mb/pg_wchar.h.html&quot;}, '*');">name</a></li>
+<li>OR: A = record-typed parameter <a class="wiki-source-link" href="../../source/src/include/mb/pg_wchar.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/mb/pg_wchar.h.html&quot;}, '*');">name</a>, B = field <a class="wiki-source-link" href="../../source/src/include/mb/pg_wchar.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/mb/pg_wchar.h.html&quot;}, '*');">name</a></li>
 <li>(the first possibility takes precedence)</li>
-<li>A.B.C	A = function name, B = record-typed parameter name,</li>
-<li>C = field name</li>
+<li>A.B.C	A = function <a class="wiki-source-link" href="../../source/src/include/mb/pg_wchar.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/mb/pg_wchar.h.html&quot;}, '*');">name</a>, B = record-typed parameter <a class="wiki-source-link" href="../../source/src/include/mb/pg_wchar.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/mb/pg_wchar.h.html&quot;}, '*');">name</a>,</li>
+<li>C = field <a class="wiki-source-link" href="../../source/src/include/mb/pg_wchar.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/mb/pg_wchar.h.html&quot;}, '*');">name</a></li>
 <li>A.*		Whole-row reference to composite parameter A.</li>
-<li>A.B.*	Same, with A = function name, B = parameter name</li>
+<li>A.B.*	Same, with A = function <a class="wiki-source-link" href="../../source/src/include/mb/pg_wchar.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/mb/pg_wchar.h.html&quot;}, '*');">name</a>, B = parameter <a class="wiki-source-link" href="../../source/src/include/mb/pg_wchar.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/mb/pg_wchar.h.html&quot;}, '*');">name</a></li>
 <p>*</p>
 <li>Here, it&#x27;s sufficient to ignore the &quot;*&quot; in the last two cases --- the</li>
 <li>main parser will take care of expanding the whole-row reference.</li>
@@ -64,10 +64,10 @@
 <p>field1 = (Node *) <a class="wiki-source-link" href="../../source/src/include/nodes/pg_list.h.html#L178" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/nodes/pg_list.h.html&quot;}, '*');">linitial</a>(cref-&gt;fields); name1 = <a class="wiki-source-link" href="../../source/src/include/nodes/value.h.html#L82" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/nodes/value.h.html&quot;}, '*');">strVal</a>(field1); if (nnames &gt; 1) { subfield = (Node *) <a class="wiki-source-link" href="../../source/src/include/nodes/pg_list.h.html#L183" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/nodes/pg_list.h.html&quot;}, '*');">lsecond</a>(cref-&gt;fields); name2 = <a class="wiki-source-link" href="../../source/src/include/nodes/value.h.html#L82" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/nodes/value.h.html&quot;}, '*');">strVal</a>(subfield); }</p>
 <p>if (nnames == 3) { /*</p>
 <ul>
-<li>Three-part name: if the first part doesn&#x27;t match the function name,</li>
+<li>Three-part <a class="wiki-source-link" href="../../source/src/include/mb/pg_wchar.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/mb/pg_wchar.h.html&quot;}, '*');">name</a>: if the first part doesn&#x27;t match the function <a class="wiki-source-link" href="../../source/src/include/mb/pg_wchar.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/mb/pg_wchar.h.html&quot;}, '*');">name</a>,</li>
 <li>we can fail immediately. Otherwise, look up the second part, and</li>
 <li>take the third part to be a field reference.</li>
-<p>*/ if (strcmp(name1, pinfo-&gt;fname) != 0) return NULL; ~~~</p>
+<p>*/ if (strcmp(name1, pinfo-&gt;<a class="wiki-source-link" href="../../source/src/backend/utils/adt/jsonfuncs.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/backend/utils/adt/jsonfuncs.c.html&quot;}, '*');">fname</a>) != 0) return NULL; ~~~</p>
 </ul>
 <h2>失敗モードと境界条件</h2>
 <p>まだ解析していません。</p>

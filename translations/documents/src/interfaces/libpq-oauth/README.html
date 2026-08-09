@@ -1,0 +1,31 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>src/interfaces/libpq-oauth/README</title><link rel="stylesheet" href="../../../../../styles.css"></head><body><h1>Japanese translation</h1><p><code>src/interfaces/libpq-oauth/README</code></p><p><a href="../../../../../source/src/interfaces/libpq-oauth/README.html" target="source-view">View original document</a></p><p class="document-translation-progress document-translation-complete">Translation complete.</p><div class="document-translation-body"><section class="document-translation-chunk translated" data-chunk-order="0"><p>libpq-oauthは、OAuthクライアント向けのデバイス認可フロー（RFC 8628）を実装するオプショナルなモジュールです。libcurlへの依存関係を隔離するために、独自の共有ライブラリとしてメンテナンスされています。（Curlへの依存関係を望まないエンドユーザーは、単にこのモジュールをインストールしないことを選択できます。）</p>
+<p>接続文字列がOAuthの使用を許可しており、サーバーがそれを要求し、かつlibpqクライアントが独自のカスタムOAuthフローをインストールしていない場合、libpqはdlopen()と以下のABIを使用して、このモジュールの遅延ロードを試みます。ロードに失敗すると、接続は失敗します。</p>
+<p>= Load-Time ABI =</p>
+<p>v19の時点で、このモジュールABIは公開されており、エントリポイントも変更しない限り、互換性のない変更を行うことはできません。ライブラリのアップグレードはどちらの順序でも発生する可能性があるため、libpqとlibpq-oauthの両方が、もう一方のライブラリが過去または将来の異なるリリースバージョンである状況を適切に処理する必要があります。</p>
+<p>（libpq-oauthからlibpqへのパッケージバージョンの依存関係によって状況が単純化されるとは仮定しないでください！ libpqはlibpq-oauthを遅延ロードするため、長期実行されているクライアントアプリケーションが、新しくアップグレードされたプラグインよりも古いlibpqを持っているケースを依然として処理する必要があります。）</p>
+<p>モジュールは以下のシンボルをエクスポートします。</p>
+<ul>
+<li>int pg_start_oauthbearer(PGconn *conn, PGoauthBearerRequestV2 *request);</li>
+</ul>
+<p>その後、モジュールはPQauthDataHook APIを介してPQAUTHDATA_OAUTH_BEARER_TOKEN_V2リクエストを受信したかのように動作し、既存のトークンを設定するか、トークンを非同期に取得するために必要なコールバックを設定します。（PGoauthBearerRequestのドキュメントを参照してください。）この関数は、成功時にゼロを返し、失敗時にゼロ以外を返します。</p>
+<p>さらに、libpq-oauthはlibpqのlibpq_gettext()に依存しており、フローが実行される前に、この初期化関数を使用してlibpqによって注入される必要があります。</p>
+<ul>
+<li>void libpq_oauth_init(libpq_gettext_func gettext_impl);</li>
+</ul>
+<p>= Static Build =</p>
+<p>静的ライブラリlibpq.a does not perform any dynamic loading. If the builtin flow is enabled, the application is expected to link against libpq-oauth.a to provide the necessary symbol, or else implement pg_start_oauthbearer() itself.</p></section></div><script>
+(function() {
+  function notifyParent() {
+    if (parent === window) return;
+    parent.postMessage({type: "frame-location", frame: window.name || "", href: window.location.href}, "*");
+  }
+  document.addEventListener("click", function(event) {
+    const link = event.target.closest("a[data-panel]");
+    if (!link || parent === window) return;
+    parent.postMessage({type: "source-link", panel: link.dataset.panel}, "*");
+  });
+  window.addEventListener("load", notifyParent);
+  window.addEventListener("hashchange", notifyParent);
+})();
+</script></body></html>

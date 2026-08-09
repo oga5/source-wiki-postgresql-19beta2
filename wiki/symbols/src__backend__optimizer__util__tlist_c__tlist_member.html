@@ -13,8 +13,8 @@
 <li>複雑度: <code>medium</code> (score 7)</li>
 </ul>
 <h3>ソース抜粋</h3>
-<p>~~~c TargetEntry * <a class="wiki-source-link" href="../../source/src/backend/optimizer/util/tlist.c.html#L87" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__tlist_c__tlist_member.html&quot;}, '*');">tlist_member</a>(<a class="wiki-source-link" href="../../source/src/include/nodes/primnodes.h.html#L189" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__nodes__primnodes_h__Expr.html&quot;}, '*');">Expr</a> *node, List *targetlist) { <a class="wiki-source-link" href="../../source/src/include/nodes/pg_list.h.html#L45" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__nodes__pg_list_h__ListCell.html&quot;}, '*');">ListCell</a>   *temp;</p>
-<p><a class="wiki-source-link" href="../../source/src/include/nodes/pg_list.h.html#L405" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/nodes/pg_list.h.html&quot;}, '*');">foreach</a>(temp, targetlist) { TargetEntry *tlentry = (TargetEntry *) <a class="wiki-source-link" href="../../source/src/include/nodes/pg_list.h.html#L172" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/nodes/pg_list.h.html&quot;}, '*');">lfirst</a>(temp);</p>
+<p>~~~c TargetEntry * <a class="wiki-source-link" href="../../source/src/backend/optimizer/util/tlist.c.html#L87" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__tlist_c__tlist_member.html&quot;}, '*');">tlist_member</a>(<a class="wiki-source-link" href="../../source/src/include/nodes/primnodes.h.html#L189" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__nodes__primnodes_h__Expr.html&quot;}, '*');">Expr</a> *node, List *<a class="wiki-source-link" href="../../source/src/include/nodes/plannodes.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/nodes/plannodes.h.html&quot;}, '*');">targetlist</a>) { <a class="wiki-source-link" href="../../source/src/include/nodes/pg_list.h.html#L45" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__nodes__pg_list_h__ListCell.html&quot;}, '*');">ListCell</a>   *temp;</p>
+<p><a class="wiki-source-link" href="../../source/src/include/nodes/pg_list.h.html#L405" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/nodes/pg_list.h.html&quot;}, '*');">foreach</a>(temp, <a class="wiki-source-link" href="../../source/src/include/nodes/plannodes.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/nodes/plannodes.h.html&quot;}, '*');">targetlist</a>) { TargetEntry *tlentry = (TargetEntry *) <a class="wiki-source-link" href="../../source/src/include/nodes/pg_list.h.html#L172" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/nodes/pg_list.h.html&quot;}, '*');">lfirst</a>(temp);</p>
 <p>if (<a class="wiki-source-link" href="../../source/src/backend/nodes/equalfuncs.c.html#L222" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__nodes__equalfuncs_c__equal.html&quot;}, '*');">equal</a>(node, tlentry-&gt;expr)) return tlentry; } return NULL; } ~~~</p>
 <h2>目的</h2>
 <p>指定した式に一致する最初の <code>TargetEntry</code> をターゲットリストから検索して返します。</p>
@@ -25,18 +25,18 @@
 </ul>
 <h2>前提条件と不変条件</h2>
 <ul>
-<li><code>targetlist</code> 内の各要素は <code>TargetEntry</code> 構造体へのポインタである必要があります。</li>
+<li><a class="wiki-source-link" href="../../source/src/include/nodes/plannodes.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/nodes/plannodes.h.html&quot;}, '*');"><code>targetlist</code></a> 内の各要素は <code>TargetEntry</code> 構造体へのポインタである必要があります。</li>
 </ul>
 <h2>アルゴリズムまたは振る舞い</h2>
 <ul>
-<li><code>targetlist</code> の各要素を順次走査します。</li>
+<li><a class="wiki-source-link" href="../../source/src/include/nodes/plannodes.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/nodes/plannodes.h.html&quot;}, '*');"><code>targetlist</code></a> の各要素を順次走査します。</li>
 <li>各エントリの <code>TargetEntry-&gt;expr</code> と引数の <code>node</code> を <code>equal()</code> 関数によって比較します。</li>
 <li>一致する式を持つエントリが見つかった時点で、その <code>TargetEntry</code> を直ちに返します。</li>
 <li>リストの最後まで一致が見つからない場合は <code>NULL</code> を返します。</li>
 </ul>
 <h2>失敗モードと境界条件</h2>
 <ul>
-<li><code>targetlist</code> が空である場合や、どのエントリの式とも一致しない場合は、単に <code>NULL</code> を返します。</li>
+<li><a class="wiki-source-link" href="../../source/src/include/nodes/plannodes.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/nodes/plannodes.h.html&quot;}, '*');"><code>targetlist</code></a> が空である場合や、どのエントリの式とも一致しない場合は、単に <code>NULL</code> を返します。</li>
 </ul><script>
 (function() {
   function notifyParent() {

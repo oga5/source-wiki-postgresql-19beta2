@@ -1,0 +1,46 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>src/backend/statistics/README</title><link rel="stylesheet" href="../../../../../styles.css"></head><body><h1>Japanese translation</h1><p><code>src/backend/statistics/README</code></p><p><a href="../../../../../source/src/backend/statistics/README.html" target="source-view">View original document</a></p><p class="document-translation-progress document-translation-complete">Translation complete.</p><div class="document-translation-body"><section class="document-translation-chunk translated" data-chunk-order="0"><p>拡張統計情報 ===================</p>
+<p>様々な量（例：条件の選択率）を推計する際、デフォルトのアプローチは独立性の仮定に依存しています。実践ではそれが成り立たないことが多く、推計エラーを引き起こします。</p>
+<p>拡張統計情報は列間の様々なタイプの依存関係を追跡し、推計を改善してより良い計画を作成することを期待させます。</p>
+<p>統計情報のタイプ -------------------</p>
+<p>現在、いくつかの種類の拡張統計情報があります：</p>
+<p>(a) ndistinct 係数</p>
+<p>(b) 緩やかな関数従属 (README.dependencies)</p>
+<p>(c) MCV リスト (README.mcv)</p>
+<p>互換性のある句のタイプ -----------------------</p>
+<p>それぞれの統計情報のタイプは、句のタイプのいくつかのサブセットを推計するために使用される場合があります。</p>
+<p>(a) 関数従属 - 等価句 (AND)、場合により IS NULL</p>
+<p>(b) MCV リスト - 等価および非等価句 (AND、OR、NOT)、IS [NOT] NULL</p>
+<p>現在、Var op Const または Const op Var の形式の OpExpr のみがサポートされていますが、将来的にコードを拡張して Var op Var などの句の選択率も推計できるようにすることは実行可能です。</p>
+<p>複雑な句 ---------------</p>
+<p>また、より複雑な句（基本的には (Var op Const) を葉とする AND/OR 句）の推計もサポートしています。ただし、参照されるすべての属性が単一の統計情報オブジェクトによってカバーされている場合に限ります。</p>
+<p>例えば、この条件</p>
+<p>(a=1) AND ((b=2) OR ((c=3) AND (d=4)))</p>
+<p>は、(a,b,c,d) の統計情報を使用して推計される場合があります。(b,c,d) の統計情報しかない場合は、後半部分を推計し、単純な統計情報を使用して (a=1) を推計することができます。</p>
+<p>(a,b,c) の統計情報しかない場合は現時点ではまったく適用できませんが、clauselist_selectivity() は再帰的に動作し、後半部分（OR 句）を処理する際には統計情報を適用できるようになるという点は指摘する価値があります。</p>
+<p>注意: 複数統計情報の推計パッチにより、一部の句を「条件」として式ツリーのより深い部分に渡すことも可能になります。</p>
+<p>選択率の推計 ----------------------</p>
+<p>プランナ全体を通して、clauselist_selectivity() が依然としてほとんどの選択率推計リクエストを担当しています。clauselist_selectivity() は、指定された RelOptInfo に対する拡張統計情報の利用を試みるよう指示されることがあり、それは以下の場合に行われます：</p>
+<p>(a) 実際に有効な RelOptInfo が渡された場合。結合リレーションは NULL として渡されるため、無効です。</p>
+<p>(b) 渡されたリレーションに、実際に構築されている拡張統計情報が定義されている場合。</p>
+<p>上記の条件が満たされた場合、clauselist_selectivity() はまず、句のリストを拡張統計情報の選択率推計関数に渡そうとします。この関数は、推計を実行できる句を全く見つけられない場合があります。そのような場合、これらの句は単に無視されます。これらの関数で実際の推計作業が行われる場合、他の推計を実行する関数がどの句をスキップすべきかを把握できるように、どの句に対して推計を実行したかをマークすることが期待されます。</p>
+<p>ANALYZE におけるサンプルのサイズ -------------------------</p>
+<p>ANALYZE を実行する際、サンプリングする行数は次のように決定されます：</p>
+<p>(300 * statistics_target)</p>
+<p>これは個別の列の統計情報に対してはそこそこうまく機能しますが、拡張統計情報に対しては十分ではないかもしれません。推計エラーを分析した論文では、すべてテーブルに比例したサンプルを使用しています（通常、正確な統計情報を構築するにはテーブルの 1〜3% で十分であることがわかっています）。</p>
+<p>サンプルサイズを決定する際には、要求される精度（MCV 項目の数またはヒストグラムのビンの数）も考慮されるべきであり、拡張統計情報ではそれらは必ずしも statistics_target によって制限されません。</p>
+<p>しかしながら、これはさらなる議論に値します。なぜなら、サンプルの収集は非常に負荷が高く、さらにそれを増やすと ANALYZE がさらに苦痛なものになるためです。現在の実装による実験から判断すると、固定サイズは今のところそこそこうまく機能しているように見えるため、これは将来の課題として残しておきます。</p></section></div><script>
+(function() {
+  function notifyParent() {
+    if (parent === window) return;
+    parent.postMessage({type: "frame-location", frame: window.name || "", href: window.location.href}, "*");
+  }
+  document.addEventListener("click", function(event) {
+    const link = event.target.closest("a[data-panel]");
+    if (!link || parent === window) return;
+    parent.postMessage({type: "source-link", panel: link.dataset.panel}, "*");
+  });
+  window.addEventListener("load", notifyParent);
+  window.addEventListener("hashchange", notifyParent);
+})();
+</script></body></html>

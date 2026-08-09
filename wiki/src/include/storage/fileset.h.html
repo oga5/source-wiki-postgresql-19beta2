@@ -1,0 +1,57 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>src/include/storage/fileset.h.md</title><link rel="stylesheet" href="../../../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../../../source/src/include/storage/fileset.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/storage/fileset.h.html&quot;}, '*');">src/include/storage/fileset.h</a></h1>
+<h2>概要</h2>
+<p>名前付きの一時ファイルを管理するための <code>FileSet</code> 構造体と、それらを操作する公開 API のインターフェースを定義するヘッダーファイルです。</p>
+<h2>モジュール内での役割</h2>
+<p><code>src/include/storage</code> ストレージサブシステムにおいて、単一または複数のバックエンドプロセス間でライフサイクルにまたがり、複数回のオープン・クローズが可能な名前付き一時ファイルのネームスペースを提供します。</p>
+<h2>責務</h2>
+<ul>
+<li>名前付き一時ファイルのグループ管理を行う <code>FileSet</code> データ構造の定義。</li>
+<li><code>FileSet</code> の初期化、ファイルの作成、オープン、削除、および一括削除を行う関数シグネチャの提供。</li>
+<li>一時ファイル配置先のテーブルスペース情報の保持と構成。</li>
+</ul>
+<h2>重要なシンボル</h2>
+<ul>
+<li><code>FileSet</code>: 作成プロセスの PID、識別子、および利用するテーブルスペースの Oid 配列を保持する構造体。</li>
+<li><code>FileSetInit</code>: <code>FileSet</code> 構造体を初期化し、一時テーブルスペースを割り当てる関数。</li>
+<li><code>FileSetCreate</code> / <code>FileSetOpen</code>: <code>FileSet</code> 内で一時ファイルを新規作成またはオープンする関数。</li>
+<li><code>FileSetDelete</code> / <code>FileSetDeleteAll</code>: 個別または一括で一時ファイルを削除する関数。</li>
+</ul>
+<h2>制御フローとデータフロー</h2>
+<ul>
+<li>呼び出し元はまず <code>FileSetInit</code> を呼び出して構造体を初期化し、利用可能な一時テーブルスペースの Oid を確定させます。</li>
+<li>ファイル操作時には <code>FileSetCreate</code> または <code>FileSetOpen</code> に <code>FileSet</code> とファイル名を渡し、実体パスを解決して <a class="wiki-source-link" href="../../../../source/src/include/storage/fd.h.html#L51" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__storage__fd_h__File.html&quot;}, '*');"><code>File</code></a> ハンドルを取得します。</li>
+<li>不要になったファイルは <code>FileSetDelete</code> または <code>FileSetDeleteAll</code> によって明示的に削除されます。</li>
+</ul>
+<h2>直接依存</h2>
+<ul>
+<li><code>storage/fd.h</code>: ファイル記述子および <a class="wiki-source-link" href="../../../../source/src/include/storage/fd.h.html#L51" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__storage__fd_h__File.html&quot;}, '*');"><code>File</code></a> 型の定義に依存。</li>
+</ul>
+<h2>関連コード</h2>
+<ul>
+<li><a class="wiki-source-link" href="../../../../source/src/backend/storage/file/fileset.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/storage/file/fileset.c.html&quot;}, '*');"><code>src/backend/storage/file/fileset.c</code></a>: <code>FileSet</code> API の実際のロジックとパス解決・ディレクトリ作成を実装するペアファイル。</li>
+<li><a class="wiki-source-link" href="../../../../source/src/include/storage/sharedfileset.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/storage/sharedfileset.h.html&quot;}, '*');"><code>src/include/storage/sharedfileset.h</code></a>: 複数プロセス間で共有されるファイルセット機能を提供する関連ヘッダー。</li>
+</ul>
+<h2>読者向けメモ</h2>
+<ul>
+<li><code>FileSet</code> に属するファイルはトランザクションを跨いで生存できるため、不要になった際は呼び出し元が責任を持って <code>FileSetDelete</code> や <code>FileSetDeleteAll</code> でクリーンアップする必要があります。</li>
+<li>テーブルスペースの割り当てには <a class="wiki-source-link" href="../../../../source/src/backend/commands/tablespace.c.html#L86" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/commands/tablespace.c.html&quot;}, '*');"><code>temp_tablespaces</code></a> GUC 設定が利用されます。</li>
+</ul>
+<h2>シンボルページ</h2>
+<ul>
+<li><a href="../../../symbols/src__include__storage__fileset_h__FileSet.html" target="wiki-view"><code>FileSet</code></a></li>
+</ul><script>
+(function() {
+  function notifyParent() {
+    if (parent === window) return;
+    parent.postMessage({type: "frame-location", frame: window.name || "", href: window.location.href}, "*");
+  }
+  document.addEventListener("click", function(event) {
+    const link = event.target.closest("a[data-panel]");
+    if (!link || parent === window) return;
+    parent.postMessage({type: "source-link", panel: link.dataset.panel}, "*");
+  });
+  window.addEventListener("load", notifyParent);
+  window.addEventListener("hashchange", notifyParent);
+})();
+</script></body></html>

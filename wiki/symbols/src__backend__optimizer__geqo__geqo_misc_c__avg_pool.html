@@ -1,39 +1,18 @@
 <!doctype html>
 <html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>symbols/src__backend__optimizer__geqo__geqo_misc_c__avg_pool.md</title><link rel="stylesheet" href="../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../source/src/backend/optimizer/geqo/geqo_misc.c.html#L34" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__geqo__geqo_misc_c__avg_pool.html&quot;}, '*');">avg_pool</a></h1>
-<h2>定義</h2>
+<h2>現在のソース事実</h2>
 <ul>
 <li>種別: <code>function</code></li>
 <li>定義箇所: <code>src/backend/optimizer/geqo/geqo_misc.c:34</code></li>
-<li>所属モジュール: <a class="wiki-entity-link" href="../modules/src__backend__optimizer__geqo.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/modules/src__backend__optimizer__geqo.html&quot;, &quot;source&quot;: &quot;source/src/backend/optimizer/geqo/geqo_copy.c.html&quot;}, '*');"><code>module:src/backend/optimizer/geqo</code></a></li>
-</ul>
-<h2>目的</h2>
-<p>静的シンボル索引から生成された初期シンボルページです。</p>
-<h2>シグネチャまたは形状</h2>
-<ul>
 <li>シグネチャ: <code>static double avg_pool(Pool *pool)</code></li>
-</ul>
-<h2>入力と出力</h2>
-<ul>
-<li>引数: <code>Pool *pool</code></li>
-<li>戻り値: <code>double</code></li>
-</ul>
-<h2>前提条件と不変条件</h2>
-<p>まだ解析していません。</p>
-<h2>アルゴリズムまたは振る舞い</h2>
-<ul>
-<li>複雑度: <code>medium</code> (score 7)</li>
-</ul>
-<p>まだ解析していません。</p>
-<h2>呼び出し元と呼び出し先</h2>
-<ul>
 <li>呼び出し元: <a class="wiki-source-link" href="../../source/src/backend/optimizer/geqo/geqo_misc.c.html#L93" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__geqo__geqo_misc_c__print_gen.html&quot;}, '*');"><code>print_gen</code></a></li>
 <li>呼び出し先: なし</li>
 <li>呼び出し元サイト: <a class="wiki-source-link" href="../../source/src/backend/optimizer/geqo/geqo_misc.c.html#L93" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__geqo__geqo_misc_c__print_gen.html&quot;}, '*');"><code>print_gen</code></a> at <code>src/backend/optimizer/geqo/geqo_misc.c:108:4</code> (direct, confidence=high, resolved=<a class="wiki-entity-link" href="src__backend__optimizer__geqo__geqo_misc_c__avg_pool.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__geqo__geqo_misc_c__avg_pool.html&quot;, &quot;source&quot;: &quot;source/src/backend/optimizer/geqo/geqo_misc.c.html#L34&quot;}, '*');"><code>symbol:src/backend/optimizer/geqo/geqo_misc.c#avg_pool</code></a>)</li>
 <li>呼び出しサイト: <a class="wiki-source-link" href="../../source/src/include/utils/elog.h.html#L242" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/utils/elog.h.html&quot;}, '*');"><code>elog</code></a> at <code>src/backend/optimizer/geqo/geqo_misc.c:41:3</code> (unresolved)</li>
+<li>関連型: <code>Pool</code></li>
+<li>複雑度: <code>medium</code> (score 7)</li>
 </ul>
-<h2>関連データ構造</h2>
-<p><code>Pool</code></p>
-<h2>ソース抜粋</h2>
+<h3>ソース抜粋</h3>
 <p>~~~c static double <a class="wiki-source-link" href="../../source/src/backend/optimizer/geqo/geqo_misc.c.html#L34" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__geqo__geqo_misc_c__avg_pool.html&quot;}, '*');">avg_pool</a>(Pool *pool) { int			i; double		cumulative = 0.0;</p>
 <p>if (pool-&gt;<a class="wiki-source-link" href="../../source/src/backend/optimizer/geqo/geqo_eval.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__geqo__geqo_eval_c__size.html&quot;}, '*');">size</a> &lt;= 0) <a class="wiki-source-link" href="../../source/src/include/utils/elog.h.html#L242" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/utils/elog.h.html&quot;}, '*');">elog</a>(ERROR, &quot;pool_size <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> zero&quot;);</p>
 <p>/*</p>
@@ -42,14 +21,28 @@
 <li>pool-&gt;<a class="wiki-source-link" href="../../source/src/backend/optimizer/geqo/geqo_eval.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__geqo__geqo_eval_c__size.html&quot;}, '*');">size</a> <a class="wiki-source-link" href="../../source/src/backend/regex/regc_locale.c.html#L487" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__regex__regc_locale_c__before.html&quot;}, '*');">before</a> summing, not after, to avoid overflow.  This loses a</li>
 <li>little in speed and accuracy, but this routine <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> only used for debug</li>
 <li>printouts, so we don&#x27;t care that much.</li>
-<p>*/ for (i = 0; i &lt; pool-&gt;<a class="wiki-source-link" href="../../source/src/backend/optimizer/geqo/geqo_eval.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__geqo__geqo_eval_c__size.html&quot;}, '*');">size</a>; i++) cumulative += pool-&gt;data[i].worth / pool-&gt;<a class="wiki-source-link" href="../../source/src/backend/optimizer/geqo/geqo_eval.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__geqo__geqo_eval_c__size.html&quot;}, '*');">size</a>;</p>
+<p>*/ for (i = 0; i &lt; pool-&gt;<a class="wiki-source-link" href="../../source/src/backend/optimizer/geqo/geqo_eval.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__geqo__geqo_eval_c__size.html&quot;}, '*');">size</a>; i++) cumulative += pool-&gt;data[i].<a class="wiki-source-link" href="../../source/src/backend/optimizer/geqo/geqo_pool.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__geqo__geqo_pool_c__worth.html&quot;}, '*');">worth</a> / pool-&gt;<a class="wiki-source-link" href="../../source/src/backend/optimizer/geqo/geqo_eval.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__geqo__geqo_eval_c__size.html&quot;}, '*');">size</a>;</p>
 </ul>
 <p>return cumulative; } ~~~</p>
-<h2>失敗モードと境界条件</h2>
-<p>まだ解析していません。</p>
-<h2>保守担当者向けメモ</h2>
+<h2>目的</h2>
+<p>プール全体の平均コストを算出するデバッグ用関数です。</p>
+<h2>入力と出力</h2>
 <ul>
-<li>後続フェーズで、ソース本文の文脈と caller/callee 情報を使ってこのページを強化する。</li>
+<li>入力: <code>Pool *pool</code> （評価対象の個体群プール）</li>
+<li>戻り値: <code>double</code> （算出した平均コスト）</li>
+</ul>
+<h2>前提条件と不変条件</h2>
+<ul>
+<li>プールのサイズ <code>pool-&gt;size</code> は 0 より大きい必要があります。</li>
+</ul>
+<h2>アルゴリズムまたは振る舞い</h2>
+<ul>
+<li>浮動小数点のオーバーフローを防ぐため、<a class="wiki-source-link" href="../../source/src/backend/optimizer/geqo/geqo_pool.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__geqo__geqo_pool_c__DBL_MAX.html&quot;}, '*');"><code>DBL_MAX</code></a> が複数含まれる可能性のある各個体のコスト総和を後から割るのではなく、事前に <code>pool-&gt;size</code> で除算してから累積します。</li>
+<li>0 から <code>pool-&gt;size - 1</code> までループを回し、各個体の <a class="wiki-source-link" href="../../source/src/backend/optimizer/geqo/geqo_pool.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__geqo__geqo_pool_c__worth.html&quot;}, '*');"><code>worth</code></a> をプールサイズで割った値を <code>cumulative</code> に加算していき、最終的な累積値を返します。</li>
+</ul>
+<h2>失敗モードと境界条件</h2>
+<ul>
+<li><code>pool-&gt;size</code> が 0 以下の場合、<code>elog(ERROR, &quot;pool_size is zero&quot;)</code> を呼び出しエラーが発生します。</li>
 </ul><script>
 (function() {
   function notifyParent() {

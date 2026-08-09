@@ -49,13 +49,13 @@
 <p>i++; }</p>
 <p>/*</p>
 <ul>
-<li>If there&#x27;s a <a class="wiki-source-link" href="../../source/src/backend/optimizer/path/allpaths.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__path__allpaths_c__HAVING.html&quot;}, '*');">HAVING</a> <a class="wiki-source-link" href="../../source/src/backend/optimizer/path/clausesel.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__path__clausesel_c__clause.html&quot;}, '*');">clause</a>, we&#x27;ll need the Vars/Aggrefs it uses, too.</li>
+<li>If there&#x27;s a HAVING <a class="wiki-source-link" href="../../source/src/backend/optimizer/path/clausesel.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__path__clausesel_c__clause.html&quot;}, '*');">clause</a>, we&#x27;ll need the Vars/Aggrefs it uses, too.</li>
 <p>*/ if (havingQual) non_group_cols = <a class="wiki-source-link" href="../../source/src/backend/nodes/list.c.html#L338" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__nodes__list_c__lappend.html&quot;}, '*');">lappend</a>(non_group_cols, havingQual);</p>
 </ul>
 <p>/*</p>
 <ul>
 <li>Pull out all the Vars, PlaceHolderVars, and Aggrefs mentioned in</li>
-<li>non-group cols (plus <a class="wiki-source-link" href="../../source/src/backend/optimizer/path/allpaths.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__path__allpaths_c__HAVING.html&quot;}, '*');">HAVING</a>), and add them to the partial_target if not</li>
+<li>non-group cols (plus HAVING), and add them to the partial_target if not</li>
 <li>already present.  (An expression used directly as a GROUP BY item will</li>
 <li>be present already.)  Note this includes Vars used in resjunk <a class="wiki-source-link" href="../../source/src/test/modules/test_tidstore/test_tidstore.c.html#L48" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/test/modules/test_tidstore/test_tidstore.c.html&quot;}, '*');">items</a>, so</li>
 <li>we are covering the needs of ORDER BY and window specifications.</li>

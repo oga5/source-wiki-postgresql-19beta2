@@ -46,7 +46,7 @@
 <li>(If we have a source tupdesc but not a tuple, we&#x27;ll set the</li>
 <li>variable to a row of nulls, instead.  This <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> odd perhaps, but</li>
 <li>backwards compatible.)</li>
-<p>*/ if (tupdesc == NULL) { if (rec-&gt;datatype &amp;&amp; rec-&gt;datatype-&gt;typtype == TYPTYPE_DOMAIN) { /*</p>
+<p>*/ if (tupdesc == NULL) { if (rec-&gt;datatype &amp;&amp; rec-&gt;datatype-&gt;<a class="wiki-source-link" href="../../source/src/include/catalog/pg_type.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/catalog/pg_type.h.html&quot;}, '*');">typtype</a> == <a class="wiki-source-link" href="../../source/src/include/catalog/pg_type.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/catalog/pg_type.h.html&quot;}, '*');">TYPTYPE_DOMAIN</a>) { /*</p>
 <li>If it&#x27;s a composite domain, NULL might not be a legal</li>
 <li>value, so we instead need to make an empty expanded record</li>
 <li>and ensure that domain <a class="wiki-source-link" href="../../source/src/include/lib/ilist.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__lib__ilist_h__type.html&quot;}, '*');">type</a> checking gets done.  If there</li>

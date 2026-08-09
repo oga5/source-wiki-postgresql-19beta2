@@ -32,14 +32,14 @@
 <li>呼び出しサイト: <code>isprint</code> at <code>src/interfaces/libpq/fe-trace.c:115:7</code> (unresolved), <code>fprintf</code> at <code>src/interfaces/libpq/fe-trace.c:116:3</code> (unresolved), <code>fprintf</code> at <code>src/interfaces/libpq/fe-trace.c:118:3</code> (unresolved)</li>
 </ul>
 <h2>関連データ構造</h2>
-<p><code>c</code>, <a class="wiki-source-link" href="../../source/src/interfaces/ecpg/preproc/type.h.html#L138" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__interfaces__ecpg__preproc__type_h__cursor.html&quot;}, '*');"><code>cursor</code></a></p>
+<p><code>c</code>, <code>cursor</code></p>
 <h2>ソース抜粋</h2>
-<p>~~~c static void <a class="wiki-source-link" href="../../source/src/interfaces/libpq/fe-trace.c.html#L106" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__interfaces__libpq__fe-trace_c__pqTraceOutputByte1.html&quot;}, '*');">pqTraceOutputByte1</a>(FILE *pfdebug, const char *data, int *<a class="wiki-source-link" href="../../source/src/interfaces/ecpg/preproc/type.h.html#L138" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__interfaces__ecpg__preproc__type_h__cursor.html&quot;}, '*');">cursor</a>) { const char *v = data + *<a class="wiki-source-link" href="../../source/src/interfaces/ecpg/preproc/type.h.html#L138" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__interfaces__ecpg__preproc__type_h__cursor.html&quot;}, '*');">cursor</a>;</p>
+<p>~~~c static void <a class="wiki-source-link" href="../../source/src/interfaces/libpq/fe-trace.c.html#L106" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__interfaces__libpq__fe-trace_c__pqTraceOutputByte1.html&quot;}, '*');">pqTraceOutputByte1</a>(FILE *pfdebug, const char *data, int *cursor) { const char *v = data + *cursor;</p>
 <p>/*</p>
 <ul>
 <li>Show non-printable data in hex <a class="wiki-source-link" href="../../source/src/bin/pg_basebackup/pg_basebackup.c.html#L134" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/bin/pg_basebackup/pg_basebackup.c.html&quot;}, '*');">format</a>, including the terminating \0</li>
 <li>that completes ErrorResponse and NoticeResponse messages.</li>
-<p>*/ if (!isprint((unsigned char) *v)) fprintf(pfdebug, &quot; \\x%02x&quot;, (unsigned char) *v); else fprintf(pfdebug, &quot; %c&quot;, *v); *<a class="wiki-source-link" href="../../source/src/interfaces/ecpg/preproc/type.h.html#L138" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__interfaces__ecpg__preproc__type_h__cursor.html&quot;}, '*');">cursor</a> += 1; } ~~~</p>
+<p>*/ if (!isprint((unsigned char) *v)) fprintf(pfdebug, &quot; \\x%02x&quot;, (unsigned char) *v); else fprintf(pfdebug, &quot; %c&quot;, *v); *cursor += 1; } ~~~</p>
 </ul>
 <h2>失敗モードと境界条件</h2>
 <p>まだ解析していません。</p>

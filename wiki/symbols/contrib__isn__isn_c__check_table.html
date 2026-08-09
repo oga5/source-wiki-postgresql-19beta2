@@ -15,7 +15,7 @@
 <h2>入力と出力</h2>
 <ul>
 <li>引数: <code>const char *(*TABLE)[2]</code>, <code>const unsigned TABLE_index[10][2]</code></li>
-<li>戻り値: <a class="wiki-source-link" href="../../source/src/include/access/tupmacs.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__access__tupmacs_h__bool.html&quot;}, '*');"><code>bool</code></a></li>
+<li>戻り値: <code>bool</code></li>
 </ul>
 <h2>前提条件と不変条件</h2>
 <p>まだ解析していません。</p>
@@ -34,7 +34,7 @@
 <h2>関連データ構造</h2>
 <p><a class="wiki-source-link" href="../../source/src/interfaces/ecpg/preproc/type.h.html#L96" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__interfaces__ecpg__preproc__type_h__index.html&quot;}, '*');"><code>index</code></a></p>
 <h2>ソース抜粋</h2>
-<p>~~~c static <a class="wiki-source-link" href="../../source/src/include/access/tupmacs.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__access__tupmacs_h__bool.html&quot;}, '*');">bool</a> <a class="wiki-source-link" href="../../source/contrib/isn/isn.c.html#L68" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/contrib__isn__isn_c__check_table.html&quot;}, '*');">check_table</a>(const char *(*TABLE)[2], const unsigned TABLE_index[10][2]) { const char *aux1, *aux2; int			a, b, x = 0, y = -1, i = 0, j, init = 0;</p>
+<p>~~~c static bool <a class="wiki-source-link" href="../../source/contrib/isn/isn.c.html#L68" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/contrib__isn__isn_c__check_table.html&quot;}, '*');">check_table</a>(const char *(*TABLE)[2], const unsigned TABLE_index[10][2]) { const char *aux1, *aux2; int			a, b, x = 0, y = -1, i = 0, j, init = 0;</p>
 <p>if (TABLE == NULL || TABLE_index == NULL) return <a class="wiki-source-link" href="../../source/src/tools/pg_bsd_indent/indent_globs.h.html#L46" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/tools/pg_bsd_indent/indent_globs.h.html&quot;}, '*');">true</a>;</p>
 <p>while (TABLE[i][0] &amp;&amp; TABLE[i][1]) { aux1 = TABLE[i][0]; aux2 = TABLE[i][1];</p>
 <p>/* must always start with a digit: */ if (!isdigit((unsigned char) *aux1) || !isdigit((unsigned char) *aux2)) goto invalidtable; a = *aux1 - &#x27;0&#x27;; b = *aux2 - &#x27;0&#x27;;</p>

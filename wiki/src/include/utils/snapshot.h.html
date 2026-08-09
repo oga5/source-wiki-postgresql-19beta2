@@ -1,0 +1,53 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>src/include/utils/snapshot.h.md</title><link rel="stylesheet" href="../../../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../../../source/src/include/utils/snapshot.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/utils/snapshot.h.html&quot;}, '*');">src/include/utils/snapshot.h</a></h1>
+<h2>概要</h2>
+<p>PostgreSQLの可視性判定およびトランザクション制御で使用されるスナップショットのデータ構造と型定義を提供するヘッダーファイルです。</p>
+<h2>モジュール内での役割</h2>
+<p><code>src/include/utils</code> モジュールの一部として、タプル（行）の可視性判定に必要なスナップショットの表現を定義します。関連するスナップショット管理機能を提供する <a class="wiki-source-link" href="../../../../source/src/include/utils/snapmgr.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/utils/snapmgr.h.html&quot;}, '*');"><code>snapmgr.h</code></a> 等の周辺ファイルと密接に連携します。</p>
+<h2>責務</h2>
+<ul>
+<li>通常のMVCCスナップショットから特殊な可視性ルール（TOAST、DIRTY、HISTORIC等）までを網羅する <a class="wiki-source-link" href="../../../../source/src/include/utils/snapshot.h.html#L31" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__utils__snapshot_h__SnapshotType.html&quot;}, '*');"><code>SnapshotType</code></a> 列挙型の定義。</li>
+<li>スナップショットのメタデータやトランザクションID配列を保持する <a class="wiki-source-link" href="../../../../source/src/include/utils/snapshot.h.html#L138" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__utils__snapshot_h__SnapshotData.html&quot;}, '*');"><code>SnapshotData</code></a> 構造体および <code>Snapshot</code> ポインタ型の提供。</li>
+<li>スナップショット管理のための参照カウンタやペアリングヒープ用ノード (<a class="wiki-source-link" href="../../../../source/src/include/lib/pairingheap.h.html#L30" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__lib__pairingheap_h__pairingheap_node.html&quot;}, '*');"><code>pairingheap_node</code></a>) の定義。</li>
+</ul>
+<h2>重要なシンボル</h2>
+<ul>
+<li><a class="wiki-source-link" href="../../../../source/src/include/utils/snapshot.h.html#L31" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__utils__snapshot_h__SnapshotType.html&quot;}, '*');"><code>SnapshotType</code></a>: スナップショットのセマンティクス（MVCC, SELF, ANY, TOAST, DIRTY, HISTORIC_MVCC, NON_VACUUMABLE）を区別する列挙型。</li>
+<li><a class="wiki-source-link" href="../../../../source/src/include/utils/snapshot.h.html#L138" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__utils__snapshot_h__SnapshotData.html&quot;}, '*');"><code>SnapshotData</code></a>: トランザクション範囲（<code>xmin</code>, <code>xmax</code>）、進行中トランザクション配列（<a class="wiki-source-link" href="../../../../source/src/include/utils/snapshot.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__utils__snapshot_h__xip.html&quot;}, '*');"><code>xip</code></a>, <a class="wiki-source-link" href="../../../../source/src/include/utils/snapshot.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__utils__snapshot_h__subxip.html&quot;}, '*');"><code>subxip</code></a>）、コマンドID（<a class="wiki-source-link" href="../../../../source/src/include/utils/snapshot.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__utils__snapshot_h__curcid.html&quot;}, '*');"><code>curcid</code></a>）などを保持するメイン構造体。</li>
+<li><code>Snapshot</code>: <code>SnapshotData *</code> のエイリアス。</li>
+<li><a class="wiki-source-link" href="../../../../source/src/include/utils/snapshot.h.html#L119" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/utils/snapshot.h.html&quot;}, '*');"><code>InvalidSnapshot</code></a>: 無効なスナップショットを表すヌルポインタマクロ。</li>
+</ul>
+<h2>制御フローとデータフロー</h2>
+<p>本ファイルは純粋な型定義とマクロのヘッダーであるため、実行コードや制御フローは含まれません。ここで定義された <a class="wiki-source-link" href="../../../../source/src/include/utils/snapshot.h.html#L138" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__utils__snapshot_h__SnapshotData.html&quot;}, '*');"><code>SnapshotData</code></a> は、バックエンドの可視性ルーチン（例: <a class="wiki-source-link" href="../../../../source/src/backend/access/heap/heapam_visibility.c.html#L758" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__access__heap__heapam_visibility_c__HeapTupleSatisfiesDirty.html&quot;}, '*');"><code>HeapTupleSatisfiesDirty</code></a> やバキューム処理）へ引数として渡され、行の可視性評価の基準データとして参照・利用されます。</p>
+<h2>直接依存</h2>
+<ul>
+<li><code>lib/pairingheap.h</code>: 登録済みスナップショットの管理ヒープ構造に使用されるペアリングヒープの定義。</li>
+</ul>
+<h2>関連コード</h2>
+<ul>
+<li><a class="wiki-source-link" href="../../../../source/src/include/utils/snapmgr.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/utils/snapmgr.h.html&quot;}, '*');"><code>src/include/utils/snapmgr.h</code></a>: スナップショットの取得、登録、スタック管理を行うマネージャー機能の定義。</li>
+</ul>
+<h2>読者向けメモ</h2>
+<ul>
+<li><a class="wiki-source-link" href="../../../../source/src/include/utils/snapshot.h.html#L138" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__utils__snapshot_h__SnapshotData.html&quot;}, '*');"><code>SnapshotData</code></a> は複数の異なるスナップショット種別（MVCC、DIRTY、NON_VACUUMABLE等）のフィールドを共用しているため、種別ごとに使用されるフィールドが異なる点に注意してください。</li>
+</ul>
+<h2>シンボルページ</h2>
+<ul>
+<li><a href="../../../symbols/src__include__utils__snapshot_h__SnapshotType.html" target="wiki-view"><code>SnapshotType</code></a></li>
+<li><a href="../../../symbols/src__include__utils__snapshot_h__Snapshot.html" target="wiki-view"><code>Snapshot</code></a></li>
+<li><a href="../../../symbols/src__include__utils__snapshot_h__SnapshotData.html" target="wiki-view"><code>SnapshotData</code></a></li>
+</ul><script>
+(function() {
+  function notifyParent() {
+    if (parent === window) return;
+    parent.postMessage({type: "frame-location", frame: window.name || "", href: window.location.href}, "*");
+  }
+  document.addEventListener("click", function(event) {
+    const link = event.target.closest("a[data-panel]");
+    if (!link || parent === window) return;
+    parent.postMessage({type: "source-link", panel: link.dataset.panel}, "*");
+  });
+  window.addEventListener("load", notifyParent);
+  window.addEventListener("hashchange", notifyParent);
+})();
+</script></body></html>

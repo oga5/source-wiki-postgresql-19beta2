@@ -1,41 +1,48 @@
 <!doctype html>
 <html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>src/include/utils/builtins.h.md</title><link rel="stylesheet" href="../../../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../../../source/src/include/utils/builtins.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/utils/builtins.h.html&quot;}, '*');">src/include/utils/builtins.h</a></h1>
 <h2>概要</h2>
-<p>PostgreSQLの組み込みデータ型および関数群に対する操作関数やマクロの宣言を集約したヘッダーファイルです。</p>
+<p>PostgreSQLの組み込みデータ型に対する各種演算や、C言語表現とDatum表現の相互変換、パース、フォーマット関数群のプロトタイプ宣言を提供するヘッダーファイルです。</p>
 <h2>モジュール内での役割</h2>
-<p><code>src/include/utils/</code> ディレクトリに位置し、ブール値、整数、OID、文字列、ネットワーク、型フォーマットなど、PostgreSQLのコア処理で多用される基本的なC言語関数インターフェースを他のサブシステムへ提供します。</p>
+<p><code>src/include/utils</code> サブシステムの一部として、型システム、文字列操作、数値変換、識別子のエスケープ処理など、コアバックエンド全般で頻繁に利用される基本関数のインターフェースを一元的に定義しています。</p>
 <h2>責務</h2>
 <ul>
-<li>各種組み込み型（<a class="wiki-source-link" href="../../../../source/src/include/access/tupmacs.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__access__tupmacs_h__bool.html&quot;}, '*');">bool</a>, int16/32/64, Oid, text, ネットワーク型等）の変換・操作関数のプロトタイプ宣言。</li>
-<li>C文字列とPostgreSQL内部のテキストデータム間を変換するマクロ（<a class="wiki-source-link" href="../../../../source/src/include/utils/builtins.h.html#L98" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/utils/builtins.h.html&quot;}, '*');"><code>CStringGetTextDatum</code></a>, <a class="wiki-source-link" href="../../../../source/src/include/utils/builtins.h.html#L99" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/utils/builtins.h.html&quot;}, '*');"><code>TextDatumGetCString</code></a>）の提供。</li>
-<li>型名フォーマット関数（<code>format_type_extended</code> 等）や識別子クォーティング関数の定義。</li>
+<li>組み込み型操作関数（<code>bool</code>, <code>int</code>, <code>oid</code>, <a class="wiki-source-link" href="../../../../source/src/include/mb/pg_wchar.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/mb/pg_wchar.h.html&quot;}, '*');"><code>name</code></a>, <code>text</code>, <code>xid</code> 等）の外部公開シグネチャの定義。</li>
+<li>Cの文字列とPostgreSQLの <code>text</code> 型やDatum型を相互変換する便利マクロの提供。</li>
+<li>データ型名整形関数 (<code>format_type_extended</code>) や文字列・識別子クォーテーション関数の宣言。</li>
 </ul>
 <h2>重要なシンボル</h2>
 <ul>
-<li><code>MAXINT8LEN</code>: 8バイト整数を表現する最大文字数（20）。</li>
-<li><a class="wiki-source-link" href="../../../../source/src/include/utils/builtins.h.html#L98" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/utils/builtins.h.html&quot;}, '*');"><code>CStringGetTextDatum</code></a> / <a class="wiki-source-link" href="../../../../source/src/include/utils/builtins.h.html#L99" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/utils/builtins.h.html&quot;}, '*');"><code>TextDatumGetCString</code></a>: Cの文字列とPostgreSQLの <code>text</code> データム間の相互変換マクロ。</li>
-<li><code>format_type_extended</code>: 型OIDや修飾子、フラグを指定してSQL型の文字列表現を取得する関数。</li>
-<li><code>pg_strtoint16</code> / <code>pg_strtoint32</code> / <code>pg_strtoint64</code>: 文字列から各サイズの整数への安全な変換関数群。</li>
+<li><code>pg_strtoint16</code>, <code>pg_strtoint32</code>, <code>pg_strtoint64</code>: 文字列を各サイズの整数に安全にパースする関数。</li>
+<li><code>format_type_extended</code>: 型OIDとtypemod、フラグを受け取り、人間が読みやすい型名文字列を生成する関数。</li>
+<li><code>text</code>: 可変長テキスト型を表す内部構造体（ポインタとして利用）。</li>
+<li><a class="wiki-source-link" href="../../../../source/src/include/utils/builtins.h.html#L98" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/utils/builtins.h.html&quot;}, '*');"><code>CStringGetTextDatum</code></a>, <a class="wiki-source-link" href="../../../../source/src/include/utils/builtins.h.html#L99" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/utils/builtins.h.html&quot;}, '*');"><code>TextDatumGetCString</code></a>: C文字列とDatum間の変換マクロ。</li>
+<li><code>FORMAT_TYPE_*</code> マクロ群: <code>format_type_extended</code> の挙動を制御するビットフラグ。</li>
 </ul>
 <h2>制御フローとデータフロー</h2>
-<ul>
-<li>ヘッダーファイルであるため直接的な制御フローは持たず、各組み込み関数を呼び出すバックエンドのパーサー、エグゼキューター、型キャスト処理などに型変換や文字列表現のAPIを供給します。</li>
-<li>データムとC言語ネイティブ型の間を行き来する変換ルーチンの境界として機能します。</li>
-</ul>
+<p>ヘッダーファイルであるため実行コードは持ちませんが、典型的なデータフローの境界を定義しています。 1. 入力層（例: SQLパーサーやGUC）がC文字列を受け取る。 2. <code>pg_strtoint*</code> や <a class="wiki-source-link" href="../../../../source/src/backend/utils/adt/bool.c.html#L30" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__utils__adt__bool_c__parse_bool.html&quot;}, '*');"><code>parse_bool</code></a> を通じてプリミティブ値へ変換される。 3. <a class="wiki-source-link" href="../../../../source/src/include/utils/builtins.h.html#L98" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/utils/builtins.h.html&quot;}, '*');"><code>CStringGetTextDatum</code></a> や <code>format_type_extended</code> を通じて、PostgreSQLの内部データ型やDatum形式へ整形・変換され、エグゼキューターやカタログ層へ渡される。</p>
 <h2>直接依存</h2>
 <ul>
-<li><a class="wiki-source-link" href="../../../../source/src/include/fmgr.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/fmgr.h.html&quot;}, '*');"><code>fmgr.h</code></a></li>
-<li><code>nodes/nodes.h</code></li>
-<li><code>utils/fmgrprotos.h</code></li>
+<li><a class="wiki-source-link" href="../../../../source/src/include/fmgr.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/fmgr.h.html&quot;}, '*');"><code>fmgr.h</code></a>: 関数マネージャおよび <code>PG_FUNCTION_ARGS</code> などの基盤マクロ。</li>
+<li><code>nodes/nodes.h</code>: ノード構造体の基本定義。</li>
+<li><code>utils/fmgrprotos.h</code>: 組み込み関数の関数プロトコル宣言群。</li>
 </ul>
 <h2>関連コード</h2>
 <ul>
-<li><code>src/backend/utils/adt/</code>: 本ファイルで宣言されている関数群の実装が含まれるディレクトリ。</li>
-<li><code>src/include/utils/fmgrprotos.h</code>: 関数マネージャーに関連するプロトコル定義。</li>
+<li><code>src/backend/utils/adt/</code>: 本ヘッダーで宣言されている各種組み込み関数（<a class="wiki-source-link" href="../../../../source/src/backend/utils/adt/numutils.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/utils/adt/numutils.c.html&quot;}, '*');"><code>numutils.c</code></a>, <a class="wiki-source-link" href="../../../../source/src/backend/utils/adt/varlena.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/utils/adt/varlena.c.html&quot;}, '*');"><code>varlena.c</code></a>, <a class="wiki-source-link" href="../../../../source/src/backend/utils/adt/format_type.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/utils/adt/format_type.c.html&quot;}, '*');"><code>format_type.c</code></a> 等）の実装本体。</li>
+<li><code>src/include/utils/fmgrprotos.h</code>: ファンクションマネージャーを通じて呼び出されるSQL関数のエントリポイント一覧。</li>
 </ul>
 <h2>読者向けメモ</h2>
 <ul>
-<li>本ファイルは多岐にわたる組み込み型のユーティリティ宣言のハブとなっているため、特定の型（数値やテキストなど）に特化した詳細な実装を追う前段階の参照先として利用してください。</li>
+<li>本ファイルは多くのソースファイルからインクルードされるため、変更時はバックエンド全体への再コンパイル影響範囲が広くなります。</li>
+<li>エラーハンドリングにおいて <code>Node *escontext</code> を引数に取る安全なパース関数（例: <a class="wiki-source-link" href="../../../../source/src/backend/utils/adt/numutils.c.html#L387" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__utils__adt__numutils_c__pg_strtoint32_safe.html&quot;}, '*');"><code>pg_strtoint32_safe</code></a>）が用意されているため、エラーを投げるかわりにコンテキストへエラーを記録するパスを追う際の起点になります。</li>
+</ul>
+<h2>シンボルページ</h2>
+<ul>
+<li><a href="../../../symbols/src__include__utils__builtins_h__format_type_extended.html" target="wiki-view"><code>format_type_extended</code></a></li>
+<li><a href="../../../symbols/src__include__utils__builtins_h__pg_strtoint16.html" target="wiki-view"><code>pg_strtoint16</code></a></li>
+<li><a href="../../../symbols/src__include__utils__builtins_h__pg_strtoint32.html" target="wiki-view"><code>pg_strtoint32</code></a></li>
+<li><a href="../../../symbols/src__include__utils__builtins_h__pg_strtoint64.html" target="wiki-view"><code>pg_strtoint64</code></a></li>
+<li><a href="../../../symbols/src__include__utils__builtins_h__text.html" target="wiki-view"><code>text</code></a></li>
 </ul><script>
 (function() {
   function notifyParent() {

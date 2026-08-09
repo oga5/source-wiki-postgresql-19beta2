@@ -1,0 +1,74 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>symbols/src__include__nodes__parsenodes_h__updatedCols.md</title><link rel="stylesheet" href="../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../source/src/include/nodes/parsenodes.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__nodes__parsenodes_h__updatedCols.html&quot;}, '*');">updatedCols</a></h1>
+<h2>定義</h2>
+<ul>
+<li>種別: <code>function</code></li>
+<li>定義箇所: <code>src/include/nodes/parsenodes.h:1</code></li>
+<li>所属モジュール: <a class="wiki-entity-link" href="../modules/src__include__nodes.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/modules/src__include__nodes.html&quot;, &quot;source&quot;: &quot;source/src/include/nodes/bitmapset.h.html&quot;}, '*');"><code>module:src/include/nodes</code></a></li>
+</ul>
+<h2>目的</h2>
+<p>静的シンボル索引から生成された初期シンボルページです。</p>
+<h2>シグネチャまたは形状</h2>
+<ul>
+<li>シグネチャ: <code>/*------------------------------------------------------------------------- * * parsenodes.h * definitions for parse tree nodes * * Many of the node types used in parsetrees include a &quot;location&quot; field. * This is a byte (not character) offset in the original source text, to be * used for positioning an error cursor when there is an error related to * the node. Access to the original source text is needed to make use of * the location. At the topmost (statement) level, we also provide a * statement length, likewise measured in bytes, for convenience in * identifying statement boundaries in multi-statement source strings. * * * Portions Copyright (c) 1996-2026, PostgreSQL Global Development Group * Portions Copyright (c) 1994, Regents of the University of California * * src/include/nodes/parsenodes.h * *------------------------------------------------------------------------- */ #ifndef PARSENODES_H #define PARSENODES_H #include &quot;common/relpath.h&quot; #include &quot;nodes/bitmapset.h&quot; #include &quot;nodes/lockoptions.h&quot; #include &quot;nodes/primnodes.h&quot; #include &quot;nodes/value.h&quot; #include &quot;partitioning/partdefs.h&quot; /* Possible sources of a Query */ typedef enum QuerySource</code></li>
+</ul>
+<h2>入力と出力</h2>
+<p>まだ解析していません。</p>
+<h2>前提条件と不変条件</h2>
+<p>まだ解析していません。</p>
+<h2>アルゴリズムまたは振る舞い</h2>
+<ul>
+<li>複雑度: <code>low</code> (score 1)</li>
+</ul>
+<p>まだ解析していません。</p>
+<h2>呼び出し元と呼び出し先</h2>
+<ul>
+<li>呼び出し元: なし</li>
+<li>呼び出し先: なし</li>
+<li>呼び出し元サイト: なし</li>
+<li>呼び出しサイト: なし</li>
+</ul>
+<h2>関連データ構造</h2>
+<p><code>c</code>, <code>cursor</code>, <code>Group</code>, <code>Query</code>, <a class="wiki-source-link" href="../../source/src/include/nodes/parsenodes.h.html#L34" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/nodes/parsenodes.h.html&quot;}, '*');"><code>QuerySource</code></a>, <code>rule</code>, <a class="wiki-source-link" href="../../source/src/interfaces/ecpg/ecpglib/ecpglib_extern.h.html#L64" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__interfaces__ecpg__ecpglib__ecpglib_extern_h__statement.html&quot;}, '*');"><code>statement</code></a>, <code>text</code>, <a class="wiki-source-link" href="../../source/src/interfaces/ecpg/preproc/type.h.html#L89" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__interfaces__ecpg__preproc__type_h__when.html&quot;}, '*');"><code>when</code></a></p>
+<h2>ソース抜粋</h2>
+<p>~~~c /*------------------------------------------------------------------------- *</p>
+<ul>
+<li><a class="wiki-source-link" href="../../source/src/include/nodes/parsenodes.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/nodes/parsenodes.h.html&quot;}, '*');">parsenodes.h</a></li>
+<li>definitions for parse tree nodes</li>
+<p>*</p>
+<li>Many of the node <a class="wiki-source-link" href="../../source/src/interfaces/ecpg/preproc/ecpg.c.html#L30" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/ecpg/preproc/ecpg.c.html&quot;}, '*');">types</a> used in parsetrees include a &quot;<a class="wiki-source-link" href="../../source/src/backend/optimizer/util/var.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__var_c__location.html&quot;}, '*');">location</a>&quot; field.</li>
+<li>This <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> a byte (not character) offset in the original source text, to be</li>
+<li>used for positioning an error cursor <a class="wiki-source-link" href="../../source/src/interfaces/ecpg/preproc/type.h.html#L89" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__interfaces__ecpg__preproc__type_h__when.html&quot;}, '*');">when</a> there <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> an error related to</li>
+<li>the node.  Access to the original source text <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> needed to make use of</li>
+<li>the <a class="wiki-source-link" href="../../source/src/backend/optimizer/util/var.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__var_c__location.html&quot;}, '*');">location</a>.  At the topmost (<a class="wiki-source-link" href="../../source/src/interfaces/ecpg/ecpglib/ecpglib_extern.h.html#L64" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__interfaces__ecpg__ecpglib__ecpglib_extern_h__statement.html&quot;}, '*');">statement</a>) <a class="wiki-source-link" href="../../source/src/backend/optimizer/path/joinrels.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__path__joinrels_c__level.html&quot;}, '*');">level</a>, we also provide a</li>
+<li><a class="wiki-source-link" href="../../source/src/interfaces/ecpg/ecpglib/ecpglib_extern.h.html#L64" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__interfaces__ecpg__ecpglib__ecpglib_extern_h__statement.html&quot;}, '*');">statement</a> <a class="wiki-source-link" href="../../source/src/include/nodes/pg_list.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/nodes/pg_list.h.html&quot;}, '*');">length</a>, likewise measured in bytes, for convenience in</li>
+<li>identifying <a class="wiki-source-link" href="../../source/src/interfaces/ecpg/ecpglib/ecpglib_extern.h.html#L64" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__interfaces__ecpg__ecpglib__ecpglib_extern_h__statement.html&quot;}, '*');">statement</a> boundaries in multi-<a class="wiki-source-link" href="../../source/src/interfaces/ecpg/ecpglib/ecpglib_extern.h.html#L64" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__interfaces__ecpg__ecpglib__ecpglib_extern_h__statement.html&quot;}, '*');">statement</a> source strings.</li>
+<p>* *</p>
+<li>Portions Copyright (c) 1996-2026, PostgreSQL Global Development Group</li>
+<li>Portions Copyright (c) 1994, Regents of the University of California</li>
+<p>*</p>
+<li><a class="wiki-source-link" href="../../source/src/include/nodes/parsenodes.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/nodes/parsenodes.h.html&quot;}, '*');">src/include/nodes/parsenodes.h</a></li>
+<p>* *------------------------------------------------------------------------- */ #ifndef <a class="wiki-source-link" href="../../source/src/include/nodes/parsenodes.h.html#L23" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/nodes/parsenodes.h.html&quot;}, '*');">PARSENODES_H</a> #define <a class="wiki-source-link" href="../../source/src/include/nodes/parsenodes.h.html#L23" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/nodes/parsenodes.h.html&quot;}, '*');">PARSENODES_H</a></p>
+</ul>
+<p>#include &quot;common/relpath.h&quot; #include &quot;nodes/bitmapset.h&quot; #include &quot;nodes/lockoptions.h&quot; #include &quot;nodes/primnodes.h&quot; #include &quot;nodes/value.h&quot; #include &quot;partitioning/partdefs.h&quot;</p>
+<p>/* Possible sources of a Query */ <a class="wiki-source-link" href="../../source/src/include/fmgr.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/fmgr.h.html&quot;}, '*');">typedef</a> enum <a class="wiki-source-link" href="../../source/src/include/nodes/parsenodes.h.html#L34" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/nodes/parsenodes.h.html&quot;}, '*');">QuerySource</a> { QSRC_ORIGINAL,				/* original parsetree (explicit query) */ QSRC_PARSER,				/* added by parse analysis (<a class="wiki-source-link" href="../../source/src/backend/utils/adt/timestamp.c.html#L1612" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__utils__adt__timestamp_c__now.html&quot;}, '*');">now</a> unused) */ QSRC_INSTEAD_RULE,			/* added by unconditional INSTEAD rule */ QSRC_QUAL_INSTEAD_RULE,		/* added by conditional INSTEAD rule */ QSRC_NON_INSTEAD_RULE,		/* added by non-INSTEAD rule */ } <a class="wiki-source-link" href="../../source/src/include/nodes/parsenodes.h.html#L34" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/nodes/parsenodes.h.html&quot;}, '*');">QuerySource</a>; ~~~</p>
+<h2>失敗モードと境界条件</h2>
+<p>まだ解析していません。</p>
+<h2>保守担当者向けメモ</h2>
+<ul>
+<li>後続フェーズで、ソース本文の文脈と caller/callee 情報を使ってこのページを強化する。</li>
+</ul><script>
+(function() {
+  function notifyParent() {
+    if (parent === window) return;
+    parent.postMessage({type: "frame-location", frame: window.name || "", href: window.location.href}, "*");
+  }
+  document.addEventListener("click", function(event) {
+    const link = event.target.closest("a[data-panel]");
+    if (!link || parent === window) return;
+    parent.postMessage({type: "source-link", panel: link.dataset.panel}, "*");
+  });
+  window.addEventListener("load", notifyParent);
+  window.addEventListener("hashchange", notifyParent);
+})();
+</script></body></html>

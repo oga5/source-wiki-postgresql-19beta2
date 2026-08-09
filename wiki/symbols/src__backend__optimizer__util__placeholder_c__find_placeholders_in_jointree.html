@@ -1,46 +1,42 @@
 <!doctype html>
 <html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>symbols/src__backend__optimizer__util__placeholder_c__find_placeholders_in_jointree.md</title><link rel="stylesheet" href="../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../source/src/backend/optimizer/util/placeholder.c.html#L186" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__placeholder_c__find_placeholders_in_jointree.html&quot;}, '*');">find_placeholders_in_jointree</a></h1>
-<h2>定義</h2>
+<h2>現在のソース事実</h2>
 <ul>
 <li>種別: <code>function</code></li>
 <li>定義箇所: <code>src/backend/optimizer/util/placeholder.c:186</code></li>
-<li>所属モジュール: <a class="wiki-entity-link" href="../modules/src__backend__optimizer__util.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/modules/src__backend__optimizer__util.html&quot;, &quot;source&quot;: &quot;source/src/backend/optimizer/util/appendinfo.c.html&quot;}, '*');"><code>module:src/backend/optimizer/util</code></a></li>
-</ul>
-<h2>目的</h2>
-<p>静的シンボル索引から生成された初期シンボルページです。</p>
-<h2>シグネチャまたは形状</h2>
-<ul>
 <li>シグネチャ: <code>void find_placeholders_in_jointree(PlannerInfo *root)</code></li>
-</ul>
-<h2>入力と出力</h2>
-<ul>
-<li>引数: <code>PlannerInfo *root</code></li>
-<li>戻り値: <code>void</code></li>
-</ul>
-<h2>前提条件と不変条件</h2>
-<p>まだ解析していません。</p>
-<h2>アルゴリズムまたは振る舞い</h2>
-<ul>
-<li>複雑度: <code>medium</code> (score 9)</li>
-</ul>
-<p>まだ解析していません。</p>
-<h2>呼び出し元と呼び出し先</h2>
-<ul>
 <li>呼び出し元: <code>query_planner</code></li>
 <li>呼び出し先: <a class="wiki-source-link" href="../../source/src/backend/optimizer/util/placeholder.c.html#L208" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__placeholder_c__find_placeholders_recurse.html&quot;}, '*');"><code>find_placeholders_recurse</code></a></li>
 <li>呼び出し元サイト: <code>query_planner</code> at <code>src/backend/optimizer/plan/planmain.c:190:2</code> (direct, confidence=high, resolved=<a class="wiki-entity-link" href="src__backend__optimizer__util__placeholder_c__find_placeholders_in_jointree.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__placeholder_c__find_placeholders_in_jointree.html&quot;, &quot;source&quot;: &quot;source/src/backend/optimizer/util/placeholder.c.html#L186&quot;}, '*');"><code>symbol:src/backend/optimizer/util/placeholder.c#find_placeholders_in_jointree</code></a>)</li>
 <li>呼び出しサイト: <a class="wiki-source-link" href="../../source/src/include/c.h.html#L950" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/c.h.html&quot;}, '*');"><code>Assert</code></a> at <code>src/backend/optimizer/util/placeholder.c:190:2</code> (unresolved), <a class="wiki-source-link" href="../../source/src/include/c.h.html#L950" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/c.h.html&quot;}, '*');"><code>Assert</code></a> at <code>src/backend/optimizer/util/placeholder.c:196:3</code> (unresolved), <a class="wiki-source-link" href="../../source/src/include/nodes/nodes.h.html#L162" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/nodes/nodes.h.html&quot;}, '*');"><code>IsA</code></a> at <code>src/backend/optimizer/util/placeholder.c:197:7</code> (unresolved), <a class="wiki-source-link" href="../../source/src/backend/optimizer/util/placeholder.c.html#L208" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__placeholder_c__find_placeholders_recurse.html&quot;}, '*');"><code>find_placeholders_recurse</code></a> at <code>src/backend/optimizer/util/placeholder.c:198:3</code> (direct, confidence=high, resolved=<a class="wiki-entity-link" href="src__backend__optimizer__util__placeholder_c__find_placeholders_recurse.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__placeholder_c__find_placeholders_recurse.html&quot;, &quot;source&quot;: &quot;source/src/backend/optimizer/util/placeholder.c.html#L208&quot;}, '*');"><code>symbol:src/backend/optimizer/util/placeholder.c#find_placeholders_recurse</code></a>)</li>
+<li>関連型: <code>FromExpr</code>, <code>Node</code>, <code>PlannerInfo</code></li>
+<li>複雑度: <code>medium</code> (score 9)</li>
 </ul>
-<h2>関連データ構造</h2>
-<p><code>FromExpr</code>, <code>Node</code>, <code>PlannerInfo</code></p>
-<h2>ソース抜粋</h2>
+<h3>ソース抜粋</h3>
 <p>~~~c void <a class="wiki-source-link" href="../../source/src/backend/optimizer/util/placeholder.c.html#L186" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__placeholder_c__find_placeholders_in_jointree.html&quot;}, '*');">find_placeholders_in_jointree</a>(PlannerInfo *<a class="wiki-source-link" href="../../source/src/backend/optimizer/util/var.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__var_c__root.html&quot;}, '*');">root</a>) { /* This must be done <a class="wiki-source-link" href="../../source/src/backend/regex/regc_locale.c.html#L487" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__regex__regc_locale_c__before.html&quot;}, '*');">before</a> freezing the set of PHIs */ <a class="wiki-source-link" href="../../source/src/include/c.h.html#L950" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/c.h.html&quot;}, '*');">Assert</a>(!<a class="wiki-source-link" href="../../source/src/backend/optimizer/util/var.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__var_c__root.html&quot;}, '*');">root</a>-&gt;placeholdersFrozen);</p>
 <p>/* We need do nothing if the query contains no PlaceHolderVars */ if (<a class="wiki-source-link" href="../../source/src/backend/optimizer/util/var.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__var_c__root.html&quot;}, '*');">root</a>-&gt;glob-&gt;lastPHId != 0) { /* Start recursion at top of jointree */ <a class="wiki-source-link" href="../../source/src/include/c.h.html#L950" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/c.h.html&quot;}, '*');">Assert</a>(<a class="wiki-source-link" href="../../source/src/backend/optimizer/util/var.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__var_c__root.html&quot;}, '*');">root</a>-&gt;parse-&gt;jointree != NULL &amp;&amp; <a class="wiki-source-link" href="../../source/src/include/nodes/nodes.h.html#L162" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/nodes/nodes.h.html&quot;}, '*');">IsA</a>(<a class="wiki-source-link" href="../../source/src/backend/optimizer/util/var.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__var_c__root.html&quot;}, '*');">root</a>-&gt;parse-&gt;jointree, FromExpr)); <a class="wiki-source-link" href="../../source/src/backend/optimizer/util/placeholder.c.html#L208" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__placeholder_c__find_placeholders_recurse.html&quot;}, '*');">find_placeholders_recurse</a>(<a class="wiki-source-link" href="../../source/src/backend/optimizer/util/var.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__var_c__root.html&quot;}, '*');">root</a>, (Node *) <a class="wiki-source-link" href="../../source/src/backend/optimizer/util/var.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__var_c__root.html&quot;}, '*');">root</a>-&gt;parse-&gt;jointree); } } ~~~</p>
-<h2>失敗モードと境界条件</h2>
-<p>まだ解析していません。</p>
-<h2>保守担当者向けメモ</h2>
+<h2>目的</h2>
+<p>クエリのジョイントリーからプレースホルダ（<code>PlaceHolderVar</code>）の探索を開始するエントリーポイントとして機能する。</p>
+<h2>入力と出力</h2>
 <ul>
-<li>後続フェーズで、ソース本文の文脈と caller/callee 情報を使ってこのページを強化する。</li>
+<li>入力: <code>PlannerInfo *root</code></li>
+<li>戻り値: なし (<code>void</code>)</li>
+</ul>
+<h2>前提条件と不変条件</h2>
+<ul>
+<li>プレースホルダのセットが凍結されている状態 (<code>root-&gt;placeholdersFrozen</code> が真) では実行できない。</li>
+<li>クエリのジョイントリーが存在する場合、ルートのジョイントリーノードは <code>FromExpr</code> 型でなければならない。</li>
+</ul>
+<h2>アルゴリズムまたは振る舞い</h2>
+<ul>
+<li>プレースホルダセットが未凍結であることをアサートで検証する。</li>
+<li>クエリにプレースホルダ変数 (<code>PlaceHolderVar</code>) が含まれていない場合（<code>root-&gt;glob-&gt;lastPHId == 0</code>）、何も処理を行わずに終了する。</li>
+<li>プレースホルダが存在する場合、ジョイントリーが <code>FromExpr</code> であることを検証した上で、ジョイントリーの最上位から再帰的探索関数 <a class="wiki-source-link" href="../../source/src/backend/optimizer/util/placeholder.c.html#L208" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__placeholder_c__find_placeholders_recurse.html&quot;}, '*');"><code>find_placeholders_recurse</code></a> を呼び出す。</li>
+</ul>
+<h2>失敗モードと境界条件</h2>
+<ul>
+<li><code>root-&gt;placeholdersFrozen</code> が真である状態で呼び出された場合、アサート違反により異常終了する。</li>
+<li><code>root-&gt;glob-&gt;lastPHId != 0</code> かつジョイントリーが <code>FromExpr</code> ではない場合、アサート違反により異常終了する。</li>
 </ul><script>
 (function() {
   function notifyParent() {

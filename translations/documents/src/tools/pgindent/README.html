@@ -1,0 +1,68 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>src/tools/pgindent/README</title><link rel="stylesheet" href="../../../../../styles.css"></head><body><h1>Japanese translation</h1><p><code>src/tools/pgindent/README</code></p><p><a href="../../../../../source/src/tools/pgindent/README.html" target="source-view">View original document</a></p><p class="document-translation-progress document-translation-complete">Translation complete.</p><div class="document-translation-body"><section class="document-translation-chunk translated" data-chunk-order="0"><p>PostgreSQLソースツリーのpgindent適用 =======================================</p>
+<p>pgindentは、CおよびPerlコードのレイアウトスタイルを均一に維持するために使用され、すべてのコミットで実行する必要があります。リリースサイクルごとに少なくとも1回は実行すべき、追加のコード美化タスクがあります。</p>
+<p>以下のブログ記事が参考になるかもしれません。 http://adpgtech.blogspot.com/2015/05/running-pgindent-on-non-core-code-or.html</p>
+<p>前提条件：</p>
+<p>1) PATHにpg_bsd_indentをインストールします。そのソースコードは、 兄弟ディレクトリのsrc/tools/pg_bsd_indentにあります。そのディレクトリの READMEファイルにある指示を参照してください。</p>
+<p>2) perltidyをインストールします。バージョンが20230309であることを確認してください（古いバージョンや 新しいバージョンではフォーマットの選択が異なり、一貫性を保ちたいためです）。 正しいバージョンは以下から入手できます。 https://cpan.metacpan.org/authors/id/S/SH/SHANCOCK/ インストールするには、Perlモジュールの通常のインストールプロセスに従ってください （&quot;man perlmodinstall&quot;で説明されています）。または、cpanがインストールされている場合は、 以下が機能するはずです。 cpan SHANCOCK/Perl-Tidy-20230309.tar.gz または、cpanmがインストールされている場合は、単に以下を使用できます。 cpanm https://cpan.metacpan.org/authors/id/S/SH/SHANCOCK/Perl-Tidy-20230309.tar.gz</p>
+<p>通常のコミット前にインデント実行を行う：</p>
+<p>1) ソースツリーの最上位ディレクトリに移動します。</p>
+<p>2) Cファイルに対してpgindentを実行します。</p>
+<p>src/tools/pgindent/pgindent .</p>
+<p>いずれかのファイルでエラーが発生した場合は、&quot;git checkout&quot;で元のバージョンを 復元し、クリーンアップのアイデアについて以下を参照してください。</p>
+<p>3) &quot;git status&quot;を使用して、新しく作成されたファイルがないか確認します。何も 存在しないはずです。（pgindentは問題が発生した場合に*.BAKファイルを残し、 perltidyは*.LOGファイルを残します。）</p>
+<p>4) コミットが触れていない部分をpgindentが変更しようとしている場合は、 立ち止まって理由を解明してください。コミットが追加したtypedefの周囲で 不格好な空白の変更が行われている場合は、それらのtypedefを src/tools/pgindent/typedefs.listに追加する必要があります。</p>
+<p>5) 根気があれば、&quot;git diff&quot;の出力を目視して、著しく不格好な変更がないか 確認する価値があります。クリーンアップのアイデアについては以下を参照してください。</p>
+<p>6) フルテストビルドを行います。</p>
+<p>make -s clean make -s all	# 予期しない警告や、もちろんエラーがないか確認します make check-world</p>
+<p>configureのスイッチには、少なくとも--enable-tap-testsを含める必要があります。 そうしないと、Perlコードの多くが実行されません。 ecpgの出力にコピーされるヘッダファイルをpgindentが更新するため、ecpgの リグレッションテストが失敗することがあります。その場合は、一致するように expectedファイルを調整してください。</p>
+<p>リリースサイクルごとに少なくとも1回：</p>
+<p>1) ビルドファームから最新のtypedefファイルをダウンロードします。</p>
+<p>wget -O src/tools/pgindent/typedefs.list https://buildfarm.postgresql.org/cgi-bin/typedefs.pl</p>
+<p>このステップにより、段階的に更新されたバージョンのファイルと、クリーンに 自動生成されたファイルとの間の差異が解消されます。 （バックブランチのインデントを行いたい場合は、typedefファイルの完全なリストについて https://buildfarm.postgresql.org/cgi-bin/typedefs.pl?show_list を参照してください。）</p>
+<p>2) 上記のようにpgindentを実行します。</p>
+<p>3) perltidyを使用してPerlコードをインデントします。</p>
+<p>src/tools/pgindent/pgperltidy .</p>
+<p>PATHにないperltidyのバージョンを使用したい場合は、まず PERLTIDY環境変数をその場所を指すように設定します。</p>
+<p>4) ブートストラップカタログデータファイルを再フォーマットします。</p>
+<p>./configure     # 設定されていないツリーでは&quot;make&quot;は機能しません cd src/include/catalog make reformat-dat-files cd ../../..</p>
+<p>5) 完了したら、使用したtypedefs.listファイルを含め、すべてを&quot;git commit&quot;します。</p>
+<p>6) 新しく作成されたコミットを.git-blame-ignore-revsファイルに追加して、 &quot;git blame&quot;がそのコミットを無視するようにします（無視ファイルの使用を 選択しているユーザー向け）。.git-blame-ignore-revsファイルの先頭に 表示される指示に従ってください。</p>
+<p>無視ファイルの変更に対して、もう一度&quot;git commit&quot;が必要になります。</p>
+<p>---------------------------------------------------------------------------</p>
+<p>失敗または不格好な出力の場合のクリーンアップ ---------------------------------------------</p>
+<p>特定のファイルの結果が気に入らない場合は、そのファイルを&quot;git checkout&quot;して 変更を取り消し、必要に応じてファイルにパッチを適用してから、インデント処理を 繰り返します。</p>
+<p>pgindentは、左マージンにないコメントブロックをリフローします。これにより、 保持すべき手動のフォーマットが崩れてしまう場合は、ダッシュを使用して コメントブロックを保護してください。</p>
+<p>/*----------</p>
+<ul>
+<li>ここにあるテキストはpgindentによって変更されません。</li>
+<p>*/</p>
+</ul>
+<p>typedef名の周囲の奇妙なスペースは、typedefsリストが不完全であることを示している可能性があります。</p>
+<p>pgindentは、名前がtypedefと一致するC関数の宣言と定義の両方を台無しにします。 現在、最善の回避策は、競合しない名前を選択することです。</p>
+<p>pgindentは、コンパイラにとっては正しく見えても、全体として見ると中括弧/括弧が 一致していない#ifシーケンスによって混乱することがあります。通常、これは 人間にとっても非常に読みにくいため、ベストプラクティスは、それを避けるために #ifテストを再配置することです。</p>
+<p>pgindentやperltidyが奇妙な出力を生成する場合、余分なカンマなどの軽微な バグが原因であることがあります。ついでにそれをクリーンアップすることを 躊躇しないでください。</p>
+<p>---------------------------------------------------------------------------</p>
+<p>BSD indent ----------</p>
+<p>私たちはFreeBSDのindentを標準とし、それをpg_bsd_indentと改名しました。 pg_bsd_indentはFreeBSDのバージョンとわずかに異なりますが、主に 非BSDプラットフォームへの移植が容易になっている点が異なります。 兄弟ディレクトリのsrc/tools/pg_bsd_indentにあります。</p>
+<p>GNU indentバージョン2.2.6にはいくつかの問題があり、推奨されません。 これらのバグは、50万行を超えるコードを処理する場合に非常に大きな問題になります。 信じられない場合は、ディレクトリを作成してコピーしてください。コピーに対して GNU indentを使用してpgindentを実行し、diff -rを実行します。私の言っている 意味がわかるでしょう。GNU indentは一部の処理をより適切に行いますが、 台無しにもします。詳細については、以下を参照してください。</p>
+<p>http://archives.postgresql.org/pgsql-hackers/2003-10/msg00374.php http://archives.postgresql.org/pgsql-hackers/2011-04/msg01436.php</p>
+<p>---------------------------------------------------------------------------</p>
+<p>どのファイルが処理されるか -------------------------</p>
+<p>pgindentの実行は、（ほぼ）すべてのPostgreSQLの*.cおよび*.hファイルを 処理しますが、現在は*.yおよび*.lファイル、ならびに*.yおよび*.lファイルから 派生した*.cおよび*.hファイルを除外しています。追加の例外は exclude_file_patternsにリストされています。その根拠については、そこにある メモを参照してください。</p>
+<p>ecpgのヘッダファイルは実行から除外されないことに注意してください。それらの 一部はecpgの出力にそのままコピーされるため、ecpgのexpectedファイルを 一致するように更新する必要がある場合があります。</p>
+<p>perltidyの実行は、すべての*.plおよび*.pmファイルに加えて、そのような名前ではない いくつかの実行可能Perlスクリプトを処理します。詳細については、pgperltidyの &quot;find&quot;ルールを参照してください。</p></section></div><script>
+(function() {
+  function notifyParent() {
+    if (parent === window) return;
+    parent.postMessage({type: "frame-location", frame: window.name || "", href: window.location.href}, "*");
+  }
+  document.addEventListener("click", function(event) {
+    const link = event.target.closest("a[data-panel]");
+    if (!link || parent === window) return;
+    parent.postMessage({type: "source-link", panel: link.dataset.panel}, "*");
+  });
+  window.addEventListener("load", notifyParent);
+  window.addEventListener("hashchange", notifyParent);
+})();
+</script></body></html>

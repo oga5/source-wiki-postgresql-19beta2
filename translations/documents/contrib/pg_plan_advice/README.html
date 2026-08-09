@@ -1,221 +1,38 @@
 <!doctype html>
-<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>contrib/pg_plan_advice/README</title><link rel="stylesheet" href="../../../../styles.css"></head><body><h1>Japanese translation</h1><p><code>contrib/pg_plan_advice/README</code></p><p><a href="../../../../source/contrib/pg_plan_advice/README.html" target="source-view">View original document</a></p><p class="document-translation-progress document-translation-incomplete">Translation in progress: 1/2 chunks complete. Pending chunks show their original text below.</p><div class="document-translation-body"><section class="document-translation-chunk pending" data-chunk-order="0"><h2>Chunk 1: translation pending</h2><p>This chunk has not been translated yet. Original text:</p><pre class="document-translation-text">contrib/pg_plan_advice/README
-
-Plan Advice
-===========
-
-This module implements a mini-language for &quot;plan advice&quot; that allows for
-control of certain key planner decisions. Goals include (1) enforcing plan
-stability (my previous plan was good and I would like to keep getting a
-similar one) and (2) allowing users to experiment with plans other than
-the one preferred by the optimizer. Non-goals include (1) controlling
-every possible planner decision and (2) forcing consideration of plans
-that the optimizer rejects for reasons other than cost. (There is some
-room for bikeshedding about what exactly this non-goal means: what if
-we skip path generation entirely for a certain case on the theory that
-we know it cannot win on cost? Does that count as a cost-based rejection
-even though no cost was ever computed?)
-
-Generally, plan advice is a series of whitespace-separated advice items,
-each of which applies an advice tag to a list of advice targets. For
-example, &quot;SEQ_SCAN(foo) HASH_JOIN(bar@ss)&quot; contains two items of advice,
-the first of which applies the SEQ_SCAN tag to &quot;foo&quot; and the second of
-which applies the HASH_JOIN tag to &quot;bar@ss&quot;. In this simple example, each
-target identifies a single relation; see &quot;Relation Identifiers&quot;, below.
-Advice tags can also be applied to groups of relations; for example,
-&quot;HASH_JOIN(baz (bletch quux))&quot; applies the HASH_JOIN tag to the single
-relation identifier &quot;baz&quot; as well as to the 2-item list containing
-&quot;bletch&quot; and &quot;quux&quot;.
-
-Critically, this module knows both how to generate plan advice from an
-already-existing plan, and also how to enforce it during future planning
-cycles. Everything it does is intended to be &quot;round-trip safe&quot;: if you
-generate advice from a plan and then feed that back into a future planning
-cycle, each piece of advice should be guaranteed to apply to exactly the
-same part of the query from which it was generated without ambiguity or
-guesswork, and it should successfully enforce the same planning decision that
-led to it being generated in the first place. Note that there is no
-intention that these guarantees hold in the presence of intervening DDL;
-e.g. if you change the properties of a function so that a subquery is no
-longer inlined, or if you drop an index named in the plan advice, the advice
-isn&#x27;t going to work any more. That&#x27;s expected.
-
-This module aims to force the planner to follow any provided advice without
-regard to whether it appears to be good advice or bad advice. If the
-user provides bad advice, whether derived from a previously-generated plan
-or manually written, they may get a bad plan. We regard this as user error,
-not a defect in this module. It seems likely that applying advice
-judiciously and only when truly required to avoid problems will be a more
-successful strategy than applying it with a broad brush, but users are free
-to experiment with whatever strategies they think best.
-
-Relation Identifiers
-====================
-
-Uniquely identifying the part of a query to which a certain piece of
-advice applies is harder than it sounds. Our basic approach is to use
-relation aliases as a starting point, and then disambiguate. There are
-three ways that the same relation alias can occur multiple times:
-
-1. It can appear in more than one subquery.
-
-2. It can appear more than once in the same subquery,
-   e.g. (foo JOIN bar) x JOIN foo.
-
-3. The table can be partitioned.
-
-Any combination of these things can occur simultaneously. Therefore, our
-general syntax for a relation identifier is:
-
-alias_name#occurrence_number/partition_schema.partition_name@plan_name
-
-All components except for the alias_name are optional and included only
-when required. When a component is omitted, the associated punctuation
-must also be omitted. Occurrence numbers are counted ignoring children of
-partitioned tables. When the generated occurrence number is 1, we omit
-the occurrence number. The partition schema and partition name are included
-only for children of partitioned tables. In generated advice, the
-partition_schema is always included whenever there is a partition_name,
-but user-written advice may mention the name and omit the schema. The
-plan_name is omitted for the top-level PlannerInfo.
-
-Scan Advice
-===========
-
-For many types of scan, no advice is generated or possible; for instance,
-a subquery is always scanned using a subquery scan. While that scan may be
-elided via setrefs processing, this doesn&#x27;t change the fact that only one
-basic approach exists. Hence, scan advice applies mostly to relations, which
-can be scanned in multiple ways.
-
-We tend to think of a scan as targeting a single relation, and that&#x27;s
-normally the case, but it doesn&#x27;t have to be. For instance, if a join is
-proven empty, the whole thing may be replaced with a single Result node
-which, in effect, is a degenerate scan of every relation in the collapsed
-portion of the join tree. Similarly, it&#x27;s possible to inject a custom scan
-in such a way that it replaces an entire join. If we ever emit advice
-for these cases, it would target sets of relation identifiers surrounded
-by parentheses, e.g., SOME_SORT_OF_SCAN(foo (bar baz)) would mean that
-the given scan type would be used for foo as a single relation and also the
-combination of bar and baz as a join product. We have no such cases at
-present.
-
-For index and index-only scans, both the relation being scanned and the
-index or indexes being used must be specified. For example, INDEX_SCAN(foo
-foo_a_idx bar bar_b_idx) indicates that an index scan (not an index-only
-scan) should be used on foo_a_idx when scanning foo, and that an index scan
-should be used on bar_b_idx when scanning bar.
-
-Bitmap heap scans currently do not allow for an index specification:
-BITMAP_HEAP_SCAN(foo bar) simply means that each of foo and bar should use
-some sort of bitmap heap scan.
-
-There is a special DO_NOT_SCAN() advice tag which says that a certain
-relation shouldn&#x27;t be scanned at all. This is used to control which of
-two choices is selected when an AlternativeSubPlan is resolved, and
-whether or not a MinMaxAggPath is chosen. Control over upper planner
-behavior is generally out-of-scope at the moment, but these cases had
-to be handled to prevent test_plan_advice failures in the buildfarm.
-
-Join Order Advice
-=================
-
-The JOIN_ORDER tag specifies the order in which several tables that are
-part of the same join problem should be joined. Each subquery (except for
-those that are inlined) is a separate join problem. Within a subquery,
-partitionwise joins can create additional, separate join problems. Hence,
-queries involving partitionwise joins may use JOIN_ORDER() many times.
-
-We take the canonical join structure to be an outer-deep tree, so
-JOIN_ORDER(t1 t2 t3) says that t1 is the driving table and should be joined
-first to t2 and then to t3. If the join problem involves additional tables,
-they can be joined in any order after the join between t1, t2, and t3 has
-been constructed. Generated join advice always mentions all tables
-in the join problem, but manually written join advice need not do so.
-
-For trees which are not outer-deep, parentheses can be used. For example,
-JOIN_ORDER(t1 (t2 t3)) says that the top-level join should have t1 on the
-outer side and a join between t2 and t3 on the inner side. That join should
-be constructed so that t2 is on the outer side and t3 is on the inner side.
-
-In some cases, it&#x27;s not possible to fully specify the join order in this way.
-For example, if t2 and t3 are being scanned by a single custom scan or foreign
-scan, or if a partitionwise join is being performed between those tables, then
-it&#x27;s impossible to say that t2 is the outer table and t3 is the inner table,
-or the other way around; it&#x27;s just undefined. In such cases, we generate
-join advice that uses curly braces, intending to indicate a lack of ordering:
-JOIN_ORDER(t1 {t2 t3}) says that the uppermost join should have t1 on the outer
-side and some kind of join between t2 and t3 on the inner side, but without
-saying how that join must be performed or anything about which relation should
-appear on which side of the join, or even whether this kind of join has sides.
-
-Join Method Advice
-==================
-
-Tags such as NESTED_LOOP_PLAIN specify the method that should be used to
-perform a certain join. More specifically, NESTED_LOOP_PLAIN(x (y z)) says
-that the plan should put the relation whose identifier is &quot;x&quot; on the inner
-side of a plain nested loop (one without materialization or memoization)
-and that it should also put a join between the relation whose identifier is
-&quot;y&quot; and the relation whose identifier is &quot;z&quot; on the inner side of a nested
-loop. Hence, for an N-table join problem, there will be N-1 pieces of join
-method advice; no join method advice is required for the outermost
-table in the join problem.
-
-Considering that we have both join order advice and join method advice,
-it might seem natural to say that NESTED_LOOP_PLAIN(x) should be redefined
-to mean that x should appear by itself on one side or the other of a nested
-loop, rather than specifically on the inner side, but this definition appears
-useless in practice. It gives the planner too much freedom to do things that
-bear little resemblance to what the user probably had in mind. This makes
-only a limited amount of practical difference in the case of a merge join or
-unparameterized nested loop, but for a parameterized nested loop or a hash
-join, the two sides are treated very differently, and saying that a certain
-relation should be involved in one of those operations without saying which
-role it should take isn&#x27;t saying much.
-
-This choice of definition implies that join method advice also imposes some
-join order constraints. For example, given a join between foo and bar,
-HASH_JOIN(bar) implies that foo is the driving table. Otherwise, it would
-be impossible to put bar beneath the inner side of a Hash Join.
-
-Note that, given this definition, it&#x27;s reasonable to consider deleting the
-join order advice but applying the join method advice. For example,
-consider a star schema with tables fact, dim1, dim2, dim3, dim4, and dim5.
-The automatically generated advice might specify JOIN_ORDER(fact dim1 dim3
-dim4 dim2 dim5) HASH_JOIN(dim2 dim4) NESTED_LOOP_PLAIN(dim1 dim3 dim5).
-Deleting the JOIN_ORDER advice allows the planner to reorder the joins
-however it likes while still forcing the same choice of join method. This
-seems potentially useful, and is one reason why a unified syntax that controls
-both join order and join method in a single locution was not chosen.
-
-Advice Completeness
-===================
-
-An essential guiding principle is that no inference may be made on the basis
-of the absence of advice. The user is entitled to remove any portion of the
-generated advice which they deem unsuitable or counterproductive and the
-result should only be to increase the flexibility afforded to the planner.
-This means that if advice can say that a certain optimization or technique
-should be used, it should also be able to say that the optimization or
-technique should not be used. We should never assume that the absence of an
-instruction to do a certain thing means that it should not be done; all
-instructions must be explicit.
-
-Semijoin Uniqueness
-===================
-
-Faced with a semijoin, the planner considers both a direct implementation
-and a plan where the one side is made unique and then an inner join is
-performed. We emit SEMIJOIN_UNIQUE() advice when this transformation occurs
-and SEMIJOIN_NON_UNIQUE() advice when it doesn&#x27;t. These items work like
-join method advice: the inner side of the relevant join is named, and the
-chosen join order must be compatible with the advice having some effect.
-
-Partitionwise
-=============
-
-</pre></section><section class="document-translation-chunk translated" data-chunk-order="1"><p>PARTITIONWISE() アドバイスを使用すると、実行すべきパーティションワイズ結合と実行すべきでないパーティションワイズ結合の両方を指定できます。このアイデアは、PARTITIONWISE の各引数が、相互に結合された後それ以外のものとは結合されずにパーティションワイズでスキャンされるべきリレーションのセットを指定するというものです。したがって、たとえば PARTITIONWISE((t1 t2) t3) は、クエリに t1 と t2 の間のパーティションワイズ結合が含まれるべきであり、t3 がいかなるパーティションワイズ結合の一部であってはならないことを指定します。クエリ内に他のリレーションが存在しない場合、単に PARTITIONWISE((t1 t2)) を指定しても同じ効果が得られます。これは、t3 がパーティションワイズ方式で結合できる他のリレーションが存在しなくなるためです。</p>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>contrib/pg_plan_advice/README</title><link rel="stylesheet" href="../../../../styles.css"></head><body><h1>Japanese translation</h1><p><code>contrib/pg_plan_advice/README</code></p><p><a href="../../../../source/contrib/pg_plan_advice/README.html" target="source-view">View original document</a></p><p class="document-translation-progress document-translation-complete">Translation complete.</p><div class="document-translation-body"><section class="document-translation-chunk translated" data-chunk-order="0"><p>Plan Advice ===========</p>
+<p>このモジュールは、プランナの特定の重要な決定を制御できるようにする「プランアドバイス」のためのミニ言語を実装しています。目標には、（1）プランの安定性の強制（以前のプランが良好であったため、同様のプランを取得し続けたい）および（2）オプティマイザが推奨するもの以外のプランをユーザーが実験できるようにすることが含まれます。非目標には、（1）考えられるすべてのプランナの決定を制御すること、および（2）コスト以外の理由でオプティマイザが拒否したプランの検討を強制することが含まれます。（この非目標が正確に何を意味するかについては、議論の余地があります。たとえば、コストで勝てないことがわかっているという理論に基づいて、特定のケースでパス生成を完全にスキップした場合はどうなるでしょうか？コストがまったく計算されていなくても、それはコストベースの拒否としてカウントされるでしょうか？）</p>
+<p>一般に、プランアドバイスは空白で区切られた一連のアドバイス項目であり、それぞれがアドバイス対象のリストにアドバイスタグを適用します。たとえば、&quot;SEQ_SCAN(foo) HASH_JOIN(bar@ss)&quot; には2つのアドバイス項目が含まれており、最初の項目は &quot;foo&quot; に SEQ_SCAN タグを適用し、2番目の項目は &quot;bar@ss&quot; に HASH_JOIN タグを適用します。この単純な例では、各対象は単一のリレーションを識別します。以下の「Relation Identifiers」を参照してください。アドバイスタグはリレーションのグループに適用することもできます。たとえば、&quot;HASH_JOIN(baz (bletch quux))&quot; は、単一のリレーション識別子 &quot;baz&quot; と、&quot;bletch&quot; および &quot;quux&quot; を含む2項目のリストの両方に HASH_JOIN タグを適用します。</p>
+<p>極めて重要な点として、このモジュールは、既存のプランからプランアドバイスを生成する方法と、将来のプランニングサイクル中にそれを強制する方法の両方を知っています。このモジュールが行うすべてのことは「ラウンドトリップセーフ」であることを意図しています。つまり、プランからアドバイスを生成し、それを将来のプランニングサイクルにフィードバックした場合、各アドバイスは、曖昧さや推測なしに、それが生成されたクエリのまったく同じ部分に適用されることが保証され、そもそもそれが生成される原因となったのと同じプランニング決定を正常に強制する必要があります。介在するDDLが存在する場合にこれらの保証が維持されることは意図されていないことに注意してください。たとえば、サブクエリがインライン化されなくなるように関数のプロパティを変更したり、プランアドバイスで指定されているインデックスを削除したりした場合、アドバイスは機能しなくなります。これは想定内の動作です。</p>
+<p>このモジュールは、提供されたアドバイスが良いアドバイスに見えるか悪いアドバイスに見えるかに関わらず、プランナにそれに従うことを強制することを目的としています。ユーザーが、以前に生成されたプランから派生したものであれ、手動で作成したものであれ、悪いアドバイスを提供した場合、悪いプランが生成される可能性があります。これはユーザーの誤りであり、このモジュールの欠陥ではないとみなします。問題を回避するために本当に必要な場合にのみ慎重にアドバイスを適用する方が、大雑把に適用するよりも成功する戦略である可能性が高いと思われますが、ユーザーは自分が最善と考える戦略を自由に実験できます。</p>
+<p>Relation Identifiers ====================</p>
+<p>特定のアドバイスが適用されるクエリの部分を一意に識別することは、言葉で言うほど簡単ではありません。私たちの基本的なアプローチは、リレーションの別名を出発点として使用し、その後で曖昧さを排除することです。同じリレーションの別名が複数回出現する方法は3つあります。</p>
+<p>1. 複数のサブクエリに出現する可能性がある。</p>
+<p>2. 同じサブクエリ内に複数回出現する可能性がある。 例: (foo JOIN bar) x JOIN foo</p>
+<p>3. テーブルがパーティショニングされている可能性がある。</p>
+<p>これらの任意の組み合わせが同時に発生する可能性があります。したがって、リレーション識別子の一般的な構文は次のようになります。</p>
+<p>alias_name#occurrence_number/partition_schema.partition_name@plan_name</p>
+<p>alias_name 以外のすべてのコンポーネントはオプションであり、必要な場合にのみ含まれます。コンポーネントが省略される場合、関連する記号も省略する必要があります。出現回数は、パーティションテーブルの子を無視してカウントされます。生成された出現回数が1の場合、出現回数は省略されます。パーティションスキーマとパーティション名は、パーティションテーブルの子に対してのみ含まれます。生成されたアドバイスでは、partition_name がある場合は常に partition_schema も含まれますが、ユーザーが作成したアドバイスでは名前を指定してスキーマを省略することができます。plan_name は、トップレベルの PlannerInfo では省略されます。</p>
+<p>Scan Advice ===========</p>
+<p>多くのタイプのスキャンでは、アドバイスは生成されないか、不可能です。たとえば、サブクエリは常にサブクエリスキャンを使用してスキャンされます。そのスキャンは setrefs 処理によって省略される可能性がありますが、基本的なアプローチが1つしか存在しないという事実は変わりません。したがって、スキャンアドバイスは主に、複数の方法でスキャンできるリレーションに適用されます。</p>
+<p>私たちはスキャンを単一のリレーションを対象とするものと考えがちであり、通常はそうですが、必ずしもそうである必要はありません。たとえば、結合が空であることが証明された場合、全体が単一の Result ノードに置き換えられる可能性があり、これは事実上、結合ツリーの折りたたまれた部分にあるすべてのリレーションの退化したスキャンになります。同様に、結合全体を置き換えるような方法でカスタムスキャンを注入することも可能です。これらのケースに対してアドバイスを出力する場合、括弧で囲まれたリレーション識別子のセットを対象とすることになります。たとえば、SOME_SORT_OF_SCAN(foo (bar baz)) は、指定されたスキャンタイプが単一のリレーションとしての foo、および結合積としての bar と baz の組み合わせに対して使用されることを意味します。現在、そのようなケースはありません。</p>
+<p>For index and index-only scans, both the relation being scanned and the index or indexes being used must be specified. For example, INDEX_SCAN(foo foo_a_idx bar bar_b_idx) indicates that an index scan (not an index-only scan) should be used on foo_a_idx when scanning foo, and that an index scan should be used on bar_b_idx when scanning bar.</p>
+<p>ビットマップヒープスキャンでは、現在インデックスの指定は許可されていません。BITMAP_HEAP_SCAN(foo bar) は、foo と bar のそれぞれが何らかのビットマップヒープスキャンを使用する必要があることを単に意味します。</p>
+<p>特定のリレーションをまったくスキャンすべきではないことを示す、特別な DO_NOT_SCAN() アドバイスタグがあります。これは、AlternativeSubPlan が解決されるときに2つの選択肢のどちらが選択されるか、および MinMaxAggPath が選択されるかどうかを制御するために使用されます。上位プランナの動作の制御は、現時点では一般的にスコープ外ですが、ビルドファームでの test_plan_advice の失敗を防ぐために、これらのケースを処理する必要がありました。</p>
+<p>Join Order Advice =================</p>
+<p>JOIN_ORDER タグは、同じ結合問題の一部である複数のテーブルを結合する順序を指定します。各サブクエリ（インライン化されたものを除く）は、個別の結合問題です。サブクエリ内では、パーティションごとの結合によって、追加の個別の結合問題が発生する可能性があります。したがって、パーティションごとの結合を伴うクエリでは、JOIN_ORDER() が何度も使用される可能性があります。</p>
+<p>私たちは標準的な結合構造をアウターディープツリー（outer-deep tree）とみなしているため、JOIN_ORDER(t1 t2 t3) は、t1 が駆動テーブルであり、最初に t2、次に t3 に結合されるべきであることを示します。結合問題に追加のテーブルが含まれている場合、t1、t2、t3 の結合が構築された後、それらは任意の順序で結合できます。生成された結合アドバイスは常に結合問題内のすべてのテーブルに言及しますが、手動で作成された結合アドバイスはそうする必要はありません。</p>
+<p>アウターディープではないツリーの場合は、括弧を使用できます。たとえば、JOIN_ORDER(t1 (t2 t3)) は、トップレベルの結合の外側（outer side）に t1 を配置し、内側（inner side）に t2 と t3 の結合を配置する必要があることを示します。その結合は、t2 が外側、t3 が内側になるように構築される必要があります。</p>
+<p>場合によっては、この方法で結合順序を完全に指定できないことがあります。たとえば、t2 と t3 が単一のカスタムスキャンまたは外部スキャンによってスキャンされている場合、あるいはそれらのテーブル間でパーティションごとの結合が実行されている場合、t2 が外側のテーブルで t3 が内側のテーブルである、またはその逆であると言うことは不可能です。それは単に未定義です。このような場合、順序がないことを示す意図で、波括弧を使用した結合アドバイスを生成します。JOIN_ORDER(t1 {t2 t3}) は、最上位の結合の外側に t1 を配置し、内側に t2 と t3 の何らかの結合を配置することを示しますが、その結合をどのように実行する必要があるか、どのリレーションが結合のどちら側に表示されるべきか、あるいはこの種の結合に「側」があるかどうかについては何も言及しません。</p>
+<p>Join Method Advice ==================</p>
+<p>NESTED_LOOP_PLAIN などのタグは、特定の結合を実行するために使用すべきメソッドを指定します。より具体的には、NESTED_LOOP_PLAIN(x (y z)) は、識別子が &quot;x&quot; であるリレーションをプレーンなネステッドループ（マテリアライズやメモ化を行わないもの）の内側に配置し、識別子が &quot;y&quot; であるリレーションと識別子が &quot;z&quot; であるリレーションの結合もネステッドループの内側に配置する必要があることを示します。したがって、Nテーブルの結合問題では、N-1個の結合メソッドアドバイスが存在することになります。結合問題の最も外側のテーブルには、結合メソッドアドバイスは必要ありません。</p>
+<p>結合順序アドバイスと結合メソッドアドバイスの両方があることを考えると、NESTED_LOOP_PLAIN(x) を、x が特に内側ではなく、ネステッドループのどちらか一方の側に単独で表示されるべきであることを意味するように再定義するのが自然に思えるかもしれませんが、この定義は実際には役に立たないようです。これにより、プランナに自由を与えすぎて、ユーザーが意図していたと思われるものとはほとんど似ていない処理が行われることになります。これは、マージ結合やパラメータ化されていないネステッドループの場合には実用上の違いは限られていますが、パラメータ化されたネステッドループやハッシュ結合の場合、両側は非常に異なって扱われるため、特定のリレーションがそれらの操作のいずれかに関与すべきであるとだけ言い、どの役割を担うべきかを言わないことは、あまり意味がありません。</p>
+<p>この定義の選択は、結合メソッドアドバイスがいくつかの結合順序の制約も課すことを意味します。たとえば、foo と bar の結合において、HASH_JOIN(bar) は foo が駆動テーブルであることを意味します。そうでなければ、ハッシュ結合の内側の下に bar を配置することは不可能になります。</p>
+<p>この定義を前提とすると、結合順序アドバイスを削除して結合メソッドアドバイスのみを適用することを検討するのは合理的です。たとえば、テーブル fact、dim1、dim2、dim3、dim4、dim5 を持つスター型スキーマを考えてみましょう。自動生成されたアドバイスは、JOIN_ORDER(fact dim1 dim3 dim4 dim2 dim5) HASH_JOIN(dim2 dim4) NESTED_LOOP_PLAIN(dim1 dim3 dim5) を指定する可能性があります。JOIN_ORDER アドバイスを削除すると、プランナは結合メソッドの同じ選択を強制しながら、結合を好きなように並べ替えることができます。これは潜在的に有用であると思われ、結合順序と結合メソッドの両方を単一の表現で制御する統一された構文が選択されなかった理由の1つです。</p>
+<p>Advice Completeness ===================</p>
+<p>不可欠な指針は、アドバイスがないことに基づいて推論を行ってはならないということです。ユーザーは、不適切または逆効果であると判断した生成されたアドバイスの任意の部分を削除する権利があり、その結果はプランナに与えられる柔軟性を高めるだけにすべきです。これは、アドバイスが特定の最適化や手法を使用すべきであると指定できるのであれば、その最適化や手法を使用すべきではないとも指定できる必要があることを意味します。特定のことを行う指示がないからといって、それを行うべきではないと想定してはなりません。すべての指示は明示的である必要があります。</p>
+<p>Semijoin Uniqueness ===================</p>
+<p>セミ結合に直面すると、プランナは直接的な実装と、一方の側を一意にしてから内部結合を実行するプランの両方を検討します。この変換が発生した場合は SEMIJOIN_UNIQUE() アドバイスを出力し、発生しない場合は SEMIJOIN_NON_UNIQUE() アドバイスを出力します。これらの項目は結合メソッドアドバイスのように機能します。関連する結合の内側が指定され、選択された結合順序はアドバイスが効果を持つことと互換性がある必要があります。</p>
+<p>Partitionwise =============</p></section><section class="document-translation-chunk translated" data-chunk-order="1"><p>PARTITIONWISE() アドバイスを使用すると、実行すべきパーティションワイズ結合と実行すべきでないパーティションワイズ結合の両方を指定できます。このアイデアは、PARTITIONWISE の各引数が、相互に結合された後それ以外のものとは結合されずにパーティションワイズでスキャンされるべきリレーションのセットを指定するというものです。したがって、たとえば PARTITIONWISE((t1 t2) t3) は、クエリに t1 と t2 の間のパーティションワイズ結合が含まれるべきであり、t3 がいかなるパーティションワイズ結合の一部であってはならないことを指定します。クエリ内に他のリレーションが存在しない場合、単に PARTITIONWISE((t1 t2)) を指定しても同じ効果が得られます。これは、t3 がパーティションワイズ方式で結合できる他のリレーションが存在しなくなるためです。</p>
 <p>並列クエリ (Gather など) =============================</p>
 <p>GATHER() または GATHER_MERGE() の各引数は、その上にそれぞれ Gather ノードまたは Gather Merge ノードが配置されるべき単一のリレーション、または正確なリレーションのセットです。NO_GATHER() の各引数は、どの Gather ノードまたは Gather Merge ノードの下にも出現してはならない（つまり、並列処理を使用すべきではない）単一のリレーションです。</p>
 <p>暗黙的な結合順序の制約 ===============================</p>

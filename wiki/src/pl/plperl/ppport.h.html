@@ -1,0 +1,73 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>src/pl/plperl/ppport.h.md</title><link rel="stylesheet" href="../../../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../../../source/src/pl/plperl/ppport.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/pl/plperl/ppport.h.html&quot;}, '*');">src/pl/plperl/ppport.h</a></h1>
+<h2>概要</h2>
+<p><a class="wiki-source-link" href="../../../../source/src/pl/plperl/ppport.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/pl/plperl/ppport.h.html&quot;}, '*');"><code>src/pl/plperl/ppport.h</code></a> は、CPAN の <code>Devel::PPPort</code> を基に自動生成された巨大な互換性ヘッダーファイルです。異なるバージョンの Perl インタープリター間で拡張モジュール（XS）をコンパイル・実行できるようにするためのマクロや、古い Perl バージョンに向けたバックポート関数を提供します。PostgreSQL の PL/Perl サブシステムにおいて、C 言語から Perl API をバージョン非依存で安全に呼び出すための基盤となります。</p>
+<h2>モジュール内での役割</h2>
+<p>本ファイルは <code>src/pl/plperl</code> ディレクトリに属し、<a class="wiki-source-link" href="../../../../source/src/pl/plperl/plperl.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/pl/plperl/plperl.c.html&quot;}, '*');"><code>plperl.c</code></a> や <a class="wiki-source-link" href="../../../../source/src/pl/plperl/plperl.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/pl/plperl/plperl.h.html&quot;}, '*');"><code>plperl.h</code></a> などの主要なソースファイルからインクルードされます。Perl のバージョンアップに伴う API の変化やスレッドコンテキスト（<a class="wiki-source-link" href="../../../../source/src/pl/plperl/ppport.h.html#L11325" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/pl/plperl/ppport.h.html&quot;}, '*');"><code>aTHX</code></a> 等）の差異を吸収し、PostgreSQL のビルド環境でターゲットとする古い Perl から新しい Perl まで一貫したビルドを保証する役割を持ちます。</p>
+<h2>責務</h2>
+<ul>
+<li>Perl バージョン判定マクロ（<a class="wiki-source-link" href="../../../../source/src/pl/plperl/ppport.h.html#L11290" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/pl/plperl/ppport.h.html&quot;}, '*');"><code>PERL_VERSION_GE</code></a>, <a class="wiki-source-link" href="../../../../source/src/pl/plperl/ppport.h.html#L11256" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/pl/plperl/ppport.h.html&quot;}, '*');"><code>PERL_BCDVERSION</code></a> など）の提供</li>
+<li>スレッドコンテキストマクロ（<a class="wiki-source-link" href="../../../../source/src/pl/plperl/ppport.h.html#L12555" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__pl__plperl__ppport_h__pTHX.html&quot;}, '*');"><code>pTHX</code></a>, <a class="wiki-source-link" href="../../../../source/src/pl/plperl/ppport.h.html#L11325" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/pl/plperl/ppport.h.html&quot;}, '*');"><code>aTHX</code></a> 等）の抽象化と未定義環境へのフォールバック</li>
+<li>廃止された Perl API やバージョン依存の関数・変数（<a class="wiki-source-link" href="../../../../source/src/pl/plperl/ppport.h.html#L11856" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/pl/plperl/ppport.h.html&quot;}, '*');"><code>PL_parser</code></a>, <a class="wiki-source-link" href="../../../../source/src/pl/plperl/ppport.h.html#L11898" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/pl/plperl/ppport.h.html&quot;}, '*');"><code>newCONSTSUB</code></a> など）の互換レイヤー提供</li>
+<li>数値パース系ヘルパー（<a class="wiki-source-link" href="../../../../source/src/pl/plperl/ppport.h.html#L16351" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/pl/plperl/ppport.h.html&quot;}, '*');"><code>grok_number</code></a>, <a class="wiki-source-link" href="../../../../source/src/pl/plperl/ppport.h.html#L16566" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/pl/plperl/ppport.h.html&quot;}, '*');"><code>grok_bin</code></a> 等）や文字コード処理（UTF-8, ロケール）の互換実装</li>
+</ul>
+<h2>重要なシンボル</h2>
+<h3>コア互換・スレッドコンテキスト</h3>
+<ul>
+<li><a class="wiki-source-link" href="../../../../source/src/pl/plperl/ppport.h.html#L12555" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__pl__plperl__ppport_h__pTHX.html&quot;}, '*');"><code>pTHX</code></a>: スレッド有効な Perl 環境におけるインタープリター構造体ポインタ型 (<code>PerlInterpreter *</code>)。</li>
+<li><a class="wiki-source-link" href="../../../../source/src/pl/plperl/ppport.h.html#L12558" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__pl__plperl__ppport_h__pTHX_.html&quot;}, '*');"><code>pTHX_</code></a>: <a class="wiki-source-link" href="../../../../source/src/pl/plperl/ppport.h.html#L12555" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__pl__plperl__ppport_h__pTHX.html&quot;}, '*');"><code>pTHX</code></a> にカンマを付加した型宣言用マクロ。引数リストの先頭で使用。</li>
+<li><a class="wiki-source-link" href="../../../../source/src/pl/plperl/ppport.h.html#L12553" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__pl__plperl__ppport_h__ARGSproto.html&quot;}, '*');"><code>ARGSproto</code></a>: プロトタイプ宣言用のスレッド引数定義マクロ。</li>
+</ul>
+<h3>データ型と数値処理</h3>
+<ul>
+<li><a class="wiki-source-link" href="../../../../source/src/pl/plperl/ppport.h.html#L12325" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__pl__plperl__ppport_h__NV.html&quot;}, '*');"><code>NV</code></a>: Perl の浮動小数点数型 (<code>double</code> または <code>long double</code>)。</li>
+<li><a class="wiki-source-link" href="../../../../source/src/pl/plperl/ppport.h.html#L11906" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__pl__plperl__ppport_h__DPPP_.html&quot;}, '*');"><code>DPPP_</code></a>: 名前空間衝突を避けるためのプリフィックス生成用マクロ。</li>
+</ul>
+<h3>コールスタックおよび実行制御</h3>
+<ul>
+<li><a class="wiki-source-link" href="../../../../source/src/pl/plperl/ppport.h.html#L16144" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__pl__plperl__ppport_h__DPPP_dopoptosub_at.html&quot;}, '*');"><code>DPPP_dopoptosub_at</code></a>: <a class="wiki-source-link" href="../../../../source/src/pl/plperl/ppport.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/pl/plperl/ppport.h.html&quot;}, '*');"><code>cxstack</code></a> を走査し、指定されたブロックインデックスから最も近いサブ・評価ブロックのコンテキストインデックスを返すヘルパー関数。</li>
+</ul>
+<h2>制御フローとデータフロー</h2>
+<p>本ファイルは主にプリプロセッサーマクロとインライン/スタティック関数群で構成されており、独自の独立した制御フローを持ちません。代わりに、<a class="wiki-source-link" href="../../../../source/src/pl/plperl/plperl.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/pl/plperl/plperl.c.html&quot;}, '*');"><code>plperl.c</code></a> などのコードが Perl API（例: <a class="wiki-source-link" href="../../../../source/src/pl/plperl/ppport.h.html#L16351" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/pl/plperl/ppport.h.html&quot;}, '*');"><code>grok_number</code></a> や <a class="wiki-source-link" href="../../../../source/src/pl/plperl/ppport.h.html#L16176" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/pl/plperl/ppport.h.html&quot;}, '*');"><code>caller_cx</code></a>）を呼び出した際、コンパイル時の Perl バージョンに応じて本ファイル内のバックポート実装（例: <code>DPPP_(my_grok_number)</code> や <code>DPPP_(my_caller_cx)</code>）へディスパッチまたはインライン展開されます。</p>
+<ul>
+<li>**データフロー**: PostgreSQL のクエリや引数を表す Perl の <code>SV*</code>（Scalar Value）や <code>HV*</code>（Hash Value）に対し、型変換マクロ（<code>SvIV</code>, <code>SvPV</code> 等）や <a class="wiki-source-link" href="../../../../source/src/pl/plperl/ppport.h.html#L14501" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/pl/plperl/ppport.h.html&quot;}, '*');"><code>sv_setuv</code></a> を介して安全にデータ入出力を行います。</li>
+</ul>
+<h2>直接依存</h2>
+<ul>
+<li><a class="wiki-source-link" href="../../../../source/src/pl/plperl/ppport.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/pl/plperl/ppport.h.html&quot;}, '*');"><code>ppport.h</code></a> 自体（自己完結型のスクリプトおよびヘッダー）</li>
+<li><code>&lt;locale.h&gt;</code>（ロケールおよび数値基数処理用）</li>
+</ul>
+<h2>関連コード</h2>
+<ul>
+<li><a class="wiki-source-link" href="../../../../source/src/pl/plperl/plperl.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/pl/plperl/plperl.c.html&quot;}, '*');"><code>src/pl/plperl/plperl.c</code></a></li>
+<li><a class="wiki-source-link" href="../../../../source/src/pl/plperl/plperl.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/pl/plperl/plperl.h.html&quot;}, '*');"><code>src/pl/plperl/plperl.h</code></a></li>
+<li><a class="wiki-source-link" href="../../../../source/src/pl/plperl/plperl_system.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/pl/plperl/plperl_system.h.html&quot;}, '*');"><code>src/pl/plperl/plperl_system.h</code></a></li>
+</ul>
+<h2>読者向けメモ</h2>
+<ul>
+<li>**メモリ所有権**: 本ファイル内で提供される関数（例: <a class="wiki-source-link" href="../../../../source/src/pl/plperl/ppport.h.html#L11898" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/pl/plperl/ppport.h.html&quot;}, '*');"><code>newCONSTSUB</code></a>, <a class="wiki-source-link" href="../../../../source/src/pl/plperl/ppport.h.html#L15653" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/pl/plperl/ppport.h.html&quot;}, '*');"><code>newSVpvn_share</code></a>）が生成するオブジェクトのライフサイクルやメモリ管理は、Perl インタープリターのモルタルスタックやガーベッジコレクションに依存します。</li>
+<li>**自動生成の注意**: ファイル冒頭に記載がある通り、本ファイルは直接編集すべきではありません（<code>Devel::PPPort</code> によって管理されます）。</li>
+</ul>
+<h2>シンボルページ</h2>
+<ul>
+<li><a href="../../../symbols/src__pl__plperl__ppport_h__DPPP_.html" target="wiki-view"><code>DPPP_</code></a></li>
+<li><a href="../../../symbols/src__pl__plperl__ppport_h__pTHX.html" target="wiki-view"><code>pTHX</code></a></li>
+<li><a href="../../../symbols/src__pl__plperl__ppport_h__pTHX_.html" target="wiki-view"><code>pTHX_</code></a></li>
+<li><a href="../../../symbols/src__pl__plperl__ppport_h__NV.html" target="wiki-view"><code>NV</code></a></li>
+<li><a href="../../../symbols/src__pl__plperl__ppport_h__ARGSproto.html" target="wiki-view"><code>ARGSproto</code></a></li>
+<li><a href="../../../symbols/src__pl__plperl__ppport_h__DPPP_dopoptosub_at.html" target="wiki-view"><code>DPPP_dopoptosub_at</code></a></li>
+</ul><script>
+(function() {
+  function notifyParent() {
+    if (parent === window) return;
+    parent.postMessage({type: "frame-location", frame: window.name || "", href: window.location.href}, "*");
+  }
+  document.addEventListener("click", function(event) {
+    const link = event.target.closest("a[data-panel]");
+    if (!link || parent === window) return;
+    parent.postMessage({type: "source-link", panel: link.dataset.panel}, "*");
+  });
+  window.addEventListener("load", notifyParent);
+  window.addEventListener("hashchange", notifyParent);
+})();
+</script></body></html>

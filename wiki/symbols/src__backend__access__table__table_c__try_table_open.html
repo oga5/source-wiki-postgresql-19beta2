@@ -1,5 +1,5 @@
 <!doctype html>
-<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>symbols/src__backend__access__table__table_c__try_table_open.md</title><link rel="stylesheet" href="../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../source/src/backend/access/table/table.c.html#L59" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__access__table__table_c__try_table_open.html&quot;}, '*');">try_table_open</a></h1>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>symbols/src__backend__access__table__table_c__try_table_open.md</title><link rel="stylesheet" href="../../styles.css"></head><body><h1>try_table_open</h1>
 <h2>定義</h2>
 <ul>
 <li>種別: <code>function</code></li>
@@ -34,7 +34,7 @@
 <h2>関連データ構造</h2>
 <p><code>LOCKMODE</code>, <code>Oid</code>, <code>Relation</code></p>
 <h2>ソース抜粋</h2>
-<p>~~~c Relation <a class="wiki-source-link" href="../../source/src/backend/access/table/table.c.html#L59" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__access__table__table_c__try_table_open.html&quot;}, '*');">try_table_open</a>(Oid relationId, LOCKMODE lockmode) { Relation	r;</p>
+<p>~~~c Relation try_table_open(Oid relationId, LOCKMODE lockmode) { Relation	r;</p>
 <p>r = <a class="wiki-source-link" href="../../source/src/backend/access/common/relation.c.html#L88" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__access__common__relation_c__try_relation_open.html&quot;}, '*');">try_relation_open</a>(relationId, lockmode);</p>
 <p>/* leave if <a class="wiki-source-link" href="../../source/src/port/pg_localeconv_r.c.html#L63" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/port/pg_localeconv_r.c.html&quot;}, '*');">table</a> does not exist */ if (!r) return NULL;</p>
 <p><a class="wiki-source-link" href="../../source/src/backend/access/table/table.c.html#L138" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__access__table__table_c__validate_relation_as_table.html&quot;}, '*');">validate_relation_as_table</a>(r);</p>

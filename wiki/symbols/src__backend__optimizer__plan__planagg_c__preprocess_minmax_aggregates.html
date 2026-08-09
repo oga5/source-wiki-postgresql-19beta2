@@ -31,7 +31,7 @@
 <li>Reject if query contains any CTEs; there&#x27;s no way to build an indexscan</li>
 <li>on one so we couldn&#x27;t succeed here.  (If the CTEs are unreferenced,</li>
 <li>that&#x27;s not <a class="wiki-source-link" href="../../source/src/tools/pg_bsd_indent/indent_globs.h.html#L46" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/tools/pg_bsd_indent/indent_globs.h.html&quot;}, '*');">true</a>, but it doesn&#x27;t seem <a class="wiki-source-link" href="../../source/src/backend/optimizer/geqo/geqo_pool.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__geqo__geqo_pool_c__worth.html&quot;}, '*');">worth</a> expending cycles to check.)</li>
-<p>*/ if (parse-&gt;cteList) return;</p>
+<p>*/ if (parse-&gt;<a class="wiki-source-link" href="../../source/src/backend/optimizer/plan/subselect.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__plan__subselect_c__cteList.html&quot;}, '*');">cteList</a>) return;</p>
 </ul>
 <p>/*</p>
 <ul>
@@ -55,7 +55,7 @@
 <ul>
 <li>処理開始時点で <code>root-&gt;minmax_aggs</code> は空 (<a class="wiki-source-link" href="../../source/src/include/nodes/pg_list.h.html#L68" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/nodes/pg_list.h.html&quot;}, '*');"><code>NIL</code></a>) であること。</li>
 <li>クエリが集約 (<code>hasAggs</code>) を持ち、集合演算 (<code>setOperations</code>) や <code>FOR UPDATE</code> (<code>rowMarks</code>) を含まないこと。</li>
-<li><code>GROUP BY</code> 句、複数のグループ化セット、ウィンドウ関数、または共通テーブル式 (<code>cteList</code>) を含まないこと。</li>
+<li><code>GROUP BY</code> 句、複数のグループ化セット、ウィンドウ関数、または共通テーブル式 (<a class="wiki-source-link" href="../../source/src/backend/optimizer/plan/subselect.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__plan__subselect_c__cteList.html&quot;}, '*');"><code>cteList</code></a>) を含まないこと。</li>
 <li>単一の通常リレーションまたはフラット化された <code>UNION ALL</code> 継承親サブクエリを参照する結合のないクエリであること。</li>
 </ul>
 <h2>アルゴリズムまたは振る舞い</h2>

@@ -51,7 +51,7 @@
 <p>/* intentionally no include guards, should only be included by <a class="wiki-source-link" href="../../source/src/include/port/atomics.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/port/atomics.h.html&quot;}, '*');">atomics.h</a> */ #ifndef <a class="wiki-source-link" href="../../source/src/include/port/atomics.h.html#L45" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/port/atomics.h.html&quot;}, '*');">INSIDE_ATOMICS_H</a> #error &quot;should be included via <a class="wiki-source-link" href="../../source/src/include/port/atomics.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/port/atomics.h.html&quot;}, '*');">atomics.h</a>&quot; #endif</p>
 <p>#pragma intrinsic(_ReadWriteBarrier) #define pg_compiler_barrier_impl()	_ReadWriteBarrier()</p>
 <p>#ifndef pg_memory_barrier_impl #define pg_memory_barrier_impl()	MemoryBarrier() #endif</p>
-<p>#define PG_HAVE_ATOMIC_U32_SUPPORT typedef struct pg_atomic_uint32 { volatile uint32 value; } pg_atomic_uint32; ~~~</p>
+<p>#define PG_HAVE_ATOMIC_U32_SUPPORT <a class="wiki-source-link" href="../../source/src/include/fmgr.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/fmgr.h.html&quot;}, '*');">typedef</a> struct pg_atomic_uint32 { volatile uint32 value; } pg_atomic_uint32; ~~~</p>
 <h2>失敗モードと境界条件</h2>
 <p>まだ解析していません。</p>
 <h2>保守担当者向けメモ</h2>

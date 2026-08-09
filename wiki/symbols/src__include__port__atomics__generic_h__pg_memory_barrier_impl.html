@@ -57,7 +57,7 @@
 <h1>define pg_write_barrier_impl pg_memory_barrier_impl</h1>
 <p>#endif</p>
 <p>#ifndef PG_HAVE_SPIN_DELAY #define PG_HAVE_SPIN_DELAY #define pg_spin_delay_impl()	((void)0) #endif</p>
-<p>/* provide fallback */ #if !defined(PG_HAVE_ATOMIC_FLAG_SUPPORT) &amp;&amp; defined(PG_HAVE_ATOMIC_U32_SUPPORT) #define PG_HAVE_ATOMIC_FLAG_SUPPORT typedef pg_atomic_uint32 pg_atomic_flag; ~~~</p>
+<p>/* provide fallback */ #if !defined(PG_HAVE_ATOMIC_FLAG_SUPPORT) &amp;&amp; defined(PG_HAVE_ATOMIC_U32_SUPPORT) #define PG_HAVE_ATOMIC_FLAG_SUPPORT <a class="wiki-source-link" href="../../source/src/include/fmgr.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/fmgr.h.html&quot;}, '*');">typedef</a> pg_atomic_uint32 pg_atomic_flag; ~~~</p>
 <h2>失敗モードと境界条件</h2>
 <p>まだ解析していません。</p>
 <h2>保守担当者向けメモ</h2>

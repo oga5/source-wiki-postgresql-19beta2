@@ -34,8 +34,8 @@
 <h2>関連データ構造</h2>
 <p>なし</p>
 <h2>ソース抜粋</h2>
-<p>~~~c static char * <a class="wiki-source-link" href="../../source/src/common/exec.c.html#L282" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__common__exec_c__pg_realpath.html&quot;}, '*');">pg_realpath</a>(const char *fname) { char	   *path;</p>
-<p>#ifndef <a class="wiki-source-link" href="../../source/src/include/port/win32.h.html#L9" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/port/win32.h.html&quot;}, '*');">WIN32</a> path = realpath(fname, NULL); #else							/* <a class="wiki-source-link" href="../../source/src/include/port/win32.h.html#L9" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/port/win32.h.html&quot;}, '*');">WIN32</a> */</p>
+<p>~~~c static char * <a class="wiki-source-link" href="../../source/src/common/exec.c.html#L282" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__common__exec_c__pg_realpath.html&quot;}, '*');">pg_realpath</a>(const char *<a class="wiki-source-link" href="../../source/src/backend/utils/adt/jsonfuncs.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/backend/utils/adt/jsonfuncs.c.html&quot;}, '*');">fname</a>) { char	   *path;</p>
+<p>#ifndef <a class="wiki-source-link" href="../../source/src/include/port/win32.h.html#L9" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/port/win32.h.html&quot;}, '*');">WIN32</a> path = realpath(<a class="wiki-source-link" href="../../source/src/backend/utils/adt/jsonfuncs.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/backend/utils/adt/jsonfuncs.c.html&quot;}, '*');">fname</a>, NULL); #else							/* <a class="wiki-source-link" href="../../source/src/include/port/win32.h.html#L9" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/port/win32.h.html&quot;}, '*');">WIN32</a> */</p>
 <p>/*</p>
 <ul>
 <li>Microsoft <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> resolutely non-POSIX, but _fullpath() does the same thing.</li>
@@ -43,7 +43,7 @@
 <li><a class="wiki-source-link" href="../../source/src/backend/utils/adt/varbit.c.html#L390" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__utils__adt__varbit_c__bit.html&quot;}, '*');">bit</a> surprising for Microsoft, but we&#x27;ll believe that until it&#x27;s proven</li>
 <li>wrong.  Clear errno first, though, so we can at least tell if a failure</li>
 <li>occurs and doesn&#x27;t set it.</li>
-<p>*/ errno = 0; path = _fullpath(NULL, fname, 0); #endif</p>
+<p>*/ errno = 0; path = _fullpath(NULL, <a class="wiki-source-link" href="../../source/src/backend/utils/adt/jsonfuncs.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/backend/utils/adt/jsonfuncs.c.html&quot;}, '*');">fname</a>, 0); #endif</p>
 </ul>
 <p>return path; } ~~~</p>
 <h2>失敗モードと境界条件</h2>

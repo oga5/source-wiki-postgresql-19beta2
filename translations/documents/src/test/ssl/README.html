@@ -1,0 +1,50 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>src/test/ssl/README</title><link rel="stylesheet" href="../../../../../styles.css"></head><body><h1>Japanese translation</h1><p><code>src/test/ssl/README</code></p><p><a href="../../../../../source/src/test/ssl/README.html" target="source-view">View original document</a></p><p class="document-translation-progress document-translation-complete">Translation complete.</p><div class="document-translation-body"><section class="document-translation-chunk translated" data-chunk-order="0"><p>src/test/ssl/README</p>
+<p>SSL regression tests ====================</p>
+<p>This directory contains a test suite for SSL support. It tests both client-side functionality, i.e. verifying server certificates, and server-side functionality, i.e. certificate authorization.</p>
+<p>CAUTION: The test server run by this test is configured to listen for TCP connections on localhost. Any user on the same host is able to log in to the test server while the tests are running. Do not run this suite on a multi-user system where you don&#x27;t trust all local users!</p>
+<p>Running the tests =================</p>
+<p>NOTE: You must have given the --enable-tap-tests argument to configure. Also, to use &quot;make installcheck&quot;, you must have built and installed contrib/sslinfo in addition to the core code.</p>
+<p>Run make check PG_TEST_EXTRA=ssl or make installcheck PG_TEST_EXTRA=ssl You can use &quot;make installcheck&quot; if you previously did &quot;make install&quot;. In that case, the code in the installation tree is tested.  With &quot;make check&quot;, a temporary installation tree is built from the current sources and then tested.</p>
+<p>Either way, this test initializes, starts, and stops a test Postgres cluster that is accessible to other local users!</p>
+<p>See src/test/perl/README for more info about running these tests.</p>
+<p>Certificates ============</p>
+<p>The test suite needs a set of public/private key pairs and certificates to run:</p>
+<p>root_ca ルートCA。サーバーおよびクライアントのCA証明書の署名に使用されます。</p>
+<p>server_ca サーバー証明書の署名に使用されるCA。</p>
+<p>client_ca クライアント証明書の署名に使用されるCA。</p>
+<p>server-cn-only server-cn-and-alt-names server-single-alt-name server-multiple-alt-names server-no-names サーバー証明書。証明書に含まれるホスト名にわずかなバリエーションがあります。server_caによって署名されています。</p>
+<p>server-password server-cn-onlyと同じですが、パスワードで保護されています。</p>
+<p>client ユーザー&quot;ssltestuser&quot;用のクライアント証明書。client_caによって署名されています。</p>
+<p>client-revoked &quot;client&quot;と同様ですが、クライアントCAのCRLで失効としてマークされています。</p>
+<p>In addition, there are a few files that combine various certificates together in the same file:</p>
+<p>both-cas-1 root_ca.crt、client_ca.crt、server_ca.crtの順で含まれています。</p>
+<p>both-cas-2 root_ca.crt、server_ca.crt、client_ca.crtの順で含まれています。</p>
+<p>root+server_ca root_crtとserver_ca.crtが含まれています。クライアントの&quot;sslrootcert&quot;オプションとして使用します。</p>
+<p>root+client_ca root_crtとclient_ca.crtが含まれています。サーバーの&quot;ssl_ca_file&quot;として使用します。</p>
+<p>client+client_ca client.crt、client_ca.crtの順で含まれています。クライアントの証明書チェーンとして使用します。</p>
+<p>There are also CRLs for each of the CAs: root.crl, server.crl and client.crl.</p>
+<p>For convenience, all of these keypairs and certificates are included in the ssl/ subdirectory. The Makefile also contains a rule, &quot;make sslfiles&quot;, to recreate them if you need to make changes. &quot;make sslfiles-clean&quot; is required in order to recreate the full set of keypairs and certificates. To rebuild separate files, touch (or remove) the files in question and run &quot;make sslfiles&quot;. This step requires at least OpenSSL 1.1.1.</p>
+<p>Note ====</p>
+<p>These certificates are also used in other tests, e.g. the LDAP tests.</p>
+<p>TODO ====</p>
+<ul>
+<li>テストのクライアント側を別のホストで簡単に実行できるようにする。現在は、適切なホスト名用の証明書を手動でセットアップし、サーバーのセットアップをスキップするようにテストファイルを変更する必要があります。また、クライアントホストからの接続を受け入れるようにサーバーを変更する必要があります。</li>
+</ul>
+<ul>
+<li>複数のサーバー証明書を持つテストを行い、秘密鍵がクライアントに提示する証明書を選択するようにする。（クライアント側でも同様。）</li>
+</ul></section></div><script>
+(function() {
+  function notifyParent() {
+    if (parent === window) return;
+    parent.postMessage({type: "frame-location", frame: window.name || "", href: window.location.href}, "*");
+  }
+  document.addEventListener("click", function(event) {
+    const link = event.target.closest("a[data-panel]");
+    if (!link || parent === window) return;
+    parent.postMessage({type: "source-link", panel: link.dataset.panel}, "*");
+  });
+  window.addEventListener("load", notifyParent);
+  window.addEventListener("hashchange", notifyParent);
+})();
+</script></body></html>

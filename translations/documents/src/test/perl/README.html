@@ -1,0 +1,51 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>src/test/perl/README</title><link rel="stylesheet" href="../../../../../styles.css"></head><body><h1>Japanese translation</h1><p><code>src/test/perl/README</code></p><p><a href="../../../../../source/src/test/perl/README.html" target="source-view">View original document</a></p><p class="document-translation-progress document-translation-complete">Translation complete.</p><div class="document-translation-body"><section class="document-translation-chunk translated" data-chunk-order="0"><p>Perl-based TAP tests ====================</p>
+<p>src/test/perl/ には、ソースツリー全体のPerlベースのテスト（特に src/bin および src/test のテスト）で使用される共有インフラストラクチャが含まれています。これは、バックアップとリストア、レプリケーションなどのテストを実行するために使用されます。これらは、pg_regress や isolation テストフレームワークを使用して表現することが難しいものです。</p>
+<p>テストは、インスタンスのセットアップなどを処理するためにPostgreSQLのmakefileにラップされた、perlの &#x27;prove&#x27; コマンドを介して呼び出されます。Makefile.global の $(prove_check) および $(prove_installcheck) ターゲットを参照してください。デフォルトでは、t/ サブディレクトリ内のすべてのテストが実行されます。代わりに、make に PROVE_TESTS=&quot;t/001_testname.pl t/002_othertestname.pl&quot; のようなものを渡すことで、個別のテストを実行できます。</p>
+<p>デフォルトでは、実行中のノイズを抑えるために PROVE_FLAGS によるフラグは設定していませんが、必要に応じて &#x27;make&#x27; コマンドラインで設定できます。例：</p>
+<p>make check-world PROVE_FLAGS=&#x27;--verbose&#x27;</p>
+<p>テストが失敗した場合、通常 &#x27;prove&#x27; からのターミナル出力だけでは問題を診断するのに十分ではありません。詳細情報を得るには、tmp_check/log/ の下に残されているログファイルを確認してください。&#x27;regress_log_XXX&#x27; という名前のファイルは、perlテストスクリプト自体からのログ出力であり、最初に調査する必要があります。その他のファイルは postmaster のログであり、追加のデータとして役立つ場合があります。</p>
+<p>テストは、多くの個別操作に対してデフォルトで180秒のタイムアウトを設定しています。低速なホストでは、環境変数 PG_TEST_TIMEOUT_DEFAULT を180より大きい秒数に設定することで、負荷に起因する誤検出の失敗を回避できる場合があります。開発者は、この環境変数をより小さい秒数に設定することで、より早く失敗を確認できます。</p>
+<p>テストが失敗した場合、分析のためにデータディレクトリも残されます。これらはテストファイル名に従って命名されます。ただし、環境変数 PG_TEST_NOCLEAN が設定されている場合、テストのステータスに関係なくデータディレクトリは保持されます。この環境変数は、テストの一時ディレクトリが削除されるのも防ぎます。</p>
+<p>Writing tests -------------</p>
+<p>可能であれば、src/test/regress の pg_regress、または src/test/isolation の isolation テスター仕様を使用してテストを作成することをお勧めします。そうでない場合は、新しいテストが src/test/ssl のような src/test 内の既存のツリーの下に適しているか、あるいは既存のユーティリティのスイートのいずれかに追加すべきかを確認してください。</p>
+<p>パッチを提出する前に、すべてのテストおよびテストツールに対して、perltidy --profile=src/tools/pgindent/perltidyrc を使用して perltidy を実行する必要があることに注意してください。</p>
+<p>テストは、Perlの Test::More と、ノード管理やクエリを実行して結果を取得するための &#x27;psql&#x27; の呼び出しサポートなどを提供する src/test/perl のPostgreSQL固有のインフラストラクチャを使用して記述されます。テストを作成する前に、Test::More のドキュメントを読む必要があります。</p>
+<p>スイートの t/ サブディレクトリにあるテストスクリプトは、アルファベット順に実行されます。</p>
+<p>各テストスクリプトは以下で始まる必要があります。</p>
+<p>use strict; use warnings FATAL =&gt; &#x27;all&#x27;; use PostgreSQL::Test::Cluster; use PostgreSQL::Test::Utils; use Test::More;</p>
+<p>その後、通常は1つ以上のノードをセットアップし、それらに対してコマンドを実行して結果を評価する必要があります。例えば：</p>
+<p>my $node = PostgreSQL::Test::Cluster-&gt;new(&#x27;primary&#x27;); $node-&gt;init; $node-&gt;start;</p>
+<p>my $ret = $node-&gt;safe_psql(&#x27;postgres&#x27;, &#x27;SELECT 1&#x27;); is($ret, &#x27;1&#x27;, &#x27;SELECT 1 returns 1&#x27;);</p>
+<p>$node-&gt;stop(&#x27;fast&#x27;);</p>
+<p>各テストスクリプトは以下で終わる必要があります。</p>
+<p>done_testing();</p>
+<p>Test::Builder::Level は、失敗を報告するときにテストがコールスタックのどこまで上を見るかを制御します。これは、ok() や is() など、Test::More のテストルーチンを直接または間接的に呼び出すサブルーチンによってインクリメントされる必要があります。</p>
+<p>local $Test::Builder::Level = $Test::Builder::Level + 1;</p>
+<p>テストの書き方の詳細については、ドキュメントを参照してください。</p>
+<p>perldoc Test::More perldoc Test::Builder</p>
+<p>利用可能なPostgreSQL固有のテストメソッドといくつかのテスト例については、テストモジュールの perldoc を参照してください。例：</p>
+<p>perldoc src/test/perl/PostgreSQL/Test/Cluster.pm</p>
+<p>Portability -----------</p>
+<p>最先端のPerl機能の使用は避けてください。5.14という古いPerlバージョンを実行しているビルドファームのメンバー（animals）が存在するため、テストはそこでパスすることが期待されます。</p>
+<p>また、IPC::Run を除き、コア以外のPerlモジュールは使用しないでください。あるいは、特定のテストでどうしても使用する必要がある場合は、必要なモジュールが存在しない場合にテストをスキップするように手配してください。不明な場合は、Module::CoreList を参照して、特定のモジュールがPerlコアの一部であるかどうか、およびどのモジュールバージョンがどのPerlリリースに同梱されていたかを確認できます。</p>
+<p>古いPerlバージョンとの互換性をテストする1つの方法は、perlbrew を使用することです。http://perlbrew.pl を参照してください。インストール後、以下を実行します。</p>
+<p>export PERLBREW_CONFIGURE_FLAGS=&#x27;-de -Duseshrplib&#x27; perlbrew --force install 5.14.0 perlbrew use 5.14.0 perlbrew install-cpanm cpanm install Test::Simple@0.98 cpanm install IPC::Run@0.79 cpanm install ExtUtils::MakeMaker@6.50  # downgrade</p>
+<p>ヒント：Test::Simple の utf8 レグレッションテストがハングアップする場合は、UTF8互換のロケールを設定してみてください。例：&quot;export LANG=en_US.utf8&quot;</p>
+<p>その後、Postgres の configure を再実行して、テストの実行時に正しい Perl が使用されるようにします。正しい Perl が見つかったことを確認するには、以下を実行します。</p>
+<p>grep ^PERL= config.log</p>
+<p>cpanm の制限により、このレシピは古いビルドファームメンバーのモジュールリストを正確に複製するわけではありません。不一致が問題になることはめったにありませんが、確実を期す場合は、cpanm をバイパスして、目的のバージョンの Test::Simple および IPC::Run を手動でインストールしてください。</p></section></div><script>
+(function() {
+  function notifyParent() {
+    if (parent === window) return;
+    parent.postMessage({type: "frame-location", frame: window.name || "", href: window.location.href}, "*");
+  }
+  document.addEventListener("click", function(event) {
+    const link = event.target.closest("a[data-panel]");
+    if (!link || parent === window) return;
+    parent.postMessage({type: "source-link", panel: link.dataset.panel}, "*");
+  });
+  window.addEventListener("load", notifyParent);
+  window.addEventListener("hashchange", notifyParent);
+})();
+</script></body></html>

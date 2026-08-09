@@ -34,12 +34,12 @@
 <h2>関連データ構造</h2>
 <p>なし</p>
 <h2>ソース抜粋</h2>
-<p>~~~c int <a class="wiki-source-link" href="../../source/src/backend/utils/adt/varchar.c.html#L678" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__utils__adt__varchar_c__bpchartruelen.html&quot;}, '*');">bpchartruelen</a>(char *s, int <a class="wiki-source-link" href="../../source/src/include/utils/memutils.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__utils__memutils_h__len.html&quot;}, '*');">len</a>) { int			i;</p>
+<p>~~~c int <a class="wiki-source-link" href="../../source/src/backend/utils/adt/varchar.c.html#L678" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__utils__adt__varchar_c__bpchartruelen.html&quot;}, '*');">bpchartruelen</a>(char *s, int len) { int			i;</p>
 <p>/*</p>
 <ul>
 <li>Note that we rely on the assumption that &#x27; &#x27; <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> a singleton unit on</li>
 <li>every supported multibyte server encoding.</li>
-<p>*/ for (i = <a class="wiki-source-link" href="../../source/src/include/utils/memutils.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__utils__memutils_h__len.html&quot;}, '*');">len</a> - 1; i &gt;= 0; i--) { if (s[i] != &#x27; &#x27;) break; } return i + 1; } ~~~</p>
+<p>*/ for (i = len - 1; i &gt;= 0; i--) { if (s[i] != &#x27; &#x27;) break; } return i + 1; } ~~~</p>
 </ul>
 <h2>失敗モードと境界条件</h2>
 <p>まだ解析していません。</p>

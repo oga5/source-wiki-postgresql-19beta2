@@ -39,7 +39,7 @@
 <p>if (tmp &lt; commonLen) commonLen = tmp; }</p>
 <p>/*</p>
 <ul>
-<li><a class="wiki-source-link" href="../../source/src/include/nodes/plannodes.h.html#L1498" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__nodes__plannodes_h__Limit.html&quot;}, '*');">Limit</a> the prefix length, if necessary, to ensure that the resulting</li>
+<li><a class="wiki-source-link" href="../../source/src/include/nodes/plannodes.h.html#L1498" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__nodes__plannodes_h__Limit.html&quot;}, '*');">Limit</a> the prefix <a class="wiki-source-link" href="../../source/src/include/nodes/pg_list.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/nodes/pg_list.h.html&quot;}, '*');">length</a>, if necessary, to ensure that the resulting</li>
 <li>inner tuple will fit on a page.</li>
 <p>*/ commonLen = Min(commonLen, <a class="wiki-source-link" href="../../source/src/backend/access/spgist/spgtextproc.c.html#L70" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/access/spgist/spgtextproc.c.html&quot;}, '*');">SPGIST_MAX_PREFIX_LENGTH</a>);</p>
 </ul>
@@ -51,7 +51,7 @@
 <ul>
 <li>Sort by <a class="wiki-source-link" href="../../source/src/bin/pg_basebackup/pg_basebackup.c.html#L135" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/bin/pg_basebackup/pg_basebackup.c.html&quot;}, '*');">label</a> values so that we can group the values into nodes.  This</li>
 <li>also ensures that the nodes are ordered by <a class="wiki-source-link" href="../../source/src/bin/pg_basebackup/pg_basebackup.c.html#L135" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/bin/pg_basebackup/pg_basebackup.c.html&quot;}, '*');">label</a> value, allowing the</li>
-<li>use of binary search in searchChar.</li>
+<li>use of <a class="wiki-source-link" href="../../source/src/include/utils/jsonb.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__utils__jsonb_h__binary.html&quot;}, '*');">binary</a> search in searchChar.</li>
 <p>~~~</p>
 </ul>
 <h2>失敗モードと境界条件</h2>

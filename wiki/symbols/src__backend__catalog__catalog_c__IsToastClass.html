@@ -15,7 +15,7 @@
 <h2>入力と出力</h2>
 <ul>
 <li>引数: <code>Form_pg_class reltuple</code></li>
-<li>戻り値: <a class="wiki-source-link" href="../../source/src/include/access/tupmacs.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__access__tupmacs_h__bool.html&quot;}, '*');"><code>bool</code></a></li>
+<li>戻り値: <code>bool</code></li>
 </ul>
 <h2>前提条件と不変条件</h2>
 <p>まだ解析していません。</p>
@@ -26,15 +26,15 @@
 <p>まだ解析していません。</p>
 <h2>呼び出し元と呼び出し先</h2>
 <ul>
-<li>呼び出し元: <a class="wiki-source-link" href="../../source/src/backend/catalog/catalog.c.html#L85" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__catalog__catalog_c__IsSystemClass.html&quot;}, '*');"><code>IsSystemClass</code></a></li>
+<li>呼び出し元: <code>IsSystemClass</code></li>
 <li>呼び出し先: <a class="wiki-source-link" href="../../source/src/backend/catalog/catalog.c.html#L260" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__catalog__catalog_c__IsToastNamespace.html&quot;}, '*');"><code>IsToastNamespace</code></a></li>
-<li>呼び出し元サイト: <a class="wiki-source-link" href="../../source/src/backend/catalog/catalog.c.html#L85" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__catalog__catalog_c__IsSystemClass.html&quot;}, '*');"><code>IsSystemClass</code></a> at <code>src/backend/catalog/catalog.c:89:41</code> (direct, confidence=high, resolved=<a class="wiki-entity-link" href="src__backend__catalog__catalog_c__IsToastClass.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__catalog__catalog_c__IsToastClass.html&quot;, &quot;source&quot;: &quot;source/src/backend/catalog/catalog.c.html#L225&quot;}, '*');"><code>symbol:src/backend/catalog/catalog.c#IsToastClass</code></a>)</li>
+<li>呼び出し元サイト: <code>IsSystemClass</code> at <code>src/backend/catalog/catalog.c:89:41</code> (direct, confidence=high, resolved=<a class="wiki-entity-link" href="src__backend__catalog__catalog_c__IsToastClass.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__catalog__catalog_c__IsToastClass.html&quot;, &quot;source&quot;: &quot;source/src/backend/catalog/catalog.c.html#L225&quot;}, '*');"><code>symbol:src/backend/catalog/catalog.c#IsToastClass</code></a>)</li>
 <li>呼び出しサイト: <a class="wiki-source-link" href="../../source/src/backend/catalog/catalog.c.html#L260" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__catalog__catalog_c__IsToastNamespace.html&quot;}, '*');"><code>IsToastNamespace</code></a> at <code>src/backend/catalog/catalog.c:230:9</code> (direct, confidence=high, resolved=<a class="wiki-entity-link" href="src__backend__catalog__catalog_c__IsToastNamespace.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__catalog__catalog_c__IsToastNamespace.html&quot;, &quot;source&quot;: &quot;source/src/backend/catalog/catalog.c.html#L260&quot;}, '*');"><code>symbol:src/backend/catalog/catalog.c#IsToastNamespace</code></a>)</li>
 </ul>
 <h2>関連データ構造</h2>
 <p><code>Oid</code></p>
 <h2>ソース抜粋</h2>
-<p>~~~c <a class="wiki-source-link" href="../../source/src/include/access/tupmacs.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__access__tupmacs_h__bool.html&quot;}, '*');">bool</a> <a class="wiki-source-link" href="../../source/src/backend/catalog/catalog.c.html#L225" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__catalog__catalog_c__IsToastClass.html&quot;}, '*');">IsToastClass</a>(Form_pg_class reltuple) { Oid			relnamespace = reltuple-&gt;relnamespace;</p>
+<p>~~~c bool <a class="wiki-source-link" href="../../source/src/backend/catalog/catalog.c.html#L225" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__catalog__catalog_c__IsToastClass.html&quot;}, '*');">IsToastClass</a>(<a class="wiki-source-link" href="../../source/src/include/catalog/pg_class.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__catalog__pg_class_h__Form_pg_class.html&quot;}, '*');">Form_pg_class</a> reltuple) { Oid			relnamespace = reltuple-&gt;relnamespace;</p>
 <p>return <a class="wiki-source-link" href="../../source/src/backend/catalog/catalog.c.html#L260" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__catalog__catalog_c__IsToastNamespace.html&quot;}, '*');">IsToastNamespace</a>(relnamespace); } ~~~</p>
 <h2>失敗モードと境界条件</h2>
 <p>まだ解析していません。</p>

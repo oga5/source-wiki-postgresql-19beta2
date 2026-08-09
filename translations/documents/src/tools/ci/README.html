@@ -1,0 +1,40 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>src/tools/ci/README</title><link rel="stylesheet" href="../../../../../styles.css"></head><body><h1>Japanese translation</h1><p><code>src/tools/ci/README</code></p><p><a href="../../../../../source/src/tools/ci/README.html" target="source-view">View original document</a></p><p class="document-translation-progress document-translation-complete">Translation complete.</p><div class="document-translation-body"><section class="document-translation-chunk translated" data-chunk-order="0"><p>Postgresの継続的インテグレーション (CI) =======================================</p>
+<p>Postgresには2つの形式のCIがあります。</p>
+<p>1) メインのpostgresリポジトリでサポートされているすべてのブランチは、 buildfarmを介して継続的にテストされます。これはメインリポジトリのみを 対象としているため、機能の開発中には使用できません。</p>
+<p>詳細は https://buildfarm.postgresql.org/ を参照してください。</p>
+<p>2) まだマージされていない開発作業については、一部のgitホスティング プロバイダでCIを有効にすることができます。これにより、開発者は パッチがマージされる（あるいは提出される）前に、多数のプラットフォームで テストすることができます。</p>
+<p>個人リポジトリでのCIの設定 ==========================</p>
+<p>現在、postgresにはGitHub Actionsを利用したCIサポートが含まれています。</p>
+<p>GitHubリポジトリでのCI利用の設定 ================================</p>
+<p>GitHub ActionsベースのCIワークフローは、リポジトリがいつフォークされたかに応じて、 デフォルトで有効になっている場合とそうでない場合があります。</p>
+<p>リポジトリでCIワークフローを無効にするには、 https://github.com/&lt;username&gt;/&lt;reponame&gt;/actions/workflows/pg-ci.yml にアクセスし、右上にある「...」をクリックして「Disable workflow」を選択します。</p>
+<p>ワークフローを有効にするには、同じページに移動し、上部にある「Enable workflow」をクリックします。</p>
+<p>ただし、postgres/postgresリポジトリの何千ものフォークが、次回postgres/postgresと再同期したときに一斉にCIを実行し始めるという問題を避けるため、各リポジトリは完全なCIテストを実際に実行するために明示的にオプトインする必要があります。</p>
+<p>CIにオプトインするには、 https://github.com/&lt;username&gt;/&lt;reponame&gt;/settings/variables/actions にアクセスし、 値が 1 の PG_CI_ENABLED という名前の新しいリポジトリ変数を作成します。</p>
+<p>GitHubリポジトリでのCI結果の表示 ================================</p>
+<p>CIの実行結果は https://github.com/&lt;username&gt;/&lt;reponame&gt;/actions で確認できます。</p>
+<p>パブリックリポジトリでのワークフロー実行の概要ステータスは、GitHubにログインしていなくても表示されますが、ログを含む詳細を表示するにはログインが必要です。</p>
+<p>CIで使用されるコンテナ / イメージ =================================</p>
+<p>CIの実行時間を許容範囲内に抑えるため、いくつかのプラットフォームでは事前に生成されたコンテナ / イメージを使用しています。コンテナとイメージはCIの実行とは別に生成されます。そうしないと、テスト対象の各gitリポジトリが独自のコンテナセットをビルドする必要があり、スペースと時間の両面で無駄が生じるためです。</p>
+<p>これらのコンテナ / イメージは、github.com/anarazel/pg-vm-images/ の仕様から毎日ビルドされています。</p>
+<p>コミットメッセージによるCIの制御 ================================</p>
+<p>CIの動作は、コミットメッセージ内の特別な記述によって制御できます。現在、以下の制御が利用可能です。</p>
+<ul>
+<li>ci-os-only: {(compilerwarnings|linux|macos|mingw|sanitycheck|windows)}</li>
+</ul>
+<p>指定されたオペレーティングシステムでのみCIを実行します。これは、プラットフォームの一部にのみ影響する移植性の問題に対処する場合に便利です。</p></section></div><script>
+(function() {
+  function notifyParent() {
+    if (parent === window) return;
+    parent.postMessage({type: "frame-location", frame: window.name || "", href: window.location.href}, "*");
+  }
+  document.addEventListener("click", function(event) {
+    const link = event.target.closest("a[data-panel]");
+    if (!link || parent === window) return;
+    parent.postMessage({type: "source-link", panel: link.dataset.panel}, "*");
+  });
+  window.addEventListener("load", notifyParent);
+  window.addEventListener("hashchange", notifyParent);
+})();
+</script></body></html>
