@@ -50,7 +50,7 @@
 <ul>
 <li>Copy the entries of the original database, changing the database Id to</li>
 <li>that of the new database.  Note that because we are not copying rows</li>
-<li>with dbId == 0 (ie, rows describing dependent shared objects) we won&#x27;t</li>
+<li>with dbId == 0 (ie, rows describing dependent <a class="wiki-source-link" href="../../source/src/include/executor/hashjoin.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__executor__hashjoin_h__shared.html&quot;}, '*');">shared</a> objects) we won&#x27;t</li>
 <li>copy the ownership dependency of the template database itself; this <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a></li>
 <li>what we want.</li>
 <p>*/ while (<a class="wiki-source-link" href="../../source/src/include/access/htup.h.html#L78" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/access/htup.h.html&quot;}, '*');">HeapTupleIsValid</a>(tup = <a class="wiki-source-link" href="../../source/src/backend/access/index/genam.c.html#L514" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__access__index__genam_c__systable_getnext.html&quot;}, '*');">systable_getnext</a>(scan))) { Form_pg_shdepend shdep;</p>

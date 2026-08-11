@@ -1,36 +1,60 @@
 <!doctype html>
 <html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>src/include/utils/typcache.h.md</title><link rel="stylesheet" href="../../../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../../../source/src/include/utils/typcache.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/utils/typcache.h.html&quot;}, '*');">src/include/utils/typcache.h</a></h1>
 <h2>概要</h2>
-<p>データ型に関するメタ情報（<code>pg_type</code> の基本属性に加え、B-tree や Hash 演算子族、コンポジット型のタプル記述子、範囲型、マルチ範囲型、ドメイン制約などの付加情報）のキャッシュ機構を定義するヘッダーファイルである。対応する実装ファイルは <a class="wiki-source-link" href="../../../../source/src/backend/utils/cache/typcache.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/utils/cache/typcache.c.html&quot;}, '*');"><code>src/backend/utils/cache/typcache.c</code></a> である。</p>
+<p>データ型に関するメタデータ（<code>pg_type</code> 行の基本情報、演算子クラス、比較関数、ハッシュ関数、複合型のタプルデスク、範囲型・マルチ範囲型情報、ドメイン制約など）をキャッシュし、高速に取得するための公開インターフェースを定義するヘッダーファイルです。実体は対応する <a class="wiki-source-link" href="../../../../source/src/backend/utils/cache/typcache.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/utils/cache/typcache.c.html&quot;}, '*');"><code>src/backend/utils/cache/typcache.c</code></a> に実装されています。</p>
 <h2>モジュール内での役割</h2>
-<p><code>src/include/utils</code> サブシステムにおいて、型メタ情報の高速検索および永続化キャッシュを提供する。汎用的な配列処理やレコード比較処理、インデックスサポート関数（メモリリークが許されない文脈）が、<code>pg_type</code> や演算子族カタログへ繰り返しアクセスするのを防ぐ。</p>
+<p><code>src/include/utils</code> サブシステムの一部として、SQL データ型を扱うあらゆるモジュール（エグゼキュータ、プランナ、配列・レコード処理関数、インデックスサポートなど）に対して型情報のルックアップ機能を提供します。</p>
 <h2>責務</h2>
 <ul>
-<li><a class="wiki-source-link" href="../../../../source/src/include/utils/typcache.h.html#L31" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__utils__typcache_h__TypeCacheEntry.html&quot;}, '*');"><code>TypeCacheEntry</code></a> 構造体を通じた、データ型ごとの拡張属性の保持。</li>
-<li>要求された情報種別に応じたビットフラグ（<code>TYPECACHE_*</code>）の定義。</li>
-<li>コンポジット型のタプル記述子（<code>TupleDesc</code>）の参照カウント管理と識別子の提供。</li>
-<li>ドメイン型の制約情報を管理するための <a class="wiki-source-link" href="../../../../source/src/include/utils/typcache.h.html#L165" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__utils__typcache_h__DomainConstraintRef.html&quot;}, '*');"><code>DomainConstraintRef</code></a> 機構の提供。</li>
-<li>セッション／バックエンドのライフサイクルを通じた型キャッシュの寿命管理。</li>
+<li>型キャッシュのエントリ構造体（<a class="wiki-source-link" href="../../../../source/src/include/utils/typcache.h.html#L31" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__utils__typcache_h__TypeCacheEntry.html&quot;}, '*');"><code>TypeCacheEntry</code></a>）およびドメイン制約参照構造体（<a class="wiki-source-link" href="../../../../source/src/include/utils/typcache.h.html#L165" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__utils__typcache_h__DomainConstraintRef.html&quot;}, '*');"><code>DomainConstraintRef</code></a>）の定義。</li>
+<li>キャッシュ要求の粒度を制御するためのビットフラグ（<code>TYPECACHE_*</code> マクロ）の提供。</li>
+<li>型キャッシュの検索、ドメイン制約の初期化・更新、行型タプル記述子の取得、および共有レコード型モッドレジストリに関する関数群の宣言。</li>
 </ul>
 <h2>重要なシンボル</h2>
-<h3>コアデータ構造</h3>
+<h3>型キャッシュエントリと定義データ</h3>
 <ul>
-<li><a class="wiki-source-link" href="../../../../source/src/include/utils/typcache.h.html#L31" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__utils__typcache_h__TypeCacheEntry.html&quot;}, '*');"><code>TypeCacheEntry</code></a>: 型ID（<a class="wiki-source-link" href="../../../../source/src/include/utils/typcache.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__utils__typcache_h__type_id.html&quot;}, '*');"><code>type_id</code></a>）をハッシュキーとし、<code>pg_type</code> の基本情報、演算子、FmgrInfo、タプル記述子、範囲／ドメイン固有情報を集約する構造体。</li>
-<li><a class="wiki-source-link" href="../../../../source/src/include/utils/typcache.h.html#L165" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__utils__typcache_h__DomainConstraintRef.html&quot;}, '*');"><code>DomainConstraintRef</code></a>: 長期的なドメイン制約の参照を維持するためのコンテキスト管理用構造体。</li>
+<li><a class="wiki-source-link" href="../../../../source/src/include/utils/typcache.h.html#L31" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__utils__typcache_h__TypeCacheEntry.html&quot;}, '*');"><code>TypeCacheEntry</code></a>:</li>
+<p>特定のデータ型（<a class="wiki-source-link" href="../../../../source/src/include/utils/typcache.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__utils__typcache_h__type_id.html&quot;}, '*');"><code>type_id</code></a>）に関するキャッシュ情報を保持する中心的な構造体。基本属性、演算子／関数の OID、<code>FmgrInfo</code>、タプルデスク、範囲／ドメイン固有の情報を含みます。</p>
+<li><code>DomainConstraintCache</code>:</li>
+<p>ドメインの制約データを保持する不透明（opaque）構造体。<a class="wiki-source-link" href="../../../../source/src/backend/utils/cache/typcache.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/utils/cache/typcache.c.html&quot;}, '*');"><code>typcache.c</code></a> の内部でのみ詳細が定義されます。</p>
+<li><a class="wiki-source-link" href="../../../../source/src/include/utils/typcache.h.html#L165" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__utils__typcache_h__DomainConstraintRef.html&quot;}, '*');"><code>DomainConstraintRef</code></a>:</li>
+<p>長寿命のドメイン制約参照を維持するための構造体。呼び出し側が制約セットを保持するために使用し、初期化や更新用の関数を伴います。</p>
+<li><code>SharedRecordTypmodRegistry</code>:</li>
+<p>共有レコード型モッドレジストリのための不透明構造体。</p>
 </ul>
-<h3>検索およびライフサイクル関数</h3>
+<h3>検索および初期化関数</h3>
 <ul>
-<li><code>lookup_type_cache(Oid type_id, int flags)</code>: 指定したフラグに必要な情報が含まれるように <a class="wiki-source-link" href="../../../../source/src/include/utils/typcache.h.html#L31" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__utils__typcache_h__TypeCacheEntry.html&quot;}, '*');"><code>TypeCacheEntry</code></a> を取得または構築する。</li>
-<li><code>InitDomainConstraintRef(...)</code> / <code>UpdateDomainConstraintRef(...)</code>: ドメイン制約参照の初期化および更新を行う。</li>
-<li><code>DomainHasConstraints(...)</code>: 指定した型が制約を持つかを判定する。</li>
+<li><code>lookup_type_cache</code>:</li>
+<p>指定されたデータ型（<a class="wiki-source-link" href="../../../../source/src/include/utils/typcache.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__utils__typcache_h__type_id.html&quot;}, '*');"><code>type_id</code></a>）のキャッシュエントリを取得し、<code>flags</code> で要求された情報が未計算であれば動的にロード・計算して返します。</p>
+<li><code>InitDomainConstraintRef</code> / <code>UpdateDomainConstraintRef</code>:</li>
+<p>ドメイン制約参照の初期化および更新を行います。</p>
+<li><code>DomainHasConstraints</code>:</li>
+<p>指定された型が制約を持つかどうかを判定します。</p>
 </ul>
-<h3>タプル記述子（Rowtype）関連関数</h3>
+<h3>行型（Composite/Record）およびレコード型関数</h3>
 <ul>
-<li><code>lookup_rowtype_tupdesc(...)</code>, <code>lookup_rowtype_tupdesc_noerror(...)</code>, <code>lookup_rowtype_tupdesc_copy(...)</code>, <code>lookup_rowtype_tupdesc_domain(...)</code>: 複合型やドメイン型に対応するタプル記述子を取得する。</li>
-<li><code>assign_record_type_typmod(...)</code>, <code>assign_record_type_identifier(...)</code>: レコード型の <a class="wiki-source-link" href="../../../../source/src/backend/utils/adt/jsonfuncs.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/backend/utils/adt/jsonfuncs.c.html&quot;}, '*');">typmod</a> や識別子の割り当てを行う。</li>
+<li><code>lookup_rowtype_tupdesc</code>:</li>
+<p>指定された行型 OID と <a class="wiki-source-link" href="../../../../source/src/backend/utils/adt/jsonfuncs.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__utils__adt__jsonfuncs_c__typmod.html&quot;}, '*');">typmod</a> に対応する参照カウント付きのタプル記述子（TupleDesc）を取得します。エラー時はエラーを送出します。</p>
+<li><code>lookup_rowtype_tupdesc_noerror</code>:</li>
+<p>エラー時に例外を送出せず、必要に応じて NULL を返すタプルデスク取得関数。</p>
+<li><code>lookup_rowtype_tupdesc_copy</code>:</li>
+<p>タプルデスクのコピーを返します。</p>
+<li><code>lookup_rowtype_tupdesc_domain</code>:</li>
+<p>ドメイン型を考慮した行型タプルデスクの取得を行います。</p>
+<li><code>assign_record_type_typmod</code> / <code>assign_record_type_identifier</code>:</li>
+<p>レコード型の <a class="wiki-source-link" href="../../../../source/src/backend/utils/adt/jsonfuncs.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__utils__adt__jsonfuncs_c__typmod.html&quot;}, '*');">typmod</a> 割り当てや識別子の管理を行います。</p>
+</ul>
+<h3>その他ユーティリティ・ライフサイクル管理関数</h3>
+<ul>
+<li><code>compare_values_of_enum</code>:</li>
+<p>列挙型（enum）の値を比較します。</p>
+<li><code>SharedRecordTypmodRegistryEstimate</code> / <code>SharedRecordTypmodRegistryInit</code> / <code>SharedRecordTypmodRegistryAttach</code>:</li>
+<p>パラレルワーカー間等での共有レコード型モッドレジストリの管理関数。</p>
+<li><code>AtEOXact_TypeCache</code> / <code>AtEOSubXact_TypeCache</code>:</li>
+<p>トランザクションおよびサブトランザクション終了時のキャッシュクリーンアップ処理。</p>
 </ul>
 <h2>制御フローとデータフロー</h2>
-<p>1. 呼び出し元が特定の情報（例: 比較関数や等価演算子）を必要とする際、対応するビットフラグ（<a class="wiki-source-link" href="../../../../source/src/include/utils/typcache.h.html#L138" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/utils/typcache.h.html&quot;}, '*');"><code>TYPECACHE_EQ_OPR</code></a> など）を指定して <a class="wiki-source-link" href="../../../../source/src/backend/utils/cache/typcache.c.html#L388" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__utils__cache__typcache_c__lookup_type_cache.html&quot;}, '*');"><code>lookup_type_cache</code></a> を呼び出す。 2. <a class="wiki-source-link" href="../../../../source/src/backend/utils/cache/typcache.c.html#L388" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__utils__cache__typcache_c__lookup_type_cache.html&quot;}, '*');"><code>lookup_type_cache</code></a> は内部のハッシュテーブル（<a class="wiki-source-link" href="../../../../source/src/backend/utils/cache/typcache.c.html#L79" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/utils/cache/typcache.c.html&quot;}, '*');"><code>TypeCacheHash</code></a>）から <a class="wiki-source-link" href="../../../../source/src/include/utils/typcache.h.html#L31" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__utils__typcache_h__TypeCacheEntry.html&quot;}, '*');"><code>TypeCacheEntry</code></a> を検索する。 3. エントリが存在しないか、要求されたフラグが未計算の場合、関連するカタログ（<code>pg_type</code>, <code>pg_operator</code>, <code>pg_opfamily</code> 等）を参照して構造体を満たし、必要に応じて <code>FmgrInfo</code> をキャッシュする。 4. 以降の呼び出しでは、キャッシュ済みの <code>FmgrInfo</code> や演算子OIDを直接利用することで、カタログ検索やメモリリークのコストを回避する。</p>
+<p>1. クライアントコードが <code>lookup_type_cache(Oid type_id, int flags)</code> を呼び出します。 2. <a class="wiki-source-link" href="../../../../source/src/backend/utils/cache/typcache.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/utils/cache/typcache.c.html&quot;}, '*');"><code>typcache.c</code></a> 内のハッシュテーブル（<a class="wiki-source-link" href="../../../../source/src/backend/utils/cache/typcache.c.html#L79" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/utils/cache/typcache.c.html&quot;}, '*');"><code>TypeCacheHash</code></a>）から <a class="wiki-source-link" href="../../../../source/src/include/utils/typcache.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__utils__typcache_h__type_id.html&quot;}, '*');"><code>type_id</code></a> に該当する <a class="wiki-source-link" href="../../../../source/src/include/utils/typcache.h.html#L31" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__utils__typcache_h__TypeCacheEntry.html&quot;}, '*');"><code>TypeCacheEntry</code></a> が検索されます。エントリが存在しない場合は新規作成されます。 3. <code>flags</code>（例: <a class="wiki-source-link" href="../../../../source/src/include/utils/typcache.h.html#L138" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/utils/typcache.h.html&quot;}, '*');"><code>TYPECACHE_EQ_OPR</code></a>, <a class="wiki-source-link" href="../../../../source/src/include/utils/typcache.h.html#L146" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/utils/typcache.h.html&quot;}, '*');"><code>TYPECACHE_TUPDESC</code></a>, <a class="wiki-source-link" href="../../../../source/src/include/utils/typcache.h.html#L149" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/utils/typcache.h.html&quot;}, '*');"><code>TYPECACHE_RANGE_INFO</code></a> など）で指定された各フィールドが未設定の場合、システムカタログ（<code>pg_type</code>, <code>pg_opclass</code>, <code>pg_range</code> など）から必要な情報が読み出され、対応する <code>FmgrInfo</code> のセットアップやタプルデスクのキャッシュが行われます。 4. 構築された <a class="wiki-source-link" href="../../../../source/src/include/utils/typcache.h.html#L31" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__utils__typcache_h__TypeCacheEntry.html&quot;}, '*');"><code>TypeCacheEntry</code></a> へのポインタが返され、以後はバックエンドの寿命期間中キャッシュとして再利用されます。</p>
 <h2>直接依存</h2>
 <ul>
 <li><code>access/tupdesc.h</code></li>
@@ -41,17 +65,18 @@
 <h2>関連コード</h2>
 <ul>
 <li><a class="wiki-source-link" href="../../../../source/src/backend/utils/cache/typcache.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/utils/cache/typcache.c.html&quot;}, '*');"><code>src/backend/utils/cache/typcache.c</code></a></li>
-<li><a class="wiki-source-link" href="../../../../source/src/include/utils/lsyscache.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/utils/lsyscache.h.html&quot;}, '*');"><code>src/include/utils/lsyscache.h</code></a></li>
 <li><a class="wiki-source-link" href="../../../../source/src/include/utils/syscache.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/utils/syscache.h.html&quot;}, '*');"><code>src/include/utils/syscache.h</code></a></li>
+<li><a class="wiki-source-link" href="../../../../source/src/include/utils/lsyscache.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/utils/lsyscache.h.html&quot;}, '*');"><code>src/include/utils/lsyscache.h</code></a></li>
 </ul>
 <h2>読者向けメモ</h2>
 <ul>
-<li>**メモリ所有権と寿命**: 作成された型キャッシュエントリはバックエンドの生存期間中ずっと保持されるため、解放処理（<a class="wiki-source-link" href="../../../../source/src/include/executor/tuptable.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__executor__tuptable_h__release.html&quot;}, '*');">release</a>）は不要である。そのため、長期的な構造体内にエントリへのポインターを保持して安全に使用できる。</li>
-<li>**不変条件**: <a class="wiki-source-link" href="../../../../source/src/include/utils/typcache.h.html#L31" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__utils__typcache_h__TypeCacheEntry.html&quot;}, '*');"><code>TypeCacheEntry</code></a> の先頭フィールド <a class="wiki-source-link" href="../../../../source/src/include/utils/typcache.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__utils__typcache_h__type_id.html&quot;}, '*');"><code>type_id</code></a> はハッシュ検索のキーであり、厳密に先頭に配置される必要がある。</li>
-<li>**マルチプロセス／共有メモリ**: <code>SharedRecordTypmodRegistry</code> 関連の関数群を通じて、DSM（動的共有メモリ）セグメントやDSA（動적共有メモリ領域）を介したレコード型 <a class="wiki-source-link" href="../../../../source/src/backend/utils/adt/jsonfuncs.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/backend/utils/adt/jsonfuncs.c.html&quot;}, '*');">typmod</a> の共有レジストリもサポートされている。</li>
+<li>一度作成された <a class="wiki-source-link" href="../../../../source/src/include/utils/typcache.h.html#L31" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__utils__typcache_h__TypeCacheEntry.html&quot;}, '*');"><code>TypeCacheEntry</code></a> はバックエンドの終了まで破棄されずに存続するため、長寿命なポインタ保持が安全に行えます。</li>
+<li>メモリリークを防ぐため、比較やハッシュ計算に必要な <code>FmgrInfo</code> はエントリ内に予めセットアップされています。</li>
 </ul>
 <h2>シンボルページ</h2>
 <ul>
+<li><a href="../../../symbols/src__include__utils__typcache_h__pg_type.html" target="wiki-view"><code>pg_type</code></a></li>
+<li><a href="../../../symbols/src__include__utils__typcache_h__type_id.html" target="wiki-view"><code>type_id</code></a></li>
 <li><a href="../../../symbols/src__include__utils__typcache_h__DomainConstraintCache.html" target="wiki-view"><code>DomainConstraintCache</code></a></li>
 <li><a href="../../../symbols/src__include__utils__typcache_h__TypeCacheEntry.html" target="wiki-view"><code>TypeCacheEntry</code></a></li>
 <li><a href="../../../symbols/src__include__utils__typcache_h__DomainConstraintRef.html" target="wiki-view"><code>DomainConstraintRef</code></a></li>

@@ -42,7 +42,7 @@
 <li>IDENTIFICATION</li>
 <li><a class="wiki-source-link" href="../../source/src/backend/executor/nodeHashjoin.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/backend/executor/nodeHashjoin.c.html&quot;}, '*');">src/backend/executor/nodeHashjoin.c</a></li>
 <p>*</p>
-<li>HASH <a class="wiki-source-link" href="../../source/src/include/nodes/primnodes.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/nodes/primnodes.h.html&quot;}, '*');">JOIN</a></li>
+<li>HASH <a class="wiki-source-link" href="../../source/src/include/nodes/primnodes.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__nodes__primnodes_h__JOIN.html&quot;}, '*');">JOIN</a></li>
 <p>*</p>
 <li>This <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> based on the &quot;hybrid <a class="wiki-source-link" href="../../source/src/backend/regex/rege_dfa.c.html#L723" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__regex__rege_dfa_c__hash.html&quot;}, '*');">hash</a> join&quot; algorithm described shortly in the</li>
 <li>following page</li>
@@ -61,13 +61,13 @@
 <li>If the statistics on the inner side relation are accurate, <a class="wiki-source-link" href="../../source/src/backend/optimizer/plan/planner.c.html#L327" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__plan__planner_c__planner.html&quot;}, '*');">planner</a> chooses a</li>
 <li>multi-batch strategy and estimates the number of batches.</li>
 <p>*</p>
-<li>The query executor measures the real <a class="wiki-source-link" href="../../source/src/backend/optimizer/geqo/geqo_eval.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__geqo__geqo_eval_c__size.html&quot;}, '*');">size</a> of the hashtable and increases the</li>
+<li>The <a class="wiki-source-link" href="../../source/src/backend/optimizer/util/var.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__var_c__query.html&quot;}, '*');">query</a> executor measures the real size of the hashtable and increases the</li>
 <li>number of batches if the hashtable grows too large.</li>
 <p>*</p>
 <li>The number of batches <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> always a power of two, so an increase in the number</li>
 <li>of batches doubles it.</li>
 <p>*</p>
-<li>Serial <a class="wiki-source-link" href="../../source/src/backend/regex/rege_dfa.c.html#L723" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__regex__rege_dfa_c__hash.html&quot;}, '*');">hash</a> join measures batch <a class="wiki-source-link" href="../../source/src/backend/optimizer/geqo/geqo_eval.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__geqo__geqo_eval_c__size.html&quot;}, '*');">size</a> lazily -- waiting until it <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> loading a</li>
+<li>Serial <a class="wiki-source-link" href="../../source/src/backend/regex/rege_dfa.c.html#L723" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__regex__rege_dfa_c__hash.html&quot;}, '*');">hash</a> join measures batch size lazily -- waiting until it <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> loading a</li>
 <li>batch to determine if it will fit in memory. While inserting tuples into the</li>
 <li>hashtable, serial <a class="wiki-source-link" href="../../source/src/backend/regex/rege_dfa.c.html#L723" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__regex__rege_dfa_c__hash.html&quot;}, '*');">hash</a> join will, if that tuple were to exceed work_mem,</li>
 <li><a class="wiki-source-link" href="../../source/src/backend/regex/regcomp.c.html#L2494" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__regex__regcomp_c__dump.html&quot;}, '*');">dump</a> out the hashtable and reassign them either to other batch files or the</li>
@@ -77,11 +77,11 @@
 <li>of batches during the build phase. If it increases the number of batches, it</li>
 <li>dumps out all the tuples from all batches and reassigns them to entirely new</li>
 <li>batch files. Then it checks every batch to ensure it will fit in the space</li>
-<li>budget for the query.</li>
+<li>budget for the <a class="wiki-source-link" href="../../source/src/backend/optimizer/util/var.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__var_c__query.html&quot;}, '*');">query</a>.</li>
 <p>*</p>
 <li>In both parallel and serial <a class="wiki-source-link" href="../../source/src/backend/regex/rege_dfa.c.html#L723" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__regex__rege_dfa_c__hash.html&quot;}, '*');">hash</a> join, the executor currently makes a best</li>
 <li>effort. If a particular batch will not fit in memory, it tries doubling the</li>
-<li>number of batches. If after a batch increase, there <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> a batch which</li>
+<li>number of batches. If <a class="wiki-source-link" href="../../source/src/include/lib/ilist.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__lib__ilist_h__after.html&quot;}, '*');">after</a> a batch increase, there <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> a batch which</li>
 <li>retained all or <a class="wiki-source-link" href="../../source/src/backend/optimizer/util/predtest.c.html#L1672" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/backend/optimizer/util/predtest.c.html&quot;}, '*');">none</a> of its tuples, the executor disables growth in the</li>
 <li>number of batches globally. After growth <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> disabled, all batches that would</li>
 <li>have previously triggered an increase in the number of batches instead</li>
@@ -89,7 +89,7 @@
 <p>*</p>
 <li>PARALLELISM</li>
 <p>*</p>
-<li>Hash joins can participate in parallel query execution in several ways.  A</li>
+<li>Hash joins can participate in parallel <a class="wiki-source-link" href="../../source/src/backend/optimizer/util/var.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__var_c__query.html&quot;}, '*');">query</a> execution in several ways.  A</li>
 <p>~~~</p>
 </ul>
 <h2>失敗モードと境界条件</h2>

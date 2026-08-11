@@ -35,13 +35,13 @@
 <p><code>c</code>, <a class="wiki-source-link" href="../../source/src/port/win32error.c.html#L20" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__port__win32error_c__DWORD.html&quot;}, '*');"><code>DWORD</code></a></p>
 <h2>ソース抜粋</h2>
 <p>~~~c <a class="wiki-source-link" href="../../source/src/port/win32error.c.html#L20" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__port__win32error_c__DWORD.html&quot;}, '*');">DWORD</a> <a class="wiki-source-link" href="../../source/src/port/win32common.c.html#L30" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__port__win32common_c__pgwin32_get_file_type.html&quot;}, '*');">pgwin32_get_file_type</a>(HANDLE hFile) { <a class="wiki-source-link" href="../../source/src/port/win32error.c.html#L20" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__port__win32error_c__DWORD.html&quot;}, '*');">DWORD</a>		fileType = FILE_TYPE_UNKNOWN; <a class="wiki-source-link" href="../../source/src/port/win32error.c.html#L20" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__port__win32error_c__DWORD.html&quot;}, '*');">DWORD</a>		lastError;</p>
-<p>errno = 0;</p>
+<p><a class="wiki-source-link" href="../../source/src/include/access/xlogreader.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__access__xlogreader_h__errno.html&quot;}, '*');">errno</a> = 0;</p>
 <p>/*</p>
 <ul>
 <li>When stdin, stdout, and stderr aren&#x27;t associated with a stream the</li>
 <li>special value -2 <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> returned:</li>
 <li>https://learn.microsoft.com/en-us/cpp/c-runtime-library/reference/get-osfhandle</li>
-<p>*/ if (hFile == INVALID_HANDLE_VALUE || hFile == (HANDLE) -2) { errno = EINVAL; return FILE_TYPE_UNKNOWN; }</p>
+<p>*/ if (hFile == INVALID_HANDLE_VALUE || hFile == (HANDLE) -2) { <a class="wiki-source-link" href="../../source/src/include/access/xlogreader.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__access__xlogreader_h__errno.html&quot;}, '*');">errno</a> = EINVAL; return FILE_TYPE_UNKNOWN; }</p>
 </ul>
 <p>fileType = GetFileType(hFile); lastError = GetLastError();</p>
 <p>/*</p>

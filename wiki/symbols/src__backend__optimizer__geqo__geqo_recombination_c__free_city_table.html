@@ -13,11 +13,11 @@
 <li>複雑度: <code>low</code> (score 1)</li>
 </ul>
 <h3>ソース抜粋</h3>
-<p>~~~c void <a class="wiki-source-link" href="../../source/src/backend/optimizer/geqo/geqo_recombination.c.html#L89" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__geqo__geqo_recombination_c__free_city_table.html&quot;}, '*');">free_city_table</a>(PlannerInfo *<a class="wiki-source-link" href="../../source/src/backend/optimizer/util/var.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__var_c__root.html&quot;}, '*');">root</a>, City * city_table) { pfree(city_table); } ~~~</p>
+<p>~~~c void <a class="wiki-source-link" href="../../source/src/backend/optimizer/geqo/geqo_recombination.c.html#L89" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__geqo__geqo_recombination_c__free_city_table.html&quot;}, '*');">free_city_table</a>(PlannerInfo *<a class="wiki-source-link" href="../../source/src/backend/optimizer/util/var.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__var_c__root.html&quot;}, '*');">root</a>, City * <a class="wiki-source-link" href="../../source/src/backend/optimizer/geqo/geqo_ox1.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/backend/optimizer/geqo/geqo_ox1.c.html&quot;}, '*');">city_table</a>) { pfree(<a class="wiki-source-link" href="../../source/src/backend/optimizer/geqo/geqo_ox1.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/backend/optimizer/geqo/geqo_ox1.c.html&quot;}, '*');">city_table</a>); } ~~~</p>
 <h2>目的</h2>
 <p>遺伝的クエリ最適化（GEQO）の交叉アルゴリズムにおいて使用される <code>City</code> テーブルのメモリ領域を解放します。</p>
 <h2>アルゴリズムまたは振る舞い</h2>
-<p>引数として受け取った <code>city_table</code> ポインタに対して <code>pfree</code> を実行し、割り当てられていたメモリ領域を解放します。</p><script>
+<p>引数として受け取った <a class="wiki-source-link" href="../../source/src/backend/optimizer/geqo/geqo_ox1.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/backend/optimizer/geqo/geqo_ox1.c.html&quot;}, '*');"><code>city_table</code></a> ポインタに対して <code>pfree</code> を実行し、割り当てられていたメモリ領域を解放します。</p><script>
 (function() {
   function notifyParent() {
     if (parent === window) return;

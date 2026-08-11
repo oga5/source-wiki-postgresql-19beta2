@@ -1,47 +1,51 @@
 <!doctype html>
 <html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>src/include/common/string.h.md</title><link rel="stylesheet" href="../../../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../../../source/src/include/common/string.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/common/string.h.html&quot;}, '*');">src/include/common/string.h</a></h1>
 <h2>概要</h2>
-<p><a class="wiki-source-link" href="../../../../source/src/include/common/string.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/common/string.h.html&quot;}, '*');"><code>src/include/common/string.h</code></a> は、PostgreSQLのバックエンドおよびフロントエンド共通で使用される文字列操作ユーティリティ、プロンプト入力、および割り込み制御コンテキストの宣言を提供するヘッダーファイルです。</p>
+<p>PostgreSQLのバックエンドおよびフロントエンド共通で使用される、文字列操作、入出力補助、プロンプト処理に関する宣言を提供するヘッダーファイルです。</p>
 <h2>モジュール内での役割</h2>
-<ul>
-<li><code>src/include/common</code> モジュールの一部として、文字列処理や安全な入力処理のインターフェースを定義します。</li>
-<li>実装ファイルである <a class="wiki-source-link" href="../../../../source/src/common/string.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/common/string.c.html&quot;}, '*');"><code>src/common/string.c</code></a>、<a class="wiki-source-link" href="../../../../source/src/common/pg_get_line.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/common/pg_get_line.c.html&quot;}, '*');"><code>src/common/pg_get_line.c</code></a>、<a class="wiki-source-link" href="../../../../source/src/common/sprompt.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/common/sprompt.c.html&quot;}, '*');"><code>src/common/sprompt.c</code></a> で定義される関数群の宣言を集約しています。</li>
-</ul>
+<p><code>src/include/common</code> モジュールの一部として、文字列操作や安全な行入力などの共通ユーティリティを公開します。実際の関数定義は <a class="wiki-source-link" href="../../../../source/src/common/string.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/common/string.c.html&quot;}, '*');"><code>src/common/string.c</code></a> のほか、関連するソースファイルに分かれて実装されています。</p>
 <h2>責務</h2>
 <ul>
-<li>文字列の判定（末尾一致、ASCIIチェックなど）および加工（改行文字の除去、非ASCII文字のエスケープ）のための関数シグネチャを公開する。</li>
-<li>ストリームからの安全な行入力や、パスワード等のプロンプト入力をサポートするデータ構造と関数群を提供する。</li>
-<li><a class="wiki-source-link" href="../../../../source/src/include/lib/stringinfo.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/lib/stringinfo.h.html&quot;}, '*');"><code>stringinfo.h</code></a> や <code>&lt;setjmp.h&gt;</code> のインクルードを回避しつつ、前方宣言や <code>void *</code> を用いて依存関係を最小化する。</li>
+<li>文字列の末尾判定や改行・制御文字の除去といった基本的かつ安全な文字列操作関数の宣言。</li>
+<li>ASCII文字の検証や非ASCII文字のエスケープ処理を行う関数のインターフェース提供。</li>
+<li>ストリームからの安全な行読み込み（<code>pg_get_line</code> 系）と、中断制御コンテキストの定義。</li>
+<li>パスワード入力などのプロンプト表示（<code>simple_prompt</code> 系）の宣言。</li>
 </ul>
 <h2>重要なシンボル</h2>
 <ul>
-<li><a class="wiki-source-link" href="../../../../source/src/include/common/string.h.html#L18" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__common__string_h__PromptInterruptContext.html&quot;}, '*');"><code>PromptInterruptContext</code></a>: プロンプト入力中の割り込み（シグナル）やキャンセルをハンドリングするための構造体。</li>
-<li><code>pg_str_endswith</code>: 文字列が指定されたサフィックスで終わるかを判定する。</li>
-<li><code>pg_clean_ascii</code>: 非ASCII文字を <code>\xXX</code> 形式のエスケープ文字列に置換した新規文字列を割り当てる。</li>
-<li><code>pg_strip_crlf</code>: 文字列末尾の改行・復帰文字（<code>\n</code>, <code>\r</code>）を除去し、新しい長さを返す。</li>
-<li><code>pg_get_line</code> / <code>simple_prompt</code>: ストリーム読み込みやプロンプト入力を拡張コンテキスト付きで実行する。</li>
+<li><a class="wiki-source-link" href="../../../../source/src/include/common/string.h.html#L18" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__common__string_h__PromptInterruptContext.html&quot;}, '*');"><code>PromptInterruptContext</code></a>: プロンプト入力時の割り込み（シグナル）やキャンセル状態を管理する構造体。</li>
+<li><code>pg_clean_ascii</code>: 非ASCII文字を <code>\xXX</code> 形式のエスケープ文字列に置き換えた新規割り当て文字列を返す関数。</li>
+<li><code>pg_strip_crlf</code>: 文字列末尾の改行・復帰文字（<code>\n</code>, <code>\r</code>）を破壊的に削除し、新しい長さを返す関数。</li>
+<li><code>pg_get_line</code>: ストリームから割り込みコンテキストを考慮して1行を読み込む関数。</li>
+<li><code>simple_prompt</code>: コンソールからのユーザー入力を安全に取得するプロンプト関数。</li>
 </ul>
 <h2>制御フローとデータフロー</h2>
 <ul>
-<li>このファイル自体は宣言のみを提供するため、実際の制御フローは呼び出し元から <code>src/common/</code> 内の実装関数へ直接流れます。</li>
-<li>データ構造 <a class="wiki-source-link" href="../../../../source/src/include/common/string.h.html#L18" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__common__string_h__PromptInterruptContext.html&quot;}, '*');"><code>PromptInterruptContext</code></a> は、行入力関数（<code>pg_get_line</code> 等）やプロンプト関数（<a class="wiki-source-link" href="../../../../source/src/common/sprompt.c.html#L52" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__common__sprompt_c__simple_prompt_extended.html&quot;}, '*');"><code>simple_prompt_extended</code></a> 等）に渡され、割り込み発生時のロングジャンプ制御とキャンセル状態の伝播を仲介します。</li>
+<li>当該ファイルは宣言のみを提供し、制御フローを持ちません。</li>
+<li>データフローとしては、呼び出し元から渡された文字列ポインタやストリームに対し、各ヘルパー関数（<code>pg_strip_crlf</code> や <code>pg_clean_ascii</code> など）が加工または検証を行い、結果として新しく割り当てられたメモリや変更済みのバッファを返却します。</li>
 </ul>
 <h2>直接依存</h2>
 <ul>
-<li><code>&lt;signal.h&gt;</code>: <code>sig_atomic_t</code> 型の定義を利用するため直接インクルードされています。</li>
+<li><code>&lt;signal.h&gt;</code>: シグナル関連の型やマクロ（<code>sig_atomic_t</code>）を利用するため。</li>
 </ul>
 <h2>関連コード</h2>
 <ul>
-<li><a class="wiki-source-link" href="../../../../source/src/common/string.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/common/string.c.html&quot;}, '*');"><code>src/common/string.c</code></a>: <code>pg_str_endswith</code> や <code>pg_clean_ascii</code> などの文字列ユーティリティの実装。</li>
-<li><a class="wiki-source-link" href="../../../../source/src/common/pg_get_line.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/common/pg_get_line.c.html&quot;}, '*');"><code>src/common/pg_get_line.c</code></a>: ストリームからの安全な行読み込みの実装。</li>
-<li><a class="wiki-source-link" href="../../../../source/src/common/sprompt.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/common/sprompt.c.html&quot;}, '*');"><code>src/common/sprompt.c</code></a>: パスワード入力などのプロンプト処理の実装。</li>
+<li><a class="wiki-source-link" href="../../../../source/src/common/string.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/common/string.c.html&quot;}, '*');"><code>src/common/string.c</code></a>: <code>pg_str_endswith</code>, <a class="wiki-source-link" href="../../../../source/src/common/string.c.html#L49" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__common__string_c__strtoint.html&quot;}, '*');"><code>strtoint</code></a>, <code>pg_clean_ascii</code>, <a class="wiki-source-link" href="../../../../source/src/common/string.c.html#L131" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__common__string_c__pg_is_ascii.html&quot;}, '*');"><code>pg_is_ascii</code></a>, <code>pg_strip_crlf</code> の実体を実装するペアファイル。</li>
+<li><a class="wiki-source-link" href="../../../../source/src/common/pg_get_line.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/common/pg_get_line.c.html&quot;}, '*');"><code>src/common/pg_get_line.c</code></a>: ストリームからの行読み込み関数群の実装元。</li>
+<li><a class="wiki-source-link" href="../../../../source/src/common/sprompt.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/common/sprompt.c.html&quot;}, '*');"><code>src/common/sprompt.c</code></a>: プロンプト関連関数群の実装元。</li>
 </ul>
 <h2>読者向けメモ</h2>
 <ul>
-<li>バックエンド（<a class="wiki-source-link" href="../../../../source/src/include/postgres.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/postgres.h.html&quot;}, '*');"><code>postgres.h</code></a>）とフロントエンド（<a class="wiki-source-link" href="../../../../source/src/include/postgres_fe.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/postgres_fe.h.html&quot;}, '*');"><code>postgres_fe.h</code></a>）の両方からインクルードされるため、環境に応じたメモリ割り当て等の違いを意識して実装されています。</li>
+<li>ヘッダー内の型定義（<code>StringInfo</code>）は、完全なインクルードを避けるため前方宣言として定義されています。</li>
+<li><code>pg_clean_ascii</code> はログ出力時などのセキュリティ・端末保護目的で使用され、通常の文字列処理での乱用は非推奨とされています。</li>
 </ul>
 <h2>シンボルページ</h2>
 <ul>
+<li><a href="../../../symbols/src__include__common__string_h__pg_clean_ascii.html" target="wiki-view"><code>pg_clean_ascii</code></a></li>
+<li><a href="../../../symbols/src__include__common__string_h__pg_get_line.html" target="wiki-view"><code>pg_get_line</code></a></li>
+<li><a href="../../../symbols/src__include__common__string_h__pg_str_endswith.html" target="wiki-view"><code>pg_str_endswith</code></a></li>
+<li><a href="../../../symbols/src__include__common__string_h__pg_strip_crlf.html" target="wiki-view"><code>pg_strip_crlf</code></a></li>
+<li><a href="../../../symbols/src__include__common__string_h__simple_prompt.html" target="wiki-view"><code>simple_prompt</code></a></li>
 <li><a href="../../../symbols/src__include__common__string_h__StringInfo.html" target="wiki-view"><code>StringInfo</code></a></li>
 <li><a href="../../../symbols/src__include__common__string_h__PromptInterruptContext.html" target="wiki-view"><code>PromptInterruptContext</code></a></li>
 </ul><script>

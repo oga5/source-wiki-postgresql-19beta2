@@ -1,0 +1,108 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>symbols/src__include__utils__expandeddatum_h__flatten_into.md</title><link rel="stylesheet" href="../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../source/src/include/utils/expandeddatum.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__utils__expandeddatum_h__flatten_into.html&quot;}, '*');">flatten_into</a></h1>
+<h2>定義</h2>
+<ul>
+<li>種別: <code>function</code></li>
+<li>定義箇所: <code>src/include/utils/expandeddatum.h:1</code></li>
+<li>所属モジュール: <a class="wiki-entity-link" href="../modules/src__include__utils.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/modules/src__include__utils.html&quot;, &quot;source&quot;: &quot;source/src/include/utils/acl.h.html&quot;}, '*');"><code>module:src/include/utils</code></a></li>
+</ul>
+<h2>目的</h2>
+<p>静的シンボル索引から生成された初期シンボルページです。</p>
+<h2>シグネチャまたは形状</h2>
+<ul>
+<li>シグネチャ: <code>/*------------------------------------------------------------------------- * * expandeddatum.h * Declarations for access to &quot;expanded&quot; value representations. * * Complex data types, particularly container types such as arrays and * records, usually have on-disk representations that are compact but not * especially convenient to modify. What&#x27;s more, when we do modify them, * having to recopy all the rest of the value can be extremely inefficient. * Therefore, we provide a notion of an &quot;expanded&quot; representation that is used * only in memory and is optimized more for computation than storage. * The format appearing on disk is called the data type&#x27;s &quot;flattened&quot; * representation, since it is required to be a contiguous blob of bytes -- * but the type can have an expanded representation that is not. Data types * must provide means to translate an expanded representation back to * flattened form. * * An expanded object is meant to survive across multiple operations, but * not to be enormously long-lived; for example it might be a local variable * in a PL/pgSQL procedure. So its extra bulk compared to the on-disk format * is a worthwhile trade-off. * * References to expanded objects are a type of TOAST pointer. * Because of longstanding conventions in Postgres, this means that the * flattened form of such an object must always be a varlena object. * Fortunately that&#x27;s no restriction in practice. * * There are actually two kinds of TOAST pointers for expanded objects: * read-only and read-write pointers. Possession of one of the latter * authorizes a function to modify the value in-place rather than copying it * as would normally be required. Functions should always return a read-write * pointer to any new expanded object they create. Functions that modify an * argument value in-place must take care that they do not corrupt the old * value if they fail partway through. * * * Portions Copyright (c) 1996-2026, PostgreSQL Global Development Group * Portions Copyright (c) 1994, Regents of the University of California * * src/include/utils/expandeddatum.h * *------------------------------------------------------------------------- */ #ifndef EXPANDEDDATUM_H #define EXPANDEDDATUM_H #include &quot;varatt.h&quot; /* Size of an EXTERNAL datum that contains a pointer to an expanded object */ #define EXPANDED_POINTER_SIZE (VARHDRSZ_EXTERNAL + sizeof(varatt_expanded)) /* * &quot;Methods&quot; that must be provided for any expanded object. * * get_flat_size: compute space needed for flattened representation (total, * including header). * * flatten_into: construct flattened representation in the caller-allocated * space at *result, of size allocated_size (which will always be the result * of a preceding get_flat_size call; it&#x27;s passed for cross-checking). * * The flattened representation must be a valid in-line, non-compressed, * 4-byte-header varlena object. * * Note: construction of a heap tuple from an expanded datum calls * get_flat_size twice, so it&#x27;s worthwhile to make sure that that doesn&#x27;t * incur too much overhead. */ typedef Size (*EOM_get_flat_size_method) (ExpandedObjectHeader *eohptr)</code></li>
+</ul>
+<h2>入力と出力</h2>
+<p>まだ解析していません。</p>
+<h2>前提条件と不変条件</h2>
+<p>まだ解析していません。</p>
+<h2>アルゴリズムまたは振る舞い</h2>
+<ul>
+<li>複雑度: <code>low</code> (score 1)</li>
+</ul>
+<p>まだ解析していません。</p>
+<h2>呼び出し元と呼び出し先</h2>
+<ul>
+<li>呼び出し元: なし</li>
+<li>呼び出し先: なし</li>
+<li>呼び出し元サイト: なし</li>
+<li>呼び出しサイト: なし</li>
+</ul>
+<h2>関連データ構造</h2>
+<p><a class="wiki-source-link" href="../../source/src/interfaces/ecpg/test/expected/preproc-type.c.html#L36" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__interfaces__ecpg__test__expected__preproc-type_c__access.html&quot;}, '*');"><code>access</code></a>, <code>c</code>, <a class="wiki-source-link" href="../../source/src/tutorial/complex.c.html#L17" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__tutorial__complex_c__Complex.html&quot;}, '*');"><code>Complex</code></a>, <code>ExpandedObjectHeader</code>, <code>Group</code>, <code>Size</code>, <a class="wiki-source-link" href="../../source/src/include/varatt.h.html#L74" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__varatt_h__varatt_expanded.html&quot;}, '*');"><code>varatt_expanded</code></a>, <code>variable</code>, <code>varlena</code>, <a class="wiki-source-link" href="../../source/src/interfaces/ecpg/preproc/type.h.html#L89" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__interfaces__ecpg__preproc__type_h__when.html&quot;}, '*');"><code>when</code></a></p>
+<h2>ソース抜粋</h2>
+<p>~~~c /*------------------------------------------------------------------------- *</p>
+<ul>
+<li><a class="wiki-source-link" href="../../source/src/include/utils/expandeddatum.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/utils/expandeddatum.h.html&quot;}, '*');">expandeddatum.h</a></li>
+<li>Declarations for <a class="wiki-source-link" href="../../source/src/interfaces/ecpg/test/expected/preproc-type.c.html#L36" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__interfaces__ecpg__test__expected__preproc-type_c__access.html&quot;}, '*');">access</a> to &quot;expanded&quot; value representations.</li>
+<p>*</p>
+<li><a class="wiki-source-link" href="../../source/src/tutorial/complex.c.html#L17" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__tutorial__complex_c__Complex.html&quot;}, '*');">Complex</a> data <a class="wiki-source-link" href="../../source/src/interfaces/ecpg/preproc/ecpg.c.html#L30" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/ecpg/preproc/ecpg.c.html&quot;}, '*');">types</a>, particularly container <a class="wiki-source-link" href="../../source/src/interfaces/ecpg/preproc/ecpg.c.html#L30" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/ecpg/preproc/ecpg.c.html&quot;}, '*');">types</a> such as arrays and</li>
+<li><a class="wiki-source-link" href="../../source/src/backend/access/transam/twophase.c.html#L1011" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/access/transam/twophase.c.html&quot;}, '*');">records</a>, usually have on-disk representations that are <a class="wiki-source-link" href="../../source/src/backend/regex/regc_nfa.c.html#L3513" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__regex__regc_nfa_c__compact.html&quot;}, '*');">compact</a> but not</li>
+<li>especially convenient to modify.  What&#x27;s more, <a class="wiki-source-link" href="../../source/src/interfaces/ecpg/preproc/type.h.html#L89" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__interfaces__ecpg__preproc__type_h__when.html&quot;}, '*');">when</a> we do modify them,</li>
+<li>having to recopy all the rest of the value can be extremely inefficient.</li>
+<li>Therefore, we provide a notion of an &quot;expanded&quot; representation that <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> used</li>
+<li>only in memory and <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> optimized more for computation than storage.</li>
+<li>The <a class="wiki-source-link" href="../../source/src/bin/pg_basebackup/pg_basebackup.c.html#L134" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/bin/pg_basebackup/pg_basebackup.c.html&quot;}, '*');">format</a> appearing on disk <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> called the data <a class="wiki-source-link" href="../../source/src/include/lib/ilist.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__lib__ilist_h__type.html&quot;}, '*');">type</a>&#x27;s &quot;flattened&quot;</li>
+<li>representation, since it <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> required to be a contiguous blob of bytes --</li>
+<li>but the <a class="wiki-source-link" href="../../source/src/include/lib/ilist.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__lib__ilist_h__type.html&quot;}, '*');">type</a> can have an expanded representation that <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> not.  Data <a class="wiki-source-link" href="../../source/src/interfaces/ecpg/preproc/ecpg.c.html#L30" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/ecpg/preproc/ecpg.c.html&quot;}, '*');">types</a></li>
+<li>must provide means to <a class="wiki-source-link" href="../../source/src/backend/utils/adt/oracle_compat.c.html#L817" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__utils__adt__oracle_compat_c__translate.html&quot;}, '*');">translate</a> an expanded representation back to</li>
+<li>flattened form.</li>
+<p>*</p>
+<li>An expanded <a class="wiki-source-link" href="../../source/src/include/utils/jsonb.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__utils__jsonb_h__object.html&quot;}, '*');">object</a> <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> meant to survive across multiple operations, but</li>
+<li>not to be enormously long-lived; for example it might be a local variable</li>
+<li>in a PL/pgSQL procedure.  <a class="wiki-source-link" href="../../source/src/common/md5.c.html#L110" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/common/md5.c.html&quot;}, '*');">So</a> its extra bulk compared to the on-disk <a class="wiki-source-link" href="../../source/src/bin/pg_basebackup/pg_basebackup.c.html#L134" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/bin/pg_basebackup/pg_basebackup.c.html&quot;}, '*');">format</a></li>
+<li><a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> a worthwhile trade-off.</li>
+<p>*</p>
+<li>References to expanded objects are a <a class="wiki-source-link" href="../../source/src/include/lib/ilist.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__lib__ilist_h__type.html&quot;}, '*');">type</a> of TOAST pointer.</li>
+<li>Because of longstanding conventions in Postgres, this means that the</li>
+<li>flattened form of such an <a class="wiki-source-link" href="../../source/src/include/utils/jsonb.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__utils__jsonb_h__object.html&quot;}, '*');">object</a> must always be a varlena <a class="wiki-source-link" href="../../source/src/include/utils/jsonb.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__utils__jsonb_h__object.html&quot;}, '*');">object</a>.</li>
+<li>Fortunately that&#x27;s no restriction in practice.</li>
+<p>*</p>
+<li>There are actually two kinds of TOAST pointers for expanded objects:</li>
+<li>read-only and read-write pointers.  Possession of one of the latter</li>
+<li>authorizes a function to modify the value in-place rather than copying it</li>
+<li>as would normally be required.  Functions should always return a read-write</li>
+<li>pointer to any new expanded <a class="wiki-source-link" href="../../source/src/include/utils/jsonb.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__utils__jsonb_h__object.html&quot;}, '*');">object</a> they create.  Functions that modify an</li>
+<li>argument value in-place must take care that they do not corrupt the old</li>
+<li>value if they fail partway through.</li>
+<p>* *</p>
+<li>Portions Copyright (c) 1996-2026, PostgreSQL Global Development Group</li>
+<li>Portions Copyright (c) 1994, Regents of the University of California</li>
+<p>*</p>
+<li><a class="wiki-source-link" href="../../source/src/include/utils/expandeddatum.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/utils/expandeddatum.h.html&quot;}, '*');">src/include/utils/expandeddatum.h</a></li>
+<p>* *------------------------------------------------------------------------- */ #ifndef <a class="wiki-source-link" href="../../source/src/include/utils/expandeddatum.h.html#L45" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/utils/expandeddatum.h.html&quot;}, '*');">EXPANDEDDATUM_H</a> #define <a class="wiki-source-link" href="../../source/src/include/utils/expandeddatum.h.html#L45" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/utils/expandeddatum.h.html&quot;}, '*');">EXPANDEDDATUM_H</a></p>
+</ul>
+<p>#include &quot;<a class="wiki-source-link" href="../../source/src/include/varatt.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/varatt.h.html&quot;}, '*');">varatt.h</a>&quot;</p>
+<p>/* Size of an EXTERNAL datum that contains a pointer to an expanded <a class="wiki-source-link" href="../../source/src/include/utils/jsonb.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__utils__jsonb_h__object.html&quot;}, '*');">object</a> */ #define <a class="wiki-source-link" href="../../source/src/include/utils/expandeddatum.h.html#L50" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/utils/expandeddatum.h.html&quot;}, '*');">EXPANDED_POINTER_SIZE</a> (<a class="wiki-source-link" href="../../source/src/include/varatt.h.html#L276" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/varatt.h.html&quot;}, '*');">VARHDRSZ_EXTERNAL</a> + sizeof(<a class="wiki-source-link" href="../../source/src/include/varatt.h.html#L74" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__varatt_h__varatt_expanded.html&quot;}, '*');">varatt_expanded</a>))</p>
+<p>/*</p>
+<ul>
+<li>&quot;Methods&quot; that must be provided for any expanded <a class="wiki-source-link" href="../../source/src/include/utils/jsonb.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__utils__jsonb_h__object.html&quot;}, '*');">object</a>.</li>
+<p>*</p>
+<li><a class="wiki-source-link" href="../../source/src/include/utils/expandeddatum.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__utils__expandeddatum_h__get_flat_size.html&quot;}, '*');">get_flat_size</a>: compute space needed for flattened representation (total,</li>
+<li>including header).</li>
+<p>*</p>
+<li><a class="wiki-source-link" href="../../source/src/include/utils/expandeddatum.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__utils__expandeddatum_h__flatten_into.html&quot;}, '*');">flatten_into</a>: construct flattened representation in the caller-allocated</li>
+<li>space at *<a class="wiki-source-link" href="../../source/src/include/storage/checksum_block_internal.h.html#L18" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/storage/checksum_block_internal.h.html&quot;}, '*');">result</a>, of size allocated_size (which will always be the <a class="wiki-source-link" href="../../source/src/include/storage/checksum_block_internal.h.html#L18" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/storage/checksum_block_internal.h.html&quot;}, '*');">result</a></li>
+<li>of a preceding <a class="wiki-source-link" href="../../source/src/include/utils/expandeddatum.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__utils__expandeddatum_h__get_flat_size.html&quot;}, '*');">get_flat_size</a> call; it&#x27;s passed for cross-checking).</li>
+<p>~~~</p>
+</ul>
+<h2>失敗モードと境界条件</h2>
+<p>まだ解析していません。</p>
+<h2>保守担当者向けメモ</h2>
+<ul>
+<li>後続フェーズで、ソース本文の文脈と caller/callee 情報を使ってこのページを強化する。</li>
+</ul><script>
+(function() {
+  function notifyParent() {
+    if (parent === window) return;
+    parent.postMessage({type: "frame-location", frame: window.name || "", href: window.location.href}, "*");
+  }
+  document.addEventListener("click", function(event) {
+    const link = event.target.closest("a[data-panel]");
+    if (!link || parent === window) return;
+    parent.postMessage({type: "source-link", panel: link.dataset.panel}, "*");
+  });
+  window.addEventListener("load", notifyParent);
+  window.addEventListener("hashchange", notifyParent);
+})();
+</script></body></html>

@@ -39,7 +39,7 @@
 <p>/*</p>
 <ul>
 <li>Normally we expect this to increase nblocks by one, but if the cached</li>
-<li>value isn&#x27;t as <a class="wiki-source-link" href="../../source/src/include/port/atomics/generic-msvc.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__port__atomics__generic-msvc_h__expected.html&quot;}, '*');">expected</a>, just invalidate it so the next call asks the</li>
+<li>value isn&#x27;t as expected, just invalidate it so the next call asks the</li>
 <li>kernel.</li>
 <p>*/ if (reln-&gt;smgr_cached_nblocks[forknum] == blocknum) reln-&gt;smgr_cached_nblocks[forknum] = blocknum + 1; else reln-&gt;smgr_cached_nblocks[forknum] = InvalidBlockNumber;</p>
 </ul>

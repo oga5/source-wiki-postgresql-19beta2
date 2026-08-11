@@ -45,7 +45,7 @@
 <ul>
 <li>There&#x27;s no need to use <a class="wiki-source-link" href="../../source/src/include/port/atomics.h.html#L531" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__port__atomics_h__pg_atomic_fetch_add_u64.html&quot;}, '*');">pg_atomic_fetch_add_u64</a> here, because nobody</li>
 <li>else can be changing this value.  This method avoids taking the bus</li>
-<li>lock unnecessarily.</li>
+<li><a class="wiki-source-link" href="../../source/src/include/port/atomics/arch-x86.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__port__atomics__arch-x86_h__lock.html&quot;}, '*');">lock</a> unnecessarily.</li>
 <p>*/ <a class="wiki-source-link" href="../../source/src/include/port/atomics.h.html#L484" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__port__atomics_h__pg_atomic_write_u64.html&quot;}, '*');">pg_atomic_write_u64</a>(&amp;mq-&gt;mq_bytes_written, <a class="wiki-source-link" href="../../source/src/include/port/atomics.h.html#L466" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__port__atomics_h__pg_atomic_read_u64.html&quot;}, '*');">pg_atomic_read_u64</a>(&amp;mq-&gt;mq_bytes_written) + n); } ~~~</p>
 </ul>
 <h2>失敗モードと境界条件</h2>

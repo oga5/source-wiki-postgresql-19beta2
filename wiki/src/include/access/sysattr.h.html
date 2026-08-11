@@ -1,44 +1,47 @@
 <!doctype html>
 <html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>src/include/access/sysattr.h.md</title><link rel="stylesheet" href="../../../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../../../source/src/include/access/sysattr.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/access/sysattr.h.html&quot;}, '*');">src/include/access/sysattr.h</a></h1>
 <h2>概要</h2>
-<p><a class="wiki-source-link" href="../../../../source/src/include/access/sysattr.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/access/sysattr.h.html&quot;}, '*');"><code>src/include/access/sysattr.h</code></a> は、PostgreSQLの各リレーション（テーブル）において暗黙的に定義されるシステム属性（<a class="wiki-source-link" href="../../../../source/src/include/port/win32_port.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__port__win32_port_h__System.html&quot;}, '*');">System</a> Attributes）の属性番号を定義するヘッダーファイルです。</p>
+<p>PostgreSQLのシステム定義列（システム属性）の属性番号とマクロ定義を提供するヘッダーファイルです。</p>
 <h2>モジュール内での役割</h2>
-<ul>
-<li><code>src/include/access</code> モジュールの低水準なタプルアクセスおよびメタデータ定義の一部を構成します。</li>
-<li>テーブル行（タプル）のヘッダー情報や可視性制御、トランザクション情報を参照するために、エンジン全体で使用されるシステム列の識別子を提供します。</li>
-</ul>
+<p><code>src/include/access</code> サブシステムのなかで、ヒープタプルやテーブル構造が内部的に保持するシステム列（<code>ctid</code>, <code>xmin</code>, <code>xmax</code> など）の識別番号を定数として一元管理します。</p>
 <h2>責務</h2>
 <ul>
-<li>システム定義属性（<code>ctid</code>, <code>xmin</code>, <a class="wiki-source-link" href="../../../../source/src/include/access/sysattr.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__access__sysattr_h__cmin.html&quot;}, '*');"><code>cmin</code></a>, <code>xmax</code>, <a class="wiki-source-link" href="../../../../source/src/include/access/sysattr.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__access__sysattr_h__cmax.html&quot;}, '*');"><code>cmax</code></a>, <a class="wiki-source-link" href="../../../../source/src/include/access/sysattr.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__access__sysattr_h__tableoid.html&quot;}, '*');"><code>tableoid</code></a>）の列番号（負の値）を一元定義する。</li>
-<li>ユーザー定義属性とシステム属性を区別するための境界値（<a class="wiki-source-link" href="../../../../source/src/include/access/sysattr.h.html#L27" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/access/sysattr.h.html&quot;}, '*');"><code>FirstLowInvalidHeapAttributeNumber</code></a>）を規定する。</li>
+<li>すべてのシステム列に対して負の属性番号（AttrNumber）を割り当てる。</li>
+<li>システム属性の有効範囲の下限境界（<a class="wiki-source-link" href="../../../../source/src/include/access/sysattr.h.html#L27" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/access/sysattr.h.html&quot;}, '*');"><code>FirstLowInvalidHeapAttributeNumber</code></a>）を定義する。</li>
 </ul>
 <h2>重要なシンボル</h2>
 <ul>
-<li><a class="wiki-source-link" href="../../../../source/src/include/access/sysattr.h.html#L21" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/access/sysattr.h.html&quot;}, '*');"><code>SelfItemPointerAttributeNumber</code></a> (-1): タプルの物理的な位置（BlockNumber と OffsetNumber）を表す <code>ctid</code> 属性の番号。</li>
-<li><a class="wiki-source-link" href="../../../../source/src/include/access/sysattr.h.html#L22" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/access/sysattr.h.html&quot;}, '*');"><code>MinTransactionIdAttributeNumber</code></a> (-2): タプルを作成したトランザクションIDを表す <code>xmin</code> 属性の番号。</li>
-<li><a class="wiki-source-link" href="../../../../source/src/include/access/sysattr.h.html#L23" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/access/sysattr.h.html&quot;}, '*');"><code>MinCommandIdAttributeNumber</code></a> (-3): 作成コマンドのインデックスを表す <a class="wiki-source-link" href="../../../../source/src/include/access/sysattr.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__access__sysattr_h__cmin.html&quot;}, '*');"><code>cmin</code></a> 属性の番号。</li>
-<li><a class="wiki-source-link" href="../../../../source/src/include/access/sysattr.h.html#L24" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/access/sysattr.h.html&quot;}, '*');"><code>MaxTransactionIdAttributeNumber</code></a> (-4): タプルを削除・更新したトランザクションIDを表す <code>xmax</code> 属性の番号。</li>
-<li><a class="wiki-source-link" href="../../../../source/src/include/access/sysattr.h.html#L25" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/access/sysattr.h.html&quot;}, '*');"><code>MaxCommandIdAttributeNumber</code></a> (-5): 削除・更新コマンドのインデックスを表す <a class="wiki-source-link" href="../../../../source/src/include/access/sysattr.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__access__sysattr_h__cmax.html&quot;}, '*');"><code>cmax</code></a> 属性の番号。</li>
-<li><a class="wiki-source-link" href="../../../../source/src/include/access/sysattr.h.html#L26" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/access/sysattr.h.html&quot;}, '*');"><code>TableOidAttributeNumber</code></a> (-6): タプルが属するテーブルのOIDを表す <a class="wiki-source-link" href="../../../../source/src/include/access/sysattr.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__access__sysattr_h__tableoid.html&quot;}, '*');"><code>tableoid</code></a> 属性の番号。</li>
-<li><a class="wiki-source-link" href="../../../../source/src/include/access/sysattr.h.html#L27" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/access/sysattr.h.html&quot;}, '*');"><code>FirstLowInvalidHeapAttributeNumber</code></a> (-7): 有効なシステム属性番号の下限を示す境界値。</li>
+<li><code>SelfItemPointerAttributeNumber</code> (<code>ctid</code>): タプル自身の物理位置（BlockNumber と OffsetNumber）を表す <code>-1</code> の属性番号。</li>
+<li><a class="wiki-source-link" href="../../../../source/src/include/access/sysattr.h.html#L22" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/access/sysattr.h.html&quot;}, '*');"><code>MinTransactionIdAttributeNumber</code></a> (<code>xmin</code>): タプルを作成したトランザクションIDを表す <code>-2</code> の属性番号。</li>
+<li><a class="wiki-source-link" href="../../../../source/src/include/access/sysattr.h.html#L23" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/access/sysattr.h.html&quot;}, '*');"><code>MinCommandIdAttributeNumber</code></a> (<a class="wiki-source-link" href="../../../../source/src/include/access/sysattr.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__access__sysattr_h__cmin.html&quot;}, '*');"><code>cmin</code></a>): 作成トランザクション内のコマンドIDを表す <code>-3</code> の属性番号。</li>
+<li><a class="wiki-source-link" href="../../../../source/src/include/access/sysattr.h.html#L24" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/access/sysattr.h.html&quot;}, '*');"><code>MaxTransactionIdAttributeNumber</code></a> (<code>xmax</code>): タプルを削除・更新したトランザクションIDを表す <code>-4</code> の属性番号。</li>
+<li><a class="wiki-source-link" href="../../../../source/src/include/access/sysattr.h.html#L25" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/access/sysattr.h.html&quot;}, '*');"><code>MaxCommandIdAttributeNumber</code></a> (<a class="wiki-source-link" href="../../../../source/src/include/access/sysattr.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__access__sysattr_h__cmax.html&quot;}, '*');"><code>cmax</code></a>): 削除・更新トランザクション内のコマンドIDを表す <code>-5</code> の属性番号。</li>
+<li><a class="wiki-source-link" href="../../../../source/src/include/access/sysattr.h.html#L26" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/access/sysattr.h.html&quot;}, '*');"><code>TableOidAttributeNumber</code></a> (<a class="wiki-source-link" href="../../../../source/src/include/access/sysattr.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__access__sysattr_h__tableoid.html&quot;}, '*');"><code>tableoid</code></a>): タプルが属するリレーション（テーブル）のOIDを表す <code>-6</code> の属性番号。</li>
+<li><a class="wiki-source-link" href="../../../../source/src/include/access/sysattr.h.html#L27" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/access/sysattr.h.html&quot;}, '*');"><code>FirstLowInvalidHeapAttributeNumber</code></a>: システム属性番号の下限を示す <code>-7</code>。これより小さい値は無効な属性番号とみなされます。</li>
 </ul>
 <h2>制御フローとデータフロー</h2>
-<ul>
-<li>本ファイルはマクロ定義のみを提供するヘッダーであり、実行コードや制御フローは持ちません。</li>
-<li>パーサーやエグゼキューターが <code>SELECT ctid, xmin FROM table</code> のようなシステム列への参照を解決する際や、タプルアクセス時に属性番号を判定するデータフローの基準として参照されます。</li>
-</ul>
+<p>制御フローや複雑なデータ処理は含まれておらず、純粋な定数定義（マクロ）のみを提供します。パーサーやエグゼキューターがシステム列への参照を解決する際に参照されます。</p>
 <h2>直接依存</h2>
 <ul>
-<li>特になし（プレーンなC言語のマクロ定義のみで構成されています）。</li>
+<li>ソースファイル内に直接の <code>#include</code> 依存関係はありません。</li>
 </ul>
 <h2>関連コード</h2>
 <ul>
-<li><a class="wiki-source-link" href="../../../../source/src/include/access/attnum.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/access/attnum.h.html&quot;}, '*');"><code>src/include/access/attnum.h</code></a>: 属性番号の一般的な型定義や関連マクロを提供します。</li>
-<li><a class="wiki-source-link" href="../../../../source/src/include/access/htup.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/access/htup.h.html&quot;}, '*');"><code>src/include/access/htup.h</code></a> および <a class="wiki-source-link" href="../../../../source/src/include/access/htup_details.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/access/htup_details.h.html&quot;}, '*');"><code>htup_details.h</code></a>: ヒープタプルの構造とシステム属性の物理的な配置を定義します。</li>
+<li><a class="wiki-source-link" href="../../../../source/src/include/access/attnum.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/access/attnum.h.html&quot;}, '*');"><code>src/include/access/attnum.h</code></a>: 一般的な属性番号の型定義や関連マクロを提供します。</li>
+<li><a class="wiki-source-link" href="../../../../source/src/include/access/htup.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/access/htup.h.html&quot;}, '*');"><code>src/include/access/htup.h</code></a>: ヒープタプルの構造とシステム属性の利用に関連します。</li>
 </ul>
 <h2>読者向けメモ</h2>
 <ul>
-<li>システム属性の番号はすべて負の値として定義されており、通常のユーザー定義属性（1から始まる正の値）と明確に区別されます。</li>
+<li>システム属性の番号はすべて負の値（<code>-1</code> から <code>-6</code>）で表現されており、通常のユーザー定義列（正の数）と明確に区別されます。</li>
+</ul>
+<h2>シンボルページ</h2>
+<ul>
+<li><a href="../../../symbols/src__include__access__sysattr_h__cmax.html" target="wiki-view"><code>cmax</code></a></li>
+<li><a href="../../../symbols/src__include__access__sysattr_h__cmin.html" target="wiki-view"><code>cmin</code></a></li>
+<li><a href="../../../symbols/src__include__access__sysattr_h__ctid.html" target="wiki-view"><code>ctid</code></a></li>
+<li><a href="../../../symbols/src__include__access__sysattr_h__tableoid.html" target="wiki-view"><code>tableoid</code></a></li>
+<li><a href="../../../symbols/src__include__access__sysattr_h__xmax.html" target="wiki-view"><code>xmax</code></a></li>
+<li><a href="../../../symbols/src__include__access__sysattr_h__xmin.html" target="wiki-view"><code>xmin</code></a></li>
 </ul><script>
 (function() {
   function notifyParent() {

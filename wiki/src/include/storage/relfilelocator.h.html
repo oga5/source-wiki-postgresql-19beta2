@@ -1,44 +1,45 @@
 <!doctype html>
 <html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>src/include/storage/relfilelocator.h.md</title><link rel="stylesheet" href="../../../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../../../source/src/include/storage/relfilelocator.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/storage/relfilelocator.h.html&quot;}, '*');">src/include/storage/relfilelocator.h</a></h1>
 <h2>概要</h2>
-<p>PostgreSQL のリレーション（テーブルやインデックスなど）に対する物理的なアクセス情報を定義するヘッダーファイルです。ファイルシステム上の位置を特定するために必要な識別子（テーブルスペース、データベース、リレークラス番号）を提供します。</p>
+<p>リレーションの物理ストレージ（ファイルパス、テーブルスペース、データベース、ファイルノード）を特定するためのデータ構造と、それらを操作するマクロ定義を提供するヘッダーファイルです。</p>
 <h2>モジュール内での役割</h2>
-<p><code>src/include/storage</code> サブシステムにおいて、バッファ管理やストレージマネージャ（<a class="wiki-source-link" href="../../../../source/src/include/storage/smgr.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/storage/smgr.h.html&quot;}, '*');"><code>smgr.h</code></a>, <a class="wiki-source-link" href="../../../../source/src/include/storage/md.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/storage/md.h.html&quot;}, '*');"><code>md.h</code></a> など）が対象ファイルを特定するための基礎データ構造および比較用マクロを提供します。</p>
+<p><code>src/include/storage</code> サブシステムの一部として、バッファ管理、ストレージマネージャ（<a class="wiki-source-link" href="../../../../source/src/include/storage/aio_types.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__storage__aio_types_h__smgr.html&quot;}, '*');">smgr</a>）、およびアクセスメソッド層が共通して使用するリレーション識別子（ロケータ）の標準定義を担います。</p>
 <h2>責務</h2>
 <ul>
-<li>リレーションの物理ロケーションを一意に特定する <code>RelFileLocator</code> 構造体の定義。</li>
+<li>リレーションの物理的な所在を示す <code>RelFileLocator</code> 構造体の定義。</li>
 <li>一時リレーションやバックエンドローカルなリレーションを識別するための <a class="wiki-source-link" href="../../../../source/src/include/storage/relfilelocator.h.html#L73" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__storage__relfilelocator_h__RelFileLocatorBackend.html&quot;}, '*');"><code>RelFileLocatorBackend</code></a> 構造体の定義。</li>
-<li>ハッシュテーブルのキー等での効率的な比較・判定を行うための各種インラインマクロの提供。</li>
+<li>ロケータ同士の比較や一時テーブル判定を行う効率的なインラインマクロの提供。</li>
 </ul>
 <h2>重要なシンボル</h2>
 <ul>
-<li><code>struct RelFileLocator</code>: <a class="wiki-source-link" href="../../../../source/src/include/storage/relfilelocator.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__storage__relfilelocator_h__spcOid.html&quot;}, '*');"><code>spcOid</code></a>（テーブルスペース）、<a class="wiki-source-link" href="../../../../source/src/include/storage/relfilelocator.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__storage__relfilelocator_h__dbOid.html&quot;}, '*');"><code>dbOid</code></a>（データベース）、<a class="wiki-source-link" href="../../../../source/src/include/storage/relfilelocator.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__storage__relfilelocator_h__relNumber.html&quot;}, '*');"><code>relNumber</code></a>（リファイルノード）を保持するコア構造体。パディングを含まない設計。</li>
-<li><code>struct RelFileLocatorBackend</code>: <code>RelFileLocator</code> にバックエンドのプロセス番号（<code>ProcNumber</code>）を付加し、一時・ローカルリレーションの物理配置を解決する構造体。</li>
-<li><a class="wiki-source-link" href="../../../../source/src/include/storage/relfilelocator.h.html#L89" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/storage/relfilelocator.h.html&quot;}, '*');"><code>RelFileLocatorEquals</code></a> / <a class="wiki-source-link" href="../../../../source/src/include/storage/relfilelocator.h.html#L94" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/storage/relfilelocator.h.html&quot;}, '*');"><code>RelFileLocatorBackendEquals</code></a>: 2つのロケーター構造体が同一かを高速に判定するマクロ。識別力の高い <a class="wiki-source-link" href="../../../../source/src/include/storage/relfilelocator.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__storage__relfilelocator_h__relNumber.html&quot;}, '*');"><code>relNumber</code></a> を最初に比較する最適化を含む。</li>
-<li><a class="wiki-source-link" href="../../../../source/src/include/storage/relfilelocator.h.html#L79" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/storage/relfilelocator.h.html&quot;}, '*');"><code>RelFileLocatorBackendIsTemp</code></a>: バックエンドローカル（一時）リレーションであるかを判定するマクロ。</li>
+<li><code>struct RelFileLocator</code>: テーブルスペース (<code>spcOid</code>)、データベース (<code>dbOid</code>)、リレーション番号 (<code>relNumber</code>) を保持し、ハッシュキーとしても安全なパディングなしの基本構造体。</li>
+<li><code>struct RelFileLocatorBackend</code>: <code>RelFileLocator</code> にバックエンドのプロセス番号 (<code>ProcNumber</code>) を付与し、テンポラリ・バックエンドローカルなリレーションのストレージを特定する構造体。</li>
+<li><a class="wiki-source-link" href="../../../../source/src/include/storage/relfilelocator.h.html#L89" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/storage/relfilelocator.h.html&quot;}, '*');"><code>RelFileLocatorEquals</code></a> / <a class="wiki-source-link" href="../../../../source/src/include/storage/relfilelocator.h.html#L94" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/storage/relfilelocator.h.html&quot;}, '*');"><code>RelFileLocatorBackendEquals</code></a>: 2つのロケータが同一の物理ファイルを指しているかを高速に判定する比較マクロ。</li>
+<li><a class="wiki-source-link" href="../../../../source/src/include/storage/relfilelocator.h.html#L79" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/storage/relfilelocator.h.html&quot;}, '*');"><code>RelFileLocatorBackendIsTemp</code></a>: 指定されたロケータがバックエンドローカルな一時リレーションであるかを判定するマクロ。</li>
 </ul>
 <h2>制御フローとデータフロー</h2>
-<p>本ファイルは構造体定義とマクロのみを提供するインヘッダーであるため、直接的な関数制御フローを持ちません。</p>
-<ul>
-<li>データフローとしては、カタログキャッシュやプランナから取得した Oid 群を <code>RelFileLocator</code> に集約し、それをバッファプールやストレージマネージャ（<code>smgr</code>）へ渡すことで、ファイルパスの生成やディスクI/Oの起点となります。</li>
-</ul>
+<p>実行コードではなくデータ構造とマクロの定義ファイルであるため、独自の制御フローはありません。データフローとしては、カタログキャッシュや <code>pg_class</code> から取得されたOID情報を元に <code>RelFileLocator</code> が構築され、ストレージマネージャ（<a class="wiki-source-link" href="../../../../source/src/include/storage/aio_types.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__storage__aio_types_h__smgr.html&quot;}, '*');"><code>smgr</code></a>）層やファイルパス生成関数へ渡されることで物理ファイルのオープンや読込に利用されます。</p>
 <h2>直接依存</h2>
 <ul>
-<li><code>common/relpath.h</code>: リレーションパス関連の共通定義</li>
+<li><code>common/relpath.h</code>: リレーションパスの共通定義 (<a class="wiki-source-link" href="../../../../source/src/include/common/relpath.h.html#L25" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__common__relpath_h__RelFileNumber.html&quot;}, '*');"><code>RelFileNumber</code></a> など)</li>
 <li><code>storage/procnumber.h</code>: バックエンドプロセス番号 (<code>ProcNumber</code>) の定義</li>
 </ul>
 <h2>関連コード</h2>
 <ul>
-<li><a class="wiki-source-link" href="../../../../source/src/backend/storage/smgr/md.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/storage/smgr/md.c.html&quot;}, '*');"><code>src/backend/storage/smgr/md.c</code></a>: 物理フォークやセグメント分割を扱うモジュール</li>
-<li><code>src/backend/catalog/relmapper.c</code>: マップされたリレーションのファイルノード解決ロジック</li>
+<li><a class="wiki-source-link" href="../../../../source/src/backend/storage/smgr/md.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/storage/smgr/md.c.html&quot;}, '*');"><code>src/backend/storage/smgr/md.c</code></a>: フォークやセグメントに分割された物理ファイルの実アクセスを担うストレージモジュール。</li>
+<li><code>src/include/catalog/relfilelocator.h</code> または関連するカタログ定義: <code>pg_class</code> や <code>pg_database</code> との対応関係の定義。</li>
 </ul>
 <h2>読者向けメモ</h2>
 <ul>
-<li><code>RelFileLocator</code> の各フィールドはハッシュテーブルのキーとして使用されるため、コンパイラのパディングバイトを含まないように設計されています。</li>
-<li><code>pg_class.reltablespace == 0</code> のような省略値は <code>RelFileLocator</code> 構造体内部では許容されず、必ず実テーブルスペース ID を設定する必要があります。</li>
+<li><code>RelFileLocator</code> はハッシュテーブルのキーとして使用されるため、構造体内に予期せぬパディングバイトが含まれない設計になっています。</li>
+<li><code>relNumber</code> は原則として <code>pg_class.relfilenode</code> に対応しており、クラスタ内で一意ではなく「データベースの特定テーブルスペース内」で一意となる点に注意してください。</li>
 </ul>
 <h2>シンボルページ</h2>
 <ul>
+<li><a href="../../../symbols/src__include__storage__relfilelocator_h__ProcNumber.html" target="wiki-view"><code>ProcNumber</code></a></li>
+<li><a href="../../../symbols/src__include__storage__relfilelocator_h__dbOid.html" target="wiki-view"><code>dbOid</code></a></li>
+<li><a href="../../../symbols/src__include__storage__relfilelocator_h__relNumber.html" target="wiki-view"><code>relNumber</code></a></li>
+<li><a href="../../../symbols/src__include__storage__relfilelocator_h__spcOid.html" target="wiki-view"><code>spcOid</code></a></li>
 <li><a href="../../../symbols/src__include__storage__relfilelocator_h__RelFileLocator.html" target="wiki-view"><code>RelFileLocator</code></a></li>
 <li><a href="../../../symbols/src__include__storage__relfilelocator_h__RelFileLocatorBackend.html" target="wiki-view"><code>RelFileLocatorBackend</code></a></li>
 </ul><script>

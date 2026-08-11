@@ -1,0 +1,80 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>src/include/nodes/nodeFuncs.h.md</title><link rel="stylesheet" href="../../../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../../../source/src/include/nodes/nodeFuncs.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/nodes/nodeFuncs.h.html&quot;}, '*');">src/include/nodes/nodeFuncs.h</a></h1>
+<h2>概要</h2>
+<p><a class="wiki-source-link" href="../../../../source/src/include/nodes/nodeFuncs.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/nodes/nodeFuncs.h.html&quot;}, '*');"><code>src/include/nodes/nodeFuncs.h</code></a> は、PostgreSQLの構文木や実行計画木などの Node ツリーを汎用的に操作・検査するための関数群、マクロ、コールバック型定義を提供するヘッダーファイルです。式ツリーの型推定、ウォーカー／ミューテーターの共通マクロ群、および述語や論理演算子（AND/OR/NOT など）の判定・分解を行うインライン関数を定義しています。</p>
+<h2>モジュール内での役割</h2>
+<p><a class="wiki-source-link" href="../../../../source/src/backend/nodes/nodeFuncs.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/nodes/nodeFuncs.c.html&quot;}, '*');"><code>src/backend/nodes/nodeFuncs.c</code></a> と対をなすヘッダーであり、<code>src/include/nodes</code> モジュール配下において、パーサーやオプティマイザ、エグゼキューターが共通して必要とする構文木ノードのユーティリティを提供します。特に、不必要な <a class="wiki-source-link" href="../../../../source/src/include/nodes/execnodes.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/nodes/execnodes.h.html&quot;}, '*');"><code>execnodes.h</code></a> のインクルードを避けるための前方宣言（<code>PlanState</code>）や、型安全性を高めつつコールバックを渡すためのマクロラッパー群を集約しています。</p>
+<h2>責務</h2>
+<ul>
+<li>**式ノードの属性取得と操作**: 式の結果型（<a class="wiki-source-link" href="../../../../source/src/backend/nodes/nodeFuncs.c.html#L41" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__nodes__nodeFuncs_c__exprType.html&quot;}, '*');"><code>exprType</code></a>）、型修飾子、照合順序（Collation）、位置情報の取得。</li>
+<li>**式構造の判定と分解**: 関数呼び出し、演算子、AND/OR/NOT などの論理演算子の判定および引数の抽出（インライン関数による高速な実装）。</li>
+<li>**ツリー走査・変形フレームワーク**: <a class="wiki-source-link" href="../../../../source/src/include/nodes/nodeFuncs.h.html#L155" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/nodes/nodeFuncs.h.html&quot;}, '*');"><code>expression_tree_walker</code></a> / <code>mutator</code> や <a class="wiki-source-link" href="../../../../source/src/include/nodes/nodeFuncs.h.html#L160" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/nodes/nodeFuncs.h.html&quot;}, '*');"><code>query_tree_walker</code></a> / <code>mutator</code> などのマクロ定義を通じた、抽象構文木（AST）およびクエリ木のトラバーサル機構の提供。</li>
+<li>**制御フラグの定義**: クエリツリー走査時の挙動を制御する <code>QTW_*</code> フラグ群（サブクエリやレンジテーブルの無視・検査など）の定義。</li>
+</ul>
+<h2>重要なシンボル</h2>
+<h3>基本データ型と前方宣言</h3>
+<ul>
+<li>**<code>PlanState</code> (struct)**: 実行計画ノードの状態を表す構造体の前方宣言。ヘッダー内での循環インクルードや不要な依存を避けるために定義されています。</li>
+<li>**<code>Oid</code>**: PostgreSQLのオブジェクト識別子（OID）。式の結果型やOID操作の基本型として利用されます。</li>
+<li>**<code>Node</code>**: すべての構文木ノードの基底構造体。</li>
+</ul>
+<h3>句および論理演算子の判定・分解（インライン関数）</h3>
+<ul>
+<li>**<a class="wiki-source-link" href="../../../../source/src/include/nodes/nodeFuncs.h.html#L70" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__nodes__nodeFuncs_h__is_funcclause.html&quot;}, '*');"><code>is_funcclause</code></a>**: 指定された句が <code>FuncExpr</code> ノードであるかを判定します（NULL安全）。</li>
+<li>**<a class="wiki-source-link" href="../../../../source/src/include/nodes/nodeFuncs.h.html#L77" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__nodes__nodeFuncs_h__is_opclause.html&quot;}, '*');"><code>is_opclause</code></a>**: 指定された句が <code>OpExpr</code> ノードであるかを判定します。</li>
+<li>**<a class="wiki-source-link" href="../../../../source/src/include/nodes/nodeFuncs.h.html#L84" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__nodes__nodeFuncs_h__get_leftop.html&quot;}, '*');"><code>get_leftop</code></a>**: 二項演算子句の左引数、または単項演算子句の唯一の引数を抽出します（引数がなければ <code>NULL</code>）。</li>
+<li>**<a class="wiki-source-link" href="../../../../source/src/include/nodes/nodeFuncs.h.html#L96" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__nodes__nodeFuncs_h__get_rightop.html&quot;}, '*');"><code>get_rightop</code></a>**: 二項演算子句の右引数を抽出します（単項の場合は <code>NULL</code>）。</li>
+<li>**<a class="wiki-source-link" href="../../../../source/src/include/nodes/nodeFuncs.h.html#L108" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__nodes__nodeFuncs_h__is_andclause.html&quot;}, '*');"><code>is_andclause</code></a>**: <code>BoolExpr</code> が <a class="wiki-source-link" href="../../../../source/src/include/nodes/nodeFuncs.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__nodes__nodeFuncs_h__AND_EXPR.html&quot;}, '*');"><code>AND_EXPR</code></a> であるかを判定します。</li>
+<li>**<a class="wiki-source-link" href="../../../../source/src/include/nodes/nodeFuncs.h.html#L117" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__nodes__nodeFuncs_h__is_orclause.html&quot;}, '*');"><code>is_orclause</code></a>**: <code>BoolExpr</code> が <a class="wiki-source-link" href="../../../../source/src/include/nodes/nodeFuncs.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__nodes__nodeFuncs_h__OR_EXPR.html&quot;}, '*');"><code>OR_EXPR</code></a> であるかを判定します。</li>
+<li>**<a class="wiki-source-link" href="../../../../source/src/include/nodes/nodeFuncs.h.html#L126" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__nodes__nodeFuncs_h__is_notclause.html&quot;}, '*');"><code>is_notclause</code></a>**: <code>BoolExpr</code> が <a class="wiki-source-link" href="../../../../source/src/include/nodes/nodeFuncs.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__nodes__nodeFuncs_h__NOT_EXPR.html&quot;}, '*');"><code>NOT_EXPR</code></a> であるかを判定します。</li>
+<li>**<a class="wiki-source-link" href="../../../../source/src/include/nodes/nodeFuncs.h.html#L135" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__nodes__nodeFuncs_h__get_notclausearg.html&quot;}, '*');"><code>get_notclausearg</code></a>**: <code>NOT</code> 句からその内部引数（<code>Expr</code>）を抽出します。</li>
+</ul>
+<h2>制御フローとデータフロー</h2>
+<ul>
+<li>**ツリー走査（Walker / Mutator）**:</li>
+<p>使用者側は <code>expression_tree_walker(node, walker_func, context)</code> などのマクロを呼び出します。マクロ層で関数ポインタのキャスト（<code>tree_walker_callback</code> への変換）を行い、コンパイラの型警告を抑制しつつ、実体関数（<code>_impl</code> サフィックスを持つ関数）へ処理を委譲します。</p>
+<li>**演算子・句の検査**:</li>
+<p>オプティマイザやプランナーが WHERE 句やターゲットリストを走査する際、<a class="wiki-source-link" href="../../../../source/src/include/nodes/nodeFuncs.h.html#L108" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__nodes__nodeFuncs_h__is_andclause.html&quot;}, '*');"><code>is_andclause</code></a> や <a class="wiki-source-link" href="../../../../source/src/include/nodes/nodeFuncs.h.html#L77" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__nodes__nodeFuncs_h__is_opclause.html&quot;}, '*');"><code>is_opclause</code></a> などの軽量なインライン関数でノードの種類を高速に判別し、<a class="wiki-source-link" href="../../../../source/src/include/nodes/nodeFuncs.h.html#L84" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__nodes__nodeFuncs_h__get_leftop.html&quot;}, '*');"><code>get_leftop</code></a> / <a class="wiki-source-link" href="../../../../source/src/include/nodes/nodeFuncs.h.html#L96" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__nodes__nodeFuncs_h__get_rightop.html&quot;}, '*');"><code>get_rightop</code></a> を通じて子式へのアクセスを行います。</p>
+</ul>
+<h2>直接依存</h2>
+<ul>
+<li><code>nodes/parsenodes.h</code>: パーサーのノード定義（<code>Query</code>, <code>RangeTblEntry</code> など）</li>
+</ul>
+<h2>関連コード</h2>
+<ul>
+<li><a class="wiki-source-link" href="../../../../source/src/backend/nodes/nodeFuncs.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/nodes/nodeFuncs.c.html&quot;}, '*');"><code>src/backend/nodes/nodeFuncs.c</code></a>: 本ヘッダーで宣言された非インライン関数（<a class="wiki-source-link" href="../../../../source/src/backend/nodes/nodeFuncs.c.html#L41" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__nodes__nodeFuncs_c__exprType.html&quot;}, '*');"><code>exprType</code></a> や各種 walker/mutator の実装）の本体。</li>
+<li><a class="wiki-source-link" href="../../../../source/src/include/nodes/nodes.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/nodes/nodes.h.html&quot;}, '*');"><code>src/include/nodes/nodes.h</code></a>: <code>Node</code> タグや <a class="wiki-source-link" href="../../../../source/src/include/nodes/nodes.h.html#L162" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/nodes/nodes.h.html&quot;}, '*');"><code>IsA</code></a> マクロなどの基礎定義。</li>
+</ul>
+<h2>読者向けメモ</h2>
+<ul>
+<li>**メモリ管理とライフタイム**: このファイルで定義される関数群はツリーの構造を変更・検査するものであり、メモリーコンテキスト自体の割り当てや解放は行いません。変更後のツリーは通常、呼び出し元のメモリーコンテキスト上で構築されます。</li>
+<li>**型キャストのマクロ**: <a class="wiki-source-link" href="../../../../source/src/include/nodes/nodeFuncs.h.html#L155" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/nodes/nodeFuncs.h.html&quot;}, '*');"><code>expression_tree_walker</code></a> などのマクロでは、C標準の <code>void *</code> に対する構造体ポインタの互換性警告を回避するため、明示的な関数ポインタキャストが挿入されています。</li>
+</ul>
+<h2>シンボルページ</h2>
+<ul>
+<li><a href="../../../symbols/src__include__nodes__nodeFuncs_h__PlanState.html" target="wiki-view"><code>PlanState</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__nodeFuncs_h__Oid.html" target="wiki-view"><code>Oid</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__nodeFuncs_h__Node.html" target="wiki-view"><code>Node</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__nodeFuncs_h__is_funcclause.html" target="wiki-view"><code>is_funcclause</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__nodeFuncs_h__is_opclause.html" target="wiki-view"><code>is_opclause</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__nodeFuncs_h__get_leftop.html" target="wiki-view"><code>get_leftop</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__nodeFuncs_h__get_rightop.html" target="wiki-view"><code>get_rightop</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__nodeFuncs_h__is_andclause.html" target="wiki-view"><code>is_andclause</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__nodeFuncs_h__is_orclause.html" target="wiki-view"><code>is_orclause</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__nodeFuncs_h__is_notclause.html" target="wiki-view"><code>is_notclause</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__nodeFuncs_h__get_notclausearg.html" target="wiki-view"><code>get_notclausearg</code></a></li>
+</ul><script>
+(function() {
+  function notifyParent() {
+    if (parent === window) return;
+    parent.postMessage({type: "frame-location", frame: window.name || "", href: window.location.href}, "*");
+  }
+  document.addEventListener("click", function(event) {
+    const link = event.target.closest("a[data-panel]");
+    if (!link || parent === window) return;
+    parent.postMessage({type: "source-link", panel: link.dataset.panel}, "*");
+  });
+  window.addEventListener("load", notifyParent);
+  window.addEventListener("hashchange", notifyParent);
+})();
+</script></body></html>

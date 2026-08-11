@@ -1,0 +1,107 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>symbols/src__include__port__atomics_h__pg_atomic_flag.md</title><link rel="stylesheet" href="../../styles.css"></head><body><h1>pg_atomic_flag</h1>
+<h2>定義</h2>
+<ul>
+<li>種別: <code>function</code></li>
+<li>定義箇所: <code>src/include/port/atomics.h:1</code></li>
+<li>所属モジュール: <a class="wiki-entity-link" href="../modules/src__include__port.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/modules/src__include__port.html&quot;, &quot;source&quot;: &quot;source/src/include/port/aix.h.html&quot;}, '*');"><code>module:src/include/port</code></a></li>
+</ul>
+<h2>目的</h2>
+<p>静的シンボル索引から生成された初期シンボルページです。</p>
+<h2>シグネチャまたは形状</h2>
+<ul>
+<li>シグネチャ: <code>/*------------------------------------------------------------------------- * * atomics.h * Atomic operations. * * Hardware and compiler dependent functions for manipulating memory * atomically and dealing with cache coherency. Used to implement locking * facilities and lockless algorithms/data structures. * * To bring up postgres on a platform/compiler at the very least * implementations for the following operations should be provided: * * pg_compiler_barrier(), pg_write_barrier(), pg_read_barrier() * * pg_atomic_compare_exchange_u32(), pg_atomic_fetch_add_u32() * * pg_atomic_test_set_flag(), pg_atomic_init_flag(), pg_atomic_clear_flag() * * PG_HAVE_8BYTE_SINGLE_COPY_ATOMICITY should be defined if appropriate. * * There exist generic, hardware independent, implementations for several * compilers which might be sufficient, although possibly not optimal, for a * new platform. If no such generic implementation is available spinlocks will * be used to implement the 64-bit parts of the API. * * Implement _u64 atomics if and only if your platform can use them * efficiently (and obviously correctly). * * Use higher level functionality (lwlocks, spinlocks, heavyweight locks) * whenever possible. Writing correct code using these facilities is hard. * * For an introduction to using memory barriers within the PostgreSQL backend, * see src/backend/storage/lmgr/README.barrier * * Portions Copyright (c) 1996-2026, PostgreSQL Global Development Group * Portions Copyright (c) 1994, Regents of the University of California * * src/include/port/atomics.h * *------------------------------------------------------------------------- */ #ifndef ATOMICS_H #define ATOMICS_H #ifdef FRONTEND #error &quot;atomics.h may not be included from frontend code&quot; #endif #define INSIDE_ATOMICS_H #include &lt;limits.h&gt; /* * First a set of architecture specific files is included. * * These files can provide the full set of atomics or can do pretty much * nothing if all the compilers commonly used on these platforms provide * usable generics. * * Don&#x27;t add an inline assembly of the actual atomic operations if all the * common implementations of your platform provide intrinsics. Intrinsics are * much easier to understand and potentially support more architectures. * * It will often make sense to define memory barrier semantics here, since * e.g. generic compiler intrinsics for x86 memory barriers can&#x27;t know that * postgres doesn&#x27;t need x86 read/write barriers do anything more than a * compiler barrier. * */ #if defined(__arm__) || defined(__arm) || defined(__aarch64__) #include &quot;port/atomics/arch-arm.h&quot; #elif defined(__i386__) || defined(__i386) || defined(__x86_64__) #include &quot;port/atomics/arch-x86.h&quot; #elif defined(__ppc__) || defined(__powerpc__) || defined(__ppc64__) || defined(__powerpc64__) #include &quot;port/atomics/arch-ppc.h&quot; #endif /* * Compiler specific, but architecture independent implementations. * * Provide architecture independent implementations of the atomic * facilities. At the very least compiler barriers should be provided, but a * full implementation of * * pg_compiler_barrier(), pg_write_barrier(), pg_read_barrier() * * pg_atomic_compare_exchange_u32(), pg_atomic_fetch_add_u32() * using compiler intrinsics are a good idea. */ /* * gcc or compatible, including clang and icc. */ #if defined(__GNUC__) || defined(__INTEL_COMPILER) #include &quot;port/atomics/generic-gcc.h&quot; #elif defined(_MSC_VER) #include &quot;port/atomics/generic-msvc.h&quot; #else /* Unknown compiler. */ #endif /* Fail if we couldn&#x27;t find implementations of required facilities. */ #if !defined(PG_HAVE_ATOMIC_U32_SUPPORT) #error &quot;could not find an implementation of pg_atomic_uint32&quot; #endif #if !defined(pg_compiler_barrier_impl) #error &quot;could not find an implementation of pg_compiler_barrier&quot; #endif #if !defined(pg_memory_barrier_impl) #error &quot;could not find an implementation of pg_memory_barrier_impl&quot; #endif /* * Provide a spinlock-based implementation of the 64 bit variants, if * necessary. */ #include &quot;port/atomics/fallback.h&quot; /* * Provide additional operations using supported infrastructure. These are * expected to be efficient if the underlying atomic operations are efficient. */ #include &quot;port/atomics/generic.h&quot; /* * pg_compiler_barrier - prevent the compiler from moving code across * * A compiler barrier need not (and preferably should not) emit any actual * machine code, but must act as an optimization fence: the compiler must not * reorder loads or stores to main memory around the barrier. However, the * CPU may still reorder loads or stores at runtime, if the architecture&#x27;s * memory model permits this. */ #define pg_compiler_barrier() pg_compiler_barrier_impl() /* * pg_memory_barrier - prevent the CPU from reordering memory access * * A memory barrier must act as a compiler barrier, and in addition must * guarantee that all loads and stores issued prior to the barrier are * completed before any loads or stores issued after the barrier. Unless * loads and stores are totally ordered (which is not the case on most * architectures) this requires issuing some sort of memory fencing * instruction. */ #define pg_memory_barrier() pg_memory_barrier_impl() /* * pg_(read|write)_barrier - prevent the CPU from reordering memory access * * A read barrier must act as a compiler barrier, and in addition must * guarantee that any loads issued prior to the barrier are completed before * any loads issued after the barrier. Similarly, a write barrier acts * as a compiler barrier, and also orders stores. Read and write barriers * are thus weaker than a full memory barrier, but stronger than a compiler * barrier. In practice, on machines with strong memory ordering, read and * write barriers may require nothing more than a compiler barrier. */ #define pg_read_barrier() pg_read_barrier_impl() #define pg_write_barrier() pg_write_barrier_impl() /* * Spinloop delay - Allow CPU to relax in busy loops */ #define pg_spin_delay() pg_spin_delay_impl() /* * pg_atomic_init_flag - initialize atomic flag. * * No barrier semantics. */ static inline void pg_atomic_init_flag(volatile pg_atomic_flag *ptr)</code></li>
+</ul>
+<h2>入力と出力</h2>
+<p>まだ解析していません。</p>
+<h2>前提条件と不変条件</h2>
+<p>まだ解析していません。</p>
+<h2>アルゴリズムまたは振る舞い</h2>
+<ul>
+<li>複雑度: <code>high</code> (score 21)</li>
+</ul>
+<p>まだ解析していません。</p>
+<h2>呼び出し元と呼び出し先</h2>
+<ul>
+<li>呼び出し元: なし</li>
+<li>呼び出し先: なし</li>
+<li>呼び出し元サイト: なし</li>
+<li>呼び出しサイト: なし</li>
+</ul>
+<h2>関連データ構造</h2>
+<p><a class="wiki-source-link" href="../../source/src/interfaces/ecpg/test/expected/preproc-type.c.html#L36" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__interfaces__ecpg__test__expected__preproc-type_c__access.html&quot;}, '*');"><code>access</code></a>, <code>c</code>, <a class="wiki-source-link" href="../../source/src/interfaces/ecpg/test/expected/preproc-init.c.html#L82" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__interfaces__ecpg__test__expected__preproc-init_c__e.html&quot;}, '*');"><code>e</code></a>, <code>Group</code>, <code>pg_atomic_uint32</code></p>
+<h2>ソース抜粋</h2>
+<p>~~~c /*------------------------------------------------------------------------- *</p>
+<ul>
+<li><a class="wiki-source-link" href="../../source/src/include/port/atomics.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/port/atomics.h.html&quot;}, '*');">atomics.h</a></li>
+<li>Atomic operations.</li>
+<p>*</p>
+<li>Hardware and compiler dependent <a class="wiki-source-link" href="../../source/src/backend/regex/regcomp.c.html#L358" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/regex/regcomp.c.html&quot;}, '*');">functions</a> for manipulating memory</li>
+<li>atomically and dealing with cache coherency. Used to implement locking</li>
+<li>facilities and lockless algorithms/data structures.</li>
+<p>*</p>
+<li>To bring up postgres on a platform/compiler at the very least</li>
+<li>implementations for the following operations should be provided:</li>
+<li>* <a class="wiki-source-link" href="../../source/src/include/port/atomics.h.html#L129" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/port/atomics.h.html&quot;}, '*');">pg_compiler_barrier</a>(), <a class="wiki-source-link" href="../../source/src/include/port/atomics.h.html#L155" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/port/atomics.h.html&quot;}, '*');">pg_write_barrier</a>(), <a class="wiki-source-link" href="../../source/src/include/port/atomics.h.html#L154" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/port/atomics.h.html&quot;}, '*');">pg_read_barrier</a>()</li>
+<li>* <a class="wiki-source-link" href="../../source/src/include/port/atomics.h.html#L348" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__port__atomics_h__pg_atomic_compare_exchange_u32.html&quot;}, '*');">pg_atomic_compare_exchange_u32</a>(), <a class="wiki-source-link" href="../../source/src/include/port/atomics.h.html#L365" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__port__atomics_h__pg_atomic_fetch_add_u32.html&quot;}, '*');">pg_atomic_fetch_add_u32</a>()</li>
+<li>* <a class="wiki-source-link" href="../../source/src/include/port/atomics.h.html#L180" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__port__atomics_h__pg_atomic_test_set_flag.html&quot;}, '*');">pg_atomic_test_set_flag</a>(), <a class="wiki-source-link" href="../../source/src/include/port/atomics.h.html#L167" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__port__atomics_h__pg_atomic_init_flag.html&quot;}, '*');">pg_atomic_init_flag</a>(), <a class="wiki-source-link" href="../../source/src/include/port/atomics.h.html#L204" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__port__atomics_h__pg_atomic_clear_flag.html&quot;}, '*');">pg_atomic_clear_flag</a>()</li>
+<li>* PG_HAVE_8BYTE_SINGLE_COPY_ATOMICITY should be defined if appropriate.</li>
+<p>*</p>
+<li>There exist generic, hardware independent, implementations for several</li>
+<li>compilers which might be sufficient, although possibly not optimal, for a</li>
+<li>new platform. If no such generic implementation <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> available spinlocks will</li>
+<li>be used to implement the 64-<a class="wiki-source-link" href="../../source/src/backend/utils/adt/varbit.c.html#L390" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__utils__adt__varbit_c__bit.html&quot;}, '*');">bit</a> parts of the API.</li>
+<p>*</p>
+<li>Implement _u64 atomics if and only if your platform can use them</li>
+<li>efficiently (and obviously correctly).</li>
+<p>*</p>
+<li>Use higher <a class="wiki-source-link" href="../../source/src/backend/optimizer/path/joinrels.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__path__joinrels_c__level.html&quot;}, '*');">level</a> functionality (lwlocks, spinlocks, heavyweight locks)</li>
+<li>whenever possible. Writing correct code using these facilities <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> hard.</li>
+<p>*</p>
+<li>For an introduction to using memory barriers within the PostgreSQL backend,</li>
+<li>see <a class="wiki-source-link" href="../../source/src/backend/storage/lmgr/README.barrier.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/storage/lmgr/README.barrier.html&quot;}, '*');">src/backend/storage/lmgr/README.barrier</a></li>
+<p>*</p>
+<li>Portions Copyright (c) 1996-2026, PostgreSQL Global Development Group</li>
+<li>Portions Copyright (c) 1994, Regents of the University of California</li>
+<p>*</p>
+<li><a class="wiki-source-link" href="../../source/src/include/port/atomics.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/port/atomics.h.html&quot;}, '*');">src/include/port/atomics.h</a></li>
+<p>* *------------------------------------------------------------------------- */ #ifndef <a class="wiki-source-link" href="../../source/src/include/port/atomics.h.html#L39" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/port/atomics.h.html&quot;}, '*');">ATOMICS_H</a> #define <a class="wiki-source-link" href="../../source/src/include/port/atomics.h.html#L39" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/port/atomics.h.html&quot;}, '*');">ATOMICS_H</a></p>
+</ul>
+<p>#ifdef FRONTEND #error &quot;<a class="wiki-source-link" href="../../source/src/include/port/atomics.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/port/atomics.h.html&quot;}, '*');">atomics.h</a> may not be included from frontend code&quot; #endif</p>
+<p>#define <a class="wiki-source-link" href="../../source/src/include/port/atomics.h.html#L45" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/port/atomics.h.html&quot;}, '*');">INSIDE_ATOMICS_H</a></p>
+<p>#include &lt;limits.h&gt;</p>
+<p>/*</p>
+<ul>
+<li>First a set of architecture specific files <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> included.</li>
+<p>*</p>
+<li>These files can provide the full set of atomics or can do pretty much</li>
+<li>nothing if all the compilers commonly used on these platforms provide</li>
+<li>usable generics.</li>
+<p>*</p>
+<li>Don&#x27;t add an inline assembly of the actual atomic operations if all the</li>
+<li>common implementations of your platform provide intrinsics. Intrinsics are</li>
+<li>much easier to understand and potentially support more architectures.</li>
+<p>*</p>
+<li>It will often make sense to define memory <a class="wiki-source-link" href="../../source/src/bin/pgbench/pgbench.c.html#L489" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/bin/pgbench/pgbench.c.html&quot;}, '*');">barrier</a> semantics here, since</li>
+<p>~~~</p>
+</ul>
+<h2>失敗モードと境界条件</h2>
+<p>まだ解析していません。</p>
+<h2>保守担当者向けメモ</h2>
+<ul>
+<li>後続フェーズで、ソース本文の文脈と caller/callee 情報を使ってこのページを強化する。</li>
+</ul><script>
+(function() {
+  function notifyParent() {
+    if (parent === window) return;
+    parent.postMessage({type: "frame-location", frame: window.name || "", href: window.location.href}, "*");
+  }
+  document.addEventListener("click", function(event) {
+    const link = event.target.closest("a[data-panel]");
+    if (!link || parent === window) return;
+    parent.postMessage({type: "source-link", panel: link.dataset.panel}, "*");
+  });
+  window.addEventListener("load", notifyParent);
+  window.addEventListener("hashchange", notifyParent);
+})();
+</script></body></html>

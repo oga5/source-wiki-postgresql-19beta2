@@ -40,7 +40,7 @@
 <li>than what this function used to do.</li>
 <p>*/ static char buf[24];</p>
 </ul>
-<p><a class="wiki-source-link" href="../../source/src/include/common/int.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__common__int_h__size_t.html&quot;}, '*');">size_t</a>		len;</p>
+<p>size_t		len;</p>
 <p>if (!res || <a class="wiki-source-link" href="../../source/src/include/utils/hsearch.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__utils__hsearch_h__strncmp.html&quot;}, '*');">strncmp</a>(res-&gt;cmdStatus, &quot;INSERT &quot;, 7) != 0) return &quot;&quot;;</p>
 <p>len = strspn(res-&gt;cmdStatus + 7, &quot;0123456789&quot;); if (len &gt; sizeof(buf) - 1) len = sizeof(buf) - 1; <a class="wiki-source-link" href="../../source/src/include/utils/hsearch.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__utils__hsearch_h__memcpy.html&quot;}, '*');">memcpy</a>(buf, res-&gt;cmdStatus + 7, len); buf[len] = &#x27;\0&#x27;;</p>
 <p>return buf; } ~~~</p>

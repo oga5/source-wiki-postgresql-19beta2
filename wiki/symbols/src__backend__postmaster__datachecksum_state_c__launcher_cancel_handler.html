@@ -34,7 +34,7 @@
 <h2>関連データ構造</h2>
 <p><code>SIGNAL_ARGS</code>, <a class="wiki-source-link" href="../../source/src/interfaces/ecpg/preproc/type.h.html#L89" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__interfaces__ecpg__preproc__type_h__when.html&quot;}, '*');"><code>when</code></a></p>
 <h2>ソース抜粋</h2>
-<p>~~~c static void <a class="wiki-source-link" href="../../source/src/backend/postmaster/datachecksum_state.c.html#L1043" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__postmaster__datachecksum_state_c__launcher_cancel_handler.html&quot;}, '*');">launcher_cancel_handler</a>(SIGNAL_ARGS) { int			save_errno = errno;</p>
+<p>~~~c static void <a class="wiki-source-link" href="../../source/src/backend/postmaster/datachecksum_state.c.html#L1043" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__postmaster__datachecksum_state_c__launcher_cancel_handler.html&quot;}, '*');">launcher_cancel_handler</a>(SIGNAL_ARGS) { int			save_errno = <a class="wiki-source-link" href="../../source/src/include/access/xlogreader.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__access__xlogreader_h__errno.html&quot;}, '*');">errno</a>;</p>
 <p><a class="wiki-source-link" href="../../source/src/backend/postmaster/datachecksum_state.c.html#L369" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/postmaster/datachecksum_state.c.html&quot;}, '*');">abort_requested</a> = <a class="wiki-source-link" href="../../source/src/tools/pg_bsd_indent/indent_globs.h.html#L46" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/tools/pg_bsd_indent/indent_globs.h.html&quot;}, '*');">true</a>;</p>
 <p>/*</p>
 <ul>
@@ -44,7 +44,7 @@
 <li>to set the latch.</li>
 <p>*/ <a class="wiki-source-link" href="../../source/src/backend/storage/ipc/latch.c.html#L289" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__storage__ipc__latch_c__SetLatch.html&quot;}, '*');">SetLatch</a>(MyLatch);</p>
 </ul>
-<p>errno = save_errno; } ~~~</p>
+<p><a class="wiki-source-link" href="../../source/src/include/access/xlogreader.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__access__xlogreader_h__errno.html&quot;}, '*');">errno</a> = save_errno; } ~~~</p>
 <h2>失敗モードと境界条件</h2>
 <p>まだ解析していません。</p>
 <h2>保守担当者向けメモ</h2>

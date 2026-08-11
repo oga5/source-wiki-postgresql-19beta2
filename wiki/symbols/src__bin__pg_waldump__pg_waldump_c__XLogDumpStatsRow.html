@@ -34,12 +34,12 @@
 <h2>関連データ構造</h2>
 <p><code>uint64</code></p>
 <h2>ソース抜粋</h2>
-<p>~~~c static void <a class="wiki-source-link" href="../../source/src/bin/pg_waldump/pg_waldump.c.html#L700" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__bin__pg_waldump__pg_waldump_c__XLogDumpStatsRow.html&quot;}, '*');">XLogDumpStatsRow</a>(const char *<a class="wiki-source-link" href="../../source/src/include/mb/pg_wchar.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/mb/pg_wchar.h.html&quot;}, '*');">name</a>, uint64 n, uint64 total_count, uint64 rec_len, uint64 total_rec_len, uint64 fpi_len, uint64 total_fpi_len, uint64 tot_len, uint64 total_len) { double		n_pct, rec_len_pct, fpi_len_pct, tot_len_pct;</p>
+<p>~~~c static void <a class="wiki-source-link" href="../../source/src/bin/pg_waldump/pg_waldump.c.html#L700" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__bin__pg_waldump__pg_waldump_c__XLogDumpStatsRow.html&quot;}, '*');">XLogDumpStatsRow</a>(const char *name, uint64 n, uint64 total_count, uint64 rec_len, uint64 total_rec_len, uint64 fpi_len, uint64 total_fpi_len, uint64 tot_len, uint64 total_len) { double		n_pct, rec_len_pct, fpi_len_pct, tot_len_pct;</p>
 <p>n_pct = 0; if (total_count != 0) n_pct = 100 * (double) n / total_count;</p>
 <p>rec_len_pct = 0; if (total_rec_len != 0) rec_len_pct = 100 * (double) rec_len / total_rec_len;</p>
 <p>fpi_len_pct = 0; if (total_fpi_len != 0) fpi_len_pct = 100 * (double) fpi_len / total_fpi_len;</p>
 <p>tot_len_pct = 0; if (total_len != 0) tot_len_pct = 100 * (double) tot_len / total_len;</p>
-<p>printf(&quot;%-27s &quot; &quot;%20&quot; PRIu64 &quot; (%6.02f) &quot; &quot;%20&quot; PRIu64 &quot; (%6.02f) &quot; &quot;%20&quot; PRIu64 &quot; (%6.02f) &quot; &quot;%20&quot; PRIu64 &quot; (%6.02f)\n&quot;, <a class="wiki-source-link" href="../../source/src/include/mb/pg_wchar.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/mb/pg_wchar.h.html&quot;}, '*');">name</a>, n, n_pct, rec_len, rec_len_pct, fpi_len, fpi_len_pct, tot_len, tot_len_pct); } ~~~</p>
+<p>printf(&quot;%-27s &quot; &quot;%20&quot; PRIu64 &quot; (%6.02f) &quot; &quot;%20&quot; PRIu64 &quot; (%6.02f) &quot; &quot;%20&quot; PRIu64 &quot; (%6.02f) &quot; &quot;%20&quot; PRIu64 &quot; (%6.02f)\n&quot;, name, n, n_pct, rec_len, rec_len_pct, fpi_len, fpi_len_pct, tot_len, tot_len_pct); } ~~~</p>
 <h2>失敗モードと境界条件</h2>
 <p>まだ解析していません。</p>
 <h2>保守担当者向けメモ</h2>

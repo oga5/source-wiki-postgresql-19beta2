@@ -1,0 +1,103 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>symbols/src__include__executor__executor_h__TupleHashEntryData.md</title><link rel="stylesheet" href="../../styles.css"></head><body><h1>TupleHashEntryData</h1>
+<h2>定義</h2>
+<ul>
+<li>種別: <code>function</code></li>
+<li>定義箇所: <code>src/include/executor/executor.h:1</code></li>
+<li>所属モジュール: <a class="wiki-entity-link" href="../modules/src__include__executor.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/modules/src__include__executor.html&quot;, &quot;source&quot;: &quot;source/src/include/executor/execAsync.h.html&quot;}, '*');"><code>module:src/include/executor</code></a></li>
+</ul>
+<h2>目的</h2>
+<p>静的シンボル索引から生成された初期シンボルページです。</p>
+<h2>シグネチャまたは形状</h2>
+<ul>
+<li>シグネチャ: <code>/*------------------------------------------------------------------------- * * executor.h * support for the POSTGRES executor module * * * Portions Copyright (c) 1996-2026, PostgreSQL Global Development Group * Portions Copyright (c) 1994, Regents of the University of California * * src/include/executor/executor.h * *------------------------------------------------------------------------- */ #ifndef EXECUTOR_H #define EXECUTOR_H #include &quot;access/xlogdefs.h&quot; #include &quot;datatype/timestamp.h&quot; #include &quot;executor/execdesc.h&quot; #include &quot;fmgr.h&quot; #include &quot;nodes/lockoptions.h&quot; #include &quot;nodes/parsenodes.h&quot; #include &quot;utils/memutils.h&quot; /* * The &quot;eflags&quot; argument to ExecutorStart and the various ExecInitNode * routines is a bitwise OR of the following flag bits, which tell the * called plan node what to expect. Note that the flags will get modified * as they are passed down the plan tree, since an upper node may require * functionality in its subnode not demanded of the plan as a whole * (example: MergeJoin requires mark/restore capability in its inner input), * or an upper node may shield its input from some functionality requirement * (example: Materialize shields its input from needing to do backward scan). * * EXPLAIN_ONLY indicates that the plan tree is being initialized just so * EXPLAIN can print it out; it will not be run. Hence, no side-effects * of startup should occur. However, error checks (such as permission checks) * should be performed. * * EXPLAIN_GENERIC can only be used together with EXPLAIN_ONLY. It indicates * that a generic plan is being shown using EXPLAIN (GENERIC_PLAN), which * means that missing parameter values must be tolerated. Currently, the only * effect is to suppress execution-time partition pruning. * * REWIND indicates that the plan node should try to efficiently support * rescans without parameter changes. (Nodes must support ExecReScan calls * in any case, but if this flag was not given, they are at liberty to do it * through complete recalculation. Note that a parameter change forces a * full recalculation in any case.) * * BACKWARD indicates that the plan node must respect the es_direction flag. * When this is not passed, the plan node will only be run forwards. * * MARK indicates that the plan node must support Mark/Restore calls. * When this is not passed, no Mark/Restore will occur. * * SKIP_TRIGGERS tells ExecutorStart/ExecutorFinish to skip calling * AfterTriggerBeginQuery/AfterTriggerEndQuery. This does not necessarily * mean that the plan can&#x27;t queue any AFTER triggers; just that the caller * is responsible for there being a trigger context for them to be queued in. * * WITH_NO_DATA indicates that we are performing REFRESH MATERIALIZED VIEW * ... WITH NO DATA. Currently, the only effect is to suppress errors about * scanning unpopulated materialized views. */ #define EXEC_FLAG_EXPLAIN_ONLY 0x0001 /* EXPLAIN, no ANALYZE */ #define EXEC_FLAG_EXPLAIN_GENERIC 0x0002 /* EXPLAIN (GENERIC_PLAN) */ #define EXEC_FLAG_REWIND 0x0004 /* need efficient rescan */ #define EXEC_FLAG_BACKWARD 0x0008 /* need backward scan */ #define EXEC_FLAG_MARK 0x0010 /* need mark/restore */ #define EXEC_FLAG_SKIP_TRIGGERS 0x0020 /* skip AfterTrigger setup */ #define EXEC_FLAG_WITH_NO_DATA 0x0040 /* REFRESH ... WITH NO DATA */ /* Hook for plugins to get control in ExecutorStart() */ typedef void (*ExecutorStart_hook_type) (QueryDesc *queryDesc, int eflags)</code></li>
+</ul>
+<h2>入力と出力</h2>
+<p>まだ解析していません。</p>
+<h2>前提条件と不変条件</h2>
+<p>まだ解析していません。</p>
+<h2>アルゴリズムまたは振る舞い</h2>
+<ul>
+<li>複雑度: <code>low</code> (score 1)</li>
+</ul>
+<p>まだ解析していません。</p>
+<h2>呼び出し元と呼び出し先</h2>
+<ul>
+<li>呼び出し元: なし</li>
+<li>呼び出し先: なし</li>
+<li>呼び出し元サイト: なし</li>
+<li>呼び出しサイト: なし</li>
+</ul>
+<h2>関連データ構造</h2>
+<p><a class="wiki-source-link" href="../../source/src/interfaces/ecpg/test/expected/preproc-type.c.html#L36" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__interfaces__ecpg__test__expected__preproc-type_c__access.html&quot;}, '*');"><code>access</code></a>, <code>c</code>, <code>Group</code>, <code>MergeJoin</code>, <code>QueryDesc</code>, <a class="wiki-source-link" href="../../source/src/interfaces/ecpg/include/pgtypes_timestamp.h.html#L10" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__interfaces__ecpg__include__pgtypes_timestamp_h__timestamp.html&quot;}, '*');"><code>timestamp</code></a></p>
+<h2>ソース抜粋</h2>
+<p>~~~c /*------------------------------------------------------------------------- *</p>
+<ul>
+<li><a class="wiki-source-link" href="../../source/src/include/executor/executor.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/executor/executor.h.html&quot;}, '*');">executor.h</a></li>
+<li>support for the POSTGRES executor module</li>
+<p>* *</p>
+<li>Portions Copyright (c) 1996-2026, PostgreSQL Global Development Group</li>
+<li>Portions Copyright (c) 1994, Regents of the University of California</li>
+<p>*</p>
+<li><a class="wiki-source-link" href="../../source/src/include/executor/executor.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/executor/executor.h.html&quot;}, '*');">src/include/executor/executor.h</a></li>
+<p>* *------------------------------------------------------------------------- */ #ifndef <a class="wiki-source-link" href="../../source/src/include/executor/executor.h.html#L15" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/executor/executor.h.html&quot;}, '*');">EXECUTOR_H</a> #define <a class="wiki-source-link" href="../../source/src/include/executor/executor.h.html#L15" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/executor/executor.h.html&quot;}, '*');">EXECUTOR_H</a></p>
+</ul>
+<p>#include &quot;access/xlogdefs.h&quot; #include &quot;datatype/timestamp.h&quot; #include &quot;executor/execdesc.h&quot; #include &quot;<a class="wiki-source-link" href="../../source/src/include/fmgr.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/fmgr.h.html&quot;}, '*');">fmgr.h</a>&quot; #include &quot;nodes/lockoptions.h&quot; #include &quot;nodes/parsenodes.h&quot; #include &quot;utils/memutils.h&quot;</p>
+<p>/*</p>
+<ul>
+<li>The &quot;eflags&quot; argument to ExecutorStart and the various <a class="wiki-source-link" href="../../source/src/backend/executor/execProcnode.c.html#L141" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__executor__execProcnode_c__ExecInitNode.html&quot;}, '*');">ExecInitNode</a></li>
+<li><a class="wiki-source-link" href="../../source/src/port/win32ntdll.c.html#L30" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/port/win32ntdll.c.html&quot;}, '*');">routines</a> <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> a bitwise OR of the following <a class="wiki-source-link" href="../../source/src/test/locale/test-ctype.c.html#L32" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__test__locale__test-ctype_c__flag.html&quot;}, '*');">flag</a> bits, which tell the</li>
+<li>called <a class="wiki-source-link" href="../../source/src/test/regress/pg_regress.c.html#L164" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/test/regress/pg_regress.c.html&quot;}, '*');">plan</a> <a class="wiki-source-link" href="../../source/src/include/lib/ilist.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__lib__ilist_h__node.html&quot;}, '*');">node</a> what to expect.  Note that the flags will get modified</li>
+<li>as they are passed down the <a class="wiki-source-link" href="../../source/src/test/regress/pg_regress.c.html#L164" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/test/regress/pg_regress.c.html&quot;}, '*');">plan</a> tree, since an upper <a class="wiki-source-link" href="../../source/src/include/lib/ilist.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__lib__ilist_h__node.html&quot;}, '*');">node</a> may require</li>
+<li>functionality in its subnode not demanded of the <a class="wiki-source-link" href="../../source/src/test/regress/pg_regress.c.html#L164" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/test/regress/pg_regress.c.html&quot;}, '*');">plan</a> as a whole</li>
+<li>(example: MergeJoin requires mark/restore capability in its inner input),</li>
+<li>or an upper <a class="wiki-source-link" href="../../source/src/include/lib/ilist.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__lib__ilist_h__node.html&quot;}, '*');">node</a> may shield its input from some functionality requirement</li>
+<li>(example: Materialize shields its input from needing to do backward scan).</li>
+<p>*</p>
+<li>EXPLAIN_ONLY indicates that the <a class="wiki-source-link" href="../../source/src/test/regress/pg_regress.c.html#L164" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/test/regress/pg_regress.c.html&quot;}, '*');">plan</a> tree <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> being <a class="wiki-source-link" href="../../source/src/port/win32ntdll.c.html#L36" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/port/win32ntdll.c.html&quot;}, '*');">initialized</a> just so</li>
+<li>EXPLAIN can print it out; it will not be run.  Hence, no side-effects</li>
+<li>of startup should occur.  However, error checks (such as permission checks)</li>
+<li>should be performed.</li>
+<p>*</p>
+<li>EXPLAIN_GENERIC can only be used together with EXPLAIN_ONLY.  It indicates</li>
+<li>that a generic <a class="wiki-source-link" href="../../source/src/test/regress/pg_regress.c.html#L164" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/test/regress/pg_regress.c.html&quot;}, '*');">plan</a> <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> being shown using EXPLAIN (GENERIC_PLAN), which</li>
+<li>means that <a class="wiki-source-link" href="../../source/config/missing.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/config/missing.html&quot;}, '*');">missing</a> parameter values must be tolerated.  Currently, the only</li>
+<li>effect <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> to suppress execution-time partition pruning.</li>
+<p>*</p>
+<li>REWIND indicates that the <a class="wiki-source-link" href="../../source/src/test/regress/pg_regress.c.html#L164" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/test/regress/pg_regress.c.html&quot;}, '*');">plan</a> <a class="wiki-source-link" href="../../source/src/include/lib/ilist.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__lib__ilist_h__node.html&quot;}, '*');">node</a> should try to efficiently support</li>
+<li>rescans without parameter changes.  (Nodes must support ExecReScan calls</li>
+<li>in any case, but if this <a class="wiki-source-link" href="../../source/src/test/locale/test-ctype.c.html#L32" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__test__locale__test-ctype_c__flag.html&quot;}, '*');">flag</a> was not given, they are at liberty to do it</li>
+<li>through complete recalculation.  Note that a parameter change forces a</li>
+<li>full recalculation in any case.)</li>
+<p>*</p>
+<li>BACKWARD indicates that the <a class="wiki-source-link" href="../../source/src/test/regress/pg_regress.c.html#L164" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/test/regress/pg_regress.c.html&quot;}, '*');">plan</a> <a class="wiki-source-link" href="../../source/src/include/lib/ilist.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__lib__ilist_h__node.html&quot;}, '*');">node</a> must respect the es_direction <a class="wiki-source-link" href="../../source/src/test/locale/test-ctype.c.html#L32" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__test__locale__test-ctype_c__flag.html&quot;}, '*');">flag</a>.</li>
+<li>When this <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> not passed, the <a class="wiki-source-link" href="../../source/src/test/regress/pg_regress.c.html#L164" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/test/regress/pg_regress.c.html&quot;}, '*');">plan</a> <a class="wiki-source-link" href="../../source/src/include/lib/ilist.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__lib__ilist_h__node.html&quot;}, '*');">node</a> will only be run forwards.</li>
+<p>*</p>
+<li>MARK indicates that the <a class="wiki-source-link" href="../../source/src/test/regress/pg_regress.c.html#L164" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/test/regress/pg_regress.c.html&quot;}, '*');">plan</a> <a class="wiki-source-link" href="../../source/src/include/lib/ilist.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__lib__ilist_h__node.html&quot;}, '*');">node</a> must support Mark/Restore calls.</li>
+<li>When this <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> not passed, no Mark/Restore will occur.</li>
+<p>*</p>
+<li>SKIP_TRIGGERS tells ExecutorStart/ExecutorFinish to skip calling</li>
+<li>AfterTriggerBeginQuery/AfterTriggerEndQuery.  This does not necessarily</li>
+<li>mean that the <a class="wiki-source-link" href="../../source/src/test/regress/pg_regress.c.html#L164" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/test/regress/pg_regress.c.html&quot;}, '*');">plan</a> can&#x27;t queue any AFTER triggers; just that the caller</li>
+<p>~~~</p>
+</ul>
+<h2>失敗モードと境界条件</h2>
+<p>まだ解析していません。</p>
+<h2>保守担当者向けメモ</h2>
+<ul>
+<li>後続フェーズで、ソース本文の文脈と caller/callee 情報を使ってこのページを強化する。</li>
+</ul><script>
+(function() {
+  function notifyParent() {
+    if (parent === window) return;
+    parent.postMessage({type: "frame-location", frame: window.name || "", href: window.location.href}, "*");
+  }
+  document.addEventListener("click", function(event) {
+    const link = event.target.closest("a[data-panel]");
+    if (!link || parent === window) return;
+    parent.postMessage({type: "source-link", panel: link.dataset.panel}, "*");
+  });
+  window.addEventListener("load", notifyParent);
+  window.addEventListener("hashchange", notifyParent);
+})();
+</script></body></html>

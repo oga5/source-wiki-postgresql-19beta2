@@ -29,15 +29,15 @@
 <li>呼び出し元: <code>multipleOfPowerOf5</code></li>
 <li>呼び出し先: なし</li>
 <li>呼び出し元サイト: <code>multipleOfPowerOf5</code> at <code>src/common/f2s.c:104:9</code> (direct, confidence=high, resolved=<a class="wiki-entity-link" href="src__common__f2s_c__pow5Factor.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__common__f2s_c__pow5Factor.html&quot;, &quot;source&quot;: &quot;source/src/common/f2s.c.html#L80&quot;}, '*');"><code>symbol:src/common/f2s.c#pow5Factor</code></a>)</li>
-<li>呼び出しサイト: <a class="wiki-source-link" href="../../source/src/include/c.h.html#L950" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/c.h.html&quot;}, '*');"><code>Assert</code></a> at <code>src/common/f2s.c:87:3</code> (unresolved)</li>
+<li>呼び出しサイト: <code>Assert</code> at <code>src/common/f2s.c:87:3</code> (unresolved)</li>
 </ul>
 <h2>関連データ構造</h2>
 <p><code>uint32</code></p>
 <h2>ソース抜粋</h2>
-<p>~~~c static <a class="wiki-source-link" href="../../source/src/include/c.h.html#L116" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/c.h.html&quot;}, '*');">inline</a> uint32 pow5Factor(uint32 value) { uint32		count = 0;</p>
-<p>for (;;) { <a class="wiki-source-link" href="../../source/src/include/c.h.html#L950" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/c.h.html&quot;}, '*');">Assert</a>(value != 0); const uint32 q = value / 5; const uint32 r = value % 5;</p>
+<p>~~~c static inline uint32 pow5Factor(uint32 value) { uint32		<a class="wiki-source-link" href="../../source/src/include/lib/ilist.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__lib__ilist_h__count.html&quot;}, '*');">count</a> = 0;</p>
+<p>for (;;) { Assert(value != 0); const uint32 q = value / 5; const uint32 r = value % 5;</p>
 <p>if (r != 0) break;</p>
-<p>value = q; ++count; } return count; } ~~~</p>
+<p>value = q; ++<a class="wiki-source-link" href="../../source/src/include/lib/ilist.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__lib__ilist_h__count.html&quot;}, '*');">count</a>; } return <a class="wiki-source-link" href="../../source/src/include/lib/ilist.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__lib__ilist_h__count.html&quot;}, '*');">count</a>; } ~~~</p>
 <h2>失敗モードと境界条件</h2>
 <p>まだ解析していません。</p>
 <h2>保守担当者向けメモ</h2>

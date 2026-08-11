@@ -34,7 +34,7 @@
 <h2>関連データ構造</h2>
 <p><code>LogicalDecodingContext</code>, <code>TransactionId</code></p>
 <h2>ソース抜粋</h2>
-<p>~~~c static <a class="wiki-source-link" href="../../source/src/include/c.h.html#L116" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/c.h.html&quot;}, '*');">inline</a> bool <a class="wiki-source-link" href="../../source/src/backend/replication/logical/decode.c.html#L571" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__replication__logical__decode_c__FilterPrepare.html&quot;}, '*');">FilterPrepare</a>(LogicalDecodingContext *ctx, TransactionId xid, const char *gid) { /*</p>
+<p>~~~c static inline bool <a class="wiki-source-link" href="../../source/src/backend/replication/logical/decode.c.html#L571" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__replication__logical__decode_c__FilterPrepare.html&quot;}, '*');">FilterPrepare</a>(LogicalDecodingContext *ctx, TransactionId xid, const char *gid) { /*</p>
 <ul>
 <li>Skip if decoding of two-phase transactions at PREPARE time <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> not</li>
 <li>enabled. In that case, all two-phase transactions are considered</li>
@@ -44,7 +44,7 @@
 </ul>
 <p>/*</p>
 <ul>
-<li>The filter_prepare <a class="wiki-source-link" href="../../source/src/tools/ifaddrs/test_ifaddrs.c.html#L45" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__tools__ifaddrs__test_ifaddrs_c__callback.html&quot;}, '*');">callback</a> <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> optional. When not supplied, all</li>
+<li>The filter_prepare callback <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> optional. When not supplied, all</li>
 <li>prepared transactions should go through.</li>
 <p>*/ if (ctx-&gt;callbacks.filter_prepare_cb == NULL) return <a class="wiki-source-link" href="../../source/src/tools/pg_bsd_indent/indent_globs.h.html#L43" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/tools/pg_bsd_indent/indent_globs.h.html&quot;}, '*');">false</a>;</p>
 </ul>

@@ -1,45 +1,52 @@
 <!doctype html>
 <html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>src/include/catalog/objectaddress.h.md</title><link rel="stylesheet" href="../../../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../../../source/src/include/catalog/objectaddress.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/catalog/objectaddress.h.html&quot;}, '*');">src/include/catalog/objectaddress.h</a></h1>
 <h2>概要</h2>
-<p>PostgreSQLのシステムカタログ上の任意のオブジェクトを一意に識別するための <code>ObjectAddress</code> 構造体と、それらを操作・解決するための関数群を定義するヘッダーファイルです。</p>
+<p>PostgreSQLのシステムカタログ内における任意のデータベースオブジェクトを一意に識別するための <code>ObjectAddress</code> 構造体と、それらを操作・解決するための関数群を提供するヘッダーファイルです。</p>
 <h2>モジュール内での役割</h2>
-<p><code>src/include/catalog</code> サブシステムにおいて、型やテーブル、関数、制約などの多様なデータベースオブジェクトを横断的に扱うための共通インターフェースを提供します。実装本体はペアファイルである <a class="wiki-source-link" href="../../../../source/src/backend/catalog/objectaddress.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/catalog/objectaddress.c.html&quot;}, '*');"><code>src/backend/catalog/objectaddress.c</code></a> に記述されています。</p>
+<p><code>src/include/catalog</code> サブシステムに属し、オブジェクトの依存関係管理、権限チェック、DDLコマンド、イベントトリガーなどで利用される共通のアドレス表現を定義しています。実体側の処理はペアとなる <a class="wiki-source-link" href="../../../../source/src/backend/catalog/objectaddress.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/catalog/objectaddress.c.html&quot;}, '*');"><code>src/backend/catalog/objectaddress.c</code></a> に実装されています。</p>
 <h2>責務</h2>
 <ul>
-<li>データベースオブジェクトの位置（カタログOID、オブジェクトOID、サブID）を保持する <code>ObjectAddress</code> 構造体の定義。</li>
-<li>パーサ表現やレンジバリアントからのオブジェクトアドレス解決関数の宣言。</li>
-<li>カタログメタデータや属性番号、オブジェクト所有権の検証、およびオブジェクトの文字列表現・説明を取得するユーティリティ関数の提供。</li>
+<li>任意のデータベースオブジェクトを指し示す <code>ObjectAddress</code> 構造体の定義と、初期化マクロの提供。</li>
+<li>パースツリーや名前からオブジェクトのアドレスを解決するインターフェースの宣言。</li>
+<li>オブジェクトの所有権チェックや、システムカタログのメタデータ（属性番号、カタログIDなど）を取得するヘルパー関数の公開。</li>
+<li>オブジェクトの説明文や識別子文字列を取得する記述用APIの提供。</li>
 </ul>
 <h2>重要なシンボル</h2>
 <ul>
-<li><code>struct ObjectAddress</code>: カタログクラスID、オブジェクトID、サブID（列番号など）を保持する基本構造体。</li>
-<li><a class="wiki-source-link" href="../../../../source/src/include/catalog/objectaddress.h.html#L41" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/catalog/objectaddress.h.html&quot;}, '*');"><code>ObjectAddressSet</code></a> / <a class="wiki-source-link" href="../../../../source/src/include/catalog/objectaddress.h.html#L34" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/catalog/objectaddress.h.html&quot;}, '*');"><code>ObjectAddressSubSet</code></a>: アドレス構造体に値を効率的に設定するためのマクロ。</li>
-<li><code>get_object_address</code>: 解析ツリー上のオブジェクト表現から <code>ObjectAddress</code> を解決する主要関数。</li>
-<li><code>check_object_ownership</code>: 指定されたロールがオブジェクトに対して所有権を持っているかを検証する関数。</li>
-<li><code>getObjectDescription</code>: オブジェクトアドレスから人間が読める説明文字列を取得する関数。</li>
+<li><code>ObjectAddress</code>: クラスID（<code>pg_class</code>）、オブジェクトID（OID）、サブID（列番号など）を保持するコア構造体。</li>
+<li><a class="wiki-source-link" href="../../../../source/src/include/catalog/objectaddress.h.html#L41" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/catalog/objectaddress.h.html&quot;}, '*');"><code>ObjectAddressSet</code></a> / <a class="wiki-source-link" href="../../../../source/src/include/catalog/objectaddress.h.html#L34" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/catalog/objectaddress.h.html&quot;}, '*');"><code>ObjectAddressSubSet</code></a>: <code>ObjectAddress</code> 構造体を簡潔に初期化するためのマクロ。</li>
+<li><code>get_object_address</code>: 構文木やオブジェクト種別から対応する <code>ObjectAddress</code> を解決する関数。</li>
+<li><code>check_object_ownership</code>: 指定されたロールがオブジェクトに対する所有権を持っているか検証する関数。</li>
+<li><code>getObjectDescription</code>: オブジェクトの文字列表現や説明を取得する関数。</li>
 </ul>
 <h2>制御フローとデータフロー</h2>
-<p>1. クエリ解析やコマンド実行時にパーサノード（<code>Node *object</code> や <code>RangeVar *rel</code>）が生成されます。 2. <code>get_object_address</code> または <a class="wiki-source-link" href="../../../../source/src/backend/catalog/objectaddress.c.html#L1318" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__catalog__objectaddress_c__get_object_address_rv.html&quot;}, '*');"><code>get_object_address_rv</code></a> が呼び出され、内部でシステムカタログやリレーションキャッシュを引いて <code>ObjectAddress</code> を構築します。 3. 取得した <code>ObjectAddress</code> は、依存関係の追跡、アクセス権限の確認、およびドロップ・コメント等のコマンド処理へ渡されます。</p>
+<ul>
+<li>DDLやパーサーからの入力（<code>Node *object</code> や <code>RangeVar</code>）を受け取り、<code>get_object_address</code> を通じてシステムカタログやリレーションキャッシュを参照し、<code>ObjectAddress</code> を構築します。</li>
+<li>構築された <code>ObjectAddress</code> は、<code>check_object_ownership</code> による権限検証や、依存関係・イベントトリガーの処理フローへと渡されます。</li>
+</ul>
 <h2>直接依存</h2>
 <ul>
-<li><code>access/htup.h</code>: ヒープタプル操作の定義。</li>
-<li><code>catalog/syscache_ids.h</code>: システムキャッシュ識別子の定義。</li>
-<li><code>nodes/parsenodes.h</code>: パーサノード構造体の定義。</li>
-<li><code>storage/lockdefs.h</code>: ロックモード定数の定義。</li>
-<li><code>utils/relcache.h</code>: リレーションキャッシュ構造体の定義。</li>
+<li><code>access/htup.h</code></li>
+<li><code>catalog/syscache_ids.h</code></li>
+<li><code>nodes/parsenodes.h</code></li>
+<li><code>storage/lockdefs.h</code></li>
+<li><code>utils/relcache.h</code></li>
 </ul>
 <h2>関連コード</h2>
 <ul>
-<li><a class="wiki-source-link" href="../../../../source/src/backend/catalog/objectaddress.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/catalog/objectaddress.c.html&quot;}, '*');"><code>src/backend/catalog/objectaddress.c</code></a>: 本ヘッダーで宣言された関数の実体を実装するペアファイル。</li>
-<li><a class="wiki-source-link" href="../../../../source/src/include/catalog/dependency.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/catalog/dependency.h.html&quot;}, '*');"><code>src/include/catalog/dependency.h</code></a>: オブジェクト間の依存関係管理。</li>
+<li><a class="wiki-source-link" href="../../../../source/src/backend/catalog/objectaddress.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/catalog/objectaddress.c.html&quot;}, '*');"><code>src/backend/catalog/objectaddress.c</code></a>: 本ヘッダーで宣言されている関数の実体と <a class="wiki-source-link" href="../../../../source/src/backend/catalog/objectaddress.c.html#L124" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/catalog/objectaddress.c.html&quot;}, '*');"><code>ObjectProperty</code></a> などの内部構造体を定義するペアファイル。</li>
+<li><a class="wiki-source-link" href="../../../../source/src/include/catalog/dependency.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/catalog/dependency.h.html&quot;}, '*');"><code>src/include/catalog/dependency.h</code></a>: オブジェクト間の依存関係追跡で <code>ObjectAddress</code> を利用するモジュール。</li>
 </ul>
 <h2>読者向けメモ</h2>
 <ul>
-<li><code>objectSubId</code> は、テーブル自体の場合は <code>0</code>、テーブルの列などオブジェクト内部のサブ要素を指す場合に正の値をとります。</li>
-<li>オブジェクト種別（<code>ObjectType</code>）やカタログメタデータの逆引きを行うヘルパー関数が多数定義されており、DDLコマンドの実装で頻繁に利用されます。</li>
+<li><code>ObjectAddress</code> はサブID（<code>objectSubId</code>）に <code>0</code> を指定することでテーブルや関数などの独立したオブジェクトを指し、非ゼロを指定することでテーブル列などの下位要素を指します。</li>
+<li><code>classId</code> には常にシステムカタログ（通常は <code>pg_class</code> に登録されているカタログ）の OID が入ります。</li>
 </ul>
 <h2>シンボルページ</h2>
 <ul>
+<li><a href="../../../symbols/src__include__catalog__objectaddress_h__check_object_ownership.html" target="wiki-view"><code>check_object_ownership</code></a></li>
+<li><a href="../../../symbols/src__include__catalog__objectaddress_h__getObjectDescription.html" target="wiki-view"><code>getObjectDescription</code></a></li>
+<li><a href="../../../symbols/src__include__catalog__objectaddress_h__get_object_address.html" target="wiki-view"><code>get_object_address</code></a></li>
 <li><a href="../../../symbols/src__include__catalog__objectaddress_h__ObjectAddress.html" target="wiki-view"><code>ObjectAddress</code></a></li>
 </ul><script>
 (function() {

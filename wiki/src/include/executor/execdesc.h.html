@@ -1,43 +1,46 @@
 <!doctype html>
 <html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>src/include/executor/execdesc.h.md</title><link rel="stylesheet" href="../../../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../../../source/src/include/executor/execdesc.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/executor/execdesc.h.html&quot;}, '*');">src/include/executor/execdesc.h</a></h1>
 <h2>概要</h2>
-<p><a class="wiki-source-link" href="../../../../source/src/include/executor/execdesc.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/executor/execdesc.h.html&quot;}, '*');"><code>src/include/executor/execdesc.h</code></a> は、PostgreSQLのクエリ実行エンジンにおいて、実行対象のクエリやプランに関する情報をカプセル化するデータ構造と関連アクセサを定義するヘッダーファイルです。</p>
+<p><a class="wiki-source-link" href="../../../../source/src/include/executor/execdesc.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/executor/execdesc.h.html&quot;}, '*');"><code>src/include/executor/execdesc.h</code></a> は、PostgreSQLのクエリ実行エンジンにおいてプランとクエリの記述子（Descriptor）を定義するヘッダーファイルです。実行器（Executor）とその関連モジュールで使用される主要な構造体やアクセサ関数を提供します。</p>
 <h2>モジュール内での役割</h2>
-<p>executor サブシステムの一部として、プランナーの出力結果とエグゼキューターの実行状態を結びつける役割を持ちます。周辺の実行制御モジュールがクエリのライフサイクル全体で参照する共通のコンテキストを定義しています。</p>
+<p><code>src/include/executor</code> サブシステムの一部として、プランツリーの実行に必要なコンテキスト情報をカプセル化する役割を持ちます。周辺の実行関連ヘッダー（<a class="wiki-source-link" href="../../../../source/src/include/executor/executor.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/executor/executor.h.html&quot;}, '*');"><code>executor.h</code></a> や各種 <code>node*.h</code>）と連携し、クエリ実行のライフサイクル全体を通じて共有されるデータ構造の基礎を定義します。</p>
 <h2>責務</h2>
 <ul>
-<li>クエリ実行に必要なあらゆる情報を保持する <code>QueryDesc</code> 構造体の定義。</li>
-<li>クエリ文字列、プランツリー、スナップショット、出力先（<code>DestReceiver</code>）、パラメータ等の保持。</li>
-<li>エグゼキューターのライフサイクル（<code>ExecutorStart</code> 等）で初期化・更新される実行状態フィールドの提供。</li>
+<li>クエリの実行に必要な全情報を集約する <code>QueryDesc</code> 構造体の定義。</li>
+<li><code>CreateQueryDesc</code> によるクエリ記述子の初期化インタフェースの提供。</li>
+<li><code>FreeQueryDesc</code> によるクエリ記述子および関連リソースの解放インタフェースの提供。</li>
 </ul>
 <h2>重要なシンボル</h2>
 <ul>
-<li><code>QueryDesc</code>: クエリ実行に必要な情報を一元管理する核心的な構造体。</li>
-<li><code>CreateQueryDesc</code>: <code>QueryDesc</code> を生成する関数（<a class="wiki-source-link" href="../../../../source/src/backend/tcop/pquery.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/tcop/pquery.c.html&quot;}, '*');"><code>pquery.c</code></a>）。</li>
-<li><code>FreeQueryDesc</code>: <code>QueryDesc</code> および関連リソースを解放する関数（<a class="wiki-source-link" href="../../../../source/src/backend/tcop/pquery.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/tcop/pquery.c.html&quot;}, '*');"><code>pquery.c</code></a>）。</li>
+<li><code>QueryDesc</code> (struct): 実行器がクエリを実行するために必要な情報（操作種別、計画文、スナップショット、出力先、実行時状態など）をすべてカプセル化する構造体。</li>
+<li><code>CreateQueryDesc</code> (function): 引数として渡された計画文やスナップショットなどから <code>QueryDesc</code> を生成・初期化する関数。</li>
+<li><code>FreeQueryDesc</code> (function): 割り当てられた <code>QueryDesc</code> とその内部リソースを解放する関数。</li>
 </ul>
 <h2>制御フローとデータフロー</h2>
 <ul>
-<li><code>CreateQueryDesc</code> により <code>QueryDesc</code> が生成され、クエリ文字列やプラン、スナップショット、出力先が設定されます。</li>
-<li>エグゼキューターの起動時に <code>ExecutorStart</code> が呼び出され、<code>QueryDesc</code> 内の <code>estate</code> や <code>planstate</code>、結果タプルの <code>tupDesc</code> が設定されます。</li>
-<li>実行フェーズおよび終了フェーズにおいて、この記述子を参照しながらタプルの処理と結果の返送が行われます。</li>
+<li>**作成フェーズ**: 上位のトランスポート層や <a class="wiki-source-link" href="../../../../source/src/backend/tcop/pquery.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/tcop/pquery.c.html&quot;}, '*');"><code>pquery.c</code></a> から <code>CreateQueryDesc</code> が呼び出され、<code>QueryDesc</code> が構築されます。この時点では <a class="wiki-source-link" href="../../../../source/src/backend/postmaster/datachecksum_state.c.html#L380" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/postmaster/datachecksum_state.c.html&quot;}, '*');"><code>operation</code></a>、<code>plannedstmt</code>、<code>snapshot</code>、<code>dest</code> などの静的なクエリ情報が設定されます。</li>
+<li>**実行フェーズ**: <code>ExecutorStart</code> などの実行フェーズにおいて、<code>QueryDesc</code> 内の <code>tupDesc</code>、<code>estate</code>、<code>planstate</code> などの実行時状態が設定・更新されます。</li>
+<li>**解放フェーズ**: クエリの実行完了後、<code>FreeQueryDesc</code> が呼び出されてメモリやリソースがクリーンアップされます。</li>
 </ul>
 <h2>直接依存</h2>
 <ul>
-<li><code>nodes/execnodes.h</code></li>
-<li><code>tcop/dest.h</code></li>
+<li><code>nodes/execnodes.h</code>: 実行ノードやプラン関連の基礎ノード構造体を提供します。</li>
+<li><code>tcop/dest.h</code>: タプル出力先を制御する <code>DestReceiver</code> 構造体を提供します。</li>
 </ul>
 <h2>関連コード</h2>
 <ul>
-<li><a class="wiki-source-link" href="../../../../source/src/backend/tcop/pquery.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/tcop/pquery.c.html&quot;}, '*');"><code>src/backend/tcop/pquery.c</code></a></li>
-<li><a class="wiki-source-link" href="../../../../source/src/include/executor/executor.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/executor/executor.h.html&quot;}, '*');"><code>src/include/executor/executor.h</code></a></li>
+<li><a class="wiki-source-link" href="../../../../source/src/backend/tcop/pquery.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/tcop/pquery.c.html&quot;}, '*');"><code>src/backend/tcop/pquery.c</code></a>: <code>CreateQueryDesc</code> や <code>FreeQueryDesc</code> の実体が定義されており、クエリのライフサイクル管理を行います。</li>
+<li><a class="wiki-source-link" href="../../../../source/src/include/executor/executor.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/executor/executor.h.html&quot;}, '*');"><code>src/include/executor/executor.h</code></a>: 実行器全体の主要な関数やインタフェースを定義しています。</li>
 </ul>
 <h2>読者向けメモ</h2>
 <ul>
-<li><code>QueryDesc</code> はユーティリティ文を保持することもありますが、エグゼキューターへ直接渡してはならないという制約があります。</li>
+<li><code>QueryDesc</code> はユーティリティ文をサポートするためにユーティリティ用の文を格納することもありますが、それらは実際の実行器には渡されません。</li>
+<li><code>query_instr</code> などの計装（Instrumentation）オプションは、実行性能のプロファイリングや統計情報の収集に利用されます。</li>
 </ul>
 <h2>シンボルページ</h2>
 <ul>
+<li><a href="../../../symbols/src__include__executor__execdesc_h__CreateQueryDesc.html" target="wiki-view"><code>CreateQueryDesc</code></a></li>
+<li><a href="../../../symbols/src__include__executor__execdesc_h__FreeQueryDesc.html" target="wiki-view"><code>FreeQueryDesc</code></a></li>
 <li><a href="../../../symbols/src__include__executor__execdesc_h__QueryDesc.html" target="wiki-view"><code>QueryDesc</code></a></li>
 </ul><script>
 (function() {

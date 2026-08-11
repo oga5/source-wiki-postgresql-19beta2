@@ -1,39 +1,34 @@
 <!doctype html>
 <html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>src/include/access/sdir.h.md</title><link rel="stylesheet" href="../../../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../../../source/src/include/access/sdir.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/access/sdir.h.html&quot;}, '*');">src/include/access/sdir.h</a></h1>
 <h2>概要</h2>
-<p><a class="wiki-source-link" href="../../../../source/src/include/access/sdir.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/access/sdir.h.html&quot;}, '*');"><code>src/include/access/sdir.h</code></a> は、PostgreSQL におけるテーブルやインデックスのスキャン方向（<a class="wiki-source-link" href="../../../../source/src/include/nodes/plannodes.h.html#L538" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__nodes__plannodes_h__Scan.html&quot;}, '*');">Scan</a> Direction）を定義するヘッダーファイルです。スキャンの進行方向を判定・操作するための共通の列挙型とマクロを提供します。</p>
+<p>PostgreSQLのテーブルおよびインデックススキャンにおける走査方向（スキャンディレクション）の定義と関連マクロを提供するヘッダーファイルです。</p>
 <h2>モジュール内での役割</h2>
-<p><code>src/include/access</code> モジュール群の中で、検索やスキャン操作を行う他のコンポーネント（例: <a class="wiki-source-link" href="../../../../source/src/include/access/relscan.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/access/relscan.h.html&quot;}, '*');"><code>relscan.h</code></a> や各種インデックスアクセスメソッド）に対して、一貫したスキャン方向の抽象化を提供します。個別のアクセスメソッドに依存しない独立したプリミティブとして機能します。</p>
+<p><code>src/include/access</code> モジュールの一部として、アクセスメソッド共通で使用される基本型の一つを定義しています。テーブル走査やインデックス走査を管理する <a class="wiki-source-link" href="../../../../source/src/include/access/relscan.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/access/relscan.h.html&quot;}, '*');"><code>relscan.h</code></a> や各アクセスメソッドの実装から参照されます。</p>
 <h2>責務</h2>
 <ul>
-<li>スキャン方向を表す <code>ScanDirection</code> 列挙型の定義（前方、後方、無移動）。</li>
-<li>スキャン方向の有効性を検証するインラインマクロの提供。</li>
-<li>2つのスキャン方向を組み合わせる計算や、特定の方向状態を判定するヘルパーマクロの提供。</li>
+<li>スキャン方向を表す列挙型 <code>ScanDirection</code> の定義（前進、後退、移動なし）。</li>
+<li>スキャン方向が有効範囲内か判定する検証マクロの提供。</li>
+<li>2つのスキャン方向を合成・比較するためのユーティリティマクロの提供。</li>
 </ul>
 <h2>重要なシンボル</h2>
 <ul>
-<li><code>ScanDirection</code>: スキャンの方向を表現する列挙型（<code>BackwardScanDirection = -1</code>, <code>NoMovementScanDirection = 0</code>, <code>ForwardScanDirection = 1</code>）。</li>
-<li><code>ScanDirectionCombine(a, b)</code>: 2つの方向を乗算により合成し、実効的な方向を算出するマクロ。</li>
-<li><code>ScanDirectionIsValid(direction)</code>: 指定された方向が有効な範囲内か判定するマクロ。</li>
-<li><a class="wiki-source-link" href="../../../../source/src/include/access/sdir.h.html#L50" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/access/sdir.h.html&quot;}, '*');"><code>ScanDirectionIsBackward</code></a> / <a class="wiki-source-link" href="../../../../source/src/include/access/sdir.h.html#L64" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/access/sdir.h.html&quot;}, '*');"><code>ScanDirectionIsForward</code></a> / <a class="wiki-source-link" href="../../../../source/src/include/access/sdir.h.html#L57" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/access/sdir.h.html&quot;}, '*');"><code>ScanDirectionIsNoMovement</code></a>: それぞれ特定の方向状態を判定するマクロ群。</li>
+<li><code>ScanDirection</code>: スキャン方向を表現する列挙型（<code>BackwardScanDirection = -1</code>, <code>NoMovementScanDirection = 0</code>, <code>ForwardScanDirection = 1</code>）。</li>
+<li><code>ScanDirectionCombine(a, b)</code>: 2つの方向の積を計算し、方向の組み合わせ効果を算出するマクロ。</li>
+<li><code>ScanDirectionIsValid(direction)</code>: 指定された方向が有効な列挙値の範囲内か判定するマクロ。</li>
+<li><code>ScanDirectionIsBackward(direction)</code> / <code>ScanDirectionIsForward(direction)</code>: それぞれ後退・前進スキャンであるかを判定するマクロ。</li>
 </ul>
 <h2>制御フローとデータフロー</h2>
-<p>このファイルはデータ型とマクロの定義のみを提供するため、独立した制御フローを持ちません。</p>
-<ul>
-<li>データフローとしては、クエリ実行エンジンやインデックススキャン処理が <code>ScanDirection</code> 値を入力として受け取り、各判定マクロ（<a class="wiki-source-link" href="../../../../source/src/include/access/sdir.h.html#L64" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/access/sdir.h.html&quot;}, '*');"><code>ScanDirectionIsForward</code></a> 等）で分岐処理を行います。</li>
-<li><a class="wiki-source-link" href="../../../../source/src/include/access/sdir.h.html#L36" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/access/sdir.h.html&quot;}, '*');"><code>ScanDirectionCombine</code></a> では、値が <code>-1</code> と <code>1</code> である特性を利用して、方向の反転や合成を数式によって直接行います。</li>
-</ul>
+<p>実行コードや複雑な制御フローは含まれません。スキャンを実行する上流のクエリ実行エンジンから下流のアクセスメソッドへ「どの方向にレコードを辿るか」を伝達するための共通データ定義として機能します。</p>
 <h2>直接依存</h2>
-<p>このファイルには直接的な <code>#include</code> 依存関係はありません。単独で完結しています。</p>
+<p>直接的なインクルードファイルはありません。プリプロセッサガード（<a class="wiki-source-link" href="../../../../source/src/include/access/sdir.h.html#L15" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/access/sdir.h.html&quot;}, '*');"><code>SDIR_H</code></a>）のみで構成されています。</p>
 <h2>関連コード</h2>
 <ul>
-<li><a class="wiki-source-link" href="../../../../source/src/include/access/relscan.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/access/relscan.h.html&quot;}, '*');"><code>src/include/access/relscan.h</code></a>: リテールおよびインデックススキャンの状態管理で <code>ScanDirection</code> を利用します。</li>
-<li><a class="wiki-source-link" href="../../../../source/src/include/access/nbtree.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/access/nbtree.h.html&quot;}, '*');"><code>src/include/access/nbtree.h</code></a> およびその他のアクセスメソッド: スキャン中のカーソル移動方向の制御にこのヘッダーの定義を使用します。</li>
+<li><a class="wiki-source-link" href="../../../../source/src/include/access/relscan.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/access/relscan.h.html&quot;}, '*');"><code>src/include/access/relscan.h</code></a>: スキャン状態を管理する構造体の中で <code>ScanDirection</code> を保持します。</li>
+<li>各アクセスメソッド（<a class="wiki-source-link" href="../../../../source/src/include/access/nbtree.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/access/nbtree.h.html&quot;}, '*');"><code>nbtree.h</code></a>, <a class="wiki-source-link" href="../../../../source/src/include/access/heapam.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/access/heapam.h.html&quot;}, '*');"><code>heapam.h</code></a> など）: スキャン時のカーソル移動方向の制御にこの定義を利用します。</li>
 </ul>
 <h2>読者向けメモ</h2>
 <ul>
-<li>方向の値に <code>-1</code>（後方）と <code>1</code>（前方）が明示的に割り当てられているのは、乗算による方向反転（<a class="wiki-source-link" href="../../../../source/src/include/access/sdir.h.html#L36" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/access/sdir.h.html&quot;}, '*');"><code>ScanDirectionCombine</code></a>）などの数学的トリックを可能にするための設計上の意図です。</li>
-<li>通常の実行時スキャンでは <code>NoMovementScanDirection</code> は使用されませんが、定義上含まれています。</li>
+<li>方向の値として <code>-1</code>（後退）、<code>0</code>（移動なし）、<code>1</code>（前進）という数値が割り当てられているため、<a class="wiki-source-link" href="../../../../source/src/include/access/sdir.h.html#L36" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/access/sdir.h.html&quot;}, '*');"><code>ScanDirectionCombine</code></a> のように乗算による数学的トリックが利用されています。変更時は数値割り当ての前提に注意してください。</li>
 </ul>
 <h2>シンボルページ</h2>
 <ul>

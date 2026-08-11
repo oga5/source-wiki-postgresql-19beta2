@@ -39,7 +39,7 @@
 <p>llvm::SmallVector&lt;llvm::User *, 8&gt; Worklist; Worklist.push_back(&amp;<a class="wiki-source-link" href="../../source/src/common/md5.c.html#L63" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/common/md5.c.html&quot;}, '*');">I</a>);</p>
 <p>running_instcount++;</p>
 <p>while (!Worklist.empty()) { llvm::User *U = Worklist.pop_back_val();</p>
-<p>/* visited <a class="wiki-source-link" href="../../source/src/backend/regex/regc_locale.c.html#L487" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__regex__regc_locale_c__before.html&quot;}, '*');">before</a> */ if (!Visited.insert(U).second) continue;</p>
+<p>/* visited before */ if (!Visited.insert(U).second) continue;</p>
 <p>for (auto &amp;OI : U-&gt;operands()) { llvm::User *Operand = llvm::dyn_cast&lt;llvm::User&gt;(OI); if (!Operand) continue; if (llvm::isa&lt;llvm::BlockAddress&gt;(Operand)) continue; if (auto *GV = llvm::dyn_cast&lt;llvm::GlobalVariable&gt;(Operand)) { referencedVars.insert(GV); if (GV-&gt;hasInitializer()) Worklist.push_back(GV-&gt;getInitializer()); continue; } if (auto *CF = llvm::dyn_cast&lt;llvm::Function&gt;(Operand)) { referencedFunctions.insert(CF); continue; } Worklist.push_back(Operand); } } } } } ~~~</p>
 <h2>失敗モードと境界条件</h2>
 <p>まだ解析していません。</p>

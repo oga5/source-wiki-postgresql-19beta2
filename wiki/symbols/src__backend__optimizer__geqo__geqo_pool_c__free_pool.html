@@ -14,7 +14,7 @@
 </ul>
 <h3>ソース抜粋</h3>
 <p>~~~c void <a class="wiki-source-link" href="../../source/src/backend/optimizer/geqo/geqo_pool.c.html#L68" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__geqo__geqo_pool_c__free_pool.html&quot;}, '*');">free_pool</a>(PlannerInfo *<a class="wiki-source-link" href="../../source/src/backend/optimizer/util/var.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__var_c__root.html&quot;}, '*');">root</a>, Pool *pool) { Chromosome *chromo; int			i;</p>
-<p>/* all gene */ chromo = (Chromosome *) pool-&gt;data; /* vector of all chromos */ for (i = 0; i &lt; pool-&gt;<a class="wiki-source-link" href="../../source/src/backend/optimizer/geqo/geqo_eval.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__geqo__geqo_eval_c__size.html&quot;}, '*');">size</a>; i++) pfree(chromo[i].string);</p>
+<p>/* all gene */ chromo = (Chromosome *) pool-&gt;data; /* vector of all chromos */ for (i = 0; i &lt; pool-&gt;size; i++) pfree(chromo[i].string);</p>
 <p>/* all chromosome */ pfree(pool-&gt;data);</p>
 <p>/* pool */ pfree(pool); } ~~~</p>
 <h2>目的</h2>

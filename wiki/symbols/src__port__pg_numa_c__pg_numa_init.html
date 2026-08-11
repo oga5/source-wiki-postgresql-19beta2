@@ -36,10 +36,10 @@
 <p>~~~c int <a class="wiki-source-link" href="../../source/src/port/pg_numa.c.html#L47" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__port__pg_numa_c__pg_numa_init.html&quot;}, '*');">pg_numa_init</a>(void) { int			r;</p>
 <p>/*</p>
 <ul>
-<li>XXX libnuma versions <a class="wiki-source-link" href="../../source/src/backend/regex/regc_locale.c.html#L487" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__regex__regc_locale_c__before.html&quot;}, '*');">before</a> 2.0.19 don&#x27;t handle EPERM by disabling</li>
+<li>XXX libnuma versions before 2.0.19 don&#x27;t handle EPERM by disabling</li>
 <li>NUMA, which then leads to unexpected failures later. This affects</li>
 <li>containers that disable get_mempolicy by a seccomp profile.</li>
-<p>*/ if (get_mempolicy(NULL, NULL, 0, 0, 0) &lt; 0 &amp;&amp; (errno == EPERM)) r = -1; else r = numa_available();</p>
+<p>*/ if (get_mempolicy(NULL, NULL, 0, 0, 0) &lt; 0 &amp;&amp; (<a class="wiki-source-link" href="../../source/src/include/access/xlogreader.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__access__xlogreader_h__errno.html&quot;}, '*');">errno</a> == EPERM)) r = -1; else r = numa_available();</p>
 </ul>
 <p>return r; } ~~~</p>
 <h2>失敗モードと境界条件</h2>

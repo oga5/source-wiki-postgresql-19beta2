@@ -40,9 +40,9 @@
 <li>This function might be called for a regular file or for a junction</li>
 <li>point (which we use to emulate symlinks).  The latter must be unlinked</li>
 <li>with rmdir() on Windows.  Before we worry about any of that, let&#x27;s see</li>
-<li>if we can unlink directly, since that&#x27;s <a class="wiki-source-link" href="../../source/src/include/port/atomics/generic-msvc.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__port__atomics__generic-msvc_h__expected.html&quot;}, '*');">expected</a> to be the most common</li>
+<li>if we can unlink directly, since that&#x27;s expected to be the most common</li>
 <li>case.</li>
-<p>*/ if (unlink(path) == 0) return 0; if (errno != EACCES) return -1;</p>
+<p>*/ if (unlink(path) == 0) return 0; if (<a class="wiki-source-link" href="../../source/src/include/access/xlogreader.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__access__xlogreader_h__errno.html&quot;}, '*');">errno</a> != EACCES) return -1;</p>
 </ul>
 <p>/*</p>
 <ul>
@@ -64,12 +64,12 @@
 </ul>
 <p>/*</p>
 <ul>
-<li>We need to loop because even though PostgreSQL uses <a class="wiki-source-link" href="../../source/src/backend/optimizer/util/var.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__var_c__flags.html&quot;}, '*');">flags</a> that allow</li>
+<li>We need to loop because even though PostgreSQL uses flags that allow</li>
 <li>unlink while the file <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> <a class="wiki-source-link" href="../../source/src/include/port.h.html#L366" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/port.h.html&quot;}, '*');">open</a>, other applications might have the file</li>
-<li><a class="wiki-source-link" href="../../source/src/include/port.h.html#L366" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/port.h.html&quot;}, '*');">open</a> without those <a class="wiki-source-link" href="../../source/src/backend/optimizer/util/var.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__var_c__flags.html&quot;}, '*');">flags</a>.  However, we won&#x27;t wait indefinitely for</li>
+<li><a class="wiki-source-link" href="../../source/src/include/port.h.html#L366" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/port.h.html&quot;}, '*');">open</a> without those flags.  However, we won&#x27;t wait indefinitely for</li>
 <li>someone else to <a class="wiki-source-link" href="../../source/src/interfaces/libpq/win32.h.html#L12" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq/win32.h.html&quot;}, '*');">close</a> the file, as the caller might be holding locks</li>
 <li>and blocking other backends.</li>
-<p>*/ while ((is_lnk ? rmdir(path) : unlink(path)) &lt; 0) { if (errno != EACCES) return -1; if (++loops &gt; 100)		/* time out after 10 sec */ return -1; pg_usleep(100000);		/* us */ } ~~~</p>
+<p>*/ while ((is_lnk ? rmdir(path) : unlink(path)) &lt; 0) { if (<a class="wiki-source-link" href="../../source/src/include/access/xlogreader.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__access__xlogreader_h__errno.html&quot;}, '*');">errno</a> != EACCES) return -1; if (++loops &gt; 100)		/* time out <a class="wiki-source-link" href="../../source/src/include/lib/ilist.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__lib__ilist_h__after.html&quot;}, '*');">after</a> 10 sec */ return -1; pg_usleep(100000);		/* us */ } ~~~</p>
 </ul>
 <h2>失敗モードと境界条件</h2>
 <p>まだ解析していません。</p>

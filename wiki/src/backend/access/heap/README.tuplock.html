@@ -18,7 +18,7 @@
 <li>**タプルロック取得フロー**: </li>
 <p>1. <code>LockTuple()</code> を呼び出し、標準ロックマネージャを介してウェイター間の調停を行う。 2. <code>XactLockTableWait()</code> 等により既存のXMAXトランザクションの終了を待つ。 3. タプルヘッダーに自身のXIDやロック強度を記録する。 4. <code>UnlockTuple()</code> でロックマネージャ上の待機を解除する。</p>
 <li>**マルチXactへの昇格**: タプルヘッダに収まりきらない複数のロックが競合する場合、XIDを <a class="wiki-source-link" href="../../../../../source/src/include/c.h.html#L753" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/c.h.html&quot;}, '*');"><code>MultiXactId</code></a> に置き換えて拡張領域で管理する。</li>
-<li>**インプレース更新のガード**: <a class="wiki-source-link" href="../../../../../source/src/include/catalog/pg_class.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__catalog__pg_class_h__pg_class.html&quot;}, '*');"><code>pg_class</code></a> や <code>pg_database</code> などのインプレース更新対象では、更新前に <code>LOCKTAG_TUPLE</code> を取得して不整合やロストを防ぐ。</li>
+<li>**インプレース更新のガード**: <code>pg_class</code> や <code>pg_database</code> などのインプレース更新対象では、更新前に <code>LOCKTAG_TUPLE</code> を取得して不整合やロストを防ぐ。</li>
 </ul>
 <h2>直接依存</h2>
 <p>ソースコードではなくテキスト文書のため、直接の言語レベルの依存関係はありません。</p>

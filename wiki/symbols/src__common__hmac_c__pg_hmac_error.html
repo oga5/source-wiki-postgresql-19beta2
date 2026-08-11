@@ -29,7 +29,7 @@
 <li>呼び出し元: なし</li>
 <li>呼び出し先: なし</li>
 <li>呼び出し元サイト: なし</li>
-<li>呼び出しサイト: <code>_</code> at <code>src/common/hmac.c:309:10</code> (unresolved), <code>_</code> at <code>src/common/hmac.c:321:11</code> (unresolved), <code>_</code> at <code>src/common/hmac.c:323:11</code> (unresolved), <code>_</code> at <code>src/common/hmac.c:325:11</code> (unresolved), <a class="wiki-source-link" href="../../source/src/include/c.h.html#L950" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/c.h.html&quot;}, '*');"><code>Assert</code></a> at <code>src/common/hmac.c:328:2</code> (unresolved), <code>_</code> at <code>src/common/hmac.c:329:9</code> (unresolved)</li>
+<li>呼び出しサイト: <code>_</code> at <code>src/common/hmac.c:309:10</code> (unresolved), <code>_</code> at <code>src/common/hmac.c:321:11</code> (unresolved), <code>_</code> at <code>src/common/hmac.c:323:11</code> (unresolved), <code>_</code> at <code>src/common/hmac.c:325:11</code> (unresolved), <code>Assert</code> at <code>src/common/hmac.c:328:2</code> (unresolved), <code>_</code> at <code>src/common/hmac.c:329:9</code> (unresolved)</li>
 </ul>
 <h2>関連データ構造</h2>
 <p><code>pg_hmac_ctx</code></p>
@@ -41,8 +41,8 @@
 <li>set.</li>
 <p>*/ if (ctx-&gt;errreason) return ctx-&gt;errreason;</p>
 </ul>
-<p>switch (ctx-&gt;error) { case PG_HMAC_ERROR_NONE: return _(&quot;success&quot;); case PG_HMAC_ERROR_INTERNAL: return _(&quot;internal error&quot;); case PG_HMAC_ERROR_OOM: return _(&quot;out of memory&quot;); }</p>
-<p><a class="wiki-source-link" href="../../source/src/include/c.h.html#L950" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/c.h.html&quot;}, '*');">Assert</a>(<a class="wiki-source-link" href="../../source/src/tools/pg_bsd_indent/indent_globs.h.html#L43" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/tools/pg_bsd_indent/indent_globs.h.html&quot;}, '*');">false</a>);				/* cannot be reached */ return _(&quot;success&quot;); } ~~~</p>
+<p><a class="wiki-source-link" href="../../source/src/include/port.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__port_h__switch.html&quot;}, '*');">switch</a> (ctx-&gt;error) { case PG_HMAC_ERROR_NONE: return _(&quot;success&quot;); case PG_HMAC_ERROR_INTERNAL: return _(&quot;internal error&quot;); case PG_HMAC_ERROR_OOM: return _(&quot;out of memory&quot;); }</p>
+<p>Assert(<a class="wiki-source-link" href="../../source/src/tools/pg_bsd_indent/indent_globs.h.html#L43" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/tools/pg_bsd_indent/indent_globs.h.html&quot;}, '*');">false</a>);				/* cannot be reached */ return _(&quot;success&quot;); } ~~~</p>
 <h2>失敗モードと境界条件</h2>
 <p>まだ解析していません。</p>
 <h2>保守担当者向けメモ</h2>

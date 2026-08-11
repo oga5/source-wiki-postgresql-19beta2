@@ -46,7 +46,7 @@
 <ul>
 <li>It&#x27;s quite possible for us to be fooled by concurrent page splits into</li>
 <li>double-counting some <a class="wiki-source-link" href="../../source/src/interfaces/ecpg/preproc/type.h.html#L96" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__interfaces__ecpg__preproc__type_h__index.html&quot;}, '*');">index</a> tuples, so disbelieve any total that exceeds</li>
-<li>the underlying heap&#x27;s count ... if we know that accurately.  Otherwise</li>
+<li>the underlying heap&#x27;s <a class="wiki-source-link" href="../../source/src/include/lib/ilist.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__lib__ilist_h__count.html&quot;}, '*');">count</a> ... if we know that accurately.  Otherwise</li>
 <li>this might just make matters worse.</li>
 <p>*/ if (!info-&gt;estimated_count) { if (stats-&gt;num_index_tuples &gt; info-&gt;num_heap_tuples) stats-&gt;num_index_tuples = info-&gt;num_heap_tuples; }</p>
 </ul>

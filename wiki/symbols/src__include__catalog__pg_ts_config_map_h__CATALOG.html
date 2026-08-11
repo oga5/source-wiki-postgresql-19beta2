@@ -15,7 +15,7 @@
 <h2>入力と出力</h2>
 <ul>
 <li>引数: <code>pg_ts_config_map</code>, <code>TSConfigMapRelationId</code></li>
-<li>戻り値: <a class="wiki-source-link" href="../../source/src/include/catalog/genbki.h.html#L34" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/catalog/genbki.h.html&quot;}, '*');"><code>BEGIN_CATALOG_STRUCT</code></a></li>
+<li>戻り値: <code>BEGIN_CATALOG_STRUCT</code></li>
 </ul>
 <h2>前提条件と不変条件</h2>
 <p>まだ解析していません。</p>
@@ -34,7 +34,7 @@
 <h2>関連データ構造</h2>
 <p><code>int32</code>, <code>Oid</code>, <code>token</code></p>
 <h2>ソース抜粋</h2>
-<p>~~~c <a class="wiki-source-link" href="../../source/src/include/catalog/genbki.h.html#L34" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/catalog/genbki.h.html&quot;}, '*');">BEGIN_CATALOG_STRUCT</a></p>
+<p>~~~c BEGIN_CATALOG_STRUCT</p>
 <p>CATALOG(pg_ts_config_map,3603,TSConfigMapRelationId) { /* OID of configuration owning this entry */ Oid			mapcfg <a class="wiki-source-link" href="../../source/src/include/catalog/genbki.h.html#L65" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/catalog/genbki.h.html&quot;}, '*');">BKI_LOOKUP</a>(pg_ts_config);</p>
 <p>/* token <a class="wiki-source-link" href="../../source/src/include/lib/ilist.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__lib__ilist_h__type.html&quot;}, '*');">type</a> from parser */ int32		maptokentype;</p>
 <p>/* order in which to consult dictionaries */ int32		mapseqno;</p>

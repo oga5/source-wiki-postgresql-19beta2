@@ -15,7 +15,7 @@
 <h2>入力と出力</h2>
 <ul>
 <li>引数: <code>const pg_wchar *str</code></li>
-<li>戻り値: <a class="wiki-source-link" href="../../source/src/include/common/int.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__common__int_h__size_t.html&quot;}, '*');"><code>size_t</code></a></li>
+<li>戻り値: <code>size_t</code></li>
 </ul>
 <h2>前提条件と不変条件</h2>
 <p>まだ解析していません。</p>
@@ -34,8 +34,8 @@
 <h2>関連データ構造</h2>
 <p><code>pg_wchar</code></p>
 <h2>ソース抜粋</h2>
-<p>~~~c <a class="wiki-source-link" href="../../source/src/include/common/int.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__common__int_h__size_t.html&quot;}, '*');">size_t</a> <a class="wiki-source-link" href="../../source/src/backend/utils/mb/wstrncmp.c.html#L69" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__utils__mb__wstrncmp_c__pg_wchar_strlen.html&quot;}, '*');">pg_wchar_strlen</a>(const pg_wchar *str) { const pg_wchar *s;</p>
-<p>for (s = str; *s; ++s) ; return (s - str); } ~~~</p>
+<p>~~~c size_t <a class="wiki-source-link" href="../../source/src/backend/utils/mb/wstrncmp.c.html#L69" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__utils__mb__wstrncmp_c__pg_wchar_strlen.html&quot;}, '*');">pg_wchar_strlen</a>(const pg_wchar *<a class="wiki-source-link" href="../../source/src/include/common/relpath.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__common__relpath_h__str.html&quot;}, '*');">str</a>) { const pg_wchar *s;</p>
+<p>for (s = <a class="wiki-source-link" href="../../source/src/include/common/relpath.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__common__relpath_h__str.html&quot;}, '*');">str</a>; *s; ++s) ; return (s - <a class="wiki-source-link" href="../../source/src/include/common/relpath.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__common__relpath_h__str.html&quot;}, '*');">str</a>); } ~~~</p>
 <h2>失敗モードと境界条件</h2>
 <p>まだ解析していません。</p>
 <h2>保守担当者向けメモ</h2>

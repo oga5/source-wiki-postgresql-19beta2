@@ -1,46 +1,42 @@
 <!doctype html>
 <html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>src/include/catalog/pg_class.h.md</title><link rel="stylesheet" href="../../../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../../../source/src/include/catalog/pg_class.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/catalog/pg_class.h.html&quot;}, '*');">src/include/catalog/pg_class.h</a></h1>
 <h2>概要</h2>
-<p>PostgreSQLのコアシステムカタログの一つである <a class="wiki-source-link" href="../../../../source/src/include/catalog/pg_class.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__catalog__pg_class_h__pg_class.html&quot;}, '*');"><code>pg_class</code></a> リレーションの構造定義、インデックス、および関係するマクロや定数を提供するヘッダーファイルです。データベース内のテーブル、インデックス、ビュー、シーケンスなどのリレーションメタデータを定義します。</p>
+<p>PostgreSQL のリレーション（テーブル、インデックス、ビュー、シーケンスなど）のシステムカタログ <code>pg_class</code> の構造定義と関連マクロを提供します。</p>
 <h2>モジュール内での役割</h2>
-<ul>
-<li><code>src/include/catalog</code> ディレクトリに位置し、ビルド時に <a class="wiki-source-link" href="../../../../source/src/backend/catalog/Catalog.pm.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/catalog/Catalog.pm.html&quot;}, '*');"><code>Catalog.pm</code></a> によってスキーマ情報へ変換されるBKIソース定義の一部です。</li>
-<li>リレーション種別（<code>relkind</code>）や永続性（<code>relpersistence</code>）、レプリカアイデンティティなどのグローバルな定数を公開し、バックエンドの様々なモジュールから参照されます。</li>
-</ul>
+<p><code>src/include/catalog</code> モジュールの一部として、リレーション定義のスキーマを定義します。<a class="wiki-source-link" href="../../../../source/src/backend/catalog/Catalog.pm.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/catalog/Catalog.pm.html&quot;}, '*');"><code>Catalog.pm</code></a> によって読み取られ、<code>pg_class_d.h</code> などの派生ヘッダーやブートストラップデータ生成の基礎となります。</p>
 <h2>責務</h2>
 <ul>
-<li><a class="wiki-source-link" href="../../../../source/src/include/catalog/pg_class.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__catalog__pg_class_h__FormData_pg_class.html&quot;}, '*');"><code>FormData_pg_class</code></a> 構造体を通じた <a class="wiki-source-link" href="../../../../source/src/include/catalog/pg_class.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__catalog__pg_class_h__pg_class.html&quot;}, '*');"><code>pg_class</code></a> タプルの物理レイアウトおよびメタデータの定義。</li>
-<li><a class="wiki-source-link" href="../../../../source/src/include/catalog/pg_class.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__catalog__pg_class_h__pg_class.html&quot;}, '*');"><code>pg_class</code></a> に対するユニークインデックスおよび通常インデックス（Oid、名前空間、テーブルスペース等）の宣言。</li>
-<li>リレーションの種類を判別・分類するためのマクロ（<a class="wiki-source-link" href="../../../../source/src/include/catalog/pg_class.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__catalog__pg_class_h__RELKIND_HAS_STORAGE.html&quot;}, '*');"><code>RELKIND_HAS_STORAGE</code></a>、<code>RELKIND_HAS_TABLESPACE</code> など）の提供。</li>
+<li><a class="wiki-source-link" href="../../../../source/src/include/catalog/pg_class.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__catalog__pg_class_h__FormData_pg_class.html&quot;}, '*');"><code>FormData_pg_class</code></a> および <code>Form_pg_class</code> を用いたリレーションメタデータのC言語表現の定義。</li>
+<li><code>pg_class</code> カタログに対する一意制約や通常インデックス、システムキャッシュ（RELOID, RELNAMENSP）の宣言。</li>
+<li>リレーション種別（<a class="wiki-source-link" href="../../../../source/src/include/catalog/pg_class.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__catalog__pg_class_h__relkind.html&quot;}, '*');"><code>relkind</code></a>）、永続性（<a class="wiki-source-link" href="../../../../source/src/include/commands/tablespace.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__commands__tablespace_h__relpersistence.html&quot;}, '*');"><code>relpersistence</code></a>）、レプリカアイデンティティ（<code>relreplident</code>）などの定数マクロと判定用ヘルパーマクロの提供。</li>
 </ul>
 <h2>重要なシンボル</h2>
 <ul>
-<li><a class="wiki-source-link" href="../../../../source/src/include/catalog/pg_class.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__catalog__pg_class_h__FormData_pg_class.html&quot;}, '*');"><code>FormData_pg_class</code></a> / <a class="wiki-source-link" href="../../../../source/src/include/catalog/pg_class.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__catalog__pg_class_h__Form_pg_class.html&quot;}, '*');"><code>Form_pg_class</code></a>: <a class="wiki-source-link" href="../../../../source/src/include/catalog/pg_class.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__catalog__pg_class_h__pg_class.html&quot;}, '*');"><code>pg_class</code></a> のタプル構造体と、そのポインタ型。</li>
-<li><code>RELKIND_*</code>: 通常テーブル（<code>r</code>）、インデックス（<code>i</code>）、ビュー（<code>v</code>）、パーティションテーブル（<code>p</code>）などのリレーション種別を定義するマクロ群。</li>
-<li><code>RELPERSISTENCE_*</code>: 永続テーブル（<code>p</code>）、アンロッグテーブル（<code>u</code>）、テンポラリテーブル（<code>t</code>）の永続性フラグ。</li>
-<li><a class="wiki-source-link" href="../../../../source/src/include/catalog/pg_class.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__catalog__pg_class_h__RELKIND_HAS_STORAGE.html&quot;}, '*');"><code>RELKIND_HAS_STORAGE</code></a>: 物理ストレージを持つリレーション種別を判定するヘルパーマクロ。</li>
-<li><code>errdetail_relkind_not_supported</code>: サポートされていないリレーション種別に対するエラー詳細を設定する関数。</li>
+<li><a class="wiki-source-link" href="../../../../source/src/include/catalog/pg_class.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__catalog__pg_class_h__FormData_pg_class.html&quot;}, '*');"><code>FormData_pg_class</code></a>: <code>pg_class</code> カタログの1行分の物理構造体。</li>
+<li><code>Form_pg_class</code>: <a class="wiki-source-link" href="../../../../source/src/include/catalog/pg_class.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__catalog__pg_class_h__FormData_pg_class.html&quot;}, '*');"><code>FormData_pg_class</code></a> へのポインタ型。</li>
+<li><a class="wiki-source-link" href="../../../../source/src/include/catalog/pg_class.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__catalog__pg_class_h__RELKIND_HAS_STORAGE.html&quot;}, '*');"><code>RELKIND_HAS_STORAGE</code></a>: 指定された <a class="wiki-source-link" href="../../../../source/src/include/catalog/pg_class.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__catalog__pg_class_h__relkind.html&quot;}, '*');"><code>relkind</code></a> が物理ストレージを持つかどうかを判定するマクロ。</li>
+<li><code>errdetail_relkind_not_supported</code>: サポートされていないリレーション種別に対するエラー詳細メッセージを生成する関数。</li>
 </ul>
 <h2>制御フローとデータフロー</h2>
-<ul>
-<li>バックエンドの起動時やスキーマ変更時に、<a class="wiki-source-link" href="../../../../source/src/backend/catalog/Catalog.pm.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/catalog/Catalog.pm.html&quot;}, '*');"><code>Catalog.pm</code></a> やBKI生成スクリプトが本ファイルを読み取り、初期カタログ定義を構築します。</li>
-<li>キャッシュ層（シスキャッシュ）では、<code>RELOID</code> や <code>RELNAMENSP</code> などのシステムキャッシュマクロを通じて <a class="wiki-source-link" href="../../../../source/src/include/catalog/pg_class.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__catalog__pg_class_h__pg_class.html&quot;}, '*');"><code>pg_class</code></a> のエントリへ高速にアクセスします。</li>
-<li>リレーション操作時に <code>errdetail_relkind_not_supported</code> が呼び出され、<code>relkind</code> に応じた適切なエラーメッセージの詳細を構築します。</li>
-</ul>
+<p>制御フローはこのファイル内には直接存在しません。データフローとしては、定義されたメタデータ構造がバックエンドの各モジュール（リレーションキャッシュやオプティマイザなど）にインクルードされ、リレーション属性の参照やストレージ有無の判定に利用されます。</p>
 <h2>直接依存</h2>
 <ul>
-<li><code>catalog/genbki.h</code>: BKI定義用のマクロや構文を提供。</li>
-<li><code>catalog/pg_class_d.h</code>: 自動生成される定数やID定義のエクスポート。</li>
+<li><code>catalog/genbki.h</code></li>
+<li><code>catalog/pg_class_d.h</code></li>
 </ul>
 <h2>関連コード</h2>
 <ul>
-<li><a class="wiki-source-link" href="../../../../source/src/backend/catalog/pg_class.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/catalog/pg_class.c.html&quot;}, '*');"><code>src/backend/catalog/pg_class.c</code></a>: リレーション操作やエラー処理（<code>errdetail_relkind_not_supported</code> の実装など）を行うペアのCソースファイル。</li>
-<li><a class="wiki-source-link" href="../../../../source/src/include/catalog/pg_type.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/catalog/pg_type.h.html&quot;}, '*');"><code>src/include/catalog/pg_type.h</code></a>: 関連する型定義システムカタログ。</li>
+<li><a class="wiki-source-link" href="../../../../source/src/backend/catalog/pg_class.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/catalog/pg_class.c.html&quot;}, '*');"><code>src/backend/catalog/pg_class.c</code></a>: リレーション操作や <code>errdetail_relkind_not_supported</code> の実装を含むペアファイル。</li>
 </ul>
 <h2>読者向けメモ</h2>
+<p><code>CATALOG</code> マクロブロック内の定義は <a class="wiki-source-link" href="../../../../source/src/backend/catalog/genbki.pl.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/catalog/genbki.pl.html&quot;}, '*');"><code>genbki.pl</code></a> によって処理されるため、フィールドの順序や属性変更時は <code>pg_class_d.h</code> などの自動生成物への影響に注意してください。</p>
+<h2>シンボルページ</h2>
 <ul>
-<li><a class="wiki-source-link" href="../../../../source/src/include/catalog/genbki.h.html#L54" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/catalog/genbki.h.html&quot;}, '*');"><code>BKI_DEFAULT</code></a> や <a class="wiki-source-link" href="../../../../source/src/include/catalog/genbki.h.html#L65" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/catalog/genbki.h.html&quot;}, '*');"><code>BKI_LOOKUP</code></a> などの属性修飾子は、通常のC言語コンパイル時にはプリプロセスされず、BKI生成ツールによって解釈されます。</li>
-<li><a class="wiki-source-link" href="../../../../source/src/include/catalog/pg_type.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__catalog__pg_type_h__EXPOSE_TO_CLIENT_CODE.html&quot;}, '*');"><code>EXPOSE_TO_CLIENT_CODE</code></a> ブロックの内外でクライアント側でも利用可能な定数（<code>RELKIND_*</code> など）が定義されているため、インクルード元コンテキストに注意してください。</li>
+<li><a href="../../../symbols/src__include__catalog__pg_class_h__FormData_pg_class.html" target="wiki-view"><code>FormData_pg_class</code></a></li>
+<li><a href="../../../symbols/src__include__catalog__pg_class_h__Form_pg_class.html" target="wiki-view"><code>Form_pg_class</code></a></li>
+<li><a href="../../../symbols/src__include__catalog__pg_class_h__RELKIND_HAS_STORAGE.html" target="wiki-view"><code>RELKIND_HAS_STORAGE</code></a></li>
+<li><a href="../../../symbols/src__include__catalog__pg_class_h__errdetail_relkind_not_supported.html" target="wiki-view"><code>errdetail_relkind_not_supported</code></a></li>
+<li><a href="../../../symbols/src__include__catalog__pg_class_h__pg_class.html" target="wiki-view"><code>pg_class</code></a></li>
 </ul><script>
 (function() {
   function notifyParent() {

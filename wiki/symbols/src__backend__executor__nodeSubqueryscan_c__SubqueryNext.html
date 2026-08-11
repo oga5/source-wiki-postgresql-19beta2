@@ -34,11 +34,11 @@
 <h2>関連データ構造</h2>
 <p><a class="wiki-source-link" href="../../source/src/include/nodes/execnodes.h.html#L1938" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__nodes__execnodes_h__SubqueryScanState.html&quot;}, '*');"><code>SubqueryScanState</code></a>, <code>TupleTableSlot</code></p>
 <h2>ソース抜粋</h2>
-<p>~~~c static TupleTableSlot * <a class="wiki-source-link" href="../../source/src/backend/executor/nodeSubqueryscan.c.html#L45" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__executor__nodeSubqueryscan_c__SubqueryNext.html&quot;}, '*');">SubqueryNext</a>(<a class="wiki-source-link" href="../../source/src/include/nodes/execnodes.h.html#L1938" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__nodes__execnodes_h__SubqueryScanState.html&quot;}, '*');">SubqueryScanState</a> *node) { TupleTableSlot *slot;</p>
+<p>~~~c static TupleTableSlot * <a class="wiki-source-link" href="../../source/src/backend/executor/nodeSubqueryscan.c.html#L45" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__executor__nodeSubqueryscan_c__SubqueryNext.html&quot;}, '*');">SubqueryNext</a>(<a class="wiki-source-link" href="../../source/src/include/nodes/execnodes.h.html#L1938" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__nodes__execnodes_h__SubqueryScanState.html&quot;}, '*');">SubqueryScanState</a> *<a class="wiki-source-link" href="../../source/src/include/lib/ilist.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__lib__ilist_h__node.html&quot;}, '*');">node</a>) { TupleTableSlot *slot;</p>
 <p>/*</p>
 <ul>
 <li>Get the next tuple from the sub-query.</li>
-<p>*/ slot = ExecProcNode(node-&gt;subplan);</p>
+<p>*/ slot = ExecProcNode(<a class="wiki-source-link" href="../../source/src/include/lib/ilist.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__lib__ilist_h__node.html&quot;}, '*');">node</a>-&gt;subplan);</p>
 </ul>
 <p>/*</p>
 <ul>

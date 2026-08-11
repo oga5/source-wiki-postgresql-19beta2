@@ -45,7 +45,7 @@
 <p>*</p>
 <li>We know already estimated clauses have both clause_attnums and</li>
 <li>clause_exprs set to NULL. We leave the pointers NULL if already</li>
-<li>estimated, or we <a class="wiki-source-link" href="../../source/src/interfaces/ecpg/test/expected/sql-declare.c.html#L600" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__interfaces__ecpg__test__expected__sql-declare_c__reset.html&quot;}, '*');">reset</a> them to NULL after estimating the clause.</li>
+<li>estimated, or we <a class="wiki-source-link" href="../../source/src/interfaces/ecpg/test/expected/sql-declare.c.html#L600" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__interfaces__ecpg__test__expected__sql-declare_c__reset.html&quot;}, '*');">reset</a> them to NULL <a class="wiki-source-link" href="../../source/src/include/lib/ilist.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__lib__ilist_h__after.html&quot;}, '*');">after</a> estimating the clause.</li>
 <p>*/ for (i = 0; i &lt; nclauses; i++) { <a class="wiki-source-link" href="../../source/src/include/nodes/bitmapset.h.html#L49" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__nodes__bitmapset_h__Bitmapset.html&quot;}, '*');">Bitmapset</a>  *expr_idxs = NULL;</p>
 </ul>
 <p>/* ignore incompatible/estimated clauses */ if (!clause_attnums[i] &amp;&amp; !clause_exprs[i]) continue;</p>

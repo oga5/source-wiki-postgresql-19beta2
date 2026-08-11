@@ -42,14 +42,14 @@
 </ul>
 <p>/*</p>
 <ul>
-<li>Calculate average <a class="wiki-source-link" href="../../source/src/backend/optimizer/geqo/geqo_eval.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__geqo__geqo_eval_c__size.html&quot;}, '*');">size</a> of already inserted <a class="wiki-source-link" href="../../source/src/interfaces/ecpg/preproc/type.h.html#L96" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__interfaces__ecpg__preproc__type_h__index.html&quot;}, '*');">index</a> tuples using gathered</li>
+<li>Calculate average size of already inserted <a class="wiki-source-link" href="../../source/src/interfaces/ecpg/preproc/type.h.html#L96" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__interfaces__ecpg__preproc__type_h__index.html&quot;}, '*');">index</a> tuples using gathered</li>
 <li>statistics.</li>
 <p>*/ itupAvgSize = (double) buildstate-&gt;indtuplesSize / (double) buildstate-&gt;indtuples;</p>
 </ul>
 <p>avgIndexTuplesPerPage = pageFreeSpace / itupAvgSize;</p>
 <p>/*</p>
 <ul>
-<li>Recalculate required <a class="wiki-source-link" href="../../source/src/backend/optimizer/geqo/geqo_eval.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__geqo__geqo_eval_c__size.html&quot;}, '*');">size</a> of buffers.</li>
+<li>Recalculate required size of buffers.</li>
 <p>*/ pagesPerBuffer = 2 * pow(avgIndexTuplesPerPage, levelStep);</p>
 </ul>
 <p>return (int) rint(pagesPerBuffer); } ~~~</p>

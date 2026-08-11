@@ -34,7 +34,7 @@
 <h2>関連データ構造</h2>
 <p>なし</p>
 <h2>ソース抜粋</h2>
-<p>~~~c static char * <a class="wiki-source-link" href="../../source/contrib/uuid-ossp/uuid-ossp.c.html#L175" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/contrib__uuid-ossp__uuid-ossp_c__uuid_to_string.html&quot;}, '*');">uuid_to_string</a>(const uuid_t *uuid) { char	   *buf = palloc(UUID_LEN_STR + 1); void	   *ptr = buf; <a class="wiki-source-link" href="../../source/src/include/common/int.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__common__int_h__size_t.html&quot;}, '*');">size_t</a>		len = UUID_LEN_STR + 1; uuid_rc_t	rc;</p>
+<p>~~~c static char * <a class="wiki-source-link" href="../../source/contrib/uuid-ossp/uuid-ossp.c.html#L175" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/contrib__uuid-ossp__uuid-ossp_c__uuid_to_string.html&quot;}, '*');">uuid_to_string</a>(const uuid_t *uuid) { char	   *buf = palloc(UUID_LEN_STR + 1); void	   *ptr = buf; size_t		len = UUID_LEN_STR + 1; uuid_rc_t	rc;</p>
 <p>rc = uuid_export(uuid, UUID_FMT_STR, &amp;ptr, &amp;len); if (rc != UUID_RC_OK) <a class="wiki-source-link" href="../../source/contrib/uuid-ossp/uuid-ossp.c.html#L124" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/contrib__uuid-ossp__uuid-ossp_c__pguuid_complain.html&quot;}, '*');">pguuid_complain</a>(rc);</p>
 <p>return buf; } ~~~</p>
 <h2>失敗モードと境界条件</h2>

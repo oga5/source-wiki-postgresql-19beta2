@@ -1,42 +1,50 @@
 <!doctype html>
 <html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>src/include/catalog/catalog.h.md</title><link rel="stylesheet" href="../../../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../../../source/src/include/catalog/catalog.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/catalog/catalog.h.html&quot;}, '*');">src/include/catalog/catalog.h</a></h1>
 <h2>概要</h2>
-<p><a class="wiki-source-link" href="../../../../source/src/include/catalog/catalog.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/catalog/catalog.h.html&quot;}, '*');"><code>src/include/catalog/catalog.h</code></a> は、PostgreSQLのシステムカタログに関する命名規則や、ハードコードされた識別ルール、オブジェクトの分類判定を行う関数の宣言を提供するヘッダーファイルです。</p>
+<p>PostgreSQLのシステムカタログおよびリレーションの命名規則、オブジェクト属性、ハードコードされた識別知識に関する関数群のプロトコルを定義するヘッダーファイルです。</p>
 <h2>モジュール内での役割</h2>
-<p><code>src/include/catalog</code> モジュールに属し、システムリレーション、TOASTテーブル、共有カタログ、およびネームスペースの属性を判定するための共通インターフェースを定義します。バックエンド側の実装ファイル <a class="wiki-source-link" href="../../../../source/src/backend/catalog/catalog.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/catalog/catalog.c.html&quot;}, '*');"><code>src/backend/catalog/catalog.c</code></a> と対をなしています。</p>
+<p><code>src/include/catalog</code> サブシステムの一部として、カタログリレーション、システムクラス、共有リレーション、および名前空間の判定に関する共通の判定ロジックやOID・リファイル番号の採番インターフェースを提供します。バックエンドの実装ファイルである <a class="wiki-source-link" href="../../../../source/src/backend/catalog/catalog.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/catalog/catalog.c.html&quot;}, '*');"><code>src/backend/catalog/catalog.c</code></a> とペアで機能します。</p>
 <h2>責務</h2>
 <ul>
-<li>リレーション、クラス、OID、ネームスペースがシステムカタログやTOAST領域に属するかを判定するAPIの公開。</li>
-<li>リレーション名が予約されているかどうかの検証。</li>
-<li>オブジェクトがピン留め（削除不可）されているか、またはインプレース更新対象であるかの判定。</li>
-<li>新規OIDやリファイル番号（<a class="wiki-source-link" href="../../../../source/src/include/common/relpath.h.html#L25" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__common__relpath_h__RelFileNumber.html&quot;}, '*');">RelFileNumber</a>）の採番インタフェースの提供。</li>
+<li>リレーション、クラス、およびOIDがシステムカタログ、トーストテーブル、共有リレーションのいずれに該当するかを判定する関数群の宣言。</li>
+<li>名前空間や予約済み名称（<a class="wiki-source-link" href="../../../../source/src/include/port.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__port_h__pg_.html&quot;}, '*');"><code>pg_</code></a> プレフィックス等）に関する検証ルールの提供。</li>
+<li>新規のOIDやリファイル番号（<a class="wiki-source-link" href="../../../../source/src/include/common/relpath.h.html#L25" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__common__relpath_h__RelFileNumber.html&quot;}, '*');">RelFileNumber</a>）を安全に取得するための関数インターフェースの公開。</li>
 </ul>
 <h2>重要なシンボル</h2>
 <ul>
-<li><code>IsSystemRelation</code> / <code>IsSystemClass</code>: 指定されたリレーションまたはクラスがシステムカタログまたはTOASTテーブルであるかを判定。</li>
-<li><code>IsCatalogRelation</code> / <code>IsCatalogRelationOid</code>: リレーションまたはOIDがブートストラップ時に作成されたシステムカタログであるかを判定。</li>
-<li><code>IsSharedRelation</code>: 指定されたリレーションIDが共有カタログ（全データベース共通）に属するかを判定。</li>
-<li><code>GetNewOidWithIndex</code>: インデックスを使用して新しいOIDを安全に採番。</li>
-<li><code>GetNewRelFileNumber</code>: 新規リレーション用のファイル番号を採番。</li>
+<li><code>IsSystemRelation</code> / <code>IsSystemClass</code>: リレーションまたはそのメタデータ（<code>Form_pg_class</code>）がシステムカタログまたはトーストテーブルであるかを判定します。</li>
+<li><code>IsCatalogRelation</code> / <code>IsCatalogRelationOid</code>: リレーションが <a class="wiki-source-link" href="../../../../source/src/include/catalog/catalog.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__catalog__catalog_h__initdb.html&quot;}, '*');"><code>initdb</code></a> のブートストラップ時に作成されたシステムカタログに含まれるかを判定します。</li>
+<li><code>IsSharedRelation</code>: 指定されたリレーションIDが全データベース間で共有されるグローバルカタログであるかを判定します。</li>
+<li><code>GetNewOidWithIndex</code>: インデックスを利用して競合のない新しいOIDを採番します。</li>
+<li><code>GetNewRelFileNumber</code>: 新規リレーション用のストレージファイル番号を割り当てます。</li>
 </ul>
 <h2>制御フローとデータフロー</h2>
 <ul>
-<li>判定系関数（<code>IsSystemRelation</code>, <code>IsCatalogRelationOid</code> など）は、カタログアクセスを行わずメモリ上の情報やOIDの範囲（ピン留めOIDなど）のみで高速に判定する設計になっています。</li>
-<li>採番系関数（<code>GetNewOidWithIndex</code> など）は、既存のインデックスを参照しながら重複のない一意なOIDやファイル番号を生成し、上位のテーブル作成・オブジェクト定義処理へデータを供給します。</li>
+<li>呼び出し側（DDL処理やオブジェクト作成のバックエンドコード）は、本ファイルで宣言された判定関数（例: <code>IsCatalogRelationOid</code>）を用いてカタログ保護や特権チェックを行います。</li>
+<li><a class="wiki-source-link" href="../../../../source/src/backend/catalog/catalog.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/catalog/catalog.c.html&quot;}, '*');"><code>catalog.c</code></a> 内の実装関数は、外部のカタログアクセスを伴わない軽量なロジックとして設計されているものが多く、リレーションキャッシュやOIDの比較によって直接真偽値を返却します。</li>
 </ul>
 <h2>直接依存</h2>
 <ul>
-<li><code>catalog/pg_class.h</code>: リレーションのメタデータを表す <a class="wiki-source-link" href="../../../../source/src/include/catalog/pg_class.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__catalog__pg_class_h__Form_pg_class.html&quot;}, '*');"><code>Form_pg_class</code></a> 構造体の定義。</li>
-<li><code>utils/relcache.h</code>: リレーションキャッシュを表す <code>Relation</code> 型の定義。</li>
+<li><code>catalog/pg_class.h</code>: リレーションのメタデータ構造体 <code>Form_pg_class</code> の定義を利用します。</li>
+<li><code>utils/relcache.h</code>: リレーションキャッシュを表す <code>Relation</code> 型を利用します。</li>
 </ul>
 <h2>関連コード</h2>
 <ul>
-<li><a class="wiki-source-link" href="../../../../source/src/backend/catalog/catalog.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/catalog/catalog.c.html&quot;}, '*');"><code>src/backend/catalog/catalog.c</code></a>: 本ヘッダーで宣言されている関数の実体を実装するペアファイル。</li>
-<li><a class="wiki-source-link" href="../../../../source/src/include/catalog/pg_class.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/catalog/pg_class.h.html&quot;}, '*');"><code>src/include/catalog/pg_class.h</code></a>: システムカタログの構造定義。</li>
+<li><a class="wiki-source-link" href="../../../../source/src/backend/catalog/catalog.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/catalog/catalog.c.html&quot;}, '*');"><code>src/backend/catalog/catalog.c</code></a>: 本ヘッダーで宣言されているすべての関数の実体を実装するペアファイル。</li>
 </ul>
 <h2>読者向けメモ</h2>
 <ul>
-<li>多くの判定関数はカタログアクセスを行わない（No-catalog-access）前提で作られており、一部の呼び出し元はその性能特性に依存しています。変更を加える際は注意してください。</li>
+<li>本ファイルで定義される判定関数の多く（特に <code>IsCatalogRelationOid</code> など）は、カタログアクセスを行わずに高速に判定する設計になっており、一部の呼び出し側はその特性に依存しています。変更を加える際はカタログ参照が発生しないという前提を崩さないよう注意してください。</li>
+</ul>
+<h2>シンボルページ</h2>
+<ul>
+<li><a href="../../../symbols/src__include__catalog__catalog_h__GetNewOidWithIndex.html" target="wiki-view"><code>GetNewOidWithIndex</code></a></li>
+<li><a href="../../../symbols/src__include__catalog__catalog_h__GetNewRelFileNumber.html" target="wiki-view"><code>GetNewRelFileNumber</code></a></li>
+<li><a href="../../../symbols/src__include__catalog__catalog_h__IsCatalogRelation.html" target="wiki-view"><code>IsCatalogRelation</code></a></li>
+<li><a href="../../../symbols/src__include__catalog__catalog_h__IsCatalogRelationOid.html" target="wiki-view"><code>IsCatalogRelationOid</code></a></li>
+<li><a href="../../../symbols/src__include__catalog__catalog_h__IsSharedRelation.html" target="wiki-view"><code>IsSharedRelation</code></a></li>
+<li><a href="../../../symbols/src__include__catalog__catalog_h__IsSystemClass.html" target="wiki-view"><code>IsSystemClass</code></a></li>
+<li><a href="../../../symbols/src__include__catalog__catalog_h__IsSystemRelation.html" target="wiki-view"><code>IsSystemRelation</code></a></li>
 </ul><script>
 (function() {
   function notifyParent() {

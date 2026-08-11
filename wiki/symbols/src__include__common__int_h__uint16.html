@@ -1,0 +1,109 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>symbols/src__include__common__int_h__uint16.md</title><link rel="stylesheet" href="../../styles.css"></head><body><h1>uint16</h1>
+<h2>定義</h2>
+<ul>
+<li>種別: <code>function</code></li>
+<li>定義箇所: <code>src/include/common/int.h:1</code></li>
+<li>所属モジュール: <a class="wiki-entity-link" href="../modules/src__include__common.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/modules/src__include__common.html&quot;, &quot;source&quot;: &quot;source/src/include/common/archive.h.html&quot;}, '*');"><code>module:src/include/common</code></a></li>
+</ul>
+<h2>目的</h2>
+<p>静的シンボル索引から生成された初期シンボルページです。</p>
+<h2>シグネチャまたは形状</h2>
+<ul>
+<li>シグネチャ: <code>/*------------------------------------------------------------------------- * * int.h * Overflow-aware integer math and integer comparison routines. * * The routines in this file are intended to be well defined C, without * relying on compiler flags like -fwrapv. * * To reduce the overhead of these routines try to use compiler intrinsics * where available. That&#x27;s not that important for the 16, 32 bit cases, but * the 64 bit cases can be considerably faster with intrinsics. In case no * intrinsics are available 128 bit math is used where available. * * Copyright (c) 2017-2026, PostgreSQL Global Development Group * * src/include/common/int.h * *------------------------------------------------------------------------- */ #ifndef COMMON_INT_H #define COMMON_INT_H /*--------- * The following guidelines apply to all the overflow routines: * * If the result overflows, return true, otherwise store the result into * *result. The content of *result is implementation defined in case of * overflow. * * bool pg_add_*_overflow(a, b, *result) * * Calculate a + b * * bool pg_sub_*_overflow(a, b, *result) * * Calculate a - b * * bool pg_mul_*_overflow(a, b, *result) * * Calculate a * b * * bool pg_neg_*_overflow(a, *result) * * Calculate -a * * * In addition, this file contains: * * &lt;unsigned int type&gt; pg_abs_*(&lt;signed int type&gt; a) * * Calculate absolute value of a. Unlike the standard library abs() * and labs() functions, the return type is unsigned, so the operation * cannot overflow. *--------- */ /*------------------------------------------------------------------------ * Overflow routines for signed integers *------------------------------------------------------------------------ */ /* * INT16 */ static inline bool pg_add_s16_overflow(int16 a, int16 b, int16 *result)</code></li>
+</ul>
+<h2>入力と出力</h2>
+<p>まだ解析していません。</p>
+<h2>前提条件と不変条件</h2>
+<p>まだ解析していません。</p>
+<h2>アルゴリズムまたは振る舞い</h2>
+<ul>
+<li>複雑度: <code>medium</code> (score 8)</li>
+</ul>
+<p>まだ解析していません。</p>
+<h2>呼び出し元と呼び出し先</h2>
+<ul>
+<li>呼び出し元: なし</li>
+<li>呼び出し先: なし</li>
+<li>呼び出し元サイト: なし</li>
+<li>呼び出しサイト: なし</li>
+</ul>
+<h2>関連データ構造</h2>
+<p><code>c</code>, <code>Group</code>, <code>int16</code>, <code>int32</code></p>
+<h2>ソース抜粋</h2>
+<p>~~~c /*------------------------------------------------------------------------- *</p>
+<ul>
+<li><a class="wiki-source-link" href="../../source/src/include/common/int.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/common/int.h.html&quot;}, '*');">int.h</a></li>
+<li>Overflow-aware integer math and integer comparison <a class="wiki-source-link" href="../../source/src/port/win32ntdll.c.html#L30" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/port/win32ntdll.c.html&quot;}, '*');">routines</a>.</li>
+<p>*</p>
+<li>The <a class="wiki-source-link" href="../../source/src/port/win32ntdll.c.html#L30" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/port/win32ntdll.c.html&quot;}, '*');">routines</a> in this file are intended to be well defined C, without</li>
+<li>relying on compiler flags like -fwrapv.</li>
+<p>*</p>
+<li>To <a class="wiki-source-link" href="../../source/src/tools/pg_bsd_indent/parse.c.html#L259" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__tools__pg_bsd_indent__parse_c__reduce.html&quot;}, '*');">reduce</a> the overhead of these <a class="wiki-source-link" href="../../source/src/port/win32ntdll.c.html#L30" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/port/win32ntdll.c.html&quot;}, '*');">routines</a> try to use compiler intrinsics</li>
+<li>where available. That&#x27;s not that important for the 16, 32 <a class="wiki-source-link" href="../../source/src/backend/utils/adt/varbit.c.html#L390" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__utils__adt__varbit_c__bit.html&quot;}, '*');">bit</a> cases, but</li>
+<li>the 64 <a class="wiki-source-link" href="../../source/src/backend/utils/adt/varbit.c.html#L390" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__utils__adt__varbit_c__bit.html&quot;}, '*');">bit</a> cases can be considerably faster with intrinsics. In case no</li>
+<li>intrinsics are available 128 <a class="wiki-source-link" href="../../source/src/backend/utils/adt/varbit.c.html#L390" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__utils__adt__varbit_c__bit.html&quot;}, '*');">bit</a> math <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> used where available.</li>
+<p>*</p>
+<li>Copyright (c) 2017-2026, PostgreSQL Global Development Group</li>
+<p>*</p>
+<li><a class="wiki-source-link" href="../../source/src/include/common/int.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/common/int.h.html&quot;}, '*');">src/include/common/int.h</a></li>
+<p>* *------------------------------------------------------------------------- */ #ifndef <a class="wiki-source-link" href="../../source/src/include/common/int.h.html#L21" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/common/int.h.html&quot;}, '*');">COMMON_INT_H</a> #define <a class="wiki-source-link" href="../../source/src/include/common/int.h.html#L21" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/common/int.h.html&quot;}, '*');">COMMON_INT_H</a></p>
+</ul>
+<p>/*---------</p>
+<ul>
+<li>The following guidelines apply to all the overflow <a class="wiki-source-link" href="../../source/src/port/win32ntdll.c.html#L30" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/port/win32ntdll.c.html&quot;}, '*');">routines</a>:</li>
+<p>*</p>
+<li>If the <a class="wiki-source-link" href="../../source/src/include/storage/checksum_block_internal.h.html#L18" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/storage/checksum_block_internal.h.html&quot;}, '*');">result</a> overflows, return <a class="wiki-source-link" href="../../source/src/tools/pg_bsd_indent/indent_globs.h.html#L46" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/tools/pg_bsd_indent/indent_globs.h.html&quot;}, '*');">true</a>, otherwise store the <a class="wiki-source-link" href="../../source/src/include/storage/checksum_block_internal.h.html#L18" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/storage/checksum_block_internal.h.html&quot;}, '*');">result</a> into</li>
+<li>*<a class="wiki-source-link" href="../../source/src/include/storage/checksum_block_internal.h.html#L18" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/storage/checksum_block_internal.h.html&quot;}, '*');">result</a>.  The content of *<a class="wiki-source-link" href="../../source/src/include/storage/checksum_block_internal.h.html#L18" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/storage/checksum_block_internal.h.html&quot;}, '*');">result</a> <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> implementation defined in case of</li>
+<li>overflow.</li>
+<p>*</p>
+<li>bool pg_add_*_overflow(a, b, *<a class="wiki-source-link" href="../../source/src/include/storage/checksum_block_internal.h.html#L18" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/storage/checksum_block_internal.h.html&quot;}, '*');">result</a>)</li>
+<p>*</p>
+<li>Calculate a + b</li>
+<p>*</p>
+<li>bool pg_sub_*_overflow(a, b, *<a class="wiki-source-link" href="../../source/src/include/storage/checksum_block_internal.h.html#L18" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/storage/checksum_block_internal.h.html&quot;}, '*');">result</a>)</li>
+<p>*</p>
+<li>Calculate a - b</li>
+<p>*</p>
+<li>bool pg_mul_*_overflow(a, b, *<a class="wiki-source-link" href="../../source/src/include/storage/checksum_block_internal.h.html#L18" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/storage/checksum_block_internal.h.html&quot;}, '*');">result</a>)</li>
+<p>*</p>
+<li>Calculate a * b</li>
+<p>*</p>
+<li>bool pg_neg_*_overflow(a, *<a class="wiki-source-link" href="../../source/src/include/storage/checksum_block_internal.h.html#L18" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/storage/checksum_block_internal.h.html&quot;}, '*');">result</a>)</li>
+<p>*</p>
+<li>Calculate -a</li>
+<p>* *</p>
+<li>In addition, this file contains:</li>
+<p>*</p>
+<li>&lt;unsigned int <a class="wiki-source-link" href="../../source/src/include/lib/ilist.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__lib__ilist_h__type.html&quot;}, '*');">type</a>&gt; pg_abs_*(&lt;signed int <a class="wiki-source-link" href="../../source/src/include/lib/ilist.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__lib__ilist_h__type.html&quot;}, '*');">type</a>&gt; a)</li>
+<p>*</p>
+<li>Calculate absolute value of a.  Unlike the standard library abs()</li>
+<li>and labs() <a class="wiki-source-link" href="../../source/src/backend/regex/regcomp.c.html#L358" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/regex/regcomp.c.html&quot;}, '*');">functions</a>, the return <a class="wiki-source-link" href="../../source/src/include/lib/ilist.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__lib__ilist_h__type.html&quot;}, '*');">type</a> <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> unsigned, so the <a class="wiki-source-link" href="../../source/src/backend/postmaster/datachecksum_state.c.html#L380" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/postmaster/datachecksum_state.c.html&quot;}, '*');">operation</a></li>
+<li>cannot overflow.</li>
+<p>*--------- */</p>
+</ul>
+<p>/*------------------------------------------------------------------------</p>
+<ul>
+<li>Overflow <a class="wiki-source-link" href="../../source/src/port/win32ntdll.c.html#L30" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/port/win32ntdll.c.html&quot;}, '*');">routines</a> for signed integers</li>
+<p>*------------------------------------------------------------------------ ~~~</p>
+</ul>
+<h2>失敗モードと境界条件</h2>
+<p>まだ解析していません。</p>
+<h2>保守担当者向けメモ</h2>
+<ul>
+<li>後続フェーズで、ソース本文の文脈と caller/callee 情報を使ってこのページを強化する。</li>
+</ul><script>
+(function() {
+  function notifyParent() {
+    if (parent === window) return;
+    parent.postMessage({type: "frame-location", frame: window.name || "", href: window.location.href}, "*");
+  }
+  document.addEventListener("click", function(event) {
+    const link = event.target.closest("a[data-panel]");
+    if (!link || parent === window) return;
+    parent.postMessage({type: "source-link", panel: link.dataset.panel}, "*");
+  });
+  window.addEventListener("load", notifyParent);
+  window.addEventListener("hashchange", notifyParent);
+})();
+</script></body></html>

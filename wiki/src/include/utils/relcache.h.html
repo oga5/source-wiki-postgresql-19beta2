@@ -1,45 +1,48 @@
 <!doctype html>
 <html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>src/include/utils/relcache.h.md</title><link rel="stylesheet" href="../../../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../../../source/src/include/utils/relcache.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/utils/relcache.h.html&quot;}, '*');">src/include/utils/relcache.h</a></h1>
 <h2>概要</h2>
-<p>PostgreSQLのバックエンド全体で利用されるリレーション記述子キャッシュ（リレーションキャッシュ、通称relcache）のインタフェース定義を提供するヘッダーファイルです。リレーションのメタデータや属性構造への高速なアクセス、ライフサイクル管理、無効化メカニズムを定義しています。</p>
+<p>PostgreSQLのリレーション記述子キャッシュ（リレーションキャッシュ、通称 relcache）のエントリ構造、初期化、構築、およびライフサイクル管理に関する公開インターフェースを定義するヘッダーファイルです。</p>
 <h2>モジュール内での役割</h2>
 <ul>
-<li><code>src/include/utils/</code> モジュールの一部として、データベースカタログ情報をメモリ上に保持するデータ構造と関数群の宣言を担います。</li>
-<li>実体である <a class="wiki-source-link" href="../../../../source/src/backend/utils/cache/relcache.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/utils/cache/relcache.c.html&quot;}, '*');"><code>src/backend/utils/cache/relcache.c</code></a> とペアをなし、エグゼキュータやプランナ、オプティマイザが必要とするリレーション情報へのアクセス経路を提供します。</li>
+<li><code>src/include/utils</code> サブシステムの一部として、カタログメタデータをメモリ上に保持するデータ構造と関数群を提供します。</li>
+<li>バックエンドの実装本体である <a class="wiki-source-link" href="../../../../source/src/backend/utils/cache/relcache.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/utils/cache/relcache.c.html&quot;}, '*');"><code>src/backend/utils/cache/relcache.c</code></a> と対をなし、外部モジュールから利用される型定義や公開関数シグネチャを定めます。</li>
 </ul>
 <h2>責務</h2>
 <ul>
-<li>リレーション識別子（<code>Oid</code>）から対応する <code>Relation</code> 構造体を取得・クローズするAPIの公開。</li>
-<li>インデックスリスト、外部キー、パーティション構造など、リレーションに紐づく付加的情報の取得関数の定義。</li>
-<li>バックエンド起動時のリレーションキャッシュ初期化フェーズ (<a class="wiki-source-link" href="../../../../source/src/backend/utils/cache/relcache.c.html#L4005" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__utils__cache__relcache_c__RelationCacheInitialize.html&quot;}, '*');"><code>RelationCacheInitialize</code></a> 等) およびキャッシュ無効化・消去処理の宣言。</li>
-<li><code>pg_internal.init</code> ファイルを活用した起動高速化機構のインタフェース提供。</li>
+<li>リレーション構造体（<code>Relation</code> および <code>RelationPtr</code>）の型定義と、高速化のための初期化ファイル名（<code>pg_internal.init</code>）のマクロ定義。</li>
+<li>リレーションのオープン・クローズ、およびインデックス・制約・属性情報などの追加キャッシュを取得する API の提供。</li>
+<li>バックエンド起動時の段階的初期化、およびトランザクション境界（EoXact / EoSubXact）でのキャッシュ無効化・同期制御の宣言。</li>
 </ul>
 <h2>重要なシンボル</h2>
 <ul>
-<li><code>struct RelationData *Relation</code>: リレーション記述子へのポインタ型。</li>
-<li><code>RelationIdGetRelation(Oid relationId)</code>: 指定されたOIDのリレーションキャッシュエントリを取得する関数。</li>
-<li><code>RelationClose(Relation relation)</code>: 使用しなくなったリレーションキャッシュエントリを解放・参照カウントをデクリメントする関数。</li>
-<li><a class="wiki-source-link" href="../../../../source/src/include/utils/relcache.h.html#L25" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/utils/relcache.h.html&quot;}, '*');"><code>RELCACHE_INIT_FILENAME</code></a>: バックエンド起動を高速化するためのリレーションキャッシュ初期化ファイル名（<code>pg_internal.init</code>）。</li>
-<li><a class="wiki-source-link" href="../../../../source/src/include/utils/relcache.h.html#L68" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__utils__relcache_h__IndexAttrBitmapKind.html&quot;}, '*');"><code>IndexAttrBitmapKind</code></a>: インデックス属性のビットマップ種別を定義する列挙型。</li>
+<li><code>struct RelationData *Relation</code>: リレーション記述子を表す不透明ポインタ型のエイリアス。</li>
+<li><code>RelationIdGetRelation</code>: 指定された Oid からリレーションキャッシュエントリを取得します。</li>
+<li><code>RelationClose</code>: 使用済みのリレーション記述子を閉じます。</li>
+<li><a class="wiki-source-link" href="../../../../source/src/include/utils/relcache.h.html#L68" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__utils__relcache_h__IndexAttrBitmapKind.html&quot;}, '*');"><code>IndexAttrBitmapKind</code></a>: インデックスの対象列を取得する際のビットマップ種別を指定する列挙型。</li>
+<li><code>RelationCacheInitialize</code>: バックエンド起動時にリレーションキャッシュを初期化します。</li>
 </ul>
 <h2>制御フローとデータフロー</h2>
-<p>1. **オープンとキャッシュヒット/構築**: クエリ処理やプラン生成の過程で、呼び出し元が <code>RelationIdGetRelation(relationId)</code> を呼び出します。キャッシュに存在しない場合、対応するカタログ情報を読み込んで <code>Relation</code> 構造体を構築します。 2. **利用と情報抽出**: 取得した <code>Relation</code> から <a class="wiki-source-link" href="../../../../source/src/backend/utils/cache/relcache.c.html#L4845" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__utils__cache__relcache_c__RelationGetIndexList.html&quot;}, '*');"><code>RelationGetIndexList</code></a> や <code>RelationGetAttrBitmap</code> などのヘルパー関数を介して、インデックスや属性情報を参照します。 3. **クローズ**: 利用終了時に <code>RelationClose(relation)</code> を呼び出し、参照カウントを更新します。 4. **無効化フロー**: DDL実行時やインボリデーションメッセージ受信時に <a class="wiki-source-link" href="../../../../source/src/backend/utils/cache/relcache.c.html#L2939" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__utils__cache__relcache_c__RelationCacheInvalidateEntry.html&quot;}, '*');"><code>RelationCacheInvalidateEntry</code></a> や <a class="wiki-source-link" href="../../../../source/src/backend/utils/cache/relcache.c.html#L3227" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__utils__cache__relcache_c__AtEOXact_RelationCache.html&quot;}, '*');"><code>AtEOXact_RelationCache</code></a> が呼ばれ、キャッシュのエントリが破棄または再構築されます。</p>
+<ul>
+<li>バックエンドの起動プロセスにおいて、<code>RelationCacheInitialize</code> から始まり、フェーズ 2 および 3 を経て共有カタログや通常カタログのキャッシュが構築されます。</li>
+<li>クエリ実行やプランナの処理において、<code>RelationIdGetRelation()</code> でキャッシュ済みエントリを取得し、利用後は <code>RelationClose()</code> で解放するフローが基本となります。</li>
+<li>キャッシュが無効化される局面では、<a class="wiki-source-link" href="../../../../source/src/backend/utils/cache/relcache.c.html#L2995" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__utils__cache__relcache_c__RelationCacheInvalidate.html&quot;}, '*');"><code>RelationCacheInvalidate</code></a> やトランザクション終了時の <a class="wiki-source-link" href="../../../../source/src/backend/utils/cache/relcache.c.html#L3227" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__utils__cache__relcache_c__AtEOXact_RelationCache.html&quot;}, '*');"><code>AtEOXact_RelationCache</code></a> が呼び出され、エントリの破棄や再構築が行われます。</li>
+</ul>
 <h2>直接依存</h2>
 <ul>
-<li><code>access/tupdesc.h</code>: タプル記述子（TupleDesc）の定義。</li>
-<li><code>common/relpath.h</code>: リレーションパスおよびストレージ関連の共通定義。</li>
-<li><code>nodes/bitmapset.h</code>: ビットマップ操作関数の定義。</li>
+<li><code>access/tupdesc.h</code></li>
+<li><code>common/relpath.h</code></li>
+<li><code>nodes/bitmapset.h</code></li>
 </ul>
 <h2>関連コード</h2>
 <ul>
 <li><a class="wiki-source-link" href="../../../../source/src/backend/utils/cache/relcache.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/utils/cache/relcache.c.html&quot;}, '*');"><code>src/backend/utils/cache/relcache.c</code></a>: 本ヘッダーで宣言された関数の実体を実装するペアファイル。</li>
-<li><a class="wiki-source-link" href="../../../../source/src/include/utils/catcache.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/utils/catcache.h.html&quot;}, '*');"><code>src/include/utils/catcache.h</code></a>: タプルレベルのキャッシュを管理する隣接モジュール。</li>
-<li><a class="wiki-source-link" href="../../../../source/src/include/utils/syscache.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/utils/syscache.h.html&quot;}, '*');"><code>src/include/utils/syscache.h</code></a>: システムカタログキャッシュのインタフェース。</li>
+<li><a class="wiki-source-link" href="../../../../source/src/include/utils/catcache.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/utils/catcache.h.html&quot;}, '*');"><code>src/include/utils/catcache.h</code></a>: システムカタログのタプルキャッシュを管理する関連モジュール。</li>
+<li><a class="wiki-source-link" href="../../../../source/src/include/utils/inval.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/utils/inval.h.html&quot;}, '*');"><code>src/include/utils/inval.h</code></a>: キャッシュ無効化機構を担うモジュール。</li>
 </ul>
 <h2>読者向けメモ</h2>
 <ul>
-<li><code>Relation</code> 構造体は非常に大きく複雑なため、ヘッダー内では不完全型 <code>struct RelationData *Relation</code> として前方宣言されています。具体的なメンバにアクセスするには実体定義（<a class="wiki-source-link" href="../../../../source/src/backend/utils/cache/relcache.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/utils/cache/relcache.c.html&quot;}, '*');"><code>relcache.c</code></a> または関連する内部ヘッダー）を確認してください。</li>
-<li><a class="wiki-source-link" href="../../../../source/src/include/utils/relcache.h.html#L25" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/utils/relcache.h.html&quot;}, '*');"><code>RELCACHE_INIT_FILENAME</code></a> はバックエンド起動の高速化に寄与しますが、カタログ定義が変更された際は適切に無効化・再構築される必要があります。</li>
+<li>ヘッダー内の多くの関数はバックエンド内部向けですが、リレーションの属性情報やインデックス構成にアクセスするオプティマイザやエグゼキュータの開発において頻繁に参照されます。</li>
+<li>アサート有効時には <code>AssertCouldGetRelation()</code> によりリレーション取得が可能かどうかの検証が行われます。</li>
 </ul>
 <h2>シンボルページ</h2>
 <ul>

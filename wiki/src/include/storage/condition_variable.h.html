@@ -1,45 +1,45 @@
 <!doctype html>
 <html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>src/include/storage/condition_variable.h.md</title><link rel="stylesheet" href="../../../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../../../source/src/include/storage/condition_variable.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/storage/condition_variable.h.html&quot;}, '*');">src/include/storage/condition_variable.h</a></h1>
 <h2>概要</h2>
-<p>PostgreSQLのバックエンドプロセス間で、特定条件の成立を非同期に待ち合わせるための「条件変数（Condition <a class="wiki-source-link" href="../../../../source/src/bin/pgbench/pgbench.c.html#L324" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__bin__pgbench__pgbench_c__Variable.html&quot;}, '*');">Variable</a>）」のデータ構造とAPIを定義するヘッダーファイルです。動的共有メモリ（DSM）セグメント内での安全な利用や、割り込み可能な待機をサポートします。</p>
+<p>PostgreSQLのバックエンドプロセス間で特定条件の成立を待ち合わせるための「条件変数（Condition <a class="wiki-source-link" href="../../../../source/src/bin/pgbench/pgbench.c.html#L324" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__bin__pgbench__pgbench_c__Variable.html&quot;}, '*');">Variable</a>）」のデータ構造とAPIを定義するヘッダーファイルです。動的共有メモリ（DSM）セグメント内での安全な利用や、割り込み可能な待機を実現します。</p>
 <h2>モジュール内での役割</h2>
-<p><code>src/include/storage</code> ストレージサブシステムのロックマネージャー（<code>lmgr</code>）関連のプリミティブとして位置づけられます。実体定義とアルゴリズムの実装はペアとなる <a class="wiki-source-link" href="../../../../source/src/backend/storage/lmgr/condition_variable.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/storage/lmgr/condition_variable.c.html&quot;}, '*');"><code>src/backend/storage/lmgr/condition_variable.c</code></a> に記述されています。</p>
+<p><code>src/include/storage</code> サブシステムにおいて、プロセス間の同期プリミティブの一つを提供します。実体実装は対応するバックエンドファイル <a class="wiki-source-link" href="../../../../source/src/backend/storage/lmgr/condition_variable.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/storage/lmgr/condition_variable.c.html&quot;}, '*');"><code>src/backend/storage/lmgr/condition_variable.c</code></a> に記述されています。</p>
 <h2>責務</h2>
 <ul>
-<li>プロセス間での状態変化待ち合わせに必要な <a class="wiki-source-link" href="../../../../source/src/include/storage/condition_variable.h.html#L28" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__storage__condition_variable_h__ConditionVariable.html&quot;}, '*');"><code>ConditionVariable</code></a> 構造体の提供。</li>
-<li>キャッシュライン境界をまたがないようにパディングされた <a class="wiki-source-link" href="../../../../source/src/include/storage/condition_variable.h.html#L39" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__storage__condition_variable_h__ConditionVariableMinimallyPadded.html&quot;}, '*');"><code>ConditionVariableMinimallyPadded</code></a> 共用体の提供。</li>
-<li>初期化、スリープ準備、無制限またはタイムアウト付きのスリープ、待機キャンセル、シグナル通知（単数/ブロードキャスト）の関数宣言。</li>
+<li>プロセス間共有が可能な <a class="wiki-source-link" href="../../../../source/src/include/storage/condition_variable.h.html#L28" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__storage__condition_variable_h__ConditionVariable.html&quot;}, '*');"><code>ConditionVariable</code></a> 構造体の定義と、キャッシュライン境界を考慮したパディング型（<a class="wiki-source-link" href="../../../../source/src/include/storage/condition_variable.h.html#L39" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__storage__condition_variable_h__ConditionVariableMinimallyPadded.html&quot;}, '*');"><code>ConditionVariableMinimallyPadded</code></a>）の提供。</li>
+<li>条件変数の初期化、スリープ準備、待機（無期限およびタイムアウト付き）、キャンセル、およびシグナル/ブロードキャスト通知を行うAPIの宣言。</li>
 </ul>
 <h2>重要なシンボル</h2>
 <ul>
-<li><a class="wiki-source-link" href="../../../../source/src/include/storage/condition_variable.h.html#L28" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__storage__condition_variable_h__ConditionVariable.html&quot;}, '*');"><code>ConditionVariable</code></a>: スピンロックとウェイクアップ待ちプロセスリスト（<code>proclist_head</code>）を保持するメイン構造体。</li>
-<li><a class="wiki-source-link" href="../../../../source/src/include/storage/condition_variable.h.html#L39" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__storage__condition_variable_h__ConditionVariableMinimallyPadded.html&quot;}, '*');"><code>ConditionVariableMinimallyPadded</code></a>: 配列配置時にキャッシュラインをまたがないよう調整されたサイズ保証用の共用体。</li>
-<li><code>ConditionVariableSleep</code> / <code>ConditionVariableTimedSleep</code>: 条件が満たされるまでプロセスをスリープさせる主要API。</li>
-<li><code>ConditionVariableSignal</code> / <code>ConditionVariableBroadcast</code>: 待機中のプロセスを起床させるAPI。</li>
+<li><code>struct ConditionVariable</code>: スピンロックと待機プロセスリスト（<code>proclist_head</code>）を保持するコア構造体。</li>
+<li><code>typedef ConditionVariableMinimallyPadded</code>: 配列配置時にキャッシュラインを跨がないようサイズを調整する共用体。</li>
+<li><code>ConditionVariableSleep</code> / <code>ConditionVariableTimedSleep</code>: 条件が満たされるまでプロセスをスリープさせる関数。</li>
+<li><code>ConditionVariableSignal</code> / <code>ConditionVariableBroadcast</code>: 待機中のプロセスへ通知を行う関数。</li>
 </ul>
 <h2>制御フローとデータフロー</h2>
-<ul>
-<li>待機側は、ループ内で条件をテストし、必要に応じて <a class="wiki-source-link" href="../../../../source/src/backend/storage/lmgr/condition_variable.c.html#L57" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__storage__lmgr__condition_variable_c__ConditionVariablePrepareToSleep.html&quot;}, '*');"><code>ConditionVariablePrepareToSleep</code></a> を呼んだ後に <code>ConditionVariableSleep</code> または <code>ConditionVariableTimedSleep</code> を実行して待ち状態に入ります。</li>
-<li>状態を変更した側が <code>ConditionVariableSignal</code> または <code>ConditionVariableBroadcast</code> を呼び出すと、内部のスピンロックで保護された <code>wakeup</code> リストを操作して対象プロセスを起床させます。</li>
-<li>待機ループを抜けた後は、必ず <a class="wiki-source-link" href="../../../../source/src/backend/storage/lmgr/condition_variable.c.html#L231" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__storage__lmgr__condition_variable_c__ConditionVariableCancelSleep.html&quot;}, '*');"><code>ConditionVariableCancelSleep</code></a> を呼び出して待機リストからプロセスを安全に外します。</li>
-</ul>
+<p>1. 呼び出し元プロセスは、必要に応じて <a class="wiki-source-link" href="../../../../source/src/backend/storage/lmgr/condition_variable.c.html#L57" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__storage__lmgr__condition_variable_c__ConditionVariablePrepareToSleep.html&quot;}, '*');"><code>ConditionVariablePrepareToSleep</code></a> で待機登録を行った後、条件判定ループに入る。 2. 条件が満たされない場合、<code>ConditionVariableSleep</code> または <code>ConditionVariableTimedSleep</code> を呼び出して待機状態（スリープ）に移行する。 3. 別プロセスが <code>ConditionVariableSignal</code> または <code>ConditionVariableBroadcast</code> を呼び出すと、スピンロックで保護された <code>wakeup</code> リストを操作して該当プロセスを起こす。 4. ループを抜けた後、プロセスは必ず <a class="wiki-source-link" href="../../../../source/src/backend/storage/lmgr/condition_variable.c.html#L231" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__storage__lmgr__condition_variable_c__ConditionVariableCancelSleep.html&quot;}, '*');"><code>ConditionVariableCancelSleep</code></a> を呼び出して待機リストから自身を確実に外す。</p>
 <h2>直接依存</h2>
 <ul>
-<li><code>storage/proclist_types.h</code>: 待ち行列のリスト型定義に依存。</li>
-<li><code>storage/spin.h</code>: スピンロック（<a class="wiki-source-link" href="../../../../source/src/include/storage/s_lock.h.html#L129" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__storage__s_lock_h__slock_t.html&quot;}, '*');"><code>slock_t</code></a>）の定義に依存。</li>
+<li><code>storage/proclist_types.h</code>: 待機プロセスリストの型定義。</li>
+<li><code>storage/spin.h</code>: スピンロック（<a class="wiki-source-link" href="../../../../source/src/include/storage/s_lock.h.html#L129" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__storage__s_lock_h__slock_t.html&quot;}, '*');"><code>slock_t</code></a>）の定義と操作。</li>
 </ul>
 <h2>関連コード</h2>
 <ul>
-<li><a class="wiki-source-link" href="../../../../source/src/backend/storage/lmgr/condition_variable.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/storage/lmgr/condition_variable.c.html&quot;}, '*');"><code>src/backend/storage/lmgr/condition_variable.c</code></a>: 条件変数の具体的な実装ファイル。</li>
-<li><a class="wiki-source-link" href="../../../../source/src/include/storage/proc.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/storage/proc.h.html&quot;}, '*');"><code>src/include/storage/proc.h</code></a>: 待機プロセス情報の管理に寄与。</li>
+<li><a class="wiki-source-link" href="../../../../source/src/backend/storage/lmgr/condition_variable.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/storage/lmgr/condition_variable.c.html&quot;}, '*');"><code>src/backend/storage/lmgr/condition_variable.c</code></a>: 条件変数APIの実体実装。</li>
+<li><a class="wiki-source-link" href="../../../../source/src/include/storage/proc.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/storage/proc.h.html&quot;}, '*');"><code>src/include/storage/proc.h</code></a>: プロセス制御構造体および待機リンクの定義。</li>
 </ul>
 <h2>読者向けメモ</h2>
 <ul>
-<li><a class="wiki-source-link" href="../../../../source/src/include/storage/lwlock.h.html#L41" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__storage__lwlock_h__LWLock.html&quot;}, '*');">LWLock</a>の待機とは異なり、条件変数の待機は割り込み可能であり、シグナル受信やクエリキャンセルによる中断が可能です。</li>
-<li>ポインタを内部に持たない設計になっているため、複数プロセス間で共有される動的共有メモリ（DSM）上でも安全に配置できます。</li>
+<li>条件変数での待機は割り込み可能であり、<a class="wiki-source-link" href="../../../../source/src/include/storage/lwlock.h.html#L41" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__storage__lwlock_h__LWLock.html&quot;}, '*');">LWLock</a>の待機とは異なりキャンセルが可能です。</li>
+<li>偽の起床（Spurious wakeups）が発生し得るため、必ずループ内で終了条件を再評価する必要があります。</li>
 </ul>
 <h2>シンボルページ</h2>
 <ul>
+<li><a href="../../../symbols/src__include__storage__condition_variable_h__ConditionVariableBroadcast.html" target="wiki-view"><code>ConditionVariableBroadcast</code></a></li>
+<li><a href="../../../symbols/src__include__storage__condition_variable_h__ConditionVariableSignal.html" target="wiki-view"><code>ConditionVariableSignal</code></a></li>
+<li><a href="../../../symbols/src__include__storage__condition_variable_h__ConditionVariableSleep.html" target="wiki-view"><code>ConditionVariableSleep</code></a></li>
+<li><a href="../../../symbols/src__include__storage__condition_variable_h__ConditionVariableTimedSleep.html" target="wiki-view"><code>ConditionVariableTimedSleep</code></a></li>
+<li><a href="../../../symbols/src__include__storage__condition_variable_h__proclist_head.html" target="wiki-view"><code>proclist_head</code></a></li>
 <li><a href="../../../symbols/src__include__storage__condition_variable_h__ConditionVariable.html" target="wiki-view"><code>ConditionVariable</code></a></li>
 <li><a href="../../../symbols/src__include__storage__condition_variable_h__ConditionVariableMinimallyPadded.html" target="wiki-view"><code>ConditionVariableMinimallyPadded</code></a></li>
 </ul><script>

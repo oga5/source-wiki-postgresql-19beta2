@@ -1,0 +1,95 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>symbols/src__backend__optimizer__path__tidpath_c__ctid.md</title><link rel="stylesheet" href="../../styles.css"></head><body><h1>ctid</h1>
+<h2>定義</h2>
+<ul>
+<li>種別: <code>function</code></li>
+<li>定義箇所: <code>src/backend/optimizer/path/tidpath.c:1</code></li>
+<li>所属モジュール: <a class="wiki-entity-link" href="../modules/src__backend__optimizer__path.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/modules/src__backend__optimizer__path.html&quot;, &quot;source&quot;: &quot;source/src/backend/optimizer/path/allpaths.c.html&quot;}, '*');"><code>module:src/backend/optimizer/path</code></a></li>
+</ul>
+<h2>目的</h2>
+<p>静的シンボル索引から生成された初期シンボルページです。</p>
+<h2>シグネチャまたは形状</h2>
+<ul>
+<li>シグネチャ: <code>/*------------------------------------------------------------------------- * * tidpath.c * Routines to determine which TID conditions are usable for scanning * a given relation, and create TidPaths and TidRangePaths accordingly. * * For TidPaths, we look for WHERE conditions of the form * &quot;CTID = pseudoconstant&quot;, which can be implemented by just fetching * the tuple directly via heap_fetch(). We can also handle OR&#x27;d conditions * such as (CTID = const1) OR (CTID = const2), as well as ScalarArrayOpExpr * conditions of the form CTID = ANY(pseudoconstant_array). In particular * this allows * WHERE ctid IN (tid1, tid2, ...) * * As with indexscans, our definition of &quot;pseudoconstant&quot; is pretty liberal: * we allow anything that doesn&#x27;t involve a volatile function or a Var of * the relation under consideration. Vars belonging to other relations of * the query are allowed, giving rise to parameterized TID scans. * * We also support &quot;WHERE CURRENT OF cursor&quot; conditions (CurrentOfExpr), * which amount to &quot;CTID = run-time-determined-TID&quot;. These could in * theory be translated to a simple comparison of CTID to the result of * a function, but in practice it works better to keep the special node * representation all the way through to execution. * * Additionally, TidRangePaths may be created for conditions of the form * &quot;CTID relop pseudoconstant&quot;, where relop is one of &gt;,&gt;=,&lt;,&lt;=, and * AND-clauses composed of such conditions. * * Portions Copyright (c) 1996-2026, PostgreSQL Global Development Group * Portions Copyright (c) 1994, Regents of the University of California * * * IDENTIFICATION * src/backend/optimizer/path/tidpath.c * *------------------------------------------------------------------------- */ #include &quot;postgres.h&quot; #include &quot;access/sysattr.h&quot; #include &quot;catalog/pg_operator.h&quot; #include &quot;catalog/pg_type.h&quot; #include &quot;nodes/nodeFuncs.h&quot; #include &quot;optimizer/cost.h&quot; #include &quot;optimizer/optimizer.h&quot; #include &quot;optimizer/pathnode.h&quot; #include &quot;optimizer/paths.h&quot; #include &quot;optimizer/restrictinfo.h&quot; /* * Does this Var represent the CTID column of the specified baserel? */ static inline bool IsCTIDVar(Var *var, RelOptInfo *rel)</code></li>
+</ul>
+<h2>入力と出力</h2>
+<p>まだ解析していません。</p>
+<h2>前提条件と不変条件</h2>
+<p>まだ解析していません。</p>
+<h2>アルゴリズムまたは振る舞い</h2>
+<ul>
+<li>複雑度: <code>medium</code> (score 8)</li>
+</ul>
+<p>まだ解析していません。</p>
+<h2>呼び出し元と呼び出し先</h2>
+<ul>
+<li>呼び出し元: なし</li>
+<li>呼び出し先: なし</li>
+<li>呼び出し元サイト: なし</li>
+<li>呼び出しサイト: なし</li>
+</ul>
+<h2>関連データ構造</h2>
+<p><a class="wiki-source-link" href="../../source/src/interfaces/ecpg/test/expected/preproc-type.c.html#L36" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__interfaces__ecpg__test__expected__preproc-type_c__access.html&quot;}, '*');"><code>access</code></a>, <code>c</code>, <code>CurrentOfExpr</code>, <code>cursor</code>, <code>Group</code>, <code>RelOptInfo</code>, <code>ScalarArrayOpExpr</code>, <code>Var</code></p>
+<h2>ソース抜粋</h2>
+<p>~~~c /*------------------------------------------------------------------------- *</p>
+<ul>
+<li><a class="wiki-source-link" href="../../source/src/backend/optimizer/path/tidpath.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/backend/optimizer/path/tidpath.c.html&quot;}, '*');">tidpath.c</a></li>
+<li>Routines to determine which TID conditions are usable for scanning</li>
+<li>a given relation, and create TidPaths and TidRangePaths accordingly.</li>
+<p>*</p>
+<li>For TidPaths, we look for WHERE conditions of the form</li>
+<li>&quot;<a class="wiki-source-link" href="../../source/src/backend/optimizer/path/tidpath.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__path__tidpath_c__CTID.html&quot;}, '*');">CTID</a> = pseudoconstant&quot;, which can be implemented by just fetching</li>
+<li>the tuple directly via <a class="wiki-source-link" href="../../source/src/backend/access/heap/heapam.c.html#L1683" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__access__heap__heapam_c__heap_fetch.html&quot;}, '*');">heap_fetch</a>().  We can also handle OR&#x27;d conditions</li>
+<li>such as (<a class="wiki-source-link" href="../../source/src/backend/optimizer/path/tidpath.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__path__tidpath_c__CTID.html&quot;}, '*');">CTID</a> = const1) OR (<a class="wiki-source-link" href="../../source/src/backend/optimizer/path/tidpath.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__path__tidpath_c__CTID.html&quot;}, '*');">CTID</a> = const2), as well as ScalarArrayOpExpr</li>
+<li>conditions of the form <a class="wiki-source-link" href="../../source/src/backend/optimizer/path/tidpath.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__path__tidpath_c__CTID.html&quot;}, '*');">CTID</a> = ANY(pseudoconstant_array).  In particular</li>
+<li>this allows</li>
+<li>WHERE ctid IN (tid1, tid2, ...)</li>
+<p>*</p>
+<li>As with indexscans, our definition of &quot;pseudoconstant&quot; <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> pretty liberal:</li>
+<li>we allow anything that doesn&#x27;t involve a <a class="wiki-source-link" href="../../source/src/include/port/atomics/generic-msvc.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__port__atomics__generic-msvc_h__volatile.html&quot;}, '*');">volatile</a> function or a Var of</li>
+<li>the relation under consideration.  Vars belonging to other relations of</li>
+<li>the <a class="wiki-source-link" href="../../source/src/backend/optimizer/util/var.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__var_c__query.html&quot;}, '*');">query</a> are allowed, giving rise to parameterized TID scans.</li>
+<p>*</p>
+<li>We also support &quot;WHERE CURRENT OF cursor&quot; conditions (CurrentOfExpr),</li>
+<li>which amount to &quot;<a class="wiki-source-link" href="../../source/src/backend/optimizer/path/tidpath.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__path__tidpath_c__CTID.html&quot;}, '*');">CTID</a> = run-time-determined-TID&quot;.  These could in</li>
+<li>theory be translated to a simple comparison of <a class="wiki-source-link" href="../../source/src/backend/optimizer/path/tidpath.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__path__tidpath_c__CTID.html&quot;}, '*');">CTID</a> to the <a class="wiki-source-link" href="../../source/src/include/storage/checksum_block_internal.h.html#L18" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/storage/checksum_block_internal.h.html&quot;}, '*');">result</a> of</li>
+<li>a function, but in practice it works better to keep the special <a class="wiki-source-link" href="../../source/src/include/lib/ilist.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__lib__ilist_h__node.html&quot;}, '*');">node</a></li>
+<li>representation all the way through to execution.</li>
+<p>*</p>
+<li>Additionally, TidRangePaths may be created for conditions of the form</li>
+<li>&quot;<a class="wiki-source-link" href="../../source/src/backend/optimizer/path/tidpath.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__path__tidpath_c__CTID.html&quot;}, '*');">CTID</a> relop pseudoconstant&quot;, where relop <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> one of &gt;,&gt;=,&lt;,&lt;=, and</li>
+<li>AND-clauses composed of such conditions.</li>
+<p>*</p>
+<li>Portions Copyright (c) 1996-2026, PostgreSQL Global Development Group</li>
+<li>Portions Copyright (c) 1994, Regents of the University of California</li>
+<p>* *</p>
+<li>IDENTIFICATION</li>
+<li><a class="wiki-source-link" href="../../source/src/backend/optimizer/path/tidpath.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/backend/optimizer/path/tidpath.c.html&quot;}, '*');">src/backend/optimizer/path/tidpath.c</a></li>
+<p>* *------------------------------------------------------------------------- */ #include &quot;<a class="wiki-source-link" href="../../source/src/include/postgres.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/postgres.h.html&quot;}, '*');">postgres.h</a>&quot;</p>
+</ul>
+<p>#include &quot;access/sysattr.h&quot; #include &quot;catalog/pg_operator.h&quot; #include &quot;catalog/pg_type.h&quot; #include &quot;nodes/nodeFuncs.h&quot; #include &quot;optimizer/cost.h&quot; #include &quot;optimizer/optimizer.h&quot; #include &quot;optimizer/pathnode.h&quot; #include &quot;optimizer/paths.h&quot; #include &quot;optimizer/restrictinfo.h&quot;</p>
+<p>/*</p>
+<ul>
+<li>Does this Var represent the <a class="wiki-source-link" href="../../source/src/backend/optimizer/path/tidpath.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__path__tidpath_c__CTID.html&quot;}, '*');">CTID</a> column of the specified baserel?</li>
+<p>*/ static inline bool IsCTIDVar(Var *<a class="wiki-source-link" href="../../source/src/backend/optimizer/path/clausesel.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__path__clausesel_c__var.html&quot;}, '*');">var</a>, RelOptInfo *rel) { /* The <a class="wiki-source-link" href="../../source/src/backend/optimizer/util/tlist.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__tlist_c__vartype.html&quot;}, '*');">vartype</a> check <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> strictly paranoia */ if (<a class="wiki-source-link" href="../../source/src/backend/optimizer/path/clausesel.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__path__clausesel_c__var.html&quot;}, '*');">var</a>-&gt;varattno == SelfItemPointerAttributeNumber &amp;&amp; <a class="wiki-source-link" href="../../source/src/backend/optimizer/path/clausesel.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__path__clausesel_c__var.html&quot;}, '*');">var</a>-&gt;<a class="wiki-source-link" href="../../source/src/backend/optimizer/util/tlist.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__tlist_c__vartype.html&quot;}, '*');">vartype</a> == <a class="wiki-source-link" href="../../source/src/backend/optimizer/path/tidpath.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__path__tidpath_c__TIDOID.html&quot;}, '*');">TIDOID</a> &amp;&amp; ~~~</p>
+</ul>
+<h2>失敗モードと境界条件</h2>
+<p>まだ解析していません。</p>
+<h2>保守担当者向けメモ</h2>
+<ul>
+<li>後続フェーズで、ソース本文の文脈と caller/callee 情報を使ってこのページを強化する。</li>
+</ul><script>
+(function() {
+  function notifyParent() {
+    if (parent === window) return;
+    parent.postMessage({type: "frame-location", frame: window.name || "", href: window.location.href}, "*");
+  }
+  document.addEventListener("click", function(event) {
+    const link = event.target.closest("a[data-panel]");
+    if (!link || parent === window) return;
+    parent.postMessage({type: "source-link", panel: link.dataset.panel}, "*");
+  });
+  window.addEventListener("load", notifyParent);
+  window.addEventListener("hashchange", notifyParent);
+})();
+</script></body></html>

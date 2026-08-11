@@ -1,44 +1,55 @@
 <!doctype html>
 <html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>src/include/access/cmptype.h.md</title><link rel="stylesheet" href="../../../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../../../source/src/include/access/cmptype.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/access/cmptype.h.html&quot;}, '*');">src/include/access/cmptype.h</a></h1>
 <h2>概要</h2>
-<p><a class="wiki-source-link" href="../../../../source/src/include/access/cmptype.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/access/cmptype.h.html&quot;}, '*');"><code>src/include/access/cmptype.h</code></a> は、PostgreSQLの演算子が持つ基本的な比較セマンティクスを定義するヘッダーファイルです。システムやインデックスアクセスメソッドが演算子の意味を抽象化して解釈するための基盤を提供します。</p>
+<p><a class="wiki-source-link" href="../../../../source/src/include/access/cmptype.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/access/cmptype.h.html&quot;}, '*');"><code>src/include/access/cmptype.h</code></a> は、PostgreSQL の内部で演算子が持つ基本的な意味論（セマンティクス）を抽象化・定義するためのヘッダーファイルです。システムやエクゼキューター（<code>RowCompareExpr</code> など）がハードコードなしで演算子の比較挙動（等価性、大小関係、包含関係など）を認識できるようにするための共通列挙型を提供します。</p>
 <h2>モジュール内での役割</h2>
-<ul>
-<li><code>src/include/access</code> サブシステムの一部として、アクセスメソッドやプランナーが共通して利用する比較型の定義を提供します。</li>
-<li>インデックスアクセスメソッドの独自の戦略番号を共通のセマンティクスへマッピングし、インデックス固有の詳細へのハードコード依存を軽減します。</li>
-</ul>
+<p><code>src/include/access</code> アクセスモジュール群の一部として、インデックスアクセスメソッド（AM）のストラテジー番号と、システム全体のクエリ処理・最適化処理で必要となる汎用的な比較セマンティクスとの間の抽象化レイヤーを構成します。インデックス AM ごとに異なるストラテジー番号の差異を、共通の比較種別にマッピングするための基礎となります。</p>
 <h2>責務</h2>
 <ul>
-<li>演算子の基本セマンティクスを表す列挙型 <code>CompareType</code> を提供する。</li>
-<li>複合比較式（<code>RowCompareExpr</code> など）や各種アクセスメソッドが参照する等価・大小比較、範囲包含関係の分類を定義する。</li>
+<li>演算子の基本セマンティクスを表す <code>CompareType</code> 列挙型の定義。</li>
+<li>Btree のような標準的な大小比較ストラテジーから、範囲検索等で利用される高度な比較種別（オーバーラップ、包含など）までの共通識別子の提供。</li>
 </ul>
 <h2>重要なシンボル</h2>
+<h3>比較種別定義 (CompareType)</h3>
 <ul>
-<li><code>CompareType</code>: 演算子の基本セマンティクスを表す列挙型。</li>
-<li><a class="wiki-source-link" href="../../../../source/src/include/access/cmptype.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__access__cmptype_h__COMPARE_INVALID.html&quot;}, '*');"><code>COMPARE_INVALID</code></a>: 無効な比較タイプ（初期値等）。</li>
-<li><a class="wiki-source-link" href="../../../../source/src/include/access/cmptype.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__access__cmptype_h__COMPARE_LT.html&quot;}, '*');"><code>COMPARE_LT</code></a>, <a class="wiki-source-link" href="../../../../source/src/include/access/cmptype.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__access__cmptype_h__COMPARE_LE.html&quot;}, '*');"><code>COMPARE_LE</code></a>, <a class="wiki-source-link" href="../../../../source/src/include/access/cmptype.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__access__cmptype_h__COMPARE_EQ.html&quot;}, '*');"><code>COMPARE_EQ</code></a>, <a class="wiki-source-link" href="../../../../source/src/include/access/cmptype.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__access__cmptype_h__COMPARE_GE.html&quot;}, '*');"><code>COMPARE_GE</code></a>, <a class="wiki-source-link" href="../../../../source/src/include/access/cmptype.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__access__cmptype_h__COMPARE_GT.html&quot;}, '*');"><code>COMPARE_GT</code></a>, <a class="wiki-source-link" href="../../../../source/src/include/access/cmptype.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__access__cmptype_h__COMPARE_NE.html&quot;}, '*');"><code>COMPARE_NE</code></a>: 従来の大小・等価比較セマンティクス。</li>
-<li><a class="wiki-source-link" href="../../../../source/src/include/access/cmptype.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__access__cmptype_h__COMPARE_OVERLAP.html&quot;}, '*');"><code>COMPARE_OVERLAP</code></a>, <a class="wiki-source-link" href="../../../../source/src/include/access/cmptype.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__access__cmptype_h__COMPARE_CONTAINED_BY.html&quot;}, '*');"><code>COMPARE_CONTAINED_BY</code></a>: 範囲型などで使用される重複・包含セマンティクス。</li>
+<li><code>enum CompareType</code>: 演算子の基本セマンティクスを識別するための列挙型。</li>
+<li><a class="wiki-source-link" href="../../../../source/src/include/access/cmptype.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__access__cmptype_h__COMPARE_INVALID.html&quot;}, '*');"><code>COMPARE_INVALID</code></a>: 未初期化または無効な比較種別（<code>0</code>）。</li>
+<li><a class="wiki-source-link" href="../../../../source/src/include/access/cmptype.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__access__cmptype_h__COMPARE_LT.html&quot;}, '*');"><code>COMPARE_LT</code></a>: より小（Less Than）。</li>
+<li><a class="wiki-source-link" href="../../../../source/src/include/access/cmptype.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__access__cmptype_h__COMPARE_LE.html&quot;}, '*');"><code>COMPARE_LE</code></a>: 以下（Less Than or Equal）。</li>
+<li><a class="wiki-source-link" href="../../../../source/src/include/access/cmptype.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__access__cmptype_h__COMPARE_EQ.html&quot;}, '*');"><code>COMPARE_EQ</code></a>: 等しい（Equal）。</li>
+<li><a class="wiki-source-link" href="../../../../source/src/include/access/cmptype.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__access__cmptype_h__COMPARE_GE.html&quot;}, '*');"><code>COMPARE_GE</code></a>: 以上（Greater Than or Equal）。</li>
+<li><a class="wiki-source-link" href="../../../../source/src/include/access/cmptype.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__access__cmptype_h__COMPARE_GT.html&quot;}, '*');"><code>COMPARE_GT</code></a>: より大（Greater Than）。</li>
+<li><a class="wiki-source-link" href="../../../../source/src/include/access/cmptype.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__access__cmptype_h__COMPARE_NE.html&quot;}, '*');"><code>COMPARE_NE</code></a>: 等しくない（Not Equal）。</li>
+<li><a class="wiki-source-link" href="../../../../source/src/include/access/cmptype.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__access__cmptype_h__COMPARE_OVERLAP.html&quot;}, '*');"><code>COMPARE_OVERLAP</code></a>: オーバーラップ（範囲などが重なる）。</li>
+<li><a class="wiki-source-link" href="../../../../source/src/include/access/cmptype.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__access__cmptype_h__COMPARE_CONTAINED_BY.html&quot;}, '*');"><code>COMPARE_CONTAINED_BY</code></a>: 包含される（別の範囲などに完全に含まれる）。</li>
 </ul>
 <h2>制御フローとデータフロー</h2>
-<ul>
-<li>本ファイルは型定義のみを提供するヘッダーファイルであるため、ファイル単体の制御フローやデータフローは存在しません。</li>
-<li>プランナーやエグゼキューターが式評価やインデックススキャンの条件解析を行う際に、演算子のセマンティクス判定用データとして <code>CompareType</code> が参照されます。</li>
-</ul>
+<p>本ファイルは純粋な型の定義（ヘッダーファイル）のみを提供するため、直接的な制御フローやデータ処理関数の実装はありません。データフローとしては、パーサーやオプティマイザ、あるいはインデックススキャン処理が演算子やストラテジー番号を <code>CompareType</code> に変換し、<code>RowCompareExpr</code> などの式評価フェーズで比較の性質を判定するために利用されます。</p>
 <h2>直接依存</h2>
 <ul>
-<li>直接インクルードする他のヘッダーファイルはありません。</li>
+<li>なし（純粋な列挙型定義のみ）</li>
 </ul>
 <h2>関連コード</h2>
 <ul>
-<li><a class="wiki-source-link" href="../../../../source/src/include/access/stratnum.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/access/stratnum.h.html&quot;}, '*');"><code>src/include/access/stratnum.h</code></a>: インデックスアクセスメソッドの戦略番号定義。</li>
-<li><a class="wiki-source-link" href="../../../../source/src/include/nodes/primnodes.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/nodes/primnodes.h.html&quot;}, '*');"><code>src/include/nodes/primnodes.h</code></a>: <code>RowCompareExpr</code> などの式ノード定義。</li>
+<li><a class="wiki-source-link" href="../../../../source/src/include/access/stratnum.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/access/stratnum.h.html&quot;}, '*');"><code>src/include/access/stratnum.h</code></a>: インデックス AM のストラテジー番号定義</li>
+<li><a class="wiki-source-link" href="../../../../source/src/include/nodes/primnodes.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/nodes/primnodes.h.html&quot;}, '*');"><code>src/include/nodes/primnodes.h</code></a>: <code>RowCompareExpr</code> などの式ノード定義</li>
 </ul>
 <h2>読者向けメモ</h2>
 <ul>
-<li>現在の実装では、大部分の値がBツリーの戦略番号に対応するように割り当てられています。他のアクセスメソッドへの適用については将来的な拡張余地が残されています。</li>
+<li>**設計上の注意**: コメントにも記載されている通り、現時点のマッピングは Btree のストラテジー番号に強く依存しており、他のアクセスメソッド全体への汎用的な適用については発展途上の部分があります。</li>
+<li>**メモリ・ライフサイクル**: 定義のみであり、実行時のメモリ割り当てやライフサイクル管理は伴いません。</li>
 </ul>
 <h2>シンボルページ</h2>
 <ul>
+<li><a href="../../../symbols/src__include__access__cmptype_h__COMPARE_CONTAINED_BY.html" target="wiki-view"><code>COMPARE_CONTAINED_BY</code></a></li>
+<li><a href="../../../symbols/src__include__access__cmptype_h__COMPARE_EQ.html" target="wiki-view"><code>COMPARE_EQ</code></a></li>
+<li><a href="../../../symbols/src__include__access__cmptype_h__COMPARE_GE.html" target="wiki-view"><code>COMPARE_GE</code></a></li>
+<li><a href="../../../symbols/src__include__access__cmptype_h__COMPARE_GT.html" target="wiki-view"><code>COMPARE_GT</code></a></li>
+<li><a href="../../../symbols/src__include__access__cmptype_h__COMPARE_INVALID.html" target="wiki-view"><code>COMPARE_INVALID</code></a></li>
+<li><a href="../../../symbols/src__include__access__cmptype_h__COMPARE_LE.html" target="wiki-view"><code>COMPARE_LE</code></a></li>
+<li><a href="../../../symbols/src__include__access__cmptype_h__COMPARE_LT.html" target="wiki-view"><code>COMPARE_LT</code></a></li>
+<li><a href="../../../symbols/src__include__access__cmptype_h__COMPARE_NE.html" target="wiki-view"><code>COMPARE_NE</code></a></li>
+<li><a href="../../../symbols/src__include__access__cmptype_h__COMPARE_OVERLAP.html" target="wiki-view"><code>COMPARE_OVERLAP</code></a></li>
 <li><a href="../../../symbols/src__include__access__cmptype_h__CompareType.html" target="wiki-view"><code>CompareType</code></a></li>
 </ul><script>
 (function() {

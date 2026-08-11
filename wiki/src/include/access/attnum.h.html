@@ -1,40 +1,40 @@
 <!doctype html>
 <html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>src/include/access/attnum.h.md</title><link rel="stylesheet" href="../../../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../../../source/src/include/access/attnum.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/access/attnum.h.html&quot;}, '*');">src/include/access/attnum.h</a></h1>
 <h2>概要</h2>
-<p>PostgreSQLにおける属性番号（アトリビュート番号）の型定義と、その検証や変換を行うインラインマクロ群を提供するヘッダーファイルです。</p>
+<p>PostgreSQLのテーブル列（属性）を識別する属性番号（Attribute Number）の型定義と関連マクロを提供するヘッダーファイルです。</p>
 <h2>モジュール内での役割</h2>
-<p><code>src/include/access</code> モジュール内において、テーブルやインデックスの列（属性）を識別するための基礎的なプリミティブを定義しています。システムカタログやタプル構造体を扱う多くのアクセスメソッドやストレージ関連のコードから参照される基盤ファイルです。</p>
+<p><code>src/include/access</code> モジュールにおいて、タプルやリレーション構造を定義する基礎的なデータ型の一つとして機能します。システムカタログやヒープタプル操作など、列の位置を特定するあらゆるコードから参照されます。</p>
 <h2>責務</h2>
 <ul>
 <li>属性番号を表す基本型 <code>AttrNumber</code>（<code>int16</code>）の定義。</li>
-<li>無効な属性番号や最大属性番号の境界値マクロの提供。</li>
-<li>属性番号の有効性判定および、ユーザー定義属性かどうかの判定。</li>
-<li>属性番号と内部オフセット間の相互変換（0始まりのオフセットと1始まりの属性番号の変換）。</li>
+<li>無効値や最大値などの境界値マクロの提供。</li>
+<li>属性番号の有効性判定およびユーザー定義列の判定ロジックの提供。</li>
+<li>属性番号と内部オフセット間の変換処理の提供。</li>
 </ul>
 <h2>重要なシンボル</h2>
 <ul>
-<li><code>AttrNumber</code>: 属性番号を保持するための <code>int16</code> 型の <a class="wiki-source-link" href="../../../../source/src/include/fmgr.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/fmgr.h.html&quot;}, '*');">typedef</a>。</li>
-<li><a class="wiki-source-link" href="../../../../source/src/include/access/attnum.h.html#L23" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/access/attnum.h.html&quot;}, '*');"><code>InvalidAttrNumber</code></a>: 無効な属性番号を示す定数（<code>0</code>）。</li>
-<li><a class="wiki-source-link" href="../../../../source/src/include/access/attnum.h.html#L34" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/access/attnum.h.html&quot;}, '*');"><code>AttributeNumberIsValid</code></a>: 与えられた属性番号が有効（<code>!= InvalidAttrNumber</code>）か判定するマクロ。</li>
-<li><a class="wiki-source-link" href="../../../../source/src/include/access/attnum.h.html#L41" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/access/attnum.h.html&quot;}, '*');"><code>AttrNumberIsForUserDefinedAttr</code></a>: 属性番号が正の値であり、ユーザー定義の列を指しているか判定するマクロ。</li>
-<li><a class="wiki-source-link" href="../../../../source/src/include/access/attnum.h.html#L51" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/access/attnum.h.html&quot;}, '*');"><code>AttrNumberGetAttrOffset</code></a> / <a class="wiki-source-link" href="../../../../source/src/include/access/attnum.h.html#L61" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/access/attnum.h.html&quot;}, '*');"><code>AttrOffsetGetAttrNumber</code></a>: 属性番号と属性オフセットの間で相互変換を行うマクロ。</li>
+<li><code>AttrNumber</code>: 列番号を表現するための <code>int16</code> の型定義。</li>
+<li><a class="wiki-source-link" href="../../../../source/src/include/access/attnum.h.html#L23" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/access/attnum.h.html&quot;}, '*');"><code>InvalidAttrNumber</code></a>: 無効な属性番号を表す定数（<code>0</code>）。</li>
+<li><a class="wiki-source-link" href="../../../../source/src/include/access/attnum.h.html#L34" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/access/attnum.h.html&quot;}, '*');"><code>AttributeNumberIsValid</code></a>: 属性番号が有効か判定するマクロ。</li>
+<li><a class="wiki-source-link" href="../../../../source/src/include/access/attnum.h.html#L41" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/access/attnum.h.html&quot;}, '*');"><code>AttrNumberIsForUserDefinedAttr</code></a>: システム列ではなくユーザー定義列であるかを判定するマクロ。</li>
+<li><a class="wiki-source-link" href="../../../../source/src/include/access/attnum.h.html#L51" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/access/attnum.h.html&quot;}, '*');"><code>AttrNumberGetAttrOffset</code></a> / <a class="wiki-source-link" href="../../../../source/src/include/access/attnum.h.html#L61" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/access/attnum.h.html&quot;}, '*');"><code>AttrOffsetGetAttrNumber</code></a>: 属性番号と0始まりのオフセット間を相互変換するマクロ。</li>
 </ul>
 <h2>制御フローとデータフロー</h2>
-<p>本ファイルは関数や複雑な制御フローを持たず、純粋なデータ型定義とプリプロセッサマクロのみで構成されています。データフローとしては、タプル操作時やカタログ参照時に渡される <code>AttrNumber</code> を <a class="wiki-source-link" href="../../../../source/src/include/access/attnum.h.html#L51" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/access/attnum.h.html&quot;}, '*');"><code>AttrNumberGetAttrOffset</code></a> によって配列インデックス等のオフセットへ変換し、メモリ上の属性データへアクセスするために利用されます。</p>
+<p>制御フローや複雑なアルゴリズムはこのファイルには存在せず、純粋なデータ型定義とインラインのマクロ評価のみを提供します。データフローとしては、呼び出し元が保持する <code>AttrNumber</code> をマクロに入力し、有効性チェック結果や変換済みのオフセット値を取得するために使われます。</p>
 <h2>直接依存</h2>
-<p>直接的なインクルードファイルはありません。標準的な型定義に依存します。</p>
+<p>直接インクルードしている他のヘッダーファイルはありません。</p>
 <h2>関連コード</h2>
 <ul>
-<li><a class="wiki-source-link" href="../../../../source/src/include/access/sysattr.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/access/sysattr.h.html&quot;}, '*');"><code>src/include/access/sysattr.h</code></a>: システム列（OIDやctidなど、負の属性番号を持つ特殊な列）の定義を提供します。</li>
-<li><a class="wiki-source-link" href="../../../../source/src/include/access/htup.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/access/htup.h.html&quot;}, '*');"><code>src/include/access/htup.h</code></a> および <a class="wiki-source-link" href="../../../../source/src/include/access/htup_details.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/access/htup_details.h.html&quot;}, '*');"><code>htup_details.h</code></a>: タプル構造体および属性へのアクセス時に本ファイルの定義を利用します。</li>
+<li><a class="wiki-source-link" href="../../../../source/src/include/access/sysattr.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/access/sysattr.h.html&quot;}, '*');"><code>src/include/access/sysattr.h</code></a>: <code>SelfItemPointerAttributeNumber</code> などのシステム列の負の属性番号を定義する関連ファイル。</li>
+<li><a class="wiki-source-link" href="../../../../source/src/include/access/htup.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/access/htup.h.html&quot;}, '*');"><code>src/include/access/htup.h</code></a>: タプルヘッダーと属性の関連を扱う関連ファイル。</li>
 </ul>
 <h2>読者向けメモ</h2>
 <ul>
-<li>ユーザー定義属性番号は <code>1</code> から始まります（<code>0</code> は無効値、負の値はシステム列）。</li>
-<li>属性オフセットへの変換マクロ (<a class="wiki-source-link" href="../../../../source/src/include/access/attnum.h.html#L51" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/access/attnum.h.html&quot;}, '*');"><code>AttrNumberGetAttrOffset</code></a>) は、対象がユーザー定義属性であることを前提にアサートで検証するため、呼び出し側で事前に <a class="wiki-source-link" href="../../../../source/src/include/access/attnum.h.html#L41" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/access/attnum.h.html&quot;}, '*');"><code>AttrNumberIsForUserDefinedAttr</code></a> による確認が必要です。</li>
+<li>ユーザー定義列の属性番号は <code>1</code> から始まりますが、システム列（例: <code>ctid</code>, <code>xmin</code> 等）は負の値をとるため、<a class="wiki-source-link" href="../../../../source/src/include/access/attnum.h.html#L41" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/access/attnum.h.html&quot;}, '*');"><code>AttrNumberIsForUserDefinedAttr</code></a> を使用する際は対象がユーザー定義列かどうかに注意してください。</li>
 </ul>
 <h2>シンボルページ</h2>
 <ul>
+<li><a href="../../../symbols/src__include__access__attnum_h__int16.html" target="wiki-view"><code>int16</code></a></li>
 <li><a href="../../../symbols/src__include__access__attnum_h__AttrNumber.html" target="wiki-view"><code>AttrNumber</code></a></li>
 </ul><script>
 (function() {

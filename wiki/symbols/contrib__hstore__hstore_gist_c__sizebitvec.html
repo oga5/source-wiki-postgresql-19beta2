@@ -34,8 +34,8 @@
 <h2>関連データ構造</h2>
 <p><code>BITVECP</code>, <code>int32</code></p>
 <h2>ソース抜粋</h2>
-<p>~~~c static int32 sizebitvec(BITVECP sign, int siglen) { int32		<a class="wiki-source-link" href="../../source/src/backend/optimizer/geqo/geqo_eval.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__geqo__geqo_eval_c__size.html&quot;}, '*');">size</a> = 0, i;</p>
-<p>LOOPBYTE(siglen) { <a class="wiki-source-link" href="../../source/src/backend/optimizer/geqo/geqo_eval.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__geqo__geqo_eval_c__size.html&quot;}, '*');">size</a> += <a class="wiki-source-link" href="../../source/contrib/hstore/hstore_gist.c.html#L64" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/contrib/hstore/hstore_gist.c.html&quot;}, '*');">SUMBIT</a>(sign); sign = (BITVECP) (((char *) sign) + 1); } return <a class="wiki-source-link" href="../../source/src/backend/optimizer/geqo/geqo_eval.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__geqo__geqo_eval_c__size.html&quot;}, '*');">size</a>; } ~~~</p>
+<p>~~~c static int32 sizebitvec(BITVECP sign, int siglen) { int32		size = 0, i;</p>
+<p>LOOPBYTE(siglen) { size += <a class="wiki-source-link" href="../../source/contrib/hstore/hstore_gist.c.html#L64" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/contrib/hstore/hstore_gist.c.html&quot;}, '*');">SUMBIT</a>(sign); sign = (BITVECP) (((char *) sign) + 1); } return size; } ~~~</p>
 <h2>失敗モードと境界条件</h2>
 <p>まだ解析していません。</p>
 <h2>保守担当者向けメモ</h2>

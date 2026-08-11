@@ -1,0 +1,67 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>src/include/storage/smgr.h.md</title><link rel="stylesheet" href="../../../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../../../source/src/include/storage/smgr.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/storage/smgr.h.html&quot;}, '*');">src/include/storage/smgr.h</a></h1>
+<h2>概要</h2>
+<p>PostgreSQL のストレージマネージャー（Storage Manager）スイッチの公開インターフェースを定義するヘッダーファイルです。ファイルシステム上のリレーションファイルに対するすべての操作は、このストレージマネージャー層を介してディスパッチされます。</p>
+<h2>モジュール内での役割</h2>
+<ul>
+<li><a class="wiki-source-link" href="../../../../source/src/backend/storage/smgr/smgr.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/storage/smgr/smgr.c.html&quot;}, '*');"><code>src/backend/storage/smgr/smgr.c</code></a> とペアをなし、バックエンド全体で使用されるストレージ操作の共通 API を提供します。</li>
+<li><a class="wiki-source-link" href="../../../../source/src/include/storage/relfilelocator.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/storage/relfilelocator.h.html&quot;}, '*');"><code>relfilelocator.h</code></a> や <a class="wiki-source-link" href="../../../../source/src/include/storage/block.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/storage/block.h.html&quot;}, '*');"><code>block.h</code></a> などの低レベルなストレージ型定義を利用し、バッファマネージャーやアクセス手法層と物理ストレージの仲立ちをします。</li>
+</ul>
+<h2>責務</h2>
+<ul>
+<li>物理リレーションファイルを開く・閉じる・破棄するといったライフサイクル管理のデータ構造（<a class="wiki-source-link" href="../../../../source/src/include/storage/smgr.h.html#L35" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__storage__smgr_h__SMgrRelationData.html&quot;}, '*');"><code>SMgrRelationData</code></a>）を定義する。</li>
+<li>キャッシュされたファイルハンドルやピン留め（Pinning）機構のインターフェースを宣言する。</li>
+<li>読み込み、書き込み、拡張、同期などのストレージ操作関数およびインラインヘルパー（<a class="wiki-source-link" href="../../../../source/src/include/storage/smgr.h.html#L123" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__storage__smgr_h__smgrread.html&quot;}, '*');"><code>smgrread</code></a>, <a class="wiki-source-link" href="../../../../source/src/include/storage/smgr.h.html#L130" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__storage__smgr_h__smgrwrite.html&quot;}, '*');"><code>smgrwrite</code></a>）を提供する。</li>
+</ul>
+<h2>重要なシンボル</h2>
+<ul>
+<li><code>struct SMgrRelationData</code>: 物理リレーションの識別子、フォークごとのキャッシュサイズ、ストレージマネージャーのセレクター、ピン留め情報を保持するキャッシュ済みファイルハンドル構造体。</li>
+<li><code>typedef SMgrRelation</code>: <code>SMgrRelationData *</code> へのエイリアス。</li>
+<li><code>macro: SmgrIsTemp(smgr)</code>: 指定されたストレージ関係が一時リレーションかどうかを判定するマクロ。</li>
+<li><code>function: smgrread</code> / <code>function: smgrwrite</code>: 単一ブロックの読み書きを行うためのインラインヘルパー関数（内部でベクトル処理関数を呼び出す）。</li>
+</ul>
+<h2>制御フローとデータフロー</h2>
+<ul>
+<li>リレーションが最初にアクセスされる際、<code>smgropen()</code> が呼び出されてハッシュテーブルから（または新規に）<code>SMgrRelation</code> エントリを取得します。</li>
+<li>通常のクエリ処理ではリレーションキャッシュを介して <code>SMgrRelation</code> が参照され、トランザクション終了時にピン留めされていないエントリが自動解放されます。</li>
+<li>読み書き要求は <a class="wiki-source-link" href="../../../../source/src/include/storage/smgr.h.html#L123" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__storage__smgr_h__smgrread.html&quot;}, '*');"><code>smgrread</code></a> や <a class="wiki-source-link" href="../../../../source/src/include/storage/smgr.h.html#L130" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__storage__smgr_h__smgrwrite.html&quot;}, '*');"><code>smgrwrite</code></a> などの公開関数から、より汎用的な <a class="wiki-source-link" href="../../../../source/src/backend/storage/smgr/smgr.c.html#L720" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__storage__smgr__smgr_c__smgrreadv.html&quot;}, '*');"><code>smgrreadv</code></a> / <a class="wiki-source-link" href="../../../../source/src/backend/storage/smgr/smgr.c.html#L790" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__storage__smgr__smgr_c__smgrwritev.html&quot;}, '*');"><code>smgrwritev</code></a> へ渡され、最終的に個別のストレージ実装（磁気ディスク用モジュール <a class="wiki-source-link" href="../../../../source/src/backend/storage/smgr/md.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/storage/smgr/md.c.html&quot;}, '*');"><code>md.c</code></a> など）へディスパッチされます。</li>
+</ul>
+<h2>直接依存</h2>
+<ul>
+<li><code>lib/ilist.h</code></li>
+<li><code>storage/aio_types.h</code></li>
+<li><code>storage/block.h</code></li>
+<li><code>storage/relfilelocator.h</code></li>
+</ul>
+<h2>関連コード</h2>
+<ul>
+<li><a class="wiki-source-link" href="../../../../source/src/backend/storage/smgr/smgr.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/storage/smgr/smgr.c.html&quot;}, '*');"><code>src/backend/storage/smgr/smgr.c</code></a>: ストレージマネージャーのメイン実装ファイル。</li>
+<li><a class="wiki-source-link" href="../../../../source/src/include/storage/md.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/storage/md.h.html&quot;}, '*');"><code>src/include/storage/md.h</code></a>: 磁気ディスクベースの具体的なストレージマネージャー実装。</li>
+<li><a class="wiki-source-link" href="../../../../source/src/include/storage/bufmgr.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/storage/bufmgr.h.html&quot;}, '*');"><code>src/include/storage/bufmgr.h</code></a>: バッファキャッシュとストレージ層を接続するモジュール。</li>
+</ul>
+<h2>読者向けメモ</h2>
+<ul>
+<li><a class="wiki-source-link" href="../../../../source/src/include/storage/smgr.h.html#L35" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__storage__smgr_h__SMgrRelationData.html&quot;}, '*');"><code>SMgrRelationData</code></a> の先頭フィールドである <code>smgr_rlocator</code> はハッシュテーブルのルックキーとして機能するため、順序の変更ができません。</li>
+<li>トランザクション境界でのクリーンアップや、割り込み処理に伴うファイルディスクリプタの解放（<code>PROCSIGNAL_BARRIER_SMGRRELEASE</code>）の仕組みに注意してください。</li>
+</ul>
+<h2>シンボルページ</h2>
+<ul>
+<li><a href="../../../symbols/src__include__storage__smgr_h__SMgrRelationData.html" target="wiki-view"><code>SMgrRelationData</code></a></li>
+<li><a href="../../../symbols/src__include__storage__smgr_h__SMgrRelation.html" target="wiki-view"><code>SMgrRelation</code></a></li>
+<li><a href="../../../symbols/src__include__storage__smgr_h__smgrread.html" target="wiki-view"><code>smgrread</code></a></li>
+<li><a href="../../../symbols/src__include__storage__smgr_h__smgrwrite.html" target="wiki-view"><code>smgrwrite</code></a></li>
+</ul><script>
+(function() {
+  function notifyParent() {
+    if (parent === window) return;
+    parent.postMessage({type: "frame-location", frame: window.name || "", href: window.location.href}, "*");
+  }
+  document.addEventListener("click", function(event) {
+    const link = event.target.closest("a[data-panel]");
+    if (!link || parent === window) return;
+    parent.postMessage({type: "source-link", panel: link.dataset.panel}, "*");
+  });
+  window.addEventListener("load", notifyParent);
+  window.addEventListener("hashchange", notifyParent);
+})();
+</script></body></html>

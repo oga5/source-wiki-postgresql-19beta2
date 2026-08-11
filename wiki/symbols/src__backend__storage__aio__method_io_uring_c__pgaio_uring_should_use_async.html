@@ -34,11 +34,11 @@
 <h2>関連データ構造</h2>
 <p><code>PgAioHandle</code></p>
 <h2>ソース抜粋</h2>
-<p>~~~c static bool <a class="wiki-source-link" href="../../source/src/backend/storage/aio/method_io_uring.c.html#L715" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__storage__aio__method_io_uring_c__pgaio_uring_should_use_async.html&quot;}, '*');">pgaio_uring_should_use_async</a>(PgAioHandle *ioh, <a class="wiki-source-link" href="../../source/src/include/common/int.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__common__int_h__size_t.html&quot;}, '*');">size_t</a> io_size) { /*</p>
+<p>~~~c static bool <a class="wiki-source-link" href="../../source/src/backend/storage/aio/method_io_uring.c.html#L715" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__storage__aio__method_io_uring_c__pgaio_uring_should_use_async.html&quot;}, '*');">pgaio_uring_should_use_async</a>(PgAioHandle *ioh, size_t io_size) { /*</p>
 <ul>
 <li>With DIO there&#x27;s no benefit from forcing asynchronous processing, as</li>
 <li>io_uring will never <a class="wiki-source-link" href="../../source/contrib/intarray/_int_bool.c.html#L263" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/contrib__intarray___int_bool_c__execute.html&quot;}, '*');">execute</a> direct IO synchronously during submission.</li>
-<p>*/ if (!(ioh-&gt;<a class="wiki-source-link" href="../../source/src/backend/optimizer/util/var.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__var_c__flags.html&quot;}, '*');">flags</a> &amp; PGAIO_HF_BUFFERED)) return <a class="wiki-source-link" href="../../source/src/tools/pg_bsd_indent/indent_globs.h.html#L43" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/tools/pg_bsd_indent/indent_globs.h.html&quot;}, '*');">false</a>;</p>
+<p>*/ if (!(ioh-&gt;flags &amp; PGAIO_HF_BUFFERED)) return <a class="wiki-source-link" href="../../source/src/tools/pg_bsd_indent/indent_globs.h.html#L43" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/tools/pg_bsd_indent/indent_globs.h.html&quot;}, '*');">false</a>;</p>
 </ul>
 <p>/*</p>
 <ul>

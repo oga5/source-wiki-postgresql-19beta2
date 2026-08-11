@@ -55,7 +55,7 @@
 <p><a class="wiki-source-link" href="../../source/src/bin/pg_upgrade/util.c.html#L258" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__bin__pg_upgrade__util_c__pg_log.html&quot;}, '*');">pg_log</a>(PG_STATUS, &quot;%s&quot;, old_db-&gt;db_name); snprintf(sql_file_name, sizeof(sql_file_name), <a class="wiki-source-link" href="../../source/src/bin/pg_upgrade/pg_upgrade.h.html#L31" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/bin/pg_upgrade/pg_upgrade.h.html&quot;}, '*');">DB_DUMP_FILE_MASK</a>, old_db-&gt;db_oid); snprintf(log_file_name, sizeof(log_file_name), <a class="wiki-source-link" href="../../source/src/bin/pg_upgrade/pg_upgrade.h.html#L43" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/bin/pg_upgrade/pg_upgrade.h.html&quot;}, '*');">DB_DUMP_LOG_FILE_MASK</a>, old_db-&gt;db_oid);</p>
 <p>/*</p>
 <ul>
-<li>template1 database will already exist in the target installation,</li>
+<li>template1 database will already exist in the <a class="wiki-source-link" href="../../source/src/backend/optimizer/path/pathkeys.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__path__pathkeys_c__target.html&quot;}, '*');">target</a> installation,</li>
 <li>so tell pg_restore to drop and recreate it; otherwise we would fail</li>
 <li>to propagate its database-level properties.</li>
 <p>*/ create_opts = &quot;--clean --create&quot;;</p>

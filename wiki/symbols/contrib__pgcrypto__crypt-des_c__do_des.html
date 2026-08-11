@@ -34,24 +34,24 @@
 <h2>関連データ構造</h2>
 <p><code>uint32</code></p>
 <h2>ソース抜粋</h2>
-<p>~~~c static int <a class="wiki-source-link" href="../../source/contrib/pgcrypto/crypt-des.c.html#L482" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/contrib__pgcrypto__crypt-des_c__do_des.html&quot;}, '*');">do_des</a>(uint32 l_in, uint32 r_in, uint32 *l_out, uint32 *r_out, int count) { /*</p>
+<p>~~~c static int <a class="wiki-source-link" href="../../source/contrib/pgcrypto/crypt-des.c.html#L482" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/contrib__pgcrypto__crypt-des_c__do_des.html&quot;}, '*');">do_des</a>(uint32 l_in, uint32 r_in, uint32 *l_out, uint32 *r_out, int <a class="wiki-source-link" href="../../source/src/include/lib/ilist.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__lib__ilist_h__count.html&quot;}, '*');">count</a>) { /*</p>
 <ul>
 <li>l_in, r_in, l_out, and r_out are in pseudo-&quot;big-endian&quot; format.</li>
 <p>*/ uint32		l, r, *kl, *kr, *kl1, *kr1; uint32		f, r48l, r48r; int			round;</p>
 </ul>
-<p>if (count == 0) return 1; else if (count &gt; 0) { /*</p>
+<p>if (<a class="wiki-source-link" href="../../source/src/include/lib/ilist.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__lib__ilist_h__count.html&quot;}, '*');">count</a> == 0) return 1; else if (<a class="wiki-source-link" href="../../source/src/include/lib/ilist.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__lib__ilist_h__count.html&quot;}, '*');">count</a> &gt; 0) { /*</p>
 <ul>
 <li>Encrypting</li>
 <p>*/ kl1 = en_keysl; kr1 = en_keysr; } else { /*</p>
 <li>Decrypting</li>
-<p>*/ count = -count; kl1 = de_keysl; kr1 = de_keysr; }</p>
+<p>*/ <a class="wiki-source-link" href="../../source/src/include/lib/ilist.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__lib__ilist_h__count.html&quot;}, '*');">count</a> = -<a class="wiki-source-link" href="../../source/src/include/lib/ilist.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__lib__ilist_h__count.html&quot;}, '*');">count</a>; kl1 = de_keysl; kr1 = de_keysr; }</p>
 </ul>
 <p>/*</p>
 <ul>
 <li>Do initial permutation (<a class="wiki-source-link" href="../../source/contrib/pgcrypto/crypt-des.c.html#L74" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/contrib/pgcrypto/crypt-des.c.html&quot;}, '*');">IP</a>).</li>
 <p>*/ l = ip_maskl[0][l_in &gt;&gt; 24] | ip_maskl[1][(l_in &gt;&gt; 16) &amp; 0xff] | ip_maskl[2][(l_in &gt;&gt; 8) &amp; 0xff] | ip_maskl[3][l_in &amp; 0xff] | ip_maskl[4][r_in &gt;&gt; 24] | ip_maskl[5][(r_in &gt;&gt; 16) &amp; 0xff] | ip_maskl[6][(r_in &gt;&gt; 8) &amp; 0xff] | ip_maskl[7][r_in &amp; 0xff]; r = ip_maskr[0][l_in &gt;&gt; 24] | ip_maskr[1][(l_in &gt;&gt; 16) &amp; 0xff] | ip_maskr[2][(l_in &gt;&gt; 8) &amp; 0xff] | ip_maskr[3][l_in &amp; 0xff] | ip_maskr[4][r_in &gt;&gt; 24] | ip_maskr[5][(r_in &gt;&gt; 16) &amp; 0xff] | ip_maskr[6][(r_in &gt;&gt; 8) &amp; 0xff] | ip_maskr[7][r_in &amp; 0xff];</p>
 </ul>
-<p>while (count--) { <a class="wiki-source-link" href="../../source/src/include/miscadmin.h.html#L125" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/miscadmin.h.html&quot;}, '*');">CHECK_FOR_INTERRUPTS</a>(); ~~~</p>
+<p>while (<a class="wiki-source-link" href="../../source/src/include/lib/ilist.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__lib__ilist_h__count.html&quot;}, '*');">count</a>--) { <a class="wiki-source-link" href="../../source/src/include/miscadmin.h.html#L125" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/miscadmin.h.html&quot;}, '*');">CHECK_FOR_INTERRUPTS</a>(); ~~~</p>
 <h2>失敗モードと境界条件</h2>
 <p>まだ解析していません。</p>
 <h2>保守担当者向けメモ</h2>

@@ -1,41 +1,45 @@
 <!doctype html>
 <html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>src/include/utils/json.h.md</title><link rel="stylesheet" href="../../../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../../../source/src/include/utils/json.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/utils/json.h.html&quot;}, '*');">src/include/utils/json.h</a></h1>
 <h2>概要</h2>
-<p><a class="wiki-source-link" href="../../../../source/src/include/utils/json.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/utils/json.h.html&quot;}, '*');"><code>src/include/utils/json.h</code></a> は、PostgreSQL における標準 JSON データ型のサポートおよび関連処理のための公開関数宣言を提供するヘッダーファイルです。</p>
+<p>PostgreSQLの <a class="wiki-source-link" href="../../../../source/src/backend/utils/adt/jsonfuncs.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__utils__adt__jsonfuncs_c__json.html&quot;}, '*');"><code>json</code></a> データ型および関連するJSON操作をサポートするための公開関数宣言を提供するヘッダーファイルです。</p>
 <h2>モジュール内での役割</h2>
-<p><code>src/include/utils</code> ユーティリティモジュールの一部であり、JSON / JSONB サブカテゴリに属します。ペアとなる実装ファイル <a class="wiki-source-link" href="../../../../source/src/backend/utils/adt/json.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/utils/adt/json.c.html&quot;}, '*');"><code>src/backend/utils/adt/json.c</code></a> の宣言インターフェースとして機能します。</p>
+<p><code>src/include/utils/</code> モジュールおよびJSON/JSONBサブトピックの一部として、JSONデータ型を扱うバックエンド機能のインターフェースを定義します。実際のアルゴリズムやデータ構造の実装はペアとなる <a class="wiki-source-link" href="../../../../source/src/backend/utils/adt/json.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/utils/adt/json.c.html&quot;}, '*');"><code>src/backend/utils/adt/json.c</code></a> に委譲されています。</p>
 <h2>責務</h2>
 <ul>
-<li>PostgreSQL の内部データ構造（Datum や composite 型など）から JSON への変換処理関数の宣言を提供する。</li>
-<li>JSON 文字列のエスケープ処理関数の公開。</li>
-<li>JSON の構築、検証、日時エンコードに関するワーカー関数のプロトタイプ定義。</li>
+<li>JSONデータ構築・変換用のワーカー関数（オブジェクトや配列の生成など）のシグネチャ公開。</li>
+<li>文字列のエスケープ処理や複合型（コンポジット）のJSON変換関数の公開。</li>
+<li>JSONの構文検証および日時表現エンコーディングに関するユーティリティ関数の宣言。</li>
 </ul>
 <h2>重要なシンボル</h2>
 <ul>
-<li><code>escape_json</code>: C 文字列を JSON 形式にエスケープしてバッファに追加する。</li>
-<li><code>composite_to_json</code>: 複合型（コンポジット）データを JSON 表現に変換する。</li>
-<li><code>json_build_object_worker</code> / <code>json_build_array_worker</code>: JSON オブジェクトおよび配列を構築する内部ワーカー関数。</li>
-<li><code>json_validate</code>: テキストとしての JSON の妥当性（および一意キー）を検証する。</li>
+<li><code>composite_to_json</code>: 複合型（Datum）をJSON形式へ変換する関数。</li>
+<li><code>escape_json</code>: 文字列をJSON仕様に合わせてエスケープしバッファへ追加する関数。</li>
+<li><code>json_build_object_worker</code> / <code>json_build_array_worker</code>: SQL関数等から呼び出されるJSONオブジェクトおよび配列構築のワーカー関数。</li>
+<li><code>json_validate</code>: 指定されたテキストが有効なJSONであるかを検証する関数。</li>
 </ul>
 <h2>制御フローとデータフロー</h2>
-<ul>
-<li>ヘッダーファイル単体には実行ロジックはありません。</li>
-<li>呼び出し側（SQL関数やビルトイン関数）が本ファイルの宣言を参照し、実際のデータ変換やエスケープ処理はペアファイル <a class="wiki-source-link" href="../../../../source/src/backend/utils/adt/json.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/utils/adt/json.c.html&quot;}, '*');"><code>src/backend/utils/adt/json.c</code></a> 内の関数へディスパッチされます。</li>
-</ul>
+<p>ヘッダーファイルであるため直接的な制御フローは持ちませんが、呼び出し元（SQL組み込み関数など）は本ファイルで宣言されたワーカー関数群を経由して <a class="wiki-source-link" href="../../../../source/src/backend/utils/adt/json.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/utils/adt/json.c.html&quot;}, '*');"><code>src/backend/utils/adt/json.c</code></a> 内の処理を起動し、結果を <code>StringInfo</code> バッファや <code>Datum</code> として返却します。</p>
 <h2>直接依存</h2>
 <ul>
-<li><code>lib/stringinfo.h</code>: 可変長文字列バッファ操作型である <code>StringInfo</code> の定義。</li>
+<li><code>lib/stringinfo.h</code>: 可変長文字列バッファ操作型 <code>StringInfo</code> の定義。</li>
 </ul>
 <h2>関連コード</h2>
 <ul>
-<li><a class="wiki-source-link" href="../../../../source/src/backend/utils/adt/json.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/utils/adt/json.c.html&quot;}, '*');"><code>src/backend/utils/adt/json.c</code></a>: ペアとなる実装ファイル。</li>
-<li><a class="wiki-source-link" href="../../../../source/src/include/utils/jsonb.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/utils/jsonb.h.html&quot;}, '*');"><code>src/include/utils/jsonb.h</code></a>: JSONB バイナリ表現向けの関連宣言。</li>
-<li><a class="wiki-source-link" href="../../../../source/src/include/utils/jsonfuncs.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/utils/jsonfuncs.h.html&quot;}, '*');"><code>src/include/utils/jsonfuncs.h</code></a>: JSON 操作用の追加関数の宣言。</li>
-<li><a class="wiki-source-link" href="../../../../source/src/include/utils/jsonpath.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/utils/jsonpath.h.html&quot;}, '*');"><code>src/include/utils/jsonpath.h</code></a>: JSONPath サポートの宣言。</li>
+<li><a class="wiki-source-link" href="../../../../source/src/backend/utils/adt/json.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/utils/adt/json.c.html&quot;}, '*');"><code>src/backend/utils/adt/json.c</code></a>: 本ヘッダーで宣言された関数の実体を実装するペアファイル。</li>
+<li><a class="wiki-source-link" href="../../../../source/src/include/utils/jsonb.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/utils/jsonb.h.html&quot;}, '*');"><code>src/include/utils/jsonb.h</code></a>: バイナリJSON（JSONB）関連の宣言を集約した関連ヘッダー。</li>
+<li><a class="wiki-source-link" href="../../../../source/src/include/utils/jsonfuncs.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/utils/jsonfuncs.h.html&quot;}, '*');"><code>src/include/utils/jsonfuncs.h</code></a>: その他のJSON処理関数を提供するヘッダー。</li>
 </ul>
 <h2>読者向けメモ</h2>
 <ul>
-<li>JSON 型の内部ストレージ構造自体は <code>text</code> 型と同一であり、バリデーションやシリアライズの境界定義としてこのヘッダーが利用されます。</li>
+<li>JSONデータのパースや構築処理を利用、または拡張する際は、直接 <a class="wiki-source-link" href="../../../../source/src/backend/utils/adt/json.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/utils/adt/json.c.html&quot;}, '*');"><code>json.c</code></a> を参照する前にまずこのヘッダーの公開インターフェースを確認してください。</li>
+</ul>
+<h2>シンボルページ</h2>
+<ul>
+<li><a href="../../../symbols/src__include__utils__json_h__composite_to_json.html" target="wiki-view"><code>composite_to_json</code></a></li>
+<li><a href="../../../symbols/src__include__utils__json_h__escape_json.html" target="wiki-view"><code>escape_json</code></a></li>
+<li><a href="../../../symbols/src__include__utils__json_h__json_build_array_worker.html" target="wiki-view"><code>json_build_array_worker</code></a></li>
+<li><a href="../../../symbols/src__include__utils__json_h__json_build_object_worker.html" target="wiki-view"><code>json_build_object_worker</code></a></li>
+<li><a href="../../../symbols/src__include__utils__json_h__json_validate.html" target="wiki-view"><code>json_validate</code></a></li>
 </ul><script>
 (function() {
   function notifyParent() {

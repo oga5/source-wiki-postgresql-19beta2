@@ -36,7 +36,7 @@
 <h2>ソース抜粋</h2>
 <p>~~~c static void <a class="wiki-source-link" href="../../source/src/bin/pg_dump/pg_backup_directory.c.html#L681" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__bin__pg_dump__pg_backup_directory_c__setFilePath.html&quot;}, '*');">setFilePath</a>(ArchiveHandle *AH, char *buf, const char *relativeFilename) { lclContext *ctx = (lclContext *) AH-&gt;formatData; char	   *dname;</p>
 <p>dname = ctx-&gt;directory;</p>
-<p>if (strlen(dname) + 1 + strlen(relativeFilename) + 1 &gt; <a class="wiki-source-link" href="../../source/src/include/pg_config_manual.h.html#L105" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/pg_config_manual.h.html&quot;}, '*');">MAXPGPATH</a>) pg_fatal(&quot;file <a class="wiki-source-link" href="../../source/src/include/mb/pg_wchar.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/mb/pg_wchar.h.html&quot;}, '*');">name</a> too long: \&quot;%s\&quot;&quot;, dname);</p>
+<p>if (strlen(dname) + 1 + strlen(relativeFilename) + 1 &gt; <a class="wiki-source-link" href="../../source/src/include/pg_config_manual.h.html#L105" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/pg_config_manual.h.html&quot;}, '*');">MAXPGPATH</a>) pg_fatal(&quot;file name too long: \&quot;%s\&quot;&quot;, dname);</p>
 <p>strcpy(buf, dname); strcat(buf, &quot;/&quot;); strcat(buf, relativeFilename); } ~~~</p>
 <h2>失敗モードと境界条件</h2>
 <p>まだ解析していません。</p>

@@ -15,7 +15,7 @@
 <h2>入力と出力</h2>
 <ul>
 <li>引数: <code>pg_parameter_acl</code>, <code>ParameterAclRelationId</code></li>
-<li>戻り値: <a class="wiki-source-link" href="../../source/src/include/catalog/genbki.h.html#L34" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/catalog/genbki.h.html&quot;}, '*');"><code>BEGIN_CATALOG_STRUCT</code></a></li>
+<li>戻り値: <code>BEGIN_CATALOG_STRUCT</code></li>
 </ul>
 <h2>前提条件と不変条件</h2>
 <p>まだ解析していません。</p>
@@ -34,9 +34,9 @@
 <h2>関連データ構造</h2>
 <p><a class="wiki-source-link" href="../../source/src/interfaces/ecpg/test/expected/preproc-type.c.html#L36" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__interfaces__ecpg__test__expected__preproc-type_c__access.html&quot;}, '*');"><code>access</code></a>, <code>Oid</code>, <code>text</code>, <code>variable</code></p>
 <h2>ソース抜粋</h2>
-<p>~~~c <a class="wiki-source-link" href="../../source/src/include/catalog/genbki.h.html#L34" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/catalog/genbki.h.html&quot;}, '*');">BEGIN_CATALOG_STRUCT</a></p>
+<p>~~~c BEGIN_CATALOG_STRUCT</p>
 <p>CATALOG(pg_parameter_acl,6243,ParameterAclRelationId) <a class="wiki-source-link" href="../../source/src/include/catalog/genbki.h.html#L46" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/catalog/genbki.h.html&quot;}, '*');">BKI_SHARED_RELATION</a> <a class="wiki-source-link" href="../../source/src/include/catalog/genbki.h.html#L47" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/catalog/genbki.h.html&quot;}, '*');">BKI_ROWTYPE_OID</a>(2173,ParameterAclRelation_Rowtype_Id) <a class="wiki-source-link" href="../../source/src/include/catalog/genbki.h.html#L48" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/catalog/genbki.h.html&quot;}, '*');">BKI_SCHEMA_MACRO</a> { Oid			oid;			/* oid */</p>
-<p>#ifdef CATALOG_VARLEN			/* variable-length fields start here */ /* <a class="wiki-source-link" href="../../source/src/include/mb/pg_wchar.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/mb/pg_wchar.h.html&quot;}, '*');">name</a> of parameter */ text		parname <a class="wiki-source-link" href="../../source/src/include/catalog/genbki.h.html#L52" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/catalog/genbki.h.html&quot;}, '*');">BKI_FORCE_NOT_NULL</a>;</p>
+<p>#ifdef CATALOG_VARLEN			/* variable-length fields start here */ /* name of parameter */ text		parname <a class="wiki-source-link" href="../../source/src/include/catalog/genbki.h.html#L52" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/catalog/genbki.h.html&quot;}, '*');">BKI_FORCE_NOT_NULL</a>;</p>
 <p>/* <a class="wiki-source-link" href="../../source/src/interfaces/ecpg/test/expected/preproc-type.c.html#L36" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__interfaces__ecpg__test__expected__preproc-type_c__access.html&quot;}, '*');">access</a> permissions */ aclitem		paracl[1] <a class="wiki-source-link" href="../../source/src/include/catalog/genbki.h.html#L54" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/catalog/genbki.h.html&quot;}, '*');">BKI_DEFAULT</a>(_null_); #endif } FormData_pg_parameter_acl; ~~~</p>
 <h2>失敗モードと境界条件</h2>
 <p>まだ解析していません。</p>

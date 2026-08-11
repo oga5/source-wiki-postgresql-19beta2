@@ -1,0 +1,87 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>symbols/src__backend__optimizer__prep__prepagg_c__aggtransno.md</title><link rel="stylesheet" href="../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../source/src/backend/optimizer/prep/prepagg.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__prep__prepagg_c__aggtransno.html&quot;}, '*');">aggtransno</a></h1>
+<h2>定義</h2>
+<ul>
+<li>種別: <code>function</code></li>
+<li>定義箇所: <code>src/backend/optimizer/prep/prepagg.c:1</code></li>
+<li>所属モジュール: <a class="wiki-entity-link" href="../modules/src__backend__optimizer__prep.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/modules/src__backend__optimizer__prep.html&quot;, &quot;source&quot;: &quot;source/src/backend/optimizer/prep/prepagg.c.html&quot;}, '*');"><code>module:src/backend/optimizer/prep</code></a></li>
+</ul>
+<h2>目的</h2>
+<p>静的シンボル索引から生成された初期シンボルページです。</p>
+<h2>シグネチャまたは形状</h2>
+<ul>
+<li>シグネチャ: <code>/*------------------------------------------------------------------------- * * prepagg.c * Routines to preprocess aggregate function calls * * If there are identical aggregate calls in the query, they only need to * be computed once. Also, some aggregate functions can share the same * transition state, so that we only need to call the final function for * them separately. These optimizations are independent of how the * aggregates are executed. * * preprocess_aggrefs() detects those cases, creates AggInfo and * AggTransInfo structs for each aggregate and transition state that needs * to be computed, and sets the &#x27;aggno&#x27; and &#x27;transno&#x27; fields in the Aggrefs * accordingly. It also resolves polymorphic transition types, and sets * the &#x27;aggtranstype&#x27; fields accordingly. * * XXX: The AggInfo and AggTransInfo structs are thrown away after * planning, so executor startup has to perform some of the same lookups * of transition functions and initial values that we do here. One day, we * might want to carry that information to the Agg nodes to save the effort * at executor startup. The Agg nodes are constructed much later in the * planning, however, so it&#x27;s not trivial. * * Portions Copyright (c) 1996-2026, PostgreSQL Global Development Group * Portions Copyright (c) 1994, Regents of the University of California * * * IDENTIFICATION * src/backend/optimizer/prep/prepagg.c * *------------------------------------------------------------------------- */ #include &quot;postgres.h&quot; #include &quot;access/htup_details.h&quot; #include &quot;catalog/pg_aggregate.h&quot; #include &quot;catalog/pg_type.h&quot; #include &quot;nodes/nodeFuncs.h&quot; #include &quot;nodes/pathnodes.h&quot; #include &quot;optimizer/cost.h&quot; #include &quot;optimizer/optimizer.h&quot; #include &quot;optimizer/plancat.h&quot; #include &quot;optimizer/prep.h&quot; #include &quot;parser/parse_agg.h&quot; #include &quot;utils/builtins.h&quot; #include &quot;utils/datum.h&quot; #include &quot;utils/fmgroids.h&quot; #include &quot;utils/lsyscache.h&quot; #include &quot;utils/memutils.h&quot; #include &quot;utils/syscache.h&quot; static bool preprocess_aggrefs_walker(Node *node, PlannerInfo *root)</code></li>
+</ul>
+<h2>入力と出力</h2>
+<p>まだ解析していません。</p>
+<h2>前提条件と不変条件</h2>
+<p>まだ解析していません。</p>
+<h2>アルゴリズムまたは振る舞い</h2>
+<ul>
+<li>複雑度: <code>low</code> (score 1)</li>
+</ul>
+<p>まだ解析していません。</p>
+<h2>呼び出し元と呼び出し先</h2>
+<ul>
+<li>呼び出し元: なし</li>
+<li>呼び出し先: なし</li>
+<li>呼び出し元サイト: なし</li>
+<li>呼び出しサイト: なし</li>
+</ul>
+<h2>関連データ構造</h2>
+<p><a class="wiki-source-link" href="../../source/src/interfaces/ecpg/test/expected/preproc-type.c.html#L36" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__interfaces__ecpg__test__expected__preproc-type_c__access.html&quot;}, '*');"><code>access</code></a>, <code>Agg</code>, <code>AggInfo</code>, <code>AggTransInfo</code>, <code>c</code>, <code>Group</code>, <code>Node</code>, <code>PlannerInfo</code>, <a class="wiki-source-link" href="../../source/src/interfaces/ecpg/preproc/type.h.html#L109" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__interfaces__ecpg__preproc__type_h__prep.html&quot;}, '*');"><code>prep</code></a>, <code>state</code></p>
+<h2>ソース抜粋</h2>
+<p>~~~c /*------------------------------------------------------------------------- *</p>
+<ul>
+<li><a class="wiki-source-link" href="../../source/src/backend/optimizer/prep/prepagg.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/backend/optimizer/prep/prepagg.c.html&quot;}, '*');">prepagg.c</a></li>
+<li>Routines to preprocess aggregate function calls</li>
+<p>*</p>
+<li>If there are identical aggregate calls in the <a class="wiki-source-link" href="../../source/src/backend/optimizer/util/var.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__var_c__query.html&quot;}, '*');">query</a>, they only need to</li>
+<li>be computed once.  Also, some aggregate <a class="wiki-source-link" href="../../source/src/backend/regex/regcomp.c.html#L358" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/regex/regcomp.c.html&quot;}, '*');">functions</a> can share the same</li>
+<li>transition state, so that we only need to call the <a class="wiki-source-link" href="../../source/src/common/hashfn.c.html#L116" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/common/hashfn.c.html&quot;}, '*');">final</a> function for</li>
+<li>them separately.  These optimizations are independent of how the</li>
+<li>aggregates are executed.</li>
+<p>*</p>
+<li><a class="wiki-source-link" href="../../source/src/backend/optimizer/prep/prepagg.c.html#L109" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__prep__prepagg_c__preprocess_aggrefs.html&quot;}, '*');">preprocess_aggrefs</a>() detects those cases, creates AggInfo and</li>
+<li>AggTransInfo structs for each aggregate and transition state that needs</li>
+<li>to be computed, and sets the &#x27;<a class="wiki-source-link" href="../../source/src/backend/optimizer/prep/prepagg.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__prep__prepagg_c__aggno.html&quot;}, '*');">aggno</a>&#x27; and &#x27;<a class="wiki-source-link" href="../../source/src/backend/optimizer/prep/prepagg.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__prep__prepagg_c__transno.html&quot;}, '*');">transno</a>&#x27; fields in the Aggrefs</li>
+<li>accordingly.  It also resolves polymorphic transition <a class="wiki-source-link" href="../../source/src/interfaces/ecpg/preproc/ecpg.c.html#L30" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/ecpg/preproc/ecpg.c.html&quot;}, '*');">types</a>, and sets</li>
+<li>the &#x27;<a class="wiki-source-link" href="../../source/src/backend/optimizer/prep/prepagg.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__prep__prepagg_c__aggtranstype.html&quot;}, '*');">aggtranstype</a>&#x27; fields accordingly.</li>
+<p>*</p>
+<li>XXX: The AggInfo and AggTransInfo structs are thrown away <a class="wiki-source-link" href="../../source/src/include/lib/ilist.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__lib__ilist_h__after.html&quot;}, '*');">after</a></li>
+<li>planning, so executor startup has to perform some of the same lookups</li>
+<li>of transition <a class="wiki-source-link" href="../../source/src/backend/regex/regcomp.c.html#L358" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/regex/regcomp.c.html&quot;}, '*');">functions</a> and initial values that we do here.  One day, we</li>
+<li>might want to carry that information to the Agg nodes to save the effort</li>
+<li>at executor startup.  The Agg nodes are constructed much later in the</li>
+<li>planning, however, so it&#x27;s not trivial.</li>
+<p>*</p>
+<li>Portions Copyright (c) 1996-2026, PostgreSQL Global Development Group</li>
+<li>Portions Copyright (c) 1994, Regents of the University of California</li>
+<p>* *</p>
+<li>IDENTIFICATION</li>
+<li><a class="wiki-source-link" href="../../source/src/backend/optimizer/prep/prepagg.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/backend/optimizer/prep/prepagg.c.html&quot;}, '*');">src/backend/optimizer/prep/prepagg.c</a></li>
+<p>* *------------------------------------------------------------------------- */</p>
+</ul>
+<p>#include &quot;<a class="wiki-source-link" href="../../source/src/include/postgres.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/postgres.h.html&quot;}, '*');">postgres.h</a>&quot;</p>
+<p>#include &quot;access/htup_details.h&quot; #include &quot;catalog/pg_aggregate.h&quot; #include &quot;catalog/pg_type.h&quot; #include &quot;nodes/nodeFuncs.h&quot; #include &quot;nodes/pathnodes.h&quot; #include &quot;optimizer/cost.h&quot; #include &quot;optimizer/optimizer.h&quot; #include &quot;optimizer/plancat.h&quot; #include &quot;optimizer/prep.h&quot; #include &quot;parser/parse_agg.h&quot; #include &quot;utils/builtins.h&quot; #include &quot;utils/datum.h&quot; #include &quot;utils/fmgroids.h&quot; #include &quot;utils/lsyscache.h&quot; #include &quot;utils/memutils.h&quot; #include &quot;utils/syscache.h&quot;</p>
+<p>static bool <a class="wiki-source-link" href="../../source/src/backend/optimizer/prep/prepagg.c.html#L343" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__prep__prepagg_c__preprocess_aggrefs_walker.html&quot;}, '*');">preprocess_aggrefs_walker</a>(Node *<a class="wiki-source-link" href="../../source/src/include/lib/ilist.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__lib__ilist_h__node.html&quot;}, '*');">node</a>, PlannerInfo *<a class="wiki-source-link" href="../../source/src/backend/optimizer/util/var.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__var_c__root.html&quot;}, '*');">root</a>); ~~~</p>
+<h2>失敗モードと境界条件</h2>
+<p>まだ解析していません。</p>
+<h2>保守担当者向けメモ</h2>
+<ul>
+<li>後続フェーズで、ソース本文の文脈と caller/callee 情報を使ってこのページを強化する。</li>
+</ul><script>
+(function() {
+  function notifyParent() {
+    if (parent === window) return;
+    parent.postMessage({type: "frame-location", frame: window.name || "", href: window.location.href}, "*");
+  }
+  document.addEventListener("click", function(event) {
+    const link = event.target.closest("a[data-panel]");
+    if (!link || parent === window) return;
+    parent.postMessage({type: "source-link", panel: link.dataset.panel}, "*");
+  });
+  window.addEventListener("load", notifyParent);
+  window.addEventListener("hashchange", notifyParent);
+})();
+</script></body></html>

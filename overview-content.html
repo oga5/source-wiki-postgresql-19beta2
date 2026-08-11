@@ -23,8 +23,8 @@
   <section class="overview-stats" aria-label="Source statistics">
     <div><strong>2575</strong><span>Files</span></div>
     <div><strong>1805674</strong><span>Lines</span></div>
-    <div><strong>47678</strong><span>Symbols</span></div>
-    <div><strong>28374</strong><span>Functions</span></div>
+    <div><strong>48071</strong><span>Symbols</span></div>
+    <div><strong>28767</strong><span>Functions</span></div>
     <div><strong>4774</strong><span>Types</span></div>
     <div><strong>310</strong><span>Modules</span></div>
   </section>
@@ -34,7 +34,7 @@
   </section>
   <section class="overview-section">
     <h2>Topics</h2>
-    <ol class="call-flow-list"><li><a href="source/src/bin/pg_dump/pg_dump.c.html#L417" target="source-view" onclick="if (parent !== window) { parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;source&quot;: &quot;source/src/bin/pg_dump/pg_dump.c.html#L417&quot;}, '*'); return false; }">main</a><span>Source representative · src/bin/pg_dump/pg_dump.c:417</span><code>main -> BuildArchiveDependencies -> CloseArchive -> ConnectDatabaseAhx -> CreateArchive -> InitDumpOptions -> NewRestoreOptions -> ...</code></li><li><a href="source/src/backend/postmaster/postmaster.c.html#L496" target="source-view" onclick="if (parent !== window) { parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;source&quot;: &quot;source/src/backend/postmaster/postmaster.c.html#L496&quot;}, '*'); return false; }">PostmasterMain</a><span>Source representative · src/backend/postmaster/postmaster.c:496</span><code>PostmasterMain -> AddToDataDirLockFile -> ApplyLauncherRegister -> ChangeToDataDir -> CheckDateTokenTables -> CreateDataDirLockFile -> CreateOptsFile -> ...</code></li><li><a href="source/src/backend/tcop/postgres.c.html#L4273" target="source-view" onclick="if (parent !== window) { parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;source&quot;: &quot;source/src/backend/tcop/postgres.c.html#L4273&quot;}, '*'); return false; }">PostgresMain</a><span>Source representative · src/backend/tcop/postgres.c:4273</span><code>PostgresMain -> AbortCurrentTransaction -> AbortTransaction -> BaseInit -> BeginReportingGUCOptions -> DropPreparedStatement -> EmitErrorReport -> ...</code></li><li><a href="source/src/backend/access/transam/parallel.c.html#L1300" target="source-view" onclick="if (parent !== window) { parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;source&quot;: &quot;source/src/backend/access/transam/parallel.c.html#L1300&quot;}, '*'); return false; }">ParallelWorkerMain</a><span>Source representative · src/backend/access/transam/parallel.c:1300</span><code>ParallelWorkerMain -> AttachSerializableXact -> AttachSession -> BackgroundWorkerInitializeConnectionByOid -> BackgroundWorkerUnblockSignals -> BecomeLockGroupMember -> CommitTransactionCommand -> ...</code></li><li><a href="wiki/src/backend/access/heap/heapam.c.html" target="wiki-view">File: src/backend/access/heap/heapam.c</a><span>制御フローとデータフロー</span><ul>
+    <ol class="call-flow-list"><li><a href="source/src/bin/pg_dump/pg_dump.c.html#L417" target="source-view" onclick="if (parent !== window) { parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;source&quot;: &quot;source/src/bin/pg_dump/pg_dump.c.html#L417&quot;}, '*'); return false; }">main</a><span>Source representative · src/bin/pg_dump/pg_dump.c:417</span><code>main -> BuildArchiveDependencies -> CloseArchive -> ConnectDatabaseAhx -> CreateArchive -> InitDumpOptions -> NewRestoreOptions -> ...</code></li><li><a href="source/src/backend/postmaster/postmaster.c.html#L496" target="source-view" onclick="if (parent !== window) { parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;source&quot;: &quot;source/src/backend/postmaster/postmaster.c.html#L496&quot;}, '*'); return false; }">PostmasterMain</a><span>Source representative · src/backend/postmaster/postmaster.c:496</span><code>PostmasterMain -> AddToDataDirLockFile -> ApplyLauncherRegister -> Assert -> ChangeToDataDir -> CheckDateTokenTables -> CreateDataDirLockFile -> ...</code></li><li><a href="source/src/backend/tcop/postgres.c.html#L4273" target="source-view" onclick="if (parent !== window) { parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;source&quot;: &quot;source/src/backend/tcop/postgres.c.html#L4273&quot;}, '*'); return false; }">PostgresMain</a><span>Source representative · src/backend/tcop/postgres.c:4273</span><code>PostgresMain -> AbortCurrentTransaction -> AbortTransaction -> Assert -> BaseInit -> BeginReportingGUCOptions -> DropPreparedStatement -> ...</code></li><li><a href="source/src/backend/access/transam/parallel.c.html#L1300" target="source-view" onclick="if (parent !== window) { parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;source&quot;: &quot;source/src/backend/access/transam/parallel.c.html#L1300&quot;}, '*'); return false; }">ParallelWorkerMain</a><span>Source representative · src/backend/access/transam/parallel.c:1300</span><code>ParallelWorkerMain -> Assert -> AttachSerializableXact -> AttachSession -> BackgroundWorkerInitializeConnectionByOid -> BackgroundWorkerUnblockSignals -> BecomeLockGroupMember -> ...</code></li><li><a href="wiki/src/backend/access/heap/heapam.c.html" target="wiki-view">File: src/backend/access/heap/heapam.c</a><span>制御フローとデータフロー</span><ul>
 <li>**スキャンフロー**: <code>heap_beginscan</code> で初期化され、<code>initscan</code> とストリーミング読み取りコールバック（<code>heap_scan_stream_read_next_serial</code> 等）を経てバッファを順次取得。<code>heapgettup</code> または <code>heapgettup_pagemode</code> でページ内のタプルを列挙し、可視性（<code>HeapTupleSatisfiesVisibility</code>）とスキャンキーを検証する。</li>
 <li>**更新・削除フロー**: <code>heap_update</code> / <code>heap_delete</code> は対象ページの排他ロックを取得後、<code>HeapTupleSatisfiesUpdate</code> で競合や実行中トランザクションを検査する。必要に応じて <code>heap_acquire_tuplock</code> と <code>MultiXactIdWait</code> で待機し、クリティカルセクション内でバッファを更新、<code>RelationNeedsWAL</code> に応じてWALレコードを生成、最後にキャッシュ無効化を行う。</li>
 <li>**メモリ所有権とライフサイクル**: スキャン記述子やスキャンキーはパラムメモリ（Palloc）上に割り当てられ、<code>heap_endscan</code> や <code>FreeBulkInsertState</code> で明示的に解放される。バッファのピンとロックは、I/Oや競合待機を跨がないよう厳密な順序（下位ブロック優先など）で管理される。</li>
@@ -46,47 +46,40 @@
 <li>**パラレル対応 (<code>MultiExecParallelHash</code>)**: バリア同期（<code>build_barrier</code>）を用いて複数バックエンドで協調動作。共有ハッシュテーブル（バッチ0）への挿入（<code>ExecParallelHashTableInsert</code>）を行い、必要に応じてバッチ数やバケット数を拡大・再パーティション化する。</li>
 <p>3. **プローブおよび後処理**:</p>
 <li>構築完了後、親のハッシュ結合ノードがバケットスキャン（<code>ExecScanHashBucket</code> 等）を行い結合を実行する。終了時は <code>ExecEndHash</code> および <code>ExecShutdownHash</code> でリソースとインストルメンテーションが回収される。</li>
-</ul></li><li><a href="wiki/src/backend/executor/nodeHashjoin.c.html" target="wiki-view">File: src/backend/executor/nodeHashjoin.c</a><span>制御フローとデータフロー</span><p>1. **初期化 (<code>ExecInitHashJoin</code>)**:</p>
+</ul></li><li><a href="wiki/src/backend/executor/nodeHashjoin.c.html" target="wiki-view">File: src/backend/executor/nodeHashjoin.c</a><span>制御フローとデータフロー</span><p>1. **初期化 (<code>ExecInitHashJoin</code>)**: 子ノード（外側プランと内側 <code>Hash</code> ノード）を初期化し、<code>node-&gt;hashoperators</code> からハッシュ関数を抽出して <code>ExecBuildHash32Expr</code> によりハッシュ式を構築する。 2. **ビルドフェーズ (<code>HJ_BUILD_HASHTABLE</code>)**:</p>
 <ul>
-<li>結合条件（<code>joinqual</code>）、フィルタ条件（<code>otherqual</code>）、ハッシュキーとハッシュ関数を初期化します。</li>
-<li><code>outerPlan</code> と <code>innerPlan</code>（Hashノード）を初期化し、必要に応じて欠損行（null fill）用のスロットを割り当てます。</li>
-<p>2. **実行ループ (<code>ExecHashJoinImpl</code> のステートマシン)**:</p>
-<li><code>HJ_BUILD_HASHTABLE</code>: 初回のみ、Hashノードを実行してハッシュテーブルを構築します。並列の場合はバリア（<code>build_barrier</code>）を用いて協調動作します。</li>
-<li><code>HJ_NEED_NEW_OUTER</code>: 外側リレーションからタプルを取得し、ハッシュ値を計算します。現在のバッチに属さない場合は一時ファイルへスポート（<code>ExecHashJoinSaveTuple</code>）し、次の外側タプルへ進みます。</li>
-<li><code>HJ_SCAN_BUCKET</code>: ハッシュテーブルの対応するバケツをスキャンして候補タプルを探し、結合条件（<code>joinqual</code>）および非結合条件（<code>otherqual</code>）を評価してマッチすれば射影結果（<code>ExecProject</code>）を返します。</li>
-<li><code>HJ_FILL_OUTER_TUPLE</code> / <code>HJ_FILL_INNER_TUPLES</code> / <code>HJ_FILL_OUTER_NULL_TUPLES</code> / <code>HJ_FILL_INNER_NULL_TUPLES</code>: 外部結合やアンチ結合において、マッチしなかった行や null キー行を補完・出力します。</li>
-<li><code>HJ_NEED_NEW_BATCH</code>: 現在のバッチが終了した場合、次のバッチが存在すれば <code>ExecHashJoinNewBatch</code>（または並列版）を呼び出して次の内側バッチをハッシュテーブルに再ロードし、外側ファイルを開き直します。</li>
-</ul></li><li><a href="wiki/src/backend/optimizer/geqo/geqo_copy.c.html" target="wiki-view">File: src/backend/optimizer/geqo/geqo_copy.c</a><span>制御フローとデータフロー</span><p>1. **入力**: コピー先ポインタ（<code>chromo1</code>）、コピー元ポインタ（<code>chromo2</code>）、およびコピー対象の遺伝子長（<code>string_length</code>）を受け取ります。 2. **ループ処理**: <code>0</code> から <code>string_length - 1</code> までのループを回し、<code>chromo2-&gt;string[i]</code> の値を <code>chromo1-&gt;string[i]</code> に代入します。 3. **評価値のコピー**: <code>chromo2-&gt;worth</code> の値を <code>chromo1-&gt;worth</code> に代入します。 4. **データフローの境界**: 本関数は呼び出し元のメモリ領域（通常はGEQOプール内の個体領域）を直接書き換えます。</p></li><li><a href="wiki/src/backend/optimizer/geqo/geqo_cx.c.html" target="wiki-view">File: src/backend/optimizer/geqo/geqo_cx.c</a><span>制御フローとデータフロー</span><p>1. **初期化**: <code>city_table</code> を走査し、両親のツアー内における各都市の位置情報を記録する。 2. **ステップ 1（サイクル構築）**: ランダムに選んだ開始位置から <code>tour1</code> の遺伝子を子孫に継承し、<code>tour2</code> の対応する位置をたどりながらサイクルを形成する。 3. **ステップ 2（補完処理）**: サイクルに含まれなかった未訪問の遺伝子を <code>tour2</code> から補完し、完全なツアーを組み立てる。 4. **ステップ 3（評価）**: 必要に応じて <code>tour1</code> と生成された <code>offspring</code> の差異をカウントし、その数を返す。</p></li><li><a href="wiki/src/backend/optimizer/geqo/geqo_erx.c.html" target="wiki-view">File: src/backend/optimizer/geqo/geqo_erx.c</a><span>制御フローとデータフロー</span><p>1. **初期化**: <code>alloc_edge_table</code> が呼び出され、<code>num_gene + 1</code> サイズの <code>Edge</code> 配列が割り当てられる。 2. **エッジ抽出**: <code>gimme_edge_table</code> が 2 つの親ツアー (<code>tour1</code>, <code>tour2</code>) を受け取り、各循環ペアに対して <code>gimme_edge</code> を双方向（計4回/ステップ）に呼び出してエッジリストを構築する。重複エッジは負の値に変換され「共有エッジ」となる。 3. **ツアー組み立て (<code>gimme_tour</code>)**:</p>
+<li>シリアルの場合、必要に応じて外側リレーションの先頭を事前フェッチして空チェック（Empty-outer optimization）を行い、<code>ExecHashTableCreate</code> でハッシュテーブルを生成して内側プランを実行（<code>MultiExecProcNode</code>）する。</li>
+<li>パラレルの場合、参加プロセスが <code>build_barrier</code> を用いて同期しながら共同でハッシュテーブルを構築し、マルチバッチ時は外側リレーションのパーティショニング（<code>ExecParallelHashJoinPartitionOuter</code>）を行う。</li>
+<p>3. **プローブフェーズ (<code>HJ_NEED_NEW_OUTER</code> -&gt; <code>HJ_SCAN_BUCKET</code>)**:</p>
+<li>外側タプルを取得し、ハッシュ値からバケットおよびバッチ番号を算出する。</li>
+<li>現在のバッチに属さない場合は外側バッチファイルにスピル（<code>ExecHashJoinSaveTuple</code>）し、現在のバッチに属する場合はハッシュバケットのスキャン（<code>ExecScanHashBucket</code> / <code>ExecParallelScanHashBucket</code>）を行って結合条件・その他のフィルタ条件を評価する。</li>
+<p>4. **バッチ切替 (<code>HJ_NEED_NEW_BATCH</code>)**:</p>
+<li>現在のバッチの処理が完了すると、次の有効なバッチに切り替え、内側バッチファイルをリロードしてハッシュテーブルを再構築する。</li>
+</ul></li><li><a href="wiki/src/backend/optimizer/geqo/geqo_copy.c.html" target="wiki-view">File: src/backend/optimizer/geqo/geqo_copy.c</a><span>制御フローとデータフロー</span><p>1. **入力**: コピー先ポインタ（<code>chromo1</code>）、コピー元ポインタ（<code>chromo2</code>）、およびコピー対象の遺伝子長（<code>string_length</code>）を受け取ります。 2. **ループ処理**: <code>0</code> から <code>string_length - 1</code> までのループを回し、<code>chromo2-&gt;string[i]</code> の値を <code>chromo1-&gt;string[i]</code> に代入します。 3. **評価値のコピー**: <code>chromo2-&gt;worth</code> の値を <code>chromo1-&gt;worth</code> に代入します。 4. **データフローの境界**: 本関数は呼び出し元のメモリ領域（通常はGEQOプール内の個体領域）を直接書き換えます。</p></li><li><a href="wiki/src/backend/optimizer/geqo/geqo_cx.c.html" target="wiki-view">File: src/backend/optimizer/geqo/geqo_cx.c</a><span>制御フローとデータフロー</span><p>1. **初期化**: 与えられた <code>num_gene</code> に基づき、<code>city_table</code> を走査して各都市の <code>tour1</code> および <code>tour2</code> における位置情報を記録し、使用フラグをクリアします。 2. **サイクル開始**: 乱数（<code>geqo_randint</code>）を用いてランダムに開始位置（<code>start_pos</code>）を選び、子孫（<code>offspring</code>）に <code>tour1</code> の遺伝子を引き継ぎます。 3. **ステップ 1（サイクル構築）**: <code>tour2</code> の該当位置の遺伝子を追跡し、元の開始位置に戻るまで <code>tour1</code> から子孫へ遺伝子を順番にコピーします。 4. **ステップ 2（残余の補完）**: サイクル内で網羅されなかった残りの都市について、<code>tour2</code> の位置情報をもとに子孫の空き位置を埋めます。 5. **ステップ 3（差異のカウント）**: 必要に応じて、親と生成された子孫の間での遺伝子の不一致数をカウントし、その数値を返します。</p></li><li><a href="wiki/src/backend/optimizer/geqo/geqo_erx.c.html" target="wiki-view">File: src/backend/optimizer/geqo/geqo_erx.c</a><span>制御フローとデータフロー</span><p>1. **初期化**: <code>gimme_tour</code> が呼び出されると、<code>geqo_randint</code> を使ってランダムに最初の遺伝子（<code>new_gene[0]</code>）を選びます。 2. **反復構築**: ループ内で以下の処理を繰り返します：</p>
 <ul>
-<li>ランダムに選んだ最初の遺伝子を <code>new_gene[0]</code> とする。</li>
-<li>ループ内で <code>remove_gene</code> を呼び出して直前の遺伝子をエッジテーブルから除外し、<code>edge_table[...]</code> の状態を更新する。</li>
-<li><code>unused_edges &gt; 0</code> の場合は <code>gimme_gene</code> を呼び出して次の遺伝子を選択する。</li>
-<li><code>unused_edges == 0</code> の場合は <code>edge_failure</code> にフォールバックし、代替の遺伝子を復旧選択する。</li>
-<p>4. **クリーンアップ**: 処理完了後、<code>free_edge_table</code> でエッジテーブルのメモリが解放される。</p>
-</ul></li><li><a href="wiki/src/backend/optimizer/geqo/geqo_eval.c.html" target="wiki-view">File: src/backend/optimizer/geqo/geqo_eval.c</a><span>制御フローとデータフロー</span><p>1. **エントリー（<code>geqo_eval</code>）**:</p>
+<li>直前の遺伝子を <code>remove_gene</code> に渡し、エッジテーブルから該当遺伝子を除去します。</li>
+<li><code>edge_table[new_gene[i-1]].unused_edges &gt; 0</code> の場合は <code>gimme_gene</code> を呼び出して最適な次候補を選択します。</li>
+<li>エッジが枯渇している場合は <code>edge_failure</code> にフォールバックします。</li>
+<li>選択したノードの <code>unused_edges</code> を <code>-1</code> に書き換え、組込み済みマークとします。</li>
+<p>3. **終了**: すべての遺伝子が組み込まれると、発生した <code>edge_failures</code> の総数を返します。</p>
+</ul></li><li><a href="wiki/src/backend/optimizer/geqo/geqo_eval.c.html" target="wiki-view">File: src/backend/optimizer/geqo/geqo_eval.c</a><span>制御フローとデータフロー</span><p>1. **評価の開始 (<code>geqo_eval</code>)**:</p>
 <ul>
-<li><code>geqo_main.c</code> 等から呼び出され、専用の <code>GEQO</code> メモリコンテキストを作成。</li>
-<li><code>PlannerInfo</code> 内の <code>join_rel_list</code> の長さを保存し、<code>join_rel_hash</code> を一時的に退避（評価中の破壊的変更を防ぐため）。</li>
-<p>2. **ツリー構築（<code>gimme_tree</code>）**:</p>
-<li>ツアー内の各遺伝子（リレーションID）を順に読み込み、サイズ1の <code>Clump</code> を作成。</li>
-<li><code>merge_clump</code> を呼び出し、<code>desirable_join</code> が真（結合条件あり）となる既存クランプと優先的にマージ。</li>
-<p>3. **強制マージ（Force Join）**:</p>
-<li>ツアー走査後、複数のクランプが残っている場合（結合条件がない孤立したリレーションなど）、<code>force = true</code> で <code>merge_clump</code> を再実行し、直積を許容して1つのクランプに強制結合。</li>
-<p>4. **コスト算出とクリーンアップ**:</p>
-<li>最終的に1つの結合リレーションに統合できれば、その最安パスのコスト（<code>cheapest_total_path-&gt;total_cost</code>）を適応度として返却。失敗した場合は <code>DBL_MAX</code> を返却。</li>
-<li>退避していた <code>join_rel_list</code> を元の長さに切り詰め、<code>GEQO</code> メモリコンテキストを削除。</li>
-</ul></li><li><a href="wiki/src/backend/optimizer/geqo/geqo_main.c.html" target="wiki-view">File: src/backend/optimizer/geqo/geqo_main.c</a><span>制御フローとデータフロー</span><p>1. **初期化フェーズ**:</p>
+<li>割り当てた一時メモリコンテキストへ切り替え、<code>root-&gt;join_rel_list</code> の長さを保存する。</li>
+<li><code>gimme_tree</code> を呼び出して結合木を構築する。</li>
+<p>2. **ツリー構築 (<code>gimme_tree</code>)**:</p>
+<li>ツアー内の各リレーションをサイズ 1 の <code>Clump</code> として順次作成し、<code>merge_clump</code> で既存のリストへマージしていく。</li>
+<li>最初はヒューリスティック (<code>desirable_join</code>) に基づく結合のみを試みる。</li>
+<li>スキャン終了後、複数のクランプが残っている場合は強制結合 (<code>force = true</code>) を行い、最終的に 1 つの結合リレーションを得る。</li>
+<p>3. **コスト算出と復元**:</p>
+<li>構築された結合リレーション (<code>joinrel</code>) の最安パス (<code>cheapest_total_path</code>) からコストを取得する。結合に失敗した場合は <code>DBL_MAX</code> を返す。</li>
+<li>プランナの状態（<code>join_rel_list</code> など）を復元し、一時メモリコンテキストを解放して終了する。</li>
+</ul></li><li><a href="wiki/src/backend/optimizer/geqo/geqo_main.c.html" target="wiki-view">File: src/backend/optimizer/geqo/geqo_main.c</a><span>制御フローとデータフロー</span><p>1. **初期化**: <code>geqo()</code> が呼ばれると、プライベート拡張状態を設定し、乱数シードを初期化します。 2. **パラメータとプール構築**: <code>gimme_pool_size()</code> と <code>gimme_number_generations()</code> でパラメータを決定し、<code>alloc_pool</code> と <code>random_init_pool</code> で初期プールを作成・ソートします。 3. **世代ループ**: 指定された世代数だけ以下を繰り返します。</p>
 <ul>
-<li><code>GetPlannerExtensionId</code> を通じて拡張IDを取得し、プライベートデータと乱数シード（<code>geqo_set_seed</code>）を設定。</li>
-<li><code>gimme_pool_size</code> と <code>gimme_number_generations</code> でGAの規模を決定。</li>
-<li><code>alloc_pool</code> と <code>random_init_pool</code> により個体群プールを作成し、<code>sort_pool</code> で適合度順にソート。</li>
-<p>2. **世代交代ループ**:</p>
-<li><code>geqo_selection</code> を呼び出し、親個体（<code>momma</code>, <code>daddy</code>）を選択。</li>
-<li>条件付きコンパイル（<code>ERX</code>, <code>PMX</code>, <code>CX</code>, <code>PX</code>, <code>OX1</code>, <code>OX2</code> のいずれか）に応じて、対応する交叉関数を実行して子個体（<code>kid</code>）を生成。</li>
-<li><code>geqo_eval</code> で子個体のフィットネス（コスト）を評価し、<code>spread_chromo</code> でプールへ挿入。</li>
-<p>3. **終了フェーズ**:</p>
-<li>プールの先頭（最良の個体）から <code>gimme_tree</code> を使って最適な <code>RelOptInfo</code> クエリツリーを復元。</li>
-<li>割り当てられた個体・プール・テーブル等のメモリを解放し、結果のプランを返却。</li>
+<li><code>geqo_selection</code> を用いて親（<code>momma</code>, <code>daddy</code>）を選択する。</li>
+<li>コンパイル時マクロに応じた交叉アルゴリズムを実行し、子（<code>kid</code>）を生成する。</li>
+<li><code>geqo_eval</code> で子のフィットネス（worth）を評価する。</li>
+<li><code>spread_chromo</code> でプール内の劣った個体を新しい子で置き換える。</li>
+<p>4. **結果の抽出**: ループ終了後、プール内の最良個体（<code>pool-&gt;data[0]</code>）を取り出し、<code>gimme_tree</code> を介して最終的なクエリツリー（<code>RelOptInfo</code>）を構築して返します。</p>
 </ul></li></ol>
   </section>
 </main><script>

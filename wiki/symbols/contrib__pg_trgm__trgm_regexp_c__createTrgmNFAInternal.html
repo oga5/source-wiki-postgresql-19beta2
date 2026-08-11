@@ -40,7 +40,7 @@
 <p>#ifdef TRGM_REGEXP_DEBUG <a class="wiki-source-link" href="../../source/contrib/pg_trgm/trgm_regexp.c.html#L2127" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/contrib__pg_trgm__trgm_regexp_c__printSourceNFA.html&quot;}, '*');">printSourceNFA</a>(regex, trgmNFA.colorInfo, trgmNFA.ncolors); #endif</p>
 <p>/*</p>
 <ul>
-<li>Stage 2: Create an expanded graph from the source NFA.</li>
+<li>Stage 2: Create an expanded graph from the <a class="wiki-source-link" href="../../source/src/backend/optimizer/path/pathkeys.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__path__pathkeys_c__source.html&quot;}, '*');">source</a> NFA.</li>
 <p>*/ <a class="wiki-source-link" href="../../source/contrib/pg_trgm/trgm_regexp.c.html#L896" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/contrib__pg_trgm__trgm_regexp_c__transformGraph.html&quot;}, '*');">transformGraph</a>(&amp;trgmNFA);</p>
 </ul>
 <p>#ifdef TRGM_REGEXP_DEBUG <a class="wiki-source-link" href="../../source/contrib/pg_trgm/trgm_regexp.c.html#L2207" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/contrib__pg_trgm__trgm_regexp_c__printTrgmNFA.html&quot;}, '*');">printTrgmNFA</a>(&amp;trgmNFA); #endif</p>
@@ -49,7 +49,7 @@
 <li>Fail if we were unable to make a nontrivial graph, ie it <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> possible to</li>
 <li>get from the initial state to the <a class="wiki-source-link" href="../../source/src/common/hashfn.c.html#L116" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/common/hashfn.c.html&quot;}, '*');">final</a> state without reading any</li>
 <li>predictable trigram.</li>
-<p>*/ if (trgmNFA.initState-&gt;<a class="wiki-source-link" href="../../source/src/backend/optimizer/util/var.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__var_c__flags.html&quot;}, '*');">flags</a> &amp; <a class="wiki-source-link" href="../../source/contrib/pg_trgm/trgm_regexp.c.html#L332" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/contrib/pg_trgm/trgm_regexp.c.html&quot;}, '*');">TSTATE_FIN</a>) return NULL;</p>
+<p>*/ if (trgmNFA.initState-&gt;flags &amp; <a class="wiki-source-link" href="../../source/contrib/pg_trgm/trgm_regexp.c.html#L332" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/contrib/pg_trgm/trgm_regexp.c.html&quot;}, '*');">TSTATE_FIN</a>) return NULL;</p>
 </ul>
 <p>/*</p>
 <ul>

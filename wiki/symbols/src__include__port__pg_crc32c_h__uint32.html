@@ -1,0 +1,86 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>symbols/src__include__port__pg_crc32c_h__uint32.md</title><link rel="stylesheet" href="../../styles.css"></head><body><h1>uint32</h1>
+<h2>定義</h2>
+<ul>
+<li>種別: <code>function</code></li>
+<li>定義箇所: <code>src/include/port/pg_crc32c.h:1</code></li>
+<li>所属モジュール: <a class="wiki-entity-link" href="../modules/src__include__port.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/modules/src__include__port.html&quot;, &quot;source&quot;: &quot;source/src/include/port/aix.h.html&quot;}, '*');"><code>module:src/include/port</code></a></li>
+</ul>
+<h2>目的</h2>
+<p>静的シンボル索引から生成された初期シンボルページです。</p>
+<h2>シグネチャまたは形状</h2>
+<ul>
+<li>シグネチャ: <code>/*------------------------------------------------------------------------- * * pg_crc32c.h * Routines for computing CRC-32C checksums. * * The speed of CRC-32C calculation has a big impact on performance, so we * jump through some hoops to get the best implementation for each * platform. Some CPU architectures have special instructions for speeding * up CRC calculations (e.g. Intel SSE 4.2), on other platforms we use the * Slicing-by-8 algorithm which uses lookup tables. * * The public interface consists of four macros: * * INIT_CRC32C(crc) * Initialize a CRC accumulator * * COMP_CRC32C(crc, data, len) * Accumulate some (more) bytes into a CRC * * FIN_CRC32C(crc) * Finish a CRC calculation * * EQ_CRC32C(c1, c2) * Check for equality of two CRCs. * * Portions Copyright (c) 1996-2026, PostgreSQL Global Development Group * Portions Copyright (c) 1994, Regents of the University of California * * src/include/port/pg_crc32c.h * *------------------------------------------------------------------------- */ #ifndef PG_CRC32C_H #define PG_CRC32C_H #include &quot;port/pg_bswap.h&quot; typedef uint32 pg_crc32c</code></li>
+</ul>
+<h2>入力と出力</h2>
+<p>まだ解析していません。</p>
+<h2>前提条件と不変条件</h2>
+<p>まだ解析していません。</p>
+<h2>アルゴリズムまたは振る舞い</h2>
+<ul>
+<li>複雑度: <code>low</code> (score 0)</li>
+</ul>
+<p>まだ解析していません。</p>
+<h2>呼び出し元と呼び出し先</h2>
+<ul>
+<li>呼び出し元: なし</li>
+<li>呼び出し先: なし</li>
+<li>呼び出し元サイト: なし</li>
+<li>呼び出しサイト: なし</li>
+</ul>
+<h2>関連データ構造</h2>
+<p><code>c</code>, <a class="wiki-source-link" href="../../source/src/interfaces/ecpg/test/expected/preproc-init.c.html#L82" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__interfaces__ecpg__test__expected__preproc-init_c__e.html&quot;}, '*');"><code>e</code></a>, <code>Group</code>, <a class="wiki-source-link" href="../../source/src/timezone/zic.c.html#L310" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__timezone__zic_c__lookup.html&quot;}, '*');"><code>lookup</code></a>, <a class="wiki-source-link" href="../../source/src/include/port/pg_crc32c.h.html#L38" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__port__pg_crc32c_h__pg_crc32c.html&quot;}, '*');"><code>pg_crc32c</code></a></p>
+<h2>ソース抜粋</h2>
+<p>~~~c /*------------------------------------------------------------------------- *</p>
+<ul>
+<li><a class="wiki-source-link" href="../../source/src/include/port/pg_crc32c.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/port/pg_crc32c.h.html&quot;}, '*');">pg_crc32c.h</a></li>
+<li>Routines for computing CRC-32C checksums.</li>
+<p>*</p>
+<li>The speed of CRC-32C calculation has a big impact on performance, so we</li>
+<li>jump through some hoops to get the best implementation for each</li>
+<li>platform. Some CPU architectures have special instructions for speeding</li>
+<li>up CRC calculations (e.g. Intel SSE 4.2), on other platforms we use the</li>
+<li>Slicing-by-8 algorithm which uses <a class="wiki-source-link" href="../../source/src/timezone/zic.c.html#L310" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__timezone__zic_c__lookup.html&quot;}, '*');">lookup</a> tables.</li>
+<p>*</p>
+<li>The public interface consists of four macros:</li>
+<p>*</p>
+<li><a class="wiki-source-link" href="../../source/src/include/port/pg_crc32c.h.html#L41" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/port/pg_crc32c.h.html&quot;}, '*');">INIT_CRC32C</a>(crc)</li>
+<li><a class="wiki-source-link" href="../../source/src/bin/pg_archivecleanup/pg_archivecleanup.c.html#L57" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__bin__pg_archivecleanup__pg_archivecleanup_c__Initialize.html&quot;}, '*');">Initialize</a> a CRC accumulator</li>
+<p>*</p>
+<li><a class="wiki-source-link" href="../../source/src/include/port/pg_crc32c.h.html#L52" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/port/pg_crc32c.h.html&quot;}, '*');">COMP_CRC32C</a>(crc, data, len)</li>
+<li>Accumulate some (more) bytes into a CRC</li>
+<p>*</p>
+<li><a class="wiki-source-link" href="../../source/src/include/port/pg_crc32c.h.html#L54" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/port/pg_crc32c.h.html&quot;}, '*');">FIN_CRC32C</a>(crc)</li>
+<li>Finish a CRC calculation</li>
+<p>*</p>
+<li><a class="wiki-source-link" href="../../source/src/include/port/pg_crc32c.h.html#L42" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/port/pg_crc32c.h.html&quot;}, '*');">EQ_CRC32C</a>(c1, c2)</li>
+<li>Check for equality of two CRCs.</li>
+<p>*</p>
+<li>Portions Copyright (c) 1996-2026, PostgreSQL Global Development Group</li>
+<li>Portions Copyright (c) 1994, Regents of the University of California</li>
+<p>*</p>
+<li><a class="wiki-source-link" href="../../source/src/include/port/pg_crc32c.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/port/pg_crc32c.h.html&quot;}, '*');">src/include/port/pg_crc32c.h</a></li>
+<p>* *------------------------------------------------------------------------- */ #ifndef <a class="wiki-source-link" href="../../source/src/include/port/pg_crc32c.h.html#L34" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/port/pg_crc32c.h.html&quot;}, '*');">PG_CRC32C_H</a> #define <a class="wiki-source-link" href="../../source/src/include/port/pg_crc32c.h.html#L34" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/port/pg_crc32c.h.html&quot;}, '*');">PG_CRC32C_H</a></p>
+</ul>
+<p>#include &quot;port/pg_bswap.h&quot;</p>
+<p>typedef uint32 <a class="wiki-source-link" href="../../source/src/include/port/pg_crc32c.h.html#L38" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__port__pg_crc32c_h__pg_crc32c.html&quot;}, '*');">pg_crc32c</a>; ~~~</p>
+<h2>失敗モードと境界条件</h2>
+<p>まだ解析していません。</p>
+<h2>保守担当者向けメモ</h2>
+<ul>
+<li>後続フェーズで、ソース本文の文脈と caller/callee 情報を使ってこのページを強化する。</li>
+</ul><script>
+(function() {
+  function notifyParent() {
+    if (parent === window) return;
+    parent.postMessage({type: "frame-location", frame: window.name || "", href: window.location.href}, "*");
+  }
+  document.addEventListener("click", function(event) {
+    const link = event.target.closest("a[data-panel]");
+    if (!link || parent === window) return;
+    parent.postMessage({type: "source-link", panel: link.dataset.panel}, "*");
+  });
+  window.addEventListener("load", notifyParent);
+  window.addEventListener("hashchange", notifyParent);
+})();
+</script></body></html>

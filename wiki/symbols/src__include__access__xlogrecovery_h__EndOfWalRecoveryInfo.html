@@ -28,9 +28,9 @@
 <h2>関連データ構造</h2>
 <p><code>string</code>, <code>TimeLineID</code>, <a class="wiki-source-link" href="../../source/src/interfaces/ecpg/preproc/type.h.html#L89" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__interfaces__ecpg__preproc__type_h__when.html&quot;}, '*');"><code>when</code></a>, <code>XLogRecPtr</code></p>
 <h2>ソース抜粋</h2>
-<p>~~~c <a class="wiki-source-link" href="../../source/src/include/fmgr.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/fmgr.h.html&quot;}, '*');">typedef</a> struct { /*</p>
+<p>~~~c typedef struct { /*</p>
 <ul>
-<li>Information about the last valid or applied record, after which new WAL</li>
+<li>Information about the last valid or applied record, <a class="wiki-source-link" href="../../source/src/include/lib/ilist.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__lib__ilist_h__after.html&quot;}, '*');">after</a> which new WAL</li>
 <li>can be appended.  &#x27;lastRec&#x27; <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> the position where the last record</li>
 <li>starts, and &#x27;endOfLog&#x27; <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> its end.  &#x27;lastPage&#x27; <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> a copy of the last</li>
 <li>partial page that contains endOfLog (or NULL if endOfLog <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> exactly at</li>
@@ -39,7 +39,7 @@
 <p>*</p>
 <li>endOfLogTLI <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> the TLI in the filename of the XLOG segment containing</li>
 <li>the last applied record.  It could be different from lastRecTLI, if</li>
-<li>there was a timeline switch in that segment, and we were reading the</li>
+<li>there was a timeline <a class="wiki-source-link" href="../../source/src/include/port.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__port_h__switch.html&quot;}, '*');">switch</a> in that segment, and we were reading the</li>
 <li>old WAL from a segment belonging to a higher timeline.</li>
 <p>*/ XLogRecPtr	lastRec;		/* start of last valid or applied record */ TimeLineID	lastRecTLI; XLogRecPtr	endOfLog;		/* end of last valid or applied record */ TimeLineID	endOfLogTLI;</p>
 </ul>
@@ -55,7 +55,7 @@
 <p>/* short human-readable string describing why recovery ended */ char	   *recoveryStopReason;</p>
 <p>/*</p>
 <ul>
-<li>If standby or recovery signal file was found, these <a class="wiki-source-link" href="../../source/src/backend/optimizer/util/var.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__var_c__flags.html&quot;}, '*');">flags</a> are set</li>
+<li>If standby or recovery signal file was found, these flags are set</li>
 <li>accordingly.</li>
 <p>*/ bool		<a class="wiki-source-link" href="../../source/src/backend/access/transam/xlogrecovery.c.html#L154" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/access/transam/xlogrecovery.c.html&quot;}, '*');">standby_signal_file_found</a>; bool		<a class="wiki-source-link" href="../../source/src/backend/access/transam/xlogrecovery.c.html#L155" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/access/transam/xlogrecovery.c.html&quot;}, '*');">recovery_signal_file_found</a>; } <a class="wiki-source-link" href="../../source/src/include/access/xlogrecovery.h.html#L165" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__access__xlogrecovery_h__EndOfWalRecoveryInfo.html&quot;}, '*');">EndOfWalRecoveryInfo</a>; ~~~</p>
 </ul>

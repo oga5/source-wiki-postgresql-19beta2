@@ -28,7 +28,7 @@
 <h2>関連データ構造</h2>
 <p><code>c</code>, <a class="wiki-source-link" href="../../source/src/include/c.h.html#L840" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/c.h.html&quot;}, '*');"><code>Name</code></a>, <code>Result</code>, <code>string</code>, <a class="wiki-source-link" href="../../source/src/interfaces/ecpg/preproc/type.h.html#L89" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__interfaces__ecpg__preproc__type_h__when.html&quot;}, '*');"><code>when</code></a></p>
 <h2>ソース抜粋</h2>
-<p>~~~c <a class="wiki-source-link" href="../../source/src/include/fmgr.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/fmgr.h.html&quot;}, '*');">typedef</a> struct <a class="wiki-source-link" href="../../source/src/bin/psql/tab-complete.in.c.html#L129" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__bin__psql__tab-complete_in_c__SchemaQuery.html&quot;}, '*');">SchemaQuery</a> { /*</p>
+<p>~~~c typedef struct <a class="wiki-source-link" href="../../source/src/bin/psql/tab-complete.in.c.html#L129" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__bin__psql__tab-complete_in_c__SchemaQuery.html&quot;}, '*');">SchemaQuery</a> { /*</p>
 <ul>
 <li>If not zero, minimum server version this struct applies to.  If not</li>
 <li>zero, there should be a following struct with a smaller minimum server</li>
@@ -60,7 +60,7 @@
 </ul>
 <p>/*</p>
 <ul>
-<li>Namespace --- <a class="wiki-source-link" href="../../source/src/include/mb/pg_wchar.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/mb/pg_wchar.h.html&quot;}, '*');">name</a> of field to join to pg_namespace.oid <a class="wiki-source-link" href="../../source/src/interfaces/ecpg/preproc/type.h.html#L89" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__interfaces__ecpg__preproc__type_h__when.html&quot;}, '*');">when</a> there <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a></li>
+<li>Namespace --- name of field to join to pg_namespace.oid <a class="wiki-source-link" href="../../source/src/interfaces/ecpg/preproc/type.h.html#L89" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__interfaces__ecpg__preproc__type_h__when.html&quot;}, '*');">when</a> there <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a></li>
 <li>schema qualification.  For example, &quot;c.relnamespace&quot;.  NULL if we don&#x27;t</li>
 <li>want to join to pg_namespace (then any schema part in the input <a class="wiki-source-link" href="../../source/src/backend/regex/regcomp.c.html#L1476" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__regex__regcomp_c__word.html&quot;}, '*');">word</a></li>
 <li>will be ignored).</li>
@@ -68,25 +68,25 @@
 </ul>
 <p>/*</p>
 <ul>
-<li>Result --- the base <a class="wiki-source-link" href="../../source/src/include/utils/jsonb.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__utils__jsonb_h__object.html&quot;}, '*');">object</a> <a class="wiki-source-link" href="../../source/src/include/mb/pg_wchar.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/mb/pg_wchar.h.html&quot;}, '*');">name</a> to return.  For example, &quot;c.relname&quot;.</li>
+<li>Result --- the base <a class="wiki-source-link" href="../../source/src/include/utils/jsonb.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__utils__jsonb_h__object.html&quot;}, '*');">object</a> name to return.  For example, &quot;c.relname&quot;.</li>
 <p>*/ const char *<a class="wiki-source-link" href="../../source/src/include/storage/checksum_block_internal.h.html#L18" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/storage/checksum_block_internal.h.html&quot;}, '*');">result</a>;</p>
 </ul>
 <p>/*</p>
 <ul>
-<li>In some cases, it&#x27;s difficult to keep the query from returning the same</li>
+<li>In some cases, it&#x27;s difficult to keep the <a class="wiki-source-link" href="../../source/src/backend/optimizer/util/var.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__var_c__query.html&quot;}, '*');">query</a> from returning the same</li>
 <li><a class="wiki-source-link" href="../../source/src/include/utils/jsonb.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__utils__jsonb_h__object.html&quot;}, '*');">object</a> multiple times.  Specify use_distinct to filter out duplicates.</li>
 <p>*/ bool		use_distinct;</p>
 </ul>
 <p>/*</p>
 <ul>
 <li>Additional literal strings (usually keywords) to be offered along with</li>
-<li>the query results.  Provide a NULL-terminated <a class="wiki-source-link" href="../../source/src/include/utils/jsonb.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__utils__jsonb_h__array.html&quot;}, '*');">array</a> of constant</li>
+<li>the <a class="wiki-source-link" href="../../source/src/backend/optimizer/util/var.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__var_c__query.html&quot;}, '*');">query</a> results.  Provide a NULL-terminated <a class="wiki-source-link" href="../../source/src/include/utils/jsonb.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__utils__jsonb_h__array.html&quot;}, '*');">array</a> of constant</li>
 <li>strings, or NULL if none.</li>
 <p>*/ const char *const *keywords;</p>
 </ul>
 <p>/*</p>
 <ul>
-<li>If this query uses completion_ref_object/completion_ref_schema,</li>
+<li>If this <a class="wiki-source-link" href="../../source/src/backend/optimizer/util/var.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__var_c__query.html&quot;}, '*');">query</a> uses completion_ref_object/completion_ref_schema,</li>
 <p>~~~</p>
 </ul>
 <h2>失敗モードと境界条件</h2>

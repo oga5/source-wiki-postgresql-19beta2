@@ -1,44 +1,45 @@
 <!doctype html>
 <html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>src/include/storage/buffile.h.md</title><link rel="stylesheet" href="../../../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../../../source/src/include/storage/buffile.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/storage/buffile.h.html&quot;}, '*');">src/include/storage/buffile.h</a></h1>
 <h2>概要</h2>
-<p><a class="wiki-source-link" href="../../../../source/src/include/storage/buffile.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/storage/buffile.h.html&quot;}, '*');"><code>src/include/storage/buffile.h</code></a> は、PostgreSQL における大規模なバッファリング付き一時ファイルを管理するための公開インターフェースを定義するヘッダーファイルです。仮想ファイルディスクリプタ（<a class="wiki-source-link" href="../../../../source/src/backend/storage/file/fd.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/storage/file/fd.c.html&quot;}, '*');"><code>fd.c</code></a>）上で動作し、標準ライブラリの <code>stdio</code> のようなバッファリング機能の代替を提供します。</p>
+<p><a class="wiki-source-link" href="../../../../source/src/include/storage/buffile.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/storage/buffile.h.html&quot;}, '*');"><code>src/include/storage/buffile.h</code></a> は、PostgreSQL における大規模なバッファリング付き一時ファイルの管理インターフェースを提供するヘッダーファイルです。stdio の部分的な代替として、仮想ファイル記述子（<a class="wiki-source-link" href="../../../../source/src/backend/storage/file/fd.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/storage/file/fd.c.html&quot;}, '*');"><code>fd.c</code></a>）の上に構築されたバッファード I/O 機能を提供します。</p>
 <h2>モジュール内での役割</h2>
-<p><code>src/include/storage</code> サブシステムに属し、ソートやハッシュ結合などの大量データを扱う処理で必要となる一時ファイルの抽象化レイヤーを担います。OSのファイルサイズ制限を超える巨大ファイルの分割管理や、並列実行時の共有一時ファイル（<a class="wiki-source-link" href="../../../../source/src/include/storage/sharedfileset.h.html#L26" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__storage__sharedfileset_h__SharedFileSet.html&quot;}, '*');"><code>SharedFileSet</code></a>）およびトランザクションを跨ぐ一時ファイル（<code>FileSet</code>）の基盤を提供します。</p>
+<p><code>src/include/storage</code> サブシステムの一部として、ソートやハッシュ結合などの大量データを扱う処理で必要となる、OS のファイルサイズ制限を超える一時ファイルや、複数バックエンド間で共有される一時ファイルの抽象化レイヤーを定義しています。実体となる実装は <a class="wiki-source-link" href="../../../../source/src/backend/storage/file/buffile.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/storage/file/buffile.c.html&quot;}, '*');"><code>src/backend/storage/file/buffile.c</code></a> に存在します。</p>
 <h2>責務</h2>
 <ul>
-<li>不透明型である <code>BufFile</code> の前方宣言と公開API関数のプロトタイプ定義。</li>
-<li>一時ファイルの作成、クローズ、読み書き、シーク、およびサイズ取得に関するインターフェースの提供。</li>
-<li><code>FileSet</code> を活用した永続的・共有可能一時ファイルの操作機能の公開。</li>
+<li>仮想ファイル記述子を隠蔽し、バッファリングされた読み書き操作（<code>BufFileRead</code>、<code>BufFileWrite</code> 等）の関数プロトタイプを公開する。</li>
+<li>単一の論理ファイルを複数の物理セグメントや複数のファイル記述子に分割して管理する仕組みを外部に提供する。</li>
+<li>通常の一時ファイルのほか、<code>FileSet</code> を用いたファイルセットベースの一時ファイルの作成・オープン・削除操作を定義する。</li>
 </ul>
 <h2>重要なシンボル</h2>
 <ul>
-<li><code>BufFile</code>: ファイル管理の状態を隠蔽する不透明な構造体（詳細は <a class="wiki-source-link" href="../../../../source/src/backend/storage/file/buffile.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/storage/file/buffile.c.html&quot;}, '*');"><code>buffile.c</code></a> で定義）。</li>
-<li><code>BufFileCreateTemp(bool interXact)</code>: 通常の一時ファイルを作成する。</li>
-<li><code>BufFileRead</code> / <code>BufFileWrite</code>: バッファを介したデータの読み書きを行う。</li>
-<li><code>BufFileCreateFileSet</code> / <code>BufFileOpenFileSet</code>: <code>FileSet</code> をベースとした名前付き一時ファイルの作成およびオープンを行う。</li>
+<li><code>BufFile</code>: 詳細が隠蔽された不透明な構造体（オパック型）。バッファリングされた一時ファイルの状態を表す。</li>
+<li><code>BufFileCreateFileSet</code>: 指定した <code>FileSet</code> と名前を使用して新しいファイルセットベースの <code>BufFile</code> を作成する。</li>
+<li><code>BufFileOpenFileSet</code>: 既存のファイルセットベースの <code>BufFile</code> をオープンする。</li>
+<li><code>BufFileRead</code>: バッファを経由してファイルからデータを読み込む。</li>
+<li><code>BufFileWrite</code>: バッファを経由してファイルへデータを書き込む。</li>
 </ul>
 <h2>制御フローとデータフロー</h2>
-<ul>
-<li>利用側コードは <a class="wiki-source-link" href="../../../../source/src/backend/storage/file/buffile.c.html#L193" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__storage__file__buffile_c__BufFileCreateTemp.html&quot;}, '*');"><code>BufFileCreateTemp</code></a> や <code>BufFileCreateFileSet</code> で <code>BufFile</code> ハンドルを取得します。</li>
-<li>データの読み書き要求は、まず <a class="wiki-source-link" href="../../../../source/src/backend/storage/file/buffile.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/storage/file/buffile.c.html&quot;}, '*');"><code>buffile.c</code></a> 内のメモリバッファに対して行われ、バッファがいっぱいになるか枯渇した段階で、低レイヤーの仮想ファイル（<a class="wiki-source-link" href="../../../../source/src/backend/storage/file/fd.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/storage/file/fd.c.html&quot;}, '*');"><code>fd.c</code></a>）に対して実際の I/O が発生します。</li>
-<li>操作終了時は <a class="wiki-source-link" href="../../../../source/src/backend/storage/file/buffile.c.html#L412" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__storage__file__buffile_c__BufFileClose.html&quot;}, '*');"><code>BufFileClose</code></a> によって関連リソースや仮想ファイルディスクリプタが解放されます。</li>
-</ul>
+<p>本ファイルはインターフェース定義のみを提供するヘッダーであるため、直接の制御フローは持ちません。実際のデータフローとしては、外部モジュールからの書き込み要求が <code>BufFileWrite</code> を経由してメモリ上のバッファ蓄積され、バッファが満杯になった時点で下位の仮想ファイル層（<a class="wiki-source-link" href="../../../../source/src/backend/storage/file/fd.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/storage/file/fd.c.html&quot;}, '*');"><code>fd.c</code></a>）を通じて物理ファイルへ出力されます。読み込み時も同様に、下位からバッファへとデータを読み込んでから利用者へ返却されます。</p>
 <h2>直接依存</h2>
 <ul>
-<li><code>storage/fileset.h</code>: <code>FileSet</code> 構造体および関連操作を利用するため。</li>
+<li><code>storage/fileset.h</code>: ファイルセットベースの一時ファイル操作で使用される <code>FileSet</code> 型等の定義に依存している。</li>
 </ul>
 <h2>関連コード</h2>
 <ul>
-<li><a class="wiki-source-link" href="../../../../source/src/backend/storage/file/buffile.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/storage/file/buffile.c.html&quot;}, '*');"><code>src/backend/storage/file/buffile.c</code></a>: <code>BufFile</code> 構造体の実体とすべての実処理ロジックが実装されている対応ファイル。</li>
-<li><a class="wiki-source-link" href="../../../../source/src/include/storage/fd.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/storage/fd.h.html&quot;}, '*');"><code>src/include/storage/fd.h</code></a>: 低レイヤーの仮想ファイル管理。</li>
+<li><a class="wiki-source-link" href="../../../../source/src/backend/storage/file/buffile.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/storage/file/buffile.c.html&quot;}, '*');"><code>src/backend/storage/file/buffile.c</code></a>: <a class="wiki-source-link" href="../../../../source/src/include/storage/buffile.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/storage/buffile.h.html&quot;}, '*');"><code>buffile.h</code></a> で宣言されたすべての関数の実体および <code>BufFile</code> 構造体の詳細定義を含む対向ファイル。</li>
 </ul>
 <h2>読者向けメモ</h2>
 <ul>
-<li><code>BufFile</code> 構造体の詳細なフィールド（現在のファイルインデックスやオフセットなど）はヘッダー側には露出せず、すべて実装ファイル側に隠蔽されています。</li>
-<li><code>palloc</code> を用いてメモリコンテキスト上に割り当てられるため、クエリやトランザクションの終了時に自動的にクリーンアップされます。</li>
+<li><code>BufFile</code> の内部構造は <a class="wiki-source-link" href="../../../../source/src/backend/storage/file/buffile.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/storage/file/buffile.c.html&quot;}, '*');"><code>buffile.c</code></a> にカプセル化されているため、このヘッダーファイルからは直接参照できません。</li>
+<li>ファイルサイズが OS の制限や整数の表現範囲を超える場合でも、本モジュールが自動的に複数セグメントへの分割処理を行います。</li>
 </ul>
 <h2>シンボルページ</h2>
 <ul>
+<li><a href="../../../symbols/src__include__storage__buffile_h__BufFileCreateFileSet.html" target="wiki-view"><code>BufFileCreateFileSet</code></a></li>
+<li><a href="../../../symbols/src__include__storage__buffile_h__BufFileOpenFileSet.html" target="wiki-view"><code>BufFileOpenFileSet</code></a></li>
+<li><a href="../../../symbols/src__include__storage__buffile_h__BufFileRead.html" target="wiki-view"><code>BufFileRead</code></a></li>
+<li><a href="../../../symbols/src__include__storage__buffile_h__BufFileWrite.html" target="wiki-view"><code>BufFileWrite</code></a></li>
+<li><a href="../../../symbols/src__include__storage__buffile_h__FileSet.html" target="wiki-view"><code>FileSet</code></a></li>
 <li><a href="../../../symbols/src__include__storage__buffile_h__BufFile.html" target="wiki-view"><code>BufFile</code></a></li>
 </ul><script>
 (function() {

@@ -1,36 +1,36 @@
 <!doctype html>
 <html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>src/include/storage/buf.h.md</title><link rel="stylesheet" href="../../../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../../../source/src/include/storage/buf.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/storage/buf.h.html&quot;}, '*');">src/include/storage/buf.h</a></h1>
 <h2>概要</h2>
-<p>PostgreSQLのバッファマネージャにおける最も基本的なデータ型とマクロを定義するヘッダーファイルです。共有バッファおよびローカルバッファの識別子や、バッファアクセスの抽象化に必要な型宣言を提供します。</p>
+<p>PostgreSQLのバッファマネージャが使用する基本的なデータ型とマクロを定義するヘッダーファイルです。</p>
 <h2>モジュール内での役割</h2>
-<p><code>src/include/storage</code> サブシステムのバッファ管理関連ヘッダー（<a class="wiki-source-link" href="../../../../source/src/include/storage/bufmgr.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/storage/bufmgr.h.html&quot;}, '*');"><code>bufmgr.h</code></a>, <a class="wiki-source-link" href="../../../../source/src/include/storage/buf_internals.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/storage/buf_internals.h.html&quot;}, '*');"><code>buf_internals.h</code></a> など）の基礎として機能します。詳細なバッファ管理ロジックを持たず、バッファIDの表現方法や有効性判定といったプリミティブな定義のみを切り出して他のモジュールから参照しやすくしています。</p>
+<p><code>src/include/storage/</code> ストレージサブシステムにおいて、バッファ識別子（<a class="wiki-source-link" href="../../../../source/src/include/storage/buf.h.html#L23" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__storage__buf_h__Buffer.html&quot;}, '*');"><code>Buffer</code></a>）やバッファアクセスの戦略オブジェクトに関する最小限の型定義を提供します。バッファ管理の実装詳細（<a class="wiki-source-link" href="../../../../source/src/include/storage/buf_internals.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/storage/buf_internals.h.html&quot;}, '*');"><code>buf_internals.h</code></a> や <a class="wiki-source-link" href="../../../../source/src/include/storage/bufmgr.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/storage/bufmgr.h.html&quot;}, '*');"><code>bufmgr.h</code></a>）に対する軽量な前提インターフェースとして機能します。</p>
 <h2>責務</h2>
 <ul>
-<li>バッファ識別子を表す基本型 <a class="wiki-source-link" href="../../../../source/src/include/storage/buf.h.html#L23" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__storage__buf_h__Buffer.html&quot;}, '*');"><code>Buffer</code></a> の定義。</li>
-<li>バッファの有効性やローカル／共有の種別を判定するマクロの提供。</li>
-<li>バッファアクセス戦略を抽象化する <code>BufferAccessStrategy</code> 型の前方宣言。</li>
+<li>バッファ識別子を表す <a class="wiki-source-link" href="../../../../source/src/include/storage/buf.h.html#L23" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__storage__buf_h__Buffer.html&quot;}, '*');"><code>Buffer</code></a> 型の定義。</li>
+<li>バッファが無効であるか、あるいはローカルバッファであるかを判定するマクロの提供。</li>
+<li>フリーリスト管理などで使用されるバッファアクセス戦略構造体ポインタ（<code>BufferAccessStrategy</code>）の定義。</li>
 </ul>
 <h2>重要なシンボル</h2>
 <ul>
-<li><a class="wiki-source-link" href="../../../../source/src/include/storage/buf.h.html#L23" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__storage__buf_h__Buffer.html&quot;}, '*');"><code>Buffer</code></a>: バッファを一意に識別する整数型の <a class="wiki-source-link" href="../../../../source/src/include/fmgr.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/fmgr.h.html&quot;}, '*');">typedef</a>。正数は共有バッファ（1〜<a class="wiki-source-link" href="../../../../source/src/backend/utils/init/globals.c.html#L144" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/utils/init/globals.c.html&quot;}, '*');">NBuffers</a>）、負数はローカルバッファ（-1〜-NLocBuffer）、0は無効を表します。</li>
-<li><a class="wiki-source-link" href="../../../../source/src/include/storage/buf.h.html#L25" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/storage/buf.h.html&quot;}, '*');"><code>InvalidBuffer</code></a>: 無効なバッファを表す定数マクロ（<code>0</code>）。</li>
-<li><code>BufferIsInvalid(buffer)</code>: 指定されたバッファ識別子が無効（<a class="wiki-source-link" href="../../../../source/src/include/storage/buf.h.html#L25" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/storage/buf.h.html&quot;}, '*');"><code>InvalidBuffer</code></a>）か判定するマクロ。</li>
-<li><code>BufferIsLocal(buffer)</code>: 指定されたバッファが自バックエンド専用のローカルバッファであるかを判定するマクロ。</li>
-<li><code>BufferAccessStrategy</code>: バッファリング戦略（リングバッファやVACUUM用など）を扱う構造体へのポインタ型。</li>
+<li><a class="wiki-source-link" href="../../../../source/src/include/storage/buf.h.html#L23" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__storage__buf_h__Buffer.html&quot;}, '*');"><code>Buffer</code></a>: バッファを一意に識別する整数型の typedef。0は無効、正数は共有バッファ、負数はローカルバッファを表します。</li>
+<li><a class="wiki-source-link" href="../../../../source/src/include/storage/buf.h.html#L25" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/storage/buf.h.html&quot;}, '*');"><code>InvalidBuffer</code></a>: 無効なバッファを表す定数マクロ（値は <code>0</code>）。</li>
+<li><code>BufferIsInvalid(buffer)</code>: 指定されたバッファが無効か判定するマクロ。</li>
+<li><code>BufferIsLocal(buffer)</code>: 指定されたバッファがローカルバッファ（他バックエンドから不可視）か判定するマクロ。</li>
+<li><code>BufferAccessStrategy</code>: バッファ置換アルゴリズムなどのアクセス戦略を抽象化する不透明ポインタ型。</li>
 </ul>
 <h2>制御フローとデータフロー</h2>
-<p>本ファイルは型定義とマクロのみを提供するヘッダーファイルであるため、ファイル単体の制御フローやデータフローはありません。ここで定義された <a class="wiki-source-link" href="../../../../source/src/include/storage/buf.h.html#L23" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__storage__buf_h__Buffer.html&quot;}, '*');"><code>Buffer</code></a> 型は、バッファプールへのアクセスやディスクI/Oを伴う上位のデータ処理フロー全体で引数や戻り値として経由されます。</p>
+<p>本ファイルはデータ型とマクロの定義のみを提供するため、直接的な制御フローやデータフローを持ちません。</p>
 <h2>直接依存</h2>
-<p>このファイルには直接の <code>#include</code> 依存関係はありません（完全な独立したプリミティブ定義です）。</p>
+<p>このファイルには直接見えるインクルードや外部依存はありません。</p>
 <h2>関連コード</h2>
 <ul>
-<li><a class="wiki-source-link" href="../../../../source/src/include/storage/bufmgr.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/storage/bufmgr.h.html&quot;}, '*');"><code>src/include/storage/bufmgr.h</code></a>: バッファマネージャの公開関数群を定義し、ここで定義された <a class="wiki-source-link" href="../../../../source/src/include/storage/buf.h.html#L23" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__storage__buf_h__Buffer.html&quot;}, '*');"><code>Buffer</code></a> 型を多用します。</li>
-<li><a class="wiki-source-link" href="../../../../source/src/include/storage/buf_internals.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/storage/buf_internals.h.html&quot;}, '*');"><code>src/include/storage/buf_internals.h</code></a>: 共有バッファの内部構造や制御ブロックを定義します。</li>
+<li><a class="wiki-source-link" href="../../../../source/src/include/storage/bufmgr.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/storage/bufmgr.h.html&quot;}, '*');"><code>src/include/storage/bufmgr.h</code></a>: バッファマネージャの公開関数インターフェース。</li>
+<li><a class="wiki-source-link" href="../../../../source/src/include/storage/buf_internals.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/storage/buf_internals.h.html&quot;}, '*');"><code>src/include/storage/buf_internals.h</code></a>: 共有バッファプールや内部構造の詳細定義。</li>
 </ul>
 <h2>読者向けメモ</h2>
 <ul>
-<li><a class="wiki-source-link" href="../../../../source/src/include/storage/buf.h.html#L23" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__storage__buf_h__Buffer.html&quot;}, '*');"><code>Buffer</code></a> の値域設計（0が無効、正が共有、負がローカル）はバッファ管理のコード全体で前提とされているため変更できません。</li>
-<li><a class="wiki-source-link" href="../../../../source/src/backend/storage/buffer/freelist.c.html#L74" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__storage__buffer__freelist_c__BufferAccessStrategyData.html&quot;}, '*');"><code>BufferAccessStrategyData</code></a> の実体はソースファイル（<a class="wiki-source-link" href="../../../../source/src/backend/storage/buffer/freelist.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/storage/buffer/freelist.c.html&quot;}, '*');"><code>freelist.c</code></a>）側に隠蔽されており、このヘッダーからは不透明ポインタとしてのみ参照できます。</li>
+<li>バッファIDの値域規則（0 = 無効, 正数 = 共有, 負数 = ローカル）は、バッファ管理全体を通じて前提とされる不変条件です。</li>
+<li>複雑なバッファ管理関数を使用する前に、まずはこのファイルで定義される基本型を把握してください。</li>
 </ul>
 <h2>シンボルページ</h2>
 <ul>

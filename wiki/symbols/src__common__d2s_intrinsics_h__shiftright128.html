@@ -29,12 +29,12 @@
 <li>呼び出し元: なし</li>
 <li>呼び出し先: なし</li>
 <li>呼び出し元サイト: なし</li>
-<li>呼び出しサイト: <a class="wiki-source-link" href="../../source/src/include/c.h.html#L950" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/c.h.html&quot;}, '*');"><code>Assert</code></a> at <code>src/common/d2s_intrinsics.h:58:2</code> (unresolved), <code>__shiftright128</code> at <code>src/common/d2s_intrinsics.h:59:9</code> (unresolved)</li>
+<li>呼び出しサイト: <code>Assert</code> at <code>src/common/d2s_intrinsics.h:58:2</code> (unresolved), <code>__shiftright128</code> at <code>src/common/d2s_intrinsics.h:59:9</code> (unresolved)</li>
 </ul>
 <h2>関連データ構造</h2>
 <p><code>uint32</code>, <code>uint64</code></p>
 <h2>ソース抜粋</h2>
-<p>~~~c static <a class="wiki-source-link" href="../../source/src/include/c.h.html#L116" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/c.h.html&quot;}, '*');">inline</a> uint64 <a class="wiki-source-link" href="../../source/src/common/d2s_intrinsics.h.html#L47" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__common__d2s_intrinsics_h__shiftright128.html&quot;}, '*');">shiftright128</a>(const uint64 lo, const uint64 hi, const uint32 dist) { /*</p>
+<p>~~~c static inline uint64 <a class="wiki-source-link" href="../../source/src/common/d2s_intrinsics.h.html#L47" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__common__d2s_intrinsics_h__shiftright128.html&quot;}, '*');">shiftright128</a>(const uint64 lo, const uint64 hi, const uint32 dist) { /*</p>
 <ul>
 <li>For the __shiftright128 intrinsic, the shift value <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> always modulo 64.</li>
 <li>In the current implementation of the double-precision version of Ryu,</li>
@@ -42,7 +42,7 @@
 <li>the shift value <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> in the <a class="wiki-source-link" href="../../source/src/backend/regex/regc_locale.c.html#L411" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__regex__regc_locale_c__range.html&quot;}, '*');">range</a> [49, 58]. Otherwise in the <a class="wiki-source-link" href="../../source/src/backend/regex/regc_locale.c.html#L411" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__regex__regc_locale_c__range.html&quot;}, '*');">range</a> [2,</li>
 <li>59].) Check this here in case a future change requires larger shift</li>
 <li>values. In this case this function needs to be adjusted.</li>
-<p>*/ <a class="wiki-source-link" href="../../source/src/include/c.h.html#L950" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/c.h.html&quot;}, '*');">Assert</a>(dist &lt; 64); return __shiftright128(lo, hi, (unsigned char) dist); } ~~~</p>
+<p>*/ Assert(dist &lt; 64); return __shiftright128(lo, hi, (unsigned char) dist); } ~~~</p>
 </ul>
 <h2>失敗モードと境界条件</h2>
 <p>まだ解析していません。</p>

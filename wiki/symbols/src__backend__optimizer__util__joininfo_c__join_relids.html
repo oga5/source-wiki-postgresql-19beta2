@@ -1,0 +1,87 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>symbols/src__backend__optimizer__util__joininfo_c__join_relids.md</title><link rel="stylesheet" href="../../styles.css"></head><body><h1>join_relids</h1>
+<h2>定義</h2>
+<ul>
+<li>種別: <code>function</code></li>
+<li>定義箇所: <code>src/backend/optimizer/util/joininfo.c:1</code></li>
+<li>所属モジュール: <a class="wiki-entity-link" href="../modules/src__backend__optimizer__util.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/modules/src__backend__optimizer__util.html&quot;, &quot;source&quot;: &quot;source/src/backend/optimizer/util/appendinfo.c.html&quot;}, '*');"><code>module:src/backend/optimizer/util</code></a></li>
+</ul>
+<h2>目的</h2>
+<p>静的シンボル索引から生成された初期シンボルページです。</p>
+<h2>シグネチャまたは形状</h2>
+<ul>
+<li>シグネチャ: <code>/*------------------------------------------------------------------------- * * joininfo.c * joininfo list manipulation routines * * Portions Copyright (c) 1996-2026, PostgreSQL Global Development Group * Portions Copyright (c) 1994, Regents of the University of California * * * IDENTIFICATION * src/backend/optimizer/util/joininfo.c * *------------------------------------------------------------------------- */ #include &quot;postgres.h&quot; #include &quot;nodes/makefuncs.h&quot; #include &quot;optimizer/joininfo.h&quot; #include &quot;optimizer/pathnode.h&quot; #include &quot;optimizer/paths.h&quot; #include &quot;optimizer/planmain.h&quot; #include &quot;optimizer/restrictinfo.h&quot; /* * have_relevant_joinclause * Detect whether there is a joinclause that involves * the two given relations. * * Note: the joinclause does not have to be evaluable with only these two * relations. This is intentional. For example consider * SELECT * FROM a, b, c WHERE a.x = (b.y + c.z) * If a is much larger than the other tables, it may be worthwhile to * cross-join b and c and then use an inner indexscan on a.x. Therefore * we should consider this joinclause as reason to join b to c, even though * it can&#x27;t be applied at that join step. */ bool have_relevant_joinclause(PlannerInfo *root, RelOptInfo *rel1, RelOptInfo *rel2)</code></li>
+</ul>
+<h2>入力と出力</h2>
+<p>まだ解析していません。</p>
+<h2>前提条件と不変条件</h2>
+<p>まだ解析していません。</p>
+<h2>アルゴリズムまたは振る舞い</h2>
+<ul>
+<li>複雑度: <code>high</code> (score 13)</li>
+</ul>
+<p>まだ解析していません。</p>
+<h2>呼び出し元と呼び出し先</h2>
+<ul>
+<li>呼び出し元: なし</li>
+<li>呼び出し先: なし</li>
+<li>呼び出し元サイト: なし</li>
+<li>呼び出しサイト: なし</li>
+</ul>
+<h2>関連データ構造</h2>
+<p><code>c</code>, <a class="wiki-source-link" href="../../source/src/include/nodes/pathnodes.h.html#L1653" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__nodes__pathnodes_h__EquivalenceClass.html&quot;}, '*');"><code>EquivalenceClass</code></a>, <code>Group</code>, <code>List</code>, <a class="wiki-source-link" href="../../source/src/include/nodes/pg_list.h.html#L45" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__nodes__pg_list_h__ListCell.html&quot;}, '*');"><code>ListCell</code></a>, <code>PlannerInfo</code>, <code>Relids</code>, <code>RelOptInfo</code>, <code>RestrictInfo</code></p>
+<h2>ソース抜粋</h2>
+<p>~~~c /*------------------------------------------------------------------------- *</p>
+<ul>
+<li><a class="wiki-source-link" href="../../source/src/backend/optimizer/util/joininfo.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/backend/optimizer/util/joininfo.c.html&quot;}, '*');">joininfo.c</a></li>
+<li><a class="wiki-source-link" href="../../source/src/backend/optimizer/util/joininfo.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__joininfo_c__joininfo.html&quot;}, '*');">joininfo</a> list manipulation <a class="wiki-source-link" href="../../source/src/port/win32ntdll.c.html#L30" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/port/win32ntdll.c.html&quot;}, '*');">routines</a></li>
+<p>*</p>
+<li>Portions Copyright (c) 1996-2026, PostgreSQL Global Development Group</li>
+<li>Portions Copyright (c) 1994, Regents of the University of California</li>
+<p>* *</p>
+<li>IDENTIFICATION</li>
+<li><a class="wiki-source-link" href="../../source/src/backend/optimizer/util/joininfo.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/backend/optimizer/util/joininfo.c.html&quot;}, '*');">src/backend/optimizer/util/joininfo.c</a></li>
+<p>* *------------------------------------------------------------------------- */ #include &quot;<a class="wiki-source-link" href="../../source/src/include/postgres.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/postgres.h.html&quot;}, '*');">postgres.h</a>&quot;</p>
+</ul>
+<p>#include &quot;nodes/makefuncs.h&quot; #include &quot;optimizer/joininfo.h&quot; #include &quot;optimizer/pathnode.h&quot; #include &quot;optimizer/paths.h&quot; #include &quot;optimizer/planmain.h&quot; #include &quot;optimizer/restrictinfo.h&quot;</p>
+<p>/*</p>
+<ul>
+<li><a class="wiki-source-link" href="../../source/src/backend/optimizer/util/joininfo.c.html#L38" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__joininfo_c__have_relevant_joinclause.html&quot;}, '*');">have_relevant_joinclause</a></li>
+<li>Detect whether there <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> a joinclause that involves</li>
+<li>the two given relations.</li>
+<p>*</p>
+<li>Note: the joinclause does not have to be evaluable with only these two</li>
+<li>relations.  This <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> intentional.  For example consider</li>
+<li>SELECT * FROM a, b, c WHERE a.x = (b.y + c.z)</li>
+<li>If a <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> much larger than the other tables, it may be worthwhile to</li>
+<li>cross-join b and c and then use an inner indexscan on a.x.  Therefore</li>
+<li>we should consider this joinclause as reason to join b to c, even though</li>
+<li>it can&#x27;t be applied at that join step.</li>
+<p>*/ bool <a class="wiki-source-link" href="../../source/src/backend/optimizer/util/joininfo.c.html#L38" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__joininfo_c__have_relevant_joinclause.html&quot;}, '*');">have_relevant_joinclause</a>(PlannerInfo *<a class="wiki-source-link" href="../../source/src/backend/optimizer/util/var.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__var_c__root.html&quot;}, '*');">root</a>, RelOptInfo *rel1, RelOptInfo *rel2) { bool		<a class="wiki-source-link" href="../../source/src/include/storage/checksum_block_internal.h.html#L18" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/storage/checksum_block_internal.h.html&quot;}, '*');">result</a> = <a class="wiki-source-link" href="../../source/src/tools/pg_bsd_indent/indent_globs.h.html#L43" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/tools/pg_bsd_indent/indent_globs.h.html&quot;}, '*');">false</a>; List	   *<a class="wiki-source-link" href="../../source/src/backend/optimizer/util/joininfo.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__joininfo_c__joininfo.html&quot;}, '*');">joininfo</a>; Relids		other_relids; <a class="wiki-source-link" href="../../source/src/include/nodes/pg_list.h.html#L45" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__nodes__pg_list_h__ListCell.html&quot;}, '*');">ListCell</a>   *l;</p>
+</ul>
+<p>/*</p>
+<ul>
+<li>We could scan either relation&#x27;s <a class="wiki-source-link" href="../../source/src/backend/optimizer/util/joininfo.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__joininfo_c__joininfo.html&quot;}, '*');">joininfo</a> list; may as well use the</li>
+<li>shorter one.</li>
+<p>*/ if (<a class="wiki-source-link" href="../../source/src/include/nodes/pg_list.h.html#L151" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__nodes__pg_list_h__list_length.html&quot;}, '*');">list_length</a>(rel1-&gt;<a class="wiki-source-link" href="../../source/src/backend/optimizer/util/joininfo.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__joininfo_c__joininfo.html&quot;}, '*');">joininfo</a>) &lt;= <a class="wiki-source-link" href="../../source/src/include/nodes/pg_list.h.html#L151" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__nodes__pg_list_h__list_length.html&quot;}, '*');">list_length</a>(rel2-&gt;<a class="wiki-source-link" href="../../source/src/backend/optimizer/util/joininfo.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__joininfo_c__joininfo.html&quot;}, '*');">joininfo</a>)) { <a class="wiki-source-link" href="../../source/src/backend/optimizer/util/joininfo.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__joininfo_c__joininfo.html&quot;}, '*');">joininfo</a> = rel1-&gt;<a class="wiki-source-link" href="../../source/src/backend/optimizer/util/joininfo.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__joininfo_c__joininfo.html&quot;}, '*');">joininfo</a>; other_relids = rel2-&gt;<a class="wiki-source-link" href="../../source/src/backend/optimizer/util/relnode.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__relnode_c__relids.html&quot;}, '*');">relids</a>; } else { <a class="wiki-source-link" href="../../source/src/backend/optimizer/util/joininfo.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__joininfo_c__joininfo.html&quot;}, '*');">joininfo</a> = rel2-&gt;<a class="wiki-source-link" href="../../source/src/backend/optimizer/util/joininfo.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__joininfo_c__joininfo.html&quot;}, '*');">joininfo</a>; other_relids = rel1-&gt;<a class="wiki-source-link" href="../../source/src/backend/optimizer/util/relnode.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__relnode_c__relids.html&quot;}, '*');">relids</a>; } ~~~</p>
+</ul>
+<h2>失敗モードと境界条件</h2>
+<p>まだ解析していません。</p>
+<h2>保守担当者向けメモ</h2>
+<ul>
+<li>後続フェーズで、ソース本文の文脈と caller/callee 情報を使ってこのページを強化する。</li>
+</ul><script>
+(function() {
+  function notifyParent() {
+    if (parent === window) return;
+    parent.postMessage({type: "frame-location", frame: window.name || "", href: window.location.href}, "*");
+  }
+  document.addEventListener("click", function(event) {
+    const link = event.target.closest("a[data-panel]");
+    if (!link || parent === window) return;
+    parent.postMessage({type: "source-link", panel: link.dataset.panel}, "*");
+  });
+  window.addEventListener("load", notifyParent);
+  window.addEventListener("hashchange", notifyParent);
+})();
+</script></body></html>

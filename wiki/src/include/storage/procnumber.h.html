@@ -1,46 +1,42 @@
 <!doctype html>
 <html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>src/include/storage/procnumber.h.md</title><link rel="stylesheet" href="../../../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../../../source/src/include/storage/procnumber.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/storage/procnumber.h.html&quot;}, '*');">src/include/storage/procnumber.h</a></h1>
 <h2>概要</h2>
-<p><a class="wiki-source-link" href="../../../../source/src/include/storage/procnumber.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/storage/procnumber.h.html&quot;}, '*');"><code>src/include/storage/procnumber.h</code></a> は、PostgreSQLのバックエンドプロセスおよび補助プロセスを識別するためのプロセス番号（<code>ProcNumber</code>）のデータ型と関連マクロを定義するヘッダーファイルです。</p>
+<p><a class="wiki-source-link" href="../../../../source/src/include/storage/procnumber.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/storage/procnumber.h.html&quot;}, '*');"><code>src/include/storage/procnumber.h</code></a> は、PostgreSQLのバックエンドプロセスおよび補助プロセスを識別するためのプロセス番号（<code>ProcNumber</code>）の型定義と関連マクロを提供するヘッダーファイルです。</p>
 <h2>モジュール内での役割</h2>
-<p><code>src/include/storage</code> サブシステムのなかで、プロセス配列のインデックスとして機能する識別子を提供します。プロセス管理を行う <a class="wiki-source-link" href="../../../../source/src/include/storage/proc.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/storage/proc.h.html&quot;}, '*');"><code>proc.h</code></a> や <a class="wiki-source-link" href="../../../../source/src/include/storage/procarray.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/storage/procarray.h.html&quot;}, '*');"><code>procarray.h</code></a>、およびバッファ管理や無効化メッセージ処理（<a class="wiki-source-link" href="../../../../source/src/backend/utils/cache/inval.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/utils/cache/inval.c.html&quot;}, '*');"><code>inval.c</code></a> 等）の下位層をつなぐ基礎的な定義として機能します。</p>
+<p><code>src/include/storage/</code> ストレージサブシステムの一部として、プロセス管理やバッファ管理、共有メモリ周辺のコードで使用される基本的な識別子の定義を行います。特に <a class="wiki-source-link" href="../../../../source/src/include/storage/proc.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/storage/proc.h.html&quot;}, '*');"><code>proc.h</code></a> や <a class="wiki-source-link" href="../../../../source/src/include/storage/buf_internals.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/storage/buf_internals.h.html&quot;}, '*');"><code>buf_internals.h</code></a> などの周辺モジュールに対し、プロセスを一意に指し示すための軽量な型を提供します。</p>
 <h2>責務</h2>
 <ul>
-<li>アクティブなバックエンドや補助プロセスを識別する一意の整数型 <code>ProcNumber</code> の定義。</li>
-<li>プロセス数の上限およびビット幅（<a class="wiki-source-link" href="../../../../source/src/include/storage/procnumber.h.html#L39" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/storage/procnumber.h.html&quot;}, '*');"><code>MAX_BACKENDS</code></a>, <a class="wiki-source-link" href="../../../../source/src/include/storage/procnumber.h.html#L38" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/storage/procnumber.h.html&quot;}, '*');"><code>MAX_BACKENDS_BITS</code></a>）の規定。</li>
-<li>自プロセスおよび並列処理リーダーのプロセス番号を管理するグローバル変数の宣言と、一時リレーション用プロセス番号を解決するマクロの提供。</li>
+<li>アクティブなバックエンドや補助プロセスを識別する <code>ProcNumber</code> 型の定義。</li>
+<li>プロセス番号が無効であることを示す <code>INVALID_PROC_NUMBER</code> の定義。</li>
+<li>サポートされる最大バックエンド数 (<a class="wiki-source-link" href="../../../../source/src/include/storage/procnumber.h.html#L39" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/storage/procnumber.h.html&quot;}, '*');"><code>MAX_BACKENDS</code></a>) および関連するビット幅 (<a class="wiki-source-link" href="../../../../source/src/include/storage/procnumber.h.html#L38" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/storage/procnumber.h.html&quot;}, '*');"><code>MAX_BACKENDS_BITS</code></a>) の制約定義。</li>
+<li>自プロセスのプロセス番号 (<code>MyProcNumber</code>) や、一時リレーション用プロセス番号を決定するマクロ (<a class="wiki-source-link" href="../../../../source/src/include/storage/procnumber.h.html#L53" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/storage/procnumber.h.html&quot;}, '*');"><code>ProcNumberForTempRelations</code></a>) の提供。</li>
 </ul>
 <h2>重要なシンボル</h2>
 <ul>
-<li><code>ProcNumber</code>: プロセス配列のインデックスを表す <code>int</code> 型の<a class="wiki-source-link" href="../../../../source/src/include/fmgr.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/fmgr.h.html&quot;}, '*');">typedef</a>。</li>
-<li><a class="wiki-source-link" href="../../../../source/src/include/storage/procnumber.h.html#L26" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/storage/procnumber.h.html&quot;}, '*');"><code>INVALID_PROC_NUMBER</code></a>: 無効なプロセス番号を表す定数（<code>-1</code>）。</li>
-<li><a class="wiki-source-link" href="../../../../source/src/include/storage/procnumber.h.html#L39" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/storage/procnumber.h.html&quot;}, '*');"><code>MAX_BACKENDS</code></a>: 許容されるバックエンドの最大数（<code>2^18 - 1</code>）。</li>
+<li><code>ProcNumber</code>: プロセス配列のインデックスとして機能するプロセス番号を表す <code>int</code> のエイリアス。</li>
+<li><code>INVALID_PROC_NUMBER</code>: 無効なプロセス番号を表す定数 (<code>-1</code>)。</li>
+<li><a class="wiki-source-link" href="../../../../source/src/include/storage/procnumber.h.html#L39" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/storage/procnumber.h.html&quot;}, '*');"><code>MAX_BACKENDS</code></a>: バッファ参照カウント等のビット制約に基づき定義される、許容される最大バックエンド数。</li>
 <li><code>MyProcNumber</code>: 自プロセスのプロセス番号を保持する外部変数。</li>
-<li><code>ProcNumberForTempRelations()</code>: 自プロセスまたは並列リーダーのプロセス番号を返し、一時リレーションのオーナーを決定するマクロ。</li>
+<li><code>ProcNumberForTempRelations()</code>: 自プロセスまたは並列クエリのリーダープロセスのうち、一時リレーションで使用すべきプロセス番号を返すマクロ。</li>
 </ul>
 <h2>制御フローとデータフロー</h2>
-<ul>
-<li>バックエンドの起動時に認証を経てプロセス配列へ登録されると、<code>ProcNumber</code> が割り当てられます。</li>
-<li>無効値は <a class="wiki-source-link" href="../../../../source/src/include/storage/procnumber.h.html#L26" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/storage/procnumber.h.html&quot;}, '*');"><code>INVALID_PROC_NUMBER</code></a> で表現され、並列ワーカーの場合は <a class="wiki-source-link" href="../../../../source/src/backend/utils/init/globals.c.html#L94" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/utils/init/globals.c.html&quot;}, '*');"><code>ParallelLeaderProcNumber</code></a> を参照してリーダーのコンテキストを継承します。</li>
-<li>一時リレーションの作成やアクセス時に <code>ProcNumberForTempRelations()</code> が呼び出され、適切な名前空間や識別情報を解決するために使用されます。</li>
-</ul>
+<p>プロセスが起動し認証を通過した後にプロセス配列へ自身を追加する際、<code>ProcNumber</code> が割り当てられます。プロセス終了時には番号が再利用されます。また、一時リレーションへのアクセス時には <code>ProcNumberForTempRelations()</code> マクロが評価され、並列ワーカーの場合はリーダーの <a class="wiki-source-link" href="../../../../source/src/backend/utils/init/globals.c.html#L94" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/utils/init/globals.c.html&quot;}, '*');"><code>ParallelLeaderProcNumber</code></a> を、通常は <code>MyProcNumber</code> を返却するデータフロー制御が行われます。</p>
 <h2>直接依存</h2>
-<ul>
-<li>ソースファイル内に直接の <code>#include</code> は存在せず、プリプロセッサのマクロと基本的な型定義のみで構成されています。</li>
-</ul>
+<p>このファイルは直接的なインクルードを持たず、純粋な型定義とマクロ、外部変数宣言のみで構成されています。</p>
 <h2>関連コード</h2>
 <ul>
-<li><a class="wiki-source-link" href="../../../../source/src/include/storage/proc.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/storage/proc.h.html&quot;}, '*');"><code>src/include/storage/proc.h</code></a>: プロセス構造体（<code>PGProc</code>）の定義。</li>
-<li><a class="wiki-source-link" href="../../../../source/src/include/storage/procarray.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/storage/procarray.h.html&quot;}, '*');"><code>src/include/storage/procarray.h</code></a>: プロセス配列全体の管理と探索。</li>
+<li><a class="wiki-source-link" href="../../../../source/src/include/storage/proc.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/storage/proc.h.html&quot;}, '*');"><code>src/include/storage/proc.h</code></a>: プロセス構造体 (<code>PGProc</code>) とプロセス番号の関連処理。</li>
 <li><a class="wiki-source-link" href="../../../../source/src/include/storage/buf_internals.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/storage/buf_internals.h.html&quot;}, '*');"><code>src/include/storage/buf_internals.h</code></a>: バッファ参照カウントにおける <a class="wiki-source-link" href="../../../../source/src/include/storage/procnumber.h.html#L38" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/storage/procnumber.h.html&quot;}, '*');"><code>MAX_BACKENDS_BITS</code></a> の制約元。</li>
 </ul>
 <h2>読者向けメモ</h2>
 <ul>
-<li><code>ProcNumber</code> はプロセス終了後に即座に再利用されるため、永続的な識別子としては使用できません。</li>
-<li><a class="wiki-source-link" href="../../../../source/src/include/storage/procnumber.h.html#L38" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/storage/procnumber.h.html&quot;}, '*');"><code>MAX_BACKENDS_BITS</code></a> はバッファ参照カウントのビット割り当てに依存しているため、将来的な拡張には他サブシステムとの整合性確認が必要です。</li>
+<li><a class="wiki-source-link" href="../../../../source/src/include/storage/procnumber.h.html#L38" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/storage/procnumber.h.html&quot;}, '*');"><code>MAX_BACKENDS_BITS</code></a> はバッファ参照カウントのビット構造に依存しているため、将来的に変更する際は関連するストレージ構造体への影響に注意してください。</li>
+<li><code>ProcNumber</code> はプロセス終了後すぐに別のプロセスに再利用される特性を持つため、有効性の検証なしに長期間保持して使用することは避けてください。</li>
 </ul>
 <h2>シンボルページ</h2>
 <ul>
+<li><a href="../../../symbols/src__include__storage__procnumber_h__MyProcNumber.html" target="wiki-view"><code>MyProcNumber</code></a></li>
+<li><a href="../../../symbols/src__include__storage__procnumber_h__int.html" target="wiki-view"><code>int</code></a></li>
 <li><a href="../../../symbols/src__include__storage__procnumber_h__ProcNumber.html" target="wiki-view"><code>ProcNumber</code></a></li>
 </ul><script>
 (function() {

@@ -1,0 +1,85 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>symbols/src__include__utils__palloc_h__next.md</title><link rel="stylesheet" href="../../styles.css"></head><body><h1>next</h1>
+<h2>定義</h2>
+<ul>
+<li>種別: <code>function</code></li>
+<li>定義箇所: <code>src/include/utils/palloc.h:1</code></li>
+<li>所属モジュール: <a class="wiki-entity-link" href="../modules/src__include__utils.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/modules/src__include__utils.html&quot;, &quot;source&quot;: &quot;source/src/include/utils/acl.h.html&quot;}, '*');"><code>module:src/include/utils</code></a></li>
+</ul>
+<h2>目的</h2>
+<p>静的シンボル索引から生成された初期シンボルページです。</p>
+<h2>シグネチャまたは形状</h2>
+<ul>
+<li>シグネチャ: <code>/*------------------------------------------------------------------------- * * palloc.h * POSTGRES memory allocator definitions. * * This file contains the basic memory allocation interface that is * needed by almost every backend module. It is included directly by * postgres.h, so the definitions here are automatically available * everywhere. Keep it lean! * * Memory allocation occurs within &quot;contexts&quot;. Every chunk obtained from * palloc()/MemoryContextAlloc() is allocated within a specific context. * The entire contents of a context can be freed easily and quickly by * resetting or deleting the context --- this is both faster and less * prone to memory-leakage bugs than releasing chunks individually. * We organize contexts into context trees to allow fine-grain control * over chunk lifetime while preserving the certainty that we will free * everything that should be freed. See utils/mmgr/README for more info. * * * Portions Copyright (c) 1996-2026, PostgreSQL Global Development Group * Portions Copyright (c) 1994, Regents of the University of California * * src/include/utils/palloc.h * *------------------------------------------------------------------------- */ #ifndef PALLOC_H #define PALLOC_H /* * Type MemoryContextData is declared in nodes/memnodes.h. Most users * of memory allocation should just treat it as an abstract type, so we * do not provide the struct contents here. */ typedef struct MemoryContextData *MemoryContext</code></li>
+</ul>
+<h2>入力と出力</h2>
+<p>まだ解析していません。</p>
+<h2>前提条件と不変条件</h2>
+<p>まだ解析していません。</p>
+<h2>アルゴリズムまたは振る舞い</h2>
+<ul>
+<li>複雑度: <code>low</code> (score 0)</li>
+</ul>
+<p>まだ解析していません。</p>
+<h2>呼び出し元と呼び出し先</h2>
+<ul>
+<li>呼び出し元: なし</li>
+<li>呼び出し先: なし</li>
+<li>呼び出し元サイト: なし</li>
+<li>呼び出しサイト: なし</li>
+</ul>
+<h2>関連データ構造</h2>
+<p><code>c</code>, <code>Group</code>, <code>MemoryContext</code>, <a class="wiki-source-link" href="../../source/src/include/nodes/memnodes.h.html#L117" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__nodes__memnodes_h__MemoryContextData.html&quot;}, '*');"><code>MemoryContextData</code></a>, <a class="wiki-source-link" href="../../source/src/include/parser/parse_type.h.html#L20" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__parser__parse_type_h__Type.html&quot;}, '*');"><code>Type</code></a></p>
+<h2>ソース抜粋</h2>
+<p>~~~c /*------------------------------------------------------------------------- *</p>
+<ul>
+<li><a class="wiki-source-link" href="../../source/src/include/utils/palloc.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/utils/palloc.h.html&quot;}, '*');">palloc.h</a></li>
+<li>POSTGRES memory allocator definitions.</li>
+<p>*</p>
+<li>This file contains the basic memory allocation interface that <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a></li>
+<li>needed by almost every backend module.  It <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> included directly by</li>
+<li><a class="wiki-source-link" href="../../source/src/include/postgres.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/postgres.h.html&quot;}, '*');">postgres.h</a>, so the definitions here are automatically available</li>
+<li>everywhere.  Keep it lean!</li>
+<p>*</p>
+<li>Memory allocation occurs within &quot;contexts&quot;.  Every chunk obtained from</li>
+<li>palloc()/MemoryContextAlloc() <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> allocated within a specific context.</li>
+<li>The entire contents of a context can be freed easily and quickly by</li>
+<li>resetting or deleting the context --- this <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> both faster and less</li>
+<li>prone to memory-leakage bugs than releasing chunks individually.</li>
+<li>We organize contexts into context trees to allow fine-grain control</li>
+<li>over chunk lifetime while preserving the certainty that we will <a class="wiki-source-link" href="../../source/src/include/snowball/snowball_runtime.h.html#L65" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/snowball/snowball_runtime.h.html&quot;}, '*');">free</a></li>
+<li>everything that should be freed.  See utils/mmgr/README for more info.</li>
+<p>* *</p>
+<li>Portions Copyright (c) 1996-2026, PostgreSQL Global Development Group</li>
+<li>Portions Copyright (c) 1994, Regents of the University of California</li>
+<p>*</p>
+<li><a class="wiki-source-link" href="../../source/src/include/utils/palloc.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/utils/palloc.h.html&quot;}, '*');">src/include/utils/palloc.h</a></li>
+<p>* *------------------------------------------------------------------------- */ #ifndef <a class="wiki-source-link" href="../../source/src/include/utils/palloc.h.html#L29" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/utils/palloc.h.html&quot;}, '*');">PALLOC_H</a> #define <a class="wiki-source-link" href="../../source/src/include/utils/palloc.h.html#L29" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/utils/palloc.h.html&quot;}, '*');">PALLOC_H</a></p>
+</ul>
+<p>/*</p>
+<ul>
+<li><a class="wiki-source-link" href="../../source/src/include/parser/parse_type.h.html#L20" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__parser__parse_type_h__Type.html&quot;}, '*');">Type</a> <a class="wiki-source-link" href="../../source/src/include/nodes/memnodes.h.html#L117" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__nodes__memnodes_h__MemoryContextData.html&quot;}, '*');">MemoryContextData</a> <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> declared in nodes/memnodes.h.  Most users</li>
+<li>of memory allocation should just treat it as an <a class="wiki-source-link" href="../../source/src/include/nodes/nodes.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__nodes__nodes_h__abstract.html&quot;}, '*');">abstract</a> <a class="wiki-source-link" href="../../source/src/include/lib/ilist.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__lib__ilist_h__type.html&quot;}, '*');">type</a>, so we</li>
+<li>do not provide the struct contents here.</li>
+<p>*/ typedef struct <a class="wiki-source-link" href="../../source/src/include/nodes/memnodes.h.html#L117" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__nodes__memnodes_h__MemoryContextData.html&quot;}, '*');">MemoryContextData</a> *MemoryContext; ~~~</p>
+</ul>
+<h2>失敗モードと境界条件</h2>
+<p>まだ解析していません。</p>
+<h2>保守担当者向けメモ</h2>
+<ul>
+<li>後続フェーズで、ソース本文の文脈と caller/callee 情報を使ってこのページを強化する。</li>
+</ul><script>
+(function() {
+  function notifyParent() {
+    if (parent === window) return;
+    parent.postMessage({type: "frame-location", frame: window.name || "", href: window.location.href}, "*");
+  }
+  document.addEventListener("click", function(event) {
+    const link = event.target.closest("a[data-panel]");
+    if (!link || parent === window) return;
+    parent.postMessage({type: "source-link", panel: link.dataset.panel}, "*");
+  });
+  window.addEventListener("load", notifyParent);
+  window.addEventListener("hashchange", notifyParent);
+})();
+</script></body></html>

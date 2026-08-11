@@ -50,7 +50,7 @@
 <p>/*</p>
 <ul>
 <li>Find the oldest extant segment file. We get 1 until checkpoint removes</li>
-<li>the first WAL segment file since startup, which causes the status being</li>
+<li>the first WAL segment file since startup, which causes the <a class="wiki-source-link" href="../../source/src/include/storage/aio_types.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__storage__aio_types_h__status.html&quot;}, '*');">status</a> being</li>
 <li>wrong under certain abnormal conditions but that doesn&#x27;t actually harm.</li>
 <p>*/ oldestSeg = <a class="wiki-source-link" href="../../source/src/backend/access/transam/xlog.c.html#L3808" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__access__transam__xlog_c__XLogGetLastRemovedSegno.html&quot;}, '*');">XLogGetLastRemovedSegno</a>() + 1;</p>
 </ul>
@@ -59,7 +59,7 @@
 <p>/* the segment we care about */ <a class="wiki-source-link" href="../../source/src/include/access/xlog_internal.h.html#L116" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/access/xlog_internal.h.html&quot;}, '*');">XLByteToSeg</a>(targetLSN, targetSeg, <a class="wiki-source-link" href="../../source/src/backend/access/transam/xlog.c.html#L150" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/access/transam/xlog.c.html&quot;}, '*');">wal_segment_size</a>);</p>
 <p>/*</p>
 <ul>
-<li>No point in returning reserved or extended status values if the</li>
+<li>No point in returning reserved or extended <a class="wiki-source-link" href="../../source/src/include/storage/aio_types.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__storage__aio_types_h__status.html&quot;}, '*');">status</a> values if the</li>
 <li>targetSeg <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> known to be lost.</li>
 <p>*/ if (targetSeg &gt;= oldestSlotSeg) { /* show &quot;reserved&quot; <a class="wiki-source-link" href="../../source/src/interfaces/ecpg/preproc/type.h.html#L89" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__interfaces__ecpg__preproc__type_h__when.html&quot;}, '*');">when</a> targetSeg <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> within max_wal_size */ if (targetSeg &gt;= oldestSegMaxWalSize) return WALAVAIL_RESERVED;</p>
 </ul>

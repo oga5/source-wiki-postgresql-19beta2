@@ -1,0 +1,80 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>symbols/src__include__storage__block_h__uint16.md</title><link rel="stylesheet" href="../../styles.css"></head><body><h1>uint16</h1>
+<h2>定義</h2>
+<ul>
+<li>種別: <code>function</code></li>
+<li>定義箇所: <code>src/include/storage/block.h:1</code></li>
+<li>所属モジュール: <a class="wiki-entity-link" href="../modules/src__include__storage.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/modules/src__include__storage.html&quot;, &quot;source&quot;: &quot;source/src/include/storage/aio.h.html&quot;}, '*');"><code>module:src/include/storage</code></a></li>
+</ul>
+<h2>目的</h2>
+<p>静的シンボル索引から生成された初期シンボルページです。</p>
+<h2>シグネチャまたは形状</h2>
+<ul>
+<li>シグネチャ: <code>/*------------------------------------------------------------------------- * * block.h * POSTGRES disk block definitions. * * * Portions Copyright (c) 1996-2026, PostgreSQL Global Development Group * Portions Copyright (c) 1994, Regents of the University of California * * src/include/storage/block.h * *------------------------------------------------------------------------- */ #ifndef BLOCK_H #define BLOCK_H /* * BlockNumber: * * each data file (heap or index) is divided into postgres disk blocks * (which may be thought of as the unit of i/o -- a postgres buffer * contains exactly one disk block). the blocks are numbered * sequentially, 0 to 0xFFFFFFFE. * * InvalidBlockNumber is the same thing as P_NEW in bufmgr.h. * * the access methods, the buffer manager and the storage manager are * more or less the only pieces of code that should be accessing disk * blocks directly. */ typedef uint32 BlockNumber</code></li>
+</ul>
+<h2>入力と出力</h2>
+<p>まだ解析していません。</p>
+<h2>前提条件と不変条件</h2>
+<p>まだ解析していません。</p>
+<h2>アルゴリズムまたは振る舞い</h2>
+<ul>
+<li>複雑度: <code>low</code> (score 0)</li>
+</ul>
+<p>まだ解析していません。</p>
+<h2>呼び出し元と呼び出し先</h2>
+<ul>
+<li>呼び出し元: なし</li>
+<li>呼び出し先: なし</li>
+<li>呼び出し元サイト: なし</li>
+<li>呼び出しサイト: なし</li>
+</ul>
+<h2>関連データ構造</h2>
+<p><a class="wiki-source-link" href="../../source/src/interfaces/ecpg/test/expected/preproc-type.c.html#L36" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__interfaces__ecpg__test__expected__preproc-type_c__access.html&quot;}, '*');"><code>access</code></a>, <code>BlockNumber</code>, <code>c</code>, <code>Group</code>, <a class="wiki-source-link" href="../../source/src/interfaces/ecpg/preproc/type.h.html#L96" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__interfaces__ecpg__preproc__type_h__index.html&quot;}, '*');"><code>index</code></a>, <code>uint32</code></p>
+<h2>ソース抜粋</h2>
+<p>~~~c /*------------------------------------------------------------------------- *</p>
+<ul>
+<li><a class="wiki-source-link" href="../../source/src/include/storage/block.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/storage/block.h.html&quot;}, '*');">block.h</a></li>
+<li>POSTGRES disk block definitions.</li>
+<p>* *</p>
+<li>Portions Copyright (c) 1996-2026, PostgreSQL Global Development Group</li>
+<li>Portions Copyright (c) 1994, Regents of the University of California</li>
+<p>*</p>
+<li><a class="wiki-source-link" href="../../source/src/include/storage/block.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/storage/block.h.html&quot;}, '*');">src/include/storage/block.h</a></li>
+<p>* *------------------------------------------------------------------------- */ #ifndef <a class="wiki-source-link" href="../../source/src/include/storage/block.h.html#L15" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/storage/block.h.html&quot;}, '*');">BLOCK_H</a> #define <a class="wiki-source-link" href="../../source/src/include/storage/block.h.html#L15" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/storage/block.h.html&quot;}, '*');">BLOCK_H</a></p>
+</ul>
+<p>/*</p>
+<ul>
+<li>BlockNumber:</li>
+<p>*</p>
+<li>each data file (heap or <a class="wiki-source-link" href="../../source/src/interfaces/ecpg/preproc/type.h.html#L96" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__interfaces__ecpg__preproc__type_h__index.html&quot;}, '*');">index</a>) <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> divided into postgres disk blocks</li>
+<li>(which may be thought of as the unit of i/o -- a postgres buffer</li>
+<li>contains exactly one disk block).  the blocks are numbered</li>
+<li>sequentially, 0 to 0xFFFFFFFE.</li>
+<p>*</p>
+<li>InvalidBlockNumber <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> the same thing as P_NEW in bufmgr.h.</li>
+<p>*</p>
+<li>the <a class="wiki-source-link" href="../../source/src/interfaces/ecpg/test/expected/preproc-type.c.html#L36" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__interfaces__ecpg__test__expected__preproc-type_c__access.html&quot;}, '*');">access</a> methods, the buffer manager and the <a class="wiki-source-link" href="../../source/src/tools/pg_bsd_indent/indent_codes.h.html#L68" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/tools/pg_bsd_indent/indent_codes.h.html&quot;}, '*');">storage</a> manager are</li>
+<li>more or less the only pieces of code that should be accessing disk</li>
+<li>blocks directly.</li>
+<p>*/ typedef uint32 BlockNumber; ~~~</p>
+</ul>
+<h2>失敗モードと境界条件</h2>
+<p>まだ解析していません。</p>
+<h2>保守担当者向けメモ</h2>
+<ul>
+<li>後続フェーズで、ソース本文の文脈と caller/callee 情報を使ってこのページを強化する。</li>
+</ul><script>
+(function() {
+  function notifyParent() {
+    if (parent === window) return;
+    parent.postMessage({type: "frame-location", frame: window.name || "", href: window.location.href}, "*");
+  }
+  document.addEventListener("click", function(event) {
+    const link = event.target.closest("a[data-panel]");
+    if (!link || parent === window) return;
+    parent.postMessage({type: "source-link", panel: link.dataset.panel}, "*");
+  });
+  window.addEventListener("load", notifyParent);
+  window.addEventListener("hashchange", notifyParent);
+})();
+</script></body></html>

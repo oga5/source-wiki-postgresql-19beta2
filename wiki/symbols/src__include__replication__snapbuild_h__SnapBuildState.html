@@ -28,7 +28,7 @@
 <h2>関連データ構造</h2>
 <p><code>state</code>, <a class="wiki-source-link" href="../../source/src/interfaces/ecpg/preproc/type.h.html#L89" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__interfaces__ecpg__preproc__type_h__when.html&quot;}, '*');"><code>when</code></a></p>
 <h2>ソース抜粋</h2>
-<p>~~~c <a class="wiki-source-link" href="../../source/src/include/fmgr.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/fmgr.h.html&quot;}, '*');">typedef</a> enum { /*</p>
+<p>~~~c typedef enum { /*</p>
 <ul>
 <li>Initial state, we can&#x27;t do much yet.</li>
 <p>*/ SNAPBUILD_START = -1,</p>
@@ -42,7 +42,7 @@
 <p>/*</p>
 <ul>
 <li>We have collected enough information to decode tuples in transactions</li>
-<li>that started after this.</li>
+<li>that started <a class="wiki-source-link" href="../../source/src/include/lib/ilist.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__lib__ilist_h__after.html&quot;}, '*');">after</a> this.</li>
 <p>*</p>
 <li>Once we reached this we start to collect changes. We cannot apply them</li>
 <li>yet, because they might be based on transactions that were still</li>
@@ -51,7 +51,7 @@
 </ul>
 <p>/*</p>
 <ul>
-<li>Found a point after SNAPBUILD_FULL_SNAPSHOT where all transactions that</li>
+<li>Found a point <a class="wiki-source-link" href="../../source/src/include/lib/ilist.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__lib__ilist_h__after.html&quot;}, '*');">after</a> SNAPBUILD_FULL_SNAPSHOT where all transactions that</li>
 <li>were running at that point finished. Till we reach that we hold off</li>
 <li>calling any commit callbacks.</li>
 <p>*/ SNAPBUILD_CONSISTENT = 2, } <a class="wiki-source-link" href="../../source/src/include/replication/snapbuild.h.html#L30" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__replication__snapbuild_h__SnapBuildState.html&quot;}, '*');">SnapBuildState</a>; ~~~</p>

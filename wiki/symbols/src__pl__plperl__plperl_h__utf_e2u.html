@@ -34,9 +34,9 @@
 <h2>関連データ構造</h2>
 <p>なし</p>
 <h2>ソース抜粋</h2>
-<p>~~~c static <a class="wiki-source-link" href="../../source/src/include/c.h.html#L116" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/c.h.html&quot;}, '*');">inline</a> char * utf_e2u(const char *str) { char	   *ret;</p>
-<p>ret = <a class="wiki-source-link" href="../../source/src/backend/utils/mb/mbutils.c.html#L759" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__utils__mb__mbutils_c__pg_server_to_any.html&quot;}, '*');">pg_server_to_any</a>(str, strlen(str), PG_UTF8);</p>
-<p>/* ensure we have a copy even if no conversion happened */ if (ret == str) ret = pstrdup(ret);</p>
+<p>~~~c static inline char * utf_e2u(const char *<a class="wiki-source-link" href="../../source/src/include/common/relpath.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__common__relpath_h__str.html&quot;}, '*');">str</a>) { char	   *ret;</p>
+<p>ret = <a class="wiki-source-link" href="../../source/src/backend/utils/mb/mbutils.c.html#L759" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__utils__mb__mbutils_c__pg_server_to_any.html&quot;}, '*');">pg_server_to_any</a>(<a class="wiki-source-link" href="../../source/src/include/common/relpath.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__common__relpath_h__str.html&quot;}, '*');">str</a>, strlen(<a class="wiki-source-link" href="../../source/src/include/common/relpath.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__common__relpath_h__str.html&quot;}, '*');">str</a>), PG_UTF8);</p>
+<p>/* ensure we have a copy even if no conversion happened */ if (ret == <a class="wiki-source-link" href="../../source/src/include/common/relpath.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__common__relpath_h__str.html&quot;}, '*');">str</a>) ret = pstrdup(ret);</p>
 <p>return ret; } ~~~</p>
 <h2>失敗モードと境界条件</h2>
 <p>まだ解析していません。</p>

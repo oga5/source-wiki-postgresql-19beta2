@@ -34,7 +34,7 @@
 <h2>関連データ構造</h2>
 <p><code>c</code>, <code>uint32</code></p>
 <h2>ソース抜粋</h2>
-<p>~~~c static <a class="wiki-source-link" href="../../source/src/include/c.h.html#L116" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/c.h.html&quot;}, '*');">inline</a> uint32 <a class="wiki-source-link" href="../../source/src/backend/utils/mb/conversion_procs/utf8_and_gb18030/utf8_and_gb18030.c.html#L93" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__utils__mb__conversion_procs__utf8_and_gb18030__utf8_and_gb18030_c__utf8word_to_unicode.html&quot;}, '*');">utf8word_to_unicode</a>(uint32 c) { uint32		ucs;</p>
+<p>~~~c static inline uint32 <a class="wiki-source-link" href="../../source/src/backend/utils/mb/conversion_procs/utf8_and_gb18030/utf8_and_gb18030.c.html#L93" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__utils__mb__conversion_procs__utf8_and_gb18030__utf8_and_gb18030_c__utf8word_to_unicode.html&quot;}, '*');">utf8word_to_unicode</a>(uint32 c) { uint32		ucs;</p>
 <p>if (c &lt;= 0x7F) { ucs = c; } else if (c &lt;= 0xFFFF) { ucs = ((c &gt;&gt; 8) &amp; 0x1F) &lt;&lt; 6; ucs |= c &amp; 0x3F; } else if (c &lt;= 0xFFFFFF) { ucs = ((c &gt;&gt; 16) &amp; 0x0F) &lt;&lt; 12; ucs |= ((c &gt;&gt; 8) &amp; 0x3F) &lt;&lt; 6; ucs |= c &amp; 0x3F; } else { ucs = ((c &gt;&gt; 24) &amp; 0x07) &lt;&lt; 18; ucs |= ((c &gt;&gt; 16) &amp; 0x3F) &lt;&lt; 12; ucs |= ((c &gt;&gt; 8) &amp; 0x3F) &lt;&lt; 6; ucs |= c &amp; 0x3F; }</p>
 <p>return ucs; } ~~~</p>
 <h2>失敗モードと境界条件</h2>

@@ -34,7 +34,7 @@
 <h2>関連データ構造</h2>
 <p><code>int64</code>, <code>pg_atomic_uint64</code>, <code>uint64</code></p>
 <h2>ソース抜粋</h2>
-<p>~~~c static <a class="wiki-source-link" href="../../source/src/include/c.h.html#L116" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/c.h.html&quot;}, '*');">inline</a> uint64 <a class="wiki-source-link" href="../../source/src/include/port/atomics/generic.h.html#L413" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__port__atomics__generic_h__pg_atomic_sub_fetch_u64_impl.html&quot;}, '*');">pg_atomic_sub_fetch_u64_impl</a>(volatile pg_atomic_uint64 *ptr, int64 sub_) { return pg_atomic_fetch_sub_u64_impl(ptr, sub_) - sub_; } ~~~</p>
+<p>~~~c static inline uint64 <a class="wiki-source-link" href="../../source/src/include/port/atomics/generic.h.html#L413" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__port__atomics__generic_h__pg_atomic_sub_fetch_u64_impl.html&quot;}, '*');">pg_atomic_sub_fetch_u64_impl</a>(<a class="wiki-source-link" href="../../source/src/include/port/atomics/generic-msvc.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__port__atomics__generic-msvc_h__volatile.html&quot;}, '*');">volatile</a> pg_atomic_uint64 *ptr, int64 sub_) { return pg_atomic_fetch_sub_u64_impl(ptr, sub_) - sub_; } ~~~</p>
 <h2>失敗モードと境界条件</h2>
 <p>まだ解析していません。</p>
 <h2>保守担当者向けメモ</h2>

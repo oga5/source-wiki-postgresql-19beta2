@@ -34,24 +34,24 @@
 <h2>関連データ構造</h2>
 <p><code>HashJoinTable</code>, <code>uint32</code></p>
 <h2>ソース抜粋</h2>
-<p>~~~c int <a class="wiki-source-link" href="../../source/src/backend/executor/nodeHash.c.html#L2580" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__executor__nodeHash_c__ExecHashGetSkewBucket.html&quot;}, '*');">ExecHashGetSkewBucket</a>(HashJoinTable hashtable, uint32 hashvalue) { int			bucket;</p>
+<p>~~~c int <a class="wiki-source-link" href="../../source/src/backend/executor/nodeHash.c.html#L2580" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__executor__nodeHash_c__ExecHashGetSkewBucket.html&quot;}, '*');">ExecHashGetSkewBucket</a>(HashJoinTable hashtable, uint32 <a class="wiki-source-link" href="../../source/src/include/utils/hsearch.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__utils__hsearch_h__hashvalue.html&quot;}, '*');">hashvalue</a>) { int			bucket;</p>
 <p>/*</p>
 <ul>
 <li>Always return <a class="wiki-source-link" href="../../source/src/include/executor/hashjoin.h.html#L131" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/executor/hashjoin.h.html&quot;}, '*');">INVALID_SKEW_BUCKET_NO</a> if not doing skew optimization (in</li>
-<li>particular, this happens after the initial batch <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> done).</li>
+<li>particular, this happens <a class="wiki-source-link" href="../../source/src/include/lib/ilist.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__lib__ilist_h__after.html&quot;}, '*');">after</a> the initial batch <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> <a class="wiki-source-link" href="../../source/src/include/lib/simplehash.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__lib__simplehash_h__done.html&quot;}, '*');">done</a>).</li>
 <p>*/ if (!hashtable-&gt;skewEnabled) return <a class="wiki-source-link" href="../../source/src/include/executor/hashjoin.h.html#L131" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/executor/hashjoin.h.html&quot;}, '*');">INVALID_SKEW_BUCKET_NO</a>;</p>
 </ul>
 <p>/*</p>
 <ul>
 <li>Since skewBucketLen <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> a power of 2, we can do a modulo by ANDing.</li>
-<p>*/ bucket = hashvalue &amp; (hashtable-&gt;skewBucketLen - 1);</p>
+<p>*/ bucket = <a class="wiki-source-link" href="../../source/src/include/utils/hsearch.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__utils__hsearch_h__hashvalue.html&quot;}, '*');">hashvalue</a> &amp; (hashtable-&gt;skewBucketLen - 1);</p>
 </ul>
 <p>/*</p>
 <ul>
 <li>While we have not hit a hole in the hashtable and have not hit the</li>
 <li>desired bucket, we have collided with some other <a class="wiki-source-link" href="../../source/src/backend/regex/rege_dfa.c.html#L723" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__regex__rege_dfa_c__hash.html&quot;}, '*');">hash</a> value, so try the</li>
 <li>next bucket location.</li>
-<p>*/ while (hashtable-&gt;skewBucket[bucket] != NULL &amp;&amp; hashtable-&gt;skewBucket[bucket]-&gt;hashvalue != hashvalue) bucket = (bucket + 1) &amp; (hashtable-&gt;skewBucketLen - 1);</p>
+<p>*/ while (hashtable-&gt;skewBucket[bucket] != NULL &amp;&amp; hashtable-&gt;skewBucket[bucket]-&gt;<a class="wiki-source-link" href="../../source/src/include/utils/hsearch.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__utils__hsearch_h__hashvalue.html&quot;}, '*');">hashvalue</a> != <a class="wiki-source-link" href="../../source/src/include/utils/hsearch.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__utils__hsearch_h__hashvalue.html&quot;}, '*');">hashvalue</a>) bucket = (bucket + 1) &amp; (hashtable-&gt;skewBucketLen - 1);</p>
 </ul>
 <p>/*</p>
 <ul>

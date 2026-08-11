@@ -28,7 +28,7 @@
 <h2>関連データ構造</h2>
 <p><a class="wiki-source-link" href="../../source/src/interfaces/ecpg/ecpglib/ecpglib_extern.h.html#L101" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__interfaces__ecpg__ecpglib__ecpglib_extern_h__connection.html&quot;}, '*');"><code>connection</code></a>, <code>Port</code>, <code>state</code>, <code>StringInfo</code></p>
 <h2>ソース抜粋</h2>
-<p>~~~c <a class="wiki-source-link" href="../../source/src/include/fmgr.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/fmgr.h.html&quot;}, '*');">typedef</a> struct <a class="wiki-source-link" href="../../source/src/include/libpq/sasl.h.html#L46" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__libpq__sasl_h__pg_be_sasl_mech.html&quot;}, '*');">pg_be_sasl_mech</a> { /*---------</p>
+<p>~~~c typedef struct <a class="wiki-source-link" href="../../source/src/include/libpq/sasl.h.html#L46" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__libpq__sasl_h__pg_be_sasl_mech.html&quot;}, '*');">pg_be_sasl_mech</a> { /*---------</p>
 <ul>
 <li>get_mechanisms()</li>
 <p>*</p>
@@ -41,7 +41,7 @@
 <p>*</p>
 <li>Output parameters:</li>
 <p>*</p>
-<li>buf:  A StringInfo buffer that the <a class="wiki-source-link" href="../../source/src/tools/ifaddrs/test_ifaddrs.c.html#L45" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__tools__ifaddrs__test_ifaddrs_c__callback.html&quot;}, '*');">callback</a> should populate with</li>
+<li>buf:  A StringInfo buffer that the callback should populate with</li>
 <li>supported mechanism names.  The names are appended into this</li>
 <li>StringInfo, each one ending with &#x27;\0&#x27; bytes.</li>
 <p>*--------- */ void		(*get_mechanisms) (Port *<a class="wiki-source-link" href="../../source/src/test/regress/pg_regress.c.html#L117" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/test/regress/pg_regress.c.html&quot;}, '*');">port</a>, StringInfo buf);</p>
@@ -50,7 +50,7 @@
 <ul>
 <li>init()</li>
 <p>*</p>
-<li>Initializes mechanism-specific state for a <a class="wiki-source-link" href="../../source/src/interfaces/ecpg/ecpglib/ecpglib_extern.h.html#L101" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__interfaces__ecpg__ecpglib__ecpglib_extern_h__connection.html&quot;}, '*');">connection</a>. This <a class="wiki-source-link" href="../../source/src/tools/ifaddrs/test_ifaddrs.c.html#L45" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__tools__ifaddrs__test_ifaddrs_c__callback.html&quot;}, '*');">callback</a></li>
+<li>Initializes mechanism-specific state for a <a class="wiki-source-link" href="../../source/src/interfaces/ecpg/ecpglib/ecpglib_extern.h.html#L101" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__interfaces__ecpg__ecpglib__ecpglib_extern_h__connection.html&quot;}, '*');">connection</a>. This callback</li>
 <li>must return a pointer to its allocated state, which will be passed</li>
 <li>as-<a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> as the first argument to the other callbacks.</li>
 <p>*</p>
@@ -58,7 +58,7 @@
 <p>*</p>
 <li><a class="wiki-source-link" href="../../source/src/test/regress/pg_regress.c.html#L117" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/test/regress/pg_regress.c.html&quot;}, '*');">port</a>:        The client Port.</li>
 <p>*</p>
-<li>mech:        The actual mechanism <a class="wiki-source-link" href="../../source/src/include/mb/pg_wchar.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/mb/pg_wchar.h.html&quot;}, '*');">name</a> in use by the client.</li>
+<li>mech:        The actual mechanism name in use by the client.</li>
 <p>*</p>
 <li>shadow_pass: The stored secret for the role being authenticated, or</li>
 <li>NULL if one does not exist.  Mechanisms that do not use</li>
@@ -73,7 +73,7 @@
 <ul>
 <li><a class="wiki-source-link" href="../../source/src/include/port/atomics/generic.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__port__atomics__generic_h__exchange.html&quot;}, '*');">exchange</a>()</li>
 <p>*</p>
-<li>Produces a server challenge to be sent to the client.  The <a class="wiki-source-link" href="../../source/src/tools/ifaddrs/test_ifaddrs.c.html#L45" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__tools__ifaddrs__test_ifaddrs_c__callback.html&quot;}, '*');">callback</a></li>
+<li>Produces a server challenge to be sent to the client.  The callback</li>
 <li>must return one of the PG_SASL_EXCHANGE_* values, depending on</li>
 <li>whether the <a class="wiki-source-link" href="../../source/src/include/port/atomics/generic.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__port__atomics__generic_h__exchange.html&quot;}, '*');">exchange</a> continues, has finished successfully, has</li>
 <li>failed, or was abandoned by the client.</li>

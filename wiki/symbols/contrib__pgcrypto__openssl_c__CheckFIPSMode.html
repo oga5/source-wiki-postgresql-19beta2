@@ -36,9 +36,9 @@
 <p>~~~c bool <a class="wiki-source-link" href="../../source/contrib/pgcrypto/openssl.c.html#L846" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/contrib__pgcrypto__openssl_c__CheckFIPSMode.html&quot;}, '*');">CheckFIPSMode</a>(void) { int			fips_enabled = 0;</p>
 <p>/*</p>
 <ul>
-<li>EVP_default_properties_is_fips_enabled was added in OpenSSL 3.0, <a class="wiki-source-link" href="../../source/src/backend/regex/regc_locale.c.html#L487" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__regex__regc_locale_c__before.html&quot;}, '*');">before</a></li>
+<li>EVP_default_properties_is_fips_enabled was added in OpenSSL 3.0, before</li>
 <li>that FIPS_mode() was used to <a class="wiki-source-link" href="../../source/src/interfaces/ecpg/test/expected/preproc-autoprep.c.html#L26" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__interfaces__ecpg__test__expected__preproc-autoprep_c__test.html&quot;}, '*');">test</a> for FIPS being enabled.  The last</li>
-<li>upstream OpenSSL version <a class="wiki-source-link" href="../../source/src/backend/regex/regc_locale.c.html#L487" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__regex__regc_locale_c__before.html&quot;}, '*');">before</a> 3.0 which supported FIPS was 1.0.2, but</li>
+<li>upstream OpenSSL version before 3.0 which supported FIPS was 1.0.2, but</li>
 <li>there are forks of 1.1.1 which are FIPS validated so we still need to</li>
 <li><a class="wiki-source-link" href="../../source/src/interfaces/ecpg/test/expected/preproc-autoprep.c.html#L26" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__interfaces__ecpg__test__expected__preproc-autoprep_c__test.html&quot;}, '*');">test</a> with FIPS_mode() even though we don&#x27;t support 1.0.2.</li>
 <p>*/ fips_enabled = #if OPENSSL_VERSION_NUMBER &gt;= 0x30000000L EVP_default_properties_is_fips_enabled(NULL); #else FIPS_mode(); #endif</p>

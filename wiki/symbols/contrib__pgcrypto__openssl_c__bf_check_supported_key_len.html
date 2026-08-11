@@ -34,15 +34,15 @@
 <p><code>uint8</code></p>
 <h2>ソース抜粋</h2>
 <p>~~~c static int <a class="wiki-source-link" href="../../source/contrib/pgcrypto/openssl.c.html#L404" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/contrib__pgcrypto__openssl_c__bf_check_supported_key_len.html&quot;}, '*');">bf_check_supported_key_len</a>(void) { static const uint8 key[56] = { 0xf0, 0xe1, 0xd2, 0xc3, 0xb4, 0xa5, 0x96, 0x87, 0x78, 0x69, 0x5a, 0x4b, 0x3c, 0x2d, 0x1e, 0x0f, 0x00, 0x11, 0x22, 0x33, 0x44, 0x55, 0x66, 0x77, 0x04, 0x68, 0x91, 0x04, 0xc2, 0xfd, 0x3b, 0x2f, 0x58, 0x40, 0x23, 0x64, 0x1a, 0xba, 0x61, 0x76, 0x1f, 0x1f, 0x1f, 0x1f, 0x0e, 0x0e, 0x0e, 0x0e, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff };</p>
-<p>static const uint8 data[8] = {0xfe, 0xdc, 0xba, 0x98, 0x76, 0x54, 0x32, 0x10}; static const uint8 res[8] = {0xc0, 0x45, 0x04, 0x01, 0x2e, 0x4e, 0x1f, 0x53}; uint8		out[8]; EVP_CIPHER_CTX *evp_ctx; int			outlen; int			status = 0;</p>
+<p>static const uint8 data[8] = {0xfe, 0xdc, 0xba, 0x98, 0x76, 0x54, 0x32, 0x10}; static const uint8 res[8] = {0xc0, 0x45, 0x04, 0x01, 0x2e, 0x4e, 0x1f, 0x53}; uint8		out[8]; EVP_CIPHER_CTX *evp_ctx; int			outlen; int			<a class="wiki-source-link" href="../../source/src/include/storage/aio_types.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__storage__aio_types_h__status.html&quot;}, '*');">status</a> = 0;</p>
 <p>/* encrypt with 448bits key and verify <a class="wiki-source-link" href="../../source/src/bin/pg_test_timing/pg_test_timing.c.html#L357" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__bin__pg_test_timing__pg_test_timing_c__output.html&quot;}, '*');">output</a> */ evp_ctx = EVP_CIPHER_CTX_new(); if (!evp_ctx) return 0; if (!EVP_EncryptInit_ex(evp_ctx, EVP_bf_ecb(), NULL, NULL, NULL)) goto leave; if (!EVP_CIPHER_CTX_set_key_length(evp_ctx, 56)) goto leave; if (!EVP_EncryptInit_ex(evp_ctx, NULL, NULL, key, NULL)) goto leave;</p>
 <p>if (!EVP_EncryptUpdate(evp_ctx, out, &amp;outlen, data, 8)) goto leave;</p>
 <p>if (memcmp(out, res, 8) != 0) goto leave;				/* Output does not match -&gt; strong cipher <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a></p>
 <ul>
 <li>not supported */</li>
-<p>status = 1;</p>
+<p><a class="wiki-source-link" href="../../source/src/include/storage/aio_types.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__storage__aio_types_h__status.html&quot;}, '*');">status</a> = 1;</p>
 </ul>
-<p>leave: EVP_CIPHER_CTX_free(evp_ctx); return status; } ~~~</p>
+<p>leave: EVP_CIPHER_CTX_free(evp_ctx); return <a class="wiki-source-link" href="../../source/src/include/storage/aio_types.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__storage__aio_types_h__status.html&quot;}, '*');">status</a>; } ~~~</p>
 <h2>失敗モードと境界条件</h2>
 <p>まだ解析していません。</p>
 <h2>保守担当者向けメモ</h2>

@@ -35,7 +35,7 @@
 <p><code>TocEntry</code></p>
 <h2>ソース抜粋</h2>
 <p>~~~c static void <a class="wiki-source-link" href="../../source/src/bin/pg_dump/pg_backup_archiver.c.html#L1963" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__bin__pg_dump__pg_backup_archiver_c___moveBefore.html&quot;}, '*');">_moveBefore</a>(TocEntry *pos, TocEntry *te) { /* Unlink te from list */ te-&gt;prev-&gt;next = te-&gt;next; te-&gt;next-&gt;prev = te-&gt;prev;</p>
-<p>/* and insert it <a class="wiki-source-link" href="../../source/src/backend/regex/regc_locale.c.html#L487" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__regex__regc_locale_c__before.html&quot;}, '*');">before</a> &quot;pos&quot; */ te-&gt;prev = pos-&gt;prev; te-&gt;next = pos; pos-&gt;prev-&gt;next = te; pos-&gt;prev = te; } ~~~</p>
+<p>/* and insert it before &quot;pos&quot; */ te-&gt;prev = pos-&gt;prev; te-&gt;next = pos; pos-&gt;prev-&gt;next = te; pos-&gt;prev = te; } ~~~</p>
 <h2>失敗モードと境界条件</h2>
 <p>まだ解析していません。</p>
 <h2>保守担当者向けメモ</h2>

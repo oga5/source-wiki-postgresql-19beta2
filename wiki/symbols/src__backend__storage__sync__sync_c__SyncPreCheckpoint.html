@@ -39,13 +39,13 @@
 <li>process all recently forwarded unlink requests, but if they aren&#x27;t</li>
 <li>absorbed prior to advancing the cycle counter, they won&#x27;t be processed</li>
 <li>until a future checkpoint.  The following absorb ensures that any</li>
-<li>unlink requests forwarded <a class="wiki-source-link" href="../../source/src/backend/regex/regc_locale.c.html#L487" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__regex__regc_locale_c__before.html&quot;}, '*');">before</a> the checkpoint began will be processed</li>
+<li>unlink requests forwarded before the checkpoint began will be processed</li>
 <li>in the current checkpoint.</li>
 <p>*/ <a class="wiki-source-link" href="../../source/src/backend/postmaster/checkpointer.c.html#L1430" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__postmaster__checkpointer_c__AbsorbSyncRequests.html&quot;}, '*');">AbsorbSyncRequests</a>();</p>
 </ul>
 <p>/*</p>
 <ul>
-<li><a class="wiki-source-link" href="../../source/src/include/utils/array.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__utils__array_h__Any.html&quot;}, '*');">Any</a> unlink requests arriving after this point will be assigned the next</li>
+<li><a class="wiki-source-link" href="../../source/src/include/utils/array.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__utils__array_h__Any.html&quot;}, '*');">Any</a> unlink requests arriving <a class="wiki-source-link" href="../../source/src/include/lib/ilist.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__lib__ilist_h__after.html&quot;}, '*');">after</a> this point will be assigned the next</li>
 <li>cycle counter, and won&#x27;t be unlinked until next checkpoint.</li>
 <p>*/ <a class="wiki-source-link" href="../../source/src/backend/storage/sync/sync.c.html#L76" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/storage/sync/sync.c.html&quot;}, '*');">checkpoint_cycle_ctr</a>++; } ~~~</p>
 </ul>

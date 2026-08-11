@@ -28,7 +28,7 @@
 <h2>関連データ構造</h2>
 <p><code>FullTransactionId</code>, <code>TransactionId</code>, <a class="wiki-source-link" href="../../source/src/interfaces/ecpg/preproc/type.h.html#L89" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__interfaces__ecpg__preproc__type_h__when.html&quot;}, '*');"><code>when</code></a></p>
 <h2>ソース抜粋</h2>
-<p>~~~c <a class="wiki-source-link" href="../../source/src/include/fmgr.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/fmgr.h.html&quot;}, '*');">typedef</a> struct <a class="wiki-source-link" href="../../source/src/backend/storage/ipc/procarray.c.html#L196" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__storage__ipc__procarray_c__ComputeXidHorizonsResult.html&quot;}, '*');">ComputeXidHorizonsResult</a> { /*</p>
+<p>~~~c typedef struct <a class="wiki-source-link" href="../../source/src/backend/storage/ipc/procarray.c.html#L196" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__storage__ipc__procarray_c__ComputeXidHorizonsResult.html&quot;}, '*');">ComputeXidHorizonsResult</a> { /*</p>
 <ul>
 <li>The value of TransamVariables-&gt;<a class="wiki-source-link" href="../../source/src/include/access/transam.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__access__transam_h__latestCompletedXid.html&quot;}, '*');">latestCompletedXid</a> <a class="wiki-source-link" href="../../source/src/interfaces/ecpg/preproc/type.h.html#L89" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__interfaces__ecpg__preproc__type_h__when.html&quot;}, '*');">when</a></li>
 <li><a class="wiki-source-link" href="../../source/src/backend/storage/ipc/procarray.c.html#L1673" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__storage__ipc__procarray_c__ComputeXidHorizons.html&quot;}, '*');">ComputeXidHorizons</a>() held ProcArrayLock.</li>
@@ -55,7 +55,7 @@
 </ul>
 <p>/*</p>
 <ul>
-<li>Oldest xid for which deleted tuples need to be retained in shared</li>
+<li>Oldest xid for which deleted tuples need to be retained in <a class="wiki-source-link" href="../../source/src/include/executor/hashjoin.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__executor__hashjoin_h__shared.html&quot;}, '*');">shared</a></li>
 <li>tables.</li>
 <p>*</p>
 <li>This includes the effects of replication slots. If that&#x27;s not desired,</li>
@@ -64,7 +64,7 @@
 </ul>
 <p>/*</p>
 <ul>
-<li>Oldest xid that may be necessary to retain in shared tables. This <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a></li>
+<li>Oldest xid that may be necessary to retain in <a class="wiki-source-link" href="../../source/src/include/executor/hashjoin.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__executor__hashjoin_h__shared.html&quot;}, '*');">shared</a> tables. This <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a></li>
 <li>the same as shared_oldest_nonremovable, except that <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> not affected by</li>
 <li>replication slot&#x27;s catalog_xmin.</li>
 <p>*</p>
@@ -75,7 +75,7 @@
 </ul>
 <p>/*</p>
 <ul>
-<li>Oldest xid for which deleted tuples need to be retained in non-shared</li>
+<li>Oldest xid for which deleted tuples need to be retained in non-<a class="wiki-source-link" href="../../source/src/include/executor/hashjoin.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__executor__hashjoin_h__shared.html&quot;}, '*');">shared</a></li>
 <li>catalog tables.</li>
 <p>*/ TransactionId catalog_oldest_nonremovable;</p>
 </ul>

@@ -29,12 +29,12 @@
 <li>呼び出し元: なし</li>
 <li>呼び出し先: なし</li>
 <li>呼び出し元サイト: なし</li>
-<li>呼び出しサイト: <a class="wiki-source-link" href="../../source/src/include/c.h.html#L950" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/c.h.html&quot;}, '*');"><code>Assert</code></a> at <code>src/include/optimizer/extendplan.h:27:2</code> (unresolved)</li>
+<li>呼び出しサイト: <code>Assert</code> at <code>src/include/optimizer/extendplan.h:27:2</code> (unresolved)</li>
 </ul>
 <h2>関連データ構造</h2>
 <p><code>PlannerGlobal</code></p>
 <h2>ソース抜粋</h2>
-<p>~~~c static <a class="wiki-source-link" href="../../source/src/include/c.h.html#L116" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/c.h.html&quot;}, '*');">inline</a> void * <a class="wiki-source-link" href="../../source/src/include/optimizer/extendplan.h.html#L24" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__optimizer__extendplan_h__GetPlannerGlobalExtensionState.html&quot;}, '*');">GetPlannerGlobalExtensionState</a>(PlannerGlobal *glob, int extension_id) { <a class="wiki-source-link" href="../../source/src/include/c.h.html#L950" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/c.h.html&quot;}, '*');">Assert</a>(extension_id &gt;= 0);</p>
+<p>~~~c static inline void * <a class="wiki-source-link" href="../../source/src/include/optimizer/extendplan.h.html#L24" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__optimizer__extendplan_h__GetPlannerGlobalExtensionState.html&quot;}, '*');">GetPlannerGlobalExtensionState</a>(PlannerGlobal *glob, int extension_id) { Assert(extension_id &gt;= 0);</p>
 <p>if (extension_id &gt;= glob-&gt;extension_state_allocated) return NULL;</p>
 <p>return glob-&gt;extension_state[extension_id]; } ~~~</p>
 <h2>失敗モードと境界条件</h2>

@@ -41,7 +41,7 @@
 <li>a <a class="wiki-source-link" href="../../source/src/include/port.h.html#L388" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/port.h.html&quot;}, '*');">system</a> catalog relation, or adds, deletes, or modifies standard</li>
 <li>catalog entries in such a way that an updated backend wouldn&#x27;t work</li>
 <li>with an old database (or vice versa), the catalog version number</li>
-<li>should be changed.  The version number stored in pg_control by initdb</li>
+<li>should be changed.  The version number stored in pg_control by <a class="wiki-source-link" href="../../source/src/include/catalog/catalog.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__catalog__catalog_h__initdb.html&quot;}, '*');">initdb</a></li>
 <li><a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> checked against the version number compiled into the backend at</li>
 <li>startup time, so that a backend can refuse to run in an incompatible</li>
 <li>database.</li>
@@ -57,12 +57,12 @@
 <li>are really just code-vs-database incompatibilities.</li>
 <p>*</p>
 <li>The rule for developers <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a>: if you commit a change that requires</li>
-<li>an initdb, you should update the catalog version number (as well as</li>
+<li>an <a class="wiki-source-link" href="../../source/src/include/catalog/catalog.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__catalog__catalog_h__initdb.html&quot;}, '*');">initdb</a>, you should update the catalog version number (as well as</li>
 <li>notifying the pgsql-hackers mailing list, which has been the</li>
 <li>informal practice for a <a class="wiki-source-link" href="../../source/src/include/port/win32_port.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__port__win32_port_h__long.html&quot;}, '*');">long</a> time).</li>
 <p>*</p>
 <li>The catalog version number <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> placed here since modifying files in</li>
-<li>include/catalog <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> the most common kind of initdb-forcing change.</li>
+<li>include/catalog <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> the most common kind of <a class="wiki-source-link" href="../../source/src/include/catalog/catalog.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__catalog__catalog_h__initdb.html&quot;}, '*');">initdb</a>-forcing change.</li>
 <li>But it could be used to protect any kind of incompatible change in</li>
 <li>database contents or layout, such as altering tuple headers.</li>
 <li>Another common reason for a catversion update <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> a change in parsetree</li>

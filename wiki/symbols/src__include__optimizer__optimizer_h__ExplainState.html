@@ -28,14 +28,14 @@
 <h2>関連データ構造</h2>
 <p><code>PlannerInfo</code></p>
 <h2>ソース抜粋</h2>
-<p>~~~c <a class="wiki-source-link" href="../../source/src/include/fmgr.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/fmgr.h.html&quot;}, '*');">typedef</a> struct ExplainState ExplainState;	/* defined in <a class="wiki-source-link" href="../../source/src/include/commands/explain_state.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/commands/explain_state.h.html&quot;}, '*');">explain_state.h</a> */</p>
+<p>~~~c typedef struct ExplainState ExplainState;	/* defined in <a class="wiki-source-link" href="../../source/src/include/commands/explain_state.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/commands/explain_state.h.html&quot;}, '*');">explain_state.h</a> */</p>
 <p>/*</p>
 <ul>
 <li>We don&#x27;t want to include nodes/pathnodes.h here, because non-planner</li>
-<li>code should generally treat PlannerInfo as an opaque <a class="wiki-source-link" href="../../source/src/include/fmgr.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/fmgr.h.html&quot;}, '*');">typedef</a>.</li>
-<li>But we&#x27;d like such code to use that <a class="wiki-source-link" href="../../source/src/include/fmgr.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/fmgr.h.html&quot;}, '*');">typedef</a> <a class="wiki-source-link" href="../../source/src/include/mb/pg_wchar.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/mb/pg_wchar.h.html&quot;}, '*');">name</a>, so define the</li>
-<li><a class="wiki-source-link" href="../../source/src/include/fmgr.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/fmgr.h.html&quot;}, '*');">typedef</a> both here and in pathnodes.h.</li>
-<p>*/ <a class="wiki-source-link" href="../../source/src/include/fmgr.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/fmgr.h.html&quot;}, '*');">typedef</a> struct PlannerInfo PlannerInfo; ~~~</p>
+<li>code should generally treat PlannerInfo as an opaque typedef.</li>
+<li>But we&#x27;d like such code to use that typedef name, so define the</li>
+<li>typedef both here and in pathnodes.h.</li>
+<p>*/ typedef struct PlannerInfo PlannerInfo; ~~~</p>
 </ul>
 <h2>失敗モードと境界条件</h2>
 <p>まだ解析していません。</p>

@@ -46,7 +46,7 @@
 <ul>
 <li>Load more data, if available. We do this no matter what state we are</li>
 <li>in, since we are probably getting called because the application wants</li>
-<li>to get rid of a read-select condition. Note that we will <a class="wiki-source-link" href="../../source/src/include/nodes/primnodes.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__nodes__primnodes_h__NOT.html&quot;}, '*');">NOT</a> block</li>
+<li>to get rid of a read-select condition. Note that we will NOT block</li>
 <li>waiting for more input.</li>
 <p>*/ if (<a class="wiki-source-link" href="../../source/src/interfaces/libpq/fe-misc.c.html#L614" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__interfaces__libpq__fe-misc_c__pqReadData.html&quot;}, '*');">pqReadData</a>(<a class="wiki-source-link" href="../../source/src/bin/pg_basebackup/streamutil.c.html#L52" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/bin/pg_basebackup/streamutil.c.html&quot;}, '*');">conn</a>) &lt; 0) return 0;</p>
 </ul>

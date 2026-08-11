@@ -38,13 +38,13 @@
 <p>/*</p>
 <ul>
 <li>Constraints and GENERATED expressions might reference the <a class="wiki-source-link" href="../../source/src/include/access/sysattr.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__access__sysattr_h__tableoid.html&quot;}, '*');">tableoid</a></li>
-<li>column, so (re-)<a class="wiki-source-link" href="../../source/src/backend/regex/rege_dfa.c.html#L739" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__regex__rege_dfa_c__initialize.html&quot;}, '*');">initialize</a> tts_tableOid <a class="wiki-source-link" href="../../source/src/backend/regex/regc_locale.c.html#L487" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__regex__regc_locale_c__before.html&quot;}, '*');">before</a> evaluating them.</li>
+<li>column, so (re-)<a class="wiki-source-link" href="../../source/src/backend/regex/rege_dfa.c.html#L739" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__regex__rege_dfa_c__initialize.html&quot;}, '*');">initialize</a> tts_tableOid before evaluating them.</li>
 <p>*/ slot-&gt;tts_tableOid = <a class="wiki-source-link" href="../../source/src/include/utils/rel.h.html#L516" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/utils/rel.h.html&quot;}, '*');">RelationGetRelid</a>(resultRelationDesc);</p>
 </ul>
 <p>/*</p>
 <ul>
 <li>Compute stored generated columns</li>
-<p>*/ if (resultRelationDesc-&gt;rd_att-&gt;constr &amp;&amp; resultRelationDesc-&gt;rd_att-&gt;constr-&gt;has_generated_stored) <a class="wiki-source-link" href="../../source/src/backend/executor/nodeModifyTable.c.html#L567" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__executor__nodeModifyTable_c__ExecComputeStoredGenerated.html&quot;}, '*');">ExecComputeStoredGenerated</a>(resultRelInfo, estate, slot, <a class="wiki-source-link" href="../../source/src/include/nodes/nodes.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__nodes__nodes_h__CMD_UPDATE.html&quot;}, '*');">CMD_UPDATE</a>); } ~~~</p>
+<p>*/ if (resultRelationDesc-&gt;rd_att-&gt;constr &amp;&amp; resultRelationDesc-&gt;rd_att-&gt;constr-&gt;has_generated_stored) <a class="wiki-source-link" href="../../source/src/backend/executor/nodeModifyTable.c.html#L567" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__executor__nodeModifyTable_c__ExecComputeStoredGenerated.html&quot;}, '*');">ExecComputeStoredGenerated</a>(resultRelInfo, estate, slot, CMD_UPDATE); } ~~~</p>
 </ul>
 <h2>失敗モードと境界条件</h2>
 <p>まだ解析していません。</p>

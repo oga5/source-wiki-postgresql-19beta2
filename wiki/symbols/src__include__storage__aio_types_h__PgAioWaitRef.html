@@ -28,7 +28,7 @@
 <h2>関連データ構造</h2>
 <p><code>int64</code>, <code>PgAioHandle</code>, <code>uint32</code></p>
 <h2>ソース抜粋</h2>
-<p>~~~c <a class="wiki-source-link" href="../../source/src/include/fmgr.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/fmgr.h.html&quot;}, '*');">typedef</a> struct <a class="wiki-source-link" href="../../source/src/include/storage/aio_types.h.html#L32" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__storage__aio_types_h__PgAioWaitRef.html&quot;}, '*');">PgAioWaitRef</a> { /* internal ID identifying the specific PgAioHandle */ uint32		aio_index;</p>
+<p>~~~c typedef struct <a class="wiki-source-link" href="../../source/src/include/storage/aio_types.h.html#L32" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__storage__aio_types_h__PgAioWaitRef.html&quot;}, '*');">PgAioWaitRef</a> { /* internal ID identifying the specific PgAioHandle */ uint32		<a class="wiki-source-link" href="../../source/src/include/storage/aio_types.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__storage__aio_types_h__aio_index.html&quot;}, '*');">aio_index</a>;</p>
 <p>/*</p>
 <ul>
 <li>IO handles are reused. To detect if a handle was reused, and thereby</li>
@@ -37,7 +37,7 @@
 <p>*</p>
 <li>To avoid requiring alignment sufficient for an int64, split the</li>
 <li>generation into two.</li>
-<p>*/ uint32		generation_upper; uint32		generation_lower; } <a class="wiki-source-link" href="../../source/src/include/storage/aio_types.h.html#L32" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__storage__aio_types_h__PgAioWaitRef.html&quot;}, '*');">PgAioWaitRef</a>; ~~~</p>
+<p>*/ uint32		<a class="wiki-source-link" href="../../source/src/include/storage/aio_types.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__storage__aio_types_h__generation_upper.html&quot;}, '*');">generation_upper</a>; uint32		<a class="wiki-source-link" href="../../source/src/include/storage/aio_types.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__storage__aio_types_h__generation_lower.html&quot;}, '*');">generation_lower</a>; } <a class="wiki-source-link" href="../../source/src/include/storage/aio_types.h.html#L32" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__storage__aio_types_h__PgAioWaitRef.html&quot;}, '*');">PgAioWaitRef</a>; ~~~</p>
 </ul>
 <h2>失敗モードと境界条件</h2>
 <p>まだ解析していません。</p>

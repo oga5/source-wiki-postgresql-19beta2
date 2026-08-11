@@ -15,7 +15,7 @@
 <h2>入力と出力</h2>
 <ul>
 <li>引数: <code>pg_foreign_table</code>, <code>ForeignTableRelationId</code></li>
-<li>戻り値: <a class="wiki-source-link" href="../../source/src/include/catalog/genbki.h.html#L34" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/catalog/genbki.h.html&quot;}, '*');"><code>BEGIN_CATALOG_STRUCT</code></a></li>
+<li>戻り値: <code>BEGIN_CATALOG_STRUCT</code></li>
 </ul>
 <h2>前提条件と不変条件</h2>
 <p>まだ解析していません。</p>
@@ -34,8 +34,8 @@
 <h2>関連データ構造</h2>
 <p><code>Oid</code>, <code>options</code>, <code>text</code>, <code>variable</code></p>
 <h2>ソース抜粋</h2>
-<p>~~~c <a class="wiki-source-link" href="../../source/src/include/catalog/genbki.h.html#L34" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/catalog/genbki.h.html&quot;}, '*');">BEGIN_CATALOG_STRUCT</a></p>
-<p>CATALOG(pg_foreign_table,3118,ForeignTableRelationId) { Oid			ftrelid <a class="wiki-source-link" href="../../source/src/include/catalog/genbki.h.html#L65" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/catalog/genbki.h.html&quot;}, '*');">BKI_LOOKUP</a>(<a class="wiki-source-link" href="../../source/src/include/catalog/pg_class.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__catalog__pg_class_h__pg_class.html&quot;}, '*');">pg_class</a>);	/* OID of foreign <a class="wiki-source-link" href="../../source/src/port/pg_localeconv_r.c.html#L63" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/port/pg_localeconv_r.c.html&quot;}, '*');">table</a> */ Oid			ftserver <a class="wiki-source-link" href="../../source/src/include/catalog/genbki.h.html#L65" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/catalog/genbki.h.html&quot;}, '*');">BKI_LOOKUP</a>(pg_foreign_server); /* OID of foreign server */</p>
+<p>~~~c BEGIN_CATALOG_STRUCT</p>
+<p>CATALOG(pg_foreign_table,3118,ForeignTableRelationId) { Oid			ftrelid <a class="wiki-source-link" href="../../source/src/include/catalog/genbki.h.html#L65" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/catalog/genbki.h.html&quot;}, '*');">BKI_LOOKUP</a>(pg_class);	/* OID of foreign <a class="wiki-source-link" href="../../source/src/port/pg_localeconv_r.c.html#L63" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/port/pg_localeconv_r.c.html&quot;}, '*');">table</a> */ Oid			ftserver <a class="wiki-source-link" href="../../source/src/include/catalog/genbki.h.html#L65" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/catalog/genbki.h.html&quot;}, '*');">BKI_LOOKUP</a>(pg_foreign_server); /* OID of foreign server */</p>
 <p>#ifdef CATALOG_VARLEN			/* variable-length fields start here */ text		ftoptions[1];	/* FDW-specific options */ #endif } FormData_pg_foreign_table; ~~~</p>
 <h2>失敗モードと境界条件</h2>
 <p>まだ解析していません。</p>

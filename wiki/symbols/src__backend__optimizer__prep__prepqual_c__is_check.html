@@ -1,0 +1,82 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>symbols/src__backend__optimizer__prep__prepqual_c__is_check.md</title><link rel="stylesheet" href="../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../source/src/backend/optimizer/prep/prepqual.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__prep__prepqual_c__is_check.html&quot;}, '*');">is_check</a></h1>
+<h2>定義</h2>
+<ul>
+<li>種別: <code>function</code></li>
+<li>定義箇所: <code>src/backend/optimizer/prep/prepqual.c:1</code></li>
+<li>所属モジュール: <a class="wiki-entity-link" href="../modules/src__backend__optimizer__prep.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/modules/src__backend__optimizer__prep.html&quot;, &quot;source&quot;: &quot;source/src/backend/optimizer/prep/prepagg.c.html&quot;}, '*');"><code>module:src/backend/optimizer/prep</code></a></li>
+</ul>
+<h2>目的</h2>
+<p>静的シンボル索引から生成された初期シンボルページです。</p>
+<h2>シグネチャまたは形状</h2>
+<ul>
+<li>シグネチャ: <code>/*------------------------------------------------------------------------- * * prepqual.c * Routines for preprocessing qualification expressions * * * While the parser will produce flattened (N-argument) AND/OR trees from * simple sequences of AND&#x27;ed or OR&#x27;ed clauses, there might be an AND clause * directly underneath another AND, or OR underneath OR, if the input was * oddly parenthesized. Also, rule expansion and subquery flattening could * produce such parsetrees. The planner wants to flatten all such cases * to ensure consistent optimization behavior. * * Formerly, this module was responsible for doing the initial flattening, * but now we leave it to eval_const_expressions to do that since it has to * make a complete pass over the expression tree anyway. Instead, we just * have to ensure that our manipulations preserve AND/OR flatness. * pull_ands() and pull_ors() are used to maintain flatness of the AND/OR * tree after local transformations that might introduce nested AND/ORs. * * * Portions Copyright (c) 1996-2026, PostgreSQL Global Development Group * Portions Copyright (c) 1994, Regents of the University of California * * * IDENTIFICATION * src/backend/optimizer/prep/prepqual.c * *------------------------------------------------------------------------- */ #include &quot;postgres.h&quot; #include &quot;nodes/makefuncs.h&quot; #include &quot;nodes/nodeFuncs.h&quot; #include &quot;optimizer/optimizer.h&quot; #include &quot;utils/lsyscache.h&quot; static List *pull_ands(List *andlist)</code></li>
+</ul>
+<h2>入力と出力</h2>
+<p>まだ解析していません。</p>
+<h2>前提条件と不変条件</h2>
+<p>まだ解析していません。</p>
+<h2>アルゴリズムまたは振る舞い</h2>
+<ul>
+<li>複雑度: <code>low</code> (score 0)</li>
+</ul>
+<p>まだ解析していません。</p>
+<h2>呼び出し元と呼び出し先</h2>
+<ul>
+<li>呼び出し元: なし</li>
+<li>呼び出し先: なし</li>
+<li>呼び出し元サイト: なし</li>
+<li>呼び出しサイト: なし</li>
+</ul>
+<h2>関連データ構造</h2>
+<p><code>c</code>, <code>Group</code>, <code>List</code>, <a class="wiki-source-link" href="../../source/src/interfaces/ecpg/preproc/type.h.html#L109" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__interfaces__ecpg__preproc__type_h__prep.html&quot;}, '*');"><code>prep</code></a>, <code>rule</code></p>
+<h2>ソース抜粋</h2>
+<p>~~~c /*------------------------------------------------------------------------- *</p>
+<ul>
+<li><a class="wiki-source-link" href="../../source/src/backend/optimizer/prep/prepqual.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/backend/optimizer/prep/prepqual.c.html&quot;}, '*');">prepqual.c</a></li>
+<li>Routines for preprocessing qualification expressions</li>
+<p>* *</p>
+<li>While the parser will produce flattened (N-argument) AND/OR trees from</li>
+<li>simple <a class="wiki-source-link" href="../../source/src/bin/pg_dump/pg_dump.c.html#L214" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/bin/pg_dump/pg_dump.c.html&quot;}, '*');">sequences</a> of AND&#x27;ed or OR&#x27;ed clauses, there might be an AND <a class="wiki-source-link" href="../../source/src/backend/optimizer/path/clausesel.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__path__clausesel_c__clause.html&quot;}, '*');">clause</a></li>
+<li>directly underneath another AND, or OR underneath OR, if the input was</li>
+<li>oddly parenthesized.  Also, rule expansion and subquery flattening could</li>
+<li>produce such parsetrees.  The <a class="wiki-source-link" href="../../source/src/backend/optimizer/plan/planner.c.html#L327" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__plan__planner_c__planner.html&quot;}, '*');">planner</a> wants to flatten all such cases</li>
+<li>to ensure consistent optimization behavior.</li>
+<p>*</p>
+<li>Formerly, this module was responsible for doing the initial flattening,</li>
+<li>but <a class="wiki-source-link" href="../../source/src/backend/utils/adt/timestamp.c.html#L1612" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__utils__adt__timestamp_c__now.html&quot;}, '*');">now</a> we leave it to <a class="wiki-source-link" href="../../source/src/backend/optimizer/util/clauses.c.html#L2515" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__clauses_c__eval_const_expressions.html&quot;}, '*');">eval_const_expressions</a> to do that since it has to</li>
+<li>make a complete pass over the expression tree anyway.  Instead, we just</li>
+<li>have to ensure that our manipulations preserve AND/OR flatness.</li>
+<li><a class="wiki-source-link" href="../../source/src/backend/optimizer/prep/prepqual.c.html#L322" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__prep__prepqual_c__pull_ands.html&quot;}, '*');">pull_ands</a>() and <a class="wiki-source-link" href="../../source/src/backend/optimizer/prep/prepqual.c.html#L348" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__prep__prepqual_c__pull_ors.html&quot;}, '*');">pull_ors</a>() are used to maintain flatness of the AND/OR</li>
+<li>tree <a class="wiki-source-link" href="../../source/src/include/lib/ilist.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__lib__ilist_h__after.html&quot;}, '*');">after</a> local transformations that might introduce nested AND/ORs.</li>
+<p>* *</p>
+<li>Portions Copyright (c) 1996-2026, PostgreSQL Global Development Group</li>
+<li>Portions Copyright (c) 1994, Regents of the University of California</li>
+<p>* *</p>
+<li>IDENTIFICATION</li>
+<li><a class="wiki-source-link" href="../../source/src/backend/optimizer/prep/prepqual.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/backend/optimizer/prep/prepqual.c.html&quot;}, '*');">src/backend/optimizer/prep/prepqual.c</a></li>
+<p>* *------------------------------------------------------------------------- */</p>
+</ul>
+<p>#include &quot;<a class="wiki-source-link" href="../../source/src/include/postgres.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/postgres.h.html&quot;}, '*');">postgres.h</a>&quot;</p>
+<p>#include &quot;nodes/makefuncs.h&quot; #include &quot;nodes/nodeFuncs.h&quot; #include &quot;optimizer/optimizer.h&quot; #include &quot;utils/lsyscache.h&quot;</p>
+<p>static List *<a class="wiki-source-link" href="../../source/src/backend/optimizer/prep/prepqual.c.html#L322" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__prep__prepqual_c__pull_ands.html&quot;}, '*');">pull_ands</a>(List *andlist); ~~~</p>
+<h2>失敗モードと境界条件</h2>
+<p>まだ解析していません。</p>
+<h2>保守担当者向けメモ</h2>
+<ul>
+<li>後続フェーズで、ソース本文の文脈と caller/callee 情報を使ってこのページを強化する。</li>
+</ul><script>
+(function() {
+  function notifyParent() {
+    if (parent === window) return;
+    parent.postMessage({type: "frame-location", frame: window.name || "", href: window.location.href}, "*");
+  }
+  document.addEventListener("click", function(event) {
+    const link = event.target.closest("a[data-panel]");
+    if (!link || parent === window) return;
+    parent.postMessage({type: "source-link", panel: link.dataset.panel}, "*");
+  });
+  window.addEventListener("load", notifyParent);
+  window.addEventListener("hashchange", notifyParent);
+})();
+</script></body></html>

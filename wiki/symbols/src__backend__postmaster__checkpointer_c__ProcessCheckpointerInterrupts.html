@@ -42,9 +42,9 @@
 <li>nothing to do with checkpointing at all.</li>
 <p>*</p>
 <li>For various reasons, some config values can change dynamically so</li>
-<li>the primary copy of them <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> held in shared memory to make sure all</li>
+<li>the primary copy of them <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> held in <a class="wiki-source-link" href="../../source/src/include/executor/hashjoin.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__executor__hashjoin_h__shared.html&quot;}, '*');">shared</a> memory to make sure all</li>
 <li>backends see the same value.  We make Checkpointer responsible for</li>
-<li>updating the shared memory copy if the parameter setting changes</li>
+<li>updating the <a class="wiki-source-link" href="../../source/src/include/executor/hashjoin.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__executor__hashjoin_h__shared.html&quot;}, '*');">shared</a> memory copy if the parameter setting changes</li>
 <li>because of SIGHUP.</li>
 <p>*/ <a class="wiki-source-link" href="../../source/src/backend/postmaster/checkpointer.c.html#L1501" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__postmaster__checkpointer_c__UpdateSharedMemoryConfig.html&quot;}, '*');">UpdateSharedMemoryConfig</a>(); }</p>
 </ul>

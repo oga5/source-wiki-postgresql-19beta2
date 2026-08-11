@@ -34,7 +34,7 @@
 <h2>関連データ構造</h2>
 <p><code>ArchiveHandle</code></p>
 <h2>ソース抜粋</h2>
-<p>~~~c static void dumpTimestamp(ArchiveHandle *AH, const char *msg, time_t tim) { char		buf[64];</p>
+<p>~~~c static void dumpTimestamp(ArchiveHandle *AH, const char *msg, <a class="wiki-source-link" href="../../source/src/include/pgtime.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__pgtime_h__time_t.html&quot;}, '*');">time_t</a> tim) { char		buf[64];</p>
 <p>if (strftime(buf, sizeof(buf), <a class="wiki-source-link" href="../../source/src/bin/pg_dump/dumputils.h.html#L34" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/bin/pg_dump/dumputils.h.html&quot;}, '*');">PGDUMP_STRFTIME_FMT</a>, localtime(&amp;tim)) != 0) <a class="wiki-source-link" href="../../source/src/bin/pg_dump/pg_backup_archiver.c.html#L1758" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__bin__pg_dump__pg_backup_archiver_c__ahprintf.html&quot;}, '*');">ahprintf</a>(AH, &quot;-- %s %s\n\n&quot;, msg, buf); } ~~~</p>
 <h2>失敗モードと境界条件</h2>
 <p>まだ解析していません。</p>

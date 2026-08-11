@@ -29,13 +29,13 @@
 <li>呼び出し元: <a class="wiki-source-link" href="../../source/src/backend/statistics/mvdistinct.c.html#L579" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__statistics__mvdistinct_c__generator_init.html&quot;}, '*');"><code>generator_init</code></a></li>
 <li>呼び出し先: なし</li>
 <li>呼び出し元サイト: <a class="wiki-source-link" href="../../source/src/backend/statistics/mvdistinct.c.html#L579" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__statistics__mvdistinct_c__generator_init.html&quot;}, '*');"><code>generator_init</code></a> at <code>src/backend/statistics/mvdistinct.c:589:25</code> (direct, confidence=high, resolved=<a class="wiki-entity-link" href="src__backend__statistics__mvdistinct_c__n_choose_k.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__statistics__mvdistinct_c__n_choose_k.html&quot;, &quot;source&quot;: &quot;source/src/backend/statistics/mvdistinct.c.html#L540&quot;}, '*');"><code>symbol:src/backend/statistics/mvdistinct.c#n_choose_k</code></a>)</li>
-<li>呼び出しサイト: <a class="wiki-source-link" href="../../source/src/include/c.h.html#L950" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/c.h.html&quot;}, '*');"><code>Assert</code></a> at <code>src/backend/statistics/mvdistinct.c:546:2</code> (unresolved), <code>Min</code> at <code>src/backend/statistics/mvdistinct.c:549:6</code> (unresolved)</li>
+<li>呼び出しサイト: <code>Assert</code> at <code>src/backend/statistics/mvdistinct.c:546:2</code> (unresolved), <code>Min</code> at <code>src/backend/statistics/mvdistinct.c:549:6</code> (unresolved)</li>
 </ul>
 <h2>関連データ構造</h2>
 <p>なし</p>
 <h2>ソース抜粋</h2>
 <p>~~~c static int <a class="wiki-source-link" href="../../source/src/backend/statistics/mvdistinct.c.html#L540" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__statistics__mvdistinct_c__n_choose_k.html&quot;}, '*');">n_choose_k</a>(int n, int k) { int			d, r;</p>
-<p><a class="wiki-source-link" href="../../source/src/include/c.h.html#L950" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/c.h.html&quot;}, '*');">Assert</a>((k &gt; 0) &amp;&amp; (n &gt;= k));</p>
+<p>Assert((k &gt; 0) &amp;&amp; (n &gt;= k));</p>
 <p>/* use symmetry of the binomial coefficients */ k = Min(k, n - k);</p>
 <p>r = 1; for (d = 1; d &lt;= k; ++d) { r *= n--; r /= d; }</p>
 <p>return r; } ~~~</p>

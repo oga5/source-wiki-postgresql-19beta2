@@ -36,7 +36,7 @@
 <h2>ソース抜粋</h2>
 <p>~~~c static void <a class="wiki-source-link" href="../../source/contrib/pg_stat_statements/pg_stat_statements.c.html#L993" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/contrib__pg_stat_statements__pg_stat_statements_c__pgss_ExecutorStart.html&quot;}, '*');">pgss_ExecutorStart</a>(QueryDesc *queryDesc, int eflags) { /*</p>
 <ul>
-<li>If query has queryId zero, don&#x27;t track it.  This prevents double</li>
+<li>If <a class="wiki-source-link" href="../../source/src/backend/optimizer/util/var.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__var_c__query.html&quot;}, '*');">query</a> has queryId zero, don&#x27;t track it.  This prevents double</li>
 <li>counting of optimizable statements that are directly contained in</li>
 <li>utility statements.</li>
 <p>*/ if (<a class="wiki-source-link" href="../../source/contrib/pg_stat_statements/pg_stat_statements.c.html#L310" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/contrib/pg_stat_statements/pg_stat_statements.c.html&quot;}, '*');">pgss_enabled</a>(nesting_level) &amp;&amp; queryDesc-&gt;plannedstmt-&gt;queryId != <a class="wiki-source-link" href="../../source/src/include/c.h.html#L637" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/c.h.html&quot;}, '*');">INT64CONST</a>(0)) { /* Request all summary instrumentation, i.e. timing, buffers and WAL */ queryDesc-&gt;query_instr_options |= INSTRUMENT_ALL; }</p>

@@ -1,43 +1,67 @@
 <!doctype html>
 <html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>src/include/utils/tuplestore.h.md</title><link rel="stylesheet" href="../../../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../../../source/src/include/utils/tuplestore.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/utils/tuplestore.h.html&quot;}, '*');">src/include/utils/tuplestore.h</a></h1>
 <h2>概要</h2>
-<p><a class="wiki-source-link" href="../../../../source/src/include/utils/tuplestore.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/utils/tuplestore.h.html&quot;}, '*');"><code>src/include/utils/tuplestore.h</code></a> は、PostgreSQL における一時的なタプル列の格納・読み出し機能（Tuplestore）の公開インターフェースを定義するヘッダーファイルです。ソートを行わない点を除けば <a class="wiki-source-link" href="../../../../source/src/backend/utils/sort/tuplesort.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/utils/sort/tuplesort.c.html&quot;}, '*');"><code>tuplesort.c</code></a> の簡易版に相当し、Materialize ノードやハッシュジョインのバッチファイルなどで利用されます。</p>
+<p><a class="wiki-source-link" href="../../../../source/src/include/utils/tuplestore.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/utils/tuplestore.h.html&quot;}, '*');"><code>src/include/utils/tuplestore.h</code></a> は、PostgreSQLの実行時における一時的なタプル（行）の格納・再取得メカニズム（Tuplestore）の公開インターフェースを定義するヘッダーファイルです。Materializeノードやハッシュジョインのバッチファイルなど、順序を維持したまま一時的なタプル列を保持し、書き込みの完了を待たずに読み取りを開始したり、複数の独立した読み取りポインタを用いてランダムアクセスを行う用途に使用されます。内部実装の詳細は不透明型（opaque <a class="wiki-source-link" href="../../../../source/src/include/lib/ilist.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__lib__ilist_h__type.html&quot;}, '*');">type</a>）として隠蔽されています。</p>
 <h2>モジュール内での役割</h2>
-<p><code>src/include/utils</code> モジュール内において、実行時の一時データ保持を抽象化するユーティリティの一つです。詳細な実装はペアファイルである <a class="wiki-source-link" href="../../../../source/src/backend/utils/sort/tuplestore.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/utils/sort/tuplestore.c.html&quot;}, '*');"><code>src/backend/utils/sort/tuplestore.c</code></a> に隠蔽されており、このヘッダーファイルは外部のモジュール（エグゼキューターやアクセス手法など）に対して操作関数と不透明構造体の定義を提供します。</p>
+<p><code>src/include/backend/utils/sort/tuplestore.c</code> とペアをなし、<code>src/backend/executor/</code> などのエグゼキューター層やクエリ処理エンジンに対し、<code>MinimalTuple</code> 形式の行データを効率よく一時保存・走査する機能を提供します。同系統の <a class="wiki-source-link" href="../../../../source/src/include/utils/tuplesort.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/utils/tuplesort.h.html&quot;}, '*');"><code>tuplesort.h</code></a> がソートを伴う処理を対象とするのに対し、本モジュールはソートを行わずストリームの保存と巻き戻し・複数ポインタ走査に特化しています。</p>
 <h2>責務</h2>
 <ul>
-<li>タプル群をメモリ上または一時ファイルに順次蓄積し、書き込み完了前であっても読み出しを開始できるAPIの提供。</li>
-<li>単一または複数の独立した読み取りポインタの管理（ランダムアクセス、巻き戻し、マーク・復元操作）。</li>
-<li><code>MinimalTuple</code> 形式をベースにした効率的なタプルの保持と、<code>TupleTableSlot</code> や <code>HeapTuple</code> を介した入出力インターフェースの公開。</li>
+<li>不透明な状態管理構造体 <code>Tuplestorestate</code> の型宣言の提供。</li>
+<li>Tuplestore の初期化・終了・クリアのライフサイクル管理インターフェースの定義。</li>
+<li>様々な形式（<code>TupleTableSlot</code>, <code>HeapTuple</code>, <code>Datum</code> 配列）でのタプル書き込みインターフェースの提供。</li>
+<li>単一または複数の読み取りポインタの割り当て、選択、複製、位置移動を行う API の提供。</li>
+<li>前方・後方スキャンや EOF 判定、タプル件数取得などの走査制御インターフェースの提供。</li>
 </ul>
 <h2>重要なシンボル</h2>
+<h3>ライフサイクルおよび状態管理</h3>
 <ul>
-<li><code>Tuplestorestate</code>: 内部状態を隠蔽するための不透明な構造体（Opaque <a class="wiki-source-link" href="../../../../source/src/include/lib/ilist.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__lib__ilist_h__type.html&quot;}, '*');">type</a>）。</li>
-<li><code>tuplestore_begin_heap</code>: ヒープタプルを格納するための Tuplestore インスタンスを生成する。</li>
-<li><code>tuplestore_puttupleslot</code> / <code>tuplestore_puttuple</code> / <code>tuplestore_putvalues</code>: 各種形式のタプルをストアへ書き込む。</li>
-<li><code>tuplestore_gettupleslot</code>: ストアから指定された方向（前方/後方）へタプルを取り出す。</li>
-<li><code>tuplestore_alloc_read_pointer</code> / <code>tuplestore_select_read_pointer</code>: 複数の独立した読み取りポインタの割り当てと切り替えを行う。</li>
-<li><code>tuplestore_end</code>: ストアが使用しているメモリや一時ファイルを解放し、ライフサイクルを終了する。</li>
+<li><code>struct Tuplestorestate</code>: 内部のメモリバッファや一時ファイルの状態を保持する不透明な構造体（定義のみ提供）。</li>
+<li><code>tuplestore_begin_heap</code>: ランダムアクセスの可否、トランザクション跨ぎの有無、許容メモリサイズ（KB）を指定して新しい Tuplestore を生成・初期化する。</li>
+<li><code>tuplestore_end</code>: Tuplestore が保持するメモリおよび一時ファイルなどの全リソースを解放する。</li>
+</ul>
+<h3>タプル書き込み</h3>
+<ul>
+<li><code>tuplestore_puttupleslot</code>: <code>TupleTableSlot</code> から MinimalTuple を抽出してストアに書き込む。</li>
+<li><code>tuplestore_puttuple</code>: 従来の <code>HeapTuple</code> をストアに書き込む。</li>
+<li><code>tuplestore_putvalues</code>: <code>Datum</code> 配列と <code>isnull</code> 配列、およびタプル記述子（TupleDesc）から直接値を書き込む。</li>
+</ul>
+<h3>読み取りポインタ管理</h3>
+<ul>
+<li><code>tuplestore_alloc_read_pointer</code>: 新しい独立した読み取りポインタを割り当て、その識別子（整数）を返す。</li>
+<li><code>tuplestore_select_read_pointer</code>: 以降の読み取り操作の対象となるアクティブな読み取りポインタを切り替える。</li>
+</ul>
+<h3>タプル取得および走査</h3>
+<ul>
+<li><code>tuplestore_gettupleslot</code>: 指定された方向（前方/後方）へ進みながら、タプルを <code>TupleTableSlot</code> に読み出す。</li>
 </ul>
 <h2>制御フローとデータフロー</h2>
-<p>本ファイルはインターフェース定義のみであり実行コードは持ちませんが、想定されるデータフローは以下の通りです。 1. <code>tuplestore_begin_heap</code> により、指定されたメモリ上限 (<code>maxKBytes</code>) とランダムアクセスの要否を指定して状態を初期化。 2. 実行時、<code>tuplestore_put...</code> 系関数を介してタプルが順次入力される。データ量がメモリ上限を超えた場合、自動的にバックエンドの一時ファイルへ書き込み先が切り替わる。 3. <code>tuplestore_gettupleslot</code> などの読み出し系関数により、初期化時に作成または追加された読み取りポインタを基準にしてタプルが順次または任意の位置から取得される。 4. 処理終了後、<code>tuplestore_end</code> によりリソースがクリーンアップされる。</p>
+<p>本ヘッダーファイルで宣言される関数を通じた典型的な利用フローは以下の通りです。</p>
+<p>1. **初期化**: 実行計画のノード開始時に <code>tuplestore_begin_heap()</code> を呼び出して <code>Tuplestorestate</code> を取得する。必要に応じて <code>tuplestore_alloc_read_pointer()</code> で追加の読み取りポインタを確保する。 2. **書き込みフェーズ**: エグゼキューターからタプルが生成されるたびに、<code>tuplestore_puttupleslot()</code> や <code>tuplestore_putvalues()</code> を用いて次々とストアに投入する。メモリ制限（<code>maxKBytes</code>）を超過した場合は、裏側で一時ファイル（Buffile）へ自動的に溢れさせる。 3. **読み取りフェーズ**: 書き込みの完了を待たず、あるいは書き込みと並行して、<code>tuplestore_select_read_pointer()</code> でポインタを選択し、<code>tuplestore_gettupleslot()</code> によりタプルをスキャン・取得する。 4. **終了**: 処理の完了に伴い <code>tuplestore_end()</code> が呼び出され、メモリコンテキストおよび一時ファイル領域がクリーンアップされる。</p>
 <h2>直接依存</h2>
 <ul>
-<li><code>executor/tuptable.h</code>: <code>TupleTableSlot</code> 構造体の定義を利用するためにインクルード。</li>
+<li><code>executor/tuptable.h</code>: <code>TupleTableSlot</code> 構造体の定義を提供し、スロットベースの入出力インターフェースを支える。</li>
 </ul>
 <h2>関連コード</h2>
 <ul>
-<li><a class="wiki-source-link" href="../../../../source/src/backend/utils/sort/tuplestore.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/utils/sort/tuplestore.c.html&quot;}, '*');"><code>src/backend/utils/sort/tuplestore.c</code></a>: ペアとなる実装ファイル。実際の状態遷移（インメモリ、書き込みファイル、読み込みファイル）やファイル入出力ロジックを含む。</li>
-<li><a class="wiki-source-link" href="../../../../source/src/include/utils/tuplesort.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/utils/tuplesort.h.html&quot;}, '*');"><code>src/include/utils/tuplesort.h</code></a>: ソート処理を行う類似のユーティリティヘッダー。</li>
-<li><a class="wiki-source-link" href="../../../../source/src/include/utils/sharedtuplestore.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/utils/sharedtuplestore.h.html&quot;}, '*');"><code>src/include/utils/sharedtuplestore.h</code></a>: 複数プロセス間で共有される Tuplestore のヘッダー。</li>
+<li><a class="wiki-source-link" href="../../../../source/src/backend/utils/sort/tuplestore.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/utils/sort/tuplestore.c.html&quot;}, '*');"><code>src/backend/utils/sort/tuplestore.c</code></a>: ペアとなる実装ファイル。インメモリ配列と一時ファイルの切り替え、状態遷移（<code>TSS_INMEM</code>, <code>TSS_WRITEFILE</code>, <code>TSS_READFILE</code>）の実体を網羅。</li>
+<li><a class="wiki-source-link" href="../../../../source/src/include/utils/tuplesort.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/utils/tuplesort.h.html&quot;}, '*');"><code>src/include/utils/tuplesort.h</code></a>: ソート機能を備えた類似のテンポラリストレージ機構。</li>
+<li><a class="wiki-source-link" href="../../../../source/src/include/utils/sharedtuplestore.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/utils/sharedtuplestore.h.html&quot;}, '*');"><code>src/include/utils/sharedtuplestore.h</code></a>: プロセス間で共有可能な Tuplestore の拡張実装。</li>
 </ul>
 <h2>読者向けメモ</h2>
 <ul>
-<li>格納されるデータの実体は主に <code>MinimalTuple</code> であり、システム列は保証されないため、呼び出し側は取得時に <code>TupleTableSlot</code> を経由してアクセスする必要があります。</li>
-<li>後方スキャンやリワインドの可否は、タプルを投入する前または適切なタイミングで設定フラグ (<a class="wiki-source-link" href="../../../../source/src/backend/utils/sort/tuplestore.c.html#L371" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__utils__sort__tuplestore_c__tuplestore_set_eflags.html&quot;}, '*');"><code>tuplestore_set_eflags</code></a>) や専用関数によって制御する必要があります。</li>
+<li>**メモリとストレージの自動切り替え**: 指定された <code>maxKBytes</code> 以内ではメモリ上の配列に保持され、超過すると一時ファイルにダンプされる。利用者はこの切り替えを意識せず統一された API で操作できる。</li>
+<li>**MinimalTuple の制限**: 格納されるデータは <code>MinimalTuple</code> 形式であるため、再取得されたタプルからシステム列（<code>ctid</code> や <code>xmin</code> など）を取り出すことはできない仕様になっている。</li>
 </ul>
 <h2>シンボルページ</h2>
 <ul>
+<li><a href="../../../symbols/src__include__utils__tuplestore_h__tuplestore_alloc_read_pointer.html" target="wiki-view"><code>tuplestore_alloc_read_pointer</code></a></li>
+<li><a href="../../../symbols/src__include__utils__tuplestore_h__tuplestore_begin_heap.html" target="wiki-view"><code>tuplestore_begin_heap</code></a></li>
+<li><a href="../../../symbols/src__include__utils__tuplestore_h__tuplestore_end.html" target="wiki-view"><code>tuplestore_end</code></a></li>
+<li><a href="../../../symbols/src__include__utils__tuplestore_h__tuplestore_gettupleslot.html" target="wiki-view"><code>tuplestore_gettupleslot</code></a></li>
+<li><a href="../../../symbols/src__include__utils__tuplestore_h__tuplestore_puttuple.html" target="wiki-view"><code>tuplestore_puttuple</code></a></li>
+<li><a href="../../../symbols/src__include__utils__tuplestore_h__tuplestore_puttupleslot.html" target="wiki-view"><code>tuplestore_puttupleslot</code></a></li>
+<li><a href="../../../symbols/src__include__utils__tuplestore_h__tuplestore_putvalues.html" target="wiki-view"><code>tuplestore_putvalues</code></a></li>
+<li><a href="../../../symbols/src__include__utils__tuplestore_h__tuplestore_select_read_pointer.html" target="wiki-view"><code>tuplestore_select_read_pointer</code></a></li>
 <li><a href="../../../symbols/src__include__utils__tuplestore_h__Tuplestorestate.html" target="wiki-view"><code>Tuplestorestate</code></a></li>
 </ul><script>
 (function() {

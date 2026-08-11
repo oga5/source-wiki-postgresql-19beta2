@@ -1,70 +1,52 @@
 <!doctype html>
 <html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>src/include/port/pg_bitutils.h.md</title><link rel="stylesheet" href="../../../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../../../source/src/include/port/pg_bitutils.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/port/pg_bitutils.h.html&quot;}, '*');">src/include/port/pg_bitutils.h</a></h1>
 <h2>概要</h2>
-<p><a class="wiki-source-link" href="../../../../source/src/include/port/pg_bitutils.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/port/pg_bitutils.h.html&quot;}, '*');"><code>src/include/port/pg_bitutils.h</code></a> は、PostgreSQLにおけるビット操作（ビットスキャン、ポップカウント、累乗計算、ビットローテートなど）のためのインライン関数および外部関数を提供するヘッダーファイルです。コンパイラ組み込み関数（<code>__builtin_clz</code>、<code>__builtin_ctz</code>）やMSVCのイントリンシック（<code>_BitScanForward</code>、<code>_BitScanReverse</code>）を利用して高速化を図るとともに、環境非依存のポータブルな実装やルックアップテーブルを併用しています。</p>
+<p><a class="wiki-source-link" href="../../../../source/src/include/port/pg_bitutils.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/port/pg_bitutils.h.html&quot;}, '*');"><code>src/include/port/pg_bitutils.h</code></a> は、プラットフォーム非依存のビット操作ユーティリティを提供するヘッダーファイルです。最上位/最下位ビットの検索、2の冪乗への切り上げ・切り下げ、対数計算 (<code>ceil(log2)</code>)、およびバッファ内のビットカウント (<code>popcount</code>) をインライン関数および最適化された関数群として提供します。</p>
 <h2>モジュール内での役割</h2>
-<p><code>src/include/port</code> サブシステムの一部として、プラットフォーム非依存かつ高パフォーマンスな低水準ビット演算ユーティリティを提供します。対応する実装ファイル <a class="wiki-source-link" href="../../../../source/src/port/pg_bitutils.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/port/pg_bitutils.c.html&quot;}, '*');"><code>src/port/pg_bitutils.c</code></a> とペアをなし、同ファイルで定義されるルックアップテーブル (<code>pg_leftmost_one_pos</code>, <code>pg_rightmost_one_pos</code>, <code>pg_number_of_ones</code>) やポータブル版・最適化版のポップカウント関数を外部公開します。</p>
+<p><code>src/include/port</code> モジュールの一部として、コンパイラ組み込み関数 (<code>__builtin_clz</code>, <code>__builtin_ctz</code>) や MSVC イントリンシック (<code>_BitScanReverse</code>, <code>_BitScanForward</code>) を抽象化し、ポータブルなフォールバック実装とともに PostgreSQL 全体に統一されたビット操作インターフェースを提供します。対応する実装ファイル <a class="wiki-source-link" href="../../../../source/src/port/pg_bitutils.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/port/pg_bitutils.c.html&quot;}, '*');"><code>src/port/pg_bitutils.c</code></a> と連携します。</p>
 <h2>責務</h2>
 <ul>
-<li>ビットスキャン操作の抽象化：32ビットおよび64ビット整数における最上位ビット（MSB）および最下位ビット（LSB）の位置検出。</li>
-<li>2の冪乗（Power of 2）計算：指定された値の上下の近傍2の冪乗の算出、および <code>ceil(log2(num))</code> の計算。</li>
-<li>ポップカウント（Population Count）：単一ワードまたはバイト配列内における1ビットの数を、CPU固有の最適化命令や並列ビットハック、ルックアップテーブルを切り替えて計算。</li>
-<li>ビットローテート操作：32ビット整数の左右方向へのビット回転。</li>
-<li>プラットフォーム差異の吸収：GCC/Clangの組み込み関数、MSVCのイントリンシック、フォールバック用のルックアップテーブルやビット演算の切り替え。</li>
+<li>最上位セットビット（左端）および最下位セットビット（右端）の位置を 32 ビット・64 ビット整数に対して計算する。</li>
+<li>指定された数値に対する 2 の冪乗の算出（次/前）および 2 の底の対数切り上げ (<code>ceil(log2)</code>) を行う。</li>
+<li>バッファ全体またはマスク適用済みのバイト列に対する 1 ビットの数（popcount）を効率的に計算する。</li>
+<li>MSVC や各種コンパイラの組み込み関数の有無に応じたマクロ定義と条件付きコンパイルの隠蔽を行う。</li>
 </ul>
 <h2>重要なシンボル</h2>
-<h3>ビット位置スキャン関数</h3>
+<h3>ビット位置検索・冪乗・対数演算</h3>
 <ul>
-<li><code>pg_leftmost_one_pos32(uint32 word)</code>, <code>pg_leftmost_one_pos64(uint64 word)</code>: 最上位の1ビットの位置を返す（0オリジン、<code>word != 0</code> の前提）。</li>
-<li><code>pg_rightmost_one_pos32(uint32 word)</code>, <code>pg_rightmost_one_pos64(uint64 word)</code>: 最下位の1ビットの位置を返す（0オリジン、<code>word != 0</code> の前提）。</li>
+<li><a class="wiki-source-link" href="../../../../source/src/include/port/pg_bitutils.h.html#L40" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__port__pg_bitutils_h__pg_leftmost_one_pos32.html&quot;}, '*');"><code>pg_leftmost_one_pos32</code></a> / <a class="wiki-source-link" href="../../../../source/src/include/port/pg_bitutils.h.html#L71" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__port__pg_bitutils_h__pg_leftmost_one_pos64.html&quot;}, '*');"><code>pg_leftmost_one_pos64</code></a>: 32/64ビット符号なし整数の最上位セットビットの位置を返す。<code>word != 0</code> の不変条件を持つ。</li>
+<li><code>pg_rightmost_one_pos32</code> / <a class="wiki-source-link" href="../../../../source/src/include/port/pg_bitutils.h.html#L144" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__port__pg_bitutils_h__pg_rightmost_one_pos64.html&quot;}, '*');"><code>pg_rightmost_one_pos64</code></a>: 32/64ビット符号なし整数の最下位セットビットの位置を返す。</li>
+<li><a class="wiki-source-link" href="../../../../source/src/include/port/pg_bitutils.h.html#L188" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__port__pg_bitutils_h__pg_nextpower2_32.html&quot;}, '*');"><code>pg_nextpower2_32</code></a> / <a class="wiki-source-link" href="../../../../source/src/include/port/pg_bitutils.h.html#L211" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__port__pg_bitutils_h__pg_nextpower2_64.html&quot;}, '*');"><code>pg_nextpower2_64</code></a>: 引数 <a class="wiki-source-link" href="../../../../source/src/include/port/pg_bitutils.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__port__pg_bitutils_h__num.html&quot;}, '*');"><code>num</code></a> 以上で最小の 2 の冪乗を返す。0 および <code>PG_UINT32_MAX / 2 + 1</code> 超過をアークで弾く。</li>
+<li><a class="wiki-source-link" href="../../../../source/src/include/port/pg_bitutils.h.html#L234" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__port__pg_bitutils_h__pg_prevpower2_32.html&quot;}, '*');"><code>pg_prevpower2_32</code></a> / <a class="wiki-source-link" href="../../../../source/src/include/port/pg_bitutils.h.html#L247" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__port__pg_bitutils_h__pg_prevpower2_64.html&quot;}, '*');"><code>pg_prevpower2_64</code></a>: 引数 <a class="wiki-source-link" href="../../../../source/src/include/port/pg_bitutils.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__port__pg_bitutils_h__num.html&quot;}, '*');"><code>num</code></a> 以下で最大の 2 の冪乗を返す。</li>
 </ul>
-<h3>2の冪乗・対数関連関数</h3>
+<h3>ルックアップテーブルとポータブル変数</h3>
 <ul>
-<li><code>pg_nextpower2_32(uint32 num)</code>, <code>pg_nextpower2_64(uint64 num)</code>: <a class="wiki-source-link" href="../../../../source/src/include/port/pg_bitutils.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__port__pg_bitutils_h__num.html&quot;}, '*');"><code>num</code></a> 以上の最小の2の冪乗を返す（<code>num &gt; 0 &amp;&amp; num &lt;= MAX / 2 + 1</code>）。</li>
-<li><code>pg_prevpower2_32(uint32 num)</code>, <code>pg_prevpower2_64(uint64 num)</code>: <a class="wiki-source-link" href="../../../../source/src/include/port/pg_bitutils.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__port__pg_bitutils_h__num.html&quot;}, '*');"><code>num</code></a> 以下の最大の2の冪乗を返す（<code>num &gt; 0</code>）。</li>
-<li><code>pg_ceil_log2_32(uint32 num)</code>, <code>pg_ceil_log2_64(uint64 num)</code>: <code>ceil(log2(num))</code> に相当する値を返す。</li>
-</ul>
-<h3>ポップカウント関数</h3>
-<ul>
-<li><code>pg_popcount32(uint32 word)</code>, <code>pg_popcount64(uint64 word)</code>: 並列ビットハックを用いてワード内の1ビット数を数える。</li>
-<li><code>pg_popcount(const char *buf, int bytes)</code>, <code>pg_popcount_masked(const char *buf, int bytes, uint8 mask)</code>: バッファ全体またはマスク適用後の1ビット数を数える。8バイト未満の場合はルックアップテーブルによるインライン処理、8バイト以上の場合は関数ポインタ経由の最適化版 (<code>pg_popcount_optimized</code> 等) へディスパッチする。</li>
-</ul>
-<h3>ビットローテート関数</h3>
-<ul>
-<li><code>pg_rotate_right32(uint32 word, int n)</code>, <code>pg_rotate_left32(uint32 word, int n)</code>: 32ビット整数のビットローテートを行う。</li>
-</ul>
-<h3>外部公開テーブルおよび関数</h3>
-<ul>
-<li><code>pg_leftmost_one_pos</code>, <code>pg_rightmost_one_pos</code>, <code>pg_number_of_ones</code>: 各バイト値（0〜255）に対するビット位置や1の個数を格納した256バイトの定数配列。</li>
-<li><code>pg_popcount_optimized</code>, <code>pg_popcount_masked_optimized</code>: CPU固有命令またはポータブル実装を指す関数ポインタ。</li>
+<li><code>pg_leftmost_one_pos</code>: 各バイト値（0-255）の左端セットビット位置を格納する定数配列（<a class="wiki-source-link" href="../../../../source/src/port/pg_bitutils.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/port/pg_bitutils.c.html&quot;}, '*');"><code>pg_bitutils.c</code></a> で定義）。</li>
+<li><code>pg_number_of_ones</code>: 各バイト値の 1 ビット数を格納する定数配列。</li>
+<li><code>pg_popcount_optimized</code> / <code>pg_popcount_masked_optimized</code>: ハードウェア最適化された popcount 関数への関数ポインタ（または直接関数）。</li>
 </ul>
 <h2>制御フローとデータフロー</h2>
-<p>1. **ビットスキャン系**:</p>
-<ul>
-<li><code>HAVE__BUILTIN_CLZ</code> / <code>HAVE__BUILTIN_CTZ</code> が定義されている環境では、コンパイラ組み込み関数（<code>__builtin_clz</code> / <code>__builtin_ctz</code> 等）を直接呼び出します。</li>
-<li><code>_MSC_VER</code> 環境では、MSVCの <code>_BitScanForward</code> / <code>_BitScanReverse</code> 系イントリンシックを利用します。</li>
-<li>それ以外の環境では、8ビットごとのシフトとルックアップテーブル (<code>pg_leftmost_one_pos</code> / <code>pg_rightmost_one_pos</code>) を用いたフォールバックループを実行します。</li>
-<p>2. **バッファベースのポップカウント (<a class="wiki-source-link" href="../../../../source/src/include/port/pg_bitutils.h.html#L346" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__port__pg_bitutils_h__pg_popcount.html&quot;}, '*');"><code>pg_popcount</code></a> / <a class="wiki-source-link" href="../../../../source/src/include/port/pg_bitutils.h.html#L371" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__port__pg_bitutils_h__pg_popcount_masked.html&quot;}, '*');"><code>pg_popcount_masked</code></a>)**:</p>
-<li>入力サイズ <code>bytes</code> を評価します。</li>
-<li><code>bytes &lt; 8</code> の場合：関数呼び出しのオーバーヘッドを避けるため、バッファを1バイトずつ走査し、<code>pg_number_of_ones</code> テーブルを参照してインラインで累算します。</li>
-<li><code>bytes &gt;= 8</code> の場合：ハードウェア固有の最適化命令（SSE4.2のPOPCNTやSVE等）またはポータブル実装にディスパッチする関数ポインタ (<code>pg_popcount_optimized</code>) へ処理を委譲します。</li>
-</ul>
+<p>1. **ビット位置の検索**: コンパイラが <code>HAVE__BUILTIN_CLZ</code> / <code>HAVE__BUILTIN_CTZ</code> または MSVC の <code>_BitScanReverse</code>/<code>_BitScanForward</code> をサポートしている場合はハードウェア命令を直接利用します。未サポート環境では、8ビットずつのシフトと <code>pg_leftmost_one_pos</code> / <code>pg_rightmost_one_pos</code> テーブルを用いたフォールバック処理にフォールスルーします。 2. **2の冪乗計算**: <code>pg_nextpower2_*</code> は、入力がすでに 2 の冪乗であるかを <code>(num &amp; (num - 1)) == 0</code> で判定し、該当する場合はそのまま返します。そうでない場合は <code>pg_leftmost_one_pos</code> の結果からビットシフトで次の冪乗を構築します。 3. **Popcount の閾値分岐**: <a class="wiki-source-link" href="../../../../source/src/include/port/pg_bitutils.h.html#L346" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__port__pg_bitutils_h__pg_popcount.html&quot;}, '*');"><code>pg_popcount</code></a> および <a class="wiki-source-link" href="../../../../source/src/include/port/pg_bitutils.h.html#L371" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__port__pg_bitutils_h__pg_popcount_masked.html&quot;}, '*');"><code>pg_popcount_masked</code></a> は、処理バイト数が 8 未満の場合は関数呼び出しオーバーヘッドを避けるため、<code>pg_number_of_ones</code> テーブルを用いたインラインループで直接計算します。8 バイト以上の場合は最適化されたポインタ経由のルーチンに処理を委譲します。</p>
 <h2>直接依存</h2>
 <ul>
-<li><code>&lt;intrin.h&gt;</code>: MSVC環境においてビットスキャンなどのイントリンシックを利用するためにインクルードされます（<code>_MSC_VER</code> ブロック内）。</li>
+<li><code>intrin.h</code>: MSVC 環境下でのビットスキャンイントリンシック用（<code>_MSC_VER</code> 定義時）。</li>
 </ul>
 <h2>関連コード</h2>
 <ul>
-<li><a class="wiki-source-link" href="../../../../source/src/port/pg_bitutils.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/port/pg_bitutils.c.html&quot;}, '*');"><code>src/port/pg_bitutils.c</code></a>: 配列（<code>pg_leftmost_one_pos</code>, <code>pg_rightmost_one_pos</code>, <code>pg_number_of_ones</code>）の実体やポータブル版のポップカウント関数の実体を定義するペアファイル。</li>
-<li><a class="wiki-source-link" href="../../../../source/src/include/port/simd.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/port/simd.h.html&quot;}, '*');"><code>src/include/port/simd.h</code></a>: SIMD命令やCPU機能検出に関連するモジュール。</li>
+<li><a class="wiki-source-link" href="../../../../source/src/port/pg_bitutils.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/port/pg_bitutils.c.html&quot;}, '*');"><code>src/port/pg_bitutils.c</code></a>: ルックアップテーブル（<code>pg_leftmost_one_pos</code>, <code>pg_rightmost_one_pos</code>, <code>pg_number_of_ones</code>）およびポータブル版 popcount の実体が定義されているペアファイル。</li>
 </ul>
 <h2>読者向けメモ</h2>
 <ul>
-<li>**前提条件（インバリアント）**: <code>pg_leftmost_one_pos32/64</code> や <code>pg_rightmost_one_pos32/64</code> に渡す <a class="wiki-source-link" href="../../../../source/src/backend/regex/regcomp.c.html#L1476" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__regex__regcomp_c__word.html&quot;}, '*');"><code>word</code></a> は、必ず非ゼロである必要があります（内部で <code>Assert(word != 0)</code> により検証されます）。</li>
-<li>**メモリ・ライフタイム**: グローバル配列は読み取り専用 (<code>const uint8</code>) としてエクスポートされ、動的なメモリ割り当てや解放はありません。</li>
+<li>**入力値の制約**: <a class="wiki-source-link" href="../../../../source/src/include/port/pg_bitutils.h.html#L40" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__port__pg_bitutils_h__pg_leftmost_one_pos32.html&quot;}, '*');"><code>pg_leftmost_one_pos32</code></a> や <code>pg_nextpower2_*</code> などの多くのインライン関数は、引数が 0 でないこと（あるいは許容範囲内であること）を <code>Assert</code> で強制しています。呼び出し側で事前に 0 チェックを行う必要があります。</li>
+<li>**メモリ安全性**: バッファ処理関数（<a class="wiki-source-link" href="../../../../source/src/include/port/pg_bitutils.h.html#L346" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__port__pg_bitutils_h__pg_popcount.html&quot;}, '*');"><code>pg_popcount</code></a> など）は渡されたポインタとバイト数に従ってメモリを読み取るため、呼び出し側で適切なバッファ長を渡す責任があります。</li>
 </ul>
 <h2>シンボルページ</h2>
 <ul>
+<li><a href="../../../symbols/src__include__port__pg_bitutils_h__pg_leftmost_one_pos.html" target="wiki-view"><code>pg_leftmost_one_pos</code></a></li>
+<li><a href="../../../symbols/src__include__port__pg_bitutils_h__pg_number_of_ones.html" target="wiki-view"><code>pg_number_of_ones</code></a></li>
+<li><a href="../../../symbols/src__include__port__pg_bitutils_h__pg_popcount_masked_optimized.html" target="wiki-view"><code>pg_popcount_masked_optimized</code></a></li>
+<li><a href="../../../symbols/src__include__port__pg_bitutils_h__pg_popcount_optimized.html" target="wiki-view"><code>pg_popcount_optimized</code></a></li>
+<li><a href="../../../symbols/src__include__port__pg_bitutils_h__pg_rightmost_one_pos.html" target="wiki-view"><code>pg_rightmost_one_pos</code></a></li>
 <li><a href="../../../symbols/src__include__port__pg_bitutils_h__pg_leftmost_one_pos32.html" target="wiki-view"><code>pg_leftmost_one_pos32</code></a></li>
 <li><a href="../../../symbols/src__include__port__pg_bitutils_h__pg_leftmost_one_pos64.html" target="wiki-view"><code>pg_leftmost_one_pos64</code></a></li>
 <li><a href="../../../symbols/src__include__port__pg_bitutils_h__pg_rightmost_one_pos32.html" target="wiki-view"><code>pg_rightmost_one_pos32</code></a></li>
@@ -72,11 +54,6 @@
 <li><a href="../../../symbols/src__include__port__pg_bitutils_h__pg_nextpower2_32.html" target="wiki-view"><code>pg_nextpower2_32</code></a></li>
 <li><a href="../../../symbols/src__include__port__pg_bitutils_h__pg_nextpower2_64.html" target="wiki-view"><code>pg_nextpower2_64</code></a></li>
 <li><a href="../../../symbols/src__include__port__pg_bitutils_h__pg_prevpower2_32.html" target="wiki-view"><code>pg_prevpower2_32</code></a></li>
-<li><a href="../../../symbols/src__include__port__pg_bitutils_h__pg_prevpower2_64.html" target="wiki-view"><code>pg_prevpower2_64</code></a></li>
-<li><a href="../../../symbols/src__include__port__pg_bitutils_h__pg_ceil_log2_32.html" target="wiki-view"><code>pg_ceil_log2_32</code></a></li>
-<li><a href="../../../symbols/src__include__port__pg_bitutils_h__pg_ceil_log2_64.html" target="wiki-view"><code>pg_ceil_log2_64</code></a></li>
-<li><a href="../../../symbols/src__include__port__pg_bitutils_h__pg_popcount32.html" target="wiki-view"><code>pg_popcount32</code></a></li>
-<li><a href="../../../symbols/src__include__port__pg_bitutils_h__pg_popcount64.html" target="wiki-view"><code>pg_popcount64</code></a></li>
 </ul><script>
 (function() {
   function notifyParent() {

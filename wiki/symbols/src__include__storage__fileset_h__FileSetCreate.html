@@ -47,7 +47,7 @@
 <p>/*</p>
 <ul>
 <li>A set of temporary files.</li>
-<p>*/ <a class="wiki-source-link" href="../../source/src/include/fmgr.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/fmgr.h.html&quot;}, '*');">typedef</a> struct FileSet { <a class="wiki-source-link" href="../../source/src/include/port/win32_port.h.html#L240" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__port__win32_port_h__pid_t.html&quot;}, '*');">pid_t</a>		creator_pid;	/* PID of the creating process */ uint32		number;			/* per-PID identifier */ int			ntablespaces;	/* number of tablespaces to use */ Oid			tablespaces[8]; /* OIDs of tablespaces to use. Assumes that</p>
+<p>*/ typedef struct FileSet { <a class="wiki-source-link" href="../../source/src/include/port/win32_port.h.html#L240" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__port__win32_port_h__pid_t.html&quot;}, '*');">pid_t</a>		creator_pid;	/* PID of the creating process */ uint32		number;			/* per-PID identifier */ int			ntablespaces;	/* number of tablespaces to use */ Oid			tablespaces[8]; /* OIDs of tablespaces to use. Assumes that</p>
 <li>it&#x27;s rare that there more than temp</li>
 <li>tablespaces. */</li>
 <p>} FileSet; ~~~</p>

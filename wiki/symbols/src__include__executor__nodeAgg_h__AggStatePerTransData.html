@@ -28,7 +28,7 @@
 <h2>関連データ構造</h2>
 <p><code>Aggref</code>, <a class="wiki-source-link" href="../../source/src/interfaces/ecpg/preproc/type.h.html#L198" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__interfaces__ecpg__preproc__type_h__arguments.html&quot;}, '*');"><code>arguments</code></a>, <code>AttrNumber</code>, <code>Datum</code>, <code>descriptor</code>, <code>ExprState</code>, <code>FmgrInfo</code>, <code>FunctionCallInfo</code>, <code>int16</code>, <a class="wiki-source-link" href="../../source/src/timezone/zic.c.html#L310" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__timezone__zic_c__lookup.html&quot;}, '*');"><code>lookup</code></a>, <code>Oid</code>, <code>state</code>, <code>TupleDesc</code>, <code>Tuplesortstate</code>, <code>TupleTableSlot</code>, <a class="wiki-source-link" href="../../source/src/interfaces/ecpg/preproc/type.h.html#L89" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__interfaces__ecpg__preproc__type_h__when.html&quot;}, '*');"><code>when</code></a></p>
 <h2>ソース抜粋</h2>
-<p>~~~c <a class="wiki-source-link" href="../../source/src/include/fmgr.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/fmgr.h.html&quot;}, '*');">typedef</a> struct <a class="wiki-source-link" href="../../source/src/include/executor/nodeAgg.h.html#L30" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__executor__nodeAgg_h__AggStatePerTransData.html&quot;}, '*');">AggStatePerTransData</a> { /*</p>
+<p>~~~c typedef struct <a class="wiki-source-link" href="../../source/src/include/executor/nodeAgg.h.html#L30" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__executor__nodeAgg_h__AggStatePerTransData.html&quot;}, '*');">AggStatePerTransData</a> { /*</p>
 <ul>
 <li>These values are set up during <a class="wiki-source-link" href="../../source/src/backend/executor/nodeAgg.c.html#L3280" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__executor__nodeAgg_c__ExecInitAgg.html&quot;}, '*');">ExecInitAgg</a>() and do not change</li>
 <li>thereafter:</li>
@@ -45,7 +45,7 @@
 </ul>
 <p>/*</p>
 <ul>
-<li>Is this state value actually being shared by more than one Aggref?</li>
+<li>Is this state value actually being <a class="wiki-source-link" href="../../source/src/include/executor/hashjoin.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__executor__hashjoin_h__shared.html&quot;}, '*');">shared</a> by more than one Aggref?</li>
 <p>*/ bool		aggshared;</p>
 </ul>
 <p>/*</p>
@@ -64,13 +64,13 @@
 <ul>
 <li>Number of aggregated input columns to pass to the transfn.  This</li>
 <li>includes the ORDER BY columns for ordered-set aggs, but not for plain</li>
-<li>aggs.  (This doesn&#x27;t count the transition state value!)</li>
+<li>aggs.  (This doesn&#x27;t <a class="wiki-source-link" href="../../source/src/include/lib/ilist.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__lib__ilist_h__count.html&quot;}, '*');">count</a> the transition state value!)</li>
 <p>*/ int			numTransInputs;</p>
 </ul>
 <p>/* Oid of the state transition or <a class="wiki-source-link" href="../../source/src/backend/regex/regc_nfa.c.html#L1986" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__regex__regc_nfa_c__combine.html&quot;}, '*');">combine</a> function */ Oid			transfn_oid;</p>
 <p>/* Oid of the serialization function or InvalidOid */ Oid			serialfn_oid;</p>
 <p>/* Oid of the deserialization function or InvalidOid */ Oid			deserialfn_oid;</p>
-<p>/* Oid of state value&#x27;s datatype */ Oid			aggtranstype;</p>
+<p>/* Oid of state value&#x27;s datatype */ Oid			<a class="wiki-source-link" href="../../source/src/backend/optimizer/prep/prepagg.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__prep__prepagg_c__aggtranstype.html&quot;}, '*');">aggtranstype</a>;</p>
 <p>/*</p>
 <ul>
 <li>fmgr <a class="wiki-source-link" href="../../source/src/timezone/zic.c.html#L310" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__timezone__zic_c__lookup.html&quot;}, '*');">lookup</a> data for transition function or <a class="wiki-source-link" href="../../source/src/backend/regex/regc_nfa.c.html#L1986" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__regex__regc_nfa_c__combine.html&quot;}, '*');">combine</a> function.  Note in</li>

@@ -35,7 +35,7 @@
 <p><code>NumericDigit</code>, <code>stat</code></p>
 <h2>ソース抜粋</h2>
 <p>~~~c static int <a class="wiki-source-link" href="../../source/src/backend/utils/adt/numeric.c.html#L11424" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__utils__adt__numeric_c__cmp_abs_common.html&quot;}, '*');">cmp_abs_common</a>(const NumericDigit *var1digits, int var1ndigits, int var1weight, const NumericDigit *var2digits, int var2ndigits, int var2weight) { int			i1 = 0; int			i2 = 0;</p>
-<p>/* Check any digits <a class="wiki-source-link" href="../../source/src/backend/regex/regc_locale.c.html#L487" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__regex__regc_locale_c__before.html&quot;}, '*');">before</a> the first common digit */</p>
+<p>/* Check any digits before the first common digit */</p>
 <p>while (var1weight &gt; var2weight &amp;&amp; i1 &lt; var1ndigits) { if (var1digits[i1++] != 0) return 1; var1weight--; } while (var2weight &gt; var1weight &amp;&amp; i2 &lt; var2ndigits) { if (var2digits[i2++] != 0) return -1; var2weight--; }</p>
 <p>/* At this point, either w1 == w2 or we&#x27;ve run out of digits */</p>
 <p>if (var1weight == var2weight) { while (i1 &lt; var1ndigits &amp;&amp; i2 &lt; var2ndigits) { int			stat = var1digits[i1++] - var2digits[i2++];</p>

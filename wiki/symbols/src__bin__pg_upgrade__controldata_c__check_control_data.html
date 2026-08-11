@@ -54,7 +54,7 @@
 <ul>
 <li>If data checksums are in any in-progress state then disallow the</li>
 <li>upgrade. The <a class="wiki-source-link" href="../../source/src/test/regress/pg_regress.c.html#L121" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/test/regress/pg_regress.c.html&quot;}, '*');">user</a> should either let the process finish, or turn off</li>
-<li>data checksums, <a class="wiki-source-link" href="../../source/src/backend/regex/regc_locale.c.html#L487" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__regex__regc_locale_c__before.html&quot;}, '*');">before</a> retrying.</li>
+<li>data checksums, before retrying.</li>
 <p>*/ if (oldctrl-&gt;data_checksum_version &gt; PG_DATA_CHECKSUM_VERSION) pg_fatal(&quot;checksums are being enabled in the old cluster&quot;);</p>
 </ul>
 <p>/*</p>

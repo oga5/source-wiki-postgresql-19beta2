@@ -1,41 +1,56 @@
 <!doctype html>
 <html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>src/include/executor/nodeHash.h.md</title><link rel="stylesheet" href="../../../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../../../source/src/include/executor/nodeHash.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/executor/nodeHash.h.html&quot;}, '*');">src/include/executor/nodeHash.h</a></h1>
 <h2>概要</h2>
-<p><a class="wiki-source-link" href="../../../../source/src/include/executor/nodeHash.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/executor/nodeHash.h.html&quot;}, '*');"><code>src/include/executor/nodeHash.h</code></a> は、PostgreSQLの実行エンジンにおけるハッシュ結合（Hash <a class="wiki-source-link" href="../../../../source/src/include/nodes/plannodes.h.html#L984" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__nodes__plannodes_h__Join.html&quot;}, '*');">Join</a>）用のインメモリハッシュテーブル構築・操作インターフェースを定義するヘッダーファイルです。</p>
+<p>PostgreSQLのエグゼキューターにおいて、ハッシュ結合（Hash <a class="wiki-source-link" href="../../../../source/src/include/nodes/plannodes.h.html#L984" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__nodes__plannodes_h__Join.html&quot;}, '*');">Join</a>）用のハッシュテーブル構築・管理インターフェースを定義するヘッダーファイルです。</p>
 <h2>モジュール内での役割</h2>
-<p><code>src/include/executor/</code> モジュール群の一部として、ハッシュ結合ノード（<code>Hash</code>）およびハッシュ結合状態（<code>HashJoin</code>）が必要とする関数プロトタイプとデータ構造の宣言を提供します。実体や内部ヘルパー関数の多くは、対となる実装ファイル <a class="wiki-source-link" href="../../../../source/src/backend/executor/nodeHash.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/backend/executor/nodeHash.c.html&quot;}, '*');"><code>src/backend/executor/nodeHash.c</code></a> に定義されています。</p>
+<ul>
+<li><a class="wiki-source-link" href="../../../../source/src/include/executor/nodeHashjoin.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/executor/nodeHashjoin.h.html&quot;}, '*');"><code>src/include/executor/nodeHashjoin.h</code></a> と連携し、Hash <a class="wiki-source-link" href="../../../../source/src/include/nodes/plannodes.h.html#L984" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__nodes__plannodes_h__Join.html&quot;}, '*');">Join</a>ノードが内部で保持するハッシュテーブルのライフサイクルを制御します。</li>
+<li>ペアとなる実装ファイル <a class="wiki-source-link" href="../../../../source/src/backend/executor/nodeHash.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/backend/executor/nodeHash.c.html&quot;}, '*');"><code>src/backend/executor/nodeHash.c</code></a> の公開関数シグネチャを定義します。</li>
+</ul>
 <h2>責務</h2>
 <ul>
-<li>ハッシュノードのライフサイクル管理（初期化、実行、終了、再スキャン）の関数群を宣言する。</li>
-<li>ハッシュテーブルの生成、破棄、サイズ見積もり、メモリ管理のインターフェースを提供する。</li>
-<li>直列実行および並列実行（Parallel Hash）の両方に対応するハッシュテーブル挿入・バケットスキャン用APIを定義する。</li>
+<li>ハッシュテーブルの生成、初期化、破棄、およびリセット関数の提供。</li>
+<li>タプル挿入、ハッシュバケットのスキャン、およびスキュー処理のインタフェース定義。</li>
+<li>パラレルクエリ環境におけるハッシュテーブル構築・共有メモリ連携関数の提供。</li>
+<li>ハッシュテーブルサイズ（バケット数・バッチ数）のサイジング計算の宣言。</li>
 </ul>
 <h2>重要なシンボル</h2>
 <ul>
-<li><code>ExecInitHash</code>: ハッシュノードの実行時状態を初期化する。</li>
-<li><code>MultiExecHash</code>: ハッシュテーブル（または並列ハッシュテーブル）を構築する。</li>
-<li><code>ExecHashTableCreate</code>: ハッシュ結合用のインメモリハッシュテーブル構造体を割り当て・初期化する。</li>
-<li><code>ExecHashTableInsert</code> / <code>ExecParallelHashTableInsert</code>: ハッシュテーブルへタプルを挿入する（通常版および並列版）。</li>
-<li><code>ExecScanHashBucket</code>: ハッシュバケット内をスキャンして結合条件に一致するタプルを探す。</li>
-<li><code>ExecChooseHashTableSize</code>: 入力行数やメモリ制限に基づき、適切なバケット数やバッチ数を決定する。</li>
+<li><code>ExecInitHash</code>, <code>MultiExecHash</code>: ハッシュノードの初期化および一括構築のエントリポイント。</li>
+<li><code>ExecHashTableCreate</code>, <code>ExecHashTableDestroy</code>: ハッシュテーブル構造体の割当てと解放。</li>
+<li><code>ExecHashTableInsert</code>, <code>ExecScanHashBucket</code>: テーブルへのタプル挿入とバケットスキャン。</li>
+<li><code>ExecChooseHashTableSize</code>: メモリ制限とワークワーカー数を考慮したハッシュサイズの見積もり。</li>
+<li><code>ExecParallelHashTableInsert</code>, <code>ExecParallelScanHashBucket</code>: 並列クエリ実行用の挿入およびスキャン処理。</li>
 </ul>
 <h2>制御フローとデータフロー</h2>
-<p>実行時において、プランナーが生成した計画ツリーに基づき <code>ExecInitHash</code> で初期化が行われます。その後、上位の <code>HashJoin</code> ノードから <code>MultiExecHash</code> が呼び出され、ビルド側のサブノードからタプルを全取得して <code>ExecHashTableInsert</code>（または並列対応の挿入関数）によりインメモリハッシュテーブルを構築します。結合フェーズでは <code>ExecScanHashBucket</code> を用いてハッシュバケットを走査し、データを受け渡します。</p>
+<ul>
+<li>プラン実行時、親の Hash <a class="wiki-source-link" href="../../../../source/src/include/nodes/plannodes.h.html#L984" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__nodes__plannodes_h__Join.html&quot;}, '*');">Join</a> ノードから <code>MultiExecHash</code> が呼び出され、ビルド側のサブプランからタプルを全取得して <code>ExecHashTableInsert</code> でハッシュテーブルへ格納します。</li>
+<li>結合フェーズでは、<code>ExecScanHashBucket</code> を使ってハッシュバケット内を走査し、結合条件に一致するタプルを探索します。</li>
+<li>並列実行時は、DSM（Dynamic Shared Memory）を介して複数ワーカーが <code>ExecParallelHashTableInsert</code> で共有ハッシュテーブルへ並行挿入を行います。</li>
+</ul>
 <h2>直接依存</h2>
 <ul>
-<li><code>access/parallel.h</code>: 並列クエリ実行時のコンテキストや機構を利用するため。</li>
-<li><code>nodes/execnodes.h</code>: <code>Hash</code>、<code>HashState</code>、<code>HashJoinState</code> などの実行時ノード構造体定義を利用するため。</li>
+<li><code>access/parallel.h</code>: 並列クエリ実行基盤の定義。</li>
+<li><code>nodes/execnodes.h</code>: エグゼキューターのノード構造体（<code>HashState</code>, <code>HashJoinState</code> など）の定義。</li>
 </ul>
 <h2>関連コード</h2>
 <ul>
-<li><a class="wiki-source-link" href="../../../../source/src/backend/executor/nodeHash.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/backend/executor/nodeHash.c.html&quot;}, '*');"><code>src/backend/executor/nodeHash.c</code></a>: 本ヘッダーで宣言された関数の実体を定義するペアファイル。</li>
-<li><a class="wiki-source-link" href="../../../../source/src/include/executor/nodeHashjoin.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/executor/nodeHashjoin.h.html&quot;}, '*');"><code>src/include/executor/nodeHashjoin.h</code></a>: ハッシュ結合ノード全体の制御構造と連携する。</li>
-<li><a class="wiki-source-link" href="../../../../source/src/include/executor/hashjoin.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/executor/hashjoin.h.html&quot;}, '*');"><code>src/include/executor/hashjoin.h</code></a>: ハッシュテーブルの内部データ構造（<code>HashJoinTable</code> 等）を定義する。</li>
+<li><a class="wiki-source-link" href="../../../../source/src/backend/executor/nodeHash.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/backend/executor/nodeHash.c.html&quot;}, '*');"><code>src/backend/executor/nodeHash.c</code></a>: 本ヘッダーで宣言された関数の実体を実装するメインソースファイル。</li>
+<li><a class="wiki-source-link" href="../../../../source/src/include/executor/nodeHashjoin.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/executor/nodeHashjoin.h.html&quot;}, '*');"><code>src/include/executor/nodeHashjoin.h</code></a>: ハッシュ結合全体の実行ノード制御に関連するヘッダー。</li>
 </ul>
 <h2>読者向けメモ</h2>
 <ul>
-<li><code>Hash</code> ノード自体は通常の <code>ExecProcNode</code> インターフェースによるタプル返却をサポートせず、<code>MultiExecHash</code> を通じて一括でハッシュテーブル構築を行う点に注意してください。</li>
-<li>並列ハッシュ（Parallel Hash）に関連するDSM（Dynamic Shared Memory）初期化やワーカー用の関数も宣言されており、並列処理時の振る舞いを理解する上で重要なヘッダーです。</li>
+<li><code>nodeHash</code> は通常の <code>ExecProcNode</code> フロー（1タプルずつの処理）ではなく、<code>MultiExecHash</code> により一度にハッシュテーブルを構築する特殊なノードです。</li>
+</ul>
+<h2>シンボルページ</h2>
+<ul>
+<li><a href="../../../symbols/src__include__executor__nodeHash_h__ExecChooseHashTableSize.html" target="wiki-view"><code>ExecChooseHashTableSize</code></a></li>
+<li><a href="../../../symbols/src__include__executor__nodeHash_h__ExecHashTableCreate.html" target="wiki-view"><code>ExecHashTableCreate</code></a></li>
+<li><a href="../../../symbols/src__include__executor__nodeHash_h__ExecHashTableInsert.html" target="wiki-view"><code>ExecHashTableInsert</code></a></li>
+<li><a href="../../../symbols/src__include__executor__nodeHash_h__ExecInitHash.html" target="wiki-view"><code>ExecInitHash</code></a></li>
+<li><a href="../../../symbols/src__include__executor__nodeHash_h__ExecParallelHashTableInsert.html" target="wiki-view"><code>ExecParallelHashTableInsert</code></a></li>
+<li><a href="../../../symbols/src__include__executor__nodeHash_h__ExecScanHashBucket.html" target="wiki-view"><code>ExecScanHashBucket</code></a></li>
+<li><a href="../../../symbols/src__include__executor__nodeHash_h__MultiExecHash.html" target="wiki-view"><code>MultiExecHash</code></a></li>
 </ul><script>
 (function() {
   function notifyParent() {

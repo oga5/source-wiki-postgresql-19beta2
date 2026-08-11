@@ -1,43 +1,43 @@
 <!doctype html>
 <html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>src/include/catalog/pg_attribute.h.md</title><link rel="stylesheet" href="../../../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../../../source/src/include/catalog/pg_attribute.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/catalog/pg_attribute.h.html&quot;}, '*');">src/include/catalog/pg_attribute.h</a></h1>
 <h2>概要</h2>
-<p>PostgreSQL のシステムカタログ <code>pg_attribute</code> のスキーマ定義を行います。テーブルやリレーションの各列（属性）のメタデータを保持し、コンパイル時に <a class="wiki-source-link" href="../../../../source/src/backend/catalog/genbki.pl.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/catalog/genbki.pl.html&quot;}, '*');"><code>genbki.pl</code></a> によって BKI ファイルへ変換されます。</p>
+<p>PostgreSQLのシステムカタログである <code>pg_attribute</code> のスキーマ定義を行います。テーブルやリレーションが持つ各カラム（属性）のメタデータを規定し、コンパイル時に <a class="wiki-source-link" href="../../../../source/src/backend/catalog/genbki.pl.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/catalog/genbki.pl.html&quot;}, '*');"><code>genbki.pl</code></a> によってブートストラップカタログとして処理されます。</p>
 <h2>モジュール内での役割</h2>
-<p><code>src/include/catalog/</code> ディレクトリに位置し、各リレーションの列構成を定義する基盤カタログの一つです。<a class="wiki-source-link" href="../../../../source/src/include/catalog/pg_class.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__catalog__pg_class_h__pg_class.html&quot;}, '*');"><code>pg_class</code></a> や <code>pg_type</code> と密接に連携し、タプルディスクリプタ（TupleDesc）のベース構造を提供します。</p>
+<p><code>src/include/catalog</code> サブシステムに属し、データベースのリレーション構造の根幹を定義するヘッダーファイルの一つです。隣接する <code>pg_attribute_d.h</code> や <a class="wiki-source-link" href="../../../../source/src/include/catalog/genbki.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/catalog/genbki.h.html&quot;}, '*');"><code>genbki.h</code></a> と連携して、バックエンドコードおよびBKI生成スクリプト向けに型とインデックスの定義を提供します。</p>
 <h2>責務</h2>
 <ul>
-<li><code>pg_attribute</code> カタログの物理・論理レイアウト（<code>FormData_pg_attribute</code>）を定義する。</li>
-<li>固定長部分（<a class="wiki-source-link" href="../../../../source/src/include/catalog/pg_attribute.h.html#L198" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/catalog/pg_attribute.h.html&quot;}, '*');"><code>ATTRIBUTE_FIXED_PART_SIZE</code></a>）と可変長部分（<code>CATALOG_VARLEN</code>）の境界を管理する。</li>
-<li>列のアイデンティティ（Identity）や生成列（Generated）の種別マクロをクライアントに提供する。</li>
-<li>システムカタログのユニークインデックスおよび SysCache の定義を行う。</li>
+<li>リレーション内のカラム定義を保持する <code>FormData_pg_attribute</code> 構造体を宣言する。</li>
+<li>カラムのデータ型 (<code>atttypid</code>)、識別番号 (<a class="wiki-source-link" href="../../../../source/src/include/executor/tuptable.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__executor__tuptable_h__attnum.html&quot;}, '*');"><code>attnum</code></a>)、物理レイアウト、制約、ストレージ方式などの属性メタデータをマッピングする。</li>
+<li>タプルディスクリプタにコピーされる固定長部分 (<a class="wiki-source-link" href="../../../../source/src/include/catalog/pg_attribute.h.html#L198" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/catalog/pg_attribute.h.html&quot;}, '*');"><code>ATTRIBUTE_FIXED_PART_SIZE</code></a>) と可変長部分 (<code>CATALOG_VARLEN</code>) の境界を定義する。</li>
+<li><code>pg_attribute</code> に関するシステムキャッシュ（ATTNAME, ATTNUM）およびユニークインデックスを宣言する。</li>
 </ul>
 <h2>重要なシンボル</h2>
 <ul>
-<li><code>FormData_pg_attribute</code> / <code>Form_pg_attribute</code>: カタログ行データの構造体とそのポインタ型。</li>
-<li><a class="wiki-source-link" href="../../../../source/src/include/catalog/pg_attribute.h.html#L216" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__catalog__pg_attribute_h__FormExtraData_pg_attribute.html&quot;}, '*');"><code>FormExtraData_pg_attribute</code></a>: タプルディスクリプタに含まれない可変長・補助データを扱う構造体。</li>
+<li><code>FormData_pg_attribute</code>: 各カラムのメタデータを格納するカタログ行構造体。</li>
+<li><code>Form_pg_attribute</code>: <code>FormData_pg_attribute</code> へのポインタ型。</li>
+<li><a class="wiki-source-link" href="../../../../source/src/include/catalog/pg_attribute.h.html#L216" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__catalog__pg_attribute_h__FormExtraData_pg_attribute.html&quot;}, '*');"><code>FormExtraData_pg_attribute</code></a>: タプルディスクリプタに含まれない可変長フィールドの拡張データを扱うための構造体。</li>
 <li><a class="wiki-source-link" href="../../../../source/src/include/catalog/pg_attribute.h.html#L198" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/catalog/pg_attribute.h.html&quot;}, '*');"><code>ATTRIBUTE_FIXED_PART_SIZE</code></a>: タプルディスクリプタにコピーされる固定長部分のサイズ。</li>
-<li><code>ATTRIBUTE_IDENTITY_*</code> / <code>ATTRIBUTE_GENERATED_*</code>: 列の属性種別を識別するマクロ群。</li>
 </ul>
 <h2>制御フローとデータフロー</h2>
-<p>実行時コードにおける制御フローの直接的な記述はありません。データ定義のヘッダーとして機能し、以下の流れで利用されます： 1. バックエンド起動時または DDL 実行時に、<code>pg_attribute</code> の定義からタプルディスクリプタが構築される。 2. <a class="wiki-source-link" href="../../../../source/src/include/catalog/pg_attribute.h.html#L198" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/catalog/pg_attribute.h.html&quot;}, '*');"><code>ATTRIBUTE_FIXED_PART_SIZE</code></a> までのフィールドがメモリ上のタプルディスクリプタへコピーされる。 3. SysCache（<code>ATTNAME</code> および <code>ATTNUM</code>）を通じて高速な列検索が行われる。</p>
+<p>実行時コードやDDL処理系は、このファイルで定義されたマクロや構造体（<code>Form_pg_attribute</code> やインデックスID）を利用して、リレーションのタプルディスクリプタからカラム情報を取得・操作します。データフローとしては、テーブル作成や列追加時に <code>pg_attribute</code> テーブルへ行が挿入され、キャッシュを介してクエリ最適化や実行エンジンに利用されます。</p>
 <h2>直接依存</h2>
 <ul>
-<li><code>catalog/genbki.h</code>: BKI 生成マクロおよび構造体定義用キーワード</li>
-<li><code>catalog/pg_attribute_d.h</code>: 定数や OID などの付随定義</li>
+<li><code>catalog/genbki.h</code>: BKI生成マクロの提供。</li>
+<li><code>catalog/pg_attribute_d.h</code>: 自動生成される定義済みヘッダー（OIDやインデックスIDなど）。</li>
 </ul>
 <h2>関連コード</h2>
 <ul>
-<li><a class="wiki-source-link" href="../../../../source/src/backend/catalog/genbki.pl.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/catalog/genbki.pl.html&quot;}, '*');"><code>src/backend/catalog/genbki.pl</code></a>: 本ヘッダーファイルを読み込んで BKI を生成するスクリプト</li>
-<li><a class="wiki-source-link" href="../../../../source/src/include/access/htup.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/access/htup.h.html&quot;}, '*');"><code>src/include/access/htup.h</code></a>: タプルディスクリプタとリレーション構造の定義</li>
-<li><a class="wiki-source-link" href="../../../../source/src/include/catalog/pg_class.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/catalog/pg_class.h.html&quot;}, '*');"><code>src/include/catalog/pg_class.h</code></a>: 親リレーションを定義するカタログ</li>
+<li><code>src/include/catalog/pg_attribute_d.h</code>: 定数やOIDの分離定義。</li>
+<li><a class="wiki-source-link" href="../../../../source/src/backend/catalog/heap.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/catalog/heap.c.html&quot;}, '*');"><code>src/backend/catalog/heap.c</code></a>: システム属性などの構造体を扱う関連コード。</li>
 </ul>
 <h2>読者向けメモ</h2>
 <ul>
-<li><code>CATALOG_VARLEN</code> ブロック内のフィールドは通常のタプルディスクリプタには含まれないため、実タプルからのみアクセス可能です。</li>
-<li>列番号（<a class="wiki-source-link" href="../../../../source/src/include/executor/tuptable.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__executor__tuptable_h__attnum.html&quot;}, '*');"><code>attnum</code></a>）はユーザー属性が 1 以上、システム属性が 0 未満の値を持ちます。</li>
+<li>固定長部分と可変長部分（<code>CATALOG_VARLEN</code> で囲まれた領域）の境界があるため、タプルディスクリプタとして扱えるフィールド範囲に注意してください。</li>
+<li><a class="wiki-source-link" href="../../../../source/src/include/executor/tuptable.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__executor__tuptable_h__attnum.html&quot;}, '*');"><code>attnum</code></a> は正の値がユーザ属性、負の値がシステム属性を表します。</li>
 </ul>
 <h2>シンボルページ</h2>
 <ul>
+<li><a href="../../../symbols/src__include__catalog__pg_attribute_h__FormData_pg_attribute.html" target="wiki-view"><code>FormData_pg_attribute</code></a></li>
 <li><a href="../../../symbols/src__include__catalog__pg_attribute_h__CATALOG.html" target="wiki-view"><code>CATALOG</code></a></li>
 <li><a href="../../../symbols/src__include__catalog__pg_attribute_h__Form_pg_attribute.html" target="wiki-view"><code>Form_pg_attribute</code></a></li>
 <li><a href="../../../symbols/src__include__catalog__pg_attribute_h__FormExtraData_pg_attribute.html" target="wiki-view"><code>FormExtraData_pg_attribute</code></a></li>
