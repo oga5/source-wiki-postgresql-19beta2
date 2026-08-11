@@ -1,36 +1,47 @@
 <!doctype html>
 <html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>src/include/tcop/cmdtaglist.h.md</title><link rel="stylesheet" href="../../../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../../../source/src/include/tcop/cmdtaglist.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/tcop/cmdtaglist.h.html&quot;}, '*');">src/include/tcop/cmdtaglist.h</a></h1>
 <h2>概要</h2>
-<p>PostgreSQLがサポートするすべてのSQLコマンドタグ（<a class="wiki-source-link" href="../../../../source/src/bin/pgbench/pgbench.c.html#L749" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__bin__pgbench__pgbench_c__Command.html&quot;}, '*');">Command</a> Tag）のマスターリストを定義するヘッダーファイルです。</p>
+<p>PostgreSQLにおけるすべてのSQLコマンドタグ（<a class="wiki-source-link" href="../../../../source/src/bin/pgbench/pgbench.c.html#L749" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__bin__pgbench__pgbench_c__Command.html&quot;}, '*');">Command</a> Tag）のメタデータリストを定義するヘッダーファイルです。</p>
 <h2>モジュール内での役割</h2>
-<p><a class="wiki-source-link" href="../../../../source/src/include/tcop/cmdtag.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/tcop/cmdtag.h.html&quot;}, '*');"><code>src/include/tcop/cmdtag.h</code></a> とペアをなし、コマンドタグのメタデータを一元管理します。データ構造の具体的な展開は、呼び出し側で <code>PG_CMDTAG</code> マクロを定義してこのファイルをインクルードすることで行われます。</p>
+<ul>
+<li><a class="wiki-source-link" href="../../../../source/src/include/tcop/cmdtag.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/tcop/cmdtag.h.html&quot;}, '*');"><code>src/include/tcop/cmdtag.h</code></a> からインクルードされ、コマンドタグの列挙値や属性情報のマスターデータを提供します。</li>
+<li>コードの重複を避け、自動生成ツールやマクロ展開による多重利用を可能にします。</li>
+</ul>
 <h2>責務</h2>
 <ul>
-<li>PostgreSQLの全SQLコマンドに対応する内部シンボル名、文字列名、および各種属性を網羅する。</li>
-<li>イベントトリガーの許可有無 (<code>event_trigger_ok</code>)、テーブル再構築の有無 (<code>table_rewrite_ok</code>)、行数カウントの有無 (<code>rowcount</code>) を定義する。</li>
-<li>効率的なバイナリサーチ（<code>bsearch</code>）を可能にするため、コマンド文字列の昇順でエントリを維持する。</li>
+<li>SQL文に対応する内部シンボル名、テキスト名、各種フラグ（イベントトリガーの可否、テーブル書き換えの可否、行数カウントの有無）を網羅的に定義する。</li>
+<li>バイナリサーチ（<code>bsearch</code>）による高速な検索を維持するため、エントリをテキスト名順にアルファベット順で保持する。</li>
 </ul>
 <h2>重要なシンボル</h2>
 <ul>
-<li><code>PG_CMDTAG</code>: 各コマンドタグを定義するためのマクロインターフェース。</li>
-<li><a class="wiki-source-link" href="../../../../source/src/include/tcop/cmdtaglist.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__tcop__cmdtaglist_h__CMDTAG_UNKNOWN.html&quot;}, '*');"><code>CMDTAG_UNKNOWN</code></a>: 不明または未定義のコマンドを表すフォールバック用タグ。</li>
-<li>各種 <code>CMDTAG_*</code>: <code>SELECT</code>、<code>INSERT</code>、<code>UPDATE</code>、<code>CREATE TABLE</code> などを表す個別の識別子。</li>
+<li><code>PG_CMDTAG</code>：各コマンドタグのエントリを定義するために呼び出し側で定義・再定義されるマクロ。</li>
+<li>代表的なタグシンボル：<a class="wiki-source-link" href="../../../../source/src/include/tcop/cmdtaglist.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__tcop__cmdtaglist_h__CMDTAG_UNKNOWN.html&quot;}, '*');"><code>CMDTAG_UNKNOWN</code></a>, <code>INSERT</code>, <code>SELECT</code>, <code>UPDATE</code>。</li>
 </ul>
 <h2>制御フローとデータフロー</h2>
 <ul>
-<li>このファイル自体には実行可能なコードや制御フローは存在しません。</li>
-<li>呼び出し元のソースファイルが <code>PG_CMDTAG</code> マクロを定義した上で本ファイルをインクルードし、タグの列挙体（Enum）や検索用配列を構築するデータフローをとります。</li>
+<li>このファイル自体には実行コードや制御フローは存在しません。</li>
+<li>呼び出し側（<a class="wiki-source-link" href="../../../../source/src/include/tcop/cmdtag.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/tcop/cmdtag.h.html&quot;}, '*');"><code>cmdtag.h</code></a> 等）が <code>PG_CMDTAG</code> マクロを定義した上で本ファイルをインクルードし、列挙型（enum）の構築や属性配列の生成を行います。</li>
 </ul>
 <h2>直接依存</h2>
-<p>このファイルは直接の <code>#include</code> を行いません。</p>
+<ul>
+<li>このファイル内に直接的なインクルード文はありません。</li>
+</ul>
 <h2>関連コード</h2>
 <ul>
-<li><a class="wiki-source-link" href="../../../../source/src/include/tcop/cmdtag.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/tcop/cmdtag.h.html&quot;}, '*');"><code>src/include/tcop/cmdtag.h</code></a>: 本ファイルのリストを利用して関数群（<a class="wiki-source-link" href="../../../../source/src/backend/tcop/cmdtag.c.html#L82" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__tcop__cmdtag_c__GetCommandTagEnum.html&quot;}, '*');"><code>GetCommandTagEnum</code></a> など）や関連型を提供するヘッダー。</li>
+<li><a class="wiki-source-link" href="../../../../source/src/include/tcop/cmdtag.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/tcop/cmdtag.h.html&quot;}, '*');"><code>src/include/tcop/cmdtag.h</code></a>: 本ファイルのリストを展開して実際のデータ構造や関数を提供する上位ヘッダー。</li>
 </ul>
 <h2>読者向けメモ</h2>
 <ul>
-<li>ファイル冒頭に意図的に <code>#ifndef</code> ガードが置かれていません。これは同一ファイル内で <code>PG_CMDTAG</code> の定義を変更しながら複数回インクルードされることを想定しているためです。</li>
-<li>新しいSQLコマンドを追加・変更する際は、アルファベット順のソート順序を崩さないように注意してください。</li>
+<li>意図的に <code>#ifndef</code> ガードが除外されており、異なるマクロ定義で複数回インクルードされることを前提としています。</li>
+<li>新しいSQLコマンドやタグを追加・編集する際は、テキスト名のアルファベット順を崩さないように配置する必要があります。</li>
+</ul>
+<h2>シンボルページ</h2>
+<ul>
+<li><a href="../../../symbols/src__include__tcop__cmdtaglist_h__CMDTAG_UNKNOWN.html" target="wiki-view"><code>CMDTAG_UNKNOWN</code></a></li>
+<li><a href="../../../symbols/src__include__tcop__cmdtaglist_h__INSERT.html" target="wiki-view"><code>INSERT</code></a></li>
+<li><a href="../../../symbols/src__include__tcop__cmdtaglist_h__PG_CMDTAG.html" target="wiki-view"><code>PG_CMDTAG</code></a></li>
+<li><a href="../../../symbols/src__include__tcop__cmdtaglist_h__SELECT.html" target="wiki-view"><code>SELECT</code></a></li>
+<li><a href="../../../symbols/src__include__tcop__cmdtaglist_h__UPDATE.html" target="wiki-view"><code>UPDATE</code></a></li>
 </ul><script>
 (function() {
   function notifyParent() {

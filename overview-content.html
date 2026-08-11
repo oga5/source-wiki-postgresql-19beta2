@@ -23,8 +23,8 @@
   <section class="overview-stats" aria-label="Source statistics">
     <div><strong>2575</strong><span>Files</span></div>
     <div><strong>1805674</strong><span>Lines</span></div>
-    <div><strong>48071</strong><span>Symbols</span></div>
-    <div><strong>28767</strong><span>Functions</span></div>
+    <div><strong>48089</strong><span>Symbols</span></div>
+    <div><strong>28785</strong><span>Functions</span></div>
     <div><strong>4774</strong><span>Types</span></div>
     <div><strong>310</strong><span>Modules</span></div>
   </section>
@@ -55,7 +55,11 @@
 <li>現在のバッチに属さない場合は外側バッチファイルにスピル（<code>ExecHashJoinSaveTuple</code>）し、現在のバッチに属する場合はハッシュバケットのスキャン（<code>ExecScanHashBucket</code> / <code>ExecParallelScanHashBucket</code>）を行って結合条件・その他のフィルタ条件を評価する。</li>
 <p>4. **バッチ切替 (<code>HJ_NEED_NEW_BATCH</code>)**:</p>
 <li>現在のバッチの処理が完了すると、次の有効なバッチに切り替え、内側バッチファイルをリロードしてハッシュテーブルを再構築する。</li>
-</ul></li><li><a href="wiki/src/backend/optimizer/geqo/geqo_copy.c.html" target="wiki-view">File: src/backend/optimizer/geqo/geqo_copy.c</a><span>制御フローとデータフロー</span><p>1. **入力**: コピー先ポインタ（<code>chromo1</code>）、コピー元ポインタ（<code>chromo2</code>）、およびコピー対象の遺伝子長（<code>string_length</code>）を受け取ります。 2. **ループ処理**: <code>0</code> から <code>string_length - 1</code> までのループを回し、<code>chromo2-&gt;string[i]</code> の値を <code>chromo1-&gt;string[i]</code> に代入します。 3. **評価値のコピー**: <code>chromo2-&gt;worth</code> の値を <code>chromo1-&gt;worth</code> に代入します。 4. **データフローの境界**: 本関数は呼び出し元のメモリ領域（通常はGEQOプール内の個体領域）を直接書き換えます。</p></li><li><a href="wiki/src/backend/optimizer/geqo/geqo_cx.c.html" target="wiki-view">File: src/backend/optimizer/geqo/geqo_cx.c</a><span>制御フローとデータフロー</span><p>1. **初期化**: 与えられた <code>num_gene</code> に基づき、<code>city_table</code> を走査して各都市の <code>tour1</code> および <code>tour2</code> における位置情報を記録し、使用フラグをクリアします。 2. **サイクル開始**: 乱数（<code>geqo_randint</code>）を用いてランダムに開始位置（<code>start_pos</code>）を選び、子孫（<code>offspring</code>）に <code>tour1</code> の遺伝子を引き継ぎます。 3. **ステップ 1（サイクル構築）**: <code>tour2</code> の該当位置の遺伝子を追跡し、元の開始位置に戻るまで <code>tour1</code> から子孫へ遺伝子を順番にコピーします。 4. **ステップ 2（残余の補完）**: サイクル内で網羅されなかった残りの都市について、<code>tour2</code> の位置情報をもとに子孫の空き位置を埋めます。 5. **ステップ 3（差異のカウント）**: 必要に応じて、親と生成された子孫の間での遺伝子の不一致数をカウントし、その数値を返します。</p></li><li><a href="wiki/src/backend/optimizer/geqo/geqo_erx.c.html" target="wiki-view">File: src/backend/optimizer/geqo/geqo_erx.c</a><span>制御フローとデータフロー</span><p>1. **初期化**: <code>gimme_tour</code> が呼び出されると、<code>geqo_randint</code> を使ってランダムに最初の遺伝子（<code>new_gene[0]</code>）を選びます。 2. **反復構築**: ループ内で以下の処理を繰り返します：</p>
+</ul></li><li><a href="wiki/src/backend/optimizer/geqo/geqo_copy.c.html" target="wiki-view">File: src/backend/optimizer/geqo/geqo_copy.c</a><span>制御フローとデータフロー</span><ul>
+<li>呼び出し元から <code>PlannerInfo</code>、コピー先とコピー元の <code>Chromosome</code> へのポインタ、および遺伝子長（<code>string_length</code>）を受け取ります。</li>
+<li>ループ処理により、<code>chromo2-&gt;string</code> の各要素を <code>chromo1-&gt;string</code> に順次代入します。</li>
+<li>最後に <code>chromo2-&gt;worth</code> の値を <code>chromo1-&gt;worth</code> に代入し、データの複製を完了します。</li>
+</ul></li><li><a href="wiki/src/backend/optimizer/geqo/geqo_cx.c.html" target="wiki-view">File: src/backend/optimizer/geqo/geqo_cx.c</a><span>制御フローとデータフロー</span><p>1. **初期化**: 与えられた <code>num_gene</code> に基づき、<code>city_table</code> を走査して各都市の <code>tour1</code> および <code>tour2</code> における位置情報を記録し、使用フラグをクリアします。 2. **サイクル開始**: 乱数（<code>geqo_randint</code>）を用いてランダムに開始位置（<code>start_pos</code>）を選び、子孫（<code>offspring</code>）に <code>tour1</code> の遺伝子を引き継ぎます。 3. **ステップ 1（サイクル構築）**: <code>tour2</code> の該当位置の遺伝子を追跡し、元の開始位置に戻るまで <code>tour1</code> から子孫へ遺伝子を順番にコピーします。 4. **ステップ 2（残余の補完）**: サイクル内で網羅されなかった残りの都市について、<code>tour2</code> の位置情報をもとに子孫の空き位置を埋めます。 5. **ステップ 3（差異のカウント）**: 必要に応じて、親と生成された子孫の間での遺伝子の不一致数をカウントし、その数値を返します。</p></li><li><a href="wiki/src/backend/optimizer/geqo/geqo_erx.c.html" target="wiki-view">File: src/backend/optimizer/geqo/geqo_erx.c</a><span>制御フローとデータフロー</span><p>1. **初期化**: <code>gimme_tour</code> が呼び出されると、<code>geqo_randint</code> を使ってランダムに最初の遺伝子（<code>new_gene[0]</code>）を選びます。 2. **反復構築**: ループ内で以下の処理を繰り返します：</p>
 <ul>
 <li>直前の遺伝子を <code>remove_gene</code> に渡し、エッジテーブルから該当遺伝子を除去します。</li>
 <li><code>edge_table[new_gene[i-1]].unused_edges &gt; 0</code> の場合は <code>gimme_gene</code> を呼び出して最適な次候補を選択します。</li>

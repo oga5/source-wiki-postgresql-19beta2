@@ -21,7 +21,7 @@
 <li>pool-&gt;size before summing, not <a class="wiki-source-link" href="../../source/src/include/lib/ilist.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__lib__ilist_h__after.html&quot;}, '*');">after</a>, to avoid overflow.  This loses a</li>
 <li>little in speed and accuracy, but this routine <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> only used for debug</li>
 <li>printouts, so we don&#x27;t care that much.</li>
-<p>*/ for (i = 0; i &lt; pool-&gt;size; i++) cumulative += pool-&gt;data[i].<a class="wiki-source-link" href="../../source/src/backend/optimizer/geqo/geqo_pool.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__geqo__geqo_pool_c__worth.html&quot;}, '*');">worth</a> / pool-&gt;size;</p>
+<p>*/ for (i = 0; i &lt; pool-&gt;size; i++) cumulative += pool-&gt;data[i].worth / pool-&gt;size;</p>
 </ul>
 <p>return cumulative; } ~~~</p>
 <h2>目的</h2>
@@ -38,7 +38,7 @@
 <h2>アルゴリズムまたは振る舞い</h2>
 <ul>
 <li>浮動小数点のオーバーフローを防ぐため、<a class="wiki-source-link" href="../../source/src/backend/optimizer/geqo/geqo_pool.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__geqo__geqo_pool_c__DBL_MAX.html&quot;}, '*');"><code>DBL_MAX</code></a> が複数含まれる可能性のある各個体のコスト総和を後から割るのではなく、事前に <code>pool-&gt;size</code> で除算してから累積します。</li>
-<li>0 から <code>pool-&gt;size - 1</code> までループを回し、各個体の <a class="wiki-source-link" href="../../source/src/backend/optimizer/geqo/geqo_pool.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__geqo__geqo_pool_c__worth.html&quot;}, '*');"><code>worth</code></a> をプールサイズで割った値を <code>cumulative</code> に加算していき、最終的な累積値を返します。</li>
+<li>0 から <code>pool-&gt;size - 1</code> までループを回し、各個体の <code>worth</code> をプールサイズで割った値を <code>cumulative</code> に加算していき、最終的な累積値を返します。</li>
 </ul>
 <h2>失敗モードと境界条件</h2>
 <ul>

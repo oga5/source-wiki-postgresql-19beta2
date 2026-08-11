@@ -47,7 +47,7 @@
 <li>Sx = Sx1 + Sx2</li>
 <li>Sxx = Sxx1 + Sxx2 + N1 * N2 * (Sx1/N1 - Sx2/N2)^2 / N;</li>
 <p>*</p>
-<li>It&#x27;s <a class="wiki-source-link" href="../../source/src/backend/optimizer/geqo/geqo_pool.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__geqo__geqo_pool_c__worth.html&quot;}, '*');">worth</a> handling the special cases N1 = 0 and N2 = 0 separately</li>
+<li>It&#x27;s worth handling the special cases N1 = 0 and N2 = 0 separately</li>
 <li>since those cases are trivial, and we then don&#x27;t need to worry about</li>
 <li>division-by-zero <a class="wiki-source-link" href="../../source/src/timezone/zic.c.html#L183" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/timezone/zic.c.html&quot;}, '*');">errors</a> in the general case.</li>
 <p>*-------------------- */ if (N1 == 0.0) { N = N2; Sx = Sx2; Sxx = Sxx2; } else if (N2 == 0.0) { N = N1; Sx = Sx1; Sxx = Sxx1; } else { N = N1 + N2; Sx = <a class="wiki-source-link" href="../../source/src/include/utils/float.h.html#L127" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__utils__float_h__float8_pl.html&quot;}, '*');">float8_pl</a>(Sx1, Sx2); tmp = Sx1 / N1 - Sx2 / N2; Sxx = Sxx1 + Sxx2 + N1 * N2 * tmp * tmp / N; ~~~</p>

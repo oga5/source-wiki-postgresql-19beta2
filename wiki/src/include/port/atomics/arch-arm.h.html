@@ -1,36 +1,42 @@
 <!doctype html>
 <html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>src/include/port/atomics/arch-arm.h.md</title><link rel="stylesheet" href="../../../../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../../../../source/src/include/port/atomics/arch-arm.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/port/atomics/arch-arm.h.html&quot;}, '*');">src/include/port/atomics/arch-arm.h</a></h1>
 <h2>概要</h2>
-<p><a class="wiki-source-link" href="../../../../../source/src/include/port/atomics/arch-arm.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/port/atomics/arch-arm.h.html&quot;}, '*');"><code>src/include/port/atomics/arch-arm.h</code></a> は、PostgreSQL のアトミック操作フレームワークにおいて、ARM アーキテクチャ特有の制約や最適化を定義するヘッダーファイルです。</p>
+<p><a class="wiki-source-link" href="../../../../../source/src/include/port/atomics/arch-arm.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/port/atomics/arch-arm.h.html&quot;}, '*');"><code>src/include/port/atomics/arch-arm.h</code></a> は、PostgreSQLの原子演算（アトミック操作）サブシステムにおいて、ARMアーキテクチャ特有の制約と最適化を定義するヘッダーファイルです。</p>
 <h2>モジュール内での役割</h2>
-<p><code>src/include/port/atomics</code> サブシステムの一部として、上位の抽象化レイヤーに対して ARM アーキテクチャ（ARM32 および ARM64）のハードウェア特性を通知します。コンパイル時のターゲットアーキテクチャに応じて、64ビットアトミック操作の有効化・無効化や単一コピーアトミシティの保証状態を切り替えます。</p>
+<ul>
+<li><code>src/include/port/atomics</code> モジュールの一部として、コンパイルターゲットがARM系の場合のプラットフォーム依存動作を制御します。</li>
+<li><a class="wiki-source-link" href="../../../../../source/src/include/port/atomics.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/port/atomics.h.html&quot;}, '*');"><code>atomics.h</code></a> からインディレクトに呼び出されることを前提としており、単体での直接インクルードを意図していません。</li>
+</ul>
 <h2>責務</h2>
 <ul>
-<li>ARM32 環境におけるカーネルフォールバック経由の 64 ビットアトミック操作のパフォーマンス低下を防ぐため、64 ビットアトミックを無効化する。</li>
-<li>ARM64 環境において、アライメントされた 8 バイトの読み書きが単一コピーアトミックである特性をマクロで明示する。</li>
-<li>単体での直接インクルードを禁止し、<a class="wiki-source-link" href="../../../../../source/src/include/port/atomics.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/port/atomics.h.html&quot;}, '*');"><code>atomics.h</code></a> 経由での安全な取り込みを強制する。</li>
+<li>ARM32環境とARM64（AArch64）環境を検出し、64ビットアトミック操作の有効性を切り替える。</li>
+<li>ARM32におけるカーネルフォールバック起因のパフォーマンス低下を防ぐため、必要に応じて64ビットアトミック操作を無効化する。</li>
+<li>ARMv8（ARM64）における8バイト単一コピー原子性（single-copy atomicity）の保証を定義する。</li>
 </ul>
 <h2>重要なシンボル</h2>
 <ul>
-<li><a class="wiki-source-link" href="../../../../../source/src/include/port/atomics/arch-arm.h.html#L25" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/port/atomics/arch-arm.h.html&quot;}, '*');"><code>PG_DISABLE_64_BIT_ATOMICS</code></a>: ARM32 アーキテクチャにおいて 64 ビットアトミック操作を無効化するマクロ。</li>
-<li><code>PG_HAVE_8BYTE_SINGLE_COPY_ATOMICITY</code>: ARM64 アーキテクチャにおいて 8 バイトのアラインされた読み書きがアトミックであることを示すマクロ。</li>
+<li><a class="wiki-source-link" href="../../../../../source/src/include/port/atomics/arch-arm.h.html#L25" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/port/atomics/arch-arm.h.html&quot;}, '*');"><code>PG_DISABLE_64_BIT_ATOMICS</code></a>: ARM32環境において、低速なカーネルフォールバックを使用する64ビットアトミック操作を無効化するためのマクロ。</li>
+<li><code>PG_HAVE_8BYTE_SINGLE_COPY_ATOMICITY</code>: ARM64環境において、アライメントされた8バイトの読み書きがアトミックであることを示すマクロ。</li>
 </ul>
 <h2>制御フローとデータフロー</h2>
-<p>1. <a class="wiki-source-link" href="../../../../../source/src/include/port/atomics.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/port/atomics.h.html&quot;}, '*');"><code>atomics.h</code></a> からインクルードされると、ガードマクロ <a class="wiki-source-link" href="../../../../../source/src/include/port/atomics.h.html#L45" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/port/atomics.h.html&quot;}, '*');"><code>INSIDE_ATOMICS_H</code></a> の存在を検証し、違反している場合はビルドエラーが発生します。 2. コンパイラの事前定義マクロ（例: <code>__aarch64__</code>）を評価し、対象が ARM64 かどうかを判別します。 3. 判定結果に基づき、<a class="wiki-source-link" href="../../../../../source/src/include/port/atomics/arch-arm.h.html#L25" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/port/atomics/arch-arm.h.html&quot;}, '*');"><code>PG_DISABLE_64_BIT_ATOMICS</code></a> または <code>PG_HAVE_8BYTE_SINGLE_COPY_ATOMICITY</code> のいずれかを定義し、アトミック操作の共通実装へ設定を提供します。</p>
+<ul>
+<li><a class="wiki-source-link" href="../../../../../source/src/include/port/atomics.h.html#L45" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/port/atomics.h.html&quot;}, '*');"><code>INSIDE_ATOMICS_H</code></a> マクロの定義をチェックし、直接インクルードされている場合はプリプロセッサエラー (<code>#error</code>) を発生させます。</li>
+<li>プリプロセッサの条件分岐 (<code>__aarch64__</code> の有無) により、ARM32とARM64のどちらであるかを判定し、対応するマクロ（<a class="wiki-source-link" href="../../../../../source/src/include/port/atomics/arch-arm.h.html#L25" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/port/atomics/arch-arm.h.html&quot;}, '*');"><code>PG_DISABLE_64_BIT_ATOMICS</code></a> または <code>PG_HAVE_8BYTE_SINGLE_COPY_ATOMICITY</code>）を定義します。</li>
+</ul>
 <h2>直接依存</h2>
 <ul>
-<li>ソースファイル内で直接インクルードしているローカルヘッダーファイルはありません。</li>
-<li>プリプロセッサのインクルードガード用マクロ <a class="wiki-source-link" href="../../../../../source/src/include/port/atomics.h.html#L45" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/port/atomics.h.html&quot;}, '*');"><code>INSIDE_ATOMICS_H</code></a> の定義に依存しています。</li>
+<li>直接的なローカル include は存在しません。</li>
+<li>呼び出し元である <a class="wiki-source-link" href="../../../../../source/src/include/port/atomics.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/port/atomics.h.html&quot;}, '*');"><code>atomics.h</code></a> が提供する <a class="wiki-source-link" href="../../../../../source/src/include/port/atomics.h.html#L45" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/port/atomics.h.html&quot;}, '*');"><code>INSIDE_ATOMICS_H</code></a> ガードに依存しています。</li>
 </ul>
 <h2>関連コード</h2>
 <ul>
-<li><a class="wiki-source-link" href="../../../../../source/src/include/port/atomics/generic.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/port/atomics/generic.h.html&quot;}, '*');"><code>src/include/port/atomics/generic.h</code></a>: 本ファイルが提供するアーキテクチャ固有のマクロを利用してアトミック操作を構築する上位の関連ファイルです。</li>
-<li><a class="wiki-source-link" href="../../../../../source/src/include/port/atomics/arch-x86.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/port/atomics/arch-x86.h.html&quot;}, '*');"><code>src/include/port/atomics/arch-x86.h</code></a>: 同等の目的を持つ x86 アーキテクチャ向けのヘッダーファイルです。</li>
-<li><a class="wiki-source-link" href="../../../../../source/src/include/port/atomics/arch-ppc.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/port/atomics/arch-ppc.h.html&quot;}, '*');"><code>src/include/port/atomics/arch-ppc.h</code></a>: 同等の目的を持つ PowerPC アーキテクチャ向けのヘッダーファイルです。</li>
+<li><a class="wiki-source-link" href="../../../../../source/src/include/port/atomics/generic.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/port/atomics/generic.h.html&quot;}, '*');"><code>src/include/port/atomics/generic.h</code></a>: アトミック操作の共通インターフェースを定義する上位の関連ファイル。</li>
+<li><a class="wiki-source-link" href="../../../../../source/src/include/port/atomics/arch-x86.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/port/atomics/arch-x86.h.html&quot;}, '*');"><code>src/include/port/atomics/arch-x86.h</code></a> や <a class="wiki-source-link" href="../../../../../source/src/include/port/atomics/arch-ppc.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/port/atomics/arch-ppc.h.html&quot;}, '*');"><code>src/include/port/atomics/arch-ppc.h</code></a>: 他のアーキテクチャ向けの同等なヘッダーファイル。</li>
 </ul>
 <h2>読者向けメモ</h2>
 <ul>
-<li>インクルードガード（<code>#ifndef</code>）の代わりに <a class="wiki-source-link" href="../../../../../source/src/include/port/atomics.h.html#L45" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/port/atomics.h.html&quot;}, '*');"><code>INSIDE_ATOMICS_H</code></a> によるチェックを行っているため、このファイルを直接インクルードしないように注意してください。</li>
+<li>インクルードガードの代わりに <a class="wiki-source-link" href="../../../../../source/src/include/port/atomics.h.html#L45" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/port/atomics.h.html&quot;}, '*');"><code>INSIDE_ATOMICS_H</code></a> によるチェックを行っているため、必ず <a class="wiki-source-link" href="../../../../../source/src/include/port/atomics.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/port/atomics.h.html&quot;}, '*');"><code>atomics.h</code></a> を経由してインクルードする必要があります。</li>
+<li>ARM32では64ビットアトミックが意図的に無効化される挙動に注意してください。</li>
 </ul><script>
 (function() {
   function notifyParent() {

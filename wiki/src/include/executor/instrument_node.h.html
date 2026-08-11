@@ -1,7 +1,7 @@
 <!doctype html>
 <html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>src/include/executor/instrument_node.h.md</title><link rel="stylesheet" href="../../../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../../../source/src/include/executor/instrument_node.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/executor/instrument_node.h.html&quot;}, '*');">src/include/executor/instrument_node.h</a></h1>
 <h2>概要</h2>
-<p>パラレルクエリ実行におけるノード固有の統計情報（EXPLAIN ANALYZE 用）のデータ構造と、ワーカー間の統計集約を支えるインライン関数を定義するヘッダーファイルです。ポインタを持たない設計になっており、プロセス間でのメモリコピーや動的共有メモリ（DSM）経由での集約を容易にしています。</p>
+<p>パラレルクエリ実行におけるノード固有の統計情報（<a class="wiki-source-link" href="../../../../source/src/include/optimizer/optimizer.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/optimizer/optimizer.h.html&quot;}, '*');">EXPLAIN</a> ANALYZE 用）のデータ構造と、ワーカー間の統計集約を支えるインライン関数を定義するヘッダーファイルです。ポインタを持たない設計になっており、プロセス間でのメモリコピーや動的共有メモリ（DSM）経由での集約を容易にしています。</p>
 <h2>モジュール内での役割</h2>
 <p><code>src/include/executor</code> サブシステムにおいて、クエリ実行ノード（集約、各種スキャン、ソート、ハッシュ、Memoizeなど）の性能計測および並列ワーカーからの統計情報収集を標準化する役割を持ちます。リーダープロセスが各ワーカーの実行結果を集約して表示するための基盤を提供します。</p>
 <h2>責務</h2>

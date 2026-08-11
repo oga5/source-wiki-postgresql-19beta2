@@ -1,30 +1,34 @@
 <!doctype html>
 <html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>src/include/port/atomics/arch-ppc.h.md</title><link rel="stylesheet" href="../../../../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../../../../source/src/include/port/atomics/arch-ppc.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/port/atomics/arch-ppc.h.html&quot;}, '*');">src/include/port/atomics/arch-ppc.h</a></h1>
 <h2>概要</h2>
-<p>PowerPC アーキテクチャ固有の低レベルアトミック操作とメモリバリアの実装を提供します。GCC インラインアセンブラを用いて、PowerPC のロード予約/ストア条件付き命令（<code>lwarx</code> / <code>stwcx.</code> および <code>ldarx</code> / <code>stdcx.</code>）を直接実行します。</p>
+<p>PowerPC (PPC) アーキテクチャ向けのインラインアセンブリを用いたハードウェア固有のアトミック操作およびメモリバリアの実装を提供します。</p>
 <h2>モジュール内での役割</h2>
-<p><code>src/include/port/atomics</code> サブシステムの一部として、CPU アーキテクチャに依存する最適化されたアトミック処理を提供します。共通のラッパーヘッダである <a class="wiki-source-link" href="../../../../../source/src/include/port/atomics/generic.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/port/atomics/generic.h.html&quot;}, '*');"><code>generic.h</code></a> からインクルードされ、PowerPC 環境でのプリミティブを定義します。</p>
+<p><code>src/include/port/atomics</code> サブシステムの一部として、汎用アトミック API (<a class="wiki-source-link" href="../../../../../source/src/include/port/atomics/generic.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/port/atomics/generic.h.html&quot;}, '*');"><code>generic.h</code></a>) からバックエンドとして利用され、PPC 環境における 32 ビットおよび 64 ビットのアトミック処理を直接定義します。</p>
 <h2>責務</h2>
 <ul>
-<li>PowerPC 向けのメモリバリア命令（<code>sync</code>, <code>lwsync</code>）のマクロ定義。</li>
-<li>32ビットおよび 64ビット（64ビットモード時のみ）の符号なし整数アトミック構造体の定義。</li>
-<li>比較交換（Compare-and-Swap）および加算フェッチ（Fetch-and-Add）のインライン関数実装。</li>
-<li>8バイトの単一コピーアトミシティ（Single-copy atomicity）のサポート宣言。</li>
+<li>GCC インラインアセンブリを使用して、PowerPC 独自のロード・ストア予約命令 (<code>lwarx</code>/<code>stwcx.</code> および <code>ldarx</code>/<code>stdcx.</code>) によるアトミック操作を実装する。</li>
+<li><code>sync</code> および <code>lwsync</code> 命令を活用してメモリバリア (<code>pg_memory_barrier_impl</code>, <code>pg_read_barrier_impl</code>, <code>pg_write_barrier_impl</code>) を定義する。</li>
+<li>64 ビットアトミック操作のサポート判定 (<code>SIZEOF_VOID_P &gt;= 8</code>) と、8 バイトの単一コピー原子性 (<code>PG_HAVE_8BYTE_SINGLE_COPY_ATOMICITY</code>) を宣言する。</li>
+</ul>
+<h2>重要なシンボル</h2>
+<ul>
+<li><code>struct pg_atomic_uint32</code>, <code>struct pg_atomic_uint64</code>: 32 ビットおよび 64 ビットのアトミック整数型コンテナ。</li>
+<li><code>pg_atomic_compare_exchange_u32_impl</code>, <code>pg_atomic_compare_exchange_u64_impl</code>: 比較・交換（CAS）操作のインライン実装。</li>
+<li><code>pg_atomic_fetch_add_u32_impl</code>, <code>pg_atomic_fetch_add_u64_impl</code>: アトミックな加算と値の取得を行うインライン実装。</li>
 </ul>
 <h2>制御フローとデータフロー</h2>
-<ul>
-<li>**メモリバリア**: <code>pg_memory_barrier_impl()</code> は <code>sync</code> を発行し、<code>pg_read_barrier_impl()</code> / <code>pg_write_barrier_impl()</code> は軽量な <code>lwsync</code> を発行します。</li>
-<li>**アトミック演算ループ**: <code>pg_atomic_compare_exchange_u32_impl</code> 等では、<code>lwarx</code> で予約付きロードを行い、期待値と比較のうえ <code>stwcx.</code> でストアを試みます。条件付きストアが失敗した場合はループバックして再試行します。</li>
-<li>**定数最適化**: <code>__builtin_constant_p</code> を用いてオペランドが 16 ビット即値に収まる場合に最適化された命令バリエーションを選択します。</li>
-</ul>
+<p>1. 各関数は、まず <code>sync</code> 命令を発行して先行するメモリ操作を完了させます。 2. <code>lwarx</code> または <code>ldarx</code> 命令で対象変数をロードし、予約をかけます。 3. 比較（<code>cmpw</code>/<code>cmpd</code>）または演算（<code>add</code>/<code>addi</code>）を行い、条件付きストア命令 <code>stwcx.</code> / <code>stdcx.</code> を実行します。 4. ストアが失敗した場合（他のスレッド割り込み等）、ループ (<code>bne</code>) により予約とストアを再試行します。 5. 成功時は <code>lwsync</code> 命令で順序付けを保証し、必要に応じて条件レジスタ（<code>mfcr</code>）から結果を取得して呼び出し元へ返します。</p>
+<h2>直接依存</h2>
+<p>直接のローカルインヘリタンスやインクルードはありませんが、GCC のコンパイラ拡張（<code>__GNUC__</code>, <code>__builtin_constant_p</code>, インラインアセンブリ構文）に依存しています。</p>
 <h2>関連コード</h2>
 <ul>
-<li><a class="wiki-source-link" href="../../../../../source/src/include/port/atomics/generic.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/port/atomics/generic.h.html&quot;}, '*');"><code>src/include/port/atomics/generic.h</code></a>: 本ファイルで定義されたアーキテクチャ依存のマクロや関数を取り込み、上位の共通アトミック API を構築する親ヘッダ。</li>
+<li><a class="wiki-source-link" href="../../../../../source/src/include/port/atomics/generic.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/port/atomics/generic.h.html&quot;}, '*');"><code>src/include/port/atomics/generic.h</code></a>: 本ファイルで定義されたインプレース実装を統括する上位の汎用アトミックヘッダー。</li>
+<li>他のアーキテクチャ固有ヘッダー（<a class="wiki-source-link" href="../../../../../source/src/include/port/atomics/arch-x86.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/port/atomics/arch-x86.h.html&quot;}, '*');"><code>arch-x86.h</code></a>, <a class="wiki-source-link" href="../../../../../source/src/include/port/atomics/arch-arm.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/port/atomics/arch-arm.h.html&quot;}, '*');"><code>arch-arm.h</code></a> 等）</li>
 </ul>
 <h2>読者向けメモ</h2>
 <ul>
-<li>64 ビットアトミック操作（<code>pg_atomic_uint64</code> および関連関数）は、<code>SIZEOF_VOID_P &gt;= 8</code>（64ビットモード）でのみ有効化されます。</li>
-<li>レジスタ割り当てにおいて、汎用レジスタ <code>r0</code> の割り当てを避けるための制約（<code>&quot;=&amp;b&quot;</code> 等）が使用されています。</li>
+<li>64 ビットアトミック操作 (<code>pg_atomic_uint64</code>) は、64 ビットモード（<code>SIZEOF_VOID_P &gt;= 8</code>）でのみ有効化されます。</li>
+<li>定数最適化（<code>HAVE_I_CONSTRAINT__BUILTIN_CONSTANT_P</code>）により、即値をとれる場合は <code>cmpwi</code> や <code>addi</code> などの即値命令が選択されます。</li>
 </ul>
 <h2>シンボルページ</h2>
 <ul>

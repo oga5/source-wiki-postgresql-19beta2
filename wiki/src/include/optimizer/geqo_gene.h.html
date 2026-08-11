@@ -1,0 +1,54 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>src/include/optimizer/geqo_gene.h.md</title><link rel="stylesheet" href="../../../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../../../source/src/include/optimizer/geqo_gene.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/optimizer/geqo_gene.h.html&quot;}, '*');">src/include/optimizer/geqo_gene.h</a></h1>
+<h2>概要</h2>
+<p>PostgreSQLの遺伝的クエリ最適化（GEQO）モジュールにおいて、遺伝子表現、染色体、および個体プールを定義するヘッダーファイルです。</p>
+<h2>モジュール内での役割</h2>
+<p>GEQOサブシステム全体で使用される基本的なデータ構造（遺伝子、染色体、プール）を定義し、突然変異、交叉、選択、評価などのアルゴリズムコンポーネントへ共通の基盤を提供します。</p>
+<h2>責務</h2>
+<ul>
+<li>クエリ最適化における探索空間の要素を表現する <a class="wiki-source-link" href="../../../../source/src/include/optimizer/geqo_gene.h.html#L33" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__optimizer__geqo_gene_h__Gene.html&quot;}, '*');"><code>Gene</code></a> 型の定義。</li>
+<li>順列やコスト評価を保持する <code>Chromosome</code> 構造体の提供。</li>
+<li>複数の染色体を管理する <code>Pool</code> 構造体の提供。</li>
+</ul>
+<h2>重要なシンボル</h2>
+<ul>
+<li><a class="wiki-source-link" href="../../../../source/src/include/optimizer/geqo_gene.h.html#L33" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__optimizer__geqo_gene_h__Gene.html&quot;}, '*');"><code>Gene</code></a>: リレーションID等の代わりに用いる整数型（通常は <code>int</code>）。</li>
+<li><code>Chromosome</code>: 遺伝子の配列（<code>string</code>）と評価コスト（<code>worth</code>）を保持する構造体。</li>
+<li><code>Pool</code>: 染色体の動的配列（<code>data</code>）、プールサイズ、遺伝子長を管理する構造体。</li>
+</ul>
+<h2>制御フローとデータフロー</h2>
+<p>データ構造の定義のみを提供するため、このファイル自体には制御フローやデータフローは存在しません。ここで定義された型は、<a class="wiki-source-link" href="../../../../source/src/include/optimizer/geqo_pool.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/optimizer/geqo_pool.h.html&quot;}, '*');"><code>geqo_pool.h</code></a>、<a class="wiki-source-link" href="../../../../source/src/include/optimizer/geqo_recombination.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/optimizer/geqo_recombination.h.html&quot;}, '*');"><code>geqo_recombination.h</code></a>、<a class="wiki-source-link" href="../../../../source/src/include/optimizer/geqo_mutation.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/optimizer/geqo_mutation.h.html&quot;}, '*');"><code>geqo_mutation.h</code></a> などの関連ファイルで操作されます。</p>
+<h2>直接依存</h2>
+<ul>
+<li><code>nodes/nodes.h</code>: 基本的なPostgreSQLノード機構や共通定義への依存。</li>
+</ul>
+<h2>関連コード</h2>
+<ul>
+<li><a class="wiki-source-link" href="../../../../source/src/include/optimizer/geqo.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/optimizer/geqo.h.html&quot;}, '*');"><code>src/include/optimizer/geqo.h</code></a>: GEQO全体のインターフェース定義。</li>
+<li><a class="wiki-source-link" href="../../../../source/src/include/optimizer/geqo_pool.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/optimizer/geqo_pool.h.html&quot;}, '*');"><code>src/include/optimizer/geqo_pool.h</code></a>: <code>Pool</code> 構造体を操作する関数群。</li>
+<li><a class="wiki-source-link" href="../../../../source/src/include/optimizer/geqo_recombination.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/optimizer/geqo_recombination.h.html&quot;}, '*');"><code>src/include/optimizer/geqo_recombination.h</code></a>: 染色体の交叉処理を行う関連コード。</li>
+</ul>
+<h2>読者向けメモ</h2>
+<ul>
+<li><a class="wiki-source-link" href="../../../../source/src/include/optimizer/geqo_gene.h.html#L33" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__optimizer__geqo_gene_h__Gene.html&quot;}, '*');"><code>Gene</code></a> 型には <code>Relid</code> ではなく <code>int</code> が意図的に使用されています。変更しないよう注意してください。</li>
+</ul>
+<h2>シンボルページ</h2>
+<ul>
+<li><a href="../../../symbols/src__include__optimizer__geqo_gene_h__Gene.html" target="wiki-view"><code>Gene</code></a></li>
+<li><a href="../../../symbols/src__include__optimizer__geqo_gene_h__Chromosome.html" target="wiki-view"><code>Chromosome</code></a></li>
+<li><a href="../../../symbols/src__include__optimizer__geqo_gene_h__Pool.html" target="wiki-view"><code>Pool</code></a></li>
+</ul><script>
+(function() {
+  function notifyParent() {
+    if (parent === window) return;
+    parent.postMessage({type: "frame-location", frame: window.name || "", href: window.location.href}, "*");
+  }
+  document.addEventListener("click", function(event) {
+    const link = event.target.closest("a[data-panel]");
+    if (!link || parent === window) return;
+    parent.postMessage({type: "source-link", panel: link.dataset.panel}, "*");
+  });
+  window.addEventListener("load", notifyParent);
+  window.addEventListener("hashchange", notifyParent);
+})();
+</script></body></html>

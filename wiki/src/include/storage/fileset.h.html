@@ -1,44 +1,55 @@
 <!doctype html>
 <html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>src/include/storage/fileset.h.md</title><link rel="stylesheet" href="../../../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../../../source/src/include/storage/fileset.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/storage/fileset.h.html&quot;}, '*');">src/include/storage/fileset.h</a></h1>
 <h2>概要</h2>
-<p>名前付きの一時ファイルを管理するための <code>FileSet</code> 構造体と、それらを操作する公開 API のインターフェースを定義するヘッダーファイルです。</p>
+<p><a class="wiki-source-link" href="../../../../source/src/include/storage/fileset.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/storage/fileset.h.html&quot;}, '*');"><code>src/include/storage/fileset.h</code></a> は、PostgreSQL における名前付き一時ファイルの管理機構を提供するヘッダーファイルです。複数回にわたるオープン／クローズや、トランザクションをまたいだ生存が必要となる一時ファイルの名前空間（ディレクトリのようなもの）を定義します。</p>
 <h2>モジュール内での役割</h2>
-<p><code>src/include/storage</code> ストレージサブシステムにおいて、単一または複数のバックエンドプロセス間でライフサイクルにまたがり、複数回のオープン・クローズが可能な名前付き一時ファイルのネームスペースを提供します。</p>
+<ul>
+<li>ストレージサブシステム（<code>src/include/storage/</code>）の一部として、低水準ファイルディスクリプタ管理（<code>storage/fd.h</code>）の上に位置する抽象化レイヤーを提供します。</li>
+<li>一時ファイルの配置先となる一時テーブルスペース（<a class="wiki-source-link" href="../../../../source/src/backend/commands/tablespace.c.html#L86" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/commands/tablespace.c.html&quot;}, '*');"><code>temp_tablespaces</code></a>）の割り当て情報を保持し、バックエンド間で一貫したファイルパスを構築します。</li>
+<li>対となる実体ファイル <a class="wiki-source-link" href="../../../../source/src/backend/storage/file/fileset.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/storage/file/fileset.c.html&quot;}, '*');"><code>src/backend/storage/file/fileset.c</code></a> と連携します。</li>
+</ul>
 <h2>責務</h2>
 <ul>
-<li>名前付き一時ファイルのグループ管理を行う <code>FileSet</code> データ構造の定義。</li>
-<li><code>FileSet</code> の初期化、ファイルの作成、オープン、削除、および一括削除を行う関数シグネチャの提供。</li>
-<li>一時ファイル配置先のテーブルスペース情報の保持と構成。</li>
+<li>名前付き一時ファイルのメタデータ構造体である <code>FileSet</code> 型の定義。</li>
+<li>一時ファイルセットの初期化、作成、オープン、削除、および全削除を行う公開 API 関数の宣言。</li>
+<li>複数テーブルスペースへのファイル分散配置に必要な状態管理の提供。</li>
 </ul>
 <h2>重要なシンボル</h2>
 <ul>
-<li><code>FileSet</code>: 作成プロセスの PID、識別子、および利用するテーブルスペースの Oid 配列を保持する構造体。</li>
-<li><code>FileSetInit</code>: <code>FileSet</code> 構造体を初期化し、一時テーブルスペースを割り当てる関数。</li>
-<li><code>FileSetCreate</code> / <code>FileSetOpen</code>: <code>FileSet</code> 内で一時ファイルを新規作成またはオープンする関数。</li>
-<li><code>FileSetDelete</code> / <code>FileSetDeleteAll</code>: 個別または一括で一時ファイルを削除する関数。</li>
+<li><code>FileSet</code> (struct): 作成プロセスの PID、識別番号、使用するテーブルスペースの数と Oid 配列を保持する構造体。</li>
+<li><code>FileSetInit(FileSet *fileset)</code>: 指定されたファイルセット構造体を初期化し、一時テーブルスペース群をキャッシュする関数。</li>
+<li><code>FileSetCreate(FileSet *fileset, const char *name)</code>: ファイルセット内に新しい一時ファイルを作成し、仮想ファイル識別子を返す関数。</li>
+<li><code>FileSetOpen(FileSet *fileset, const char *name, int mode)</code>: 既存の一時ファイルをオープンする関数。</li>
+<li><code>FileSetDelete(FileSet *fileset, const char *name, bool error_on_failure)</code>: 個別の一時ファイルを削除する関数。</li>
+<li><code>FileSetDeleteAll(FileSet *fileset)</code>: ファイルセットに関連するすべてのファイルを削除する関数。</li>
 </ul>
 <h2>制御フローとデータフロー</h2>
 <ul>
-<li>呼び出し元はまず <code>FileSetInit</code> を呼び出して構造体を初期化し、利用可能な一時テーブルスペースの Oid を確定させます。</li>
-<li>ファイル操作時には <code>FileSetCreate</code> または <code>FileSetOpen</code> に <code>FileSet</code> とファイル名を渡し、実体パスを解決して <a class="wiki-source-link" href="../../../../source/src/include/storage/fd.h.html#L51" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__storage__fd_h__File.html&quot;}, '*');"><code>File</code></a> ハンドルを取得します。</li>
-<li>不要になったファイルは <code>FileSetDelete</code> または <code>FileSetDeleteAll</code> によって明示的に削除されます。</li>
+<li>利用側コードはまず <code>FileSet</code> 構造体を宣言し、<code>FileSetInit()</code> に渡して PID やテーブルスペース群の割り当てを初期化します。</li>
+<li>ファイル操作時には、<code>FileSetCreate()</code> または <code>FileSetOpen()</code> が <code>name</code> を受け取り、内部でパスを解決して <a class="wiki-source-link" href="../../../../source/src/include/storage/fd.h.html#L51" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__storage__fd_h__File.html&quot;}, '*');"><code>File</code></a> 型のハンドルを返します。</li>
+<li>不要になったファイルは <code>FileSetDelete()</code> または <code>FileSetDeleteAll()</code> によって明示的にクリーンアップされます。</li>
 </ul>
 <h2>直接依存</h2>
 <ul>
-<li><code>storage/fd.h</code>: ファイル記述子および <a class="wiki-source-link" href="../../../../source/src/include/storage/fd.h.html#L51" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__storage__fd_h__File.html&quot;}, '*');"><code>File</code></a> 型の定義に依存。</li>
+<li><code>storage/fd.h</code>: PostgreSQL のファイルディスクリプタおよび <a class="wiki-source-link" href="../../../../source/src/include/storage/fd.h.html#L51" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__storage__fd_h__File.html&quot;}, '*');"><code>File</code></a> 型の定義を利用するためインクルードしています。</li>
 </ul>
 <h2>関連コード</h2>
 <ul>
-<li><a class="wiki-source-link" href="../../../../source/src/backend/storage/file/fileset.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/storage/file/fileset.c.html&quot;}, '*');"><code>src/backend/storage/file/fileset.c</code></a>: <code>FileSet</code> API の実際のロジックとパス解決・ディレクトリ作成を実装するペアファイル。</li>
-<li><a class="wiki-source-link" href="../../../../source/src/include/storage/sharedfileset.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/storage/sharedfileset.h.html&quot;}, '*');"><code>src/include/storage/sharedfileset.h</code></a>: 複数プロセス間で共有されるファイルセット機能を提供する関連ヘッダー。</li>
+<li><a class="wiki-source-link" href="../../../../source/src/backend/storage/file/fileset.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/storage/file/fileset.c.html&quot;}, '*');"><code>src/backend/storage/file/fileset.c</code></a>: 本ヘッダーで宣言された API の実体を実装しているペアファイル。</li>
+<li><a class="wiki-source-link" href="../../../../source/src/include/storage/sharedfileset.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/storage/sharedfileset.h.html&quot;}, '*');"><code>src/include/storage/sharedfileset.h</code></a>: 共有メモリ環境や複数プロセス間で <code>FileSet</code> を拡張して利用するための関連コンポーネント。</li>
 </ul>
 <h2>読者向けメモ</h2>
 <ul>
-<li><code>FileSet</code> に属するファイルはトランザクションを跨いで生存できるため、不要になった際は呼び出し元が責任を持って <code>FileSetDelete</code> や <code>FileSetDeleteAll</code> でクリーンアップする必要があります。</li>
-<li>テーブルスペースの割り当てには <a class="wiki-source-link" href="../../../../source/src/backend/commands/tablespace.c.html#L86" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/commands/tablespace.c.html&quot;}, '*');"><code>temp_tablespaces</code></a> GUC 設定が利用されます。</li>
+<li><code>FileSet</code> が使用するテーブルスペース配列のサイズは最大 8 まで固定されています（通常の設定では十分であるという仮定に基づきます）。</li>
+<li>自動的なガベージコレクションは行われないため、呼び出し側が責任を持って <code>FileSetDelete</code> または <code>FileSetDeleteAll</code> を呼び出す必要があります。</li>
 </ul>
 <h2>シンボルページ</h2>
 <ul>
+<li><a href="../../../symbols/src__include__storage__fileset_h__FileSetCreate.html" target="wiki-view"><code>FileSetCreate</code></a></li>
+<li><a href="../../../symbols/src__include__storage__fileset_h__FileSetDelete.html" target="wiki-view"><code>FileSetDelete</code></a></li>
+<li><a href="../../../symbols/src__include__storage__fileset_h__FileSetDeleteAll.html" target="wiki-view"><code>FileSetDeleteAll</code></a></li>
+<li><a href="../../../symbols/src__include__storage__fileset_h__FileSetInit.html" target="wiki-view"><code>FileSetInit</code></a></li>
+<li><a href="../../../symbols/src__include__storage__fileset_h__FileSetOpen.html" target="wiki-view"><code>FileSetOpen</code></a></li>
 <li><a href="../../../symbols/src__include__storage__fileset_h__FileSet.html" target="wiki-view"><code>FileSet</code></a></li>
 </ul><script>
 (function() {
