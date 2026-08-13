@@ -1,0 +1,20 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>src/test/modules/test_predtest/README</title><link rel="stylesheet" href="../../../../../../styles.css"></head><body><h1>Japanese translation</h1><p><code>src/test/modules/test_predtest/README</code></p><p><a href="../../../../../../source/src/test/modules/test_predtest/README.html" target="source-view">View original document</a></p><p class="document-translation-progress document-translation-complete">Translation complete.</p><div class="document-translation-body"><section class="document-translation-chunk translated" data-chunk-order="0"><p>test_predtestは、src/backend/optimizer/util/predtest.cにあるオプティマイザの述語証明ロジックの正確性を検証するためのモジュールです。</p>
+<p>このモジュールは、predtest.cが公開している関数であるpredicate_implied_by()およびpredicate_refuted_by()を任意のブーリアン式に直接適用し、その結果を直接検査できるようにする関数を提供します。これはプランナの結果を確認することで間接的に行うこともできますが、期待される結果が得られたことを証明するエンドツーエンドのテストケースを構築するのは困難な場合があります。</p>
+<p>一般に、この関数の使用方法は以下のようになります。 select * from test_predtest(&#x27;query string&#x27;) ここで、クエリ文字列は2つのブーリアン列を返すSELECTである必要があります。例えば、以下のようになります。</p>
+<p>select * from test_predtest($$ select x, not x from (values (false), (true), (null)) as v(x) $$);</p>
+<p>この関数は、指定されたクエリをパースして計画を作成し、predtest.cのコードをSELECTリスト内の2つのブーリアン式に適用して、最初の式が2番目の式によって証明または反証できるかどうかを確認します。また、クエリを実行し、得られた行をチェックして、主張された含意または反証の関係が実際に成り立っているかどうかを確認します。上記の例のように、考えられる入力値の完全なセットに対して式を評価するようにクエリが設計されている場合、これは証明コードが正しい答えを出したかどうかを機械的にクロスチェックする手段を提供します。</p></section></div><script>
+(function() {
+  function notifyParent() {
+    if (parent === window) return;
+    parent.postMessage({type: "frame-location", frame: window.name || "", href: window.location.href}, "*");
+  }
+  document.addEventListener("click", function(event) {
+    const link = event.target.closest("a[data-panel]");
+    if (!link || parent === window) return;
+    parent.postMessage({type: "source-link", panel: link.dataset.panel}, "*");
+  });
+  window.addEventListener("load", notifyParent);
+  window.addEventListener("hashchange", notifyParent);
+})();
+</script></body></html>

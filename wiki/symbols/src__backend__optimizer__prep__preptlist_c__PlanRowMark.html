@@ -1,36 +1,18 @@
 <!doctype html>
 <html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>symbols/src__backend__optimizer__prep__preptlist_c__PlanRowMark.md</title><link rel="stylesheet" href="../../styles.css"></head><body><h1>PlanRowMark</h1>
-<h2>定義</h2>
+<h2>現在のソース事実</h2>
 <ul>
 <li>種別: <code>function</code></li>
 <li>定義箇所: <code>src/backend/optimizer/prep/preptlist.c:1</code></li>
-<li>所属モジュール: <a class="wiki-entity-link" href="../modules/src__backend__optimizer__prep.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/modules/src__backend__optimizer__prep.html&quot;, &quot;source&quot;: &quot;source/src/backend/optimizer/prep/prepagg.c.html&quot;}, '*');"><code>module:src/backend/optimizer/prep</code></a></li>
-</ul>
-<h2>目的</h2>
-<p>静的シンボル索引から生成された初期シンボルページです。</p>
-<h2>シグネチャまたは形状</h2>
-<ul>
 <li>シグネチャ: <code>/*------------------------------------------------------------------------- * * preptlist.c * Routines to preprocess the parse tree target list * * For an INSERT, the targetlist must contain an entry for each attribute of * the target relation in the correct order. * * For an UPDATE, the targetlist just contains the expressions for the new * column values. * * For UPDATE and DELETE queries, the targetlist must also contain &quot;junk&quot; * tlist entries needed to allow the executor to identify the rows to be * updated or deleted; for example, the ctid of a heap row. (The planner * adds these; they&#x27;re not in what we receive from the parser/rewriter.) * * For all query types, there can be additional junk tlist entries, such as * sort keys, Vars needed for a RETURNING list, and row ID information needed * for SELECT FOR UPDATE locking and/or EvalPlanQual checking. * * The query rewrite phase also does preprocessing of the targetlist (see * rewriteTargetListIU). The division of labor between here and there is * partially historical, but it&#x27;s not entirely arbitrary. The stuff done * here is closely connected to physical access to tables, whereas the * rewriter&#x27;s work is more concerned with SQL semantics. * * * Portions Copyright (c) 1996-2026, PostgreSQL Global Development Group * Portions Copyright (c) 1994, Regents of the University of California * * IDENTIFICATION * src/backend/optimizer/prep/preptlist.c * *------------------------------------------------------------------------- */ #include &quot;postgres.h&quot; #include &quot;access/sysattr.h&quot; #include &quot;access/table.h&quot; #include &quot;catalog/pg_type_d.h&quot; #include &quot;nodes/makefuncs.h&quot; #include &quot;optimizer/appendinfo.h&quot; #include &quot;optimizer/optimizer.h&quot; #include &quot;optimizer/prep.h&quot; #include &quot;optimizer/tlist.h&quot; #include &quot;parser/parse_coerce.h&quot; #include &quot;parser/parsetree.h&quot; #include &quot;utils/lsyscache.h&quot; #include &quot;utils/rel.h&quot; static List *expand_insert_targetlist(PlannerInfo *root, List *tlist, Relation rel)</code></li>
-</ul>
-<h2>入力と出力</h2>
-<p>まだ解析していません。</p>
-<h2>前提条件と不変条件</h2>
-<p>まだ解析していません。</p>
-<h2>アルゴリズムまたは振る舞い</h2>
-<ul>
-<li>複雑度: <code>low</code> (score 2)</li>
-</ul>
-<p>まだ解析していません。</p>
-<h2>呼び出し元と呼び出し先</h2>
-<ul>
 <li>呼び出し元: なし</li>
 <li>呼び出し先: なし</li>
 <li>呼び出し元サイト: なし</li>
 <li>呼び出しサイト: なし</li>
+<li>関連型: <a class="wiki-source-link" href="../../source/src/interfaces/ecpg/test/expected/preproc-type.c.html#L36" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__interfaces__ecpg__test__expected__preproc-type_c__access.html&quot;}, '*');"><code>access</code></a>, <code>c</code>, <code>Group</code>, <code>List</code>, <code>PlannerInfo</code>, <a class="wiki-source-link" href="../../source/src/interfaces/ecpg/preproc/type.h.html#L109" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__interfaces__ecpg__preproc__type_h__prep.html&quot;}, '*');"><code>prep</code></a>, <code>Relation</code></li>
+<li>複雑度: <code>low</code> (score 2)</li>
 </ul>
-<h2>関連データ構造</h2>
-<p><a class="wiki-source-link" href="../../source/src/interfaces/ecpg/test/expected/preproc-type.c.html#L36" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__interfaces__ecpg__test__expected__preproc-type_c__access.html&quot;}, '*');"><code>access</code></a>, <code>c</code>, <code>Group</code>, <code>List</code>, <code>PlannerInfo</code>, <a class="wiki-source-link" href="../../source/src/interfaces/ecpg/preproc/type.h.html#L109" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__interfaces__ecpg__preproc__type_h__prep.html&quot;}, '*');"><code>prep</code></a>, <code>Relation</code></p>
-<h2>ソース抜粋</h2>
+<h3>ソース抜粋</h3>
 <p>~~~c /*------------------------------------------------------------------------- *</p>
 <ul>
 <li><a class="wiki-source-link" href="../../source/src/backend/optimizer/prep/preptlist.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/backend/optimizer/prep/preptlist.c.html&quot;}, '*');">preptlist.c</a></li>
@@ -67,12 +49,10 @@
 <p>#include &quot;<a class="wiki-source-link" href="../../source/src/include/postgres.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/postgres.h.html&quot;}, '*');">postgres.h</a>&quot;</p>
 <p>#include &quot;access/sysattr.h&quot; #include &quot;access/table.h&quot; #include &quot;catalog/pg_type_d.h&quot; #include &quot;nodes/makefuncs.h&quot; #include &quot;optimizer/appendinfo.h&quot; #include &quot;optimizer/optimizer.h&quot; #include &quot;optimizer/prep.h&quot; #include &quot;optimizer/tlist.h&quot; #include &quot;parser/parse_coerce.h&quot; #include &quot;parser/parsetree.h&quot; #include &quot;utils/lsyscache.h&quot; #include &quot;utils/rel.h&quot;</p>
 <p>static List *<a class="wiki-source-link" href="../../source/src/backend/optimizer/prep/preptlist.c.html#L383" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__prep__preptlist_c__expand_insert_targetlist.html&quot;}, '*');">expand_insert_targetlist</a>(PlannerInfo *root, List *tlist, Relation rel); ~~~</p>
-<h2>失敗モードと境界条件</h2>
-<p>まだ解析していません。</p>
-<h2>保守担当者向けメモ</h2>
-<ul>
-<li>後続フェーズで、ソース本文の文脈と caller/callee 情報を使ってこのページを強化する。</li>
-</ul><script>
+<h2>目的</h2>
+<p>プラン内における行ロックや EvalPlanQual 再チェックの対象となるリレーションを表すデータ構造です。</p>
+<h2>アルゴリズムまたは振る舞い</h2>
+<p>プラン生成フェーズにおいて、<code>root-&gt;rowMarks</code> リスト内の要素として保持され、エグゼキュータが対象行を識別またはロックするために参照されます。</p><script>
 (function() {
   function notifyParent() {
     if (parent === window) return;

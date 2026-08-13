@@ -1,50 +1,250 @@
 <!doctype html>
-<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>src/backend/utils/fmgr/README</title><link rel="stylesheet" href="../../../../../../styles.css"></head><body><h1>Japanese translation</h1><p><code>src/backend/utils/fmgr/README</code></p><p><a href="../../../../../../source/src/backend/utils/fmgr/README.html" target="source-view">View original document</a></p><p class="document-translation-progress document-translation-complete">Translation complete.</p><div class="document-translation-body"><section class="document-translation-chunk translated" data-chunk-order="0"><p>src/backend/utils/fmgr/README</p>
-<p>Function Manager ================</p>
-<p>[このファイルは元々、V0 から V1 インターフェースへの移行について説明していました。現在では V1 インターフェースの内部構造と設計根拠をいくつか説明するのみとなり、V0 インターフェースは削除されています。]</p>
-<p>V1 Function-Manager インターフェース ---------------------------------</p>
-<p>設計の核心は、関数ルックアップの結果を表現するためのデータ構造と、特定の関数呼び出しに渡されるパラメータを表現するためのデータ構造です。（システムの多くの部分が同じ関数を何度も繰り返し適用するため、関数ルックアップは関数呼び出しから分離しておきたいと考えました。ルックアップのオーバーヘッドはタプルごとではなく、クエリごとに1回だけ支払われるべきです。）</p>
-<p>pg_proc で関数がルックアップされると、その結果は次のように表現されます。</p>
-<p>typedef struct { PGFunction  fn_addr;    /* pointer to function or handler to be called */ Oid         fn_oid;     /* OID of function (NOT of handler, if any) */ short       fn_nargs;   /* number of input args (0..FUNC_MAX_ARGS) */ bool        fn_strict;  /* function is &quot;strict&quot; (NULL in =&gt; NULL out) */ bool        fn_retset;  /* function returns a set (over multiple calls) */ unsigned char fn_stats; /* collect stats if track_functions &gt; this */ void       *fn_extra;   /* extra space for use by handler */ MemoryContext fn_mcxt;  /* memory context to store fn_extra in */ Node       *fn_expr;    /* expression parse tree for call, or NULL */ } FmgrInfo;</p>
-<p>通常の組み込み関数の場合、fn_addr は単にその関数を実装している C ルーチンのアドレスです。それ以外の場合は、ターゲット関数を含む関数のクラスに対するハンドラーのアドレスになります。ハンドラーは、関数 OID と、場合によっては fn_extra スロットを使用して、実行する特定のコードを見つけることができます。（fn_oid = InvalidOid は、まだ初期化されていない FmgrInfo 構造体を表すために使用できます。fn_extra は、FmgrInfo が関数ルックアップコードによって最初に埋められたときは常に NULL になりますが、クエリ中に同じ FmgrInfo が繰り返し使用されるときに独自のルックアップが何度も行われるのを避けるために、関数ハンドラーが設定することができます。）fn_nargs は関数が期待する引数の数、fn_strict は厳格性フラグ、fn_retset はセットを返すかどうかを示します。これらの値はすべて、関数の pg_proc エントリから取得されます。fn_stats も、この関数の呼び出しに関する実行時統計を追跡するかどうかを制御するように設定されます。</p>
-<p>関数が SQL 式の一部として呼び出される場合、fn_expr は関数呼び出しの式パースツリーを指します。これを使用して、実際の引数に関するパース時の知識を抽出できます。なお、このフィールドは実際には関数に関する情報ではなく引数に関する情報ですが、より論理的な FunctionCallInfoBaseData よりも FmgrInfo 内に保持する方が便利であることが証明されています。</p>
-<p>関数の呼び出し中、次のデータ構造が作成され、関数に渡されます。</p>
-<p>typedef struct { FmgrInfo   *flinfo;         /* ptr to lookup info used for this call */ Node       *context;        /* pass info about context of call */ Node       *resultinfo;     /* pass or return extra info about result */ Oid         fncollation;    /* collation for function to use */ bool        isnull;         /* function must set true if result is NULL */ short       nargs;          /* # arguments actually passed */ NullableDatum args[];       /* Arguments passed to function */ } FunctionCallInfoBaseData; typedef FunctionCallInfoBaseData* FunctionCallInfo;</p>
-<p>flinfo は、呼び出しを行うために使用されたルックアップ情報を指します。通常の関数はおそらくこのフィールドを無視しますが、関数クラスハンドラーは、呼び出されている特定の関数の OID を見つけるためにこのフィールドを必要とします。</p>
-<p>context は「通常の」関数呼び出しでは NULL ですが、特定のコンテキストで関数が呼び出されたときに追加情報を指す場合があります。（例えば、トリガーマネージャーは現在のトリガーイベントに関する情報をここに渡します。）詳細については、以下の「Function Call Contexts」を参照してください。</p>
-<p>resultinfo は、単純な Datum 結果が期待される関数を呼び出すときは NULL です。関数が Datum よりも多くのものを返す場合、Node の何らかのサブタイプを指すことがあります。（例えば、後述するように、セットを返す関数を呼び出すときに resultinfo が使用されます。）context フィールドと同様に、resultinfo は拡張用のフックであり、fmgr 自体はこのフィールドの使用を制限しません。</p>
-<p>fncollation は、パーサーによって導出された入力照合順序（collation）、または照合順序付き型の入力がないか共通の照合順序を共有していない場合の InvalidOid です。これは事実上、隠された追加の引数であり、照合順序に敏感な関数がその動作を決定するために使用できます。</p>
-<p>nargs と args[] は、関数に渡される引数を保持します。関数に渡されるすべての引数（およびその結果値）が、今や一様に Datum 型になることに注意してください。後述するように、呼び出し側と呼び出される側は、標準の Datum と任意の型の間を変換するマクロを適用して、特定の関数の実際の引数型に変換する必要があります。args[i].isnull が true の場合、args[i].value の値は不確定です。</p>
-<p>渡された引数の数が呼び出される側が期待している数と一致していることを確認することは、通常は呼び出し側の責任です。可変数の引数を受け取る呼び出される側を除き、呼び出される側は通常 nargs フィールドを無視し、args[] から値を取得するだけです。</p>
-<p>isnull フィールドは呼び出し前に「false」に初期化されます。関数からの戻り時に、isnull は関数結果の null フラグになります。これが true の場合、実際の関数の戻り値に関係なく、関数の結果は NULL になります。単純な「strict」な関数は、args[].isnull に TRUE の値が含まれている場合には呼び出されさえしないため、isnull と args[i].isnull の両方を無視できることに注意してください。</p>
-<p>FunctionCallInfo は、FmgrValues と、一連のアドホックなパラメータ規約、グローバル変数（少なくとも fmgr_pl_finfo と CurrentTriggerData）、およびその他の醜雑なものに代わるものです。</p>
-<p>呼び出される側（個々の関数であろうと関数ハンドラーであろうと）は、常に次のシグネチャを持つ必要があります。</p>
-<p>Datum function (FunctionCallInfo fcinfo);</p>
-<p>これは、次の typedef で表現されます。</p>
-<p>typedef Datum (*PGFunction) (FunctionCallInfo fcinfo);</p>
-<p>関数は、Datum として表現される結果を返すだけでなく、fcinfo-&gt;isnull を適切に設定する責任があります。すべての呼び出される側が現在まったく同じシグネチャを持ち、正確にそのシグネチャで宣言された関数ポインタを介して呼び出されるため、移植性や最適化の問題は発生しないはずです。</p>
-<p>関数コーディング規約 ---------------------------</p>
-<p>推奨されるマクロとコーディング規約は次のとおりです。</p>
-<p>fmgr から呼び出し可能な関数の定義は、常に次のようになります。</p>
-<p>Datum function_name(PG_FUNCTION_ARGS) { ... }</p>
-<p>&quot;PG_FUNCTION_ARGS&quot; は単に &quot;FunctionCallInfo fcinfo&quot; に展開されます。このマクロを使用する主な理由は、スクリプトが関数定義を見つけやすくすることです。ただし、呼び出し規約を再び変更することになった場合、このマクロが存在することが役立つ可能性があります。</p>
-<p>非厳格（nonstrict）な関数は、個々の引数が null であるかどうかを確認する責任があり、これは PG_ARGISNULL(n)（単に &quot;fcinfo-&gt;args[n].isnull&quot; です）を使用して行うことができます。null である引数の値を取得しようとすることは避ける必要があります。</p>
-<p>厳格および非厳格の両方の関数は、必要に応じて次のようにして NULL を返すことができます。 PG_RETURN_NULL(); これは次のように展開されます。 { fcinfo-&gt;isnull = true; return (Datum) 0; }</p>
-<p>引数の値は通常、次のようなコードを使用して取得されます。 int32	name = PG_GETARG_INT32(number);</p>
-<p>float4、float8、int8 の場合、PG_GETARG マクロは、型が値渡し（pass-by-value）であるか参照渡し（pass-by-reference）であるかを隠蔽します。例えば、float8 が参照渡しである場合、PG_GETARG_FLOAT8 は次のように展開されます。 (* (float8 *) DatumGetPointer(fcinfo-&gt;args[number].value)) そして通常は次のように呼び出されます。 float8  arg = PG_GETARG_FLOAT8(0); 歴史的な理由により、浮動小数点関連の typedef とマクロは型の幅をバイト単位（4 または 8）で表現しますが、整数型の幅はビット単位でラベル付けすることが好まれています。</p>
-<p>非 null の値は、適切な型の PG_RETURN_XXX マクロで返されます。例えば、PG_RETURN_INT32 は次のように展開されます。 return Int32GetDatum(x) PG_RETURN_FLOAT4、PG_RETURN_FLOAT8、および PG_RETURN_INT64 は、必要に応じて palloc を実行することにより、データ型が値渡しであるか参照渡しであるかを隠蔽します。</p>
-<p>fmgr.h は、すべての基本データ型に対して PG_GETARG および PG_RETURN マクロを提供します。特殊な SQL データ型（例：timestamp）を定義するモジュールやヘッダーファイルは、それらの型に適したマクロを定義する必要があり、そうすることでその型を操作する関数を標準スタイルでコーディングできるようになります。</p>
-<p>非プリミティブなデータ型（特に可変長型）の場合、データ型の参照渡しの性質を隠蔽することはあまり実用的ではないため、それらの型の PG_GETARG および PG_RETURN マクロは、DatumGetPointer/PointerGetDatum に適切な型キャストを加えたものと大差ありません（ただし、後述の TOAST の議論を参照してください）。そのような型を返す関数は、結果領域を明示的に palloc() する必要があります。そのような型の GETARG および RETURN マクロには、ポインタを生成または取得することを思い出させるために、末尾に &quot;_P&quot; を付けることをお勧めします。例えば、PG_GETARG_TEXT_P は &quot;text *&quot; を生成します。</p>
-<p>関数が fcinfo-&gt;flinfo や FunctionCallInfo の他の補助フィールドのいずれかにアクセスする必要がある場合、単にそうすればよいのです。これらのケースに対して構文糖衣マクロを提供することが有用であるとは思いません。</p>
-<p>TOAST 対応データ型のサポート ---------------------------------</p>
-<p>TOAST 対応データ型の場合、PG_GETARG マクロは TOAST 解除されたデータ値を配信します。まだ TOAST されたままの値が必要なケースが少数あるかもしれませんが、圧倒的多数のケースでは TOAST 解除された結果が必要とされるため、それがデフォルトになります。TOAST 解除を引き起こさずに引数値を取得するには、PG_GETARG_RAW_VARLENA_P(n) を使用します。</p>
-<p>入力値の変更可能なコピーを必要とする関数もあります。このような場合、TOAST を解除するためにデータをすでにコピーしていたのであれば、追加のコピー手順を実行するのは無意味です。したがって、各 TOAST 対応データ型には、例えば PG_GETARG_TEXT_P_COPY(n) のような追加の取得マクロがあり、これは確実な新鮮なコピーを配信し、可能であればこれを TOAST 解除ステップと結合します。</p>
-<p>また、PG_FREE_IF_COPY(ptr, n) マクロもあり、これは指定されたポインタが n 番目の引数の元の値と異なる場合に限り、そのポインタに対して pfree を実行します。これは、n 番目の引数の値が実際に TOAST 解除されていた場合に、その TOAST 解除された値を解放するために使用できます。現在、コアバックエンドコードが一時領域を定期的に解放するため、関数の実行リークは大きな問題にならないため、大多数の関数ではこれを行う必要はありません。ただし、バージョン 7.1 の時点で、インデックス検索によって呼び出される関数でのメモリリークは、トランザクションの終了までクリーンアップされなくなります。したがって、pg_amop または pg_amproc にリストされている関数は、TOAST 解除されたコピーをリークしないように注意する必要があり、そのためこれらの関数では TOAST 対応の入力に対して PG_FREE_IF_COPY() を使用する必要があります。</p>
-<p>関数は、その結果値を再 TOAST しようとしてはならず、現在のメモリコンテキストで palloc された、TOAST 解除された結果を単に配信するだけにする必要があります。その値が実際にタプルに保存されるとき、タプル トースターがトーストが必要かどうかを決定します。</p>
-<p>関数呼び出しコンテキスト ----------------------</p>
-<p>呼び出し側が fcinfo-&gt;context に非 NULL ポインタを渡す場合、それは Node の何らかのサブタイプを指している必要があります。特定の種類のコンテキストは、ノード型フィールドによって示されます。（呼び出しを受ける側は、渡されているコンテキストの種類を知っていると仮定する前に、IsA() を介して常にノード型を確認する必要があります。）fmgr 自体はこのフィールドの使用に対して他の制限を課しません。</p>
-<p>この規約の現在の使用法には次のようなものがあります。</p>
-<p>&lt;/document&gt;</p></section><section class="document-translation-chunk translated" data-chunk-order="1"><ul>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>src/backend/utils/fmgr/README</title><link rel="stylesheet" href="../../../../../../styles.css"></head><body><h1>Japanese translation</h1><p><code>src/backend/utils/fmgr/README</code></p><p><a href="../../../../../../source/src/backend/utils/fmgr/README.html" target="source-view">View original document</a></p><p class="document-translation-progress document-translation-incomplete">Translation in progress: 1/2 chunks complete. Pending chunks show their original text below.</p><div class="document-translation-body"><section class="document-translation-chunk pending" data-chunk-order="0"><h2>Chunk 1: translation pending</h2><p>This chunk has not been translated yet. Original text:</p><pre class="document-translation-text">src/backend/utils/fmgr/README
+
+Function Manager
+================
+
+[This file originally explained the transition from the V0 to the V1
+interface.  Now it just explains some internals and rationale for the V1
+interface, while the V0 interface has been removed.]
+
+The V1 Function-Manager Interface
+---------------------------------
+
+The core of the design is data structures for representing the result of a
+function lookup and for representing the parameters passed to a specific
+function invocation.  (We want to keep function lookup separate from
+function call, since many parts of the system apply the same function over
+and over; the lookup overhead should be paid once per query, not once per
+tuple.)
+
+
+When a function is looked up in pg_proc, the result is represented as
+
+typedef struct
+{
+    PGFunction  fn_addr;    /* pointer to function or handler to be called */
+    Oid         fn_oid;     /* OID of function (NOT of handler, if any) */
+    short       fn_nargs;   /* number of input args (0..FUNC_MAX_ARGS) */
+    bool        fn_strict;  /* function is &quot;strict&quot; (NULL in =&gt; NULL out) */
+    bool        fn_retset;  /* function returns a set (over multiple calls) */
+    unsigned char fn_stats; /* collect stats if track_functions &gt; this */
+    void       *fn_extra;   /* extra space for use by handler */
+    MemoryContext fn_mcxt;  /* memory context to store fn_extra in */
+    Node       *fn_expr;    /* expression parse tree for call, or NULL */
+} FmgrInfo;
+
+For an ordinary built-in function, fn_addr is just the address of the C
+routine that implements the function.  Otherwise it is the address of a
+handler for the class of functions that includes the target function.
+The handler can use the function OID and perhaps also the fn_extra slot
+to find the specific code to execute.  (fn_oid = InvalidOid can be used
+to denote a not-yet-initialized FmgrInfo struct.  fn_extra will always
+be NULL when an FmgrInfo is first filled by the function lookup code, but
+a function handler could set it to avoid making repeated lookups of its
+own when the same FmgrInfo is used repeatedly during a query.)  fn_nargs
+is the number of arguments expected by the function, fn_strict is its
+strictness flag, and fn_retset shows whether it returns a set; all of
+these values come from the function&#x27;s pg_proc entry.  fn_stats is also
+set up to control whether or not to track runtime statistics for calling
+this function.
+
+If the function is being called as part of a SQL expression, fn_expr will
+point to the expression parse tree for the function call; this can be used
+to extract parse-time knowledge about the actual arguments.  Note that this
+field really is information about the arguments rather than information
+about the function, but it&#x27;s proven to be more convenient to keep it in
+FmgrInfo than in FunctionCallInfoBaseData where it might more logically go.
+
+
+During a call of a function, the following data structure is created
+and passed to the function:
+
+typedef struct
+{
+    FmgrInfo   *flinfo;         /* ptr to lookup info used for this call */
+    Node       *context;        /* pass info about context of call */
+    Node       *resultinfo;     /* pass or return extra info about result */
+    Oid         fncollation;    /* collation for function to use */
+    bool        isnull;         /* function must set true if result is NULL */
+    short       nargs;          /* # arguments actually passed */
+    NullableDatum args[];       /* Arguments passed to function */
+} FunctionCallInfoBaseData;
+typedef FunctionCallInfoBaseData* FunctionCallInfo;
+
+flinfo points to the lookup info used to make the call.  Ordinary functions
+will probably ignore this field, but function class handlers will need it
+to find out the OID of the specific function being called.
+
+context is NULL for an &quot;ordinary&quot; function call, but may point to additional
+info when the function is called in certain contexts.  (For example, the
+trigger manager will pass information about the current trigger event here.)
+Further details appear in &quot;Function Call Contexts&quot; below.
+
+resultinfo is NULL when calling any function from which a simple Datum
+result is expected.  It may point to some subtype of Node if the function
+returns more than a Datum.  (For example, resultinfo is used when calling a
+function that returns a set, as discussed below.)  Like the context field,
+resultinfo is a hook for expansion; fmgr itself doesn&#x27;t constrain the use
+of the field.
+
+fncollation is the input collation derived by the parser, or InvalidOid
+when there are no inputs of collatable types or they don&#x27;t share a common
+collation.  This is effectively a hidden additional argument, which
+collation-sensitive functions can use to determine their behavior.
+
+nargs and args[] hold the arguments being passed to the function.
+Notice that all the arguments passed to a function (as well as its result
+value) will now uniformly be of type Datum.  As discussed below, callers
+and callees should apply the standard Datum-to-and-from-whatever macros
+to convert to the actual argument types of a particular function.  The
+value in args[i].value is unspecified when args[i].isnull is true.
+
+It is generally the responsibility of the caller to ensure that the
+number of arguments passed matches what the callee is expecting; except
+for callees that take a variable number of arguments, the callee will
+typically ignore the nargs field and just grab values from args[].
+
+The isnull field will be initialized to &quot;false&quot; before the call.  On
+return from the function, isnull is the null flag for the function result:
+if it is true the function&#x27;s result is NULL, regardless of the actual
+function return value.  Note that simple &quot;strict&quot; functions can ignore
+both isnull and args[i].isnull, since they won&#x27;t even get called when there
+are any TRUE values in args[].isnull.
+
+FunctionCallInfo replaces FmgrValues plus a bunch of ad-hoc parameter
+conventions, global variables (fmgr_pl_finfo and CurrentTriggerData at
+least), and other uglinesses.
+
+
+Callees, whether they be individual functions or function handlers,
+shall always have this signature:
+
+Datum function (FunctionCallInfo fcinfo);
+
+which is represented by the typedef
+
+typedef Datum (*PGFunction) (FunctionCallInfo fcinfo);
+
+The function is responsible for setting fcinfo-&gt;isnull appropriately
+as well as returning a result represented as a Datum.  Note that since
+all callees will now have exactly the same signature, and will be called
+through a function pointer declared with exactly that signature, we
+should have no portability or optimization problems.
+
+
+Function Coding Conventions
+---------------------------
+
+Here are the proposed macros and coding conventions:
+
+The definition of an fmgr-callable function will always look like
+
+Datum
+function_name(PG_FUNCTION_ARGS)
+{
+	...
+}
+
+&quot;PG_FUNCTION_ARGS&quot; just expands to &quot;FunctionCallInfo fcinfo&quot;.  The main
+reason for using this macro is to make it easy for scripts to spot function
+definitions.  However, if we ever decide to change the calling convention
+again, it might come in handy to have this macro in place.
+
+A nonstrict function is responsible for checking whether each individual
+argument is null or not, which it can do with PG_ARGISNULL(n) (which is
+just &quot;fcinfo-&gt;args[n].isnull&quot;).  It should avoid trying to fetch the value
+of any argument that is null.
+
+Both strict and nonstrict functions can return NULL, if needed, with
+	PG_RETURN_NULL();
+which expands to
+	{ fcinfo-&gt;isnull = true; return (Datum) 0; }
+
+Argument values are ordinarily fetched using code like
+	int32	name = PG_GETARG_INT32(number);
+
+For float4, float8, and int8, the PG_GETARG macros will hide whether the
+types are pass-by-value or pass-by-reference.  For example, if float8 is
+pass-by-reference then PG_GETARG_FLOAT8 expands to
+	(* (float8 *) DatumGetPointer(fcinfo-&gt;args[number].value))
+and would typically be called like this:
+	float8  arg = PG_GETARG_FLOAT8(0);
+For what are now historical reasons, the float-related typedefs and macros
+express the type width in bytes (4 or 8), whereas we prefer to label the
+widths of integer types in bits.
+
+Non-null values are returned with a PG_RETURN_XXX macro of the appropriate
+type.  For example, PG_RETURN_INT32 expands to
+	return Int32GetDatum(x)
+PG_RETURN_FLOAT4, PG_RETURN_FLOAT8, and PG_RETURN_INT64 hide whether their
+data types are pass-by-value or pass-by-reference, by doing a palloc if
+needed.
+
+fmgr.h will provide PG_GETARG and PG_RETURN macros for all the basic data
+types.  Modules or header files that define specialized SQL datatypes
+(eg, timestamp) should define appropriate macros for those types, so that
+functions manipulating the types can be coded in the standard style.
+
+For non-primitive data types (particularly variable-length types) it won&#x27;t
+be very practical to hide the pass-by-reference nature of the data type,
+so the PG_GETARG and PG_RETURN macros for those types won&#x27;t do much more
+than DatumGetPointer/PointerGetDatum plus the appropriate typecast (but see
+TOAST discussion, below).  Functions returning such types will need to
+palloc() their result space explicitly.  I recommend naming the GETARG and
+RETURN macros for such types to end in &quot;_P&quot;, as a reminder that they
+produce or take a pointer.  For example, PG_GETARG_TEXT_P yields &quot;text *&quot;.
+
+When a function needs to access fcinfo-&gt;flinfo or one of the other auxiliary
+fields of FunctionCallInfo, it should just do it.  I doubt that providing
+syntactic-sugar macros for these cases is useful.
+
+
+Support for TOAST-Able Data Types
+---------------------------------
+
+For TOAST-able data types, the PG_GETARG macro will deliver a de-TOASTed
+data value.  There might be a few cases where the still-toasted value is
+wanted, but the vast majority of cases want the de-toasted result, so
+that will be the default.  To get the argument value without causing
+de-toasting, use PG_GETARG_RAW_VARLENA_P(n).
+
+Some functions require a modifiable copy of their input values.  In these
+cases, it&#x27;s silly to do an extra copy step if we copied the data anyway
+to de-TOAST it.  Therefore, each toastable datatype has an additional
+fetch macro, for example PG_GETARG_TEXT_P_COPY(n), which delivers a
+guaranteed-fresh copy, combining this with the detoasting step if possible.
+
+There is also a PG_FREE_IF_COPY(ptr,n) macro, which pfree&#x27;s the given
+pointer if and only if it is different from the original value of the n&#x27;th
+argument.  This can be used to free the de-toasted value of the n&#x27;th
+argument, if it was actually de-toasted.  Currently, doing this is not
+necessary for the majority of functions because the core backend code
+releases temporary space periodically, so that memory leaked in function
+execution isn&#x27;t a big problem.  However, as of 7.1 memory leaks in
+functions that are called by index searches will not be cleaned up until
+end of transaction.  Therefore, functions that are listed in pg_amop or
+pg_amproc should be careful not to leak detoasted copies, and so these
+functions do need to use PG_FREE_IF_COPY() for toastable inputs.
+
+A function should never try to re-TOAST its result value; it should just
+deliver an untoasted result that&#x27;s been palloc&#x27;d in the current memory
+context.  When and if the value is actually stored into a tuple, the
+tuple toaster will decide whether toasting is needed.
+
+
+Function Call Contexts
+----------------------
+
+If a caller passes a non-NULL pointer in fcinfo-&gt;context, it should point
+to some subtype of Node; the particular kind of context is indicated by the
+node type field.  (A callee should always check the node type, via IsA(),
+before assuming it knows what kind of context is being passed.)  fmgr
+itself puts no other restrictions on the use of this field.
+
+Current uses of this convention include:
+
+</pre></section><section class="document-translation-chunk translated" data-chunk-order="1"><ul>
 <li>トリガー関数には、トリガーコンテキストに関する情報を含む struct TriggerData のインスタンスが渡されます（トリガー関数は通常の引数を受け取りません）。トリガー関数によって一般的に使用されるマクロや詳細については、commands/trigger.h を参照してください。</li>
 </ul>
 <ul>

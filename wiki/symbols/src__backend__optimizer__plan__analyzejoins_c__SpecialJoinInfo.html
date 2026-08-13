@@ -1,36 +1,18 @@
 <!doctype html>
 <html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>symbols/src__backend__optimizer__plan__analyzejoins_c__SpecialJoinInfo.md</title><link rel="stylesheet" href="../../styles.css"></head><body><h1>SpecialJoinInfo</h1>
-<h2>定義</h2>
+<h2>現在のソース事実</h2>
 <ul>
 <li>種別: <code>function</code></li>
 <li>定義箇所: <code>src/backend/optimizer/plan/analyzejoins.c:1</code></li>
-<li>所属モジュール: <a class="wiki-entity-link" href="../modules/src__backend__optimizer__plan.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/modules/src__backend__optimizer__plan.html&quot;, &quot;source&quot;: &quot;source/src/backend/optimizer/plan/analyzejoins.c.html&quot;}, '*');"><code>module:src/backend/optimizer/plan</code></a></li>
-</ul>
-<h2>目的</h2>
-<p>静的シンボル索引から生成された初期シンボルページです。</p>
-<h2>シグネチャまたは形状</h2>
-<ul>
 <li>シグネチャ: <code>/*------------------------------------------------------------------------- * * analyzejoins.c * Routines for simplifying joins after initial query analysis * * While we do a great deal of join simplification in prep/prepjointree.c, * certain optimizations cannot be performed at that stage for lack of * detailed information about the query. The routines here are invoked * after initsplan.c has done its work, and can do additional join removal * and simplification steps based on the information extracted. The penalty * is that we have to work harder to clean up after ourselves when we modify * the query, since the derived data structures have to be updated too. * * Portions Copyright (c) 1996-2026, PostgreSQL Global Development Group * Portions Copyright (c) 1994, Regents of the University of California * * * IDENTIFICATION * src/backend/optimizer/plan/analyzejoins.c * *------------------------------------------------------------------------- */ #include &quot;postgres.h&quot; #include &quot;catalog/pg_class.h&quot; #include &quot;nodes/nodeFuncs.h&quot; #include &quot;optimizer/joininfo.h&quot; #include &quot;optimizer/optimizer.h&quot; #include &quot;optimizer/pathnode.h&quot; #include &quot;optimizer/paths.h&quot; #include &quot;optimizer/placeholder.h&quot; #include &quot;optimizer/planmain.h&quot; #include &quot;optimizer/restrictinfo.h&quot; #include &quot;parser/parse_agg.h&quot; #include &quot;rewrite/rewriteManip.h&quot; #include &quot;utils/lsyscache.h&quot; /* * Utility structure. A sorting procedure is needed to simplify the search * of SJE-candidate baserels referencing the same database relation. Having * collected all baserels from the query jointree, the planner sorts them * according to the reloid value, groups them with the next pass and attempts * to remove self-joins. * * Preliminary sorting prevents quadratic behavior that can be harmful in the * case of numerous joins. */ typedef struct</code></li>
-</ul>
-<h2>入力と出力</h2>
-<p>まだ解析していません。</p>
-<h2>前提条件と不変条件</h2>
-<p>まだ解析していません。</p>
-<h2>アルゴリズムまたは振る舞い</h2>
-<ul>
-<li>複雑度: <code>low</code> (score 1)</li>
-</ul>
-<p>まだ解析していません。</p>
-<h2>呼び出し元と呼び出し先</h2>
-<ul>
 <li>呼び出し元: なし</li>
 <li>呼び出し先: なし</li>
 <li>呼び出し元サイト: なし</li>
 <li>呼び出しサイト: なし</li>
+<li>関連型: <code>c</code>, <code>Group</code>, <code>Oid</code>, <a class="wiki-source-link" href="../../source/src/interfaces/ecpg/preproc/type.h.html#L109" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__interfaces__ecpg__preproc__type_h__prep.html&quot;}, '*');"><code>prep</code></a>, <a class="wiki-source-link" href="../../source/src/backend/optimizer/plan/analyzejoins.c.html#L48" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__plan__analyzejoins_c__SelfJoinCandidate.html&quot;}, '*');"><code>SelfJoinCandidate</code></a>, <a class="wiki-source-link" href="../../source/src/interfaces/ecpg/preproc/type.h.html#L89" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__interfaces__ecpg__preproc__type_h__when.html&quot;}, '*');"><code>when</code></a></li>
+<li>複雑度: <code>low</code> (score 1)</li>
 </ul>
-<h2>関連データ構造</h2>
-<p><code>c</code>, <code>Group</code>, <code>Oid</code>, <a class="wiki-source-link" href="../../source/src/interfaces/ecpg/preproc/type.h.html#L109" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__interfaces__ecpg__preproc__type_h__prep.html&quot;}, '*');"><code>prep</code></a>, <a class="wiki-source-link" href="../../source/src/backend/optimizer/plan/analyzejoins.c.html#L48" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__plan__analyzejoins_c__SelfJoinCandidate.html&quot;}, '*');"><code>SelfJoinCandidate</code></a>, <a class="wiki-source-link" href="../../source/src/interfaces/ecpg/preproc/type.h.html#L89" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__interfaces__ecpg__preproc__type_h__when.html&quot;}, '*');"><code>when</code></a></p>
-<h2>ソース抜粋</h2>
+<h3>ソース抜粋</h3>
 <p>~~~c /*------------------------------------------------------------------------- *</p>
 <ul>
 <li><a class="wiki-source-link" href="../../source/src/backend/optimizer/plan/analyzejoins.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/backend/optimizer/plan/analyzejoins.c.html&quot;}, '*');">analyzejoins.c</a></li>
@@ -64,11 +46,15 @@
 <li>case of numerous joins.</li>
 <p>*/ typedef struct { int			relid; Oid			<a class="wiki-source-link" href="../../source/src/backend/optimizer/plan/analyzejoins.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__plan__analyzejoins_c__reloid.html&quot;}, '*');">reloid</a>; } <a class="wiki-source-link" href="../../source/src/backend/optimizer/plan/analyzejoins.c.html#L48" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__plan__analyzejoins_c__SelfJoinCandidate.html&quot;}, '*');">SelfJoinCandidate</a>; ~~~</p>
 </ul>
-<h2>失敗モードと境界条件</h2>
-<p>まだ解析していません。</p>
-<h2>保守担当者向けメモ</h2>
+<h2>定義</h2>
 <ul>
-<li>後続フェーズで、ソース本文の文脈と caller/callee 情報を使ってこのページを強化する。</li>
+<li>種別: <code>struct</code> (索引定義に基づく)</li>
+</ul>
+<h2>目的</h2>
+<p>このシンボルページは <a class="wiki-source-link" href="../../source/src/backend/optimizer/plan/analyzejoins.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/backend/optimizer/plan/analyzejoins.c.html&quot;}, '*');"><code>analyzejoins.c</code></a> 内のコンテキストに関連するが、指定されたソース範囲およびモジュール概要の事実に基づき、該当ファイル内で直接定義されている別のユーティリティ構造体等との混同を避けるため、構造体自体や関数の振る舞いの詳細はこのシンボルのソース範囲外または別ヘッダに依存する。</p>
+<h2>アルゴリズムまたは振る舞い</h2>
+<ul>
+<li>指定されたソース範囲（1〜52行目）では、<code>SpecialJoinInfo</code> という名前のシンボル定義の直接的な処理コードや関数本体は含まれておらず、ファイルヘッダーのコメントおよび <a class="wiki-source-link" href="../../source/src/backend/optimizer/plan/analyzejoins.c.html#L48" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__plan__analyzejoins_c__SelfJoinCandidate.html&quot;}, '*');"><code>SelfJoinCandidate</code></a> 構造体の定義が存在するのみである。</li>
 </ul><script>
 (function() {
   function notifyParent() {

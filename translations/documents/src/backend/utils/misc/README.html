@@ -1,5 +1,5 @@
 <!doctype html>
-<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>src/backend/utils/misc/README</title><link rel="stylesheet" href="../../../../../../styles.css"></head><body><h1>Japanese translation</h1><p><code>src/backend/utils/misc/README</code></p><p><a href="../../../../../../source/src/backend/utils/misc/README.html" target="source-view">View original document</a></p><p class="document-translation-progress document-translation-complete">Translation complete.</p><div class="document-translation-body"><section class="document-translation-chunk translated" data-chunk-order="0"><p>src/backend/utils/misc/README</p>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>src/backend/utils/misc/README</title><link rel="stylesheet" href="../../../../../../styles.css"></head><body><h1>Japanese translation</h1><p><code>src/backend/utils/misc/README</code></p><p><a href="../../../../../../source/src/backend/utils/misc/README.html" target="source-view">View original document</a></p><p class="document-translation-progress document-translation-incomplete">Translation in progress: 1/2 chunks complete. Pending chunks show their original text below.</p><div class="document-translation-body"><section class="document-translation-chunk translated" data-chunk-order="0"><p>src/backend/utils/misc/README</p>
 <p>GUC 実装ノート ========================</p>
 <p>GUC (Grand Unified Configuration) モジュールは、複数の型（現在は boolean、enum、int、real、および string）の 設定変数を実装します。 変数の設定はさまざまな場所から取得され、どの設定を使用するかを決定する優先順位があります。</p>
 <p>変数ごとのフック ------------------</p>
@@ -57,13 +57,44 @@
 <p>RESET は SET のように実行されますが、目的の新しい値として reset_val を使用します。 (RESET LOCAL コマンドは提供していませんが、SET LOCAL TO DEFAULT は RESET LOCAL と同じ動作をします。) reset_val に関連付けられたソースは、実際の値にも関連付けられます。</p>
 <p>SIGHUP を受信すると、GUC コードは postgresql.conf 設定ファイルを再読み込みします （これはシグナルハンドラ内ではなく、メインループへの次の復帰時に行われます。 トランザクション内で実行できることに注意してください）。 postgresql.conf からの新しい値は、これらのおのおのの現在のソース優先度が &lt;= PGC_S_FILE である場合にのみ、 実際の変数、reset_val、およびスタックされた実際の値に割り当てられます。 （したがって、実際の値の異なる対話型値が現在存在する場合でも、 reset_val が設定ファイルの雰囲気を追跡することが可能です。）</p>
 <p>check_hook、assign_hook、および show_hook ルーチンは実際の変数でのみ動作し、 GUC によって維持される追加の値を直接認識しません。</p>
-<p>GUC メモリ管理 -------------------</p></section><section class="document-translation-chunk translated" data-chunk-order="1"><p>String variable values are allocated with guc_malloc or guc_strdup, which ensure that the values are kept in a long-lived context, and provide more control over handling out-of-memory failures than bare palloc.</p>
-<p>We allow a string variable&#x27;s actual value, reset_val, boot_val, and stacked values to point at the same storage.  This makes it slightly harder to free space (we must test whether a value to be freed isn&#x27;t equal to any of the other pointers in the GUC entry or associated stack items).  The main advantage is that we never need to malloc during transaction commit/abort, so cannot cause an out-of-memory failure there.</p>
-<p>&quot;Extra&quot; structs returned by check_hook routines are managed in the same way as string values.  Note that we support &quot;extra&quot; structs for all types of GUC variables, although they are mainly useful with strings.</p>
-<p>GUCとNull文字列変数 -----------------------------</p>
-<p>GUC文字列変数は、NULLのboot_valを持つことができます。guc.cはこれを当然のこととして処理し、基礎となるC変数にNULLを代入します。したがって、そのような変数を使用するコードや、その変数のフック関数は、NULL値を処理できるように準備しておく必要があります。</p>
-<p>しかし、他の方法でGUC文字列変数にNULL値を代入することはできません。SETやpostgresql.confなどから渡される値は空文字列である可能性はありますが、NULLになることはありません。また、SHOWはNULLを空文字列と同様に表示します。したがって、NULL値をユーザーに見える個別の設定として扱うことは適切ではありません。NULLのboot_valの典型的な用途は、起動プロセスの後半で実際の値を受け取る変数に対して、値がまだ設定されていないことを示すことです。</p>
-<p>基礎となるC変数を使用するコードがNULL値について一切心配したくない場合は、変数に非NULLの静的初期化子と非NULLのboot_valの両方を与えることができます。guc.cはInitializeGUCOptionsの実行中に静的初期化子のポインタをboot_valのコピーで上書きしますが、変数がNULLを保持することはありません。</p></section></div><script>
+<p>GUC メモリ管理 -------------------</p></section><section class="document-translation-chunk pending" data-chunk-order="1"><h2>Chunk 2: translation pending</h2><p>This chunk has not been translated yet. Original text:</p><pre class="document-translation-text">String variable values are allocated with guc_malloc or guc_strdup,
+which ensure that the values are kept in a long-lived context, and provide
+more control over handling out-of-memory failures than bare palloc.
+
+We allow a string variable&#x27;s actual value, reset_val, boot_val, and stacked
+values to point at the same storage.  This makes it slightly harder to free
+space (we must test whether a value to be freed isn&#x27;t equal to any of the
+other pointers in the GUC entry or associated stack items).  The main
+advantage is that we never need to malloc during transaction commit/abort,
+so cannot cause an out-of-memory failure there.
+
+&quot;Extra&quot; structs returned by check_hook routines are managed in the same
+way as string values.  Note that we support &quot;extra&quot; structs for all types
+of GUC variables, although they are mainly useful with strings.
+
+
+GUC and Null String Variables
+-----------------------------
+
+A GUC string variable can have a boot_val of NULL.  guc.c handles this
+unsurprisingly, assigning the NULL to the underlying C variable.  Any code
+using such a variable, as well as any hook functions for it, must then be
+prepared to deal with a NULL value.
+
+However, it is not possible to assign a NULL value to a GUC string
+variable in any other way: values coming from SET, postgresql.conf, etc,
+might be empty strings, but they&#x27;ll never be NULL.  And SHOW displays
+a NULL the same as an empty string.  It is therefore not appropriate to
+treat a NULL value as a distinct user-visible setting.  A typical use
+for a NULL boot_val is to denote that a value hasn&#x27;t yet been set for
+a variable that will receive a real value later in startup.
+
+If it&#x27;s undesirable for code using the underlying C variable to have to
+worry about NULL values ever, the variable can be given a non-null static
+initializer as well as a non-null boot_val.  guc.c will overwrite the
+static initializer pointer with a copy of the boot_val during
+InitializeGUCOptions, but the variable will never contain a NULL.
+</pre></section></div><script>
 (function() {
   function notifyParent() {
     if (parent === window) return;

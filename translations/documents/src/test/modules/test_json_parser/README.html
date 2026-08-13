@@ -1,0 +1,22 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>src/test/modules/test_json_parser/README</title><link rel="stylesheet" href="../../../../../../styles.css"></head><body><h1>Japanese translation</h1><p><code>src/test/modules/test_json_parser/README</code></p><p><a href="../../../../../../source/src/test/modules/test_json_parser/README.html" target="source-view">View original document</a></p><p class="document-translation-progress document-translation-complete">Translation complete.</p><div class="document-translation-body"><section class="document-translation-chunk translated" data-chunk-order="0"><p>モジュール <code>test_json_parser</code> =========================</p>
+<p>このモジュールには、jsonパーサーをテストするための2つのプログラムが含まれています。</p>
+<ul>
+<li><code>test_json_parser_incremental</code> は、インクリメンタルパーサーをテストするためのものです。ファイルを読み込み、非常に小さなチャンク（デフォルトは一度に60バイト）でインクリメンタルパーサーに渡します。これは速度テストを目的としたものではなく、インクリメンタルパーサーの正確性をテストするためのものです。オプション &quot;-c nn&quot; は代替のチャンクサイズを指定し、&quot;-r nn&quot; は同じ入力に対して1バイトまでの範囲のチャンクサイズを実行し（出力はヌルバイトで区切られます）、&quot;-s&quot; はセマンティックルーチンの使用を指定します。セマンティックルーチンは、あまりきれいな形式ではありませんが、jsonを再出力します。必須の非オプション引数は、入力ファイル名です。</li>
+<li><code>test_json_parser_perf</code> は、標準的な再帰下降パーサーと非再帰インクリメンタルパーサーの両方の速度テストを行うためのものです。<code>-i</code> フラグが指定された場合は非再帰パーサーを使用し、そうでない場合は標準パーサーを使用します。残りのフラグは、パースの反復回数と入力を含むファイルです。非再帰パーサーを使用する場合でも、入力は単一のチャンクでパーサーに渡されます。したがって、結果は標準パーサーのものと比較可能です。</li>
+</ul>
+<p>サンプル入力ファイルは、数年前に取得された <code>delicious</code> ブックマークのリストから抽出され、サニタイズされた小さな抜粋であり、すべて単一の json 配列にラップされています。</p></section></div><script>
+(function() {
+  function notifyParent() {
+    if (parent === window) return;
+    parent.postMessage({type: "frame-location", frame: window.name || "", href: window.location.href}, "*");
+  }
+  document.addEventListener("click", function(event) {
+    const link = event.target.closest("a[data-panel]");
+    if (!link || parent === window) return;
+    parent.postMessage({type: "source-link", panel: link.dataset.panel}, "*");
+  });
+  window.addEventListener("load", notifyParent);
+  window.addEventListener("hashchange", notifyParent);
+})();
+</script></body></html>

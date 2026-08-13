@@ -1,42 +1,179 @@
 <!doctype html>
-<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>src/tools/pg_bsd_indent/README</title><link rel="stylesheet" href="../../../../../styles.css"></head><body><h1>Japanese translation</h1><p><code>src/tools/pg_bsd_indent/README</code></p><p><a href="../../../../../source/src/tools/pg_bsd_indent/README.html" target="source-view">View original document</a></p><p class="document-translation-progress document-translation-complete">Translation complete.</p><div class="document-translation-body"><section class="document-translation-chunk translated" data-chunk-order="0"><p>src/tools/pg_bsd_indent/README</p>
-<p>これは、FreeBSD プロジェクトによってメンテナンスされている &quot;indent&quot; プログラムを軽微に修正したものです。修正の大部分は BSD 系以外のプラットフォームへ移植しやすくするためのものですが、アップストリーム側に取り込んでもらえなかったフォーマット用のスイッチが 1 つだけ含まれています。</p>
-<p>ビルドするには、周囲の Postgres ソースツリーを configure してから、このディレクトリで &quot;make&quot; を実行します。 オプションとして、簡単なテストを実行するために &quot;make test&quot; を実行することもできます。</p>
-<p>使用する前に、PATH の通った場所に pg_bsd_indent をインストールする必要があります。開発者であれば、おそらく周辺の Postgres のビルドがインストールされるのと同じ場所に配置したくはないでしょう。したがって、この手順は以下のように実行します。</p>
-<p>make install prefix=/usr/local</p>
-<p>ビルドに Meson を使用している場合、標準のビルドターゲットで pg_bsd_indent のビルドとテストが行われますが、現在のところ任意の場所へインストールする仕組みはありません。ビルドされた実行ファイルを build/src/tools/pg_bsd_indent/pg_bsd_indent から配置したい場所へ手動でコピーしてください。</p>
-<p>もし indent のソースコードをハッキングする機会があるなら、既存のインデントスタイルに最も近い設定は以下のようになります。</p>
-<p>./pg_bsd_indent -i4 -l79 -di12 -nfc1 -nlp -sac somefile.c</p>
-<p>もっとも、これが厳密に守られているわけではありません。 （靴職人の子供についての格言はどんなものだったでしょうか？） Postgres スタイルに再インデントする予定はありません。なぜなら、そうすると FreeBSD のソースとの比較が難しくなるためです。</p>
-<p>----------</p>
-<p>このディレクトリ内のファイルの FreeBSD オリジナル版には、BSD ライセンスの「4条項」版が適用されています。UC バークレーの以下の指示に従い、「広告」条項を削除しました。 ftp://ftp.cs.berkeley.edu/pub/4bsd/README.Impt.License.Change 内容は以下の通りです。</p>
-<p>1999年7月22日</p>
-<p>すべてのライセンシー、および BSD のあらゆるバージョンの配布者各位：</p>
-<p>ご存知の通り、カリフォルニア大学バークレー校（UC Berkeley）のソフトウェア配布（&quot;BSD&quot;）ソースコードファイルの一部では、ソフトウェアの全部または一部を含む製品のさらなる配布を行う際、それらの広告資料において、当該製品に UC Berkeley およびその協力者によって開発されたソフトウェアが含まれていることを謝辞として記載することが求められています。</p>
-<p>具体的には、その規定は以下の通りです。</p>
-<p>&quot;     * 3. 本ソフトウェアの機能または使用について言及するすべての広告資料は、</p>
-<ul>
-<li>以下の謝辞を表示しなければならない：</li>
-<li>本製品には、カリフォルニア大学バークレー校およびその協力者によって</li>
-<li>開発されたソフトウェアが含まれています。&quot;</li>
-</ul>
-<p>直ちに発効するものとして、ライセンシーおよび配布者は、広告資料内にこの謝辞を含めることがもはや要求されません。したがって、これを含んでいた BSD Unix ファイルの上記の段落は、ここにその全体が削除されます。</p>
-<p>ウィリアム・ホスキンス（William Hoskins） 技術ライセンスオフィス ディレクター カリフォルニア大学バークレー校</p>
-<p>----------</p>
-<p>以下に続くのは、FreeBSD indent によってメンテナンスされている README ファイルです。</p>
-<p>----------</p>
-<p>$FreeBSD: head/usr.bin/indent/README 105244 2002-10-16 13:58:39Z charnier $</p>
-<p>これは C 言語のインデントツールであり、元々は PDP-11 Unix 用のいくつかの配布テープを介してイリノイ大学から提供されたものです。その後、CMU のジェームズ・ゴスリング（James Gosling）によって手を加えられました。あまり洗練されておらず、実際には完全に作り直す必要がありますが、おそらく現存する中で最も優れた C 言語のプリフィッター（整形プログラム）です。</p>
-<p>「カーネル正規形式（Kernel Normal Form）」を提供するためのさらなる追加は、サン・マイクロシステムズ（Sun Microsystems）の人々によって貢献されました。</p>
-<p>++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ &gt; From mnetor!yunexus!oz@uunet.UU.NET Wed Mar  9 15:30:55 1988 &gt; Date: Tue, 8 Mar 88 18:36:25 EST &gt; From: yunexus!oz@uunet.UU.NET (Ozan Yigit) &gt; To: bostic@okeeffe.berkeley.edu &gt; Cc: ccvaxa!willcox@uunet.UU.NET, jag@sun.com, rsalz@uunet.UU.NET &gt; In-Reply-To: Keith Bostic&#x27;s message of Tue, 16 Feb 88 16:09:06 PST &gt; Subject: Re: Indent...</p>
-<p>indent に関するご返答ありがとうございます。私の最初の観察（あるいは誤った観察 :-）は間違っていました。UCB はイリノイ大学の著作権をそのまま保持していました。</p>
-<p>問題は依然として、私たちが indent を配布できるかどうか、そしてできるのであればどのバージョンかという点です。作者であるデヴィッド・ウィルコックス（David Willcox）は次のように述べています：</p>
-<p>| indent がパブリックドメインにあると私が主張する根拠について、何人もの人から尋ねられました。 | そんな投稿をしたことを後悔するだろうと分かっていました。 | | 少し歴史を振り返ります。1976年当時、私がイリノイ大学高度計算センター（Center for Advanced Computation）で取り組んでいたプロジェクトでは、 | C コードのフォーマット方法を巡って大喧嘩がありました。1週間ほど言い争った後、私はうんざりして、 | C コードを再フォーマットするための indent と呼ぶプログラムを書きました。 | それには、出力を好みの形式にフォーマットできるさまざまなオプションがありました。 | 特に、支持されていたすべての異なるフォーマットがサポートされていました。 | | それは私の初めての大きな C プログラムでした。醜いものでした。設計されたわけではなく、 | なんとなく成長していったものです。しかし、それはほぼ期待通りに動作し、言い争いのほとんどを終わらせました。 | | 形式として、私はイリノイ大学の著作権表示を含めました。しかし私の認識では、 | その作業は ARPA の契約下で行われたものであるため、パブリックドメインでした。 | | 時は流れ、何年か後、indent は初期の emacs のディストリビューションの 1 つに現れました。 | | さらにその後、UC バークレーの誰かがイリノイ大学に電話をかけ、indent がパブリックドメインにあるかどうかを尋ねました。 | 彼らは emacs のものと一緒に、自分たちの UNIX ディストリビューションに含めたかったのです。 | 私はもはやイリノイ大学にはいませんでしたが、そこにいたロブ・コルスタッド（Rob Kolstad）が私にそれについて尋ねました。 | 私は使ってもらっても構わないと答え、それ以来それは BSD ディストリビューションに含まれてきました。 | | その過程のどこかで、他の何人かの名前の挙がらない人々がそれに手を加えました。 | バージョン 7 の C を理解できるように変換されました（オリジナルはバージョン 6 でした）。 | 元のフィルターインターフェースから、現在の「ユーザーのファイルを吹き飛ばす」インターフェースへと変換されました。 | $HOME/.indent.pro ファイルの解析が追加されました。さらにいくつかのフォーマットオプションが追加されました。 | | 私が現在持っているソースには 2 つの著作権表示があります。1つはイリノイ大学からのオリジナルです。 | もう1つはバークレーからのものです。 | | 私は弁護士ではなく、著作権法を確かに理解しているわけでもありません。 | 私に関する限り、このプログラムの大部分、イリノイ大学の著作権でカバーされているすべてのものはパブリックドメインであり、 | その価値は十分にあります。バークレーの著作権は彼らの変更のみをカバーすべきであり、 | それを送信することについて彼らがどう感じているのかは私には分かりません。</p>
-<p>いずれにせよ、その著作権を明確化・変更する人物はイリノイ大学にはいないようですが、（作者の言に基づき）コードは著作権を保持したその現状のままで配布可能であり、法的な問題を引き起こすことはないと確信しています。</p>
-<p>したがって、問題は comp.sources.unix を通じて「どれを」配布するかという点に帰着します。皆さんの許可が得られるのであれば（一部に著作権があることを考慮して）、最も最新のバージョンと思われる indent の 4.3 バージョンを配布することを提案します。 私は、作者から unix テープへの最初の提出物、その後の G-Emacs バージョン、あらゆる 4.n バージョン、サン版、Unipress 版を含む、知られている限りのほぼすべてのバージョンの indent を偶然にも持っています。 それでもなお、私たちが「過去に逆戻り」して、あなた方が行ったすべての作業をやり直す必要はないと考えています。</p>
-<p>これについてどう思われるか、お返事をお待ちしております。もちろん 4.3 バージョンをモデレーターに直接送っていただいても構いませんし、許可をお知らせいただければ私がソースを送ることもできます。あるいは 4.3 バージョンがNGであると知らせていただければ、その場合はおそらく古いバージョンに戻さざるを得なくなるでしょう。いずれにせよ、何らかのバージョンの indent を comp.sources.unix に届けたいと思っています。</p>
-<p>敬具..	oz</p>
-<p>cc: ccvaxa!willcox sun.com!jar uunet!rsalz</p></section></div><script>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>src/tools/pg_bsd_indent/README</title><link rel="stylesheet" href="../../../../../styles.css"></head><body><h1>Japanese translation</h1><p><code>src/tools/pg_bsd_indent/README</code></p><p><a href="../../../../../source/src/tools/pg_bsd_indent/README.html" target="source-view">View original document</a></p><p class="document-translation-progress document-translation-incomplete">Translation in progress: 0/1 chunks complete. Pending chunks show their original text below.</p><div class="document-translation-body"><section class="document-translation-chunk pending" data-chunk-order="0"><h2>Chunk 1: translation pending</h2><p>This chunk has not been translated yet. Original text:</p><pre class="document-translation-text">src/tools/pg_bsd_indent/README
+
+This is a lightly modified version of the &quot;indent&quot; program maintained
+by the FreeBSD project.  The modifications are mostly to make it portable
+to non-BSD-ish platforms, though we do have one formatting switch we
+couldn&#x27;t convince upstream to take.
+
+To build it, configure the surrounding Postgres source tree,
+then run &quot;make&quot; in this directory.
+Optionally, run &quot;make test&quot; for some simple tests.
+
+You&#x27;ll need to install pg_bsd_indent somewhere in your PATH before
+using it.  Most likely, if you&#x27;re a developer, you don&#x27;t want to
+put it in the same place as where the surrounding Postgres build
+gets installed.  Therefore, do this part with something like
+
+	make install prefix=/usr/local
+
+If you are using Meson to build, the standard build targets will
+build pg_bsd_indent and also test it, but there is not currently
+provision for installing it anywhere.  Manually copy the built
+executable from build/src/tools/pg_bsd_indent/pg_bsd_indent to
+wherever you want to put it.
+
+
+If you happen to be hacking upon the indent source code, the closest
+approximation to the existing indentation style seems to be
+
+	./pg_bsd_indent -i4 -l79 -di12 -nfc1 -nlp -sac somefile.c
+
+although this has by no means been rigorously adhered to.
+(What was that saw about the shoemaker&#x27;s children?)
+We&#x27;re not planning to re-indent to Postgres style, because that
+would make it difficult to compare to the FreeBSD sources.
+
+----------
+
+The FreeBSD originals of the files in this directory bear the
+&quot;4-clause&quot; version of the BSD license.  We have removed the
+&quot;advertising&quot; clauses, as per UC Berkeley&#x27;s directive here:
+ftp://ftp.cs.berkeley.edu/pub/4bsd/README.Impt.License.Change
+which reads:
+
+July 22, 1999
+
+To All Licensees, Distributors of Any Version of BSD:
+
+As you know, certain of the Berkeley Software Distribution (&quot;BSD&quot;) source
+code files require that further distributions of products containing all or
+portions of the software, acknowledge within their advertising materials
+that such products contain software developed by UC Berkeley and its
+contributors.
+
+Specifically, the provision reads:
+
+&quot;     * 3. All advertising materials mentioning features or use of this software
+      *    must display the following acknowledgement:
+      *    This product includes software developed by the University of
+      *    California, Berkeley and its contributors.&quot;
+
+Effective immediately, licensees and distributors are no longer required to
+include the acknowledgement within advertising materials.  Accordingly, the
+foregoing paragraph of those BSD Unix files containing it is hereby deleted
+in its entirety.
+
+William Hoskins
+Director, Office of Technology Licensing
+University of California, Berkeley
+
+----------
+
+What follows is the README file as maintained by FreeBSD indent.
+
+----------
+
+  $FreeBSD: head/usr.bin/indent/README 105244 2002-10-16 13:58:39Z charnier $
+
+This is the C indenter, it originally came from the University of Illinois
+via some distribution tape for PDP-11 Unix.  It has subsequently been
+hacked upon by James Gosling @ CMU.  It isn&#x27;t very pretty, and really needs
+to be completely redone, but it is probably the nicest C pretty printer
+around.
+
+Further additions to provide &quot;Kernel Normal Form&quot; were contributed
+by the folks at Sun Microsystems.
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+&gt; From mnetor!yunexus!oz@uunet.UU.NET Wed Mar  9 15:30:55 1988
+&gt; Date: Tue, 8 Mar 88 18:36:25 EST
+&gt; From: yunexus!oz@uunet.UU.NET (Ozan Yigit)
+&gt; To: bostic@okeeffe.berkeley.edu
+&gt; Cc: ccvaxa!willcox@uunet.UU.NET, jag@sun.com, rsalz@uunet.UU.NET
+&gt; In-Reply-To: Keith Bostic&#x27;s message of Tue, 16 Feb 88 16:09:06 PST 
+&gt; Subject: Re: Indent...
+
+Thank you for your response about indent. I was wrong in my original
+observation (or mis-observation :-). UCB did keep the Illinois
+copyright intact.
+
+The issue still is whether we can distribute indent, and if we can, which
+version. David Willcox (the author) states that:
+
+| Several people have asked me on what basis I claim that indent is in
+| the public domain.  I knew I would be sorry I made that posting.
+| 
+| Some history.  Way back in 1976, the project I worked on at the
+| University of Illinois Center for Advanced Computation had a huge
+| battle about how to format C code.  After about a week of fighting, I
+| got disgusted and wrote a program, which I called indent, to reformat C
+| code.  It had a bunch of different options that would let you format
+| the output the way you liked.  In particular, all of the different
+| formats being championed were supported.
+| 
+| It was my first big C program.  It was ugly.  It wasn&#x27;t designed, it
+| just sort of grew.  But it pretty much worked, and it stopped most of
+| the fighting.
+| 
+| As a matter of form, I included a University of Illinois Copyright
+| notice.  However, my understanding was that, since the work was done
+| on an ARPA contract, it was in the public domain.
+| 
+| Time passed.  Some years later, indent showed up on one of the early
+| emacs distributions.
+| 
+| Later still, someone from UC Berkeley called the UofI and asked if
+| indent was in the public domain.  They wanted to include it in their
+| UNIX distributions, along with the emacs stuff.  I was no longer at the
+| UofI, but Rob Kolstad, who was, asked me about it.  I told him I didn&#x27;t
+| care if they used it, and since then it has been on the BSD distributions.
+| 
+| Somewhere along the way, several other unnamed people have had their
+| hands in it.  It was converted to understand version 7 C.  (The
+| original was version 6.)  It was converted from its original filter
+| interface to its current &quot;blow away the user&#x27;s file&quot; interface.
+| The $HOME/.indent.pro file parsing was added.  Some more formatting
+| options were added.
+| 
+| The source I have right now has two copyright notices.  One is the
+| original from the UofI.  One is from Berkeley.
+| 
+| I am not a lawyer, and I certainly do not understand copyright law.  As
+| far as I am concerned, the bulk of this program, everything covered by
+| the UofI copyright, is in the public domain, and worth every penny.
+| Berkeley&#x27;s copyright probably should only cover their changes, and I
+| don&#x27;t know their feelings about sending it out.  
+
+In any case, there appears to be none at UofI to clarify/and change
+that copyright, but I am confident (based on the statements of its
+author) that the code, as it stands with its copyright, is
+distributable, and will not cause any legal problems.
+
+Hence, the issue reduces to *which* one to distribute through
+comp.sources.unix. I would suggest that with the permission of you
+folks (given that you have parts copyrighted), we distribute the 4.3
+version of indent, which appears to be the most up-to-date version. I
+happen to have just about every known version of indent, including the
+very original submission from the author to a unix tape, later the
+G-Emacs version, any 4.n version, sun version and the Unipress
+version.  I still think we should not have to &quot;go-back-in-time&quot; and
+re-do all the work you people have done.
+
+I hope to hear from you as to what you think about this. You may of
+course send 4.3 version to the moderator directly, or you can let me
+know of your permission, and I will send the sources, or you can let
+me know that 4.3 version is off-limits, in which case we would probably
+have to revert to an older version. One way or another, I hope to get
+a version of indent to comp.sources.unix.
+
+regards..	oz
+
+cc: ccvaxa!willcox
+    sun.com!jar
+    uunet!rsalz
+
+</pre></section></div><script>
 (function() {
   function notifyParent() {
     if (parent === window) return;

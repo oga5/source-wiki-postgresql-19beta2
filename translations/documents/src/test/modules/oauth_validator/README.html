@@ -1,0 +1,18 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>src/test/modules/oauth_validator/README</title><link rel="stylesheet" href="../../../../../../styles.css"></head><body><h1>Japanese translation</h1><p><code>src/test/modules/oauth_validator/README</code></p><p><a href="../../../../../../source/src/test/modules/oauth_validator/README.html" target="source-view">View original document</a></p><p class="document-translation-progress document-translation-complete">Translation complete.</p><div class="document-translation-body"><section class="document-translation-chunk translated" data-chunk-order="0"><p>OAuth用のテストプログラムとライブラリ -------------------------------------</p>
+<p>このフォルダーには、クライアント側およびサーバー側のOAuth実装のテストが含まれています。ほとんどのテストは、両方を同時にテストするためにエンドツーエンドで実行されます。t/001_server内のテストは、t/OAuth/Server.pmとt/oauth_server.pyによって共同で実装されたモックOAuth認可サーバーを使用して、libpqのデバイス認可フローを実行します。t/002_client内のテストはカスタムOAuthフローをテストするものであり、認可サーバーを必要としません。</p>
+<p>TCP/IPソケットでlocalhostをリスンするHTTPSサーバーが起動されるため、このフォルダー内のテストを実行するにはPG_TEST_EXTRAに&#x27;oauth&#x27;が含まれている必要があります。モック認可サーバーを実行するには、Pythonのインストールが必要です。</p></section></div><script>
+(function() {
+  function notifyParent() {
+    if (parent === window) return;
+    parent.postMessage({type: "frame-location", frame: window.name || "", href: window.location.href}, "*");
+  }
+  document.addEventListener("click", function(event) {
+    const link = event.target.closest("a[data-panel]");
+    if (!link || parent === window) return;
+    parent.postMessage({type: "source-link", panel: link.dataset.panel}, "*");
+  });
+  window.addEventListener("load", notifyParent);
+  window.addEventListener("hashchange", notifyParent);
+})();
+</script></body></html>

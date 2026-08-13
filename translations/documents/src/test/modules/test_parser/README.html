@@ -1,0 +1,28 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>src/test/modules/test_parser/README</title><link rel="stylesheet" href="../../../../../../styles.css"></head><body><h1>Japanese translation</h1><p><code>src/test/modules/test_parser/README</code></p><p><a href="../../../../../../source/src/test/modules/test_parser/README.html" target="source-view">View original document</a></p><p class="document-translation-progress document-translation-complete">Translation complete.</p><div class="document-translation-body"><section class="document-translation-chunk translated" data-chunk-order="0"><p>test_parserは、全文検索用のカスタムパーサーの例です。特に実用的なことは行いませんが、独自のパーサーを開発するための出発点として役立ちます。</p>
+<p>test_parserは空白で区切られた単語を認識し、2つのトークンタイプのみを返します。</p>
+<p>mydb=# SELECT * FROM ts_token_type(&#x27;testparser&#x27;); tokid | alias |  description -------+-------+--------------- 3 | word  | Word 12 | blank | Space symbols (2 rows)</p>
+<p>これらのトークン番号は、デフォルトパーサーの番号付けと互換性があるように選択されています。これにより、そのheadline()関数を使用することができ、例をシンプルに保つことができます。</p>
+<p>使用方法 ========</p>
+<p>test_parser拡張機能をインストールすると、テキスト検索パーサーtestparserが作成されます。ユーザーが設定可能なパラメータはありません。</p>
+<p>例えば、以下のようにパーサーをテストできます。</p>
+<p>mydb=# SELECT * FROM ts_parse(&#x27;testparser&#x27;, &#x27;That&#x27;&#x27;s my first own parser&#x27;); tokid | token -------+-------- 3 | That&#x27;s 12 | 3 | my 12 | 3 | first 12 | 3 | own 12 | 3 | parser</p>
+<p>実用的な使用には、このパーサーを使用するテキスト検索設定をセットアップする必要があります。例えば、</p>
+<p>mydb=# CREATE TEXT SEARCH CONFIGURATION testcfg ( PARSER = testparser ); CREATE TEXT SEARCH CONFIGURATION</p>
+<p>mydb=# ALTER TEXT SEARCH CONFIGURATION testcfg mydb-#   ADD MAPPING FOR word WITH english_stem; ALTER TEXT SEARCH CONFIGURATION</p>
+<p>mydb=#  SELECT to_tsvector(&#x27;testcfg&#x27;, &#x27;That&#x27;&#x27;s my first own parser&#x27;); to_tsvector ------------------------------- &#x27;that&#x27;:1 &#x27;first&#x27;:3 &#x27;parser&#x27;:5 (1 row)</p>
+<p>mydb=# SELECT ts_headline(&#x27;testcfg&#x27;, &#x27;Supernovae stars are the brightest phenomena in galaxies&#x27;, mydb(#                    to_tsquery(&#x27;testcfg&#x27;, &#x27;star&#x27;)); ts_headline ----------------------------------------------------------------- Supernovae &lt;b&gt;stars&lt;/b&gt; are the brightest phenomena in galaxies (1 row)</p></section></div><script>
+(function() {
+  function notifyParent() {
+    if (parent === window) return;
+    parent.postMessage({type: "frame-location", frame: window.name || "", href: window.location.href}, "*");
+  }
+  document.addEventListener("click", function(event) {
+    const link = event.target.closest("a[data-panel]");
+    if (!link || parent === window) return;
+    parent.postMessage({type: "source-link", panel: link.dataset.panel}, "*");
+  });
+  window.addEventListener("load", notifyParent);
+  window.addEventListener("hashchange", notifyParent);
+})();
+</script></body></html>

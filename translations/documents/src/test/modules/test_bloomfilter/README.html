@@ -1,0 +1,40 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>src/test/modules/test_bloomfilter/README</title><link rel="stylesheet" href="../../../../../../styles.css"></head><body><h1>Japanese translation</h1><p><code>src/test/modules/test_bloomfilter/README</code></p><p><a href="../../../../../../source/src/test/modules/test_bloomfilter/README.html" target="source-view">View original document</a></p><p class="document-translation-progress document-translation-complete">Translation complete.</p><div class="document-translation-body"><section class="document-translation-chunk translated" data-chunk-order="0"><p>test_bloomfilterの概要 =========================</p>
+<p>test_bloomfilterは、ブルームフィルタライブラリのセットメンバーシップ操作をテストするためのテストハーネスモジュールです。これは、単一のSQL呼び出し可能関数であるtest_bloomfilter()と、test_bloomfilter()を呼び出すレグレッションテストで構成されています。メンバーシップテストは、テストハーネスモジュールが生成するデータセットに対して実行されます。</p>
+<p>test_bloomfilter()関数は、DEBUG1のelogレベルで計測情報を表示します（偽陽性率が1%のしきい値を超えた場合はWARNING）。これを使用して、さまざまな条件下におけるPostgresのブルームフィルタ実装のパフォーマンス特性を把握できます。</p>
+<p>ビットセットのサイズ -----------</p>
+<p>bloomfilter.cがビットセットのサイズを決定する際の主な基準は、十分なbloom_work_memが利用可能である（かつ、呼び出し元から提供された要素数の見積もりが正確であった）場合に、偽陽性率が2%を超えないようにすることです。現在、1%〜2%の割合がすべてのブルームフィルタ呼び出し元に適していると想定されています。</p>
+<p>最適なK（ハッシュ関数の数）を使用すると、ブルームフィルタは要素あたりわずか9.6ビットのメモリで、わずか1%の偽陽性率しか持たないはずです。Postgresの実装が最悪の場合でも2%を保証しているのは、ビットセットのサイズ決定における実装の柔軟性の欠如による、ある程度の余裕（スロップ）が必要であるためです。ビットセットのサイズは実際には常に2の累乗のビット数に維持されるため、呼び出し元はbloom_work_mem引数をほぼ半分に切り捨てられる可能性があります。実際には、意図的に2の累乗のビットセットサイズであるbloom_work_memを渡す呼び出し元（test_bloomfilter.cなど）は、実際に「要素あたり9.6ビット」の1%の偽陽性率を得ることができます。</p>
+<p>テスト戦略 ----------------</p>
+<p>レグレッションテストに対するアプローチは、単一のビットセットサイズ（2 ^ 23、または1MB）に対して、ブルームフィルタの偽陽性率が1%以下であることをテストすることです。838,861要素のデータセットをテストします。これは要素あたり10ビットのメモリに相当します。レグレッションテストで確実に1%未満になるように、9.6ビットから10ビットに切り上げています。プラットフォーム間で正確な偽陽性率が一致しないため、レグレッションテストではランダムシードが使用されることに注意してください。ハッシュ関数の動作が一致しないことは、いずれにせよレグレッションテストが許容しなければならないことです。</p>
+<p>test_bloomfilter() SQL呼び出し可能関数 ========================================</p>
+<p>SQL呼び出し可能関数test_bloomfilter()は、以下の引数を提供します。</p>
+<ul>
+<li>&quot;power&quot;は、ブルームフィルタのビットセットのサイズを決定するために使用される2の累乗です。</li>
+</ul>
+<p>有効な最小の引数値は23（2^23ビット）、または1MBのメモリです。有効な最大の引数値は32、または512MBのメモリです。</p>
+<ul>
+<li>&quot;nelements&quot;は、テスト目的で生成する要素の数です。</li>
+</ul>
+<ul>
+<li>&quot;seed&quot;は、ハッシュ用のシード値です。</li>
+</ul>
+<p>0未満の値は「ランダムシードを使用する」と解釈されます。シード値を変更する（または-1を指定する）と、偽陽性の総数にわずかな変動が生じます。</p>
+<ul>
+<li>&quot;tests&quot;は、実行するテストの回数です。</li>
+</ul>
+<p>これは、対話型セッションで多くのテストを実行すると便利な場合に増やすことができます。複数回のテストを実行することは、ランダムシードが使用されている場合にのみ意味があります。</p></section></div><script>
+(function() {
+  function notifyParent() {
+    if (parent === window) return;
+    parent.postMessage({type: "frame-location", frame: window.name || "", href: window.location.href}, "*");
+  }
+  document.addEventListener("click", function(event) {
+    const link = event.target.closest("a[data-panel]");
+    if (!link || parent === window) return;
+    parent.postMessage({type: "source-link", panel: link.dataset.panel}, "*");
+  });
+  window.addEventListener("load", notifyParent);
+  window.addEventListener("hashchange", notifyParent);
+})();
+</script></body></html>

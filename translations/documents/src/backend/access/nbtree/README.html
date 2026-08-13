@@ -1,5 +1,5 @@
 <!doctype html>
-<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>src/backend/access/nbtree/README</title><link rel="stylesheet" href="../../../../../../styles.css"></head><body><h1>Japanese translation</h1><p><code>src/backend/access/nbtree/README</code></p><p><a href="../../../../../../source/src/backend/access/nbtree/README.html" target="source-view">View original document</a></p><p class="document-translation-progress document-translation-complete">Translation complete.</p><div class="document-translation-body"><section class="document-translation-chunk translated" data-chunk-order="0"><p>src/backend/access/nbtree/README</p>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>src/backend/access/nbtree/README</title><link rel="stylesheet" href="../../../../../../styles.css"></head><body><h1>Japanese translation</h1><p><code>src/backend/access/nbtree/README</code></p><p><a href="../../../../../../source/src/backend/access/nbtree/README.html" target="source-view">View original document</a></p><p class="document-translation-progress document-translation-incomplete">Translation in progress: 4/6 chunks complete. Pending chunks show their original text below.</p><div class="document-translation-body"><section class="document-translation-chunk translated" data-chunk-order="0"><p>src/backend/access/nbtree/README</p>
 <p>Btree インデックス ==================</p>
 <p>このディレクトリには、Lehman と Yao の高並行 B 木管理アルゴリズムの正しい実装が含まれています（P. Lehman and S. Yao, Efficient Locking for Concurrent Operations on B-Trees, ACM Transactions on Database Systems, Vol 6, No. 4, December 1981, pp 650-670）。また、Lanin と Shasha で記述されている削除ロジックの簡略版も使用しています（V. Lanin and D. Shasha, A Symmetric Concurrent B-Tree Algorithm, Proceedings of 1986 Fall Joint Computer Conference, pp 380-389）。</p>
 <p>基本的な Lehman &amp; Yao アルゴリズム ---------------------------------</p>
@@ -44,29 +44,202 @@
 <p>ページ削除とツリーの高さ ---------------------------------------------</p>
 <p>どのレベルの最右ページも決して削除しない（特にルートを決して削除しない）ため、ツリーの高さが減少することは不可能です。大量の削除の後、ルートの下に単一ページのレベルがいくつかある「細い」ツリーのシナリオが発生する可能性があります。この場合でも操作は正しく行われますが、単一ページのレベルを下降するサイクルが無駄になります。これに対処するため、LaninとHashaのアイデアを使用します。最も低い単一ページレベルである「高速ルート（fast root）」レベルを追跡します。メタデータページは、真のルートだけでなく、このレベルへのポインタも保持しています。通常の操作はすべて、真のルートではなく高速ルートで検索を開始します。レベル上で単独であるページを分割したり、レベル上の最後から2番目のページを削除したりする場合（どちらのケースも容易に検出されます）、高速ルートポインタが適切に調整されるようにしなければなりません。分割の場合、親レベルへの挿入のためのアトミック更新の一部としてこの作業を行い、削除の場合、削除のためのアトミック更新の一部として行います（いずれの場合も、デッドロックのリスクを避けるために、メタページは更新で最後にロックされるページでなければなりません）。これにより、このような2つの操作が同時に実行されている場合の競合状態を回避できます。</p>
 <p>FSMへの削除されたページの配置 ---------------------------------</p>
-<p>ページの再利用は、ページの削除とは切り離されています。削除されたページは、それを参照している可能性のあるスキャンや検索が一切存在しなくなったときに初めて、再利用のためにFSMに配置できます。それまでは、並行検索が並行削除（検索者にとっては並行ページ分割のようなものです）を検出し、そこから回復することを可能にする墓石（tombstone）として、兄弟リンクを乱さずにその場に留まらなければなりません。この設計は、LaninとShashaが「ドレイン技術」と呼ぶものの実装です。</p></section><section class="document-translation-chunk translated" data-chunk-order="2"><p>We implement the technique by waiting until all active snapshots and registered snapshots as of the page deletion are gone; which is overly strong, but is simple to implement within Postgres.  When marked fully dead, a deleted page is labeled with the next-transaction counter value. VACUUM can reclaim the page for re-use when the stored XID is guaranteed to be &quot;visible to everyone&quot;.  As collateral damage, we wait for snapshots taken until the next transaction to allocate an XID commits.  We also wait for running XIDs with no snapshots.</p>
-<p>PostgreSQL 14より前は、VACUUMは線形スキャン中に遭遇した「_古い_」削除済みページ（以前のVACUUM操作によって削除されたページ）のみをFSMに配置していました。新しく削除されたページは、それが「_常に_」安全ではないと想定されていたため、FSMに配置されることはありませんでした。しかし、その想定は実際には不必要に悲観的でした。新しく削除されたページがFSMに配置しても安全になるまでに、それほど長い時間はかからないことが多いからです。削除されたページがいつリサイクルのためにFSMに配置しても安全になるかを予測する、真に体系的な方法はありません。ほぼ即座に（現在のVACUUMが完了するずっと前に）安全になることもあれば、次のVACUUMが実行される時点でもまだ安全ではないこともあります。リサイクルの安全性は、純粋に物理的なデータ構造の一貫性（あるいは少なくとも見かけ上の一貫性）を維持することの問題です。VACUUMを実行しているバックエンド内の状態は、単に関連していません。</p>
-<p>PostgreSQL 14では、ページの削除が行われたフルインデックススキャンの終了時に、新しく削除されたページをリサイクルできるかどうかをVACUUMが検討する機能が追加されました。その時点で安全かどうかを確認するのが便利です。これには、VACUUMが新しく削除されたページに関するわずかな帳簿情報を保持しておく必要がありますが、これは非常に低コストです。このためにインメモリ状態を使用することで、後で新しく削除されたページを再度訪問する必要がなくなります。ローカルの帳簿状態からのsafexid値を使用して、遅延された方法でリサイクルの安全性を判断できます。</p>
-<p>ページ削除操作が行われた後にFSMの追加の間接参照が必要になるのは、LehmanとYaoの設計によるインデックススキャンの非常に寛容なルールの自然な帰結です。一般に、インデックススキャンはツリーを下るときに、どのページに対してもロックやピンさえ保持する必要はありません（通常インターロックと考えるようなものは「レベル間」で保持されません）。同時に、並行リサイクル（並行削除と混同しないでください）によってインデックススキャンがまったく無関係なページに到達することは許されません。クエリに対して誤った回答が返される原因になるためです。リサイクルを遅延させる必要のない、より単純なページ削除のアプローチも可能ですが、LehmanとYaoの設計と互換性があると思われるものはありません。</p>
-<p>すでに削除されたページを必要に応じてリサイクルするためにFSMに配置しても、実際にはページの物理的な状態は変更されません。ページは、その後再利用のためにFSMから取り出されたときに変更されます。削除されたページの内容は、分割操作によって上書きされます（新しい右の兄弟ページになります）。</p>
-<p>並行TIDリサイクルの安全化 --------------------------</p>
-<p>VACUUM中のインデックスツプルの削除に関する前のセクションで説明したように、個々のインデックススキャンが並行TIDリサイクルを回避できるようにするロックプロトコルを実装しています。ただし、インデックススキャンは、安全であればいつでもオプトアウトします（したがって、ヒープを訪問するときにリーフページのピンを解放します）。ピンを早期に解放することは、VACUUMによる進行のブロックを回避できるため有用です。これは、カーソルによって使用されるインデックススキャンで特に重要です。アイドル状態のカーソルは比較的長い時間停止することがあるためです。極端な場合、クライアントアプリケーションがアイドル状態のカーソルを数時間、あるいは数日間も保持し続けることがあります。それほど長くVACUUMをブロックすることは、壊滅的な結果をもたらす可能性があります。</p>
-<p>バッファピンを保持しないインデックススキャンは、代わりにMVCCスナップショットを保持することによって保護されます。このより限定的なインターロックはクエリへの誤った回答を防ぎますが、並行TIDリサイクル自体を防ぐことはありません（ヒープへのアクセス中にリーフページのピンを保持し続けることのみがそれを保証します）。</p>
-<p>インデックスオンリースキャンは、参照されているTIDがリサイクル可能になることを許容できないため、バッファピンを解放することはできません。インデックスオンリースキャンは通常、可視性マップのみを訪問し（ヒープ自体は訪問しません）、そのため、（最初は全員に対してデッドなヒープアイテムを指していたTIDの）古いTID参照が、VACUUMによってヒープ内で並行してLP_UNUSEDとマークされたことに確実には気付きません。これにより、VACUUMがその直後に可視性マップでヒープページ全体をall-visibleに設定することが容易に可能になってしまいます。MVCCスナップショットは、通常のインデックススキャン中の問題を回避するのに十分なだけです。なぜなら、通常のインデックススキャンはヒープ自体から詳細な可視性情報にアクセスする必要があるからです。通常のインデックススキャンは、ヒープページが一般にall-visibleとみなされている場合であっても、ヒープ内のLP_UNUSEDアイテム（リサイクル可能だがまだリサイクルされていないアイテム）を「不可視」として認識します。</p>
-<p>kill_prior_tuple最適化（詳細は以下の単純な削除で説明）によるインデックスツプルのLP_DEAD設定も、リーフページのピンを解放するインデックススキャンにとってはより複雑になります。並行TIDリサイクルの後、たまたま同じTIDを共有しているために、既知のデッドなインデックスツプルのように見える新しいインデックスツプルに対して、誤ってLP_DEADマークを付けないように注意する必要があります。他のセッションが、同じリーフページ上に、同じ元のTIDを持つ新しい無関係なインデックスツプルを挿入した可能性は十分にあります。この新しい無関係なインデックスツプルをLP_DEADに設定することは完全に誤りです。</p>
-<p>このkill_prior_tupleの競合状態に対処するため、影響を受けるインデックススキャンは、リーフページへのいかなる変更も、バッファピンが保持されていなかった中間期間にbtbulkdeleteによって到達されたことを意味すると保守的に想定します。これは、ページのLSNが変更されている場合に、リーフページにLP_DEADビットを一切設定しないことで実装されています。（これが、ログに記録されないインデックスリレーションに対して「偽の」LSNを実装している理由です。）</p>
-<p>インデックス挿入のファストパス ------------------------------</p>
-<p>増加するインデックスキー値の挿入という一般的なケースを最適化するために、このページが最も右側のリーフページであった場合、このバックエンドが最後の値を挿入した最後のページをキャッシュします。次の挿入では、キャッシュされたページがまだ最も右側のリーフページであり、現在の値を保持するのに正しい場所であるかどうかを迅速に確認できます。このような一般的なケースでは、ツリーを下るコストを回避できます。</p>
-<p>この最適化は、無視できないリーフの最も右側のページは1つしか存在し得ないという仮定に基づいて動作するため、全員に可視（visible-to-everyone）スタイルのインターロックさえ必要ありません。B-Tree内には常にそのようなページが1つしか存在し得ないため、ヒントが無効化されたことを検出できないということはありません。バックエンドのキャッシュされたページが無効化されたと検出されることなく、ページが削除されてリサイクルされる可能性はありますが、それは、たまたまリサイクルされたブロックが再び最も右側のリーフページとしてリサイクルされた場合に限られます。</p>
-<p>単純な削除 ----------</p>
-<p>プロセスがヒープツプルを訪問し、それがデッドで削除可能（つまり、そのプロセスだけでなく、すべての開いているトランザクションに対してデッド）であることを見つけた場合、インデックスに戻って対応するインデックスエントリを「既知のデッド」としてマークし、その後のインデックススキャンがヒープツプルの訪問をスキップできるようにします。「既知のデッド」マークは、インデックス項目のlp_flags状態をLP_DEADに設定することによって機能します。これは現在、ビットマップスキャンではなく通常のインデックススキャンでのみ行われます。通常のスキャンのみがヒープとインデックスを「同期して」訪問するため、ビットマップスキャンでこれを行う便利な方法がないためです。また、挿入時に一意性インデックスの競合をチェックするときにLP_DEADビットが設定されることが多いことにも注意してください（これはリーフページに排他ロックを保持しているときに行われるため、より単純です）。</p>
-<p>インデックスツプルがLP_DEADとマークされると、実際にはすぐにインデックスから削除できます。インデックススキャンはページの「間」でのみ停止するため、そのような削除によってスキャンが位置を見失うことはありません。ステップを分離しているのは、共有ロックのみでLP_DEADを設定できるようにしているためですが（ヒープツプルのヒントビットのようなものです）、ツプルを物理的に削除するには排他ロックが必要です。また、各削除操作のWALレコードに対してsnapshotConflictHorizonを生成する必要があり、これには削除が実際に実行されるときにtableamとの追加の調整が必要になります。（snapshotConflictHorizonの値は、スタンバイによるその後のレコードのREDO中に競合を生成するために使用される場合があります。）</p>
-<p>このようにインデックスツプルの削除を遅延させてバッチ処理することで、さらなる最適化が可能になります。それは、ついでにチェックするのが非常に安価な場合（tableamがsnapshotConflictHorizonを生成するためにそれらのテーブルブロックを訪問することがすでにわかっているため）に、近くの「余分な」インデックスツプル（LP_DEADが設定されていないツプル）を便宜的にチェックすることです。削除しても安全であることが判明したインデックスツプルも削除されます。単純な削除は、実際に削除安全であることが判明した余分なツプルが、最初からLP_DEADビットを設定されていたかのように動作します。</p>
-<p>重複排除（Deduplication）もページの分割を防ぐことができますが、インデックスツプルの削除が推奨されるアプローチです。ポスティングリストツプルは、ポスティングリスト内のすべてのテーブルTIDが既知のデッドである場合にのみ、LP_DEADビットを設定できることに注意してください。LP_DEADビットは削除の出発点にすぎないため、これは実際には大きな問題ではありません。本当に重要なのは、ページが最終的に分割される前のどこかの時点で、関連するテーブル内の近くのTIDを対象とする「_何らかの_」削除操作が行われることです。削除プロセスがポスティングリストツプルからデッドなTIDのグループを詳細に削除するために必要なのはそれだけです（状況が手に負えなくなることはありません）。</p>
-<p>ボトムアップ削除 ----------------</p>
-<p>連続するUPDATEによるバージョン移行（version churn）が原因で重複が発生していると疑われる場合、ページ上にたまま存在する重複を削除しようと試みます。これは、heapamのHOTのような最適化がインデックスに対して機能しなかったことを示すエグゼキュータヒントを受け取った場合にのみ発生します。つまり、入ってくるツプルはMVCCの目的で必要な論理的に変更されていない重複であり、問題のリーフページにおける新しいインデックスツプルの主要なソースである可能性が高いことを示唆しています。（また、継続的なINSERTおよびDELETEに関連する移行がある場合、一意性インデックス内でボトムアップ削除がトリガーされます。これは外部のヒントなしで簡単に検出できるためです。）</p>
-<p>ボトムアップ削除パスが実行されるとき、単純な削除はすでにページの分割を防ぐことに失敗しています（多くの場合、ページにLP_DEADビットがまったく設定されていなかったためです）。これら2つのメカズムは、密接に関連した実装を持っています。各操作に同じWALレコードが使用され、実際にどのTID/ツプルを削除しても安全かを判断するために同じtableamインフラストラクチャが使用されます。実装の違いは、削除を検討するTIDをどのように選択するか、およびすべてのテーブルブロックにアクセスする前にtableamが諦めるかどうか（ボトムアップ削除は、失敗のコストを低く抑えることで、成功の不確実性を受け入れます）だけです。それでもなお、これら2つのメカニズムは概念レベルで明確に区別されます。</p>
-<p>ボトムアップインデックス削除は完全にヒューリスティクスによって駆動されます（一方、単純な削除は、すでにLP_DEADとマークされているインデックスツプルを少なくとも削除することが保証されています。少なくとも1つは存在するはずです）。削除するインデックスツプルが1つでも見つかるという確実性はありません。そのため、tableamが支払うコストと私たちが得る利益のバランスを保つために、tableamと緊密に連携します。このために使用するインターフェースは、access/tableam.hで詳しく説明されています。</p></section><section class="document-translation-chunk translated" data-chunk-order="3"><p>ボトムアップのインデックス削除は、不要なバージョン起因のページ分割に対するバックストップ（防護策）メカニズムと考えることができます。これは、世代別ガベージコレクションのアイデアである「世代仮説」に一部基づいています。これは「ほとんどのオブジェクトは若くして死ぬ」という経験的な観察です。nbtree内では、新しいインデックスツプルが同じ場所にすぐに現れ、その後すぐにガベージになることがよくあります。特定のワークロードでは、比較的少数のリーフページにガベージが激しく集中することがあります（少なくとも、ボトムアップのインデックス削除がなかった以前のバージョンのPostgreSQLではそうでした）。nbtreeにおけるボトムアップのインデックス削除の背後にある設計原則のハイレベルな説明については、それがどのようにVACUUMを補完するかの詳細を含め、doc/src/sgml/btree.sgmlを参照してください。</p>
+<p>ページの再利用は、ページの削除とは切り離されています。削除されたページは、それを参照している可能性のあるスキャンや検索が一切存在しなくなったときに初めて、再利用のためにFSMに配置できます。それまでは、並行検索が並行削除（検索者にとっては並行ページ分割のようなものです）を検出し、そこから回復することを可能にする墓石（tombstone）として、兄弟リンクを乱さずにその場に留まらなければなりません。この設計は、LaninとShashaが「ドレイン技術」と呼ぶものの実装です。</p></section><section class="document-translation-chunk pending" data-chunk-order="2"><h2>Chunk 3: translation pending</h2><p>This chunk has not been translated yet. Original text:</p><pre class="document-translation-text">We implement the technique by waiting until all active snapshots and
+registered snapshots as of the page deletion are gone; which is overly
+strong, but is simple to implement within Postgres.  When marked fully
+dead, a deleted page is labeled with the next-transaction counter value.
+VACUUM can reclaim the page for re-use when the stored XID is guaranteed
+to be &quot;visible to everyone&quot;.  As collateral damage, we wait for snapshots
+taken until the next transaction to allocate an XID commits.  We also wait
+for running XIDs with no snapshots.
+
+Prior to PostgreSQL 14, VACUUM would only place _old_ deleted pages that
+it encounters during its linear scan (pages deleted by a previous VACUUM
+operation) in the FSM.  Newly deleted pages were never placed in the FSM,
+because that was assumed to _always_ be unsafe.  That assumption was
+unnecessarily pessimistic in practice, though -- it often doesn&#x27;t take
+very long for newly deleted pages to become safe to place in the FSM.
+There is no truly principled way to predict when deleted pages will become
+safe to place in the FSM for recycling -- it might become safe almost
+immediately (long before the current VACUUM completes), or it might not
+even be safe by the time the next VACUUM takes place.  Recycle safety is
+purely a question of maintaining the consistency (or at least the apparent
+consistency) of a physical data structure.  The state within the backend
+running VACUUM is simply not relevant.
+
+PostgreSQL 14 added the ability for VACUUM to consider if it&#x27;s possible to
+recycle newly deleted pages at the end of the full index scan where the
+page deletion took place.  It is convenient to check if it&#x27;s safe at that
+point.  This does require that VACUUM keep around a little bookkeeping
+information about newly deleted pages, but that&#x27;s very cheap.  Using
+in-memory state for this avoids the need to revisit newly deleted pages a
+second time later on -- we can just use safexid values from the local
+bookkeeping state to determine recycle safety in a deferred fashion.
+
+The need for additional FSM indirection after a page deletion operation
+takes place is a natural consequence of the highly permissive rules for
+index scans with Lehman and Yao&#x27;s design.  In general an index scan
+doesn&#x27;t have to hold a lock or even a pin on any page when it descends the
+tree (nothing that you&#x27;d usually think of as an interlock is held &quot;between
+levels&quot;).  At the same time, index scans cannot be allowed to land on a
+truly unrelated page due to concurrent recycling (not to be confused with
+concurrent deletion), because that results in wrong answers to queries.
+Simpler approaches to page deletion that don&#x27;t need to defer recycling are
+possible, but none seem compatible with Lehman and Yao&#x27;s design.
+
+Placing an already-deleted page in the FSM to be recycled when needed
+doesn&#x27;t actually change the state of the page.  The page will be changed
+whenever it is subsequently taken from the FSM for reuse.  The deleted
+page&#x27;s contents will be overwritten by the split operation (it will become
+the new right sibling page).
+
+Making concurrent TID recycling safe
+------------------------------------
+
+As explained in the earlier section about deleting index tuples during
+VACUUM, we implement a locking protocol that allows individual index scans
+to avoid concurrent TID recycling.  Index scans opt-out (and so drop their
+leaf page pin when visiting the heap) whenever it&#x27;s safe to do so, though.
+Dropping the pin early is useful because it avoids blocking progress by
+VACUUM.  This is particularly important with index scans used by cursors,
+since idle cursors sometimes stop for relatively long periods of time.  In
+extreme cases, a client application may hold on to an idle cursors for
+hours or even days.  Blocking VACUUM for that long could be disastrous.
+
+Index scans that don&#x27;t hold on to a buffer pin are protected by holding an
+MVCC snapshot instead.  This more limited interlock prevents wrong answers
+to queries, but it does not prevent concurrent TID recycling itself (only
+holding onto the leaf page pin while accessing the heap ensures that).
+
+Index-only scans can never drop their buffer pin, since they are unable to
+tolerate having a referenced TID become recyclable.  Index-only scans
+typically just visit the visibility map (not the heap proper), and so will
+not reliably notice that any stale TID reference (for a TID that pointed
+to a dead-to-all heap item at first) was concurrently marked LP_UNUSED in
+the heap by VACUUM.  This could easily allow VACUUM to set the whole heap
+page to all-visible in the visibility map immediately afterwards.  An MVCC
+snapshot is only sufficient to avoid problems during plain index scans
+because they must access granular visibility information from the heap
+proper.  A plain index scan will even recognize LP_UNUSED items in the
+heap (items that could be recycled but haven&#x27;t been just yet) as &quot;not
+visible&quot; -- even when the heap page is generally considered all-visible.
+
+LP_DEAD setting of index tuples by the kill_prior_tuple optimization
+(described in full in simple deletion, below) is also more complicated for
+index scans that drop their leaf page pins.  We must be careful to avoid
+LP_DEAD-marking any new index tuple that looks like a known-dead index
+tuple because it happens to share the same TID, following concurrent TID
+recycling.  It&#x27;s just about possible that some other session inserted a
+new, unrelated index tuple, on the same leaf page, which has the same
+original TID.  It would be totally wrong to LP_DEAD-set this new,
+unrelated index tuple.
+
+We handle this kill_prior_tuple race condition by having affected index
+scans conservatively assume that any change to the leaf page at all
+implies that it was reached by btbulkdelete in the interim period when no
+buffer pin was held.  This is implemented by not setting any LP_DEAD bits
+on the leaf page at all when the page&#x27;s LSN has changed.  (This is why we
+implement &quot;fake&quot; LSNs for unlogged index relations.)
+
+Fastpath For Index Insertion
+----------------------------
+
+We optimize for a common case of insertion of increasing index key
+values by caching the last page to which this backend inserted the last
+value, if this page was the rightmost leaf page. For the next insert, we
+can then quickly check if the cached page is still the rightmost leaf
+page and also the correct place to hold the current value. We can avoid
+the cost of walking down the tree in such common cases.
+
+The optimization works on the assumption that there can only be one
+non-ignorable leaf rightmost page, and so not even a visible-to-everyone
+style interlock is required.  We cannot fail to detect that our hint was
+invalidated, because there can only be one such page in the B-Tree at
+any time. It&#x27;s possible that the page will be deleted and recycled
+without a backend&#x27;s cached page also being detected as invalidated, but
+only when we happen to recycle a block that once again gets recycled as the
+rightmost leaf page.
+
+Simple deletion
+---------------
+
+If a process visits a heap tuple and finds that it&#x27;s dead and removable
+(ie, dead to all open transactions, not only that process), then we can
+return to the index and mark the corresponding index entry &quot;known dead&quot;,
+allowing subsequent index scans to skip visiting the heap tuple.  The
+&quot;known dead&quot; marking works by setting the index item&#x27;s lp_flags state
+to LP_DEAD.  This is currently only done in plain indexscans, not bitmap
+scans, because only plain scans visit the heap and index &quot;in sync&quot; and so
+there&#x27;s not a convenient way to do it for bitmap scans.  Note also that
+LP_DEAD bits are often set when checking a unique index for conflicts on
+insert (this is simpler because it takes place when we hold an exclusive
+lock on the leaf page).
+
+Once an index tuple has been marked LP_DEAD it can actually be deleted
+from the index immediately; since index scans only stop &quot;between&quot; pages,
+no scan can lose its place from such a deletion.  We separate the steps
+because we allow LP_DEAD to be set with only a share lock (it&#x27;s like a
+hint bit for a heap tuple), but physically deleting tuples requires an
+exclusive lock.  We also need to generate a snapshotConflictHorizon for
+each deletion operation&#x27;s WAL record, which requires additional
+coordinating with the tableam when the deletion actually takes place.
+(snapshotConflictHorizon value may be used to generate a conflict during
+subsequent REDO of the record by a standby.)
+
+Delaying and batching index tuple deletion like this enables a further
+optimization: opportunistic checking of &quot;extra&quot; nearby index tuples
+(tuples that are not LP_DEAD-set) when they happen to be very cheap to
+check in passing (because we already know that the tableam will be
+visiting their table block to generate a snapshotConflictHorizon).  Any
+index tuples that turn out to be safe to delete will also be deleted.
+Simple deletion will behave as if the extra tuples that actually turn
+out to be delete-safe had their LP_DEAD bits set right from the start.
+
+Deduplication can also prevent a page split, but index tuple deletion is
+our preferred approach.  Note that posting list tuples can only have
+their LP_DEAD bit set when every table TID within the posting list is
+known dead.  This isn&#x27;t much of a problem in practice because LP_DEAD
+bits are just a starting point for deletion.  What really matters is
+that _some_ deletion operation that targets related nearby-in-table TIDs
+takes place at some point before the page finally splits.  That&#x27;s all
+that&#x27;s required for the deletion process to perform granular removal of
+groups of dead TIDs from posting list tuples (without the situation ever
+being allowed to get out of hand).
+
+Bottom-Up deletion
+------------------
+
+We attempt to delete whatever duplicates happen to be present on the page
+when the duplicates are suspected to be caused by version churn from
+successive UPDATEs.  This only happens when we receive an executor hint
+indicating that optimizations like heapam&#x27;s HOT have not worked out for
+the index -- the incoming tuple must be a logically unchanged duplicate
+which is needed for MVCC purposes, suggesting that that might well be the
+dominant source of new index tuples on the leaf page in question.  (Also,
+bottom-up deletion is triggered within unique indexes in cases with
+continual INSERT and DELETE related churn, since that is easy to detect
+without any external hint.)
+
+Simple deletion will already have failed to prevent a page split when a
+bottom-up deletion pass takes place (often because no LP_DEAD bits were
+ever set on the page).  The two mechanisms have closely related
+implementations.  The same WAL records are used for each operation, and
+the same tableam infrastructure is used to determine what TIDs/tuples are
+actually safe to delete.  The implementations only differ in how they pick
+TIDs to consider for deletion, and whether or not the tableam will give up
+before accessing all table blocks (bottom-up deletion lives with the
+uncertainty of its success by keeping the cost of failure low).  Even
+still, the two mechanisms are clearly distinct at the conceptual level.
+
+Bottom-up index deletion is driven entirely by heuristics (whereas simple
+deletion is guaranteed to delete at least those index tuples that are
+already LP_DEAD marked -- there must be at least one).  We have no
+certainty that we&#x27;ll find even one index tuple to delete.  That&#x27;s why we
+closely cooperate with the tableam to keep the costs it pays in balance
+with the benefits we receive.  The interface that we use for this is
+described in detail in access/tableam.h.
+
+</pre></section><section class="document-translation-chunk translated" data-chunk-order="3"><p>ボトムアップのインデックス削除は、不要なバージョン起因のページ分割に対するバックストップ（防護策）メカニズムと考えることができます。これは、世代別ガベージコレクションのアイデアである「世代仮説」に一部基づいています。これは「ほとんどのオブジェクトは若くして死ぬ」という経験的な観察です。nbtree内では、新しいインデックスツプルが同じ場所にすぐに現れ、その後すぐにガベージになることがよくあります。特定のワークロードでは、比較的少数のリーフページにガベージが激しく集中することがあります（少なくとも、ボトムアップのインデックス削除がなかった以前のバージョンのPostgreSQLではそうでした）。nbtreeにおけるボトムアップのインデックス削除の背後にある設計原則のハイレベルな説明については、それがどのようにVACUUMを補完するかの詳細を含め、doc/src/sgml/btree.sgmlを参照してください。</p>
 <p>各ボトムアップパス内で、削除しても安全なツプルが適度に多く見つかることを期待しています。そうでない場合、同じリーフページに対するボトムアップ削除の検討は、しばらくの間必要なくなります（通常はページが分割され、当面の間状況が解決するためです）。バージョンチャーン（頻繁な更新）のみによって引き起こされる不要なページ分割の危険に常にさらされているページに対して、定期的なボトムアップ削除操作を実行することを期待しています。このメカニズムがうまく機能すると、バージョンチャーン起因のページ分割が発生する「寸前」の状態が常に維持されますが、実際に分割が発生することは一度もありません。</p>
 <p>重複ヒューリスティックは、かなり単純であるにもかかわらず、うまく機能します。不要なページ分割は、真に病的なレベルのバージョンチャーンがある場合にのみ発生します（理論的には、少量のバージョンチャーンによって、厳密に必要とされるよりも早くページ分割が発生する可能性がありますが、それはほとんど無害です）。基礎となるワークロードを理解する必要はありません。ターゲットとする病的な状態の一般的な性質を理解するだけで十分です。バージョンチャーンが真に病的である場合、それを特定するのは容易です。影響を受けるリーフページはかなり均質です。</p>
 <p>WAL Considerations ------------------</p>
@@ -107,19 +280,111 @@
 <p>一意インデックスにおける重複排除 -------------------------------</p>
 <p>非常に多くの場合、一意インデックスのほぼすべての特定のリーフページに配置される可能性のある一意な値の数は、固定され永続的です。例えば、アイデンティティ列の主キーでは、通常、最も右側のリーフページ内に新しい論理行が挿入されることによってのみリーフページの分割が発生します。最も右側ではないリーフページの分割がある場合、その分割は既存の論理行のUPDATEに関連する挿入によって引き起こされたに違いありません。単に複数のバージョンを格納するためだけにリーフページを分割することは、誤った経済性です。実質的に、一時的な重複の急増を吸収するためだけに、インデックス構造を永続的に劣化させていることになります。</p>
 <p>一意インデックスにおける重複排除は、これらの病的なページ分割を防ぐのに役立ちます。長期的には重複が存在しなくなるため、スペース効率の良い方法で重複を格納することが目的ではありません。むしろ、ページの分割が必要になる前に、標準的なガベージコレクションメカニズムが実行されるための時間を稼いでいるのです。</p>
-<p>一意インデックスのリーフページは、挿入（ページを分割しなければならない可能性があります）の際に、ページ上の既存の重複を偶然検出した場合にのみ、重複排除パスを実行します。これは、重複排除が効果を発揮するのは、*すべての*新しい挿入がUPDATEによる重複である場合のみであるという前提に基づいています。これにより、ページ分割を遅らせる機会を逃す可能性がありますが、私たちの最終的な目標はリーフページの分割を*無期限に*遅らせる（すなわち、完全に防止する）ことであるため、問題ありません。どうせ避けられない可能性が高い分割を遅らせようとすることには、ほとんど意味がありません。これにより、常に重複がほとんどまたはまったくない一意インデックスに対して重複排除を試みるオーバーヘッドを回避できます。</p></section><section class="document-translation-chunk translated" data-chunk-order="5"><p>Note: バージョンチャーンに起因する「不要な」ページ分割を回避することも、PostgreSQL 14で追加されたボトムアップインデックス削除の目的です。ボトムアップインデックス削除は、現在、この問題に対処するための推奨される方法です（あらゆる種類のインデックスにおいて、特にユニークインデックスにおいてそうです）。それでも、重複排除はボトムアップインデックス削除を補強できる場合があります。削除によってタプルを解放できない場合（古いスナップショットがクリーンアップをブロックしているため）、重複排除にフォールバックすることで追加の容量が提供されます。重複排除によってページ分割を遅延させることで、同じページの将来のボトムアップ削除パスを成功させることができます。</p>
-<p>Posting list splits -------------------</p>
-<p>新規のタプルが既存のposting listと偶然重複する場合、posting list splitが実行されます。ページ分割と同様に、posting list splitは、新規/入力アイテムが「収まらない」という状況を解決しつつ、同時に（つまり同じアトミックアクションの一部として）入力アイテムを挿入します。ほぼ満杯のページへの新規アイテムの挿入がposting listと重複し、その結果posting list splitとページ分割の両方が発生する可能性があります（可能性は高くありませんが）。その場合でも、posting listを分割するアトミックアクションによって新規アイテムも挿入されます（ページ分割では常に新規アイテムがその場で挿入されるためです）。挿入と同じアトミックアクションにposting list splitを含めることで、同じposting listへの並行挿入によって引き起こされる問題を回避できます。私たちがposting listを変更する正確な詳細は新規アイテムに依存し、その逆も同様です。単一のアトミックアクションにより、元のposting listタプルを明示的にWALログに記録する必要がないため、posting list splitに必要な追加WALの量も最小限に抑えられます。</p>
-<p>新規タプルを挿入するのと同じアトミックアクションに便乗しているにもかかわらず、posting list splitは、挿入自体（またはページ分割自体）とは別の、追加のアクションと考えることができます。概念的に、posting list splitは、既存のposting listと重複する挿入を、posting listのすぐ右側だけに最後の新しいアイテムを追加する挿入へと「書き換え」ます。posting listのサイズは変わらないため、ページ空間アカウンティングコードはposting list splitをまったく気にする必要がありません。これは私たちの設計の重要な利点です。ページ分割点選択ロジックは、posting list splitに対処する必要がない場合でも非常に微妙です。</p>
-<p>新しいアイテムが既存のposting listと最初から重複していなかったという錯覚を維持するために必要なのは、いくつかの独立した追加ステップだけです。入力されたタプルのヒープTIDは、そのTIDが、既存の/もともと重複していたposting listの最も右側/最大のヒープTIDに置き換えられます。同様に、元の入力アイテムのTIDは、posting list内の適切なオフセットに再配置されます（通常、空きスロットを作るためにTIDをずらします）。最後に、posting list splitとページ分割が同時に発生するケースでは、最後の新しいアイテムとリスト分割後のpostingタプルの両方を持つ元のページの仮想バージョンに基づいて、新しいハイキーを生成する必要があります（ページ分割は通常、新しいアイテム/収まらないアイテムを含む仮想バージョンに対してのみ動作します）。</p>
-<p>このアプローチにより、入力アイテムの挿入を同時に完了させることなくposting listを分割するような、「積極的な（eager）」アトミックなposting split操作を発明することを回避できます。この代替設計の方すっきりと見えるかもしれませんが、ページ空間アカウンティングに微妙な問題を引き起こします。一般に、入力/新規アイテムがいずれのposting listの半分とも重複しなくなるようにposting listを分割するのに十分な空きスペースがページ上にない可能性があります。この操作は、新規アイテムの実際の個別挿入が始まる前ですら失敗する可能性があります。結局のところ、どうせページ分割を必要とするposting list splitを処理しなければならなくなります。その上、posting listの分割時に可変の「分割点」をサポートしても、全体的なスペース利用率は実際には改善されません。</p>
-<p>Notes About Data Representation -------------------------------</p>
-<p>L&amp;Yで必要とされる右きょうだいリンクは、左きょうだいリンク、ページレベル、および一部のフラグとともに、ページの「不透明データ（opaque data）」領域に保持されます。ページレベルは、リーフレベルの0から始まり、ルートでツリーの深さから1を引いた値まで上に向かって数えられます。（リーフから上に向かって数えることで、ルートを分割する際に既存のページの番号付けを付け替える必要がなくなることが保証されます。）</p>
-<p>Postgresのディスクブロックデータ形式（アイテムの配列）は、ディスクページに関するLehmanと姚の「交互するキーとポインタ」という概念に適合しないため、いくつかの工夫をする必要があります。（「交互するキーとポインタ」の概念は内部ページの分割において重要であり、概念的に既存のピボットタプルの中央で分割を行います。タプルの「セパレータ」キーは、左側の新しいハイキーとして分割の左側に配置され、タプルのポインタ/ダウンリンクは、最初/負の無限大のダウンリンクとして右側に配置されます。）</p>
-<p>ツリーレベルで最も右側にないページでは、「ハイキー」はページの最初のアイテムに保持され、実際のデータアイテムはアイテム2から始まります。「ハイキー」アイテムのリンク部分は使用されません。最も右側にあるページには「ハイキー」がありません（暗黙的に正の無限大です）ので、データアイテムは最初のアイテムから始まります。ハイキーを右側ではなく左側に配置するのは奇妙に思えるかもしれませんが、データアイテムを追加する際にハイキーを移動させずに済みます。</p>
-<p>リーフページでは、データアイテムは、関連するキー値とともに、インデックス付けされているリレーション内のタプルへのリンク（TID）にすぎません。</p>
-<p>非リーフページでは、データアイテムは、境界キーを持つ子ページへのダウンリンクです。各データアイテム内のキーは、その子ページのキーの下限（厳密な下限）であるため、論理的にはキーはそのダウンリンクの左側にあります。ハイキー（存在する場合）は、最後のダウンリンクの上限です。そのような各ページの最初のデータアイテムには下限がありません（お好みであれば、負の無限大の下限です）。比較ルーチンはそれに応じて処理する必要があります。アイテムに格納されている実際のキーは無関係であり、格納する必要もありません。この配置は、L&amp;Yの非リーフページがキーよりも1つ多いポインタを持つという事実に対応しています。サフィックス切り捨ての負の無限大属性も同様に動作します。</p>
-<p>&lt;/document&gt;</p></section></div><script>
+<p>一意インデックスのリーフページは、挿入（ページを分割しなければならない可能性があります）の際に、ページ上の既存の重複を偶然検出した場合にのみ、重複排除パスを実行します。これは、重複排除が効果を発揮するのは、*すべての*新しい挿入がUPDATEによる重複である場合のみであるという前提に基づいています。これにより、ページ分割を遅らせる機会を逃す可能性がありますが、私たちの最終的な目標はリーフページの分割を*無期限に*遅らせる（すなわち、完全に防止する）ことであるため、問題ありません。どうせ避けられない可能性が高い分割を遅らせようとすることには、ほとんど意味がありません。これにより、常に重複がほとんどまたはまったくない一意インデックスに対して重複排除を試みるオーバーヘッドを回避できます。</p></section><section class="document-translation-chunk pending" data-chunk-order="5"><h2>Chunk 6: translation pending</h2><p>This chunk has not been translated yet. Original text:</p><pre class="document-translation-text">Note: Avoiding &quot;unnecessary&quot; page splits driven by version churn is also
+the goal of bottom-up index deletion, which was added to PostgreSQL 14.
+Bottom-up index deletion is now the preferred way to deal with this
+problem (with all kinds of indexes, though especially with unique
+indexes).  Still, deduplication can sometimes augment bottom-up index
+deletion.  When deletion cannot free tuples (due to an old snapshot
+holding up cleanup), falling back on deduplication provides additional
+capacity.  Delaying the page split by deduplicating can allow a future
+bottom-up deletion pass of the same page to succeed.
+
+Posting list splits
+-------------------
+
+When the incoming tuple happens to overlap with an existing posting list,
+a posting list split is performed.  Like a page split, a posting list
+split resolves a situation where a new/incoming item &quot;won&#x27;t fit&quot;, while
+inserting the incoming item in passing (i.e. as part of the same atomic
+action).  It&#x27;s possible (though not particularly likely) that an insert of
+a new item on to an almost-full page will overlap with a posting list,
+resulting in both a posting list split and a page split.  Even then, the
+atomic action that splits the posting list also inserts the new item
+(since page splits always insert the new item in passing).  Including the
+posting list split in the same atomic action as the insert avoids problems
+caused by concurrent inserts into the same posting list --  the exact
+details of how we change the posting list depend upon the new item, and
+vice-versa.  A single atomic action also minimizes the volume of extra
+WAL required for a posting list split, since we don&#x27;t have to explicitly
+WAL-log the original posting list tuple.
+
+Despite piggy-backing on the same atomic action that inserts a new tuple,
+posting list splits can be thought of as a separate, extra action to the
+insert itself (or to the page split itself).  Posting list splits
+conceptually &quot;rewrite&quot; an insert that overlaps with an existing posting
+list into an insert that adds its final new item just to the right of the
+posting list instead.  The size of the posting list won&#x27;t change, and so
+page space accounting code does not need to care about posting list splits
+at all.  This is an important upside of our design; the page split point
+choice logic is very subtle even without it needing to deal with posting
+list splits.
+
+Only a few isolated extra steps are required to preserve the illusion that
+the new item never overlapped with an existing posting list in the first
+place: the heap TID of the incoming tuple has its TID replaced with the
+rightmost/max heap TID from the existing/originally overlapping posting
+list.  Similarly, the original incoming item&#x27;s TID is relocated to the
+appropriate offset in the posting list (we usually shift TIDs out of the
+way to make a hole for it).  Finally, the posting-split-with-page-split
+case must generate a new high key based on an imaginary version of the
+original page that has both the final new item and the after-list-split
+posting tuple (page splits usually just operate against an imaginary
+version that contains the new item/item that won&#x27;t fit).
+
+This approach avoids inventing an &quot;eager&quot; atomic posting split operation
+that splits the posting list without simultaneously finishing the insert
+of the incoming item.  This alternative design might seem cleaner, but it
+creates subtle problems for page space accounting.  In general, there
+might not be enough free space on the page to split a posting list such
+that the incoming/new item no longer overlaps with either posting list
+half --- the operation could fail before the actual retail insert of the
+new item even begins.  We&#x27;d end up having to handle posting list splits
+that need a page split anyway.  Besides, supporting variable &quot;split points&quot;
+while splitting posting lists won&#x27;t actually improve overall space
+utilization.
+
+Notes About Data Representation
+-------------------------------
+
+The right-sibling link required by L&amp;Y is kept in the page &quot;opaque
+data&quot; area, as is the left-sibling link, the page level, and some flags.
+The page level counts upwards from zero at the leaf level, to the tree
+depth minus 1 at the root.  (Counting up from the leaves ensures that we
+don&#x27;t need to renumber any existing pages when splitting the root.)
+
+The Postgres disk block data format (an array of items) doesn&#x27;t fit
+Lehman and Yao&#x27;s alternating-keys-and-pointers notion of a disk page,
+so we have to play some games.  (The alternating-keys-and-pointers
+notion is important for internal page splits, which conceptually split
+at the middle of an existing pivot tuple -- the tuple&#x27;s &quot;separator&quot; key
+goes on the left side of the split as the left side&#x27;s new high key,
+while the tuple&#x27;s pointer/downlink goes on the right side as the
+first/minus infinity downlink.)
+
+On a page that is not rightmost in its tree level, the &quot;high key&quot; is
+kept in the page&#x27;s first item, and real data items start at item 2.
+The link portion of the &quot;high key&quot; item goes unused.  A page that is
+rightmost has no &quot;high key&quot; (it&#x27;s implicitly positive infinity), so
+data items start with the first item.  Putting the high key at the
+left, rather than the right, may seem odd, but it avoids moving the
+high key as we add data items.
+
+On a leaf page, the data items are simply links to (TIDs of) tuples
+in the relation being indexed, with the associated key values.
+
+On a non-leaf page, the data items are down-links to child pages with
+bounding keys.  The key in each data item is a strict lower bound for
+keys on that child page, so logically the key is to the left of that
+downlink.  The high key (if present) is the upper bound for the last
+downlink.  The first data item on each such page has no lower bound
+--- or lower bound of minus infinity, if you prefer.  The comparison
+routines must treat it accordingly.  The actual key stored in the
+item is irrelevant, and need not be stored at all.  This arrangement
+corresponds to the fact that an L&amp;Y non-leaf page has one more pointer
+than key.  Suffix truncation&#x27;s negative infinity attributes behave in
+the same way.
+</pre></section></div><script>
 (function() {
   function notifyParent() {
     if (parent === window) return;

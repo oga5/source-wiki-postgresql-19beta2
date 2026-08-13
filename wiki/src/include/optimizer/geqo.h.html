@@ -1,0 +1,59 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>src/include/optimizer/geqo.h.md</title><link rel="stylesheet" href="../../../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../../../source/src/include/optimizer/geqo.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/optimizer/geqo.h.html&quot;}, '*');">src/include/optimizer/geqo.h</a></h1>
+<h2>概要</h2>
+<p>PostgreSQLの遺伝的クエリ最適化（GEQO: Genetic Query Optimizer）サブシステム全体で使用される設定パラメータ、マクロ、およびプライベートデータ構造を定義するヘッダーファイルです。</p>
+<h2>モジュール内での役割</h2>
+<p><code>src/include/optimizer</code> モジュールにおいて、GEQOアルゴリズムの設定管理と内部状態の受け渡しを行う中心的な役割を果たします。遺伝的アルゴリズムの挙動を調整するパラメータ群と、プルーニングや評価を補助するデータ構造を提供します。</p>
+<h2>責務</h2>
+<ul>
+<li>遺伝的アルゴリズム（努力度、プールサイズ、世代数、選択バイアス、乱数シードなど）のデフォルト値および限界値のマクロ定義。</li>
+<li>GEQOの実行時状態を保持する <a class="wiki-source-link" href="../../../../source/src/include/optimizer/geqo.h.html#L79" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__optimizer__geqo_h__GeqoPrivateData.html&quot;}, '*');"><code>GeqoPrivateData</code></a> 構造体の定義。</li>
+<li><code>PlannerInfo</code> から拡張状態を取得するインライン関数 <a class="wiki-source-link" href="../../../../source/src/include/optimizer/geqo.h.html#L85" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__optimizer__geqo_h__GetGeqoPrivateData.html&quot;}, '*');"><code>GetGeqoPrivateData</code></a> の提供。</li>
+<li>メインエントリポイントや評価関数（<code>geqo</code>, <code>geqo_eval</code>, <a class="wiki-source-link" href="../../../../source/src/backend/optimizer/geqo/geqo_eval.c.html#L162" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__geqo__geqo_eval_c__gimme_tree.html&quot;}, '*');"><code>gimme_tree</code></a> など）のプロトタイプ宣言。</li>
+</ul>
+<h2>重要なシンボル</h2>
+<ul>
+<li><a class="wiki-source-link" href="../../../../source/src/include/optimizer/geqo.h.html#L79" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__optimizer__geqo_h__GeqoPrivateData.html&quot;}, '*');"><code>GeqoPrivateData</code></a>: 最適化対象のベースリレーションリストと乱数生成器の状態を保持する構造体。</li>
+<li><a class="wiki-source-link" href="../../../../source/src/include/optimizer/geqo.h.html#L85" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__optimizer__geqo_h__GetGeqoPrivateData.html&quot;}, '*');"><code>GetGeqoPrivateData</code></a>: プランナー情報から <a class="wiki-source-link" href="../../../../source/src/include/optimizer/geqo.h.html#L79" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__optimizer__geqo_h__GeqoPrivateData.html&quot;}, '*');"><code>GeqoPrivateData</code></a> を安全に取り出すインライン関数。</li>
+<li>設定マクロ (<a class="wiki-source-link" href="../../../../source/src/include/optimizer/geqo.h.html#L57" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/optimizer/geqo.h.html&quot;}, '*');"><code>DEFAULT_GEQO_EFFORT</code></a>, <a class="wiki-source-link" href="../../../../source/src/include/optimizer/geqo.h.html#L69" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/optimizer/geqo.h.html&quot;}, '*');"><code>DEFAULT_GEQO_SELECTION_BIAS</code></a> など): GEQOの探索パラメータのデフォルト値と許容範囲を規定。</li>
+<li><code>geqo</code>: GEQO探索プロセスの主エントリ関数。</li>
+</ul>
+<h2>制御フローとデータフロー</h2>
+<p>1. クエリ最適化プロセスから <code>geqo()</code> が呼び出され、初期リレーションのリストが渡されます。 2. 実行中、アルゴリズムは <code>GetGeqoPrivateData()</code> を通じて現在のGEQO実行コンテキスト（<a class="wiki-source-link" href="../../../../source/src/include/optimizer/geqo.h.html#L79" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__optimizer__geqo_h__GeqoPrivateData.html&quot;}, '*');"><code>GeqoPrivateData</code></a>）にアクセスします。 3. 内部では <code>geqo_eval()</code> や <code>gimme_tree()</code> を用いて個体（<a class="wiki-source-link" href="../../../../source/src/backend/optimizer/geqo/geqo_mutation.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__geqo__geqo_mutation_c__tour.html&quot;}, '*');">tour</a>）のコスト評価とプランツリーの構築を行います。</p>
+<h2>直接依存</h2>
+<ul>
+<li><code>common/pg_prng.h</code></li>
+<li><code>nodes/pathnodes.h</code></li>
+<li><code>optimizer/extendplan.h</code></li>
+<li><code>optimizer/geqo_gene.h</code></li>
+</ul>
+<h2>関連コード</h2>
+<ul>
+<li><code>src/optimizer/geqo/geqo_main.c</code>: GEQOの中核ロジックと <code>geqo()</code> の実装。</li>
+<li><code>src/optimizer/geqo/geqo_eval.c</code>: 個体の評価とツリー生成（<code>geqo_eval</code>, <a class="wiki-source-link" href="../../../../source/src/backend/optimizer/geqo/geqo_eval.c.html#L162" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__geqo__geqo_eval_c__gimme_tree.html&quot;}, '*');"><code>gimme_tree</code></a>）。</li>
+<li>その他の <code>geqo_*.h</code> ファイル群（選択、交叉、突然変異など）。</li>
+</ul>
+<h2>読者向けメモ</h2>
+<ul>
+<li>ヘッダーファイルはC++互換性を考慮して記述されており、拡張状態の取得時には明示的なキャストが行われています。</li>
+<li>探索アルゴリズムの交叉メカニズムとして <a class="wiki-source-link" href="../../../../source/src/include/optimizer/geqo.h.html#L46" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/optimizer/geqo.h.html&quot;}, '*');"><code>ERX</code></a>（Edge Recombination Crossover）がデフォルトで有効化されています。</li>
+</ul>
+<h2>シンボルページ</h2>
+<ul>
+<li><a href="../../../symbols/src__include__optimizer__geqo_h__GeqoPrivateData.html" target="wiki-view"><code>GeqoPrivateData</code></a></li>
+<li><a href="../../../symbols/src__include__optimizer__geqo_h__GetGeqoPrivateData.html" target="wiki-view"><code>GetGeqoPrivateData</code></a></li>
+</ul><script>
+(function() {
+  function notifyParent() {
+    if (parent === window) return;
+    parent.postMessage({type: "frame-location", frame: window.name || "", href: window.location.href}, "*");
+  }
+  document.addEventListener("click", function(event) {
+    const link = event.target.closest("a[data-panel]");
+    if (!link || parent === window) return;
+    parent.postMessage({type: "source-link", panel: link.dataset.panel}, "*");
+  });
+  window.addEventListener("load", notifyParent);
+  window.addEventListener("hashchange", notifyParent);
+})();
+</script></body></html>

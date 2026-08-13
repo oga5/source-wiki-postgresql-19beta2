@@ -1,0 +1,30 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>src/test/modules/test_regex/README</title><link rel="stylesheet" href="../../../../../../styles.css"></head><body><h1>Japanese translation</h1><p><code>src/test/modules/test_regex/README</code></p><p><a href="../../../../../../source/src/test/modules/test_regex/README.html" target="source-view">View original document</a></p><p class="document-translation-progress document-translation-complete">Translation complete.</p><div class="document-translation-body"><section class="document-translation-chunk translated" data-chunk-order="0"><p>test_regex は、正規表現パッケージをテストするためのモジュールです。 主に、Tcl の正規表現テストスイートを取り込めるようにすることを意図しています。 そのため、現在 PostgreSQL によって SQL レベルで公開されていない正規表現機能を検証するための仕組みが含まれています。</p>
+<p>現在、1つの関数が提供されています。</p>
+<p>test_regex(pattern text, string text, flags text) returns setof text[]</p>
+<p>パターンが無効な正規表現である場合はエラーを報告します。それ以外の場合、出力の最初の行には部分式の数が含まれ、その後に正規表現の re_info フィールドにあるセットされたビットを報告する単語が続きます。 パターンが文字列に一致しない場合は、それだけで終了します。 パターンが一致する場合、次の行には最初の配列要素として全体の一致が含まれます。括弧で囲まれた部分式がある場合、後続の配列要素にはそれらの部分式への一致が含まれます。 &quot;g&quot; (グローバル) フラグが設定されている場合、追加の出力行でも同様に追加の一致が報告されます。</p>
+<p>&quot;flags&quot; 引数は、正規表現パッケージまたはテスト関数の動作を変更する、0個以上の1文字のフラグからなる文字列です。Tcl の reg.test ファイルに記載されているように、以下のようになります。</p>
+<p>フラグ文字は複雑で、少し折衷的です。一般的に言って、 小文字はコンパイルオプション、大文字は期待される re_info ビット、 非アルファベット文字は一致オプション、テストの実行方法の制御、またはテストオプションです。 ちょっとした意外な点として、ARE がデフォルトであり、より下位のフレーバーの RE を明示的に要求する必要があることです。 フラグは以下の通りです。一部はあまり覚えやすくないことを認めます。</p>
+<ul>
+<li>何もしない (プレースホルダー)</li>
+<p>0	実際の文字列ではなくインデックスを報告する (これは Tcl の -indices スイッチの代わりになります) !	部分一致を期待し、とにかく開始位置を報告する %	マッチャー内の小さな状態セットキャッシュを強制する (キャッシュ置換をテストするため) ^	文字列の先頭は行の先頭ではない $	文字列の終端は行の終端ではない</p>
+<li>テストは Unicode 固有であり、大きな文字セットが必要</li>
+<p>+	偽の xy 同値クラスと ch 照合要素を提供する (注意: 同値クラスは実装されていますが、 照合要素は実装されていないため、[.ch.] への参照は失敗します) ,	REG_PROGRESS を設定する (REG_DEBUG ビルドでのみ有効) .	REG_DUMP を設定する (REG_DEBUG ビルドでのみ有効) :	REG_MTRACE を設定する (REG_DEBUG ビルドでのみ有効) ;	REG_FTRACE を設定する (REG_DEBUG ビルドでのみ有効)</p>
+</ul>
+<p>&amp;	ARE と BRE の両方としてテストする (Postgres では実装されておらず、個別のテストを使用します) b	BRE e	ERE a	高度な機能ビットをオンにする (ERE でない限りエラー) q	リテラル文字列、メタ文字は一切なし</p>
+<p>g	グローバルマッチ (すべての一致を検索) i	大文字小文字を区別しない一致 o	(&quot;不透明&quot; - opaque) 一致位置を返さない p	改行文字は半マジックであり、. と [^ のみから除外される w	改行文字は半マジックであり、^ と $ のみに意味を持つ n	改行文字は完全マジックであり、両方の効果を持つ x	拡張 RE 構文 t	不完全一致の報告 c	canmatch (Postgres 実装における &quot;t0!&quot; と同等) s	先頭のみで一致 (REG_BOSONLY)</p>
+<p>A	バックスラッシュと_a_lphanumeric (英数字) が見つかった B	ERE/ARE リテラル-_b_race (波括弧) ヒューリスティックが使用された E	[] 内でバックスラッシュ (_e_scape) が見つかった H	先行予測 (_h_ookahead) 制約が見つかった I	一致させるのが_i_mpossible (不可能) L	_l_ocale (ロケール) 固有の構文要素が見つかった M	移植性がない (_m_achine 固有) 構文要素が見つかった N	RE が空 (_n_ull) 文字列に一致できる P	非-_P_OSIX 構文要素が見つかった Q	{} 量子子 (_q_uantifier) が見つかった R	後方参照 (_r_eference) が見つかった S	POSIX で未指定 (_s_pecified) の構文が見つかった T	最も短いもの (_t_iny) を優先する U	元の POSIX の欠陥を検出: ERE 内の対応する閉じ括弧がない (_u_gh)</p></section></div><script>
+(function() {
+  function notifyParent() {
+    if (parent === window) return;
+    parent.postMessage({type: "frame-location", frame: window.name || "", href: window.location.href}, "*");
+  }
+  document.addEventListener("click", function(event) {
+    const link = event.target.closest("a[data-panel]");
+    if (!link || parent === window) return;
+    parent.postMessage({type: "source-link", panel: link.dataset.panel}, "*");
+  });
+  window.addEventListener("load", notifyParent);
+  window.addEventListener("hashchange", notifyParent);
+})();
+</script></body></html>

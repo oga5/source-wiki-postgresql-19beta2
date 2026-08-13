@@ -1,36 +1,18 @@
 <!doctype html>
 <html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>symbols/src__backend__optimizer__util__extendplan_c__PlannerGlobal.md</title><link rel="stylesheet" href="../../styles.css"></head><body><h1>PlannerGlobal</h1>
-<h2>定義</h2>
+<h2>現在のソース事実</h2>
 <ul>
 <li>種別: <code>function</code></li>
 <li>定義箇所: <code>src/backend/optimizer/util/extendplan.c:1</code></li>
-<li>所属モジュール: <a class="wiki-entity-link" href="../modules/src__backend__optimizer__util.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/modules/src__backend__optimizer__util.html&quot;, &quot;source&quot;: &quot;source/src/backend/optimizer/util/appendinfo.c.html&quot;}, '*');"><code>module:src/backend/optimizer/util</code></a></li>
-</ul>
-<h2>目的</h2>
-<p>静的シンボル索引から生成された初期シンボルページです。</p>
-<h2>シグネチャまたは形状</h2>
-<ul>
 <li>シグネチャ: <code>/*------------------------------------------------------------------------- * * extendplan.c * Extend core planner objects with additional private state * * Portions Copyright (c) 1996-2026, PostgreSQL Global Development Group * Portions Copyright (c) 1994-5, Regents of the University of California * * The interfaces defined in this file make it possible for loadable * modules to store their own private state inside of key planner data * structures -- specifically, the PlannerGlobal, PlannerInfo, and * RelOptInfo structures. This can make it much easier to write * reasonably efficient planner extensions; for instance, code that * uses set_join_pathlist_hook can arrange to compute a key intermediate * result once per joinrel rather than on every call. * * IDENTIFICATION * src/backend/optimizer/util/extendplan.c * *------------------------------------------------------------------------- */ #include &quot;postgres.h&quot; #include &quot;optimizer/extendplan.h&quot; #include &quot;port/pg_bitutils.h&quot; #include &quot;utils/memutils.h&quot; static const char **PlannerExtensionNameArray = NULL</code></li>
-</ul>
-<h2>入力と出力</h2>
-<p>まだ解析していません。</p>
-<h2>前提条件と不変条件</h2>
-<p>まだ解析していません。</p>
-<h2>アルゴリズムまたは振る舞い</h2>
-<ul>
-<li>複雑度: <code>low</code> (score 1)</li>
-</ul>
-<p>まだ解析していません。</p>
-<h2>呼び出し元と呼び出し先</h2>
-<ul>
 <li>呼び出し元: なし</li>
 <li>呼び出し先: なし</li>
 <li>呼び出し元サイト: なし</li>
 <li>呼び出しサイト: なし</li>
+<li>関連型: <code>c</code>, <code>Group</code>, <code>PlannerInfo</code>, <code>RelOptInfo</code>, <code>state</code></li>
+<li>複雑度: <code>low</code> (score 1)</li>
 </ul>
-<h2>関連データ構造</h2>
-<p><code>c</code>, <code>Group</code>, <code>PlannerInfo</code>, <code>RelOptInfo</code>, <code>state</code></p>
-<h2>ソース抜粋</h2>
+<h3>ソース抜粋</h3>
 <p>~~~c /*------------------------------------------------------------------------- *</p>
 <ul>
 <li><a class="wiki-source-link" href="../../source/src/backend/optimizer/util/extendplan.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/backend/optimizer/util/extendplan.c.html&quot;}, '*');">extendplan.c</a></li>
@@ -53,11 +35,11 @@
 </ul>
 <p>#include &quot;optimizer/extendplan.h&quot; #include &quot;port/pg_bitutils.h&quot; #include &quot;utils/memutils.h&quot;</p>
 <p>static const char **<a class="wiki-source-link" href="../../source/src/backend/optimizer/util/extendplan.c.html#L28" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/backend/optimizer/util/extendplan.c.html&quot;}, '*');">PlannerExtensionNameArray</a> = NULL; ~~~</p>
-<h2>失敗モードと境界条件</h2>
-<p>まだ解析していません。</p>
-<h2>保守担当者向けメモ</h2>
+<h2>目的</h2>
+<p>ロード可能なモジュール（プランナ拡張）が独自のプライベート状態を格納するために拡張できる、コアプランナ構造体の一つです。</p>
+<h2>アルゴリズムまたは振る舞い</h2>
 <ul>
-<li>後続フェーズで、ソース本文の文脈と caller/callee 情報を使ってこのページを強化する。</li>
+<li><code>PlannerGlobal</code> 構造体は、拡張モジュールが <a class="wiki-source-link" href="../../source/src/backend/optimizer/util/extendplan.c.html#L76" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__extendplan_c__SetPlannerGlobalExtensionState.html&quot;}, '*');"><code>SetPlannerGlobalExtensionState</code></a> などのインターフェースを通じてプライベート状態（不透明ポインタ）を格納するための対象となります。</li>
 </ul><script>
 (function() {
   function notifyParent() {

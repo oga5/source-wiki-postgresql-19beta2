@@ -1,36 +1,18 @@
 <!doctype html>
 <html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>symbols/src__backend__optimizer__geqo__geqo_eval_c__RelOptInfo.md</title><link rel="stylesheet" href="../../styles.css"></head><body><h1>RelOptInfo</h1>
-<h2>定義</h2>
+<h2>現在のソース事実</h2>
 <ul>
 <li>種別: <code>function</code></li>
 <li>定義箇所: <code>src/backend/optimizer/geqo/geqo_eval.c:1</code></li>
-<li>所属モジュール: <a class="wiki-entity-link" href="../modules/src__backend__optimizer__geqo.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/modules/src__backend__optimizer__geqo.html&quot;, &quot;source&quot;: &quot;source/src/backend/optimizer/geqo/geqo_copy.c.html&quot;}, '*');"><code>module:src/backend/optimizer/geqo</code></a></li>
-</ul>
-<h2>目的</h2>
-<p>静的シンボル索引から生成された初期シンボルページです。</p>
-<h2>シグネチャまたは形状</h2>
-<ul>
 <li>シグネチャ: <code>/*------------------------------------------------------------------------ * * geqo_eval.c * Routines to evaluate query trees * * Portions Copyright (c) 1996-2026, PostgreSQL Global Development Group * Portions Copyright (c) 1994, Regents of the University of California * * src/backend/optimizer/geqo/geqo_eval.c * *------------------------------------------------------------------------- */ /* * contributed by: * =*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*= * * Martin Utesch * Institute of Automatic Control * * = = University of Mining and Technology = * * utesch@aut.tu-freiberg.de * Freiberg, Germany * * =*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*= */ #include &quot;postgres.h&quot; #include &lt;float.h&gt; #include &lt;limits.h&gt; #include &quot;optimizer/geqo.h&quot; #include &quot;optimizer/joininfo.h&quot; #include &quot;optimizer/pathnode.h&quot; #include &quot;optimizer/paths.h&quot; #include &quot;utils/memutils.h&quot; /* A &quot;clump&quot; of already-joined relations within gimme_tree */ typedef struct</code></li>
-</ul>
-<h2>入力と出力</h2>
-<p>まだ解析していません。</p>
-<h2>前提条件と不変条件</h2>
-<p>まだ解析していません。</p>
-<h2>アルゴリズムまたは振る舞い</h2>
-<ul>
-<li>複雑度: <code>low</code> (score 1)</li>
-</ul>
-<p>まだ解析していません。</p>
-<h2>呼び出し元と呼び出し先</h2>
-<ul>
 <li>呼び出し元: なし</li>
 <li>呼び出し先: なし</li>
 <li>呼び出し元サイト: なし</li>
 <li>呼び出しサイト: なし</li>
+<li>関連型: <code>c</code>, <a class="wiki-source-link" href="../../source/src/backend/optimizer/geqo/geqo_eval.c.html#L36" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__geqo__geqo_eval_c__Clump.html&quot;}, '*');"><code>Clump</code></a>, <code>Group</code></li>
+<li>複雑度: <code>low</code> (score 1)</li>
 </ul>
-<h2>関連データ構造</h2>
-<p><code>c</code>, <a class="wiki-source-link" href="../../source/src/backend/optimizer/geqo/geqo_eval.c.html#L36" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__geqo__geqo_eval_c__Clump.html&quot;}, '*');"><code>Clump</code></a>, <code>Group</code></p>
-<h2>ソース抜粋</h2>
+<h3>ソース抜粋</h3>
 <p>~~~c /*------------------------------------------------------------------------ *</p>
 <ul>
 <li><a class="wiki-source-link" href="../../source/src/backend/optimizer/geqo/geqo_eval.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/backend/optimizer/geqo/geqo_eval.c.html&quot;}, '*');">geqo_eval.c</a></li>
@@ -56,11 +38,13 @@
 <p>#include &lt;<a class="wiki-source-link" href="../../source/src/include/utils/float.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/utils/float.h.html&quot;}, '*');">float.h</a>&gt; #include &lt;limits.h&gt;</p>
 <p>#include &quot;optimizer/geqo.h&quot; #include &quot;optimizer/joininfo.h&quot; #include &quot;optimizer/pathnode.h&quot; #include &quot;optimizer/paths.h&quot; #include &quot;utils/memutils.h&quot;</p>
 <p>/* A &quot;clump&quot; of already-joined relations within <a class="wiki-source-link" href="../../source/src/backend/optimizer/geqo/geqo_eval.c.html#L162" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__geqo__geqo_eval_c__gimme_tree.html&quot;}, '*');">gimme_tree</a> */ typedef struct { RelOptInfo *joinrel;		/* joinrel for the set of relations */ int			size;			/* number of input relations in clump */ } <a class="wiki-source-link" href="../../source/src/backend/optimizer/geqo/geqo_eval.c.html#L36" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__geqo__geqo_eval_c__Clump.html&quot;}, '*');">Clump</a>; ~~~</p>
-<h2>失敗モードと境界条件</h2>
-<p>まだ解析していません。</p>
-<h2>保守担当者向けメモ</h2>
+<h2>目的</h2>
+<p><a class="wiki-source-link" href="../../source/src/backend/optimizer/geqo/geqo_eval.c.html#L162" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__geqo__geqo_eval_c__gimme_tree.html&quot;}, '*');"><code>gimme_tree</code></a> 内ですでに結合された関係のセット（クランプ）を表現するための、<a class="wiki-source-link" href="../../source/src/backend/optimizer/geqo/geqo_eval.c.html#L36" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__geqo__geqo_eval_c__Clump.html&quot;}, '*');"><code>Clump</code></a> 構造体の一部として利用されます。</p>
+<h2>アルゴリズムまたは振る舞い</h2>
+<p><a class="wiki-source-link" href="../../source/src/backend/optimizer/geqo/geqo_eval.c.html#L36" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__geqo__geqo_eval_c__Clump.html&quot;}, '*');"><code>Clump</code></a> 構造体のフィールドとして保持され、一連の関係集合に対する結合リレーション（<code>joinrel</code>）を指し示します。</p>
+<h2>関連データ構造</h2>
 <ul>
-<li>後続フェーズで、ソース本文の文脈と caller/callee 情報を使ってこのページを強化する。</li>
+<li><a class="wiki-source-link" href="../../source/src/backend/optimizer/geqo/geqo_eval.c.html#L36" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__geqo__geqo_eval_c__Clump.html&quot;}, '*');"><code>Clump</code></a>: すでに結合された関係の塊を保持し、<code>RelOptInfo *joinrel</code> と <code>int size</code> を内包します。</li>
 </ul><script>
 (function() {
   function notifyParent() {

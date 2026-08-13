@@ -1,5 +1,5 @@
 <!doctype html>
-<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>src/backend/access/transam/README</title><link rel="stylesheet" href="../../../../../../styles.css"></head><body><h1>Japanese translation</h1><p><code>src/backend/access/transam/README</code></p><p><a href="../../../../../../source/src/backend/access/transam/README.html" target="source-view">View original document</a></p><p class="document-translation-progress document-translation-complete">Translation complete.</p><div class="document-translation-body"><section class="document-translation-chunk translated" data-chunk-order="0"><p>src/backend/access/transam/README</p>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>src/backend/access/transam/README</title><link rel="stylesheet" href="../../../../../../styles.css"></head><body><h1>Japanese translation</h1><p><code>src/backend/access/transam/README</code></p><p><a href="../../../../../../source/src/backend/access/transam/README.html" target="source-view">View original document</a></p><p class="document-translation-progress document-translation-incomplete">Translation in progress: 4/5 chunks complete. Pending chunks show their original text below.</p><div class="document-translation-body"><section class="document-translation-chunk translated" data-chunk-order="0"><p>src/backend/access/transam/README</p>
 <p>トランザクションシステム ======================</p>
 <p>PostgreSQL のトランザクションシステムは3層構造になっています。最下層は 低レベルのトランザクションとサブトランザクションを実装し、その上に メインループの制御コードが置かれ、さらにそれがユーザーに公開される トランザクションとセーブポイントを実装しています。</p>
 <p>中層のコードは、各クエリの処理前後に postgres.c から、あるいは エラーの検出後に呼び出されます：</p>
@@ -50,29 +50,203 @@
 <p>内部的に、バックエンドには XID の有無に関わらずサブトランザクションを 識別する方法が必要ですが、この必要性は親のトップトランザクションが 存続している間だけ続きます。したがって、各トップトランザクションの 開始時にリセットするカウンタから生成されるという点で CommandId に 少し似ている SubTransactionId があります。トップレベルトランザクション 自体の SubTransactionId は 1であり、サブトランザクションの ID は 2 以降です。（ゼロは InvalidSubTransactionId のために予約されています。） サブトランザクションは独自の VXID を持たず、親のトップトランザクションの VXID を使用することに注意してください。</p>
 <p>トランザクション開始、トランザクション終了、およびスナップショットのインターロック ----------------------------------------------------------------------------------</p>
 <p>トランザクションの開始/終了やスナップショットの取得という頻繁なアクティビティ に関連するオーバーヘッドとロック競合の量を最小限に抑えるよう、私たちは 尽力しています。不運なことに、トランザクションのコミット順序に関する 一貫性を確保する必要があるため、これには何らかのインターロックが 必要になります。 たとえば、トランザクション A の UPDATE が、同じ行に対するトランザクション B の事前の更新によってブロックされており、トランザクション B がコミットを 行っている間に、トランザクション C がスナップショットを取得するとします。 トランザクション A は、B がロックを解放するとすぐに完了してコミット できます。もしトランザクション C の GetSnapshotData がトランザクション B をまだ実行中であると見なす場合、トランザクション A もまだ実行中であると 見なす必要があります。そうしないと、B によって削除されたものと A によって 挿入されたものの、2つのタプルバージョンを見ることになってしまいます。 これが望ましくないもう一つの理由は、C が（Aによって挿入された行の中で） B による以前の変更を見てしまい、データベース内の他の場所で B の変更を まったく見ないことと矛盾するためです。</p>
-<p>形式的に、正当性の要件は「スナップショット A がトランザクション X を コミット済みと見なし、トランザクション X のスナップショットのいずれかが トランザクション Y をコミット済みと見なしている場合、スナップショット A はトランザクション Y をコミット済みと見なさなければならない」という ものです。</p></section><section class="document-translation-chunk translated" data-chunk-order="1"><p>私たちが実際に強制しているのは、スナップショットの取得とコミットおよびロールバックの厳密なシリアライズです。つまり、スナップショットの取得中に、どのトランザクションも実行中のトランザクションのセットから抜けることを許可しません。（このルールは一貫性を保つためには必要以上に厳格ですが、強制するのが比較的簡単であり、後述する他のいくつかの問題の解決にも役立ちます。）この実装として、GetSnapshotDataはProcArrayLockを共有モードで取得し（複数のバックエンドが並行してスナップショットを取得できるようにするため）、ProcArrayEndTransactionはトランザクション終了時（コミットまたはアボートのいずれか）にProcGlobal-&gt;xids[]エントリをクリアする際、排他モードでProcArrayLockを取得しなければなりません。（コンテキストスイッチを減らすため、複数のトランザクションがほぼ同時にコミットする場合、1つのバックエンドがProcArrayLockを取得し、複数のプロセスのXIDを一度にクリアします。）</p>
-<p>また、ProcArrayEndTransactionは、共有のlatestCompletedXid変数を進めている間もロックを保持します。これにより、GetSnapshotDataはスナップショットのxmaxとしてlatestCompletedXid + 1を使用できるようになります。スナップショットが完了したものとみなす必要がある、このxid値以上のトランザクションは存在し得ないからです。</p>
-<p>つまり要約すると、ルールとは、latestCompletedXidを取得した時点からスナップショットの構築を完了する時点までの間に、どのトランザクションも現在実行中のトランザクションのセットから抜けてはならないということです。ただし、この制限はXIDを持つトランザクションにのみ適用されます。読み取り専用トランザクションは、他の誰のスナップショットにもlatestCompletedXidにも影響を与えないため、ProcArrayLockを取得せずに終了できます。</p>
-<p>トランザクション開始そのものは、トランザクション開始時に即座にXIDを割り当てなくなったため、これらの考慮事項と連動することはありません。しかし、実際にXIDを割り当てると決定した場合、GetNewTransactionIdはXidGenLockを解放する前に、新しいXIDを共有ProcArrayに格納しなければなりません。これにより、latestCompletedXid以下のすべてのトップレベルXIDが、ProcArrayに存在するか、すでに実行されていないかのどちらかであることが保証されます。（サブトランザクションのXIDのサブxid配列に空きがない可能性があるため、この保証はサブトランザクションのXIDには適用されません。その代わりに、それらが存在するか、オーバーフローフラグが設定されていることが保証されます。）もしバックエンドが、自身のXIDをProcGlobal-&gt;xids[]に格納する前にXidGenLockを解放した場合、別のバックエンドがより後のXIDを割り当ててコミットし、その値がProcArrayで可視になる前にlatestCompletedXidが最初のバックエンドのXIDを追い越してしまう可能性があります。それは後述するようにComputeXidHorizonsを壊すことになります。</p>
-<p>GetNewTransactionIdは、ProcArrayLockを取得せずにXIDをProcGlobal-&gt;xids[]（またはサブxid配列）に格納することが許可されています。これはかつてデッドロックを避けるために必要でしたが、もはやそうではない現在でもパフォーマンス上有益です。そのため、私たちはXIDのフェッチ/ストアがアトミックであることを信頼しており、そうでなければ他のバックエンドが部分的に設定されたXIDを見てしまう可能性があります。これはまた、ProcArrayのxidフィールドの読み取り手が、毎回同じ答えが得られると仮定して複数回読み取れると思い込むのではなく、値のフェッチを1回だけ行うように注意しなければならないことを意味します。（これを行うときは、Cコンパイラが指示通りの正確な動作をするように、volatile修飾されたポインタを使用してください。）</p>
-<p>共有ProcArrayを使用するもう一つの重要な活動はComputeXidHorizonsです。これは、システム全体でアクティブなMVCCスナップショットの最も古いxminの下限を決定しなければなりません。個々のバックエンドは、自身のスナップショットの最小xminをMyProc-&gt;xminに宣伝し、現在ライブなスナップショットがない場合（例えば、トランザクションの間である場合や、新しいトランザクションのスナップショットをまだ設定していない場合）はゼロを宣伝します。ComputeXidHorizonsは、有効なxminフィールドのMIN()を取得します。これはProcArrayLockの共有ロックのみで行われます。つまり、同時にGetSnapshotDataを実行している他のバックエンドに対して競合状態の潜在的な可能性が生じます。xminを設定しようとしている並行バックエンドが、ComputeXidHorizonsが決定するものよりも小さいxminを計算しないように確実にする必要があります。これを確実にするために、有効なxminとともに、すべてのアクティブなXIDをMIN()の計算に含めます。トランザクションが排他ProcArrayLockを取得せずに終了できないというルールにより、共有ProcArrayLockの同時保持者は現在アクティブなXIDの同じ最小値を計算することが保証されます。私たちが共有ProcArrayLockを保持している間は、いかなるトランザクションも（特に最も古いトランザクションも）終了できません。したがって、最小アクティブXIDに関するComputeXidHorizonsの見解は、並行するどのGetSnapshotDataの見解とも同じになり、過大評価を生み出すことはありません。アクティブなトランザクションが全く存在しない場合、ComputeXidHorizonsはlatestCompletedXid + 1を使用します。これは、並行またはその後のGetSnapshotDataの呼び出しによって計算される可能性のあるxminの下限です。（前述のXidGenLockの連動により、これより小さいXIDがProcArrayに現れることはないことがわかっています。）</p>
-<p>GetSnapshotDataはパフォーマンスクリティカルであるため、正確な最古xminの計算を行いません（v14までは行っていました）。スナップショットの内容は、他のバックエンドのxminではなく、そのxidのみに依存します。バックエンドのxminはxidよりもはるかに頻繁に変更されるため、GetSnapshotDataにxminを確認させると、不要なキャッシュラインのピンポンが大量に発生する可能性があります。その代わりに、GetSnapshotDataは近似の閾値を更新します（1つはそれより古い削除された行がすべて削除できることを保証し、もう1つはそれより新しい削除された行は削除できないことを決定します）。GlobalVisTest*はそれらの閾値を使用して不可視性の決定を行い、必要な場合はComputeXidHorizonsにフォールバックします。</p>
-<p>GetSnapshotDataの2つの並行実行が独自のスナップショットに対して同じxminを計算することは確実ですが、ComputeXidHorizonsによって計算されるホライズンにはそのような保証がないことに注意してください。これは、XIDを持たないトランザクションが（ProcArrayLockを取得せずに）非同期でMyProc-&gt;xminをクリアすることを許可しているため、ある実行ではかつて最古のxminであったものが見え、別の実行では見えない可能性があるためです。閾値は有効な下限であることさえ求められればよいため、これは問題ありません。前述の通り、xidフィールドのフェッチ/ストアはアトミックであるとすでに仮定しているため、xminについても同様に仮定することに追加のリスクはありません。</p>
-<p>pg_xactとpg_subtrans -----------------------</p>
-<p>pg_xactとpg_subtransは、トランザクション関連情報の永続的（オンディスク）なストレージです。各々のページのごく一部がメモリ内に保持されるため、多くの場合、実際にディスクから読み取る必要はありません。しかし、長期実行中のトランザクションや、トランザクションを開いたままアイドル状態になっているバックエンドがある場合、この情報をディスクから読み書きできるようにする必要が生じることがあります。これらはまた、サーバーの再起動をまたいで情報を永続的に保持することも可能にします。</p>
-<p>pg_xactは、XIDが割り当てられた各トランザクションのコミットステータスを記録します。トランザクションは、進行中（in progress）、コミット済み（committed）、アボート済み（aborted）、または「サブコミット済み（sub-committed）」の状態になり得ます。この最後の状態は、実行が終了したサブトランザクションであるが、その親がまだその状態を更新していないことを意味します。サブトランザクションのトランザクションステータスをサブコミットに更新する必要はないため、メインのトランザクションのコミットまで延期することができます。トランザクションをサブコミット済みとしてマークする主な役割は、トランザクションステータスが複数のclogページにまたがっている場合にアトミックなコミットプロトコルを提供することです。その結果、トランザクションステータスが複数のページにまたがる場合は常に、二相コミットプロトコルを使用する必要があります。第1フェーズはサブトランザクションをサブコミット済みとしてマークし、次にトップレベルのトランザクションとそのすべてのサブトランザクションをコミット済みとしてマークします（その順序で）。したがって、アボートしていないサブトランザクションは、すでに終了している場合でも進行中として表示され、サブコミットステータスはメインのトランザクションコミット中のごく短い一時的な状態として表示されます。サブトランザクションのアボートは、発生するとすぐに常にclogにマークされます。トランザクションステータス全体が単一のCLOGページに収まる場合、中間的なサブコミット状態を経ることなく、それらすべてをアトミックにコミット済みとしてマークします。</p>
-<p>セーブポイントはサブトランザクションを使用して実装されます。サブトランザクションはトランザクション内のトランザクションであり、そのコミットまたはアボートのステータスは、自身がコミットしたかどうかだけでなく、親トランザクションがコミットしたかどうかにも依存します。1つのトランザクション内で複数のセーブポイントを実装するため、無制限のトランザクションネスト深度を許可しており、任意の特定のサブトランザクションのコミットステータスは、すべての祖先トランザクションのコミットステータスに依存します。</p>
-<p>「サブトランザクション親」（pg_subtrans）メカニズムは、XIDを持つ各トランザクションについて、その親トランザクションのTransactionIdを記録します。この情報は、サブトランザクションにXIDが割り当てられるとすぐに格納されます。トップレベルトランザクションには親がないため、pg_subtransのエントリはデフォルト値のゼロ（InvalidTransactionId）のままになります。</p>
-<p>pg_subtransは、問題のトランザクションがまだ実行中であるかどうかを確認するために使用されます。トランザクションのメインXidはProcGlobal-&gt;xids[]に記録され、PGPROC-&gt;xidにコピーが保持されますが、サブトランザクションの任意のネストを許可しているため、すべてのXidを共有メモリに収めることができず、ディスクに格納する必要があります。ただし、各トランザクションについて、トランザクションツリーの一部であることが分かっているXidの「キャッシュ」を保持しているため、キャッシュがオーバーフローしたことが分かっている場合を除き、pg_subtransの参照をスキップできることに注意してください。詳細については storage/ipc/procarray.c を参照してください。</p>
-<p>slru.cは、pg_xactとpg_subtransの両方をサポートするメカニズムです。これは、メモリ内バッファページのためのLRUポリシーを実装しています。pg_xactの高水準ルーチンはtransam.cに実装されており、低水準関数はclog.cにあります。pg_subtransは完全にsubtrans.cに含まれています。</p>
-<p>先行書き込みログのコーディング ----------------------</p>
-<p>WALサブシステム（コード内ではXLOGとも呼ばれます）は、クラッシュリカバリを保証するために存在します。また、ポイントインタイムリカバリや、ログシッピングによるホットスタンバイレプリケーションを提供するためにも使用されます。ここでは、その設計の自明ではない側面についてのいくつかのメモを示します。</p>
-<p>先行書き込みログ（Write Ahead Log）の基本的な前提は、ログエントリが記述するデータページの変更よりも前に、ログエントリが安定ストレージに到達しなければならないということです。これにより、ログを最後まで再生することで、部分的に実行されたトランザクションが存在しない一貫した状態に到達できることが保証されます。これを保証するために、各データページ（ヒープまたはインデックス）には、そのページに影響を与える最新のXLOGレコードのLSN（ログシーケンス番号 --- 実際にはWALファイルの場所）がマークされます。bufmgrがダーティページを書き出す前に、xlogが少なくともページのLSNまでディスクにフラッシュされていることを確認しなければなりません。この低水準のインタラクションにより、必要なときまでXLOG I/Oを待機しないことでパフォーマンスが向上します。LSNチェックは共有バッファマネージャにのみ存在し、一時テーブルに使用されるローカルバッファマネージャには存在しないため、一時テーブルに対する操作はWALに記録されてはなりません。</p>
-<p>WALリプレイ中、ページのLSNをチェックして、現在のログエントリによって記録された変更がすでに適用されているかどうかを検出できます（ページのLSNがログエントリのWAL位置以上であれば、適用されています）。</p>
-<p>通常、ログエントリには、ページ（または小さなページのグループ）に対する単一の増分更新をやり直す（redo）のに十分な情報のみが含まれています。これは、ファイルシステムとハードウェアがデータページの書き込みをアトミックなアクションとして実装しており、ページが破損した部分的に書き込まれた状態で放置されない場合にのみ機能します。実際にはそれは多くの場合に不可能な前提であるため、変更されたページの完全な再構築を可能にする追加の情報をログに記録します。チェックポイント後に特定のページに影響を与える最初のWALレコードには、ページ全体のコピーが含まれるようになり、更新をやり直す代わりにそのページのコピーを復元することでリプレイを実装します。（WALレコードのCRCの有効性を確認できるため、これはデータストレージ自体よりも信頼性が高くなります。）ページの古いLSNが最後のチェックポイント時点のWALの終わり（RedoRecPtr）より前であるかどうかを確認することで、「チェックポイント後の最初の変更」を検出できます。</p>
-<p>WALに記録されたアクションを実行するための一般的なスキーマは次のとおりです。</p>
-<p>1. 変更されるデータページを含む共有バッファをピン留めし、排他ロックします。</p>
-<p>&lt;/document&gt;</p></section><section class="document-translation-chunk translated" data-chunk-order="2"><p>2. START_CRIT_SECTION()  (共有バッファには未記録の変更が含まれており、これらがディスクに書き込まれないようにする必要があるため、次の3つのステップのいずれかのエラーはPANICを引き起こさなければなりません。当然ながら、クリティカルセクションを開始する前に、ページ上に十分な空き領域があるかどうかなどの条件を確認する必要があります。)</p>
+<p>形式的に、正当性の要件は「スナップショット A がトランザクション X を コミット済みと見なし、トランザクション X のスナップショットのいずれかが トランザクション Y をコミット済みと見なしている場合、スナップショット A はトランザクション Y をコミット済みと見なさなければならない」という ものです。</p></section><section class="document-translation-chunk pending" data-chunk-order="1"><h2>Chunk 2: translation pending</h2><p>This chunk has not been translated yet. Original text:</p><pre class="document-translation-text">What we actually enforce is strict serialization of commits and rollbacks
+with snapshot-taking: we do not allow any transaction to exit the set of
+running transactions while a snapshot is being taken.  (This rule is
+stronger than necessary for consistency, but is relatively simple to
+enforce, and it assists with some other issues as explained below.)  The
+implementation of this is that GetSnapshotData takes the ProcArrayLock in
+shared mode (so that multiple backends can take snapshots in parallel),
+but ProcArrayEndTransaction must take the ProcArrayLock in exclusive mode
+while clearing the ProcGlobal-&gt;xids[] entry at transaction end (either
+commit or abort). (To reduce context switching, when multiple transactions
+commit nearly simultaneously, we have one backend take ProcArrayLock and
+clear the XIDs of multiple processes at once.)
+
+ProcArrayEndTransaction also holds the lock while advancing the shared
+latestCompletedXid variable.  This allows GetSnapshotData to use
+latestCompletedXid + 1 as xmax for its snapshot: there can be no
+transaction &gt;= this xid value that the snapshot needs to consider as
+completed.
+
+In short, then, the rule is that no transaction may exit the set of
+currently-running transactions between the time we fetch latestCompletedXid
+and the time we finish building our snapshot.  However, this restriction
+only applies to transactions that have an XID --- read-only transactions
+can end without acquiring ProcArrayLock, since they don&#x27;t affect anyone
+else&#x27;s snapshot nor latestCompletedXid.
+
+Transaction start, per se, doesn&#x27;t have any interlocking with these
+considerations, since we no longer assign an XID immediately at transaction
+start.  But when we do decide to allocate an XID, GetNewTransactionId must
+store the new XID into the shared ProcArray before releasing XidGenLock.
+This ensures that all top-level XIDs &lt;= latestCompletedXid are either
+present in the ProcArray, or not running anymore.  (This guarantee doesn&#x27;t
+apply to subtransaction XIDs, because of the possibility that there&#x27;s not
+room for them in the subxid array; instead we guarantee that they are
+present or the overflow flag is set.)  If a backend released XidGenLock
+before storing its XID into ProcGlobal-&gt;xids[], then it would be possible for
+another backend to allocate and commit a later XID, causing latestCompletedXid
+to pass the first backend&#x27;s XID, before that value became visible in the
+ProcArray.  That would break ComputeXidHorizons, as discussed below.
+
+We allow GetNewTransactionId to store the XID into ProcGlobal-&gt;xids[] (or the
+subxid array) without taking ProcArrayLock.  This was once necessary to
+avoid deadlock; while that is no longer the case, it&#x27;s still beneficial for
+performance.  We are thereby relying on fetch/store of an XID to be atomic,
+else other backends might see a partially-set XID.  This also means that
+readers of the ProcArray xid fields must be careful to fetch a value only
+once, rather than assume they can read it multiple times and get the same
+answer each time.  (Use volatile-qualified pointers when doing this, to
+ensure that the C compiler does exactly what you tell it to.)
+
+Another important activity that uses the shared ProcArray is
+ComputeXidHorizons, which must determine a lower bound for the oldest xmin
+of any active MVCC snapshot, system-wide.  Each individual backend
+advertises the smallest xmin of its own snapshots in MyProc-&gt;xmin, or zero
+if it currently has no live snapshots (eg, if it&#x27;s between transactions or
+hasn&#x27;t yet set a snapshot for a new transaction).  ComputeXidHorizons takes
+the MIN() of the valid xmin fields.  It does this with only shared lock on
+ProcArrayLock, which means there is a potential race condition against other
+backends doing GetSnapshotData concurrently: we must be certain that a
+concurrent backend that is about to set its xmin does not compute an xmin
+less than what ComputeXidHorizons determines.  We ensure that by including
+all the active XIDs into the MIN() calculation, along with the valid xmins.
+The rule that transactions can&#x27;t exit without taking exclusive ProcArrayLock
+ensures that concurrent holders of shared ProcArrayLock will compute the
+same minimum of currently-active XIDs: no xact, in particular not the
+oldest, can exit while we hold shared ProcArrayLock.  So
+ComputeXidHorizons&#x27;s view of the minimum active XID will be the same as that
+of any concurrent GetSnapshotData, and so it can&#x27;t produce an overestimate.
+If there is no active transaction at all, ComputeXidHorizons uses
+latestCompletedXid + 1, which is a lower bound for the xmin that might
+be computed by concurrent or later GetSnapshotData calls.  (We know that no
+XID less than this could be about to appear in the ProcArray, because of the
+XidGenLock interlock discussed above.)
+
+As GetSnapshotData is performance critical, it does not perform an accurate
+oldest-xmin calculation (it used to, until v14). The contents of a snapshot
+only depend on the xids of other backends, not their xmin. As backend&#x27;s xmin
+changes much more often than its xid, having GetSnapshotData look at xmins
+can lead to a lot of unnecessary cacheline ping-pong.  Instead
+GetSnapshotData updates approximate thresholds (one that guarantees that all
+deleted rows older than it can be removed, another determining that deleted
+rows newer than it can not be removed). GlobalVisTest* uses those thresholds
+to make invisibility decision, falling back to ComputeXidHorizons if
+necessary.
+
+Note that while it is certain that two concurrent executions of
+GetSnapshotData will compute the same xmin for their own snapshots, there is
+no such guarantee for the horizons computed by ComputeXidHorizons.  This is
+because we allow XID-less transactions to clear their MyProc-&gt;xmin
+asynchronously (without taking ProcArrayLock), so one execution might see
+what had been the oldest xmin, and another not.  This is OK since the
+thresholds need only be a valid lower bound.  As noted above, we are already
+assuming that fetch/store of the xid fields is atomic, so assuming it for
+xmin as well is no extra risk.
+
+
+pg_xact and pg_subtrans
+-----------------------
+
+pg_xact and pg_subtrans are permanent (on-disk) storage of transaction related
+information.  There is a limited number of pages of each kept in memory, so
+in many cases there is no need to actually read from disk.  However, if
+there&#x27;s a long running transaction or a backend sitting idle with an open
+transaction, it may be necessary to be able to read and write this information
+from disk.  They also allow information to be permanent across server restarts.
+
+pg_xact records the commit status for each transaction that has been assigned
+an XID.  A transaction can be in progress, committed, aborted, or
+&quot;sub-committed&quot;.  This last state means that it&#x27;s a subtransaction that&#x27;s no
+longer running, but its parent has not updated its state yet.  It is not
+necessary to update a subtransaction&#x27;s transaction status to subcommit, so we
+can just defer it until main transaction commit.  The main role of marking
+transactions as sub-committed is to provide an atomic commit protocol when
+transaction status is spread across multiple clog pages. As a result, whenever
+transaction status spreads across multiple pages we must use a two-phase commit
+protocol: the first phase is to mark the subtransactions as sub-committed, then
+we mark the top level transaction and all its subtransactions committed (in
+that order).  Thus, subtransactions that have not aborted appear as in-progress
+even when they have already finished, and the subcommit status appears as a
+very short transitory state during main transaction commit.  Subtransaction
+abort is always marked in clog as soon as it occurs.  When the transaction
+status all fit in a single CLOG page, we atomically mark them all as committed
+without bothering with the intermediate sub-commit state.
+
+Savepoints are implemented using subtransactions.  A subtransaction is a
+transaction inside a transaction; its commit or abort status is not only
+dependent on whether it committed itself, but also whether its parent
+transaction committed.  To implement multiple savepoints in a transaction we
+allow unlimited transaction nesting depth, so any particular subtransaction&#x27;s
+commit state is dependent on the commit status of each and every ancestor
+transaction.
+
+The &quot;subtransaction parent&quot; (pg_subtrans) mechanism records, for each
+transaction with an XID, the TransactionId of its parent transaction.  This
+information is stored as soon as the subtransaction is assigned an XID.
+Top-level transactions do not have a parent, so they leave their pg_subtrans
+entries set to the default value of zero (InvalidTransactionId).
+
+pg_subtrans is used to check whether the transaction in question is still
+running --- the main Xid of a transaction is recorded in ProcGlobal-&gt;xids[],
+with a copy in PGPROC-&gt;xid, but since we allow arbitrary nesting of
+subtransactions, we can&#x27;t fit all Xids in shared memory, so we have to store
+them on disk.  Note, however, that for each transaction we keep a &quot;cache&quot; of
+Xids that are known to be part of the transaction tree, so we can skip looking
+at pg_subtrans unless we know the cache has been overflowed.  See
+storage/ipc/procarray.c for the gory details.
+
+slru.c is the supporting mechanism for both pg_xact and pg_subtrans.  It
+implements the LRU policy for in-memory buffer pages.  The high-level routines
+for pg_xact are implemented in transam.c, while the low-level functions are in
+clog.c.  pg_subtrans is contained completely in subtrans.c.
+
+
+Write-Ahead Log Coding
+----------------------
+
+The WAL subsystem (also called XLOG in the code) exists to guarantee crash
+recovery.  It can also be used to provide point-in-time recovery, as well as
+hot-standby replication via log shipping.  Here are some notes about
+non-obvious aspects of its design.
+
+A basic assumption of a write AHEAD log is that log entries must reach stable
+storage before the data-page changes they describe.  This ensures that
+replaying the log to its end will bring us to a consistent state where there
+are no partially-performed transactions.  To guarantee this, each data page
+(either heap or index) is marked with the LSN (log sequence number --- in
+practice, a WAL file location) of the latest XLOG record affecting the page.
+Before the bufmgr can write out a dirty page, it must ensure that xlog has
+been flushed to disk at least up to the page&#x27;s LSN.  This low-level
+interaction improves performance by not waiting for XLOG I/O until necessary.
+The LSN check exists only in the shared-buffer manager, not in the local
+buffer manager used for temp tables; hence operations on temp tables must not
+be WAL-logged.
+
+During WAL replay, we can check the LSN of a page to detect whether the change
+recorded by the current log entry is already applied (it has been, if the page
+LSN is &gt;= the log entry&#x27;s WAL location).
+
+Usually, log entries contain just enough information to redo a single
+incremental update on a page (or small group of pages).  This will work only
+if the filesystem and hardware implement data page writes as atomic actions,
+so that a page is never left in a corrupt partly-written state.  Since that&#x27;s
+often an untenable assumption in practice, we log additional information to
+allow complete reconstruction of modified pages.  The first WAL record
+affecting a given page after a checkpoint is made to contain a copy of the
+entire page, and we implement replay by restoring that page copy instead of
+redoing the update.  (This is more reliable than the data storage itself would
+be because we can check the validity of the WAL record&#x27;s CRC.)  We can detect
+the &quot;first change after checkpoint&quot; by noting whether the page&#x27;s old LSN
+precedes the end of WAL as of the last checkpoint (the RedoRecPtr).
+
+The general schema for executing a WAL-logged action is
+
+1. Pin and exclusive-lock the shared buffer(s) containing the data page(s)
+to be modified.
+
+</pre></section><section class="document-translation-chunk translated" data-chunk-order="2"><p>2. START_CRIT_SECTION()  (共有バッファには未記録の変更が含まれており、これらがディスクに書き込まれないようにする必要があるため、次の3つのステップのいずれかのエラーはPANICを引き起こさなければなりません。当然ながら、クリティカルセクションを開始する前に、ページ上に十分な空き領域があるかどうかなどの条件を確認する必要があります。)</p>
 <p>3. 必要な変更を共有バッファに適用します。</p>
 <p>4. MarkBufferDirty()を使用して共有バッファをダーティとしてマークします。(これはWALレコードが挿入される前に行う必要があります。SyncOneBuffer()の注記を参照してください。) MarkBufferDirty()でバッファをダーティとしてマークするのは、WALレコードを書き込む場合にのみ行うべきであることに注意してください。以下の「ヒントの書き込み」を参照してください。</p>
 <p>5. リレーションにWALロギングが必要な場合は、XLogBeginInsertおよびXLogRegister*関数を使用してWALレコードを構築し、それを挿入します。(以下の「WALレコードの構築」を参照してください。) その後、返されたXLOGロケーションを使用してページのLSNを更新します。例:</p>

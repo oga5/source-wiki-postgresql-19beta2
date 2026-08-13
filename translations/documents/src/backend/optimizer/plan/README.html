@@ -1,37 +1,163 @@
 <!doctype html>
-<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>src/backend/optimizer/plan/README</title><link rel="stylesheet" href="../../../../../../styles.css"></head><body><h1>Japanese translation</h1><p><code>src/backend/optimizer/plan/README</code></p><p><a href="../../../../../../source/src/backend/optimizer/plan/README.html" target="source-view">View original document</a></p><p class="document-translation-progress document-translation-complete">Translation complete.</p><div class="document-translation-body"><section class="document-translation-chunk translated" data-chunk-order="0"><p>src/backend/optimizer/plan/README</p>
-<p>Subselects ==========</p>
-<p>Vadim B. Mikheev</p>
-<p>From owner-pgsql-hackers@hub.org Fri Feb 13 09:01:19 1998 Received: from renoir.op.net (root@renoir.op.net [209.152.193.4]) by candle.pha.pa.us (8.8.5/8.8.5) with ESMTP id JAA11576 for &lt;maillist@candle.pha.pa.us&gt;; Fri, 13 Feb 1998 09:01:17 -0500 (EST) Received: from hub.org (hub.org [209.47.148.200]) by renoir.op.net (o1/$Revision: 1.14 $) with ESMTP id IAA09761 for &lt;maillist@candle.pha.pa.us&gt;; Fri, 13 Feb 1998 08:41:22 -0500 (EST) Received: from localhost (majordom@localhost) by hub.org (8.8.8/8.7.5) with SMTP id IAA08135; Fri, 13 Feb 1998 08:40:17 -0500 (EST) Received: by hub.org (TLB v0.10a (1.23 tibbs 1997/01/09 00:29:32)); Fri, 13 Feb 1998 08:38:42 -0500 (EST) Received: (from majordom@localhost) by hub.org (8.8.8/8.7.5) id IAA06646 for pgsql-hackers-outgoing; Fri, 13 Feb 1998 08:38:35 -0500 (EST) Received: from dune.krasnet.ru (dune.krasnet.ru [193.125.44.86]) by hub.org (8.8.8/8.7.5) with ESMTP id IAA04568 for &lt;hackers@postgreSQL.org&gt;; Fri, 13 Feb 1998 08:37:16 -0500 (EST) Received: from sable.krasnoyarsk.su (dune.krasnet.ru [193.125.44.86]) by dune.krasnet.ru (8.8.7/8.8.7) with ESMTP id UAA13717 for &lt;hackers@postgreSQL.org&gt;; Fri, 13 Feb 1998 20:51:03 +0700 (KRS) (envelope-from vadim@sable.krasnoyarsk.su) Message-ID: &lt;34E44FBA.D64E7997@sable.krasnoyarsk.su&gt; Date: Fri, 13 Feb 1998 20:50:50 +0700 From: &quot;Vadim B. Mikheev&quot; &lt;vadim@sable.krasnoyarsk.su&gt; Organization: ITTS (Krasnoyarsk) X-Mailer: Mozilla 4.04 [en] (X11; I; FreeBSD 2.2.5-RELEASE i386) MIME-Version: 1.0 To: PostgreSQL Developers List &lt;hackers@postgreSQL.org&gt; Subject: [HACKERS] Subselects are in CVS... Content-Type: text/plain; charset=us-ascii Content-Transfer-Encoding: 7bit Sender: owner-pgsql-hackers@hub.org Precedence: bulk Status: OR</p>
-<p>これは実装に関するいくつかのメモと未解決の問題です...</p>
-<p>まず、実装では相関Varsを処理するために、新しいタイプのパラメータであるPARAM_EXECを使用します。query_planner()が呼び出されると、まず現在のクエリで参照されているすべての上位クエリのVarをこのタイプのParamに置き換えようとします。VarsからParamsへのマッピング、およびParamsからVarsへのマッピングを保持するために、いくつかのグローバル変数が使用されます。</p>
-<p>この後、現在のクエリのすべてのSubLinkが処理されます。クエリのqualで見つかった各SubLinkに対して、対応するサブクエリを計画するためにunion_planner()（古いplanner()関数）が呼び出されます（union_planner()は「単純な」クエリに対してquery_planner()を呼び出し、UNIONをサポートします）。サブクエリが計画された後、オプティマイザはこれが相関、非相関、または_間接_相関（祖先のVarsを参照しているが、親のVarsは参照していない：親の観点からは非相関）クエリであるかを認識します。</p>
-<p>EXPRessionまたはEXISTSタイプの非相関および間接相関サブクエリの場合、SubLinkはSubLink-&gt;Operリスト（このリストを単なるOperノードではなく、EXPRノードのリストに変更しました）からの「通常の」句に置き換えられます。これらのノードの右側はPARAM_EXECパラメータに置き換えられます。これが新しいパラメータタイプの2番目の用途です。実行時に、これらのパラメータはサブクエリ評価の結果（すなわち、サブクエリのターゲットリスト）から値を取得します。サブクエリ自体の実行計画は、親クエリの初期計画（init plan）になります。InitPlanは、どのパラメータがサブクエリの結果から値を取得するかを認識しており、「オンデマンド」で実行されます（クエリ select * from table where x &gt; 0 and y &gt; (select max(a) from table_a) では、x &gt; 0 のタプルが存在しない、_かつ_ y がインデックススキャンで使用されていない場合、サブクエリはまったく実行されません）。</p>
-<p>他のすべてのタイプのサブクエリのSubLinkは、新しいタイプのExprノードであるSUBPLAN_EXPRに変換されます。Expr-&gt;argsは親（_parent_）クエリからの単なる相関変数です。Expr-&gt;operは新しいSubPlanノードです。</p>
-<p>このノードはInitPlanにも使用されます。これは、サブクエリのレンジテーブル、親（_parent_）クエリのVars（すなわちExpr-&gt;args）から値を取得するParamsのインデックス、サブクエリの結果が代入されるParamsのインデックス（これはInitPlans用です）、SubLink、およびサブクエリの実行計画を保持します。</p>
-<p>Planノードは、親クエリおよびInitPlansからのParamsへの依存関係を認識し、変更されたParamsのリスト（上記より）を保持し、このリストがNULLでない場合に再スキャンされるように変更されました。また、InitPlansのリスト（実際には、現在のクエリのすべてのInitPlansは現在、最上位のplanノードにあります）および他のSubPlans（plan-&gt;qualから）が追加され、これらを初期化し、変更されたParams（彼らの「関心」リストから）について通知します。</p>
-<p>すべてのSubLinkが処理された後、query_planner()はqualの正規化処理（canonificator）を呼び出し、「通常の」処理を行います。Paramsを使用することにより、オプティマイザはほとんど変更されません。</p>
-<p>さて、Executor（実行部）です。ExecutorStart()やExecutorEnd()を呼び出すことなく（リレーションやインデックスのオープン・クローズを行わず、また多くのpalloc()やpfree()を行うことなく。これはSQL関数が呼び出しごとに行うことです）、サブプランを再評価できるようにするため、ExecReScan()は現在、ほとんどのPlanタイプをサポートしています...</p>
-<p>EXPLAINの説明。</p>
-<p>vac=&gt; explain select * from tmp where x &gt;= (select max(x2) from test2 where y2 = y and exists (select * from tempx where tx = x)); NOTICE:  QUERY PLAN:</p>
-<p>Seq Scan on tmp  (cost=40.03 size=101 width=8) SubPlan ^^^^^^^ サブクエリはSeq Scanのqualにあり、その計画は以下です -&gt;  Aggregate  (cost=2.05 size=0 width=0) InitPlan ^^^^^^^^ EXISTSサブサブクエリはサブクエリのInitPlanです -&gt;  Seq Scan on tempx  (cost=4.33 size=1 width=4) -&gt;  Result  (cost=2.05 size=0 width=0) ^^^^^^ EXISTSサブサブクエリはParamに変換されたため、 ここにResultノードがあります -&gt;  Index Scan on test2  (cost=2.05 size=1 width=4)</p>
-<p>未解決の問題。</p>
-<p>1. 読み取り権限のチェックがない（容易ですが、まだ行われていません）。 2. readfuncs.cがsubplanを読み込めない（容易であり、現在実行計画のASCII表現をどこでも使用していないため、致命的ではありません）。 3. ExecReScan()がすべてのplanタイプをサポートしていない。少なくともMergeJoinのサポートを実装する必要があります。 4. ExecReScan()におけるメモリリーク。 5. アドバイスが必要です：NOT INで導入されたサブクエリがタプルを返さない場合、条件（qualification）は失敗しますよね？ 6. レグレッションテスト!!!!!!!!!!!!!!!!!!!! （MySQLのcrash.meのデータ/クエリを使用できますか？ 著作権は？権利を譲渡してもらえるでしょうか？） 7. パフォーマンス。</p>
-<ul>
-<li>サブクエリがInitPlanに変換される場合は良好なはずです。</li>
-<li>ANY/ALLで導入される非相関サブクエリに対して何か対策が必要です</li>
-<p>— 考え続けています。現在は、親タプルごとにサブプランが再スキャンされるため、 非常に遅いです...</p>
-</ul>
-<p>いくつかのテスト結果。TMPはx, y（int4）を持つテーブルで、xは0〜9、y = 100 - x、1000タプル（各タプルの重複が10個）。TEST2はx2, y2（int4）を持つテーブルで、x2は1〜99、y2 = 100 - x2、10000タプル（重複100個）。</p>
-<p>試行：</p>
-<p>select * from tmp where x &gt;= (select max(x2) from test2 where y2 = y);</p>
-<p>および</p>
-<p>begin; select y as ty, max(x2) as mx into table tsub from test2, tmp where y2 = y group by ty; vacuum tsub; select x, y from tmp, tsub where x &gt;= mx and y = ty; drop table tsub; end;</p>
-<p>test2(y2)にインデックスがない場合：</p>
-<p>SubSelect         -&gt; 320秒 一時テーブルの使用 -&gt; 32秒</p>
-<p>インデックスがある場合：</p>
-<p>SubSelect         -&gt; 17秒 (2Mのメモリ) 一時テーブルの使用 -&gt; 32秒 (12Mのメモリ: -S 8192)</p>
-<p>Vadim</p></section></div><script>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>src/backend/optimizer/plan/README</title><link rel="stylesheet" href="../../../../../../styles.css"></head><body><h1>Japanese translation</h1><p><code>src/backend/optimizer/plan/README</code></p><p><a href="../../../../../../source/src/backend/optimizer/plan/README.html" target="source-view">View original document</a></p><p class="document-translation-progress document-translation-incomplete">Translation in progress: 0/1 chunks complete. Pending chunks show their original text below.</p><div class="document-translation-body"><section class="document-translation-chunk pending" data-chunk-order="0"><h2>Chunk 1: translation pending</h2><p>This chunk has not been translated yet. Original text:</p><pre class="document-translation-text">src/backend/optimizer/plan/README
+
+Subselects
+==========
+
+Vadim B. Mikheev
+
+
+From owner-pgsql-hackers@hub.org Fri Feb 13 09:01:19 1998
+Received: from renoir.op.net (root@renoir.op.net [209.152.193.4])
+	by candle.pha.pa.us (8.8.5/8.8.5) with ESMTP id JAA11576
+	for &lt;maillist@candle.pha.pa.us&gt;; Fri, 13 Feb 1998 09:01:17 -0500 (EST)
+Received: from hub.org (hub.org [209.47.148.200]) by renoir.op.net (o1/$Revision: 1.14 $) with ESMTP id IAA09761 for &lt;maillist@candle.pha.pa.us&gt;; Fri, 13 Feb 1998 08:41:22 -0500 (EST)
+Received: from localhost (majordom@localhost) by hub.org (8.8.8/8.7.5) with SMTP id IAA08135; Fri, 13 Feb 1998 08:40:17 -0500 (EST)
+Received: by hub.org (TLB v0.10a (1.23 tibbs 1997/01/09 00:29:32)); Fri, 13 Feb 1998 08:38:42 -0500 (EST)
+Received: (from majordom@localhost) by hub.org (8.8.8/8.7.5) id IAA06646 for pgsql-hackers-outgoing; Fri, 13 Feb 1998 08:38:35 -0500 (EST)
+Received: from dune.krasnet.ru (dune.krasnet.ru [193.125.44.86]) by hub.org (8.8.8/8.7.5) with ESMTP id IAA04568 for &lt;hackers@postgreSQL.org&gt;; Fri, 13 Feb 1998 08:37:16 -0500 (EST)
+Received: from sable.krasnoyarsk.su (dune.krasnet.ru [193.125.44.86])
+	by dune.krasnet.ru (8.8.7/8.8.7) with ESMTP id UAA13717
+	for &lt;hackers@postgreSQL.org&gt;; Fri, 13 Feb 1998 20:51:03 +0700 (KRS)
+	(envelope-from vadim@sable.krasnoyarsk.su)
+Message-ID: &lt;34E44FBA.D64E7997@sable.krasnoyarsk.su&gt;
+Date: Fri, 13 Feb 1998 20:50:50 +0700
+From: &quot;Vadim B. Mikheev&quot; &lt;vadim@sable.krasnoyarsk.su&gt;
+Organization: ITTS (Krasnoyarsk)
+X-Mailer: Mozilla 4.04 [en] (X11; I; FreeBSD 2.2.5-RELEASE i386)
+MIME-Version: 1.0
+To: PostgreSQL Developers List &lt;hackers@postgreSQL.org&gt;
+Subject: [HACKERS] Subselects are in CVS...
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+Sender: owner-pgsql-hackers@hub.org
+Precedence: bulk
+Status: OR
+
+This is some implementation notes and opened issues...
+
+First, implementation uses new type of parameters - PARAM_EXEC - to deal
+with correlation Vars. When query_planner() is called, it first tries to
+replace all upper queries Var referenced in current query with Param of
+this type. Some global variables are used to keep mapping of Vars to
+Params and Params to Vars.
+
+After this, all current query&#x27; SubLinks are processed: for each SubLink
+found in query&#x27; qual union_planner() (old planner() function) will be
+called to plan corresponding subselect (union_planner() calls
+query_planner() for &quot;simple&quot; query and supports UNIONs). After subselect
+are planned, optimizer knows about is this correlated, un-correlated or
+_undirect_ correlated (references some grand-parent Vars but no parent
+ones: uncorrelated from the parent&#x27; point of view) query.
+
+For uncorrelated and undirect correlated subqueries of EXPRession or
+EXISTS type SubLinks will be replaced with &quot;normal&quot; clauses from
+SubLink-&gt;Oper list (I changed this list to be list of EXPR nodes,
+not just Oper ones). Right sides of these nodes are replaced with
+PARAM_EXEC parameters. This is second use of new parameter type.
+At run-time these parameters get value from result of subquery
+evaluation (i.e. - from target list of subquery). Execution plan of
+subquery itself becomes init plan of parent query. InitPlan knows
+what parameters are to get values from subquery&#x27; results and will be
+executed &quot;on-demand&quot; (for query select * from table where x &gt; 0 and
+y &gt; (select max(a) from table_a) subquery will not be executed at all
+if there are no tuples with x &gt; 0 _and_ y is not used in index scan).
+
+SubLinks for subqueries of all other types are transformed into
+new type of Expr node - SUBPLAN_EXPR. Expr-&gt;args are just correlation
+variables from _parent_ query. Expr-&gt;oper is new SubPlan node.
+
+This node is used for InitPlan too. It keeps subquery range table,
+indices of Params which are to get value from _parent_ query Vars
+(i.e. - from Expr-&gt;args), indices of Params into which subquery&#x27;
+results are to be substituted (this is for InitPlans), SubLink
+and subquery&#x27; execution plan.
+
+Plan node was changed to know about dependencies on Params from
+parent queries and InitPlans, to keep list of changed Params
+(from the above) and so be re-scanned if this list is not NULL.
+Also, added list of InitPlans (actually, all of them for current
+query are in topmost plan node now) and other SubPlans (from
+plan-&gt;qual) - to initialize them and let them know about changed
+Params (from the list of their &quot;interests&quot;).
+
+After all SubLinks are processed, query_planner() calls qual&#x27;
+canonificator and does &quot;normal&quot; work. By using Params optimizer
+is mostly unchanged.
+
+Well, Executor. To get subplans re-evaluated without ExecutorStart()
+and ExecutorEnd() (without opening and closing relations and indices
+and without many palloc() and pfree() - this is what SQL-funcs does
+on each call) ExecReScan() now supports most of Plan types...
+
+Explanation of EXPLAIN.
+
+vac=&gt; explain select * from tmp where x &gt;= (select max(x2) from test2
+where y2 = y and exists (select * from tempx where tx = x));
+NOTICE:  QUERY PLAN:
+
+Seq Scan on tmp  (cost=40.03 size=101 width=8)
+  SubPlan
+  ^^^^^^^ subquery is in Seq Scan&#x27; qual, its plan is below
+    -&gt;  Aggregate  (cost=2.05 size=0 width=0)
+          InitPlan
+          ^^^^^^^^ EXISTS subsubquery is InitPlan of subquery
+            -&gt;  Seq Scan on tempx  (cost=4.33 size=1 width=4)
+          -&gt;  Result  (cost=2.05 size=0 width=0)
+              ^^^^^^ EXISTS subsubquery was transformed into Param
+                     and so we have Result node here
+                -&gt;  Index Scan on test2  (cost=2.05 size=1 width=4)
+
+
+Opened issues.
+
+1. No read permissions checking (easy, just not done yet).
+2. readfuncs.c can&#x27;t read subplan-s (easy, not critical, because of
+   we currently nowhere use ascii representation of execution plans).
+3. ExecReScan() doesn&#x27;t support all plan types. At least support for
+   MergeJoin has to be implemented.
+4. Memory leaks in ExecReScan().
+5. I need in advice: if subquery introduced with NOT IN doesn&#x27;t return
+   any tuples then qualification is failed, yes ?
+6. Regression tests !!!!!!!!!!!!!!!!!!!!
+   (Could we use data/queries from MySQL&#x27; crash.me ?
+    Copyright-ed ? Could they give us rights ?)
+7. Performance.
+   - Should be good when subquery is transformed into InitPlan.
+   - Something should be done for uncorrelated subqueries introduced
+     with ANY/ALL - keep thinking. Currently, subplan will be re-scanned
+     for each parent tuple - very slow...
+
+Results of some test. TMP is table with x,y (int4-s), x in 0-9,
+y = 100 - x, 1000 tuples (10 duplicates of each tuple). TEST2 is table
+with x2, y2 (int4-s), x2 in 1-99, y2 = 100 -x2, 10000 tuples (100 dups).
+
+   Trying
+
+select * from tmp where x &gt;= (select max(x2) from test2 where y2 = y);
+
+   and
+
+begin;
+select y as ty, max(x2) as mx into table tsub from test2, tmp
+where y2 = y group by ty;
+vacuum tsub;
+select x, y from tmp, tsub where x &gt;= mx and y = ty;
+drop table tsub;
+end;
+
+   Without index on test2(y2):
+
+SubSelect         -&gt; 320 sec
+Using temp table  -&gt; 32 sec
+
+   Having index
+
+SubSelect         -&gt; 17 sec (2M of memory)
+Using temp table  -&gt; 32 sec (12M of memory: -S 8192)
+
+Vadim
+</pre></section></div><script>
 (function() {
   function notifyParent() {
     if (parent === window) return;

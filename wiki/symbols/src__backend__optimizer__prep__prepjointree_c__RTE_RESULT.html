@@ -1,36 +1,18 @@
 <!doctype html>
 <html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>symbols/src__backend__optimizer__prep__prepjointree_c__RTE_RESULT.md</title><link rel="stylesheet" href="../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../source/src/backend/optimizer/prep/prepjointree.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__prep__prepjointree_c__RTE_RESULT.html&quot;}, '*');">RTE_RESULT</a></h1>
-<h2>定義</h2>
+<h2>現在のソース事実</h2>
 <ul>
 <li>種別: <code>function</code></li>
 <li>定義箇所: <code>src/backend/optimizer/prep/prepjointree.c:1</code></li>
-<li>所属モジュール: <a class="wiki-entity-link" href="../modules/src__backend__optimizer__prep.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/modules/src__backend__optimizer__prep.html&quot;, &quot;source&quot;: &quot;source/src/backend/optimizer/prep/prepagg.c.html&quot;}, '*');"><code>module:src/backend/optimizer/prep</code></a></li>
-</ul>
-<h2>目的</h2>
-<p>静的シンボル索引から生成された初期シンボルページです。</p>
-<h2>シグネチャまたは形状</h2>
-<ul>
 <li>シグネチャ: <code>/*------------------------------------------------------------------------- * * prepjointree.c * Planner preprocessing for subqueries and join tree manipulation. * * NOTE: the intended sequence for invoking these operations is * preprocess_relation_rtes * replace_empty_jointree * pull_up_sublinks * preprocess_function_rtes * pull_up_subqueries * flatten_simple_union_all * do expression preprocessing (including flattening JOIN alias vars) * reduce_outer_joins * remove_useless_result_rtes * * * Portions Copyright (c) 1996-2026, PostgreSQL Global Development Group * Portions Copyright (c) 1994, Regents of the University of California * * * IDENTIFICATION * src/backend/optimizer/prep/prepjointree.c * *------------------------------------------------------------------------- */ #include &quot;postgres.h&quot; #include &quot;access/table.h&quot; #include &quot;catalog/pg_type.h&quot; #include &quot;funcapi.h&quot; #include &quot;miscadmin.h&quot; #include &quot;nodes/makefuncs.h&quot; #include &quot;nodes/multibitmapset.h&quot; #include &quot;nodes/nodeFuncs.h&quot; #include &quot;optimizer/clauses.h&quot; #include &quot;optimizer/optimizer.h&quot; #include &quot;optimizer/placeholder.h&quot; #include &quot;optimizer/plancat.h&quot; #include &quot;optimizer/prep.h&quot; #include &quot;optimizer/subselect.h&quot; #include &quot;optimizer/tlist.h&quot; #include &quot;parser/parse_relation.h&quot; #include &quot;parser/parsetree.h&quot; #include &quot;rewrite/rewriteHandler.h&quot; #include &quot;rewrite/rewriteManip.h&quot; #include &quot;utils/rel.h&quot; typedef struct nullingrel_info</code></li>
-</ul>
-<h2>入力と出力</h2>
-<p>まだ解析していません。</p>
-<h2>前提条件と不変条件</h2>
-<p>まだ解析していません。</p>
-<h2>アルゴリズムまたは振る舞い</h2>
-<ul>
-<li>複雑度: <code>low</code> (score 2)</li>
-</ul>
-<p>まだ解析していません。</p>
-<h2>呼び出し元と呼び出し先</h2>
-<ul>
 <li>呼び出し元: なし</li>
 <li>呼び出し先: なし</li>
 <li>呼び出し元サイト: なし</li>
 <li>呼び出しサイト: なし</li>
+<li>関連型: <a class="wiki-source-link" href="../../source/src/interfaces/ecpg/test/expected/preproc-type.c.html#L36" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__interfaces__ecpg__test__expected__preproc-type_c__access.html&quot;}, '*');"><code>access</code></a>, <code>c</code>, <code>Group</code>, <a class="wiki-source-link" href="../../source/src/interfaces/ecpg/preproc/type.h.html#L96" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__interfaces__ecpg__preproc__type_h__index.html&quot;}, '*');"><code>index</code></a>, <a class="wiki-source-link" href="../../source/src/backend/optimizer/prep/prepjointree.c.html#L50" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__prep__prepjointree_c__nullingrel_info.html&quot;}, '*');"><code>nullingrel_info</code></a>, <a class="wiki-source-link" href="../../source/src/interfaces/ecpg/preproc/type.h.html#L109" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__interfaces__ecpg__preproc__type_h__prep.html&quot;}, '*');"><code>prep</code></a>, <code>Relids</code>, <code>vars</code></li>
+<li>複雑度: <code>low</code> (score 2)</li>
 </ul>
-<h2>関連データ構造</h2>
-<p><a class="wiki-source-link" href="../../source/src/interfaces/ecpg/test/expected/preproc-type.c.html#L36" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__interfaces__ecpg__test__expected__preproc-type_c__access.html&quot;}, '*');"><code>access</code></a>, <code>c</code>, <code>Group</code>, <a class="wiki-source-link" href="../../source/src/interfaces/ecpg/preproc/type.h.html#L96" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__interfaces__ecpg__preproc__type_h__index.html&quot;}, '*');"><code>index</code></a>, <a class="wiki-source-link" href="../../source/src/backend/optimizer/prep/prepjointree.c.html#L50" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__prep__prepjointree_c__nullingrel_info.html&quot;}, '*');"><code>nullingrel_info</code></a>, <a class="wiki-source-link" href="../../source/src/interfaces/ecpg/preproc/type.h.html#L109" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__interfaces__ecpg__preproc__type_h__prep.html&quot;}, '*');"><code>prep</code></a>, <code>Relids</code>, <code>vars</code></p>
-<h2>ソース抜粋</h2>
+<h3>ソース抜粋</h3>
 <p>~~~c /*------------------------------------------------------------------------- *</p>
 <ul>
 <li><a class="wiki-source-link" href="../../source/src/backend/optimizer/prep/prepjointree.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/backend/optimizer/prep/prepjointree.c.html&quot;}, '*');">prepjointree.c</a></li>
@@ -61,12 +43,10 @@
 <li>that potentially null that RTE.</li>
 <p>*/ Relids	   *<a class="wiki-source-link" href="../../source/src/backend/optimizer/prep/prepjointree.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__prep__prepjointree_c__nullingrels.html&quot;}, '*');">nullingrels</a>; /* Length of <a class="wiki-source-link" href="../../source/src/backend/regex/regc_locale.c.html#L411" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__regex__regc_locale_c__range.html&quot;}, '*');">range</a> <a class="wiki-source-link" href="../../source/src/port/pg_localeconv_r.c.html#L63" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/port/pg_localeconv_r.c.html&quot;}, '*');">table</a> (maximum <a class="wiki-source-link" href="../../source/src/interfaces/ecpg/preproc/type.h.html#L96" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__interfaces__ecpg__preproc__type_h__index.html&quot;}, '*');">index</a> in <a class="wiki-source-link" href="../../source/src/backend/optimizer/prep/prepjointree.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__prep__prepjointree_c__nullingrels.html&quot;}, '*');">nullingrels</a>[]) */ int			<a class="wiki-source-link" href="../../source/src/backend/optimizer/prep/prepjointree.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__prep__prepjointree_c__rtlength.html&quot;}, '*');">rtlength</a>;		/* used only for assertion checks */ } <a class="wiki-source-link" href="../../source/src/backend/optimizer/prep/prepjointree.c.html#L50" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__prep__prepjointree_c__nullingrel_info.html&quot;}, '*');">nullingrel_info</a>; ~~~</p>
 </ul>
-<h2>失敗モードと境界条件</h2>
-<p>まだ解析していません。</p>
-<h2>保守担当者向けメモ</h2>
-<ul>
-<li>後続フェーズで、ソース本文の文脈と caller/callee 情報を使ってこのページを強化する。</li>
-</ul><script>
+<h2>目的</h2>
+<p>値を返さない、またはダミーの1行を生成するクエリ範囲テーブルエントリ（RTE）の種類を表す。空のジョイントリーのプレースホルダや、引き上げられたサブクエリの置き換えに使用される。</p>
+<h2>アルゴリズムまたは振る舞い</h2>
+<p>クエリの範囲テーブルエントリの種類として定義されており、オプティマイザのプリプロセスフェーズにおいて空の結合のプレースホルダや不要な結合の排除に伴う置き換え対象として扱われる。</p><script>
 (function() {
   function notifyParent() {
     if (parent === window) return;
