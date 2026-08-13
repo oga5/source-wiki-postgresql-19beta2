@@ -1,36 +1,18 @@
 <!doctype html>
 <html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>symbols/src__backend__optimizer__plan__planmain_c__RelOptInfo.md</title><link rel="stylesheet" href="../../styles.css"></head><body><h1>RelOptInfo</h1>
-<h2>定義</h2>
+<h2>現在のソース事実</h2>
 <ul>
 <li>種別: <code>function</code></li>
 <li>定義箇所: <code>src/backend/optimizer/plan/planmain.c:1</code></li>
-<li>所属モジュール: <a class="wiki-entity-link" href="../modules/src__backend__optimizer__plan.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/modules/src__backend__optimizer__plan.html&quot;, &quot;source&quot;: &quot;source/src/backend/optimizer/plan/analyzejoins.c.html&quot;}, '*');"><code>module:src/backend/optimizer/plan</code></a></li>
-</ul>
-<h2>目的</h2>
-<p>静的シンボル索引から生成された初期シンボルページです。</p>
-<h2>シグネチャまたは形状</h2>
-<ul>
 <li>シグネチャ: <code>/*------------------------------------------------------------------------- * * planmain.c * Routines to plan a single query * * What&#x27;s in a name, anyway? The top-level entry point of the planner/ * optimizer is over in planner.c, not here as you might think from the * file name. But this is the main code for planning a basic join operation, * shorn of features like subselects, inheritance, aggregates, grouping, * and so on. (Those are the things planner.c deals with.) * * Portions Copyright (c) 1996-2026, PostgreSQL Global Development Group * Portions Copyright (c) 1994, Regents of the University of California * * * IDENTIFICATION * src/backend/optimizer/plan/planmain.c * *------------------------------------------------------------------------- */ #include &quot;postgres.h&quot; #include &quot;optimizer/appendinfo.h&quot; #include &quot;optimizer/clauses.h&quot; #include &quot;optimizer/optimizer.h&quot; #include &quot;optimizer/orclauses.h&quot; #include &quot;optimizer/pathnode.h&quot; #include &quot;optimizer/paths.h&quot; #include &quot;optimizer/placeholder.h&quot; #include &quot;optimizer/planmain.h&quot; /* * query_planner * Generate a path (that is, a simplified plan) for a basic query, * which may involve joins but not any fancier features. * * Since query_planner does not handle the toplevel processing (grouping, * sorting, etc) it cannot select the best path by itself. Instead, it * returns the RelOptInfo for the top level of joining, and the caller * (grouping_planner) can choose among the surviving paths for the rel. * * root describes the query to plan * qp_callback is a function to compute query_pathkeys once it&#x27;s safe to do so * qp_extra is optional extra data to pass to qp_callback * * Note: the PlannerInfo node also includes a query_pathkeys field, which * tells query_planner the sort order that is desired in the final output * plan. This value is *not* available at call time, but is computed by * qp_callback once we have completed merging the query&#x27;s equivalence classes. * (We cannot construct canonical pathkeys until that&#x27;s done.) */ RelOptInfo * query_planner(PlannerInfo *root, query_pathkeys_callback qp_callback, void *qp_extra)</code></li>
-</ul>
-<h2>入力と出力</h2>
-<p>まだ解析していません。</p>
-<h2>前提条件と不変条件</h2>
-<p>まだ解析していません。</p>
-<h2>アルゴリズムまたは振る舞い</h2>
-<ul>
-<li>複雑度: <code>high</code> (score 22)</li>
-</ul>
-<p>まだ解析していません。</p>
-<h2>呼び出し元と呼び出し先</h2>
-<ul>
 <li>呼び出し元: なし</li>
 <li>呼び出し先: なし</li>
 <li>呼び出し元サイト: なし</li>
 <li>呼び出しサイト: なし</li>
+<li>関連型: <a class="wiki-source-link" href="../../source/src/interfaces/ecpg/test/expected/preproc-type.c.html#L36" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__interfaces__ecpg__test__expected__preproc-type_c__access.html&quot;}, '*');"><code>access</code></a>, <a class="wiki-source-link" href="../../source/src/include/snowball/libstemmer/snowball_runtime.h.html#L47" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__snowball__libstemmer__snowball_runtime_h__among.html&quot;}, '*');"><code>among</code></a>, <code>c</code>, <code>Group</code>, <a class="wiki-source-link" href="../../source/src/include/nodes/pathnodes.h.html#L2323" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__nodes__pathnodes_h__GroupResultPath.html&quot;}, '*');"><code>GroupResultPath</code></a>, <code>List</code>, <code>Node</code>, <code>Path</code>, <code>PlaceHolderInfo</code>, <code>PlannerInfo</code>, <code>Query</code>, <code>RangeTblEntry</code>, <code>RangeTblRef</code>, <code>Result</code>, <code>SpecialJoinInfo</code></li>
+<li>複雑度: <code>high</code> (score 22)</li>
 </ul>
-<h2>関連データ構造</h2>
-<p><a class="wiki-source-link" href="../../source/src/interfaces/ecpg/test/expected/preproc-type.c.html#L36" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__interfaces__ecpg__test__expected__preproc-type_c__access.html&quot;}, '*');"><code>access</code></a>, <a class="wiki-source-link" href="../../source/src/include/snowball/libstemmer/snowball_runtime.h.html#L47" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__snowball__libstemmer__snowball_runtime_h__among.html&quot;}, '*');"><code>among</code></a>, <code>c</code>, <code>Group</code>, <a class="wiki-source-link" href="../../source/src/include/nodes/pathnodes.h.html#L2323" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__nodes__pathnodes_h__GroupResultPath.html&quot;}, '*');"><code>GroupResultPath</code></a>, <code>List</code>, <code>Node</code>, <code>Path</code>, <code>PlaceHolderInfo</code>, <code>PlannerInfo</code>, <code>Query</code>, <code>RangeTblEntry</code>, <code>RangeTblRef</code>, <code>Result</code>, <code>SpecialJoinInfo</code></p>
-<h2>ソース抜粋</h2>
+<h3>ソース抜粋</h3>
 <p>~~~c /*------------------------------------------------------------------------- *</p>
 <ul>
 <li><a class="wiki-source-link" href="../../source/src/backend/optimizer/plan/planmain.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/backend/optimizer/plan/planmain.c.html&quot;}, '*');">planmain.c</a></li>
@@ -61,7 +43,7 @@
 <li>returns the RelOptInfo for the top <a class="wiki-source-link" href="../../source/src/backend/optimizer/path/joinrels.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__path__joinrels_c__level.html&quot;}, '*');">level</a> of joining, and the caller</li>
 <li>(grouping_planner) can choose <a class="wiki-source-link" href="../../source/src/include/snowball/libstemmer/snowball_runtime.h.html#L47" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__snowball__libstemmer__snowball_runtime_h__among.html&quot;}, '*');">among</a> the surviving paths for the rel.</li>
 <p>*</p>
-<li><a class="wiki-source-link" href="../../source/src/backend/optimizer/util/var.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__var_c__root.html&quot;}, '*');">root</a> describes the <a class="wiki-source-link" href="../../source/src/backend/optimizer/util/var.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__var_c__query.html&quot;}, '*');">query</a> to <a class="wiki-source-link" href="../../source/src/test/regress/pg_regress.c.html#L164" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/test/regress/pg_regress.c.html&quot;}, '*');">plan</a></li>
+<li>root describes the <a class="wiki-source-link" href="../../source/src/backend/optimizer/util/var.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__var_c__query.html&quot;}, '*');">query</a> to <a class="wiki-source-link" href="../../source/src/test/regress/pg_regress.c.html#L164" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/test/regress/pg_regress.c.html&quot;}, '*');">plan</a></li>
 <li>qp_callback <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> a function to compute <a class="wiki-source-link" href="../../source/src/backend/optimizer/plan/planagg.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__plan__planagg_c__query_pathkeys.html&quot;}, '*');">query_pathkeys</a> once it&#x27;s safe to do so</li>
 <li>qp_extra <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> optional extra data to pass to qp_callback</li>
 <p>*</p>
@@ -69,15 +51,44 @@
 <li>tells query_planner the <a class="wiki-source-link" href="../../source/contrib/intarray/_int_op.c.html#L198" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/contrib__intarray___int_op_c__sort.html&quot;}, '*');">sort</a> order that <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> desired in the <a class="wiki-source-link" href="../../source/src/common/hashfn.c.html#L116" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/common/hashfn.c.html&quot;}, '*');">final</a> <a class="wiki-source-link" href="../../source/src/bin/pg_test_timing/pg_test_timing.c.html#L357" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__bin__pg_test_timing__pg_test_timing_c__output.html&quot;}, '*');">output</a></li>
 <li><a class="wiki-source-link" href="../../source/src/test/regress/pg_regress.c.html#L164" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/test/regress/pg_regress.c.html&quot;}, '*');">plan</a>.  This value <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> *not* available at call time, but <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> computed by</li>
 <li>qp_callback once we have completed merging the <a class="wiki-source-link" href="../../source/src/backend/optimizer/util/var.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__var_c__query.html&quot;}, '*');">query</a>&#x27;s equivalence classes.</li>
-<li>(We cannot construct canonical pathkeys until that&#x27;s done.)</li>
-<p>*/ RelOptInfo * query_planner(PlannerInfo *<a class="wiki-source-link" href="../../source/src/backend/optimizer/util/var.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__var_c__root.html&quot;}, '*');">root</a>, <a class="wiki-source-link" href="../../source/src/backend/optimizer/plan/planmain.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__plan__planmain_c__query_pathkeys_callback.html&quot;}, '*');">query_pathkeys_callback</a> qp_callback, void *qp_extra) { Query	   *parse = <a class="wiki-source-link" href="../../source/src/backend/optimizer/util/var.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__var_c__root.html&quot;}, '*');">root</a>-&gt;parse; List	   *<a class="wiki-source-link" href="../../source/src/backend/optimizer/plan/analyzejoins.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__plan__analyzejoins_c__joinlist.html&quot;}, '*');">joinlist</a>; RelOptInfo *final_rel;</p>
+<li>(We cannot construct canonical <a class="wiki-source-link" href="../../source/src/include/nodes/pathnodes.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__nodes__pathnodes_h__pathkeys.html&quot;}, '*');">pathkeys</a> until that&#x27;s done.)</li>
+<p>*/ RelOptInfo * query_planner(PlannerInfo *root, query_pathkeys_callback qp_callback, void *qp_extra) { Query	   *parse = root-&gt;parse; List	   *<a class="wiki-source-link" href="../../source/src/backend/optimizer/plan/analyzejoins.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__plan__analyzejoins_c__joinlist.html&quot;}, '*');">joinlist</a>; RelOptInfo *final_rel;</p>
 </ul>
 <p>~~~</p>
-<h2>失敗モードと境界条件</h2>
-<p>まだ解析していません。</p>
-<h2>保守担当者向けメモ</h2>
+<h2>目的</h2>
+<p>サブクエリや集約などの高度な機能を除外した基本的なクエリおよび結合操作を対象に、パスやプランの構築に関する中心的な処理を行う中核ルーチンとして機能する。</p>
+<h2>入力と出力</h2>
 <ul>
-<li>後続フェーズで、ソース本文の文脈と caller/callee 情報を使ってこのページを強化する。</li>
+<li>入力: <code>PlannerInfo *root</code>（計画対象のクエリ記述）、<code>query_pathkeys_callback qp_callback</code>（クエリパスキー計算用コールバック）、<code>void *qp_extra</code>（コールバックに渡す追加データ）</li>
+<li>出力: トップレベル結合の <code>RelOptInfo *</code>（生存するパスの集合を保持するリレーション情報）</li>
+</ul>
+<h2>前提条件と不変条件</h2>
+<ul>
+<li><code>append_rel_list</code> は <code>subquery_planner</code> によって事前にセットアップされているため、関数内初期化の対象外とする。</li>
+<li>結合木の <code>fromlist</code> は空であってはならない。</li>
+</ul>
+<h2>アルゴリズムまたは振る舞い</h2>
+<p>1. **初期化**:</p>
+<ul>
+<li><code>root-&gt;join_rel_list</code> などの各種プランナ内部リストを <a class="wiki-source-link" href="../../source/src/include/nodes/pg_list.h.html#L68" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/nodes/pg_list.h.html&quot;}, '*');"><code>NIL</code></a> や <code>NULL</code> にクリアし、初期化する。</li>
+<li><code>setup_simple_rel_arrays(root)</code> を呼び出し、ベースリレーションと <code>AppendRelInfos</code> にアクセスするための配列を準備する。</li>
+<p>2. **トリビアルケース（単一 Result リレーション）の判定と処理**:</p>
+<li>結合木の <code>fromlist</code> の要素数が 1 であり、かつそれが <code>RangeTblRef</code> で示される <a class="wiki-source-link" href="../../source/src/backend/optimizer/prep/prepjointree.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__prep__prepjointree_c__RTE_RESULT.html&quot;}, '*');"><code>RTE_RESULT</code></a> 関係である場合、通常パスをバイパスして専用処理を実行する。</li>
+<li><code>build_simple_rel</code> により直接 <code>final_rel</code> を作成し、条件に応じて並行処理の安全性を評価した上で <a class="wiki-source-link" href="../../source/src/include/nodes/pathnodes.h.html#L2323" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__nodes__pathnodes_h__GroupResultPath.html&quot;}, '*');"><code>GroupResultPath</code></a> を追加する。</li>
+<li>最安パスの設定を行い、<code>root-&gt;ec_merging_done = true</code> とみなして <code>qp_callback</code> を実行したのち早期リターンする。</li>
+<p>3. **ベースリレーションと結合木の構築**:</p>
+<li><a class="wiki-source-link" href="../../source/src/backend/optimizer/plan/initsplan.c.html#L177" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__plan__initsplan_c__add_base_rels_to_query.html&quot;}, '*');"><code>add_base_rels_to_query</code></a> でクエリ内のすべてのベースリレーションに対する <code>RelOptInfo</code> ノードを構築する。</li>
+<li>不要な <code>GROUP BY</code> 列の削除や、ターゲットリスト・プレースホルダ・等価クラスの構築、結合木の分解（<a class="wiki-source-link" href="../../source/src/backend/optimizer/plan/initsplan.c.html#L1521" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__plan__initsplan_c__deconstruct_jointree.html&quot;}, '*');"><code>deconstruct_jointree</code></a>）を行う。</li>
+<p>4. **等価クラス・結合の最適化**:</p>
+<li><a class="wiki-source-link" href="../../source/src/backend/optimizer/path/equivclass.c.html#L2133" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__path__equivclass_c__reconsider_outer_join_clauses.html&quot;}, '*');"><code>reconsider_outer_join_clauses</code></a> や外側結合・等価関係の生成、プレースホルダ入力レベルの修正、不要な結合やセミジョイン、自己結合の削除を順次実行する。</li>
+<li>パスキーが正規形式で生成できる状態になったタイミングで <code>qp_callback</code> を実行して <a class="wiki-source-link" href="../../source/src/backend/optimizer/plan/planagg.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__plan__planagg_c__query_pathkeys.html&quot;}, '*');"><code>query_pathkeys</code></a> などを計算する。</li>
+<p>5. **最終リレーション生成**:</p>
+<li>外部キー制約のマッチング、オプティマイザの集約設定、<a class="wiki-source-link" href="../../source/src/backend/optimizer/plan/initsplan.c.html#L215" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__plan__initsplan_c__add_other_rels_to_query.html&quot;}, '*');"><code>add_other_rels_to_query</code></a> によるパーティション等の子リレーション（otherrels）の展開、行識別子変数の配布を行う。</li>
+<li>最終的に <code>make_one_rel(root, joinlist)</code> を呼び出してプライマリプランニングを完了し、結合のトップレベル <code>RelOptInfo</code> を取得・返却する。</li>
+</ul>
+<h2>失敗モードと境界条件</h2>
+<ul>
+<li>結合木が単一の <a class="wiki-source-link" href="../../source/src/backend/optimizer/prep/prepjointree.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__prep__prepjointree_c__RTE_RESULT.html&quot;}, '*');"><code>RTE_RESULT</code></a> 関係である場合、通常の複雑な結合処理パスを完全にバイパスして早期リターンする。</li>
 </ul><script>
 (function() {
   function notifyParent() {

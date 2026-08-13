@@ -1,0 +1,170 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>src/include/nodes/pathnodes.h.md</title><link rel="stylesheet" href="../../../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../../../source/src/include/nodes/pathnodes.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/nodes/pathnodes.h.html&quot;}, '*');">src/include/nodes/pathnodes.h</a></h1>
+<h2>概要</h2>
+<p>PostgreSQLのオプティマイザ内部で用いられる、探索木やプラン候補（Path）、関係情報（RelOptInfo）、等価性クラス（<a class="wiki-source-link" href="../../../../source/src/include/nodes/pathnodes.h.html#L1653" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__nodes__pathnodes_h__EquivalenceClass.html&quot;}, '*');">EquivalenceClass</a>）、制限事項（RestrictInfo）などの主要な内部データ構造を定義するヘッダーファイルである。プラン生成の各戦略を指定するビットマスクマクロから、各種スキャン・結合アルゴリズムのパラメータ構造体まで網羅している。</p>
+<h2>モジュール内での役割</h2>
+<p><code>src/include/nodes/</code> サブシステムの一部として、パーサやエグゼキュータで使われるノード定義（<a class="wiki-source-link" href="../../../../source/src/include/nodes/parsenodes.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/nodes/parsenodes.h.html&quot;}, '*');"><code>parsenodes.h</code></a>, <a class="wiki-source-link" href="../../../../source/src/include/nodes/primnodes.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/nodes/primnodes.h.html&quot;}, '*');"><code>primnodes.h</code></a> など）と連携しつつ、特化してオプティマイザ（Planner）専用の表現を提供する。クエリの最適化木、コスト計算用のワークスペース、およびパス構造体群の型安全なインターフェースを定めている。</p>
+<h2>責務</h2>
+<ul>
+<li>クエリ最適化全体の状態を管理する <code>PlannerGlobal</code> および <code>PlannerInfo</code> の定義。</li>
+<li>ベース関係や結合関係のメタデータを保持する <code>RelOptInfo</code> とインデックス情報 <code>IndexOptInfo</code> の提供。</li>
+<li>スキャン方式（<a class="wiki-source-link" href="../../../../source/src/include/nodes/plannodes.h.html#L551" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__nodes__plannodes_h__SeqScan.html&quot;}, '*');">SeqScan</a>, <a class="wiki-source-link" href="../../../../source/src/include/nodes/plannodes.h.html#L604" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__nodes__plannodes_h__IndexScan.html&quot;}, '*');">IndexScan</a>, BitmapHeapPath等）や結合方式（NestPath, MergePath, HashPath等）の多様な <code>Path</code> 派生構造体の定義。</li>
+<li>述語や結合条件の最適化を支える <code>RestrictInfo</code> および <a class="wiki-source-link" href="../../../../source/src/include/nodes/pathnodes.h.html#L1653" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__nodes__pathnodes_h__EquivalenceClass.html&quot;}, '*');"><code>EquivalenceClass</code></a> の管理。</li>
+<li>プラン生成時のパス生成戦略（<code>PGS_*</code> マクロ）の提供。</li>
+</ul>
+<h2>重要なシンボル</h2>
+<h3>計画・全体状態</h3>
+<ul>
+<li><code>PlannerGlobal</code>: コマンド全体のプランニングを通して共有される大域的な状態（サブプラン、最終的なリレーションテーブル、依存関係OIDなど）を保持する構造体。</li>
+<li><code>PlannerInfo</code>: 個別のクエリレベル（サブクエリ含む）における作業状態へのリンクやパーソナル情報を保持する構造体。オプティマイザのルーチン内では慣習的に <code>root</code> と呼ばれる。</li>
+</ul>
+<h3>関係性・メタデータ</h3>
+<ul>
+<li><code>RelOptInfo</code>: ベース関係、結合関係、その他の関係（継承のメンバ等）ごとの最適化情報を保持する構造体。コスト試算、パスリスト、制約情報、パーティション情報を統合する。</li>
+<li><code>IndexOptInfo</code>: 個々のインデックスに関する統計情報、キー列、式、アクセスメソッドの特性を保持する構造体。</li>
+<li><a class="wiki-source-link" href="../../../../source/src/include/nodes/pathnodes.h.html#L1460" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__nodes__pathnodes_h__ForeignKeyOptInfo.html&quot;}, '*');"><code>ForeignKeyOptInfo</code></a>: 外部キー制約に関する基本データと、クエリの等価クラス（EC）や制限事項との整合情報を保持する構造体。</li>
+<li><a class="wiki-source-link" href="../../../../source/src/include/nodes/pathnodes.h.html#L1510" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__nodes__pathnodes_h__StatisticExtInfo.html&quot;}, '*');"><code>StatisticExtInfo</code></a>: 拡張統計情報（複数列の統計など）のエントリを表す構造体。</li>
+</ul>
+<h3>等価クラスとパスキー</h3>
+<ul>
+<li><a class="wiki-source-link" href="../../../../source/src/include/nodes/pathnodes.h.html#L1653" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__nodes__pathnodes_h__EquivalenceClass.html&quot;}, '*');"><code>EquivalenceClass</code></a>: 推移律を満たす等価な式や変数の集合を表し、マージ結合や等価性に基づく最適化を支える構造体。</li>
+<li><code>EquivalenceMember</code>: <a class="wiki-source-link" href="../../../../source/src/include/nodes/pathnodes.h.html#L1653" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__nodes__pathnodes_h__EquivalenceClass.html&quot;}, '*');"><code>EquivalenceClass</code></a> に属する個々のメンバ式や関連プロパティを表す構造体。</li>
+<li><a class="wiki-source-link" href="../../../../source/src/include/nodes/pathnodes.h.html#L1779" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__nodes__pathnodes_h__EquivalenceMemberIterator.html&quot;}, '*');"><code>EquivalenceMemberIterator</code></a>: 大規模なパーティションテーブルなどで多数存在する子メンバを効率的に走査するための反復子構造体。</li>
+<li><a class="wiki-source-link" href="../../../../source/src/include/nodes/pathnodes.h.html#L1806" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__nodes__pathnodes_h__PathKey.html&quot;}, '*');"><code>PathKey</code></a>: ソート順序を表現するためのノード。<a class="wiki-source-link" href="../../../../source/src/include/nodes/pathnodes.h.html#L1653" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__nodes__pathnodes_h__EquivalenceClass.html&quot;}, '*');"><code>EquivalenceClass</code></a> へのリンクとソート方向（昇順・降順）を持つ。</li>
+</ul>
+<h3>パスおよびプラン候補</h3>
+<ul>
+<li><code>Path</code>: すべての物理パス構造体の基底となる共通構造体。ノードタグ、親関係、並列実行フラグ、推定行数、コスト、出力のソート順（<a class="wiki-source-link" href="../../../../source/src/include/nodes/pathnodes.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__nodes__pathnodes_h__pathkeys.html&quot;}, '*');"><code>pathkeys</code></a>）を保持する。</li>
+<li><code>IndexPath</code>: 単一インデックスに対するスキャンパス（インデックススキャンおよびインデックスオンリースキャン）を表す構造体。</li>
+<li><code>BitmapHeapPath</code>: インデックススキャン等から得られたTIDビットマップを結合・評価し、最終的にヒープをスキャンするパス。</li>
+<li><code>NestPath</code>, <code>MergePath</code>, <code>HashPath</code>: ネストループ、マージ、ハッシュ結合の各方式を表現する結合パス構造体。</li>
+<li><a class="wiki-source-link" href="../../../../source/src/include/nodes/pathnodes.h.html#L2589" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__nodes__pathnodes_h__AggPath.html&quot;}, '*');"><code>AggPath</code></a>, <a class="wiki-source-link" href="../../../../source/src/include/nodes/pathnodes.h.html#L2561" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__nodes__pathnodes_h__GroupPath.html&quot;}, '*');"><code>GroupPath</code></a>, <a class="wiki-source-link" href="../../../../source/src/include/nodes/pathnodes.h.html#L2535" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__nodes__pathnodes_h__SortPath.html&quot;}, '*');"><code>SortPath</code></a>, <a class="wiki-source-link" href="../../../../source/src/include/nodes/pathnodes.h.html#L2735" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__nodes__pathnodes_h__LimitPath.html&quot;}, '*');"><code>LimitPath</code></a>, <a class="wiki-source-link" href="../../../../source/src/include/nodes/pathnodes.h.html#L2710" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__nodes__pathnodes_h__ModifyTablePath.html&quot;}, '*');"><code>ModifyTablePath</code></a>: それぞれ集約、グループ化、ソート、リミット、データ変更（INSERT/UPDATE/DELETE/MERGE）の各操作を表すパス構造体。</li>
+</ul>
+<h3>評価・補助データ構造</h3>
+<ul>
+<li><a class="wiki-source-link" href="../../../../source/src/include/nodes/pathnodes.h.html#L118" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__nodes__pathnodes_h__QualCost.html&quot;}, '*');"><code>QualCost</code></a>: 1回限りのスタートアップコストとタスクごとの実行コストを保持する構造体。</li>
+<li><code>RestrictInfo</code>: WHERE 句や JOIN/ON 句の各 AND サブ句に対応し、プッシュダウン状態やセキュリティレベル、等価クラスのリンクなどを保持する構造体。</li>
+<li><code>PlaceHolderVar</code>: 評価レベルを下位プランツリーに押し下げる必要のある式をラップするためのプレースホルダノード。</li>
+<li><code>SpecialJoinInfo</code>: 外部結合、セミ結合、アンチ結合による結合順序の制約を記録する構造体。</li>
+<li><a class="wiki-source-link" href="../../../../source/src/include/nodes/pathnodes.h.html#L3724" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__nodes__pathnodes_h__JoinCostWorkspace.html&quot;}, '*');"><code>JoinCostWorkspace</code></a>: 結合パスのコスト見積もりを2段階（早期枝刈り用と詳細計算用）で行うための作業領域構造体。</li>
+</ul>
+<h2>制御フローとデータフロー</h2>
+<ul>
+<li>**プランニングの初期化**: <code>PlannerGlobal</code> と最上位の <code>PlannerInfo</code> (<code>root</code>) が生成され、クエリツリーの構文木からベース関係（<code>RelOptInfo</code>）や結合ドメイン、等価クラス（<a class="wiki-source-link" href="../../../../source/src/include/nodes/pathnodes.h.html#L1653" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__nodes__pathnodes_h__EquivalenceClass.html&quot;}, '*');"><code>EquivalenceClass</code></a>）が構築される。</li>
+<li>**パス生成と枝刈り**: 各 <code>RelOptInfo</code> に対して、有効な <code>PGS_*</code> 戦略フラグに基づき、<code>IndexPath</code> や各種結合パス（<code>NestPath</code>, <code>MergePath</code>, <code>HashPath</code> 等）が評価・蓄積される。</li>
+<li>**制限・等価性の伝播**: 条件節は <code>RestrictInfo</code> としてラップされ、プッシュダウン可能性や <a class="wiki-source-link" href="../../../../source/src/backend/regex/regc_locale.c.html#L499" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__regex__regc_locale_c__eclass.html&quot;}, '*');"><code>eclass</code></a> との照合を経て、最適なコストのパスが選択されていく。</li>
+</ul>
+<h2>直接依存</h2>
+<ul>
+<li><code>access/sdir.h</code></li>
+<li><code>lib/stringinfo.h</code></li>
+<li><code>nodes/params.h</code></li>
+<li><code>nodes/parsenodes.h</code></li>
+<li><code>storage/block.h</code></li>
+</ul>
+<h2>関連コード</h2>
+<ul>
+<li><code>src/backend/optimizer/path/</code></li>
+<li><code>src/backend/optimizer/plan/</code></li>
+<li><code>src/backend/optimizer/prep/</code></li>
+<li><a class="wiki-source-link" href="../../../../source/src/include/nodes/primnodes.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/nodes/primnodes.h.html&quot;}, '*');"><code>src/include/nodes/primnodes.h</code></a></li>
+<li><a class="wiki-source-link" href="../../../../source/src/include/nodes/plannodes.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/nodes/plannodes.h.html&quot;}, '*');"><code>src/include/nodes/plannodes.h</code></a></li>
+</ul>
+<h2>読者向けメモ</h2>
+<ul>
+<li><code>RelOptInfo</code> や <code>Path</code> ノードの循環参照が多いため、単純な <code>copyObject()</code> はサポートされていない（一部の補助構造体を除く）。</li>
+<li>多くの構造体はメモリデバッグやクエリダンプ時の無限再帰を防ぐため、特定のフィールドに対して <code>no_copy_equal</code> や <code>read_write_ignore</code> 属性が付与されている。</li>
+</ul>
+<h2>シンボルページ</h2>
+<ul>
+<li><a href="../../../symbols/src__include__nodes__pathnodes_h__QualCost.html" target="wiki-view"><code>QualCost</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__pathnodes_h__AggClauseCosts.html" target="wiki-view"><code>AggClauseCosts</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__pathnodes_h__PlannerGlobal.html" target="wiki-view"><code>PlannerGlobal</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__pathnodes_h__PlannerInfo.html" target="wiki-view"><code>PlannerInfo</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__pathnodes_h__PartitionScheme.html" target="wiki-view"><code>PartitionScheme</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__pathnodes_h__RelOptInfo.html" target="wiki-view"><code>RelOptInfo</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__pathnodes_h__RelAggInfo.html" target="wiki-view"><code>RelAggInfo</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__pathnodes_h__IndexOptInfo.html" target="wiki-view"><code>IndexOptInfo</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__pathnodes_h__ForeignKeyOptInfo.html" target="wiki-view"><code>ForeignKeyOptInfo</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__pathnodes_h__StatisticExtInfo.html" target="wiki-view"><code>StatisticExtInfo</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__pathnodes_h__JoinDomain.html" target="wiki-view"><code>JoinDomain</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__pathnodes_h__EquivalenceClass.html" target="wiki-view"><code>EquivalenceClass</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__pathnodes_h__EquivalenceMember.html" target="wiki-view"><code>EquivalenceMember</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__pathnodes_h__EquivalenceMemberIterator.html" target="wiki-view"><code>EquivalenceMemberIterator</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__pathnodes_h__PathKey.html" target="wiki-view"><code>PathKey</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__pathnodes_h__GroupByOrdering.html" target="wiki-view"><code>GroupByOrdering</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__pathnodes_h__PathTarget.html" target="wiki-view"><code>PathTarget</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__pathnodes_h__ParamPathInfo.html" target="wiki-view"><code>ParamPathInfo</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__pathnodes_h__Path.html" target="wiki-view"><code>Path</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__pathnodes_h__IndexPath.html" target="wiki-view"><code>IndexPath</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__pathnodes_h__IndexClause.html" target="wiki-view"><code>IndexClause</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__pathnodes_h__BitmapHeapPath.html" target="wiki-view"><code>BitmapHeapPath</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__pathnodes_h__BitmapAndPath.html" target="wiki-view"><code>BitmapAndPath</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__pathnodes_h__BitmapOrPath.html" target="wiki-view"><code>BitmapOrPath</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__pathnodes_h__TidPath.html" target="wiki-view"><code>TidPath</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__pathnodes_h__TidRangePath.html" target="wiki-view"><code>TidRangePath</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__pathnodes_h__SubqueryScanPath.html" target="wiki-view"><code>SubqueryScanPath</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__pathnodes_h__ForeignPath.html" target="wiki-view"><code>ForeignPath</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__pathnodes_h__CustomPath.html" target="wiki-view"><code>CustomPath</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__pathnodes_h__AppendPath.html" target="wiki-view"><code>AppendPath</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__pathnodes_h__MergeAppendPath.html" target="wiki-view"><code>MergeAppendPath</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__pathnodes_h__GroupResultPath.html" target="wiki-view"><code>GroupResultPath</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__pathnodes_h__MaterialPath.html" target="wiki-view"><code>MaterialPath</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__pathnodes_h__MemoizePath.html" target="wiki-view"><code>MemoizePath</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__pathnodes_h__GatherPath.html" target="wiki-view"><code>GatherPath</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__pathnodes_h__GatherMergePath.html" target="wiki-view"><code>GatherMergePath</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__pathnodes_h__JoinPath.html" target="wiki-view"><code>JoinPath</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__pathnodes_h__NestPath.html" target="wiki-view"><code>NestPath</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__pathnodes_h__MergePath.html" target="wiki-view"><code>MergePath</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__pathnodes_h__HashPath.html" target="wiki-view"><code>HashPath</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__pathnodes_h__ProjectionPath.html" target="wiki-view"><code>ProjectionPath</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__pathnodes_h__ProjectSetPath.html" target="wiki-view"><code>ProjectSetPath</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__pathnodes_h__SortPath.html" target="wiki-view"><code>SortPath</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__pathnodes_h__IncrementalSortPath.html" target="wiki-view"><code>IncrementalSortPath</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__pathnodes_h__GroupPath.html" target="wiki-view"><code>GroupPath</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__pathnodes_h__UniquePath.html" target="wiki-view"><code>UniquePath</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__pathnodes_h__AggPath.html" target="wiki-view"><code>AggPath</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__pathnodes_h__GroupingSetData.html" target="wiki-view"><code>GroupingSetData</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__pathnodes_h__RollupData.html" target="wiki-view"><code>RollupData</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__pathnodes_h__GroupingSetsPath.html" target="wiki-view"><code>GroupingSetsPath</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__pathnodes_h__MinMaxAggPath.html" target="wiki-view"><code>MinMaxAggPath</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__pathnodes_h__WindowAggPath.html" target="wiki-view"><code>WindowAggPath</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__pathnodes_h__SetOpPath.html" target="wiki-view"><code>SetOpPath</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__pathnodes_h__RecursiveUnionPath.html" target="wiki-view"><code>RecursiveUnionPath</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__pathnodes_h__LockRowsPath.html" target="wiki-view"><code>LockRowsPath</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__pathnodes_h__ModifyTablePath.html" target="wiki-view"><code>ModifyTablePath</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__pathnodes_h__LimitPath.html" target="wiki-view"><code>LimitPath</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__pathnodes_h__RestrictInfo.html" target="wiki-view"><code>RestrictInfo</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__pathnodes_h__MergeScanSelCache.html" target="wiki-view"><code>MergeScanSelCache</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__pathnodes_h__PlaceHolderVar.html" target="wiki-view"><code>PlaceHolderVar</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__pathnodes_h__SpecialJoinInfo.html" target="wiki-view"><code>SpecialJoinInfo</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__pathnodes_h__OuterJoinClauseInfo.html" target="wiki-view"><code>OuterJoinClauseInfo</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__pathnodes_h__AppendRelInfo.html" target="wiki-view"><code>AppendRelInfo</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__pathnodes_h__RowIdentityVarInfo.html" target="wiki-view"><code>RowIdentityVarInfo</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__pathnodes_h__DistinctColInfo.html" target="wiki-view"><code>DistinctColInfo</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__pathnodes_h__PlaceHolderInfo.html" target="wiki-view"><code>PlaceHolderInfo</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__pathnodes_h__MinMaxAggInfo.html" target="wiki-view"><code>MinMaxAggInfo</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__pathnodes_h__AggClauseInfo.html" target="wiki-view"><code>AggClauseInfo</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__pathnodes_h__GroupingExprInfo.html" target="wiki-view"><code>GroupingExprInfo</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__pathnodes_h__PlannerParamItem.html" target="wiki-view"><code>PlannerParamItem</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__pathnodes_h__JoinPathExtraData.html" target="wiki-view"><code>JoinPathExtraData</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__pathnodes_h__GroupPathExtraData.html" target="wiki-view"><code>GroupPathExtraData</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__pathnodes_h__JoinCostWorkspace.html" target="wiki-view"><code>JoinCostWorkspace</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__pathnodes_h__AggInfo.html" target="wiki-view"><code>AggInfo</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__pathnodes_h__AggTransInfo.html" target="wiki-view"><code>AggTransInfo</code></a></li>
+<li><a href="../../../symbols/src__include__nodes__pathnodes_h__UniqueRelInfo.html" target="wiki-view"><code>UniqueRelInfo</code></a></li>
+</ul><script>
+(function() {
+  function notifyParent() {
+    if (parent === window) return;
+    parent.postMessage({type: "frame-location", frame: window.name || "", href: window.location.href}, "*");
+  }
+  document.addEventListener("click", function(event) {
+    const link = event.target.closest("a[data-panel]");
+    if (!link || parent === window) return;
+    parent.postMessage({type: "source-link", panel: link.dataset.panel}, "*");
+  });
+  window.addEventListener("load", notifyParent);
+  window.addEventListener("hashchange", notifyParent);
+})();
+</script></body></html>

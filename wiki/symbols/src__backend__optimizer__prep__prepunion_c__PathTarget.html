@@ -1,36 +1,18 @@
 <!doctype html>
 <html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>symbols/src__backend__optimizer__prep__prepunion_c__PathTarget.md</title><link rel="stylesheet" href="../../styles.css"></head><body><h1>PathTarget</h1>
-<h2>定義</h2>
+<h2>現在のソース事実</h2>
 <ul>
 <li>種別: <code>function</code></li>
 <li>定義箇所: <code>src/backend/optimizer/prep/prepunion.c:1</code></li>
-<li>所属モジュール: <a class="wiki-entity-link" href="../modules/src__backend__optimizer__prep.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/modules/src__backend__optimizer__prep.html&quot;, &quot;source&quot;: &quot;source/src/backend/optimizer/prep/prepagg.c.html&quot;}, '*');"><code>module:src/backend/optimizer/prep</code></a></li>
-</ul>
-<h2>目的</h2>
-<p>静的シンボル索引から生成された初期シンボルページです。</p>
-<h2>シグネチャまたは形状</h2>
-<ul>
 <li>シグネチャ: <code>/*------------------------------------------------------------------------- * * prepunion.c * Routines to plan set-operation queries. The filename is a leftover * from a time when only UNIONs were implemented. * * There are two code paths in the planner for set-operation queries. * If a subquery consists entirely of simple UNION ALL operations, it * is converted into an &quot;append relation&quot;. Otherwise, it is handled * by the general code in this module (plan_set_operations and its * subroutines). There is some support code here for the append-relation * case, but most of the heavy lifting for that is done elsewhere, * notably in prepjointree.c and allpaths.c. * * Portions Copyright (c) 1996-2026, PostgreSQL Global Development Group * Portions Copyright (c) 1994, Regents of the University of California * * * IDENTIFICATION * src/backend/optimizer/prep/prepunion.c * *------------------------------------------------------------------------- */ #include &quot;postgres.h&quot; #include &lt;math.h&gt; #include &quot;access/htup_details.h&quot; #include &quot;catalog/pg_type.h&quot; #include &quot;miscadmin.h&quot; #include &quot;nodes/makefuncs.h&quot; #include &quot;nodes/nodeFuncs.h&quot; #include &quot;optimizer/cost.h&quot; #include &quot;optimizer/pathnode.h&quot; #include &quot;optimizer/paths.h&quot; #include &quot;optimizer/planner.h&quot; #include &quot;optimizer/prep.h&quot; #include &quot;optimizer/tlist.h&quot; #include &quot;parser/parse_coerce.h&quot; #include &quot;port/pg_bitutils.h&quot; #include &quot;utils/selfuncs.h&quot; static RelOptInfo *recurse_set_operations(Node *setOp, PlannerInfo *root, SetOperationStmt *parentOp, List *colTypes, List *colCollations, List *refnames_tlist, List **pTargetList, bool *istrivial_tlist)</code></li>
-</ul>
-<h2>入力と出力</h2>
-<p>まだ解析していません。</p>
-<h2>前提条件と不変条件</h2>
-<p>まだ解析していません。</p>
-<h2>アルゴリズムまたは振る舞い</h2>
-<ul>
-<li>複雑度: <code>medium</code> (score 5)</li>
-</ul>
-<p>まだ解析していません。</p>
-<h2>呼び出し元と呼び出し先</h2>
-<ul>
 <li>呼び出し元: なし</li>
 <li>呼び出し先: なし</li>
 <li>呼び出し元サイト: なし</li>
 <li>呼び出しサイト: なし</li>
+<li>関連型: <a class="wiki-source-link" href="../../source/src/interfaces/ecpg/test/expected/preproc-type.c.html#L36" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__interfaces__ecpg__test__expected__preproc-type_c__access.html&quot;}, '*');"><code>access</code></a>, <code>c</code>, <code>Group</code>, <code>List</code>, <code>Node</code>, <code>PlannerInfo</code>, <a class="wiki-source-link" href="../../source/src/interfaces/ecpg/preproc/type.h.html#L109" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__interfaces__ecpg__preproc__type_h__prep.html&quot;}, '*');"><code>prep</code></a>, <code>RelOptInfo</code>, <a class="wiki-source-link" href="../../source/src/include/nodes/parsenodes.h.html#L2355" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__nodes__parsenodes_h__SetOperationStmt.html&quot;}, '*');"><code>SetOperationStmt</code></a>, <a class="wiki-source-link" href="../../source/src/interfaces/ecpg/preproc/type.h.html#L89" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__interfaces__ecpg__preproc__type_h__when.html&quot;}, '*');"><code>when</code></a></li>
+<li>複雑度: <code>medium</code> (score 5)</li>
 </ul>
-<h2>関連データ構造</h2>
-<p><a class="wiki-source-link" href="../../source/src/interfaces/ecpg/test/expected/preproc-type.c.html#L36" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__interfaces__ecpg__test__expected__preproc-type_c__access.html&quot;}, '*');"><code>access</code></a>, <code>c</code>, <code>Group</code>, <code>List</code>, <code>Node</code>, <code>PlannerInfo</code>, <a class="wiki-source-link" href="../../source/src/interfaces/ecpg/preproc/type.h.html#L109" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__interfaces__ecpg__preproc__type_h__prep.html&quot;}, '*');"><code>prep</code></a>, <code>RelOptInfo</code>, <a class="wiki-source-link" href="../../source/src/include/nodes/parsenodes.h.html#L2355" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__nodes__parsenodes_h__SetOperationStmt.html&quot;}, '*');"><code>SetOperationStmt</code></a>, <a class="wiki-source-link" href="../../source/src/interfaces/ecpg/preproc/type.h.html#L89" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__interfaces__ecpg__preproc__type_h__when.html&quot;}, '*');"><code>when</code></a></p>
-<h2>ソース抜粋</h2>
+<h3>ソース抜粋</h3>
 <p>~~~c /*------------------------------------------------------------------------- *</p>
 <ul>
 <li><a class="wiki-source-link" href="../../source/src/backend/optimizer/prep/prepunion.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/backend/optimizer/prep/prepunion.c.html&quot;}, '*');">prepunion.c</a></li>
@@ -40,7 +22,7 @@
 <li>There are two code paths in the <a class="wiki-source-link" href="../../source/src/backend/optimizer/plan/planner.c.html#L327" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__plan__planner_c__planner.html&quot;}, '*');">planner</a> for set-operation queries.</li>
 <li>If a subquery consists entirely of simple <a class="wiki-source-link" href="../../source/src/include/nodes/parsenodes.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__nodes__parsenodes_h__UNION.html&quot;}, '*');">UNION</a> ALL operations, it</li>
 <li><a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> converted into an &quot;append relation&quot;.  Otherwise, it <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> handled</li>
-<li>by the general code in this module (<a class="wiki-source-link" href="../../source/src/backend/optimizer/prep/prepunion.c.html#L97" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__prep__prepunion_c__plan_set_operations.html&quot;}, '*');">plan_set_operations</a> and its</li>
+<li>by the general code in this module (plan_set_operations and its</li>
 <li>subroutines).  There <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> some support code here for the append-relation</li>
 <li>case, but most of the heavy lifting for that <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> <a class="wiki-source-link" href="../../source/src/include/lib/simplehash.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__lib__simplehash_h__done.html&quot;}, '*');">done</a> elsewhere,</li>
 <li>notably in <a class="wiki-source-link" href="../../source/src/backend/optimizer/prep/prepjointree.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/backend/optimizer/prep/prepjointree.c.html&quot;}, '*');">prepjointree.c</a> and allpaths.c.</li>
@@ -54,13 +36,17 @@
 </ul>
 <p>#include &lt;math.h&gt;</p>
 <p>#include &quot;access/htup_details.h&quot; #include &quot;catalog/pg_type.h&quot; #include &quot;<a class="wiki-source-link" href="../../source/src/include/miscadmin.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/miscadmin.h.html&quot;}, '*');">miscadmin.h</a>&quot; #include &quot;nodes/makefuncs.h&quot; #include &quot;nodes/nodeFuncs.h&quot; #include &quot;optimizer/cost.h&quot; #include &quot;optimizer/pathnode.h&quot; #include &quot;optimizer/paths.h&quot; #include &quot;optimizer/planner.h&quot; #include &quot;optimizer/prep.h&quot; #include &quot;optimizer/tlist.h&quot; #include &quot;parser/parse_coerce.h&quot; #include &quot;port/pg_bitutils.h&quot; #include &quot;utils/selfuncs.h&quot;</p>
-<p>static RelOptInfo *<a class="wiki-source-link" href="../../source/src/backend/optimizer/prep/prepunion.c.html#L213" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__prep__prepunion_c__recurse_set_operations.html&quot;}, '*');">recurse_set_operations</a>(Node *setOp, PlannerInfo *<a class="wiki-source-link" href="../../source/src/backend/optimizer/util/var.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__var_c__root.html&quot;}, '*');">root</a>, <a class="wiki-source-link" href="../../source/src/include/nodes/parsenodes.h.html#L2355" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__nodes__parsenodes_h__SetOperationStmt.html&quot;}, '*');">SetOperationStmt</a> *parentOp, List *colTypes, List *colCollations, List *refnames_tlist, List **pTargetList, bool *istrivial_tlist); ~~~</p>
+<p>static RelOptInfo *<a class="wiki-source-link" href="../../source/src/backend/optimizer/prep/prepunion.c.html#L213" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__prep__prepunion_c__recurse_set_operations.html&quot;}, '*');">recurse_set_operations</a>(Node *setOp, PlannerInfo *root, <a class="wiki-source-link" href="../../source/src/include/nodes/parsenodes.h.html#L2355" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__nodes__parsenodes_h__SetOperationStmt.html&quot;}, '*');">SetOperationStmt</a> *parentOp, List *colTypes, List *colCollations, List *refnames_tlist, List **pTargetList, bool *istrivial_tlist); ~~~</p>
+<h2>目的</h2>
+<p><code>PathTarget</code> は、PostgreSQLのオプティマイザにおいて、パスやプランノードが生成する出力ターゲットリスト（評価コスト、出力幅、および出力すべき式や変数のリスト）を表現・保持するためのデータ構造である。</p>
+<h2>入力と出力</h2>
+<p>データ構造として、入力された式や変数のリスト（<code>List</code>）を保持し、それらに対応する評価コスト（<a class="wiki-source-link" href="../../source/src/include/nodes/nodes.h.html#L259" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__nodes__nodes_h__Cost.html&quot;}, '*');"><code>Cost</code></a>）や推定される出力幅（バイト数）を計算して格納する。集合演算のプラン作成においては、各子パスのターゲットリストから調停された共通の型やコレーション情報が反映された <code>PathTarget</code> が出力される。</p>
+<h2>前提条件と不変条件</h2>
+<p><code>PathTarget</code> に格納される式リストは、対応するパスやプランノードが実際に評価・出力可能な変数や式と一致していなければならない。また、集合演算の文脈では、左右の子クエリから生成されるターゲットリストのデータ型やコレーションが、暗黙的キャストや <code>RelabelType</code> を介して適切に調停されていることが不変条件となる。</p>
+<h2>アルゴリズムまたは振る舞い</h2>
+<p>集合演算の処理中、<code>PathTarget</code> は子パスの行数で加重平均した推定幅を設定しながら作成される。具体的には、<code>optimizer/cost.h</code> や <code>optimizer/pathnode.h</code> などのインターフェースを介して、ターゲットリスト内の各式の評価コストを累計し、全体の評価コストと出力幅を決定する処理（<a class="wiki-source-link" href="../../source/src/backend/optimizer/path/costsize.c.html#L6510" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__path__costsize_c__set_pathtarget_cost_width.html&quot;}, '*');"><code>set_pathtarget_cost_width</code></a> など）が実行される。これにより、プランナーは物理パスのコスト比較を正確に行うことができる。</p>
 <h2>失敗モードと境界条件</h2>
-<p>まだ解析していません。</p>
-<h2>保守担当者向けメモ</h2>
-<ul>
-<li>後続フェーズで、ソース本文の文脈と caller/callee 情報を使ってこのページを強化する。</li>
-</ul><script>
+<p>入力される子クエリ間でデータ型やコレーションの互換性がない場合、適切なターゲットリストの生成やキャストの挿入に失敗し、プラン生成時にエラーが発生する。また、統計情報が不足している場合や極端なデータ分布がある場合、推定幅や評価コストの計算が境界値で不正確になり、最適ではない実行プランが選択される原因となる。</p><script>
 (function() {
   function notifyParent() {
     if (parent === window) return;

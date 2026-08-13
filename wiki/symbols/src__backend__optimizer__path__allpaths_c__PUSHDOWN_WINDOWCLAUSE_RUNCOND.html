@@ -1,36 +1,18 @@
 <!doctype html>
 <html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>symbols/src__backend__optimizer__path__allpaths_c__PUSHDOWN_WINDOWCLAUSE_RUNCOND.md</title><link rel="stylesheet" href="../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../source/src/backend/optimizer/path/allpaths.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__path__allpaths_c__PUSHDOWN_WINDOWCLAUSE_RUNCOND.html&quot;}, '*');">PUSHDOWN_WINDOWCLAUSE_RUNCOND</a></h1>
-<h2>定義</h2>
+<h2>現在のソース事実</h2>
 <ul>
 <li>種別: <code>function</code></li>
 <li>定義箇所: <code>src/backend/optimizer/path/allpaths.c:1</code></li>
-<li>所属モジュール: <a class="wiki-entity-link" href="../modules/src__backend__optimizer__path.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/modules/src__backend__optimizer__path.html&quot;, &quot;source&quot;: &quot;source/src/backend/optimizer/path/allpaths.c.html&quot;}, '*');"><code>module:src/backend/optimizer/path</code></a></li>
-</ul>
-<h2>目的</h2>
-<p>静的シンボル索引から生成された初期シンボルページです。</p>
-<h2>シグネチャまたは形状</h2>
-<ul>
 <li>シグネチャ: <code>/*------------------------------------------------------------------------- * * allpaths.c * Routines to find possible search paths for processing a query * * Portions Copyright (c) 1996-2026, PostgreSQL Global Development Group * Portions Copyright (c) 1994, Regents of the University of California * * * IDENTIFICATION * src/backend/optimizer/path/allpaths.c * *------------------------------------------------------------------------- */ #include &quot;postgres.h&quot; #include &lt;limits.h&gt; #include &lt;math.h&gt; #include &quot;access/sysattr.h&quot; #include &quot;access/tsmapi.h&quot; #include &quot;catalog/pg_class.h&quot; #include &quot;catalog/pg_operator.h&quot; #include &quot;catalog/pg_proc.h&quot; #include &quot;foreign/fdwapi.h&quot; #include &quot;miscadmin.h&quot; #include &quot;nodes/makefuncs.h&quot; #include &quot;nodes/nodeFuncs.h&quot; #include &quot;nodes/supportnodes.h&quot; #ifdef OPTIMIZER_DEBUG #include &quot;nodes/print.h&quot; #endif #include &quot;optimizer/appendinfo.h&quot; #include &quot;optimizer/clauses.h&quot; #include &quot;optimizer/cost.h&quot; #include &quot;optimizer/geqo.h&quot; #include &quot;optimizer/optimizer.h&quot; #include &quot;optimizer/pathnode.h&quot; #include &quot;optimizer/paths.h&quot; #include &quot;optimizer/plancat.h&quot; #include &quot;optimizer/planner.h&quot; #include &quot;optimizer/prep.h&quot; #include &quot;optimizer/tlist.h&quot; #include &quot;parser/parse_clause.h&quot; #include &quot;parser/parsetree.h&quot; #include &quot;partitioning/partbounds.h&quot; #include &quot;port/pg_bitutils.h&quot; #include &quot;rewrite/rewriteManip.h&quot; #include &quot;utils/lsyscache.h&quot; #include &quot;utils/selfuncs.h&quot; /* Bitmask flags for pushdown_safety_info.unsafeFlags */ #define UNSAFE_HAS_VOLATILE_FUNC (1 &lt;&lt; 0) #define UNSAFE_HAS_SET_FUNC (1 &lt;&lt; 1) #define UNSAFE_NOTIN_DISTINCTON_CLAUSE (1 &lt;&lt; 2) #define UNSAFE_NOTIN_PARTITIONBY_CLAUSE (1 &lt;&lt; 3) #define UNSAFE_TYPE_MISMATCH (1 &lt;&lt; 4) /* results of subquery_is_pushdown_safe */ typedef struct pushdown_safety_info</code></li>
-</ul>
-<h2>入力と出力</h2>
-<p>まだ解析していません。</p>
-<h2>前提条件と不変条件</h2>
-<p>まだ解析していません。</p>
-<h2>アルゴリズムまたは振る舞い</h2>
-<ul>
-<li>複雑度: <code>medium</code> (score 6)</li>
-</ul>
-<p>まだ解析していません。</p>
-<h2>呼び出し元と呼び出し先</h2>
-<ul>
 <li>呼び出し元: なし</li>
 <li>呼び出し先: なし</li>
 <li>呼び出し元サイト: なし</li>
 <li>呼び出しサイト: なし</li>
+<li>関連型: <a class="wiki-source-link" href="../../source/src/interfaces/ecpg/test/expected/preproc-type.c.html#L36" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__interfaces__ecpg__test__expected__preproc-type_c__access.html&quot;}, '*');"><code>access</code></a>, <code>c</code>, <code>Group</code>, <a class="wiki-source-link" href="../../source/src/interfaces/ecpg/preproc/type.h.html#L109" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__interfaces__ecpg__preproc__type_h__prep.html&quot;}, '*');"><code>prep</code></a>, <a class="wiki-source-link" href="../../source/src/backend/optimizer/path/allpaths.c.html#L62" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__path__allpaths_c__pushdown_safety_info.html&quot;}, '*');"><code>pushdown_safety_info</code></a></li>
+<li>複雑度: <code>medium</code> (score 6)</li>
 </ul>
-<h2>関連データ構造</h2>
-<p><a class="wiki-source-link" href="../../source/src/interfaces/ecpg/test/expected/preproc-type.c.html#L36" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__interfaces__ecpg__test__expected__preproc-type_c__access.html&quot;}, '*');"><code>access</code></a>, <code>c</code>, <code>Group</code>, <a class="wiki-source-link" href="../../source/src/interfaces/ecpg/preproc/type.h.html#L109" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__interfaces__ecpg__preproc__type_h__prep.html&quot;}, '*');"><code>prep</code></a>, <a class="wiki-source-link" href="../../source/src/backend/optimizer/path/allpaths.c.html#L62" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__path__allpaths_c__pushdown_safety_info.html&quot;}, '*');"><code>pushdown_safety_info</code></a></p>
-<h2>ソース抜粋</h2>
+<h3>ソース抜粋</h3>
 <p>~~~c /*------------------------------------------------------------------------- *</p>
 <ul>
 <li><a class="wiki-source-link" href="../../source/src/backend/optimizer/path/allpaths.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/backend/optimizer/path/allpaths.c.html&quot;}, '*');">allpaths.c</a></li>
@@ -48,11 +30,42 @@
 <p>#include &quot;access/sysattr.h&quot; #include &quot;access/tsmapi.h&quot; #include &quot;catalog/pg_class.h&quot; #include &quot;catalog/pg_operator.h&quot; #include &quot;catalog/pg_proc.h&quot; #include &quot;foreign/fdwapi.h&quot; #include &quot;<a class="wiki-source-link" href="../../source/src/include/miscadmin.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/miscadmin.h.html&quot;}, '*');">miscadmin.h</a>&quot; #include &quot;nodes/makefuncs.h&quot; #include &quot;nodes/nodeFuncs.h&quot; #include &quot;nodes/supportnodes.h&quot; #ifdef OPTIMIZER_DEBUG #include &quot;nodes/print.h&quot; #endif #include &quot;optimizer/appendinfo.h&quot; #include &quot;optimizer/clauses.h&quot; #include &quot;optimizer/cost.h&quot; #include &quot;optimizer/geqo.h&quot; #include &quot;optimizer/optimizer.h&quot; #include &quot;optimizer/pathnode.h&quot; #include &quot;optimizer/paths.h&quot; #include &quot;optimizer/plancat.h&quot; #include &quot;optimizer/planner.h&quot; #include &quot;optimizer/prep.h&quot; #include &quot;optimizer/tlist.h&quot; #include &quot;parser/parse_clause.h&quot; #include &quot;parser/parsetree.h&quot; #include &quot;partitioning/partbounds.h&quot; #include &quot;port/pg_bitutils.h&quot; #include &quot;rewrite/rewriteManip.h&quot; #include &quot;utils/lsyscache.h&quot; #include &quot;utils/selfuncs.h&quot;</p>
 <p>/* Bitmask flags for pushdown_safety_info.unsafeFlags */ #define <a class="wiki-source-link" href="../../source/src/backend/optimizer/path/allpaths.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/backend/optimizer/path/allpaths.c.html&quot;}, '*');">UNSAFE_HAS_VOLATILE_FUNC</a>		(1 &lt;&lt; 0) #define <a class="wiki-source-link" href="../../source/src/backend/optimizer/path/allpaths.c.html#L56" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/backend/optimizer/path/allpaths.c.html&quot;}, '*');">UNSAFE_HAS_SET_FUNC</a>				(1 &lt;&lt; 1) #define <a class="wiki-source-link" href="../../source/src/backend/optimizer/path/allpaths.c.html#L57" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/backend/optimizer/path/allpaths.c.html&quot;}, '*');">UNSAFE_NOTIN_DISTINCTON_CLAUSE</a>	(1 &lt;&lt; 2) #define <a class="wiki-source-link" href="../../source/src/backend/optimizer/path/allpaths.c.html#L58" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/backend/optimizer/path/allpaths.c.html&quot;}, '*');">UNSAFE_NOTIN_PARTITIONBY_CLAUSE</a>	(1 &lt;&lt; 3) #define <a class="wiki-source-link" href="../../source/src/backend/optimizer/path/allpaths.c.html#L59" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/backend/optimizer/path/allpaths.c.html&quot;}, '*');">UNSAFE_TYPE_MISMATCH</a>			(1 &lt;&lt; 4)</p>
 <p>~~~</p>
-<h2>失敗モードと境界条件</h2>
-<p>まだ解析していません。</p>
-<h2>保守担当者向けメモ</h2>
+<h2>定義</h2>
 <ul>
-<li>後続フェーズで、ソース本文の文脈と caller/callee 情報を使ってこのページを強化する。</li>
+<li>種別: 列挙値（<a class="wiki-source-link" href="../../source/src/backend/optimizer/path/allpaths.c.html#L72" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__path__allpaths_c__pushdown_safe_type.html&quot;}, '*');"><code>pushdown_safe_type</code></a> の一員）</li>
+<li>定義箇所: <a class="wiki-source-link" href="../../source/src/backend/optimizer/path/allpaths.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/backend/optimizer/path/allpaths.c.html&quot;}, '*');"><code>src/backend/optimizer/path/allpaths.c</code></a></li>
+</ul>
+<h2>目的</h2>
+<p>サブクエリに対するクエリ条件（修飾句）のプッシュダウン安全性評価において、通常の <code>WHERE</code> 句などへのプッシュダウンは安全ではないものの、<code>WindowClause</code> の実行条件（ランコンディション）としてであれば適用可能であることを示す。</p>
+<h2>シグネチャまたは形状</h2>
+<pre><code>/* allpaths.c 内の pushdown_safe_type 列挙型で定義される定数 */
+PUSHDOWN_WINDOWCLAUSE_RUNCOND</code></pre>
+<h2>入力と出力</h2>
+<ul>
+<li>**入力**: なし（静的定数のため、直接の入力引数は存在しない）。</li>
+<li>**出力**: サブクエリのプッシュダウン安全性を評価する関数（<a class="wiki-source-link" href="../../source/src/backend/optimizer/path/allpaths.c.html#L4146" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__path__allpaths_c__subquery_is_pushdown_safe.html&quot;}, '*');"><code>subquery_is_pushdown_safe</code></a> など）の戻り値として、<a class="wiki-source-link" href="../../source/src/backend/optimizer/path/allpaths.c.html#L72" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__path__allpaths_c__pushdown_safe_type.html&quot;}, '*');"><code>pushdown_safe_type</code></a> 型の評価結果を返す。</li>
+</ul>
+<h2>前提条件と不変条件</h2>
+<ul>
+<li>本値が選択される前提として、評価対象の条件が通常のプッシュダウンに対しては「不安全（unsafe）」と判定されている必要がある。</li>
+<li><code>WindowClause</code> の実行条件として機能するためには、特定の不安全フラグ（例: <a class="wiki-source-link" href="../../source/src/backend/optimizer/path/allpaths.c.html#L58" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/backend/optimizer/path/allpaths.c.html&quot;}, '*');"><code>UNSAFE_NOTIN_PARTITIONBY_CLAUSE</code></a> など）の組み合わせや、ウィンドウ関数の評価順序に依存する制約を満たしている必要がある。</li>
+</ul>
+<h2>アルゴリズムまたは振る舞い</h2>
+<ul>
+<li>サブクエリのプッシュダウン可否を判定する際、ターゲットリストの列や条件の性質を検証する。</li>
+<li>通常の <code>WHERE</code> 句へのプッシュダウンが不安全と判断された場合でも、条件が <code>WindowClause</code> の実行条件として適合可能であれば、判定結果として <a class="wiki-source-link" href="../../source/src/backend/optimizer/path/allpaths.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__path__allpaths_c__PUSHDOWN_WINDOWCLAUSE_RUNCOND.html&quot;}, '*');"><code>PUSHDOWN_WINDOWCLAUSE_RUNCOND</code></a> を設定する。</li>
+<li>呼び出し側（<a class="wiki-source-link" href="../../source/src/backend/optimizer/path/allpaths.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/backend/optimizer/path/allpaths.c.html&quot;}, '*');"><code>allpaths.c</code></a> 内のパス生成処理など）は、この返り値を受け取った場合、通常のプッシュダウン処理（<a class="wiki-source-link" href="../../source/src/backend/optimizer/path/allpaths.c.html#L4724" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__path__allpaths_c__subquery_push_qual.html&quot;}, '*');"><code>subquery_push_qual</code></a> など）をスキップし、ウィンドウ関数の実行条件としての適用ルートへ処理を分岐させる。</li>
+</ul>
+<h2>関連データ構造</h2>
+<ul>
+<li><a class="wiki-source-link" href="../../source/src/backend/optimizer/path/allpaths.c.html#L72" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__path__allpaths_c__pushdown_safe_type.html&quot;}, '*');"><code>pushdown_safe_type</code></a> (列挙型)</li>
+<li><a class="wiki-source-link" href="../../source/src/backend/optimizer/path/allpaths.c.html#L62" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__path__allpaths_c__pushdown_safety_info.html&quot;}, '*');"><code>pushdown_safety_info</code></a> (構造体)</li>
+</ul>
+<h2>失敗モードと境界条件</h2>
+<ul>
+<li>**通常のプッシュダウンとの混同**: オプティマイザが <a class="wiki-source-link" href="../../source/src/backend/optimizer/path/allpaths.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__path__allpaths_c__PUSHDOWN_WINDOWCLAUSE_RUNCOND.html&quot;}, '*');"><code>PUSHDOWN_WINDOWCLAUSE_RUNCOND</code></a> を <a class="wiki-source-link" href="../../source/src/backend/optimizer/path/allpaths.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__path__allpaths_c__PUSHDOWN_SAFE.html&quot;}, '*');"><code>PUSHDOWN_SAFE</code></a> と同様に扱い、通常の <code>WHERE</code> 句としてサブクエリにプッシュダウンしてしまうと、ウィンドウ関数の計算前にフィルタが適用されてしまい、結果の整合性が失われる。</li>
+<li>**致命的な不安全フラグの無視**: <a class="wiki-source-link" href="../../source/src/backend/optimizer/path/allpaths.c.html#L62" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__path__allpaths_c__pushdown_safety_info.html&quot;}, '*');"><code>pushdown_safety_info</code></a> において、揮発性関数（<a class="wiki-source-link" href="../../source/src/backend/optimizer/path/allpaths.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/backend/optimizer/path/allpaths.c.html&quot;}, '*');"><code>UNSAFE_HAS_VOLATILE_FUNC</code></a>）やセットを返す関数（<a class="wiki-source-link" href="../../source/src/backend/optimizer/path/allpaths.c.html#L56" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/backend/optimizer/path/allpaths.c.html&quot;}, '*');"><code>UNSAFE_HAS_SET_FUNC</code></a>）などの致命的な不安全フラグがセットされている場合、この境界条件は適用できず、完全に不安全（<a class="wiki-source-link" href="../../source/src/backend/optimizer/path/allpaths.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__path__allpaths_c__PUSHDOWN_UNSAFE.html&quot;}, '*');"><code>PUSHDOWN_UNSAFE</code></a>）として扱われなければならない。</li>
+<li>**型不一致（<a class="wiki-source-link" href="../../source/src/backend/optimizer/path/allpaths.c.html#L59" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/backend/optimizer/path/allpaths.c.html&quot;}, '*');"><code>UNSAFE_TYPE_MISMATCH</code></a>）**: ターゲットリストと条件の型が一致しない場合など、実行条件としても適用できない境界条件が存在し、その場合はプッシュダウンが完全に拒否される。</li>
 </ul><script>
 (function() {
   function notifyParent() {

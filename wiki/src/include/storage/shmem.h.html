@@ -1,0 +1,61 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>src/include/storage/shmem.h.md</title><link rel="stylesheet" href="../../../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../../../source/src/include/storage/shmem.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/storage/shmem.h.html&quot;}, '*');">src/include/storage/shmem.h</a></h1>
+<h2>概要</h2>
+<p><a class="wiki-source-link" href="../../../../source/src/include/storage/shmem.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/storage/shmem.h.html&quot;}, '*');"><code>src/include/storage/shmem.h</code></a> は、PostgreSQLの共有メモリ領域および共有ハッシュテーブルの割り当て、初期化、アタッチを管理するための公開インターフェースを定義するヘッダーファイルです。</p>
+<h2>モジュール内での役割</h2>
+<p><code>src/include/storage</code> サブシステム内において、固定サイズ構造体や共有ハッシュテーブルを安全に定義・要求するための仕組みを提供します。内部的なアロケータの実装を隠蔽し、コアサブシステムや拡張機能が統一されたライフサイクル（要求・初期化・アタッチ）で共有メモリを利用できるようにします。</p>
+<h2>責務</h2>
+<ul>
+<li>固定サイズ共有メモリ構造体の要求オプション (<a class="wiki-source-link" href="../../../../source/src/include/storage/shmem.h.html#L41" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__storage__shmem_h__ShmemStructOpts.html&quot;}, '*');"><code>ShmemStructOpts</code></a>) の定義。</li>
+<li>共有ハッシュテーブルの要求オプション (<a class="wiki-source-link" href="../../../../source/src/include/storage/shmem.h.html#L76" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__storage__shmem_h__ShmemHashOpts.html&quot;}, '*');"><code>ShmemHashOpts</code></a>) の定義。</li>
+<li>ライフサイクル管理用コールバック群 (<a class="wiki-source-link" href="../../../../source/src/include/storage/shmem.h.html#L122" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__storage__shmem_h__ShmemCallbacks.html&quot;}, '*');"><code>ShmemCallbacks</code></a>, 各種コールバック型) の提供。</li>
+<li>名前付き引数風の構文を可能にするマクロ (<a class="wiki-source-link" href="../../../../source/src/include/storage/shmem.h.html#L176" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/storage/shmem.h.html&quot;}, '*');"><code>ShmemRequestStruct</code></a>, <a class="wiki-source-link" href="../../../../source/src/include/storage/shmem.h.html#L179" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/storage/shmem.h.html&quot;}, '*');"><code>ShmemRequestHash</code></a>) の提供。</li>
+<li>レガシーな共有メモリ割り当て関数および公開ユーティリティ関数の宣言。</li>
+</ul>
+<h2>重要なシンボル</h2>
+<ul>
+<li><a class="wiki-source-link" href="../../../../source/src/include/storage/shmem.h.html#L41" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__storage__shmem_h__ShmemStructOpts.html&quot;}, '*');"><code>ShmemStructOpts</code></a>: 共有メモリ構造体の名前、サイズ、アライメント、ポインタ格納先を指定するオプション構造体。</li>
+<li><a class="wiki-source-link" href="../../../../source/src/include/storage/shmem.h.html#L76" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__storage__shmem_h__ShmemHashOpts.html&quot;}, '*');"><code>ShmemHashOpts</code></a>: 共有ハッシュテーブルの基本オプション (<a class="wiki-source-link" href="../../../../source/src/include/storage/shmem.h.html#L41" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__storage__shmem_h__ShmemStructOpts.html&quot;}, '*');"><code>ShmemStructOpts</code></a>)、要素数、ハッシュ制御情報をまとめた構造体。</li>
+<li><a class="wiki-source-link" href="../../../../source/src/include/storage/shmem.h.html#L122" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__storage__shmem_h__ShmemCallbacks.html&quot;}, '*');"><code>ShmemCallbacks</code></a>: ポストマスター起動時やバックエンド起動時に呼ばれる要求・初期化・アタッチ用のコールバック関数群を保持する構造体。</li>
+<li><a class="wiki-source-link" href="../../../../source/src/include/storage/shmem.h.html#L176" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/storage/shmem.h.html&quot;}, '*');"><code>ShmemRequestStruct</code></a> / <a class="wiki-source-link" href="../../../../source/src/include/storage/shmem.h.html#L179" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/storage/shmem.h.html&quot;}, '*');"><code>ShmemRequestHash</code></a>: 複合リテラルと可変長引数を利用して、オプション構造体を簡潔に渡すための糖衣マクロ。</li>
+</ul>
+<h2>制御フローとデータフロー</h2>
+<p>1. サブシステムや拡張機能は <a class="wiki-source-link" href="../../../../source/src/include/storage/shmem.h.html#L122" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__storage__shmem_h__ShmemCallbacks.html&quot;}, '*');"><code>ShmemCallbacks</code></a> を定義し、<code>RegisterShmemCallbacks()</code> を通じて登録します。 2. ポストマスター起動時の要求フェーズにおいて、<code>request_fn</code> 内から <code>ShmemRequestStruct()</code> または <code>ShmemRequestHash()</code> が呼び出され、必要な共有メモリサイズが集計されます。 3. 共有メモリ領域が確保された後の初期化フェーズで <code>init_fn</code> が呼ばれ、指定された <code>*ptr</code> 経由で各構造体やハッシュテーブルへのアクセスが可能になります。 4. <a class="wiki-source-link" href="../../../../source/src/include/pg_config_manual.h.html#L131" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/pg_config_manual.h.html&quot;}, '*');"><code>EXEC_BACKEND</code></a> モード等の環境では、バックエンド起動時に <code>attach_fn</code> が呼ばれてポインタの結び付けが行われます。</p>
+<h2>直接依存</h2>
+<ul>
+<li><code>utils/hsearch.h</code>: 共有ハッシュテーブル（<code>HTAB</code> や <a class="wiki-source-link" href="../../../../source/src/include/utils/hsearch.h.html#L64" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__utils__hsearch_h__HASHCTL.html&quot;}, '*');"><code>HASHCTL</code></a>）の定義に依存。</li>
+</ul>
+<h2>関連コード</h2>
+<ul>
+<li><a class="wiki-source-link" href="../../../../source/src/backend/storage/ipc/shmem.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/storage/ipc/shmem.c.html&quot;}, '*');"><code>src/backend/storage/ipc/shmem.c</code></a>: 本ヘッダーで宣言されたインターフェースの実装本体。</li>
+<li><a class="wiki-source-link" href="../../../../source/src/include/storage/shmem_internal.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/storage/shmem_internal.h.html&quot;}, '*');"><code>src/include/storage/shmem_internal.h</code></a>: シャメモリアロケータ自体の内部関数やシステム連携用の定義。</li>
+<li><a class="wiki-source-link" href="../../../../source/src/include/storage/subsystemlist.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/storage/subsystemlist.h.html&quot;}, '*');"><code>src/include/storage/subsystemlist.h</code></a>: 組み込みサブシステムのコールバック登録先。</li>
+</ul>
+<h2>読者向けメモ</h2>
+<ul>
+<li>PostgreSQLの共有メモリはすべてのプロセスで同一アドレスにマップされるため、通常のポインタを構造体内で直接使用できます。</li>
+<li>ほとんどの共有メモリはポストマスター起動時に確保されるべきであり、起動後の動的確保は拡張機能向けに厳しく制限されています。</li>
+</ul>
+<h2>シンボルページ</h2>
+<ul>
+<li><a href="../../../symbols/src__include__storage__shmem_h__ShmemStructOpts.html" target="wiki-view"><code>ShmemStructOpts</code></a></li>
+<li><a href="../../../symbols/src__include__storage__shmem_h__ShmemHashOpts.html" target="wiki-view"><code>ShmemHashOpts</code></a></li>
+<li><a href="../../../symbols/src__include__storage__shmem_h__ShmemRequestCallback.html" target="wiki-view"><code>ShmemRequestCallback</code></a></li>
+<li><a href="../../../symbols/src__include__storage__shmem_h__ShmemInitCallback.html" target="wiki-view"><code>ShmemInitCallback</code></a></li>
+<li><a href="../../../symbols/src__include__storage__shmem_h__ShmemAttachCallback.html" target="wiki-view"><code>ShmemAttachCallback</code></a></li>
+<li><a href="../../../symbols/src__include__storage__shmem_h__ShmemCallbacks.html" target="wiki-view"><code>ShmemCallbacks</code></a></li>
+</ul><script>
+(function() {
+  function notifyParent() {
+    if (parent === window) return;
+    parent.postMessage({type: "frame-location", frame: window.name || "", href: window.location.href}, "*");
+  }
+  document.addEventListener("click", function(event) {
+    const link = event.target.closest("a[data-panel]");
+    if (!link || parent === window) return;
+    parent.postMessage({type: "source-link", panel: link.dataset.panel}, "*");
+  });
+  window.addEventListener("load", notifyParent);
+  window.addEventListener("hashchange", notifyParent);
+})();
+</script></body></html>

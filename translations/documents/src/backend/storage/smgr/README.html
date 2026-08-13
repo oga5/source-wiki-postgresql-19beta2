@@ -1,0 +1,26 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>src/backend/storage/smgr/README</title><link rel="stylesheet" href="../../../../../../styles.css"></head><body><h1>Japanese translation</h1><p><code>src/backend/storage/smgr/README</code></p><p><a href="../../../../../../source/src/backend/storage/smgr/README.html" target="source-view">View original document</a></p><p class="document-translation-progress document-translation-complete">Translation complete.</p><div class="document-translation-body"><section class="document-translation-chunk translated" data-chunk-order="0"><p>src/backend/storage/smgr/README</p>
+<p>ストレージマネージャー ====================</p>
+<p>オリジナルの Berkeley Postgres システムには複数のストレージマネージャーが存在していましたが、そのうち残っているのは「磁気ディスク」マネージャーのみです（Berkeley には Sony の WORM 光ディスクジュークボックスや永続メインメモリ用のマネージャーもありましたが、外部リリースされた Postgres やどのバージョンの PostgreSQL でもサポートされたことはありません）。「磁気ディスク」マネージャー自体、実際にはオペレーティングシステムが標準のファイルシステム操作を提供するあらゆるデバイスをサポートしているため、非常に不適切な名前になっています。今日では関心のあるもののほとんどがこれに該当します。しかし、誰かが他の種類のストレージマネージャーを再導入したいと考えた場合に備えて、ストレージマネージャーの切り替え（スイッチ）の概念は維持しています。ストレージアクセス操作は C 関数の呼び出しが 1 層増えることよりも確実に遥かに高価であるため、いずれにせよスイッチ層を削除しても目立った節約にはなりません。</p>
+<p>Berkeley Postgres では、各リレーションに使用するストレージマネージャーの ID がタグ付けされていましたが、これは廃止されました。将来的にシステムカタログへ複数のストレージマネージャーを再導入することになった場合、ストレージマネージャーをテーブルスペースに関連付ける方がおそらくより合理的でしょう。</p>
+<p>このディレクトリ内のファイルとその内容は以下の通りです：</p>
+<p>smgr.c	ストレージマネージャーのスイッチディスパッチコード。このファイル内のルーチンは、上位レベルのコードから要求されたストレージアクセスを実行するために適切なストレージマネージャーを呼び出します。また、smgr.c はファイルハンドルキャッシュ（SMgrRelation テーブル）も管理します。</p>
+<p>md.c	「磁気ディスク」ストレージマネージャー。実態はカーネルのファイルシステム操作に対するインターフェースにすぎません。</p>
+<p>なお、md.c は src/backend/storage/file/fd.c に依存しています。</p>
+<p>リレーションフォーク ====================</p>
+<p>8.4 以降、単一の smgr リレーションは、リレーションフォークと呼ばれる複数の物理ファイルで構成されるようになりました。これにより、フリースペース情報などの追加メタデータを追加のフォークに格納できるようになり、メインデータファイルとは独立して拡張や切り詰めを行うことができます。同時に、システムカタログ上ではこれらすべてを単一の物理リレーションとして扱うことができます。</p>
+<p>メインフォーク（フォーク番号 0 または MAIN_FORKNUM）は常に存在するものと仮定されています。フォーク番号は src/include/common/relpath.h で割り当てられます。smgr.c および md.c の関数は、relfilelocator およびブロック番号に加えて、アクセスしたいリレーションフォークを特定するための追加のフォーク番号引数を取ります。ほとんどのコードはメインフォークへのアクセスを望むため、利便性のために MAIN_FORKNUM にアクセスする ReadBuffer のショートカット版がバッファマネージャーに用意されています。</p></section></div><script>
+(function() {
+  function notifyParent() {
+    if (parent === window) return;
+    parent.postMessage({type: "frame-location", frame: window.name || "", href: window.location.href}, "*");
+  }
+  document.addEventListener("click", function(event) {
+    const link = event.target.closest("a[data-panel]");
+    if (!link || parent === window) return;
+    parent.postMessage({type: "source-link", panel: link.dataset.panel}, "*");
+  });
+  window.addEventListener("load", notifyParent);
+  window.addEventListener("hashchange", notifyParent);
+})();
+</script></body></html>

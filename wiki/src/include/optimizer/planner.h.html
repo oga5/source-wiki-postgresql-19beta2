@@ -1,0 +1,55 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>src/include/optimizer/planner.h.md</title><link rel="stylesheet" href="../../../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../../../source/src/include/optimizer/planner.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/optimizer/planner.h.html&quot;}, '*');">src/include/optimizer/planner.h</a></h1>
+<h2>概要</h2>
+<p>クエリ最適化の主要実装である <a class="wiki-source-link" href="../../../../source/src/backend/optimizer/plan/planner.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/backend/optimizer/plan/planner.c.html&quot;}, '*');"><code>src/backend/optimizer/plan/planner.c</code></a> に対する内部ヘッダーファイルです。非オプティマイザコード向けの公開エントリポイントを定義する <code>optimizer/optimizer.h</code> とは異なり、本ファイルはオプティマイザモジュール内部の他ファイルから参照される関数群、データ構造、およびプラグインフックを宣言します。</p>
+<h2>モジュール内での役割</h2>
+<p>PostgreSQLのオプティマイザサブシステム内において、<a class="wiki-source-link" href="../../../../source/src/backend/optimizer/plan/planner.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/backend/optimizer/plan/planner.c.html&quot;}, '*');"><code>planner.c</code></a> が提供する内部関数（<code>standard_planner</code>、<code>subquery_planner</code> など）や拡張プラグイン用フックのインターフェースを集約する中心的な役割を持ちます。</p>
+<h2>責務</h2>
+<ul>
+<li>オプティマイザ内部モジュール間で共有される関数プロトタイプの提供。</li>
+<li>クエリ最適化の各フェーズ（サブクエリ処理、行マーク選択、リミット評価、パス生成など）で使用される内部関数の宣言。</li>
+<li>サードパーティ製プラグインや拡張機能がオプティマイザのライフサイクルに介入するためのフック変数および関数型の定義。</li>
+</ul>
+<h2>重要なシンボル</h2>
+<ul>
+<li><code>planner_hook</code>: プラグインがオプティマイザ全体の処理をフックするための関数ポインタ。</li>
+<li><code>standard_planner</code>: PostgreSQL標準のクエリプランナ本体の関数宣言。</li>
+<li><code>subquery_planner</code>: サブクエリや再帰クエリを含むツリーを再帰的に最適化する関数宣言。</li>
+<li><code>ExplainState</code>: クエリ解説（<a class="wiki-source-link" href="../../../../source/src/include/optimizer/optimizer.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__optimizer__optimizer_h__EXPLAIN.html&quot;}, '*');">EXPLAIN</a>）の内部状態を保持する不完全型。</li>
+<li><code>PlannedStmt</code>: エグゼキュータに渡される実行計画ツリーのルート構造体。</li>
+<li><code>RelOptInfo</code>: リレーションのパスやコスト見積もり情報を保持する最適化構造体。</li>
+</ul>
+<h2>制御フローとデータフロー</h2>
+<p>本ファイルはヘッダーファイルのため直接的な制御フローを持ちませんが、宣言されているインターフェースを通じて <code>standard_planner</code> が外部から呼び出され、内部で <code>subquery_planner</code> を経由してツリーを再帰的に走査・最適化し、最終的に <code>PlannedStmt</code> を生成するデータフローを支えます。</p>
+<h2>直接依存</h2>
+<ul>
+<li><code>nodes/pathnodes.h</code></li>
+<li><code>nodes/plannodes.h</code></li>
+</ul>
+<h2>関連コード</h2>
+<ul>
+<li><a class="wiki-source-link" href="../../../../source/src/backend/optimizer/plan/planner.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/backend/optimizer/plan/planner.c.html&quot;}, '*');"><code>src/backend/optimizer/plan/planner.c</code></a>: 本ヘッダーで宣言されている関数およびフックの実装元。</li>
+<li><a class="wiki-source-link" href="../../../../source/src/include/optimizer/optimizer.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/optimizer/optimizer.h.html&quot;}, '*');"><code>src/include/optimizer/optimizer.h</code></a>: 非オプティマイザコードから呼び出される外部向けエントリポイントの定義。</li>
+</ul>
+<h2>読者向けメモ</h2>
+<p>外部の実行系やパーサから呼ばれるAPIを探している場合は <code>optimizer/optimizer.h</code> を参照してください。オプティマイザ内部の連携やフック拡張に興味がある場合にこの <a class="wiki-source-link" href="../../../../source/src/include/optimizer/planner.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/optimizer/planner.h.html&quot;}, '*');"><code>planner.h</code></a> が参照されます。</p>
+<h2>シンボルページ</h2>
+<ul>
+<li><a href="../../../symbols/src__include__optimizer__planner_h__ExplainState.html" target="wiki-view"><code>ExplainState</code></a></li>
+<li><a href="../../../symbols/src__include__optimizer__planner_h__PlannedStmt.html" target="wiki-view"><code>PlannedStmt</code></a></li>
+<li><a href="../../../symbols/src__include__optimizer__planner_h__RelOptInfo.html" target="wiki-view"><code>RelOptInfo</code></a></li>
+</ul><script>
+(function() {
+  function notifyParent() {
+    if (parent === window) return;
+    parent.postMessage({type: "frame-location", frame: window.name || "", href: window.location.href}, "*");
+  }
+  document.addEventListener("click", function(event) {
+    const link = event.target.closest("a[data-panel]");
+    if (!link || parent === window) return;
+    parent.postMessage({type: "source-link", panel: link.dataset.panel}, "*");
+  });
+  window.addEventListener("load", notifyParent);
+  window.addEventListener("hashchange", notifyParent);
+})();
+</script></body></html>

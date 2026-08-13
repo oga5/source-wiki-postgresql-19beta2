@@ -1,0 +1,53 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>src/include/replication/logicalctl.h.md</title><link rel="stylesheet" href="../../../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../../../source/src/include/replication/logicalctl.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/replication/logicalctl.h.html&quot;}, '*');">src/include/replication/logicalctl.h</a></h1>
+<h2>概要</h2>
+<p><a class="wiki-source-link" href="../../../../source/src/include/replication/logicalctl.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/replication/logicalctl.h.html&quot;}, '*');"><code>src/include/replication/logicalctl.h</code></a> は、論理デコーディングの有効化状態および WAL の論理情報出力状態をオンラインで動的に制御するための関数群を宣言するヘッダーファイルです。対応する実装ファイルは <a class="wiki-source-link" href="../../../../source/src/backend/replication/logical/logicalctl.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/replication/logical/logicalctl.c.html&quot;}, '*');"><code>src/backend/replication/logical/logicalctl.c</code></a> です。</p>
+<h2>モジュール内での役割</h2>
+<p>レプリケーションサブシステムにおいて、<code>wal_level = &#x27;replica&#x27;</code> の設定時に論理レプリケーションスロットの有無に応じて論理デコーディング機能を動的かつ安全に制御するインターフェースを提供します。リカバリ時、トランザクション境界、およびスロット作成・削除時の状態管理を支えます。</p>
+<h2>責務</h2>
+<ul>
+<li>論理デコーディングおよび WAL 論理情報の有効/無効を判定する関数 (<code>IsLogicalDecodingEnabled</code>, <code>IsXLogLogicalInfoEnabled</code>) の宣言。</li>
+<li>起動時、リカバリ終了時、およびトランザクション終了時における論理制御の状態同期・更新関数の提供。</li>
+<li>論理デコーディングの有効化 (<a class="wiki-source-link" href="../../../../source/src/backend/replication/logical/logicalctl.c.html#L323" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__replication__logical__logicalctl_c__EnableLogicalDecoding.html&quot;}, '*');"><code>EnableLogicalDecoding</code></a>, <a class="wiki-source-link" href="../../../../source/src/backend/replication/logical/logicalctl.c.html#L288" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__replication__logical__logicalctl_c__EnsureLogicalDecodingEnabled.html&quot;}, '*');"><code>EnsureLogicalDecodingEnabled</code></a>) および無効化要求・実行 (<code>DisableLogicalDecoding</code>, <code>RequestDisableLogicalDecoding</code>) の制御フローの公開。</li>
+</ul>
+<h2>重要なシンボル</h2>
+<ul>
+<li><code>IsLogicalDecodingEnabled</code>: 現在のプロセスで論理デコーディングが有効かどうかを返します。</li>
+<li><code>IsXLogLogicalInfoEnabled</code>: WAL レコードに論理デコーディング用情報書き込みが有効かどうかを返します。</li>
+<li><code>StartupLogicalDecodingStatus</code>: 起動時に論理デコーディング状態を初期化します。</li>
+<li><code>UpdateLogicalDecodingStatusEndOfRecovery</code>: リカバリ終了時の論理デコーディング状態を更新します。</li>
+<li><code>RequestDisableLogicalDecoding</code> / <code>DisableLogicalDecoding</code>: 非同期または直接的な論理デコーディングの無効化を実行・要求します。</li>
+</ul>
+<h2>制御フローとデータフロー</h2>
+<ul>
+<li>動的制御では、WAL への論理情報の書き込み有効化と、論理デコーディング自体の有効化を多段階に分けて行います。</li>
+<li>有効化は最初の論理スロット作成後に同期的に実行されます。</li>
+<li>無効化は競合状態（リカバリ終了時など）を避けるため、チェックプロセス経由などで非同期に行われます。</li>
+<li>スタンバイサーバーでは <a class="wiki-source-link" href="../../../../source/src/include/catalog/pg_control.h.html#L87" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/catalog/pg_control.h.html&quot;}, '*');"><code>XLOG_LOGICAL_DECODING_STATUS_CHANGE</code></a> レコードのリプレイにより、プライマリの状態が反映されます。</li>
+</ul>
+<h2>直接依存</h2>
+<p>ソースファイル内には直接的な <code>#include</code> は記述されていません（マクロガード <a class="wiki-source-link" href="../../../../source/src/include/replication/logicalctl.h.html#L15" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/replication/logicalctl.h.html&quot;}, '*');"><code>LOGICALCTL_H</code></a> のみ）。ペアとなる <a class="wiki-source-link" href="../../../../source/src/backend/replication/logical/logicalctl.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/replication/logical/logicalctl.c.html&quot;}, '*');"><code>logicalctl.c</code></a> では <a class="wiki-source-link" href="../../../../source/src/include/postgres.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/postgres.h.html&quot;}, '*');"><code>postgres.h</code></a> やストレージ、レプリケーション関連のヘッダーがインクルードされます。</p>
+<h2>関連コード</h2>
+<ul>
+<li><a class="wiki-source-link" href="../../../../source/src/backend/replication/logical/logicalctl.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/replication/logical/logicalctl.c.html&quot;}, '*');"><code>src/backend/replication/logical/logicalctl.c</code></a>: ペアとなる実装ファイル。状態遷移の詳細なアルゴリズムが含まれています。</li>
+<li><a class="wiki-source-link" href="../../../../source/src/include/replication/slot.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/replication/slot.h.html&quot;}, '*');"><code>src/include/replication/slot.h</code></a>: レプリケーションスロットの管理機能。</li>
+</ul>
+<h2>読者向けメモ</h2>
+<ul>
+<li><code>wal_level = &#x27;logical&#x27;</code> の場合は常に有効、<code>&#x27;minimal&#x27;</code> の場合は常に無効であり、動的制御は <code>wal_level = &#x27;replica&#x27;</code> のときのみ作動します。</li>
+<li>非同期無効化の設計上の理由やリカバリ時の詳細については、対応する <a class="wiki-source-link" href="../../../../source/src/backend/replication/logical/logicalctl.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/replication/logical/logicalctl.c.html&quot;}, '*');"><code>logicalctl.c</code></a> のファイルコメントを参照してください。</li>
+</ul><script>
+(function() {
+  function notifyParent() {
+    if (parent === window) return;
+    parent.postMessage({type: "frame-location", frame: window.name || "", href: window.location.href}, "*");
+  }
+  document.addEventListener("click", function(event) {
+    const link = event.target.closest("a[data-panel]");
+    if (!link || parent === window) return;
+    parent.postMessage({type: "source-link", panel: link.dataset.panel}, "*");
+  });
+  window.addEventListener("load", notifyParent);
+  window.addEventListener("hashchange", notifyParent);
+})();
+</script></body></html>

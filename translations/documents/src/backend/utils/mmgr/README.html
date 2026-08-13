@@ -1,0 +1,186 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>src/backend/utils/mmgr/README</title><link rel="stylesheet" href="../../../../../../styles.css"></head><body><h1>Japanese translation</h1><p><code>src/backend/utils/mmgr/README</code></p><p><a href="../../../../../../source/src/backend/utils/mmgr/README.html" target="source-view">View original document</a></p><p class="document-translation-progress document-translation-incomplete">Translation in progress: 2/3 chunks complete. Pending chunks show their original text below.</p><div class="document-translation-body"><section class="document-translation-chunk translated" data-chunk-order="0"><p>src/backend/utils/mmgr/README</p>
+<p>メモリコンテキストシステム設計の概要 =====================================</p>
+<p>背景 ----</p>
+<p>私たちはメモリ割り当てのほとんどを「メモリコンテキスト」で行います。これは通常、src/backend/utils/mmgr/aset.cで実装されているAllocSetsです。多くのオーバーヘッドなしにメモリ管理を成功させる鍵は、適切な生存期間を持つ有用なコンテキストのセットを定義することです。</p>
+<p>メモリコンテキストに対する基本操作は以下の通りです。</p>
+<ul>
+<li>コンテキストを作成する</li>
+</ul>
+<ul>
+<li>コンテキスト内にメモリのチャンクを割り当てる（標準Cライブラリのmalloc()に相当）</li>
+</ul>
+<ul>
+<li>コンテキストを削除する（そこに割り当てられたすべてのメモリの解放を含む）</li>
+</ul>
+<ul>
+<li>コンテキストをリセットする（コンテキスト内に割り当てられたすべてのメモリを解放するが、コンテキストオブジェクト自体は解放しない）</li>
+</ul>
+<ul>
+<li>コンテキストに割り当てられたメモリの総量を問い合わせる（コンテキストがチャンクを割り当てる元の生のメモリであり、チャンク自体ではない）</li>
+</ul>
+<p>以前にコンテキストから割り当てられたメモリのチャンクが与えられた場合、それを解放するか、あるいはより大きくまたは小さく再割り当てすることができます（標準Cライブラリのfree()およびrealloc()ルーチンに対応します）。これらの操作は、チャンクが最初に割り当てられたのと同じコンテキストにメモリを返却するか、あるいはそこからさらにメモリを取得します。</p>
+<p>常に、CurrentMemoryContextグローバル変数によって示される「現在の」コンテキストが存在します。palloc()は暗黙的にそのコンテキストに領域を割り当てます。MemoryContextSwitchTo()操作は、新しい現在のコンテキストを選択します（そして、呼び出し元が終了前に以前のコンテキストを復元できるように、以前のコンテキストを返します）。</p>
+<p>malloc/freeをそのまま使用することに対するメモリコンテキストの主な利点は、メモリコンテキストの全内容を、その中の個々のチャンクの解放を要求することなく、簡単に解放できることです。これは、チャンクごとの簿記（管理）よりも高速であり、信頼性も高くなります。私たちはこの事実を利用してトランザクション終了時にクリーンアップを行います。トランザクションまたはそれより短い生存期間を持つすべてのアクティブなコンテキストをリセットすることで、すべての過渡的なメモリを回収できます。同様に、各クエリの終了時、またはクエリ中に各タプルが処理された後にクリーンアップを行うことができます。</p>
+<p>palloc APIと標準Cライブラリに関するいくつかの注意点 ---------------------------------------------------------</p>
+<p>pallocとその関連関数の動作は、標準Cライブラリのmallocとその関連関数に似ていますが、意図的な違いもいくつかあります。動作を明確にするための注意点を以下に示します。</p>
+<ul>
+<li>メモリ不足の場合、pallocおよびrepallocはelog(ERROR)を介して終了します。これらがNULLを返すことは決してないため、そのような結果を検査することは不要であり、有用でもありません。palloc_extended()を使用すると、MCXT_ALLOC_NO_OOMフラグを使用してその動作をオーバーライドできます。</li>
+</ul>
+<ul>
+<li>palloc(0)は明示的に有効な操作です。NULLポインタを返すのではなく、1バイトも使用できない有効なチャンクを返します。ただし、そのチャンクは後でrepallocによって大きく再割り当てされる可能性があり、エラーなしでpfreeすることもできます。同様に、repallocはサイズゼロへの再割り当てを許可します。</li>
+</ul>
+<ul>
+<li>pfreeおよびrepallocはNULLポインタを受け入れません。これは意図的なものです。（repallocの場合、これは必要です。上記のように、repallocは現在のメモリコンテキストに依存しません。しかし、その場合、どのメモリコンテキストで割り当てを行うかを知る必要があります。そのため、最初の割り当てはrepallocの外で行う必要があります。pfreeの場合、この動作は主に歴史的な理由によるものであり、一部は追加のチェックがパフォーマンスに影響を与えるためです。）</li>
+</ul>
+<p>現在のメモリコンテキスト --------------------------</p>
+<p>呼び出されるルーチンに常に適切なメモリコンテキストを渡すことは表記上のオーバーヘッドが大きすぎるため、常に現在のメモリコンテキストCurrentMemoryContextという概念が存在します。これがなければ、例えばcopyObjectルーチンにコンテキストを渡す必要があり、参照渡しデータタイプを返す関数実行ルーチンも同様になります。内部で一時的に領域を割り当てるが、呼び出し元には返さないルーチンについても同様です。システム内のすべての呼び出しを「一時的なメモリ割り当てに使用するためのコンテキストはこれです」という記述で乱雑にしたくはありません。</p>
+<p>しかし、その推論の結果として、CurrentMemoryContextは可能であれば一般に生存期間の短いコンテキストを指すべきです。クエリ実行中、通常は各タプルの後にリセットされるコンテキストを指します。トランザクションの生存期間より長い生存期間を持つコンテキストを指すのは、*極めて*限定されたコード内のみであるべきです。そうしないと、永続的なメモリリークのリスクが生じるためです。</p>
+<p>pfree/repallocはCurrentMemoryContextに依存しない ----------------------------------------------------</p>
+<p>pfree()およびrepalloc()は、チャンクがCurrentMemoryContextに属しているかどうかに関係なく、任意のチャンクに適用できます。いずれにせよ、チャンクを所有するコンテキストが呼び出されて操作を処理します。</p>
+<p>「親」と「子」のコンテキスト -----------------------------</p>
+<p>すべてのコンテキストが独立している場合、特にエラーが発生したときにそれらを追跡するのが困難になります。これは、「親」と「子」のコンテキストのツリーを作成することで解決されます。メモリコンテキストを作成するとき、新しいコンテキストを既存のコンテキストの子として指定できます。コンテキストは多くの子を持つことができますが、親は1つだけです。このようにして、コンテキストはフォレストを形成します（トップレベルのコンテキストが複数存在する可能性があるため、必ずしも単一のツリーとは限りません。ただし、現在の実務では、トップコンテキストはTopMemoryContextの1つだけです）。</p>
+<p>コンテキストを削除すると、その直接的および間接的な子もすべて削除されます。コンテキストをリセットする場合、ほとんど常に子コンテキストを削除する方が有用であるため、MemoryContextReset()はそのように動作します。本当に空のコンテキストのツリーを残したい場合は、MemoryContextResetOnly()に加えてMemoryContextResetChildren()を呼び出す必要があります。</p>
+<p>これらの機能により、一部がリークすることを恐れることなく、多くのコンテキストを管理できます。トランザクション終了時に削除する1つのトップレベルコンテキストを追跡し、作成するより生存期間の短いコンテキストがそのコンテキストの子孫であることを確認するだけで済みます。ツリーは複数のレベルを持つことができるため、トランザクションごと、ステートメントごと、スキャンごと、タプルごとなど、ストレージのネストされた生存期間を簡単に処理できます。部分的にしか重複しないストレージの生存期間は、コンテキストフォレストの異なるツリーから割り当てることで処理できます（次のセクションにいくつかの例があります）。</p>
+<p>便宜上、「指定されたコンテキストのすべての子をリセット/削除するが、そのコンテキスト自体はリセットも削除もしない」といった操作も提供しています。</p>
+<p>メモリコンテキストのリセット/削除コールバック -------------------------------------</p>
+<p>Postgres 9.5で導入された機能により、単なる通常のpallocされたメモリだけでなく、より多くのリソースを管理するためにメモリコンテキストを使用できるようになりました。これは、メモリコンテキストに「リセットコールバック関数」を登録することによって行われます。このような関数は、コンテキストが次にリセットまたは削除される直前に、一度だけ呼び出されます。これは、コンテキスト内で割り当てられたオブジェクトに何らかの意味で関連付けられているリソースを放棄するために使用できます。考えられるユースケースには、以下のものがあります。</p>
+<ul>
+<li>tuplesortオブジェクトに関連付けられた開いているファイルを閉じる。</li>
+<li>リセットされるコンテキスト内のオブジェクトによって保持されている、長寿命のキャッシュオブジェクトの参照カウントを解放する。</li>
+<li>一部のpallocされたオブジェクトに関連付けられたmalloc管理のメモリを解放する。</li>
+<p>最後のケースは、純粋なPostgresコードにとっては単に不適切なプログラミング手法を示しています。ターゲットコンテキストまたはその子コンテキストで、pallocを使用してすべての割り当てを行う方が適切です。ただし、Postgres以外のライブラリとインターフェースするコードにとっては非常に便利です。</p>
+</ul>
+<p>メモリコンテキストには任意の数のリセットコールバックを設定できます。これらは登録の逆順で呼び出されます。また、コンテキストのツリーがリセットまたは削除される場合、子コンテキストにアタッチされたコールバックは、親コンテキストにアタッチされたコールバックよりも前に呼び出されます。</p>
+<p>このためのAPIでは、呼び出し元がコールバックの状態を保持するためのMemoryContextCallbackメモリチャンクを提供する必要があります。通常、これは論理的にアタッチされているのと同じコンテキストに割り当てられるべきであり、使用後に自動的に解放されます。呼び出し元にこのメモリの提供を求める理由は、ほとんどの使用シナリオにおいて、呼び出し元がターゲットコンテキスト内にいくつかのより大きな構造体を作成するためであり、MemoryContextCallback構造体をこのより大きな構造体に含めることで、個別のpalloc()呼び出しを行うことなく「無料」で作成できるからです。</p>
+<p>実務におけるメモリコンテキスト ===========================</p>
+<p>グローバルに知られているコンテキスト -----------------------------------</p>
+<p>グローバル変数を通じて一般的に参照される、広く知られたコンテキストがいくつか存在します。いかなる瞬間においても、システムには多くの追加のコンテキストが含まれている可能性がありますが、エラーが発生したときにリークしないようにするために、他のすべてのコンテキストはこれらのコンテキストのいずれかの直接的または間接的な子である必要があります。</p>
+<p>TopMemoryContext --- これはコンテキストツリーの実際のトップレベルです。他のすべてのコンテキストは、これの直接的または間接的な子です。ここで割り当てることは、本質的に「malloc」と同じです。なぜなら、このコンテキストがリセットまたは削除されることは決してないからです。これは、永久に存続すべきもの、または制御モジュールが適切なタイミングで削除を処理するもののためのものです。例として、fd.cの開いているファイルのテーブルがあります。本当に必要な場合を除き、ここでの割り当ては避けてください。特に、CurrentMemoryContextがここを指した状態で実行することは避けてください。</p>
+<p>PostmasterContext ---  これはpostmasterの通常の作業コンテキストです。バックエンドが起動された後、不要になったpostmasterが使用していたメモリのコピーを解放するために、PostmasterContextを削除できます。 なお、non-EXEC_BACKENDビルドでは、postmasterのpg_hba.confおよびpg_ident.confデータのコピーが、バックエンドプロセスでの認証中に直接使用されます。そのため、それが完了するまでバックエンドはPostmasterContextを削除できません。 （postmasterにはTopMemoryContext、PostmasterContext、およびErrorContextのみが存在します。残りのトップレベルコンテキストは、起動時に各バックエンドでセットアップされます。）</p>
+<p>CacheMemoryContext --- relcache、catcache、および関連モジュールのための永続的なストレージです。これもリセットまたは削除されることはないため、TopMemoryContextと区別することは本当に必要というわけではありません。しかし、デバッグ目的で区別を維持することには価値があると思われます。 （注意：CacheMemoryContextには、より短い生存期間を持つ子コンテキストがあります。例えば、子コンテキストは、relcacheエントリに関連付けられた補助ストレージを保持するのに最適な場所です。そうすれば、信頼性の高いバージョンのfreeObject()の構築に依存することなく、ルールのパースツリーなどを簡単に解放できます。）</p>
+<p>MessageContext --- このコンテキストは、フロントエンドからの現在のコマンドメッセージと、現在のメッセージと同じ期間だけ生存すればよい派生ストレージを保持します（例えば、簡易クエリモードでは、パースツリーとプランツリーをここに配置できます）。このコンテキストはリセットされ、PostgresMainの外側ループの各サイクルの先頭で、すべての子が削除されます。これは、クエリ文字列が単一のトランザクションやポータルよりも長く、または短く生存する必要がある場合があるため、トランザクションごとおよびポータルごとのコンテキストとは別に管理されます。</p>
+<p>TopTransactionContext --- これは、トップレベルトランザクションの終了まで生存するすべてを保持します。このコンテキストはリセットされ、各トップレベルトランザクションサイクルの終了時に、そのすべての子が削除されます。ほとんどの場合、ここに直接割り当てるのではなく、CurTransactionContextに割り当てるべきです。ここに属するものは、複数のサブトランザクションにわたるステータスを管理するために明示的に存在する制御情報です。注意：このコンテキストはエラー発生時に直ちにはクリアされません。その内容は、COMMIT/ROLLBACKによってトランザクションブロックが終了するまで存続します。</p></section><section class="document-translation-chunk translated" data-chunk-order="1"><p>CurTransactionContext --- これは現在のトランザクションの終了まで存続しなければならないデータ、特にトップレベルトランザクションのコミット時に必要となるデータを保持します。トップレベルトランザクションにいるときは、これは TopTransactionContext と同じですが、サブトランザクションでは子コンテキストを指します。 サブトランザクションがアボートした場合、その CurTransactionContext はアボート処理の完了後に破棄されますが、コミットされたサブトランザクションの CurTransactionContext は（もちろん中間レベルのサブトランザクションのいずれかがアボートしない限り）トップレベルのコミットまで保持されることを理解することが重要です。これにより、失敗したサブトランザクションのデータを必要以上に長く保持しないようにします。この動作のため、サブトランザクションのアボート時に適切にクリーンアップするように注意する必要があります。サブトランザクションの状態は、上位のトランザクションに保持されているポインタやリストから切り離す必要があり、そうしないと、トップレベルのコミット時にクラッシュにつながるダングリングポインタが発生します。ここに保持されるデータの例としては、保留中の NOTIFY メッセージがあります。これらはトップレベルのコミット時に送信されますが、生成元のサブトランザクションがアボートしなかった場合に限ります。</p>
+<p>PortalContext --- これは実際には独立したコンテキストではなく、現在アクティブな実行ポータルのポータルごとのコンテキストを指すグローバル変数です。これは、現在のポータルの実行に必要な期間だけ存続するストレージを割り当てる必要がある場合に使用できます。</p>
+<p>ErrorContext --- この永続的なコンテキストはエラーリカバリ処理に切り替えられ、リカバリの完了時にリセットされます。いつでも数 KB のメモリを利用できるように手配されています。このようにして、バックエンドのメモリが他に枯渇した場合でも、エラーリカバリ用のメモリが確実に利用できるようにします。これにより、メモリ不足を FATAL エラーではなく、通常の ERROR 条件として扱うことができます。</p>
+<p>準備された文とポータルのためのコンテキスト ----------------------------------------</p>
+<p>準備された文（prepared statement）オブジェクトには、そのクエリの解析ツリーと計画ツリーが格納される関連するプライベートコンテキストがあります。これらのツリーはエグゼキュータにとって読み取り専用であるため、準備された文はこれらのツリーをさらにコピーすることなく、何度も再利用できます。</p>
+<p>実行ポータル（execution portal）オブジェクトには、ポータルがアクティブなときに PortalContext によって参照されるプライベートコンテキストがあります。DECLARE CURSOR によって作成されたポータルの場合、このプライベートコンテキストにはクエリの解析ツリーと計画ツリーが含まれます（それらを保持できる他のオブジェクトがないためです）。準備された文から作成されたポータルの場合は、単に準備された文のツリーを参照し、そのプライベートコンテキストにストレージを割り当てる必要はありません。</p>
+<p>論理レプリケーションワーカーのコンテキスト -----------------------------------------</p>
+<p>ApplyContext --- アプリケーションワーカーの全ライフサイクルを通じて永続的です。ここでも TopMemoryContext を使用することは可能ですが、メモリ使用量分析の簡素化のために別のコンテキストを起動しています。</p>
+<p>ApplyMessageContext --- 各論理レプリケーションプロトコルメッセージが処理された後にリセットされる短命なコンテキストです。</p>
+<p>実行時のトランジェントコンテキスト ----------------------------------</p>
+<p>準備された文を作成する場合、解析ツリーと計画ツリーは MessageContextの子である一時的なコンテキストで構築されます（エラー発生時に自動的に消滅するようにするためです）。成功すると、完成した計画が準備された文のプライベートコンテキストにコピーされ、一時的なコンテキストが解放されます。これにより、実行が開始される前にプランラのテンポラリ領域を回収できるようになります。（シンプルクエリモードでは余分なコピーの手間をかけないため、プランラのテンポラリ領域はクエリの終了まで残り続けます。）</p>
+<p>トップレベルのエグゼキュータールーチン、およびほとんどの「計画ノード」実行コードは、通常、ExecutorStart によって作成され ExecutorEnd によって破棄されるコンテキストで実行されます。このコンテキストには、ExecutorStart 中に構築された「計画状態」ツリーも保持されます。これらのルーチンで割り当てられたメモリのほとんどはクエリの終了まで存続することを意図しているため、これらの目的に適しています。エグゼキュータのトップコンテキストは PortalContext の子、つまりクエリの実行を表すポータルのポータルごとのコンテキストです。</p>
+<p>エグゼキュータにおける主なメモリ管理上の考慮事項は、式評価（値のテスト用と targetlist エントリの計算用の両方）でメモリリークが発生しないようにする必要があることです。これを行うために、エグゼキュータ内で作成される各 ExprContext（式評価コンテキスト）には、それに関連付けられたプライベートメモリコンテキストがあり、その ExprContext 内で式を評価するときにそのコンテキストに切り替えます。ExprContext を所有する計画ノードは、式評価の結果を必要としなくなったときに、プライベートコンテキストを空にリセットする責任を負います。通常、このリセットは計画ノード内の各タプルフェッチサイクルの開始時に行われます。</p>
+<p>この設計により、各計画ノードが独自の式評価メモリコンテキストを持つことに注意してください。これは、ネストされた結合を適切に処理するために必要なようです。外側の計画ノードは、内側のノードから次のタプルを取得する際に計算した式の結果を保持する必要がある場合がありますが、内側のノードはタプルを返すまでに何回ものタプルサイクルや多くの式を実行する可能性があるためです。内側のノードは、外側のタプルサイクルごとに1回よりも高い頻度で自身の式コンテキストをリセットできなければなりません。幸いなことに、メモリコンテキストは十分に安価であるため、各計画ノードに1つずつ割り当てることは問題になりません。</p>
+<p>クエリのライフスパンを持つコンテキストでインデックスアクセスやソートを実行する場合の問題は、これらの操作がデータ型固有の比較関数を呼び出すことであり、比較関数がメモリリークを起こした場合、そのメモリはクエリが終了するまで回収されないということです。比較関数はすべて bool または int32 を返すため、その結果データに問題はありませんが、内部の一時データのリークに問題が生じる可能性があります。特に、TOAST化可能なデータ型を操作する比較関数は、入力のデトーストされたバージョンのリークを起こさないように注意する必要があります。これは煩わしいですが、インデックスやソートのルーチンを修正するよりも比較関数を適合させる方がはるかに簡単であるように思われたため、7.1ではそのように行われました。これは btree およびハッシュインデックスの現状のままであるため、btree およびハッシュのサポート関数は依然としてメモリリークを起こさないようにする必要があります。他のインデックスアクセスメソッド (AM) のほとんどは、演算子クラスのサポート関数を短命なコンテキストで実行するように修正されているため、リークは問題になりません。サポート関数がはるかに複雑になる傾向があることを考えると、これは必要です。</p>
+<p>集約関数などの特殊なケースもあります。nodeAgg.c は、あるタプルサイクルから次のサイクルへと集約遷移関数の評価結果を記憶する必要があるため、サイクルごとにタプルごとの状態をすべて破棄するわけにはいきません。これを処理する最も簡単な方法は、集約ノードに2つのタプルごとのコンテキストを持たせ、それらの間でピンポンさせることであり、これにより、各タプルにおいて一方がアクティブな割り当てコンテキストとなり、もう一方が前のサイクルの遷移関数によって割り当てられた結果を保持するようになります。</p>
+<p>アクティブな CurrentMemoryContext を切り替えるエグゼキュータールーチンは、戻る前に呼び出し元の現在のメモリコンテキストにデータをコピーする必要がある場合があります。しかし、タプルごとのコンテキストを終了時ではなく実行サイクルの*開始時*にリセットするという規約があるため、その必要性は最小限に抑えられています。このルールにより、実行ノードはタプルごとのコンテキスト内で palloc されたタプルを返すことができ、そのタプルは、ノードが別のタプルの呼び出しを受けるか実行の終了を指示されるまで有効なままになります。これは、スキャンノードがディスクバッファ内のタプルへの直接ポインタを返すことができ、それがその期間だけ有効であることが保証されているのと同様に、テーブルスキャンレベルでの参照渡し値の場合の状況と並行しています。</p>
+<p>データをコピーするより一般的な理由は、タプルごとのコンテキストからクエリごとのコンテキストに結果を転送することです。たとえば、Unique ノードは最後のdistinctなタプル値をクエリごとのコンテキストに保存するため、コピーのステップが必要になります。</p>
+<p>複数のタイプのコンテキストを許可するメカニズム ---------------------------------------------</p>
+<p>さまざまな割り当てパターンや実験を効率的に許可するために、異なる割り当てポリシーを持ちながら外部動作が似ている、さまざまなタイプのメモリコンテキストを許可しています。これを処理するために、メモリ割り当て関数には関数ポインタを介してアクセスし、すべてのコンテキストタイプがここで示す規約に従うことを要求しています。</p>
+<p>メモリコンテキストは、struct MemoryContextData（memnodes.h を参照）によって表現されます。この構造体はコンテキストの正確なタイプを特定し、親コンテキストや子コンテキスト、コンテキストの名前など、さまざまなタイプの MemoryContext 間で共通の情報を保持します。</p>
+<p>これは本質的に抽象スーパークラスであり、動作はどの MemoryContextMethods セットを使用するかを参照する &quot;methods&quot; ポインタによって決定されます。特定のメモリコンテキストタイプは、これらのフィールドを最初のフィールドとして持つ派生構造体を使用します。特定のタイプのすべてのコンテキストは、mcxt.c で定義されている mcxt_methods[] 配列内の対応する要素を指す methods ポインタを持ちます。</p>
+<p>コンテキストからの割り当てやリセットなどの操作は関連する MemoryContext をパラメータとして受け取りますが、free や realloc などの操作はより複雑です。これらを機能させるために、すべてのメモリコンテキストタイプに対して、割り当てられたチャンクのすぐ前（パディングなし）に、最下位 4 ビットが所有側コンテキストの MemoryContextMethodID に設定された uint64 値が置かれることを要求しています。これにより、コードは 4 ビットを配列のインデックスとして使用して mcxt_methods[] 配列をルックアップすることにより、使用する正しい MemoryContextMethods を決定できます。</p>
+<p>アロケータのタイプがチャンクに関する追加情報（例えば割り当てサイズなど）を必要とする場合、その情報は先行する uint64 値の残りの 60 ビットにエンコードするか、より多くのスペースが必要な場合は、uint64 値の直前に直接追加の値を格納することができます。これを管理するのはコンテキストの実装次第です。</p>
+<p>これを踏まえ、pfree などのルーチンは、GetMemoryChunkMethodID() を呼び出し、mcxt_methods[] 配列内で対応する MemoryContextMethods を見つけることで、どの MemoryContextMethods の free_p 関数を呼び出すべきかを判断できます。利便性のために MCXT_METHOD() マクロが提供されており、コードを次のようにシンプルにしています。</p>
+<p>void pfree(void *pointer) { MCXT_METHOD(pointer, free_p)(pointer); }</p>
+<p>現在のすべてのメモリコンテキストは、memutils_memorychunk.h で定義されている MemoryChunk ヘッダータイプを利用しています。これは、uint64 ヘッダーの残りの 60 ビットを使用して、メモリチャンクのサイズ（または aset.c の場合はフリーリストインデックス）と、チャンクが属するブロックへの参照を取得するためにチャンクから減算する必要があるバイト数を効率的にエンコードするため、既存のすべてのコンテキストタイプにうまく適合しています。これらにそれぞれ 30 ビットが使用されますが、チャンクからブロックへのオフセットの最下位ビットはチャンクサイズの最最高ビットと同じビットであるため、合計で 59 ビットのみです。ブロックとチャンクの間の相対オフセットは MAXALIGN された値であることが期待され、最下位ビットが常に 0 であることが保証されるため、このオーバーラップが可能です。これらのフィールドのそれぞれに 30 ビットを超えるビットが必要な場合は、メモリコンテキスト自身でそれを管理する必要があります。これは、指定されたチャンクに対して MemoryChunkSetHdrMaskExternal() 関数を呼び出すことで実行できます。チャンクが外部チャンクであるかどうかは、64 ビットの MemoryChunk からの残りの 1 ビットによって決定できます。</p>
+<p>現在、各メモリコンテキストタイプは、大きな割り当てを専用のブロック（常に単一のチャンクのみを含む）に格納します。これらの場合、チャンクが指定されたブロック上で最初のものであることがわかっているため、ブロックの検索は単純であり、したがってブロックは常にチャンクから固定オフセットにあります。これらの場合、ブロックはチャンクのサイズを計算するために使用できる endptr を常に格納しているため、チャンクのサイズの検索も単純です。</p>
+<p>aset.c の動作のより詳細な制御 --------------------------------</p></section><section class="document-translation-chunk pending" data-chunk-order="2"><h2>Chunk 3: translation pending</h2><p>This chunk has not been translated yet. Original text:</p><pre class="document-translation-text">By default aset.c always allocates an 8K block upon the first
+allocation in a context, and doubles that size for each successive
+block request.  That&#x27;s good behavior for a context that might hold
+*lots* of data.  But if there are dozens if not hundreds of smaller
+contexts in the system, we need to be able to fine-tune things a
+little better.
+
+The creator of a context is able to specify an initial block size and
+a maximum block size.  Selecting smaller values can prevent wastage of
+space in contexts that aren&#x27;t expected to hold very much (an example
+is the relcache&#x27;s per-relation contexts).
+
+Also, it is possible to specify a minimum context size, in case for some
+reason that should be different from the initial size for additional
+blocks.  An aset.c context will always contain at least one block,
+of size minContextSize if that is specified, otherwise initBlockSize.
+
+We expect that per-tuple contexts will be reset frequently and typically
+will not allocate very much space per tuple cycle.  To make this usage
+pattern cheap, the first block allocated in a context is not given
+back to malloc() during reset, but just cleared.  This avoids malloc
+thrashing.
+
+
+Alternative Memory Context Implementations
+------------------------------------------
+
+aset.c (AllocSetContext) is our default general-purpose allocator.  Three other
+allocator types also exist which are special-purpose:
+
+* slab.c (SlabContext) is designed for allocations of fixed-sized
+  chunks.  The fixed chunk size must be specified when creating the context.
+  New chunks are allocated to the fullest block, keeping used chunks densely
+  packed together to avoid memory fragmentation.  This also increases the
+  chances that pfree&#x27;ing a chunk will result in a block becoming empty of all
+  chunks and allow it to be free&#x27;d back to the operating system.
+
+* generation.c (GenerationContext) is best suited for cases when chunks are
+  allocated in groups with similar lifespan (generations), or roughly in FIFO
+  order.  No attempt is made to reuse space left by pfree&#x27;d chunks.  Blocks
+  are returned to the operating system when all chunks on them have been
+  pfree&#x27;d.
+
+* bump.c (BumpContext) is best suited for use cases that require densely
+  allocated chunks of memory that never need to be individually pfree&#x27;d or
+  repalloc&#x27;d.  These operations are unsupported due to BumpContext chunks
+  having no chunk header.  No chunk header means more densely packed chunks,
+  which is especially useful for workloads that perform lots of small
+  allocations.  Blocks are only free&#x27;d back to the operating system when the
+  context is reset or deleted.
+
+For further details, please read the header comment in the corresponding .c
+file.
+
+Memory Accounting
+-----------------
+
+One of the basic memory context operations is determining the amount of
+memory used in the context (and its children). We have multiple places
+that implement their own ad hoc memory accounting, and this is meant to
+provide a unified approach. Ad hoc accounting solutions work for places
+with tight control over the allocations or when it&#x27;s easy to determine
+sizes of allocated chunks (e.g. places that only work with tuples).
+
+The accounting built into the memory contexts is transparent and works
+transparently for all allocations as long as they end up in the right
+memory context subtree.
+
+Consider for example aggregate functions - the aggregate state is often
+represented by an arbitrary structure, allocated from the transition
+function, so the ad hoc accounting is unlikely to work. The built-in
+accounting will however handle such cases just fine.
+
+To minimize overhead, the accounting is done at the block level, not for
+individual allocation chunks.
+
+The accounting is lazy - after a block is allocated (or freed), only the
+context owning that block is updated. This means that when inquiring
+about the memory usage in a given context, we have to walk all children
+contexts recursively. This means the memory accounting is not intended
+for cases with too many memory contexts (in the relevant subtree).
+</pre></section></div><script>
+(function() {
+  function notifyParent() {
+    if (parent === window) return;
+    parent.postMessage({type: "frame-location", frame: window.name || "", href: window.location.href}, "*");
+  }
+  document.addEventListener("click", function(event) {
+    const link = event.target.closest("a[data-panel]");
+    if (!link || parent === window) return;
+    parent.postMessage({type: "source-link", panel: link.dataset.panel}, "*");
+  });
+  window.addEventListener("load", notifyParent);
+  window.addEventListener("hashchange", notifyParent);
+})();
+</script></body></html>

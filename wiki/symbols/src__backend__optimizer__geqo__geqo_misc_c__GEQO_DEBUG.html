@@ -1,36 +1,18 @@
 <!doctype html>
 <html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>symbols/src__backend__optimizer__geqo__geqo_misc_c__GEQO_DEBUG.md</title><link rel="stylesheet" href="../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../source/src/backend/optimizer/geqo/geqo_misc.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__geqo__geqo_misc_c__GEQO_DEBUG.html&quot;}, '*');">GEQO_DEBUG</a></h1>
-<h2>定義</h2>
+<h2>現在のソース事実</h2>
 <ul>
 <li>種別: <code>function</code></li>
 <li>定義箇所: <code>src/backend/optimizer/geqo/geqo_misc.c:1</code></li>
-<li>所属モジュール: <a class="wiki-entity-link" href="../modules/src__backend__optimizer__geqo.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/modules/src__backend__optimizer__geqo.html&quot;, &quot;source&quot;: &quot;source/src/backend/optimizer/geqo/geqo_copy.c.html&quot;}, '*');"><code>module:src/backend/optimizer/geqo</code></a></li>
-</ul>
-<h2>目的</h2>
-<p>静的シンボル索引から生成された初期シンボルページです。</p>
-<h2>シグネチャまたは形状</h2>
-<ul>
 <li>シグネチャ: <code>/*------------------------------------------------------------------------ * * geqo_misc.c * misc. printout and debug stuff * * Portions Copyright (c) 1996-2026, PostgreSQL Global Development Group * Portions Copyright (c) 1994, Regents of the University of California * * src/backend/optimizer/geqo/geqo_misc.c * *------------------------------------------------------------------------- */ /* * contributed by: * =*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*= * * Martin Utesch * Institute of Automatic Control * * = = University of Mining and Technology = * * utesch@aut.tu-freiberg.de * Freiberg, Germany * * =*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*= */ #include &quot;postgres.h&quot; #include &quot;optimizer/geqo_misc.h&quot; #ifdef GEQO_DEBUG /* * avg_pool */ static double avg_pool(Pool *pool)</code></li>
-</ul>
-<h2>入力と出力</h2>
-<p>まだ解析していません。</p>
-<h2>前提条件と不変条件</h2>
-<p>まだ解析していません。</p>
-<h2>アルゴリズムまたは振る舞い</h2>
-<ul>
-<li>複雑度: <code>medium</code> (score 8)</li>
-</ul>
-<p>まだ解析していません。</p>
-<h2>呼び出し元と呼び出し先</h2>
-<ul>
 <li>呼び出し元: なし</li>
 <li>呼び出し先: なし</li>
 <li>呼び出し元サイト: なし</li>
 <li>呼び出しサイト: なし</li>
+<li>関連型: <code>c</code>, <code>Group</code>, <code>Pool</code></li>
+<li>複雑度: <code>medium</code> (score 8)</li>
 </ul>
-<h2>関連データ構造</h2>
-<p><code>c</code>, <code>Group</code>, <code>Pool</code></p>
-<h2>ソース抜粋</h2>
+<h3>ソース抜粋</h3>
 <p>~~~c /*------------------------------------------------------------------------ *</p>
 <ul>
 <li><a class="wiki-source-link" href="../../source/src/backend/optimizer/geqo/geqo_misc.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/backend/optimizer/geqo/geqo_misc.c.html&quot;}, '*');">geqo_misc.c</a></li>
@@ -70,11 +52,35 @@
 <p>*/ for (i = 0; i &lt; pool-&gt;size; i++) cumulative += pool-&gt;data[i].worth / pool-&gt;size;</p>
 </ul>
 <p>return cumulative; } ~~~</p>
-<h2>失敗モードと境界条件</h2>
-<p>まだ解析していません。</p>
-<h2>保守担当者向けメモ</h2>
+<h2>定義</h2>
 <ul>
-<li>後続フェーズで、ソース本文の文脈と caller/callee 情報を使ってこのページを強化する。</li>
+<li>**種別**: プリプロセッサマクロおよび条件付きコンパイル領域</li>
+<li>**定義ファイル**: <a class="wiki-source-link" href="../../source/src/backend/optimizer/geqo/geqo_misc.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/backend/optimizer/geqo/geqo_misc.c.html&quot;}, '*');"><code>src/backend/optimizer/geqo/geqo_misc.c</code></a></li>
+</ul>
+<h2>目的</h2>
+<p><a class="wiki-source-link" href="../../source/src/backend/optimizer/geqo/geqo_misc.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__geqo__geqo_misc_c__GEQO_DEBUG.html&quot;}, '*');"><code>GEQO_DEBUG</code></a> は、遺伝的クエリ最適化（GEQO）モジュールにおいてデバッグおよびログ出力を有効化するためのマクロである。このマクロが定義されている場合、個体群プール（<code>Pool</code>）の平均適応度を算出する <a class="wiki-source-link" href="../../source/src/backend/optimizer/geqo/geqo_misc.c.html#L34" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__geqo__geqo_misc_c__avg_pool.html&quot;}, '*');"><code>avg_pool</code></a> などのデバッグ用ヘルパー関数がコンパイル対象となる。</p>
+<h2>シグネチャまたは形状</h2>
+<p><a class="wiki-source-link" href="../../source/src/backend/optimizer/geqo/geqo_misc.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__geqo__geqo_misc_c__GEQO_DEBUG.html&quot;}, '*');"><code>GEQO_DEBUG</code></a> が有効な場合に定義される内部関数のシグネチャ：</p>
+<pre><code>static double avg_pool(Pool *pool);</code></pre>
+<h2>入力と出力</h2>
+<p><a class="wiki-source-link" href="../../source/src/backend/optimizer/geqo/geqo_misc.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__geqo__geqo_misc_c__GEQO_DEBUG.html&quot;}, '*');"><code>GEQO_DEBUG</code></a> 有効時にコンパイルされる <a class="wiki-source-link" href="../../source/src/backend/optimizer/geqo/geqo_misc.c.html#L34" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__geqo__geqo_misc_c__avg_pool.html&quot;}, '*');"><code>avg_pool</code></a> 関数の入力と出力は以下の通りである：</p>
+<ul>
+<li>**入力**: <code>Pool *pool</code> — 評価対象となる個体群プール構造体へのポインタ。</li>
+<li>**出力**: <code>double</code> 型の戻り値 — プール内の全個体が持つ適応度（<code>worth</code>）の平均値。</li>
+</ul>
+<h2>前提条件と不変条件</h2>
+<ul>
+<li><a class="wiki-source-link" href="../../source/src/backend/optimizer/geqo/geqo_misc.c.html#L34" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__geqo__geqo_misc_c__avg_pool.html&quot;}, '*');"><code>avg_pool</code></a> の呼び出し時、引数として渡される <code>pool</code> ポインタは有効でなければならず、そのプールサイズ（<code>pool-&gt;size</code>）は 0 より大きくなければならない。</li>
+</ul>
+<h2>アルゴリズムまたは振る舞い</h2>
+<p><a class="wiki-source-link" href="../../source/src/backend/optimizer/geqo/geqo_misc.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__geqo__geqo_misc_c__GEQO_DEBUG.html&quot;}, '*');"><code>GEQO_DEBUG</code></a> 有効時にコンパイルされる <a class="wiki-source-link" href="../../source/src/backend/optimizer/geqo/geqo_misc.c.html#L34" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__geqo__geqo_misc_c__avg_pool.html&quot;}, '*');"><code>avg_pool</code></a> は、以下の手順で平均値を算出する： 1. プールサイズ（<code>pool-&gt;size</code>）が 0 以下であるか検証する。 2. プール内の個体群が持つ適応度（<code>pool-&gt;data[i].worth</code>）の平均値を算出する。この際、プール内に <a class="wiki-source-link" href="../../source/src/backend/optimizer/geqo/geqo_pool.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__geqo__geqo_pool_c__DBL_MAX.html&quot;}, '*');"><code>DBL_MAX</code></a> が複数含まれている場合を考慮し、累積時の浮動小数点オーバーフローを回避するため、各個体の適応度をあらかじめ <code>pool-&gt;size</code> で除算してから累積変数 <code>cumulative</code> に加算する。 3. 最終的に累積された平均値を戻り値として返す。</p>
+<h2>関連データ構造</h2>
+<ul>
+<li><code>Pool</code>: 個体群プールを表す構造体。プールサイズを示す <code>size</code> や、個体データの配列である <code>data</code>（各要素は適応度 <code>worth</code> を保持する）をメンバとして持つ。</li>
+</ul>
+<h2>失敗モードと境界条件</h2>
+<ul>
+<li>**プールサイズが 0 以下の場合**: <code>pool-&gt;size &lt;= 0</code> の場合、<code>elog(ERROR, &quot;pool_size is zero&quot;)</code> を呼び出してエラーを発生させ、処理を中断する。</li>
 </ul><script>
 (function() {
   function notifyParent() {

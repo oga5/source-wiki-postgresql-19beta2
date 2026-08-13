@@ -58,7 +58,7 @@
 <li>enough buffers have been consumed.</li>
 <p>*</p>
 <li>- If we are not reading ahead aggressively enough, future</li>
-<li><a class="wiki-source-link" href="../../source/src/backend/storage/buffer/bufmgr.c.html#L1758" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__storage__buffer__bufmgr_c__WaitReadBuffers.html&quot;}, '*');">WaitReadBuffers</a>() calls will return <a class="wiki-source-link" href="../../source/src/tools/pg_bsd_indent/indent_globs.h.html#L46" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/tools/pg_bsd_indent/indent_globs.h.html&quot;}, '*');">true</a>, leading to readahead_distance</li>
+<li>WaitReadBuffers() calls will return <a class="wiki-source-link" href="../../source/src/tools/pg_bsd_indent/indent_globs.h.html#L46" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/tools/pg_bsd_indent/indent_globs.h.html&quot;}, '*');">true</a>, leading to readahead_distance</li>
 <li>being increased. After that more full-sized IOs can be issued.</li>
 <p>*</p>
 <li>Furthermore, if we did not have the pinned_buffers == 0 condition, we</li>

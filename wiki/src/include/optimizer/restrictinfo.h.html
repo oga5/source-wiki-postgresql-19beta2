@@ -1,0 +1,54 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>src/include/optimizer/restrictinfo.h.md</title><link rel="stylesheet" href="../../../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../../../source/src/include/optimizer/restrictinfo.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/optimizer/restrictinfo.h.html&quot;}, '*');">src/include/optimizer/restrictinfo.h</a></h1>
+<h2>概要</h2>
+<p><a class="wiki-source-link" href="../../../../source/src/include/optimizer/restrictinfo.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/optimizer/restrictinfo.h.html&quot;}, '*');"><code>src/include/optimizer/restrictinfo.h</code></a> は、PostgreSQLオプティマイザがクエリの絞り込み条件（RestrictInfoノード）を構築・操作するための関数プロトタイプ、インラインヘルパー、およびマクロを定義するヘッダーファイルです。</p>
+<h2>モジュール内での役割</h2>
+<p>オプティマイザモジュール（<code>src/include/optimizer/</code>）の一部として、条件式（Expr）をプラン生成や述語プッシュダウンで扱いやすい <code>RestrictInfo</code> 構造体へ変換・管理するインターフェースを提供します。実体となる実装コードはペアファイルである <a class="wiki-source-link" href="../../../../source/src/backend/optimizer/util/restrictinfo.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/backend/optimizer/util/restrictinfo.c.html&quot;}, '*');"><code>src/backend/optimizer/util/restrictinfo.c</code></a> に存在します。</p>
+<h2>責務</h2>
+<ul>
+<li>プレーンな式やOR句から <code>RestrictInfo</code> ノードを生成するインターフェースの提供（<a class="wiki-source-link" href="../../../../source/src/backend/optimizer/util/restrictinfo.c.html#L51" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__restrictinfo_c__make_restrictinfo.html&quot;}, '*');"><code>make_restrictinfo</code></a> や <a class="wiki-source-link" href="../../../../source/src/backend/optimizer/util/restrictinfo.c.html#L102" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__restrictinfo_c__make_plain_restrictinfo.html&quot;}, '*');"><code>make_plain_restrictinfo</code></a> など）。</li>
+<li>条件式がどこでも有効な一般ケースを簡素化するマクロ（<a class="wiki-source-link" href="../../../../source/src/include/optimizer/restrictinfo.h.html#L21" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/optimizer/restrictinfo.h.html&quot;}, '*');"><code>make_simple_restrictinfo</code></a>）の提供。</li>
+<li>結合条件の左右の辺がアウター/インナーの関係に適合するかを判定するインライン関数の提供。</li>
+<li>リスト形式の RestrictInfo から実際の式（Expr）を抽出・変換する関数の宣言。</li>
+</ul>
+<h2>重要なシンボル</h2>
+<ul>
+<li>マクロ <code>make_simple_restrictinfo(root, clause)</code>: セキュリティレベルやフラグがデフォルトの標準的な <code>RestrictInfo</code> を簡便に作成するためのラッパー。</li>
+<li>関数 <code>clause_sides_match_join(RestrictInfo *rinfo, Relids outerrelids, Relids innerrelids)</code>: 結合条件の左右の変数集合がアウター側・インナー側のいずれのサブセットに属するかを判定し、<code>outer_is_left</code> フラグを設定するインライン関数。</li>
+<li>関数 <code>make_restrictinfo(...)</code>: 与えられたサブ式から <code>RestrictInfo</code> ノードを構築する（OR句の場合は再帰的にサブ構造を作成する）。</li>
+<li>関数 <code>extract_actual_join_clauses(...)</code>: <code>RestrictInfo</code> リストから結合関係に基づいて実際の結合条件とその他の条件を分離・抽出する。</li>
+</ul>
+<h2>制御フローとデータフロー</h2>
+<p>1. オプティマイザの初期段階やパス生成時に、パーサー等から得られた <code>Expr</code> ノードを <a class="wiki-source-link" href="../../../../source/src/backend/optimizer/util/restrictinfo.c.html#L51" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__restrictinfo_c__make_restrictinfo.html&quot;}, '*');"><code>make_restrictinfo</code></a> または <a class="wiki-source-link" href="../../../../source/src/include/optimizer/restrictinfo.h.html#L21" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/optimizer/restrictinfo.h.html&quot;}, '*');"><code>make_simple_restrictinfo</code></a> に渡し、メタデータが付加された <code>RestrictInfo</code> ノードを生成します。 2. 結合の検討フェーズにおいて、<code>clause_sides_match_join</code> などのインライン関数が呼び出され、条件式の左右の変数（<code>left_relids</code> / <code>right_relids</code>）が現在処理しているアウターおよびインナーのリレーション集合に完全に含まれるかを検証します。 3. 条件が適合する場合、<code>rinfo-&gt;outer_is_left</code> が更新され、オプティマイザは効率的な結合方向（Nested Loop や Merge <a class="wiki-source-link" href="../../../../source/src/include/nodes/plannodes.h.html#L984" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__nodes__plannodes_h__Join.html&quot;}, '*');">Join</a> 等）を選択できるようになります。</p>
+<h2>直接依存</h2>
+<ul>
+<li><code>nodes/pathnodes.h</code>: <code>RestrictInfo</code> や <code>PlannerInfo</code>, <code>Relids</code> などのノード定義および型定義。</li>
+</ul>
+<h2>関連コード</h2>
+<ul>
+<li><a class="wiki-source-link" href="../../../../source/src/backend/optimizer/util/restrictinfo.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/backend/optimizer/util/restrictinfo.c.html&quot;}, '*');"><code>src/backend/optimizer/util/restrictinfo.c</code></a>: 本ヘッダーで宣言されている関数の実体を実装するペアファイル。</li>
+<li><a class="wiki-source-link" href="../../../../source/src/include/optimizer/clauses.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/optimizer/clauses.h.html&quot;}, '*');"><code>src/include/optimizer/clauses.h</code></a>: 条件式の解析や操作に関する関連ルーチン。</li>
+</ul>
+<h2>読者向けメモ</h2>
+<ul>
+<li><code>RestrictInfo</code> は単なる式（<code>Expr</code>）のラッパーではなく、オプティマイザが結合順序の検討や述語プッシュダウンを行うためのキャッシュおよびフラグ群（変数集合やセキュリティレベルなど）を保持しています。</li>
+<li>頻繁に呼び出される軽量な判定ロジック（<code>clause_sides_match_join</code> など）は、ヘッダー内に <code>static inline</code> 関数として直接実装されています。</li>
+</ul>
+<h2>シンボルページ</h2>
+<ul>
+<li><a href="../../../symbols/src__include__optimizer__restrictinfo_h__clause_sides_match_join.html" target="wiki-view"><code>clause_sides_match_join</code></a></li>
+</ul><script>
+(function() {
+  function notifyParent() {
+    if (parent === window) return;
+    parent.postMessage({type: "frame-location", frame: window.name || "", href: window.location.href}, "*");
+  }
+  document.addEventListener("click", function(event) {
+    const link = event.target.closest("a[data-panel]");
+    if (!link || parent === window) return;
+    parent.postMessage({type: "source-link", panel: link.dataset.panel}, "*");
+  });
+  window.addEventListener("load", notifyParent);
+  window.addEventListener("hashchange", notifyParent);
+})();
+</script></body></html>

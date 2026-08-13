@@ -1,0 +1,54 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>src/include/optimizer/tlist.h.md</title><link rel="stylesheet" href="../../../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../../../source/src/include/optimizer/tlist.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/optimizer/tlist.h.html&quot;}, '*');">src/include/optimizer/tlist.h</a></h1>
+<h2>概要</h2>
+<p>ターゲットリスト（TargetEntry のリスト）および PathTarget の作成、検索、変換、操作を行うための関数プロトタイプとマクロを定義するヘッダーファイルです。</p>
+<h2>モジュール内での役割</h2>
+<p><code>src/include/optimizer</code> サブシステムの一部として、プラン生成や最適化フェーズにおいて式や射影を保持するターゲットリスト（tlist）と PathTarget の共通操作インターフェースを提供します。実体となる処理はペアファイルの <a class="wiki-source-link" href="../../../../source/src/backend/optimizer/util/tlist.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/backend/optimizer/util/tlist.c.html&quot;}, '*');"><code>src/backend/optimizer/util/tlist.c</code></a> に実装されています。</p>
+<h2>責務</h2>
+<ul>
+<li>ターゲットリスト内のエントリ検索や、式の一致・型・照合順序の一致検証を行う。</li>
+<li>ターゲットリストと <code>PathTarget</code> 間の相互変換やコピー操作を提供する。</li>
+<li>グルーピング演算子、列、照合順序の抽出やソート可能性・ハッシュ可能性の判定を行う。</li>
+<li>セット返却関数（SRF）を含むターゲットの分割処理などを公開する。</li>
+</ul>
+<h2>重要なシンボル</h2>
+<ul>
+<li><a class="wiki-source-link" href="../../../../source/src/include/optimizer/tlist.h.html#L58" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/optimizer/tlist.h.html&quot;}, '*');"><code>create_pathtarget</code></a>: 渡されたターゲットリストから <code>PathTarget</code> を作成し、コストと幅のフィールドを設定する便利なマクロ。</li>
+<li><code>tlist_member</code>: 指定した式がターゲットリスト内に含まれるかを検索し、一致する <code>TargetEntry</code> を返す。</li>
+<li><code>make_pathtarget_from_tlist</code> / <code>make_tlist_from_pathtarget</code>: ターゲットリストと <code>PathTarget</code> のデータ構造を相互に変換する。</li>
+<li><code>split_pathtarget_at_srfs</code>: SRF（Set Returning Functions）を含む PathTarget を段階的な評価階層に分割する。</li>
+</ul>
+<h2>制御フローとデータフロー</h2>
+<ul>
+<li>オプティマイザは、クエリツリーのターゲットリストを入力として <code>make_pathtarget_from_tlist</code> や <a class="wiki-source-link" href="../../../../source/src/include/optimizer/tlist.h.html#L58" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/optimizer/tlist.h.html&quot;}, '*');"><code>create_pathtarget</code></a> を呼び出し、内部のコスト見積もりやパス探索用の <code>PathTarget</code> 構造体を構築します。</li>
+<li>必要に応じて <code>split_pathtarget_at_srfs</code> を用いて、SRFの評価順序を考慮した複数のサブターゲットに分割し、段階的なプラン評価フローを構築します。</li>
+<li>最終的なプラン構築時には <code>make_tlist_from_pathtarget</code> を通じて通常のターゲットリスト形式へ戻されます。</li>
+</ul>
+<h2>直接依存</h2>
+<ul>
+<li><code>nodes/pathnodes.h</code>: <code>PathTarget</code> や関連するプラン・パスノードの基本定義。</li>
+</ul>
+<h2>関連コード</h2>
+<ul>
+<li><a class="wiki-source-link" href="../../../../source/src/backend/optimizer/util/tlist.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/backend/optimizer/util/tlist.c.html&quot;}, '*');"><code>src/backend/optimizer/util/tlist.c</code></a>: 本ヘッダーで宣言されている関数の実体が実装されているペアファイル。</li>
+<li><a class="wiki-source-link" href="../../../../source/src/include/optimizer/cost.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/optimizer/cost.h.html&quot;}, '*');"><code>src/include/optimizer/cost.h</code></a>: <a class="wiki-source-link" href="../../../../source/src/include/optimizer/tlist.h.html#L58" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/optimizer/tlist.h.html&quot;}, '*');"><code>create_pathtarget</code></a> マクロ内部で呼び出されるコスト計算関連の関数定義。</li>
+</ul>
+<h2>読者向けメモ</h2>
+<ul>
+<li>本ファイルは関数群の宣言のみを行っているため、具体的なアルゴリズムやヘルパー関数の挙動を確認する場合は <a class="wiki-source-link" href="../../../../source/src/backend/optimizer/util/tlist.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/backend/optimizer/util/tlist.c.html&quot;}, '*');"><code>src/backend/optimizer/util/tlist.c</code></a> を参照してください。</li>
+<li><a class="wiki-source-link" href="../../../../source/src/include/optimizer/tlist.h.html#L58" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/optimizer/tlist.h.html&quot;}, '*');"><code>create_pathtarget</code></a> マクロはコストと幅の計算を自動で行うため、単なる構造体変換よりも頻繁に使用されます。</li>
+</ul><script>
+(function() {
+  function notifyParent() {
+    if (parent === window) return;
+    parent.postMessage({type: "frame-location", frame: window.name || "", href: window.location.href}, "*");
+  }
+  document.addEventListener("click", function(event) {
+    const link = event.target.closest("a[data-panel]");
+    if (!link || parent === window) return;
+    parent.postMessage({type: "source-link", panel: link.dataset.panel}, "*");
+  });
+  window.addEventListener("load", notifyParent);
+  window.addEventListener("hashchange", notifyParent);
+})();
+</script></body></html>

@@ -1,0 +1,80 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>src/backend/utils/misc/README</title><link rel="stylesheet" href="../../../../../../styles.css"></head><body><h1>Japanese translation</h1><p><code>src/backend/utils/misc/README</code></p><p><a href="../../../../../../source/src/backend/utils/misc/README.html" target="source-view">View original document</a></p><p class="document-translation-progress document-translation-complete">Translation complete.</p><div class="document-translation-body"><section class="document-translation-chunk translated" data-chunk-order="0"><p>src/backend/utils/misc/README</p>
+<p>GUC 実装ノート ========================</p>
+<p>GUC (Grand Unified Configuration) モジュールは、複数の型（現在は boolean、enum、int、real、および string）の 設定変数を実装します。 変数の設定はさまざまな場所から取得され、どの設定を使用するかを決定する優先順位があります。</p>
+<p>変数ごとのフック ------------------</p>
+<p>GUC に知られている各変数は、カスタマイズされた動作を提供するために、任意で check_hook、 assign_hook、および/または show_hook を持つことができます。 チェックフックは、変数(GUCができることを超えて)の値に対する妥当性チェックの実行、 それを行うために自明ではない作業が必要な場合に派生設定を計算するため、 およびオプションでユーザーが指定した値を「正規化」するために使用されます。 アサインフックは、GUC 変数が設定されたときに対応が必要な派生状態を更新するために使用されます。 ショーフックは、変数のデフォルトの SHOW 表示を変更するために使用されます。</p>
+<p>check_hook が提供されている場合、それは以下のシグネチャを持つ関数を指します。 bool check_hook(datatype *newvalue, void **extra, GucSource source) &quot;newvalue&quot; 引数の型は、それぞれ bool、int/enum、real、または string 変数に対して、 bool *、int *、double *、または char ** です。 チェック関数は提案された新しい値を検証し、問題ない場合は true を、そうでない場合は false を返します。 この関数はオプションで他のいくつかのことも実行できます。</p>
+<ul>
+<li>不正な提案された値を拒否する場合、guc.c が発行する汎用的な「パラメータ FOO の値が無効です」</li>
+<p>という不満に何らかの追加情報を付加すると便利です。 それを行うには、以下を呼び出します。 void GUC_check_errdetail(const char *format, ...) ここで、フォーマット文字列と追加の引数は errdetail() 引数の規則に従います。 結果の文字列は guc.c のエラーレポートの DETAIL 行として出力されるため、 DETAIL メッセージのメッセージスタイルガイドラインに従う必要があります。 また、同様の方法で HINT メッセージを追加するために使用できる以下もあります。 void GUC_check_errhint(const char *format, ...) 場合によっては、guc.c の汎用的なプライマリメッセージやエラーコードを上書きすることも適切であり、 それは以下で行うことができます。 void GUC_check_errcode(int sqlerrcode) void GUC_check_errmsg(const char *format, ...) 一般に、可能であれば check_hook は直接エラーをスローすることを避けるべきですが、 メモリ不足などの一部のエッジケースではこれを避けることが実用的ではない場合があります。</p>
+</ul>
+<ul>
+<li>newvalue は参照渡しであるため、関数はそれを変更できます。</li>
+<p>これを使用して、たとえば文字列値のスペルを正規化したり、 バッファサイズを最も近いサポートされている値に丸めたり、 &quot;-1&quot; などの特殊な値を計算されたデフォルト値に置き換えたりすることができます。 関数が文字列値を置き換えることを望む場合、(palloc ではなく) guc_malloc を使用して 置換値を割り当て、前の値を確実に guc_free() する必要があります。</p>
+</ul>
+<ul>
+<li>ユーザー名によって表されるロール OID などの派生情報は、</li>
+<p>assignフックで使用するために保存できます。 これを行うには、情報の記憶域スペースを (palloc ではなく) guc_malloc で割り当て、 そのアドレスを *extra で返します。 guc.c は、関連する GUC 設定が不要になったときに、 このスペースを自動的に guc_free() します。 *extra は呼び出し前に NULL に初期化されるため、 不要な場合は無視できます。</p>
+</ul>
+<p>&quot;source&quot; 引数は、提案された新しい値のソースを示します。 これが &gt;= PGC_S_INTERACTIVE である場合、対話型割り当て（例：SET コマンド）を実行しています。 しかし、source &lt; PGC_S_INTERACTIVE の場合、 postgresql.conf などの非対話型オプションソースを読み込んでいます。 これは、設定を許可すべきかどうかを判断するために必要になることがあります。 check_hook は、何が許可されるかを判断するために、変数の現在の実際の値を見ることもあります。</p>
+<p>チェックフックは、設定を実際に変更する意図なしに、単に値を検証するためだけに呼び出されることがあることに注意してください。 したがって、チェックフックは、割り当てが発生するという仮定に基づいていかなるアクションも実行しては *ならない* 点に注意してください。</p>
+<p>assign_hook が提供されている場合、それは以下のシグネチャを持つ関数を指します。 void assign_hook(datatype newvalue, void *extra) ここで、&quot;newvalue&quot; の型は変数の種類と一致し、&quot;extra&quot; は check_hook によって返された派生情報ポインタです (check_hook がない場合は常に NULL)。 この関数は、変数の値を実際に設定する直前に呼び出されます（したがって、実際の変数を見て古い値を判断し、 たとえば値が実際には変化していない場合に作業を回避することができます）。</p>
+<p>失敗時のリターンコードの規定はありません。 アサインフックは、障害が発生した場合にたとえばトランザクションの中断時に GUC 設定が正しくロールバックされない原因になる可能性があるため、 最悪の状況を除いて決して失敗してはなりません。 一般に、失敗する可能性のあるものはすべて代わりに check_hook 内で行うようにし、 結果を &quot;extra&quot; 構造体で渡すことで、アサインフックがデータをどこかにコピーする以外の作業をほとんど行わないようにします。 これは特にカタログ検索に当てはまります。アサインフックは、検索が安全ではないトランザクションのロールバック中に実行される可能性があるため、 必要な検索はすべて check_hook 内で行う必要があります。</p>
+<p>チェックフックがトランザクションの外側でも呼び出されることがあることに注意してください。 これは、ハードコードされた「ブートストラップ」値、ポストマスターのコマンドラインや環境からの値、 あるいは postgresql.conf からの値の処理時に発生します。 したがって、check_hook 内で行われるカタログ検索は IsTransactionState() テストで保護される必要があり、 トランザクション内での GUC 設定のその後の最初の使用時に派生値を計算できるようにフォールバックパスが存在しなければなりません。 一般的な構成では、check_hook によって計算され assign_hook によってインストールされたカタログ値は、 新しい設定が行われたトランザクションの残りの期間のみ使用されます。 その後の各トランザクションは、最初の使用時に新しく値を検索します。 トランザクション外で GUC 値をチェックする必要があるという問題とは無関係に、 古いカタログ値の使用を防ぐために、この構成が役立ちます。</p>
+<p>show_hook が提供されている場合、それは以下のシグネチャを持つ関数を指します。 const char *show_hook(void) このフックにより、SHOW（および GUC 変数の値を示すその他の SQL 機能）によって表示される値の 変数固有の計算が可能になります。 show 関数は再入可能ではないため、戻り値は静的バッファを指すことができます。</p>
+<p>GUC 変数値の保存/復元 ------------------------------------</p>
+<p>いくつかの特殊なケースに対処するため、設定変数の以前の値を覚えておく必要があります。 RESET（別名 SET TO DEFAULT）、トランザクション中断時の SET のロールバック、 トランザクション終了時（コミットまたは中断のいずれか）の SET LOCAL のロールバック、 および SET オプションを持つ関数の周囲での保存/復元です。 RESET は、現在のセッションに SET コマンドが一度もなかった場合に有効であったであろう値を選択するものとして定義されます。</p>
+<p>これらのケースを処理するために、各変数について多くの異なる値を追跡する必要があります。 プライマリ値は以下の通りです。</p>
+<ul>
+<li>実際の変数コンテンツ		常に現在の有効な値</li>
+</ul>
+<ul>
+<li>reset_val			RESET に使用する値</li>
+</ul>
+<p>(各 GUC エントリーには、ハードコードされたデフォルト値である boot_val もあります。 これは、InitializeGUCOptions() 時に reset_val と実際の変数に割り当てられます。 boot_val は、SIGHUP 処理によって以前に postgresql.conf で指定された変数が そこに設定されなくなったことが判明した場合に、正しい reset_val を復元するためにも参照されます。)</p>
+<p>プライマリ値に加えて、将来復元する必要があるかもしれない以前の有効な値のスタックがあります。 スタッキングとアンスタッキングは GUC の「ネストレベル」によって制御されます。 これは、トランザクション外ではゼロ、トップトランザクションレベルでは 1 であり、 開かれているサブトランザクションまたは SET オプションを持つ関数呼び出しごとにインクリメントされます。 スタックエントリは、GUC 変数が特定のネストレベルで最初に変更されたときに作成されます。 (注意: reset_val はトランザクション外の操作によってのみ変更されるため、スタックする必要はありません。)</p>
+<p>スタックエントリには、状態、GUC 変数の以前の値、その以前の覚えているソースがあり、 状態によっては「マスクされた」値を持つこともあります。 マスクされた値は、SET の後に SET LOCAL が同じネストレベルで発生した場合に必要になります。 SET の値はマスクされますが、トランザクションコミット後に復元するために覚えておく必要があります。</p>
+<p>初期化中、非対話型ソースのうち最も優先順位が高いものに基づいて、実際の値と reset_val を設定します。 これらは同じ値を持ちます。</p>
+<p>GUC 値に対する可能なトランザクション操作は以下の通りです。</p>
+<p>SET オプションを持つ関数へのエントリー：</p>
+<p>以前の変数状態と状態 SAVE を持つスタックエントリをプッシュし、 その後変数を設定する。</p>
+<p>通常の SET コマンド：</p>
+<p>現在のレベルのスタックエントリがない場合： 以前の値と状態 SET を持つ新しいスタックエントリをプッシュする スタックエントリの状態が SAVE、SET、または LOCAL の場合： スタック状態を SET に変更し、保存された値は変更しない （ここでは以前の set アクションの影響を忘れている） それ以外の場合（エントリの状態は SET+LOCAL でなければならない）： そのマスクされた値を破棄し、状態を SET に変更する （ここでは以前の SET および SET LOCAL の影響を忘れている） 新しい値を設定する。</p>
+<p>SET LOCAL コマンド：</p>
+<p>現在のレベルのスタックエントリがない場合： 以前の値と状態 LOCAL を持つ新しいスタックエントリをプッシュする スタックエントリの状態が SAVE、LOCAL、または SET+LOCAL の場合： スタックエントリに変更なし （SAVE の場合、SET LOCAL は関数終了時に忘れられる） それ以外の場合（エントリの状態は SET でなければならない）： 現在のアクティブなものをそのマスクされたスロットに入れ、状態を SET+LOCAL に設定する 新しい値を設定する。</p>
+<p>トランザクションまたはサブトランザクションの中断：</p>
+<p>トップ &lt; サブトランザクション深度になるまで、スタックエントリをポップし、以前の値を復元する。</p>
+<p>トランザクションまたはサブトランザクションのコミット（関数の正常終了を含む）：</p>
+<p>スタックエントリのレベル &gt;= サブトランザクション深度の間</p>
+<p>エントリの状態が SAVE の場合： ポップし、以前の値を復元する レベルが 1 でエントリの状態が SET+LOCAL の場合： ポップし、*マスクされた*値を復元する レベルが 1 でエントリの状態が SET の場合： ポップし、古い値を破棄する レベルが 1 でエントリの状態が LOCAL の場合： ポップし、以前の値を復元する レベル N-1 のエントリが正確に存在しない場合： エントリのレベルをデクリメントし、その他の状態変更は行わない それ以外の場合： 以下で指定するようにレベル N-1 と N のエントリをマージする</p>
+<p>マージされたエントリはレベル N-1 と prior = 古い prior を持つため、 古いエントリを保持し、新しいエントリを解放するのが最も簡単です。 レベル N の状態 = SAVE はすでに処理したため、12 通りの可能性があります：</p>
+<p>N-1		N</p>
+<p>SAVE		SET		トップの prior を破棄し、状態を SET に設定する SAVE		LOCAL		トップの prior を破棄し、スタックエントリを変更しない SAVE		SET+LOCAL	トップの prior を破棄し、マスクをコピーし、状態を S+L にする</p>
+<p>SET		SET		トップの prior を破棄し、スタックエントリを変更しない SET		LOCAL		トップの prior をマスクにコピーし、状態を S+L にする SET		SET+LOCAL	トップの prior を破棄し、マスクをコピーし、状態を S+L にする</p>
+<p>LOCAL		SET		トップの prior を破棄し、状態を SET に設定する LOCAL		LOCAL		トップの prior を破棄し、スタックエントリを変更しない LOCAL		SET+LOCAL	トップの prior を破棄し、マスクをコピーし、状態を S+L にする</p>
+<p>SET+LOCAL	SET		トップの prior と 2 番目のマスクを破棄し、状態を SET にする SET+LOCAL	LOCAL		トップの prior を破棄し、スタックエントリを変更しない SET+LOCAL	SET+LOCAL	トップの prior を破棄し、マスクをコピーし、状態を S+L にする</p>
+<p>RESET は SET のように実行されますが、目的の新しい値として reset_val を使用します。 (RESET LOCAL コマンドは提供していませんが、SET LOCAL TO DEFAULT は RESET LOCAL と同じ動作をします。) reset_val に関連付けられたソースは、実際の値にも関連付けられます。</p>
+<p>SIGHUP を受信すると、GUC コードは postgresql.conf 設定ファイルを再読み込みします （これはシグナルハンドラ内ではなく、メインループへの次の復帰時に行われます。 トランザクション内で実行できることに注意してください）。 postgresql.conf からの新しい値は、これらのおのおのの現在のソース優先度が &lt;= PGC_S_FILE である場合にのみ、 実際の変数、reset_val、およびスタックされた実際の値に割り当てられます。 （したがって、実際の値の異なる対話型値が現在存在する場合でも、 reset_val が設定ファイルの雰囲気を追跡することが可能です。）</p>
+<p>check_hook、assign_hook、および show_hook ルーチンは実際の変数でのみ動作し、 GUC によって維持される追加の値を直接認識しません。</p>
+<p>GUC メモリ管理 -------------------</p></section><section class="document-translation-chunk translated" data-chunk-order="1"><p>String variable values are allocated with guc_malloc or guc_strdup, which ensure that the values are kept in a long-lived context, and provide more control over handling out-of-memory failures than bare palloc.</p>
+<p>We allow a string variable&#x27;s actual value, reset_val, boot_val, and stacked values to point at the same storage.  This makes it slightly harder to free space (we must test whether a value to be freed isn&#x27;t equal to any of the other pointers in the GUC entry or associated stack items).  The main advantage is that we never need to malloc during transaction commit/abort, so cannot cause an out-of-memory failure there.</p>
+<p>&quot;Extra&quot; structs returned by check_hook routines are managed in the same way as string values.  Note that we support &quot;extra&quot; structs for all types of GUC variables, although they are mainly useful with strings.</p>
+<p>GUCとNull文字列変数 -----------------------------</p>
+<p>GUC文字列変数は、NULLのboot_valを持つことができます。guc.cはこれを当然のこととして処理し、基礎となるC変数にNULLを代入します。したがって、そのような変数を使用するコードや、その変数のフック関数は、NULL値を処理できるように準備しておく必要があります。</p>
+<p>しかし、他の方法でGUC文字列変数にNULL値を代入することはできません。SETやpostgresql.confなどから渡される値は空文字列である可能性はありますが、NULLになることはありません。また、SHOWはNULLを空文字列と同様に表示します。したがって、NULL値をユーザーに見える個別の設定として扱うことは適切ではありません。NULLのboot_valの典型的な用途は、起動プロセスの後半で実際の値を受け取る変数に対して、値がまだ設定されていないことを示すことです。</p>
+<p>基礎となるC変数を使用するコードがNULL値について一切心配したくない場合は、変数に非NULLの静的初期化子と非NULLのboot_valの両方を与えることができます。guc.cはInitializeGUCOptionsの実行中に静的初期化子のポインタをboot_valのコピーで上書きしますが、変数がNULLを保持することはありません。</p></section></div><script>
+(function() {
+  function notifyParent() {
+    if (parent === window) return;
+    parent.postMessage({type: "frame-location", frame: window.name || "", href: window.location.href}, "*");
+  }
+  document.addEventListener("click", function(event) {
+    const link = event.target.closest("a[data-panel]");
+    if (!link || parent === window) return;
+    parent.postMessage({type: "source-link", panel: link.dataset.panel}, "*");
+  });
+  window.addEventListener("load", notifyParent);
+  window.addEventListener("hashchange", notifyParent);
+})();
+</script></body></html>

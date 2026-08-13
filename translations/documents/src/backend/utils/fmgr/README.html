@@ -1,0 +1,99 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>src/backend/utils/fmgr/README</title><link rel="stylesheet" href="../../../../../../styles.css"></head><body><h1>Japanese translation</h1><p><code>src/backend/utils/fmgr/README</code></p><p><a href="../../../../../../source/src/backend/utils/fmgr/README.html" target="source-view">View original document</a></p><p class="document-translation-progress document-translation-complete">Translation complete.</p><div class="document-translation-body"><section class="document-translation-chunk translated" data-chunk-order="0"><p>src/backend/utils/fmgr/README</p>
+<p>Function Manager ================</p>
+<p>[このファイルは元々、V0 から V1 インターフェースへの移行について説明していました。現在では V1 インターフェースの内部構造と設計根拠をいくつか説明するのみとなり、V0 インターフェースは削除されています。]</p>
+<p>V1 Function-Manager インターフェース ---------------------------------</p>
+<p>設計の核心は、関数ルックアップの結果を表現するためのデータ構造と、特定の関数呼び出しに渡されるパラメータを表現するためのデータ構造です。（システムの多くの部分が同じ関数を何度も繰り返し適用するため、関数ルックアップは関数呼び出しから分離しておきたいと考えました。ルックアップのオーバーヘッドはタプルごとではなく、クエリごとに1回だけ支払われるべきです。）</p>
+<p>pg_proc で関数がルックアップされると、その結果は次のように表現されます。</p>
+<p>typedef struct { PGFunction  fn_addr;    /* pointer to function or handler to be called */ Oid         fn_oid;     /* OID of function (NOT of handler, if any) */ short       fn_nargs;   /* number of input args (0..FUNC_MAX_ARGS) */ bool        fn_strict;  /* function is &quot;strict&quot; (NULL in =&gt; NULL out) */ bool        fn_retset;  /* function returns a set (over multiple calls) */ unsigned char fn_stats; /* collect stats if track_functions &gt; this */ void       *fn_extra;   /* extra space for use by handler */ MemoryContext fn_mcxt;  /* memory context to store fn_extra in */ Node       *fn_expr;    /* expression parse tree for call, or NULL */ } FmgrInfo;</p>
+<p>通常の組み込み関数の場合、fn_addr は単にその関数を実装している C ルーチンのアドレスです。それ以外の場合は、ターゲット関数を含む関数のクラスに対するハンドラーのアドレスになります。ハンドラーは、関数 OID と、場合によっては fn_extra スロットを使用して、実行する特定のコードを見つけることができます。（fn_oid = InvalidOid は、まだ初期化されていない FmgrInfo 構造体を表すために使用できます。fn_extra は、FmgrInfo が関数ルックアップコードによって最初に埋められたときは常に NULL になりますが、クエリ中に同じ FmgrInfo が繰り返し使用されるときに独自のルックアップが何度も行われるのを避けるために、関数ハンドラーが設定することができます。）fn_nargs は関数が期待する引数の数、fn_strict は厳格性フラグ、fn_retset はセットを返すかどうかを示します。これらの値はすべて、関数の pg_proc エントリから取得されます。fn_stats も、この関数の呼び出しに関する実行時統計を追跡するかどうかを制御するように設定されます。</p>
+<p>関数が SQL 式の一部として呼び出される場合、fn_expr は関数呼び出しの式パースツリーを指します。これを使用して、実際の引数に関するパース時の知識を抽出できます。なお、このフィールドは実際には関数に関する情報ではなく引数に関する情報ですが、より論理的な FunctionCallInfoBaseData よりも FmgrInfo 内に保持する方が便利であることが証明されています。</p>
+<p>関数の呼び出し中、次のデータ構造が作成され、関数に渡されます。</p>
+<p>typedef struct { FmgrInfo   *flinfo;         /* ptr to lookup info used for this call */ Node       *context;        /* pass info about context of call */ Node       *resultinfo;     /* pass or return extra info about result */ Oid         fncollation;    /* collation for function to use */ bool        isnull;         /* function must set true if result is NULL */ short       nargs;          /* # arguments actually passed */ NullableDatum args[];       /* Arguments passed to function */ } FunctionCallInfoBaseData; typedef FunctionCallInfoBaseData* FunctionCallInfo;</p>
+<p>flinfo は、呼び出しを行うために使用されたルックアップ情報を指します。通常の関数はおそらくこのフィールドを無視しますが、関数クラスハンドラーは、呼び出されている特定の関数の OID を見つけるためにこのフィールドを必要とします。</p>
+<p>context は「通常の」関数呼び出しでは NULL ですが、特定のコンテキストで関数が呼び出されたときに追加情報を指す場合があります。（例えば、トリガーマネージャーは現在のトリガーイベントに関する情報をここに渡します。）詳細については、以下の「Function Call Contexts」を参照してください。</p>
+<p>resultinfo は、単純な Datum 結果が期待される関数を呼び出すときは NULL です。関数が Datum よりも多くのものを返す場合、Node の何らかのサブタイプを指すことがあります。（例えば、後述するように、セットを返す関数を呼び出すときに resultinfo が使用されます。）context フィールドと同様に、resultinfo は拡張用のフックであり、fmgr 自体はこのフィールドの使用を制限しません。</p>
+<p>fncollation は、パーサーによって導出された入力照合順序（collation）、または照合順序付き型の入力がないか共通の照合順序を共有していない場合の InvalidOid です。これは事実上、隠された追加の引数であり、照合順序に敏感な関数がその動作を決定するために使用できます。</p>
+<p>nargs と args[] は、関数に渡される引数を保持します。関数に渡されるすべての引数（およびその結果値）が、今や一様に Datum 型になることに注意してください。後述するように、呼び出し側と呼び出される側は、標準の Datum と任意の型の間を変換するマクロを適用して、特定の関数の実際の引数型に変換する必要があります。args[i].isnull が true の場合、args[i].value の値は不確定です。</p>
+<p>渡された引数の数が呼び出される側が期待している数と一致していることを確認することは、通常は呼び出し側の責任です。可変数の引数を受け取る呼び出される側を除き、呼び出される側は通常 nargs フィールドを無視し、args[] から値を取得するだけです。</p>
+<p>isnull フィールドは呼び出し前に「false」に初期化されます。関数からの戻り時に、isnull は関数結果の null フラグになります。これが true の場合、実際の関数の戻り値に関係なく、関数の結果は NULL になります。単純な「strict」な関数は、args[].isnull に TRUE の値が含まれている場合には呼び出されさえしないため、isnull と args[i].isnull の両方を無視できることに注意してください。</p>
+<p>FunctionCallInfo は、FmgrValues と、一連のアドホックなパラメータ規約、グローバル変数（少なくとも fmgr_pl_finfo と CurrentTriggerData）、およびその他の醜雑なものに代わるものです。</p>
+<p>呼び出される側（個々の関数であろうと関数ハンドラーであろうと）は、常に次のシグネチャを持つ必要があります。</p>
+<p>Datum function (FunctionCallInfo fcinfo);</p>
+<p>これは、次の typedef で表現されます。</p>
+<p>typedef Datum (*PGFunction) (FunctionCallInfo fcinfo);</p>
+<p>関数は、Datum として表現される結果を返すだけでなく、fcinfo-&gt;isnull を適切に設定する責任があります。すべての呼び出される側が現在まったく同じシグネチャを持ち、正確にそのシグネチャで宣言された関数ポインタを介して呼び出されるため、移植性や最適化の問題は発生しないはずです。</p>
+<p>関数コーディング規約 ---------------------------</p>
+<p>推奨されるマクロとコーディング規約は次のとおりです。</p>
+<p>fmgr から呼び出し可能な関数の定義は、常に次のようになります。</p>
+<p>Datum function_name(PG_FUNCTION_ARGS) { ... }</p>
+<p>&quot;PG_FUNCTION_ARGS&quot; は単に &quot;FunctionCallInfo fcinfo&quot; に展開されます。このマクロを使用する主な理由は、スクリプトが関数定義を見つけやすくすることです。ただし、呼び出し規約を再び変更することになった場合、このマクロが存在することが役立つ可能性があります。</p>
+<p>非厳格（nonstrict）な関数は、個々の引数が null であるかどうかを確認する責任があり、これは PG_ARGISNULL(n)（単に &quot;fcinfo-&gt;args[n].isnull&quot; です）を使用して行うことができます。null である引数の値を取得しようとすることは避ける必要があります。</p>
+<p>厳格および非厳格の両方の関数は、必要に応じて次のようにして NULL を返すことができます。 PG_RETURN_NULL(); これは次のように展開されます。 { fcinfo-&gt;isnull = true; return (Datum) 0; }</p>
+<p>引数の値は通常、次のようなコードを使用して取得されます。 int32	name = PG_GETARG_INT32(number);</p>
+<p>float4、float8、int8 の場合、PG_GETARG マクロは、型が値渡し（pass-by-value）であるか参照渡し（pass-by-reference）であるかを隠蔽します。例えば、float8 が参照渡しである場合、PG_GETARG_FLOAT8 は次のように展開されます。 (* (float8 *) DatumGetPointer(fcinfo-&gt;args[number].value)) そして通常は次のように呼び出されます。 float8  arg = PG_GETARG_FLOAT8(0); 歴史的な理由により、浮動小数点関連の typedef とマクロは型の幅をバイト単位（4 または 8）で表現しますが、整数型の幅はビット単位でラベル付けすることが好まれています。</p>
+<p>非 null の値は、適切な型の PG_RETURN_XXX マクロで返されます。例えば、PG_RETURN_INT32 は次のように展開されます。 return Int32GetDatum(x) PG_RETURN_FLOAT4、PG_RETURN_FLOAT8、および PG_RETURN_INT64 は、必要に応じて palloc を実行することにより、データ型が値渡しであるか参照渡しであるかを隠蔽します。</p>
+<p>fmgr.h は、すべての基本データ型に対して PG_GETARG および PG_RETURN マクロを提供します。特殊な SQL データ型（例：timestamp）を定義するモジュールやヘッダーファイルは、それらの型に適したマクロを定義する必要があり、そうすることでその型を操作する関数を標準スタイルでコーディングできるようになります。</p>
+<p>非プリミティブなデータ型（特に可変長型）の場合、データ型の参照渡しの性質を隠蔽することはあまり実用的ではないため、それらの型の PG_GETARG および PG_RETURN マクロは、DatumGetPointer/PointerGetDatum に適切な型キャストを加えたものと大差ありません（ただし、後述の TOAST の議論を参照してください）。そのような型を返す関数は、結果領域を明示的に palloc() する必要があります。そのような型の GETARG および RETURN マクロには、ポインタを生成または取得することを思い出させるために、末尾に &quot;_P&quot; を付けることをお勧めします。例えば、PG_GETARG_TEXT_P は &quot;text *&quot; を生成します。</p>
+<p>関数が fcinfo-&gt;flinfo や FunctionCallInfo の他の補助フィールドのいずれかにアクセスする必要がある場合、単にそうすればよいのです。これらのケースに対して構文糖衣マクロを提供することが有用であるとは思いません。</p>
+<p>TOAST 対応データ型のサポート ---------------------------------</p>
+<p>TOAST 対応データ型の場合、PG_GETARG マクロは TOAST 解除されたデータ値を配信します。まだ TOAST されたままの値が必要なケースが少数あるかもしれませんが、圧倒的多数のケースでは TOAST 解除された結果が必要とされるため、それがデフォルトになります。TOAST 解除を引き起こさずに引数値を取得するには、PG_GETARG_RAW_VARLENA_P(n) を使用します。</p>
+<p>入力値の変更可能なコピーを必要とする関数もあります。このような場合、TOAST を解除するためにデータをすでにコピーしていたのであれば、追加のコピー手順を実行するのは無意味です。したがって、各 TOAST 対応データ型には、例えば PG_GETARG_TEXT_P_COPY(n) のような追加の取得マクロがあり、これは確実な新鮮なコピーを配信し、可能であればこれを TOAST 解除ステップと結合します。</p>
+<p>また、PG_FREE_IF_COPY(ptr, n) マクロもあり、これは指定されたポインタが n 番目の引数の元の値と異なる場合に限り、そのポインタに対して pfree を実行します。これは、n 番目の引数の値が実際に TOAST 解除されていた場合に、その TOAST 解除された値を解放するために使用できます。現在、コアバックエンドコードが一時領域を定期的に解放するため、関数の実行リークは大きな問題にならないため、大多数の関数ではこれを行う必要はありません。ただし、バージョン 7.1 の時点で、インデックス検索によって呼び出される関数でのメモリリークは、トランザクションの終了までクリーンアップされなくなります。したがって、pg_amop または pg_amproc にリストされている関数は、TOAST 解除されたコピーをリークしないように注意する必要があり、そのためこれらの関数では TOAST 対応の入力に対して PG_FREE_IF_COPY() を使用する必要があります。</p>
+<p>関数は、その結果値を再 TOAST しようとしてはならず、現在のメモリコンテキストで palloc された、TOAST 解除された結果を単に配信するだけにする必要があります。その値が実際にタプルに保存されるとき、タプル トースターがトーストが必要かどうかを決定します。</p>
+<p>関数呼び出しコンテキスト ----------------------</p>
+<p>呼び出し側が fcinfo-&gt;context に非 NULL ポインタを渡す場合、それは Node の何らかのサブタイプを指している必要があります。特定の種類のコンテキストは、ノード型フィールドによって示されます。（呼び出しを受ける側は、渡されているコンテキストの種類を知っていると仮定する前に、IsA() を介して常にノード型を確認する必要があります。）fmgr 自体はこのフィールドの使用に対して他の制限を課しません。</p>
+<p>この規約の現在の使用法には次のようなものがあります。</p>
+<p>&lt;/document&gt;</p></section><section class="document-translation-chunk translated" data-chunk-order="1"><ul>
+<li>トリガー関数には、トリガーコンテキストに関する情報を含む struct TriggerData のインスタンスが渡されます（トリガー関数は通常の引数を受け取りません）。トリガー関数によって一般的に使用されるマクロや詳細については、commands/trigger.h を参照してください。</li>
+</ul>
+<ul>
+<li>集約関数（正確には、その遷移関数および最終関数）には、呼び出し側の Agg プランノードのエグゼキュータ状態ノードである struct AggState のインスタンスが渡されます。または、ウィンドウ関数として呼び出される場合は、struct WindowAggState のインスタンスが渡されます。これらのポインタは、fmgr.h で宣言されているものの、ソースコードである src/backend/executor/nodeAgg.c 内でのみ文書化されている AggCheckCallContext() および関連関数を介してのみ使用することが推奨されます。通常、これらのコンテキストノードは、遷移関数や最終関数が、独立した SQL 関数としてではなく集約内で使用されていることを認識して実行を最適化したい場合にのみ重要となります。</li>
+</ul>
+<ul>
+<li>真のウィンドウ関数には、struct WindowObject のインスタンスが渡されます（トリガー関数と同様に、通常の引数は受け取りません）。詳細については windowapi.h を参照してください。</li>
+</ul>
+<ul>
+<li>プロシージャには、CALL 文のコンテキストに関する情報、特に「アトミック」な実行コンテキスト内にあるかどうかに関する情報を含む struct CallContext のインスタンスが渡されます。</li>
+</ul>
+<ul>
+<li>データ型入力関数の一部の呼び出し側（および将来的には他のクラスの関数も）は、ErrorSaveContext のインスタンスを渡します。これは、呼び出し側がトランザクションを終了させる例外をスローせずに「ソフト」エラーを処理したい意向を示しています。代わりに、呼び出し先の関数はエラー原因に関する情報を ErrorSaveContext 構造体に格納し、ダミーの結果値を返すべきです。詳細については、後述の「ソフトエラーの処理」を参照してください。</li>
+</ul>
+<p>ソフトエラーの処理 --------------------</p>
+<p>Postgres の標準的なエラー報告メカニズム（ereport() または elog()）は、あらゆる種類のエラー条件に使用されます。これは、ereport(ERROR) による例外のスローには、何が間違っていたかについて例外キャッチャが多くの仮定を置くことができないため、コストの高いトランザクション（またはサブトランザクション）の中止とクリーンアップが必要になることを意味します。完全なトランザクションクリーンアップを行わずに安全に回復できることがわかっているエラーに対処するための、より軽量なメカニズムが望ましい状況があります。SQL 呼び出し可能な関数は、ErrorSaveContext コンテキストメカニズムを使用してこのニーズをサポートできます。</p>
+<p>「ソフト」エラーを報告するには、SQL 呼び出し可能な関数は以下を呼び出す必要があります。 errsave(fcinfo-&gt;context, ...) これは以前には次のように記述されていた場所です。 ereport(ERROR, ...) 渡された &quot;context&quot; が NULL であるか、ErrorSaveContext ノードではない場合、errsave は ereport(ERROR) とまったく同様に動作します。例外は longjmp を介してスローされるため、制御は戻りません。&quot;context&quot; が ErrorSaveContext ノードである場合、errsave の付属的な報告呼び出しに含まれるエラー情報はコンテキストノードに格納され、制御は通常どおり errsave から戻ります。その後、関数は呼び出し元にダミー値を返す必要があります（ダミー値としては SQL NULL が推奨されますが、呼び出し元が ErrorSaveContext ノードでエラーが報告されたことを確認した後は関数の戻り値を無視することが想定されているため、どのような値でも構いません）。</p>
+<p>errsave() の呼び出し後に戻ること以外に何もしない場合は、次のように記述して 1、2 行を省略できます。 ereturn(fcinfo-&gt;context, dummy_value, ...) これにより errsave() が実行され、その後「return dummy_value」が実行されます。</p>
+<p>「ソフトに」報告されるエラーは、トランザクションの通常の処理を継続できることに疑問の余地がないという意味において、安全でなければなりません。この方法で処理してはならないエラー条件には、メモリ不足、予期しない内部エラー、または簡単にクリーンアップできないものが含まれます。このような場合は、従来どおり ereport を使用してスローする必要があります。</p>
+<p>データ型入力関数を例に取ると、一般的な「ソフト」エラー条件には、入力構文エラーや範囲外の値が含まれます。入力関数は通常、単純な if テストでそのようなケースを検出し、その後の ereport 呼び出しを errsave や ereturn に簡単に変更できます。この制限のため、低レベルの関数によって報告されるエラーは通常、内部的なものと見なすのが妥当であるため、ErrorSaveContext ポインタを非常に深い階層まで渡す必要は通常ありません。（この区別を別の表現で言い換えると、入力関数はすべての無効な入力条件をソフトに報告すべきであり、内部的な問題はハードエラーであるということです。）</p>
+<p>トランザクションのクリーンアップは行われないため、errsave() が返った後に終了する関数は、リソースのクリーンアップの責任を負います。呼び出し元が短命なメモリコンテキストで関数を実行しているはずであるため、palloc されたメモリの小さな漏れについて気にする必要はありません。ただし、ロック、オープンされたファイル、バッファピンなどのリソースは、エラーが発生しないコードパスと同様に、クリーンにクローズされる必要があります。</p>
+<p>エラーをトラップするために ErrorSaveContext メカニズムを使用する呼び出し側の規則については、nodes/miscnodes.h 内のその構造体の宣言とともに説明されています。</p>
+<p>セットを受け取るまたは返す関数 -----------------------------</p>
+<p>関数が pg_proc 内でセットを返すものとしてマークされている場合、その関数は fcinfo-&gt;resultinfo が ReturnSetInfo 型の目を指している状態で呼び出されます。セットを返したい関数は、resultinfo が NULL であるか ReturnSetInfo ノードを指していない場合、「セットの結果を受け付けないコンテキストで呼び出されました」というエラーを発生させる必要があります。</p>
+<p>現在、関数がセットの結果を返すモードには、値毎の呼び出し（value-per-call）とマテリアライズ（materialize）の 2 つがあります。値毎の呼び出しモードでは、関数は呼び出されるたびに 1 つの値を返し、返す値がなくなると最終的に「完了（done）」を報告します。マテリアライズモードでは、関数の出力セットが Tuplestore オブジェクト内にインスタンス化され、すべての値が 1 回の呼び出しで返されます。将来的に追加のモードが追加される可能性があります。</p>
+<p>ReturnSetInfo には「allowedModes」というフィールドが含まれており、呼び出し側がサポートできるモードの OR であるビットマスクに（呼び出し側によって）設定されます。関数によって実際に使用されるモードは、別のフィールド「returnMode」で返されます。後方互換性の理由から、returnMode は値毎の呼び出しに初期化されており、関数が別のモードを使用したい場合にのみ変更する必要があります。関数は、呼び出し側がサポートするどのモードも使用できない場合に ereport() を行う必要があります。</p>
+<p>値毎の呼び出しモードは次のように動作します。ReturnSetInfo には「isDone」というフィールドが含まれており、これはいずれかの値に設定される必要があります。</p>
+<p>ExprSingleResult             /* 式はセットを返さない */ ExprMultipleResult           /* この結果はセットの要素である */ ExprEndResult                /* セットにはこれ以上要素がない */</p>
+<p>（呼び出し側はこれを ExprSingleResult に初期化します）。関数が ReturnSetInfo に触れずに単に Datum を返す場合、呼び出しは終了し、単一アイテムのセットが返されたことになります。セットを返すには、関数はセットの各要素に対して isDone を ExprMultipleResult に設定する必要があります。すべての要素が返された後、次の呼び出しで isDone を ExprEndResult に設定し、null の結果を返す必要があります（最初の呼び出しでこれを行って空のセットを返すことも可能です）。</p>
+<p>値毎の呼び出しを行う関数は、完了まで実行されると仮定してはなりません。たとえば LIMIT のために、エグゼキュータが関数の呼び出しを突然停止させる可能性があるためです。したがって、最後の呼び出しでリソースのクリーンアップを試みることは安全ではありません。いずれにせよ、通常はメモリをクリーンアップする必要はありません。ファイル記述子などの他の種類のリソースをクリーンアップする必要がある場合は、ReturnSetInfo ノードが指す ExprContext にシャットダウンコールバック関数を登録できます（ただし、ファイル記述子は限られたリソースであるため、呼び出しをまたいでオープンしたままにすることは一般的に得策ではありません。ファイルアクセスを必要とする SRF は、Materialize モードを使用して 1 回の呼び出しで行うように記述する方が適切です）。</p>
+<p>マテリアライズモードは次のように動作します。関数は（空の可能性もある）結果セットを保持する Tuplestore を作成し、それを返します。複数の呼び出しはありません。関数はまた、タプル構造を示す TupleDesc を返す必要があります。Tuplestore と TupleDesc は、コンテキスト econtext-&gt;ecxt_per_query_memory 内で作成される必要があります（これは関数が呼び出されるコンテキストとは *異なる* 点に注意してください）。関数は Tuplestore と TupleDesc へのポインタを ReturnSetInfo に格納し、returnMode をマテリアライズモードを示すように設定し、null を返します。isDone は使用されず、ExprSingleResult のままにしておく必要があります。</p>
+<p>allowedModes で SFRM_Materialize_Random が設定されている場合、Tuplestore は randomAccess = true で作成されなければなりませんが、設定されていない場合は randomAccess = false で作成することができます（また、可能であればそうすべきです）。ValuePerCall と Materialize モードの両方をサポートできる呼び出し側は、好みのモードに応じて SFRM_Materialize_Preferred を設定するかどうかを選択します。</p>
+<p>利用可能な場合、期待されるタプル記述子が ReturnSetInfo で渡されます。他のコンテキストでは、expectedDesc フィールドは NULL になります。関数は expectedDesc に注意を払う必要はありませんが、特殊なケースでは役立つ場合があります。</p>
+<p>InitMaterializedSRF() は、1 回の呼び出しのために関数の ReturnSetInfo をセットアップし、マテリアライズモード用の適切な設定で Tuplestore と TupleDesc を埋めることができるヘルパー関数です。</p>
+<p>セットを受け入れる関数のサポートはありません。代わりに、入力セットの各要素に対して 1 回ずつ、関数が複数回呼び出されます。</p>
+<p>関数ハンドラーに関する注意事項 -----------------------------</p>
+<p>この設計では、関数のクラスのハンドラーにとって、実装がはるかに容易でクリーンになるはずです。呼び出された関数の OID は、渡されたパラメータから直接取得できます。グローバル変数 fmgr_pl_finfo はもう必要ありません。また、fcinfo-&gt;flinfo-&gt;fn_extra を変更することにより、ハンドラーはルックアップ情報をキャッシュし、同じ関数が何度も呼び出されるときの重複するルックアップを回避できます（呼び出し側が FmgrInfo 構造体を再利用することが義務付けられていないため、fn_extra はヒントとしてのみ使用できます。ただし、パフォーマンスが重要なパスでは、通常は再利用されます）。</p>
+<p>ハンドラーが fn_extra データを保持するメモリを割り当てたい場合、CurrentMemoryContext 内で割り当てては *なりません*。現在のコンテキストは、FmgrInfo が存在するコンテキストよりも寿命がはるかに短い可能性があるためです。代わりに、コンテキスト flinfo-&gt;fn_mcxt、または長命なキャッシュコンテキストでメモリを割り当ててください。fn_mcxt は通常、FmgrInfo 構造体が作成された時点で CurrentMemoryContext であったコンテキストを指します。いずれにせよ、少なくとも FmgrInfo 自体と同程度に長命なコンテキストであることが要求されます。</p></section></div><script>
+(function() {
+  function notifyParent() {
+    if (parent === window) return;
+    parent.postMessage({type: "frame-location", frame: window.name || "", href: window.location.href}, "*");
+  }
+  document.addEventListener("click", function(event) {
+    const link = event.target.closest("a[data-panel]");
+    if (!link || parent === window) return;
+    parent.postMessage({type: "source-link", panel: link.dataset.panel}, "*");
+  });
+  window.addEventListener("load", notifyParent);
+  window.addEventListener("hashchange", notifyParent);
+})();
+</script></body></html>

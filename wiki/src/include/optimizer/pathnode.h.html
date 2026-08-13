@@ -1,0 +1,58 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>src/include/optimizer/pathnode.h.md</title><link rel="stylesheet" href="../../../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../../../source/src/include/optimizer/pathnode.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/optimizer/pathnode.h.html&quot;}, '*');">src/include/optimizer/pathnode.h</a></h1>
+<h2>概要</h2>
+<p>PostgreSQLオプティマイザにおいて、プランの探索空間を構成するさまざまな <code>Path</code> ノードおよびリレーション構造（<code>RelOptInfo</code>）を生成・操作するための関数群、フック、データ構造を定義するヘッダーファイルです。</p>
+<h2>モジュール内での役割</h2>
+<p><a class="wiki-source-link" href="../../../../source/src/backend/optimizer/util/pathnode.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/backend/optimizer/util/pathnode.c.html&quot;}, '*');"><code>src/backend/optimizer/util/pathnode.c</code></a> および <a class="wiki-source-link" href="../../../../source/src/backend/optimizer/util/relnode.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/backend/optimizer/util/relnode.c.html&quot;}, '*');"><code>relnode.c</code></a> に対する主要な公開インターフェースを提供します。パスのコスト比較、スキャン・結合・集約などの各種パス生成関数を網羅し、<a class="wiki-source-link" href="../../../../source/src/include/optimizer/paths.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/optimizer/paths.h.html&quot;}, '*');"><code>src/include/optimizer/paths.h</code></a> や <a class="wiki-source-link" href="../../../../source/src/include/optimizer/planner.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/optimizer/planner.h.html&quot;}, '*');"><code>planner.h</code></a> と連携してオプティマイザ全体のプラン構築を支えます。</p>
+<h2>責務</h2>
+<ul>
+<li>各種スキャンパス（シーケンシャル、インデックス、Bitmap、TID 等）の生成関数の宣言。</li>
+<li>結合パス（ネストループ、マージ結合、ハッシュ結合）および集約・ソート・射影などの演算子パス生成関数の宣言。</li>
+<li>リレーション操作やパラメータ化パス情報の構築・管理を行う関数の宣言。</li>
+<li>プラグイン拡張用のフック（<a class="wiki-source-link" href="../../../../source/src/backend/optimizer/util/relnode.c.html#L51" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/backend/optimizer/util/relnode.c.html&quot;}, '*');"><code>build_simple_rel_hook</code></a>、<a class="wiki-source-link" href="../../../../source/src/backend/optimizer/util/relnode.c.html#L54" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/backend/optimizer/util/relnode.c.html&quot;}, '*');"><code>joinrel_setup_hook</code></a>）の定義。</li>
+</ul>
+<h2>重要なシンボル</h2>
+<ul>
+<li><a class="wiki-source-link" href="../../../../source/src/include/optimizer/pathnode.h.html#L34" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__optimizer__pathnode_h__AppendPathInput.html&quot;}, '*');"><code>AppendPathInput</code></a>: Appendノードのサブパスや子Appendリレーション集合を保持する入力構造体。</li>
+<li><a class="wiki-source-link" href="../../../../source/src/include/optimizer/pathnode.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__optimizer__pathnode_h__build_simple_rel_hook_type.html&quot;}, '*');"><code>build_simple_rel_hook_type</code></a> / <a class="wiki-source-link" href="../../../../source/src/include/optimizer/pathnode.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__optimizer__pathnode_h__joinrel_setup_hook_type.html&quot;}, '*');"><code>joinrel_setup_hook_type</code></a>: プランナの各段階に割り込むためのプラグインフック。</li>
+<li>スキャン系・結合系・演算子系の <code>create_*_path</code> 関数群: 具体的な実行計画候補を表す <code>Path派生構造体</code> を構築する関数群。</li>
+<li>リレーション管理系関数: <code>build_simple_rel</code>、<code>build_join_rel</code>、<code>find_base_rel</code> 等のリレーション構築・検索関数。</li>
+</ul>
+<h2>制御フローとデータフロー</h2>
+<p>本ファイルはヘッダーのため実処理を持ちませんが、提供する関数群は以下のフローでデータを受け渡します。 1. <a class="wiki-source-link" href="../../../../source/src/backend/optimizer/plan/planner.c.html#L327" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__plan__planner_c__planner.html&quot;}, '*');"><code>planner</code></a> モジュールやパス探索ルーチンが <code>build_simple_rel</code> や <code>build_join_rel</code> を呼び出し、リレーション構造を構築する。 2. 最適なアクセス手段を決定するために <a class="wiki-source-link" href="../../../../source/src/backend/optimizer/util/pathnode.c.html#L1091" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__pathnode_c__create_index_path.html&quot;}, '*');"><code>create_index_path</code></a> や <a class="wiki-source-link" href="../../../../source/src/backend/optimizer/util/pathnode.c.html#L2355" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__pathnode_c__create_nestloop_path.html&quot;}, '*');"><code>create_nestloop_path</code></a> などの生成関数を呼び出して <code>Path</code> ツリーを組み立てる。 3. 生成されたパスは <code>add_path</code> や <a class="wiki-source-link" href="../../../../source/src/backend/optimizer/util/pathnode.c.html#L267" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__pathnode_c__set_cheapest.html&quot;}, '*');"><code>set_cheapest</code></a> を通じて比較・評価され、最終的な実行計画へと引き渡される。</p>
+<h2>直接依存</h2>
+<ul>
+<li><code>nodes/bitmapset.h</code>: リレーションIDやパラメータ集合を表すビットマップ操作。</li>
+<li><code>nodes/pathnodes.h</code>: <code>Path</code>, <code>RelOptInfo</code>, <code>PlannerInfo</code> などの基底データ構造。</li>
+</ul>
+<h2>関連コード</h2>
+<ul>
+<li><a class="wiki-source-link" href="../../../../source/src/backend/optimizer/util/pathnode.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/backend/optimizer/util/pathnode.c.html&quot;}, '*');"><code>src/backend/optimizer/util/pathnode.c</code></a>: 本ヘッダーに対応する実装ファイル（パス操作・コスト比較等）。</li>
+<li><a class="wiki-source-link" href="../../../../source/src/backend/optimizer/util/relnode.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/backend/optimizer/util/relnode.c.html&quot;}, '*');"><code>src/backend/optimizer/util/relnode.c</code></a>: リレーション構築・管理の実装ファイル。</li>
+<li><a class="wiki-source-link" href="../../../../source/src/include/optimizer/paths.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/optimizer/paths.h.html&quot;}, '*');"><code>src/include/optimizer/paths.h</code></a>: パス探索のトップレベルエントリを提供する関連ヘッダー。</li>
+</ul>
+<h2>読者向けメモ</h2>
+<ul>
+<li>新規のプランナ演算子やアクセスメソッドを追加する際は、ここに <code>create_*_path</code> のプロトタイプを追加し、対応する実装を <a class="wiki-source-link" href="../../../../source/src/backend/optimizer/util/pathnode.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/backend/optimizer/util/pathnode.c.html&quot;}, '*');"><code>pathnode.c</code></a> に記述する必要があります。</li>
+<li>パスの再パラメータ化（<a class="wiki-source-link" href="../../../../source/src/backend/optimizer/util/pathnode.c.html#L3916" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__pathnode_c__reparameterize_path.html&quot;}, '*');"><code>reparameterize_path</code></a>）やコスト比較関数もここで宣言されており、コストモデルの挙動を追う際の起点となります。</li>
+</ul>
+<h2>シンボルページ</h2>
+<ul>
+<li><a href="../../../symbols/src__include__optimizer__pathnode_h__RangeTblEntry.html" target="wiki-view"><code>RangeTblEntry</code></a></li>
+<li><a href="../../../symbols/src__include__optimizer__pathnode_h__AppendPathInput.html" target="wiki-view"><code>AppendPathInput</code></a></li>
+<li><a href="../../../symbols/src__include__optimizer__pathnode_h__List.html" target="wiki-view"><code>List</code></a></li>
+</ul><script>
+(function() {
+  function notifyParent() {
+    if (parent === window) return;
+    parent.postMessage({type: "frame-location", frame: window.name || "", href: window.location.href}, "*");
+  }
+  document.addEventListener("click", function(event) {
+    const link = event.target.closest("a[data-panel]");
+    if (!link || parent === window) return;
+    parent.postMessage({type: "source-link", panel: link.dataset.panel}, "*");
+  });
+  window.addEventListener("load", notifyParent);
+  window.addEventListener("hashchange", notifyParent);
+})();
+</script></body></html>

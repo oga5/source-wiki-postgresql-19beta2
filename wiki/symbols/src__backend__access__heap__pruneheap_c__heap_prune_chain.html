@@ -42,7 +42,7 @@
 <p>*/ int			ndeadchain = 0, nchain = 0;</p>
 </ul>
 <p>rootlp = <a class="wiki-source-link" href="../../source/src/include/storage/bufpage.h.html#L268" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__storage__bufpage_h__PageGetItemId.html&quot;}, '*');">PageGetItemId</a>(page, rootoffnum);</p>
-<p>/* Start from the <a class="wiki-source-link" href="../../source/src/backend/optimizer/util/var.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__var_c__root.html&quot;}, '*');">root</a> tuple */ offnum = rootoffnum;</p>
+<p>/* Start from the root tuple */ offnum = rootoffnum;</p>
 <p>/* while not end of the chain */ for (;;) { <a class="wiki-source-link" href="../../source/src/include/access/htup.h.html#L23" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__access__htup_h__HeapTupleHeader.html&quot;}, '*');">HeapTupleHeader</a> htup; ItemId		lp;</p>
 <p>/* Sanity check (pure paranoia) */ if (offnum &lt; <a class="wiki-source-link" href="../../source/src/include/storage/off.h.html#L27" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/storage/off.h.html&quot;}, '*');">FirstOffsetNumber</a>) break;</p>
 <p>/*</p>
@@ -62,7 +62,7 @@
 </ul>
 <p>/*</p>
 <ul>
-<li>If we are looking at the redirected <a class="wiki-source-link" href="../../source/src/backend/optimizer/util/var.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__var_c__root.html&quot;}, '*');">root</a> line pointer, jump to the</li>
+<li>If we are looking at the redirected root line pointer, jump to the</li>
 <li>first normal tuple in the chain.  If we <a class="wiki-source-link" href="../../source/src/backend/regex/regexec.c.html#L420" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__regex__regexec_c__find.html&quot;}, '*');">find</a> a redirect somewhere</li>
 <li>else, stop --- it must not be same chain.</li>
 <p>*/ if (<a class="wiki-source-link" href="../../source/src/include/storage/itemid.h.html#L106" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/storage/itemid.h.html&quot;}, '*');">ItemIdIsRedirected</a>(lp)) { ~~~</p>

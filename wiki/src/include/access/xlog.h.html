@@ -1,0 +1,83 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>src/include/access/xlog.h.md</title><link rel="stylesheet" href="../../../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../../../source/src/include/access/xlog.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/access/xlog.h.html&quot;}, '*');">src/include/access/xlog.h</a></h1>
+<h2>概要</h2>
+<p>PostgreSQLの先行書き込みログ（WAL: Write-Ahead Log）マネージャーの公開インターフェースを定義するヘッダーファイルです。WALバッファの管理、チェックポイントの調整、データベースの起動とリカバリ（<a class="wiki-source-link" href="../../../../source/src/backend/access/transam/xlog.c.html#L5845" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__access__transam__xlog_c__StartupXLOG.html&quot;}, '*');"><code>StartupXLOG</code></a>）、およびWALレコードの挿入やフラッシュに関するマクロ、列挙型、構造体、外部関数宣言を提供します。</p>
+<h2>モジュール内での役割</h2>
+<p><code>src/include/access</code> モジュール内において、WALサブシステムの中核を成す定義を提供します。実体コードの大半は <a class="wiki-source-link" href="../../../../source/src/backend/access/transam/xlog.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/access/transam/xlog.c.html&quot;}, '*');"><code>src/backend/access/transam/xlog.c</code></a>（および分割された <a class="wiki-source-link" href="../../../../source/src/backend/access/transam/xloginsert.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/access/transam/xloginsert.c.html&quot;}, '*');"><code>xloginsert.c</code></a>, <a class="wiki-source-link" href="../../../../source/src/backend/access/transam/xlogrecovery.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/access/transam/xlogrecovery.c.html&quot;}, '*');"><code>xlogrecovery.c</code></a>, <a class="wiki-source-link" href="../../../../source/src/backend/access/transam/xlogreader.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/access/transam/xlogreader.c.html&quot;}, '*');"><code>xlogreader.c</code></a>, <a class="wiki-source-link" href="../../../../source/src/backend/access/transam/xlogutils.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/access/transam/xlogutils.c.html&quot;}, '*');"><code>xlogutils.c</code></a>）に存在し、このヘッダーはそれらのバックエンド実装と外部サブシステムを繋ぐパブリックな契約として機能します。</p>
+<h2>責務</h2>
+<ul>
+<li>WAL同期方式、アーカイブモード、WALレベル、圧縮アルゴリズム、リカバリ状態等のコア設定値・状態を表す列挙型の定義。</li>
+<li>チェックポイントのリクエストフラグおよび統計情報構造体（<a class="wiki-source-link" href="../../../../source/src/include/access/xlog.h.html#L172" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__access__xlog_h__CheckpointStatsData.html&quot;}, '*');"><code>CheckpointStatsData</code></a>）の提供。</li>
+<li>WALの可用性判定（<a class="wiki-source-link" href="../../../../source/src/include/access/xlog.h.html#L200" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__access__xlog_h__WALAvailability.html&quot;}, '*');"><code>WALAvailability</code></a>）およびセッション単位のバックアップ状態（<a class="wiki-source-link" href="../../../../source/src/include/access/xlog.h.html#L318" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__access__xlog_h__SessionBackupState.html&quot;}, '*');"><code>SessionBackupState</code></a>）の定義。</li>
+<li>WALの挿入、フラッシュ、ファイル初期化、リカバリ制御、チェックポイント実行を行う公開関数群の宣言。</li>
+<li>ホットスタンバイやロジカルレプリケーション、ヒントビット用のマクロによる判定ロジックの提供。</li>
+</ul>
+<h2>重要なシンボル</h2>
+<h3>設定・状態定義</h3>
+<ul>
+<li><code>enum WalSyncMethod</code>: WALをディスクへ同期する方式（<a class="wiki-source-link" href="../../../../source/src/include/access/xlog.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__access__xlog_h__WAL_SYNC_METHOD_FSYNC.html&quot;}, '*');"><code>WAL_SYNC_METHOD_FSYNC</code></a>, <a class="wiki-source-link" href="../../../../source/src/include/access/xlog.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__access__xlog_h__WAL_SYNC_METHOD_FDATASYNC.html&quot;}, '*');"><code>WAL_SYNC_METHOD_FDATASYNC</code></a>, <a class="wiki-source-link" href="../../../../source/src/include/access/xlog.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__access__xlog_h__WAL_SYNC_METHOD_OPEN.html&quot;}, '*');"><code>WAL_SYNC_METHOD_OPEN</code></a> 等）を定義。</li>
+<li><code>enum ArchiveMode</code>: WALアーカイブの動作モード（無効、通常稼働時のみ有効、リカバリ中含む常時有効）を定義。</li>
+<li><code>enum WalLevel</code>: WALの出力レベル（<a class="wiki-source-link" href="../../../../source/src/include/access/xlog.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__access__xlog_h__WAL_LEVEL_MINIMAL.html&quot;}, '*');"><code>WAL_LEVEL_MINIMAL</code></a>, <a class="wiki-source-link" href="../../../../source/src/include/access/xlog.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__access__xlog_h__WAL_LEVEL_REPLICA.html&quot;}, '*');"><code>WAL_LEVEL_REPLICA</code></a>, <a class="wiki-source-link" href="../../../../source/src/include/access/xlog.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__access__xlog_h__WAL_LEVEL_LOGICAL.html&quot;}, '*');"><code>WAL_LEVEL_LOGICAL</code></a>）を定義。</li>
+<li><code>enum WalCompression</code>: WALレコードの圧縮アルゴリズム（<a class="wiki-source-link" href="../../../../source/src/include/access/xlog.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__access__xlog_h__WAL_COMPRESSION_NONE.html&quot;}, '*');"><code>WAL_COMPRESSION_NONE</code></a>, <a class="wiki-source-link" href="../../../../source/src/include/access/xlog.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__access__xlog_h__WAL_COMPRESSION_PGLZ.html&quot;}, '*');"><code>WAL_COMPRESSION_PGLZ</code></a>, <a class="wiki-source-link" href="../../../../source/src/include/access/xlog.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__access__xlog_h__WAL_COMPRESSION_LZ4.html&quot;}, '*');"><code>WAL_COMPRESSION_LZ4</code></a>, <a class="wiki-source-link" href="../../../../source/src/include/access/xlog.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__access__xlog_h__WAL_COMPRESSION_ZSTD.html&quot;}, '*');"><code>WAL_COMPRESSION_ZSTD</code></a>）を定義。</li>
+<li><code>enum RecoveryState</code>: サーバーのリカバリ状態（クラッシュリカバリ、アーカイブリカバリ、通常稼働中）を定義。</li>
+</ul>
+<h3>統計・可用性・バックアップ管理</h3>
+<ul>
+<li><code>struct CheckpointStatsData</code>: チェックポイント処理中のタイムスタンプ、書き込み・同期バッファ数、セグメント増減数、同期時間などの統計情報を保持する構造体。</li>
+<li><code>enum WALAvailability</code>: 指定されたLSNに対応するWALセグメントの可用性（予約内、スロット/保持サイズで保護、未予約だが未削除、削除済み）を表現。</li>
+<li><code>enum SessionBackupState</code>: セッションレベルでのベースバックアップの実行状態（なし、実行中）を定義。</li>
+</ul>
+<h2>制御フローとデータフロー</h2>
+<ul>
+<li>**リカバリ・起動フロー**: サーバー起動時に <code>StartupXLOG()</code> が呼び出され、制御ファイルやWALを読み込んでクラッシュリカバリまたはアーカイブリカバリを実行し、通常稼働状態（<code>RECOVERY_STATE_DONE</code>）へ遷移します。</li>
+<li>**WAL挿入とフラッシュフロー**: バックエンドが変更を行った際、<a class="wiki-source-link" href="../../../../source/src/backend/access/transam/xloginsert.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/access/transam/xloginsert.c.html&quot;}, '*');"><code>xloginsert.c</code></a> 等で構築されたレコードが <code>XLogInsertRecord()</code> を通じてWALバッファに挿入されます。必要に応じて <code>XLogFlush()</code> によりディスクへ確実に書き込まれます。</li>
+<li>**チェックポイントフロー**: <code>CreateCheckPoint()</code> または <code>CreateRestartPoint()</code> が呼び出され、<a class="wiki-source-link" href="../../../../source/src/include/access/xlog.h.html#L151" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/access/xlog.h.html&quot;}, '*');"><code>CHECKPOINT_IS_SHUTDOWN</code></a> などのフラグに応じてダーティバッファのフラッシュやチェックポイントレコードの書き込みが行われます。</li>
+</ul>
+<h2>直接依存</h2>
+<ul>
+<li><code>access/xlogbackup.h</code></li>
+<li><code>access/xlogdefs.h</code></li>
+<li><code>replication/logicalctl.h</code></li>
+<li><code>datatype/timestamp.h</code></li>
+<li><code>lib/stringinfo.h</code></li>
+<li><code>nodes/pg_list.h</code></li>
+</ul>
+<h2>関連コード</h2>
+<ul>
+<li><a class="wiki-source-link" href="../../../../source/src/backend/access/transam/xlog.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/access/transam/xlog.c.html&quot;}, '*');"><code>src/backend/access/transam/xlog.c</code></a></li>
+<li><a class="wiki-source-link" href="../../../../source/src/include/access/xlog_internal.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/access/xlog_internal.h.html&quot;}, '*');"><code>src/include/access/xlog_internal.h</code></a></li>
+<li><a class="wiki-source-link" href="../../../../source/src/include/access/xloginsert.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/access/xloginsert.h.html&quot;}, '*');"><code>src/include/access/xloginsert.h</code></a></li>
+<li><a class="wiki-source-link" href="../../../../source/src/include/access/xlogrecovery.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/access/xlogrecovery.h.html&quot;}, '*');"><code>src/include/access/xlogrecovery.h</code></a></li>
+<li><a class="wiki-source-link" href="../../../../source/src/include/access/xlogreader.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/access/xlogreader.h.html&quot;}, '*');"><code>src/include/access/xlogreader.h</code></a></li>
+<li><a class="wiki-source-link" href="../../../../source/src/include/access/xlogutils.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/access/xlogutils.h.html&quot;}, '*');"><code>src/include/access/xlogutils.h</code></a></li>
+</ul>
+<h2>読者向けメモ</h2>
+<ul>
+<li>本ファイルで宣言されている大半のグローバル変数（<a class="wiki-source-link" href="../../../../source/src/backend/access/transam/xlog.c.html#L138" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/access/transam/xlog.c.html&quot;}, '*');"><code>wal_level</code></a>, <a class="wiki-source-link" href="../../../../source/src/backend/access/transam/xlog.c.html#L129" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/access/transam/xlog.c.html&quot;}, '*');"><code>fullPageWrites</code></a> 等）および関数は、PostgreSQLのバックエンド全体から参照されるため、シグネチャの変更はストレージおよびレプリケーション層全体に影響します。</li>
+<li>マクロ（<a class="wiki-source-link" href="../../../../source/src/include/access/xlog.h.html#L102" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/access/xlog.h.html&quot;}, '*');"><code>XLogArchivingActive</code></a>, <a class="wiki-source-link" href="../../../../source/src/include/access/xlog.h.html#L112" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/access/xlog.h.html&quot;}, '*');"><code>XLogIsNeeded</code></a>, <a class="wiki-source-link" href="../../../../source/src/include/access/xlog.h.html#L123" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/access/xlog.h.html&quot;}, '*');"><code>XLogHintBitIsNeeded</code></a> 等）は、インラインでの高速なポリシー判定を目的として記述されています。</li>
+</ul>
+<h2>シンボルページ</h2>
+<ul>
+<li><a href="../../../symbols/src__include__access__xlog_h__WalSyncMethod.html" target="wiki-view"><code>WalSyncMethod</code></a></li>
+<li><a href="../../../symbols/src__include__access__xlog_h__ArchiveMode.html" target="wiki-view"><code>ArchiveMode</code></a></li>
+<li><a href="../../../symbols/src__include__access__xlog_h__WalLevel.html" target="wiki-view"><code>WalLevel</code></a></li>
+<li><a href="../../../symbols/src__include__access__xlog_h__WalCompression.html" target="wiki-view"><code>WalCompression</code></a></li>
+<li><a href="../../../symbols/src__include__access__xlog_h__RecoveryState.html" target="wiki-view"><code>RecoveryState</code></a></li>
+<li><a href="../../../symbols/src__include__access__xlog_h__CheckpointStatsData.html" target="wiki-view"><code>CheckpointStatsData</code></a></li>
+<li><a href="../../../symbols/src__include__access__xlog_h__WALAvailability.html" target="wiki-view"><code>WALAvailability</code></a></li>
+<li><a href="../../../symbols/src__include__access__xlog_h__SessionBackupState.html" target="wiki-view"><code>SessionBackupState</code></a></li>
+</ul><script>
+(function() {
+  function notifyParent() {
+    if (parent === window) return;
+    parent.postMessage({type: "frame-location", frame: window.name || "", href: window.location.href}, "*");
+  }
+  document.addEventListener("click", function(event) {
+    const link = event.target.closest("a[data-panel]");
+    if (!link || parent === window) return;
+    parent.postMessage({type: "source-link", panel: link.dataset.panel}, "*");
+  });
+  window.addEventListener("load", notifyParent);
+  window.addEventListener("hashchange", notifyParent);
+})();
+</script></body></html>

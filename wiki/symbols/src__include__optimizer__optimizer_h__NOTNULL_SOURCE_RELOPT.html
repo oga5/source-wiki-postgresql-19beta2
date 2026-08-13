@@ -1,36 +1,18 @@
 <!doctype html>
 <html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>symbols/src__include__optimizer__optimizer_h__NOTNULL_SOURCE_RELOPT.md</title><link rel="stylesheet" href="../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../source/src/include/optimizer/optimizer.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__optimizer__optimizer_h__NOTNULL_SOURCE_RELOPT.html&quot;}, '*');">NOTNULL_SOURCE_RELOPT</a></h1>
-<h2>定義</h2>
+<h2>現在のソース事実</h2>
 <ul>
 <li>種別: <code>function</code></li>
 <li>定義箇所: <code>src/include/optimizer/optimizer.h:1</code></li>
-<li>所属モジュール: <a class="wiki-entity-link" href="../modules/src__include__optimizer.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/modules/src__include__optimizer.html&quot;, &quot;source&quot;: &quot;source/src/include/optimizer/appendinfo.h.html&quot;}, '*');"><code>module:src/include/optimizer</code></a></li>
-</ul>
-<h2>目的</h2>
-<p>静的シンボル索引から生成された初期シンボルページです。</p>
-<h2>シグネチャまたは形状</h2>
-<ul>
 <li>シグネチャ: <code>/*------------------------------------------------------------------------- * * optimizer.h * External API for the Postgres planner. * * This header is meant to define everything that the core planner * exposes for use by non-planner modules. * * Note that there are files outside src/backend/optimizer/ that are * considered planner modules, because they&#x27;re too much in bed with * planner operations to be treated otherwise. FDW planning code is an * example. For the most part, however, code outside the core planner * should not need to include any optimizer/ header except this one. * * Portions Copyright (c) 1996-2026, PostgreSQL Global Development Group * Portions Copyright (c) 1994, Regents of the University of California * * src/include/optimizer/optimizer.h * *------------------------------------------------------------------------- */ #ifndef OPTIMIZER_H #define OPTIMIZER_H #include &quot;nodes/parsenodes.h&quot; typedef struct ExplainState ExplainState; /* defined in explain_state.h */ /* * We don&#x27;t want to include nodes/pathnodes.h here, because non-planner * code should generally treat PlannerInfo as an opaque typedef. * But we&#x27;d like such code to use that typedef name, so define the * typedef both here and in pathnodes.h. */ typedef struct PlannerInfo PlannerInfo</code></li>
-</ul>
-<h2>入力と出力</h2>
-<p>まだ解析していません。</p>
-<h2>前提条件と不変条件</h2>
-<p>まだ解析していません。</p>
-<h2>アルゴリズムまたは振る舞い</h2>
-<ul>
-<li>複雑度: <code>low</code> (score 0)</li>
-</ul>
-<p>まだ解析していません。</p>
-<h2>呼び出し元と呼び出し先</h2>
-<ul>
 <li>呼び出し元: なし</li>
 <li>呼び出し先: なし</li>
 <li>呼び出し元サイト: なし</li>
 <li>呼び出しサイト: なし</li>
+<li>関連型: <code>c</code>, <code>ExplainState</code>, <code>Group</code>, <code>PlannerInfo</code></li>
+<li>複雑度: <code>low</code> (score 0)</li>
 </ul>
-<h2>関連データ構造</h2>
-<p><code>c</code>, <code>ExplainState</code>, <code>Group</code>, <code>PlannerInfo</code></p>
-<h2>ソース抜粋</h2>
+<h3>ソース抜粋</h3>
 <p>~~~c /*------------------------------------------------------------------------- *</p>
 <ul>
 <li><a class="wiki-source-link" href="../../source/src/include/optimizer/optimizer.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/optimizer/optimizer.h.html&quot;}, '*');">optimizer.h</a></li>
@@ -61,11 +43,17 @@
 <li>typedef both here and in pathnodes.h.</li>
 <p>*/ typedef struct PlannerInfo PlannerInfo; ~~~</p>
 </ul>
-<h2>失敗モードと境界条件</h2>
-<p>まだ解析していません。</p>
-<h2>保守担当者向けメモ</h2>
+<h2>定義</h2>
 <ul>
-<li>後続フェーズで、ソース本文の文脈と caller/callee 情報を使ってこのページを強化する。</li>
+<li>種別: <code>function</code></li>
+<li>定義箇所: <code>src/include/optimizer/optimizer.h:1</code></li>
+<li>所属モジュール: <a class="wiki-entity-link" href="../modules/src__include__optimizer.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/modules/src__include__optimizer.html&quot;, &quot;source&quot;: &quot;source/src/include/optimizer/appendinfo.h.html&quot;}, '*');"><code>module:src/include/optimizer</code></a></li>
+</ul>
+<h2>目的</h2>
+<p><a class="wiki-source-link" href="../../source/src/include/optimizer/optimizer.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/optimizer/optimizer.h.html&quot;}, '*');"><code>src/include/optimizer/optimizer.h</code></a> は、PostgreSQLオプティマイザモジュール（コアプランナー）が外部の非プランナーモジュールやサブシステムへ公開する外部APIを定義するヘッダーファイルです。</p>
+<h2>アルゴリズムまたは振る舞い</h2>
+<ul>
+<li>提供されるソース抜粋内では直接的なアルゴリズムの定義はありませんが、本ヘッダーは <code>ExplainState</code> や <code>PlannerInfo</code> などの不透明型定義を公開し、非プランナーコードが直接内部構造の詳細に依存せずにプランナー機能へアクセスできるように仲介します。</li>
 </ul><script>
 (function() {
   function notifyParent() {

@@ -1,0 +1,28 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>src/test/modules/dummy_seclabel/README</title><link rel="stylesheet" href="../../../../../../styles.css"></head><body><h1>Japanese translation</h1><p><code>src/test/modules/dummy_seclabel/README</code></p><p><a href="../../../../../../source/src/test/modules/dummy_seclabel/README.html" target="source-view">View original document</a></p><p class="document-translation-progress document-translation-complete">Translation complete.</p><div class="document-translation-body"><section class="document-translation-chunk translated" data-chunk-order="0"><p>dummy_seclabel モジュールは、SECURITY LABEL 文のリグレッションテストをサポートするためだけに存在します。本番環境で使用することを意図したものではありません。</p>
+<p>Rationale =========</p>
+<p>SECURITY LABEL 文を使用すると、ユーザーはデータベースオブジェクトにセキュリティラベルを割り当てることができます。ただし、セキュリティラベルはロード可能なモジュールによって明示的に許可されている場合にのみ割り当てることができるため、適切なリグレッションテストを行えるようにこのモジュールが提供されています。</p>
+<p>本番環境で使用することを意図したセキュリティラベルプロバイダーは、通常、SELinux などのプラットフォーム固有の機能に依存します。このモジュールはプラットフォームに依存しないため、リグレッションテストにより適しています。</p>
+<p>Usage =====</p>
+<p>使用方法の簡単な例を以下に示します。</p>
+<h1>postgresql.conf</h1>
+<p>shared_preload_libraries = &#x27;dummy_seclabel&#x27;</p>
+<p>postgres=# CREATE TABLE t (a int, b text); CREATE TABLE postgres=# SECURITY LABEL ON TABLE t IS &#x27;classified&#x27;; SECURITY LABEL</p>
+<p>dummy_seclabel モジュールは、unclassified、classified、secret、top secret の4つのハードコードされたラベルのみを提供します。他の文字列をセキュリティラベルとして許可しません。</p>
+<p>これらのラベルはアクセス制御の強制には使用されません。SECURITY LABEL 文が期待どおりに動作するかどうかを確認するためだけに使用されます。</p>
+<p>Author ======</p>
+<p>KaiGai Kohei &lt;kaigai@ak.jp.nec.com&gt;</p></section></div><script>
+(function() {
+  function notifyParent() {
+    if (parent === window) return;
+    parent.postMessage({type: "frame-location", frame: window.name || "", href: window.location.href}, "*");
+  }
+  document.addEventListener("click", function(event) {
+    const link = event.target.closest("a[data-panel]");
+    if (!link || parent === window) return;
+    parent.postMessage({type: "source-link", panel: link.dataset.panel}, "*");
+  });
+  window.addEventListener("load", notifyParent);
+  window.addEventListener("hashchange", notifyParent);
+})();
+</script></body></html>

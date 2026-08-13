@@ -1,0 +1,47 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>src/include/optimizer/plancat.h.md</title><link rel="stylesheet" href="../../../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../../../source/src/include/optimizer/plancat.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/optimizer/plancat.h.html&quot;}, '*');">src/include/optimizer/plancat.h</a></h1>
+<h2>概要</h2>
+<p><a class="wiki-source-link" href="../../../../source/src/include/optimizer/plancat.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/optimizer/plancat.h.html&quot;}, '*');"><code>src/include/optimizer/plancat.h</code></a> は、PostgreSQLのオプティマイザがシステムカタログやリレーションキャッシュから物理的性質や統計情報を取得するための関数群を宣言するヘッダーファイルです。</p>
+<h2>モジュール内での役割</h2>
+<p>オプティマイザ配下の <a class="wiki-source-link" href="../../../../source/src/backend/optimizer/util/plancat.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/backend/optimizer/util/plancat.c.html&quot;}, '*');"><code>src/backend/optimizer/util/plancat.c</code></a> とペアをなし、リレーションのサイズ見積もり、インデックス情報、制約、トリガー有無、および関数・演算子の選択度（Selectivity）情報のブリッジを提供します。</p>
+<h2>責務</h2>
+<ul>
+<li>リレーションのOidに基づき、<code>RelOptInfo</code> に物理属性、インデックス、統計情報を設定するインターフェースの提供。</li>
+<li>制約による除外（<a class="wiki-source-link" href="../../../../source/src/include/nodes/parsenodes.h.html#L2936" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__nodes__parsenodes_h__Constraint.html&quot;}, '*');">Constraint</a> Exclusion）や一意性、NOT NULL属性の判定関数の公開。</li>
+<li>演算子、関数、結合における選択度やコスト見積もり用関数のプロトタイプ宣言。</li>
+</ul>
+<h2>重要なシンボル</h2>
+<ul>
+<li><code>get_relation_info</code>: リレーションのカタログ情報を取得し <code>RelOptInfo</code> を構築する。</li>
+<li><code>estimate_rel_size</code>: リレーションのページ数、タプル数、可視フラクションを見積もる。</li>
+<li><code>relation_excluded_by_constraints</code>: 制約に基づいてリレーションをスキャン対象から除外できるか判定する。</li>
+<li><code>restriction_selectivity</code> / <code>join_selectivity</code>: 条件式や結合の選択度を算出する。</li>
+</ul>
+<h2>制御フローとデータフロー</h2>
+<p>オプティマイザがプラン作成の初期段階で <code>get_relation_info</code> を呼び出すことで、リレーションキャッシュやカタログから <code>IndexOptInfo</code> やサイズ情報が読み込まれ、<code>PlannerInfo</code> および <code>RelOptInfo</code> に結び付けられます。</p>
+<h2>直接依存</h2>
+<ul>
+<li><code>nodes/pathnodes.h</code>: <code>PlannerInfo</code>, <code>RelOptInfo</code>, <code>IndexOptInfo</code> などのオプティマイザ用ノード定義。</li>
+<li><code>utils/relcache.h</code>: リレーションキャッシュ構造体 (<code>Relation</code>) の参照。</li>
+</ul>
+<h2>関連コード</h2>
+<ul>
+<li><a class="wiki-source-link" href="../../../../source/src/backend/optimizer/util/plancat.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/backend/optimizer/util/plancat.c.html&quot;}, '*');"><code>src/backend/optimizer/util/plancat.c</code></a>: 本ヘッダーに対応する実体実装ファイル。</li>
+<li><a class="wiki-source-link" href="../../../../source/src/include/optimizer/cost.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/optimizer/cost.h.html&quot;}, '*');"><code>src/include/optimizer/cost.h</code></a>: コスト見積もり関連の定義。</li>
+</ul>
+<h2>読者向けメモ</h2>
+<p>オプティマイザがテーブル構造やインデックスなどのメタデータをどのように収集しているかを追う際のエントリポイントとなるファイルです。</p><script>
+(function() {
+  function notifyParent() {
+    if (parent === window) return;
+    parent.postMessage({type: "frame-location", frame: window.name || "", href: window.location.href}, "*");
+  }
+  document.addEventListener("click", function(event) {
+    const link = event.target.closest("a[data-panel]");
+    if (!link || parent === window) return;
+    parent.postMessage({type: "source-link", panel: link.dataset.panel}, "*");
+  });
+  window.addEventListener("load", notifyParent);
+  window.addEventListener("hashchange", notifyParent);
+})();
+</script></body></html>

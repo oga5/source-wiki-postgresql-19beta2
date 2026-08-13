@@ -1,0 +1,51 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>src/include/optimizer/placeholder.h.md</title><link rel="stylesheet" href="../../../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../../../source/src/include/optimizer/placeholder.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/optimizer/placeholder.h.html&quot;}, '*');">src/include/optimizer/placeholder.h</a></h1>
+<h2>概要</h2>
+<p><a class="wiki-source-link" href="../../../../source/src/include/optimizer/placeholder.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/optimizer/placeholder.h.html&quot;}, '*');"><code>src/include/optimizer/placeholder.h</code></a> は、PostgreSQLオプティマイザにおいて <code>PlaceHolderVar</code>（PHV）および <code>PlaceHolderInfo</code> を操作・管理するための関数群を宣言するヘッダーファイルです。構文木上のプレースホルダー構築、情報検索、結合ツリーからの検出、および必要レベルの調整機能を提供します。</p>
+<h2>モジュール内での役割</h2>
+<p>optimizerサブシステムのユーティリティ層に位置し、主に <a class="wiki-source-link" href="../../../../source/src/backend/optimizer/util/placeholder.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/backend/optimizer/util/placeholder.c.html&quot;}, '*');"><code>src/backend/optimizer/util/placeholder.c</code></a> とペアを成しています。クエリの最適化過程において、外部結合やサブクエリのプルアップなどで生じる中間式を安全に保持・評価するためのプレースホルダー関連のライフサイクルを支えます。</p>
+<h2>責務</h2>
+<ul>
+<li><code>PlaceHolderVar</code> 式の生成インタフェースの提供。</li>
+<li>クエリ内のプレースホルダーに関するメタデータである <code>PlaceHolderInfo</code> の検索および管理インタフェースの定義。</li>
+<li>結合ツリーからのプレースホルダー検出や、参照関係・必要レベル（input needed levels）の固定・調整を行う関数の公開。</li>
+<li>不要なプレースホルダー（noop PHV）の判定や除去を行うためのユーティリティ関数の提供。</li>
+</ul>
+<h2>重要なシンボル</h2>
+<ul>
+<li><code>make_placeholder_expr</code>: 与えられた式と関係IDセット（<a class="wiki-source-link" href="../../../../source/src/backend/optimizer/util/placeholder.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__placeholder_c__phrels.html&quot;}, '*');">phrels</a>）から <code>PlaceHolderVar</code> を構築します。</li>
+<li><code>find_placeholder_info</code>: 指定されたPHVに対応する <code>PlaceHolderInfo</code> を取得、または未登録の場合は新規作成します。</li>
+<li><code>find_placeholders_in_jointree</code>: 結合ツリーを走査し、プレースホルダーを検出して登録します。</li>
+<li><code>fix_placeholder_input_needed_levels</code>: プレースホルダーの評価に必要な入力関係のレベルを調整します。</li>
+<li><code>strip_noop_phvs</code>: 効果を持たない冗長なプレースホルダー式を除去します。</li>
+</ul>
+<h2>制御フローとデータフロー</h2>
+<p>クエリプランナの初期段階やサブクエリのプルアップ時に <code>make_placeholder_expr</code> が呼ばれてPHVが生成されます。その後、<code>query_planner()</code> の実行以降に <code>find_placeholder_info</code> や <code>find_placeholders_in_jointree</code> が呼び出され、オプティマイザ内部の管理構造である <code>PlaceHolderInfo</code> として登録されます。結合ツリーの構築やパス探索の過程で、<code>fix_placeholder_input_needed_levels</code> や <a class="wiki-source-link" href="../../../../source/src/backend/optimizer/util/placeholder.c.html#L401" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__placeholder_c__add_placeholders_to_joinrel.html&quot;}, '*');"><code>add_placeholders_to_joinrel</code></a> などを経由して評価タイミングや参照関係が確定されます。</p>
+<h2>直接依存</h2>
+<ul>
+<li><code>nodes/pathnodes.h</code>: <code>PlaceHolderVar</code>、<code>PlaceHolderInfo</code>、<code>PlannerInfo</code>、<code>RelOptInfo</code> などの主要なデータ構造の定義元。</li>
+</ul>
+<h2>関連コード</h2>
+<ul>
+<li><a class="wiki-source-link" href="../../../../source/src/backend/optimizer/util/placeholder.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/backend/optimizer/util/placeholder.c.html&quot;}, '*');"><code>src/backend/optimizer/util/placeholder.c</code></a>: 本ヘッダーで宣言されている関数の実際のロジックを実装するペアファイル。</li>
+<li><a class="wiki-source-link" href="../../../../source/src/include/optimizer/pathnode.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/optimizer/pathnode.h.html&quot;}, '*');"><code>src/include/optimizer/pathnode.h</code></a>: パスノードやオプティマイザの基本構造体を提供する隣接ヘッダー。</li>
+</ul>
+<h2>読者向けメモ</h2>
+<ul>
+<li><code>make_placeholder_expr</code> は <code>root-&gt;glob</code> のみを操作するため、クエリレベルが確定する前でも安全に呼び出すことができます。</li>
+<li><code>PlaceHolderInfo</code> の作成はクエリプランナの実行開始後に行われるため、<code>find_placeholder_info</code> の呼び出しタイミングには制约があります。</li>
+</ul><script>
+(function() {
+  function notifyParent() {
+    if (parent === window) return;
+    parent.postMessage({type: "frame-location", frame: window.name || "", href: window.location.href}, "*");
+  }
+  document.addEventListener("click", function(event) {
+    const link = event.target.closest("a[data-panel]");
+    if (!link || parent === window) return;
+    parent.postMessage({type: "source-link", panel: link.dataset.panel}, "*");
+  });
+  window.addEventListener("load", notifyParent);
+  window.addEventListener("hashchange", notifyParent);
+})();
+</script></body></html>

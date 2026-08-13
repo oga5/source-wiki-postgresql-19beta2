@@ -1,0 +1,52 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>src/include/optimizer/extendplan.h.md</title><link rel="stylesheet" href="../../../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../../../source/src/include/optimizer/extendplan.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/optimizer/extendplan.h.html&quot;}, '*');">src/include/optimizer/extendplan.h</a></h1>
+<h2>概要</h2>
+<p>コアオプティマイザの主要なデータ構造（<code>PlannerGlobal</code>、<code>PlannerInfo</code>、<code>RelOptInfo</code>）に対し、ロード可能な拡張モジュールが独自のプライベート状態を格納・取得するためのインターフェースを提供するヘッダーファイルです。</p>
+<h2>モジュール内での役割</h2>
+<p><code>src/include/optimizer</code> サブシステムの一部として、オプティマイザの内部構造を変更することなく外部フック（例: <a class="wiki-source-link" href="../../../../source/src/backend/optimizer/path/joinpath.c.html#L31" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/backend/optimizer/path/joinpath.c.html&quot;}, '*');"><code>set_join_pathlist_hook</code></a>）を利用する拡張モジュールに対して、効率的な状態保持の仕組みを公開します。</p>
+<h2>責務</h2>
+<ul>
+<li>拡張モジュールの名前をバックエンド生存期間内で一意の整数 ID にマップする。</li>
+<li><code>PlannerGlobal</code>、<code>PlannerInfo</code>、<code>RelOptInfo</code> の各構造体に対する拡張状態の取得（インライン関数による高速化）および設定インターフェースを定義する。</li>
+</ul>
+<h2>重要なシンボル</h2>
+<ul>
+<li><a class="wiki-source-link" href="../../../../source/src/include/optimizer/extendplan.h.html#L24" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__optimizer__extendplan_h__GetPlannerGlobalExtensionState.html&quot;}, '*');"><code>GetPlannerGlobalExtensionState</code></a>: <code>PlannerGlobal</code> から拡張固有の状態を取得するインライン関数。</li>
+<li><a class="wiki-source-link" href="../../../../source/src/include/optimizer/extendplan.h.html#L38" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__optimizer__extendplan_h__GetPlannerInfoExtensionState.html&quot;}, '*');"><code>GetPlannerInfoExtensionState</code></a>: <code>PlannerInfo</code> から拡張固有の状態を取得するインライン関数。</li>
+<li><a class="wiki-source-link" href="../../../../source/src/include/optimizer/extendplan.h.html#L52" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__optimizer__extendplan_h__GetRelOptInfoExtensionState.html&quot;}, '*');"><code>GetRelOptInfoExtensionState</code></a>: <code>RelOptInfo</code> から拡張固有の状態を取得するインライン関数。</li>
+</ul>
+<h2>制御フローとデータフロー</h2>
+<p>1. 拡張モジュールは起動時等に <code>GetPlannerExtensionId(const char *extension_name)</code> を呼び出し、拡張 ID を取得します。 2. オプティマイザの実行中、拡張モジュールは対応する <code>Set...ExtensionState</code> 関数を呼んでプライベートなデータポインタ（<code>opaque</code>）を各プランナーオブジェクトに登録します。 3. 以降のオプティマイザ処理において、<code>Get...ExtensionState</code> インライン関数を用いて登録済みの状態をO(1)で安全かつ高速に取得し、中間計算結果の再利用等に活用します。</p>
+<h2>直接依存</h2>
+<ul>
+<li><code>nodes/pathnodes.h</code>: <code>PlannerGlobal</code>、<code>PlannerInfo</code>、<code>RelOptInfo</code> などのコアオプティマイザノード定義。</li>
+</ul>
+<h2>関連コード</h2>
+<ul>
+<li><a class="wiki-source-link" href="../../../../source/src/backend/optimizer/util/extendplan.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/backend/optimizer/util/extendplan.c.html&quot;}, '*');"><code>src/backend/optimizer/util/extendplan.c</code></a>: 拡張IDの割り当ておよび状態の設定処理を実装する対となるソースファイル。</li>
+</ul>
+<h2>読者向けメモ</h2>
+<ul>
+<li>取得系関数はパフォーマンスのため <code>static inline</code> として実装されており、ID の範囲外アクセスに対しては <code>NULL</code> を返します。</li>
+<li>拡張 ID はバックエンドのライフタイム内でのみ有効であり、永続的なものではありません。</li>
+</ul>
+<h2>シンボルページ</h2>
+<ul>
+<li><a href="../../../symbols/src__include__optimizer__extendplan_h__GetPlannerGlobalExtensionState.html" target="wiki-view"><code>GetPlannerGlobalExtensionState</code></a></li>
+<li><a href="../../../symbols/src__include__optimizer__extendplan_h__GetPlannerInfoExtensionState.html" target="wiki-view"><code>GetPlannerInfoExtensionState</code></a></li>
+<li><a href="../../../symbols/src__include__optimizer__extendplan_h__GetRelOptInfoExtensionState.html" target="wiki-view"><code>GetRelOptInfoExtensionState</code></a></li>
+</ul><script>
+(function() {
+  function notifyParent() {
+    if (parent === window) return;
+    parent.postMessage({type: "frame-location", frame: window.name || "", href: window.location.href}, "*");
+  }
+  document.addEventListener("click", function(event) {
+    const link = event.target.closest("a[data-panel]");
+    if (!link || parent === window) return;
+    parent.postMessage({type: "source-link", panel: link.dataset.panel}, "*");
+  });
+  window.addEventListener("load", notifyParent);
+  window.addEventListener("hashchange", notifyParent);
+})();
+</script></body></html>

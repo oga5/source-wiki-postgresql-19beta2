@@ -1,36 +1,18 @@
 <!doctype html>
 <html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>symbols/src__backend__optimizer__util__tlist_c__ProjectSet.md</title><link rel="stylesheet" href="../../styles.css"></head><body><h1>ProjectSet</h1>
-<h2>定義</h2>
+<h2>現在のソース事実</h2>
 <ul>
 <li>種別: <code>function</code></li>
 <li>定義箇所: <code>src/backend/optimizer/util/tlist.c:1</code></li>
-<li>所属モジュール: <a class="wiki-entity-link" href="../modules/src__backend__optimizer__util.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/modules/src__backend__optimizer__util.html&quot;, &quot;source&quot;: &quot;source/src/backend/optimizer/util/appendinfo.c.html&quot;}, '*');"><code>module:src/backend/optimizer/util</code></a></li>
-</ul>
-<h2>目的</h2>
-<p>静的シンボル索引から生成された初期シンボルページです。</p>
-<h2>シグネチャまたは形状</h2>
-<ul>
 <li>シグネチャ: <code>/*------------------------------------------------------------------------- * * tlist.c * Target list manipulation routines * * Portions Copyright (c) 1996-2026, PostgreSQL Global Development Group * Portions Copyright (c) 1994, Regents of the University of California * * * IDENTIFICATION * src/backend/optimizer/util/tlist.c * *------------------------------------------------------------------------- */ #include &quot;postgres.h&quot; #include &quot;nodes/makefuncs.h&quot; #include &quot;nodes/nodeFuncs.h&quot; #include &quot;optimizer/cost.h&quot; #include &quot;optimizer/optimizer.h&quot; #include &quot;optimizer/tlist.h&quot; #include &quot;rewrite/rewriteManip.h&quot; /* * Test if an expression node represents a SRF call. Beware multiple eval! * * Please note that this is only meant for use in split_pathtarget_at_srfs()</code></li>
-</ul>
-<h2>入力と出力</h2>
-<p>まだ解析していません。</p>
-<h2>前提条件と不変条件</h2>
-<p>まだ解析していません。</p>
-<h2>アルゴリズムまたは振る舞い</h2>
-<ul>
-<li>複雑度: <code>low</code> (score 4)</li>
-</ul>
-<p>まだ解析していません。</p>
-<h2>呼び出し元と呼び出し先</h2>
-<ul>
 <li>呼び出し元: なし</li>
 <li>呼び出し先: なし</li>
 <li>呼び出し元サイト: なし</li>
 <li>呼び出しサイト: なし</li>
+<li>関連型: <code>c</code>, <code>Group</code></li>
+<li>複雑度: <code>low</code> (score 4)</li>
 </ul>
-<h2>関連データ構造</h2>
-<p><code>c</code>, <code>Group</code></p>
-<h2>ソース抜粋</h2>
+<h3>ソース抜粋</h3>
 <p>~~~c /*------------------------------------------------------------------------- *</p>
 <ul>
 <li><a class="wiki-source-link" href="../../source/src/backend/optimizer/util/tlist.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/backend/optimizer/util/tlist.c.html&quot;}, '*');">tlist.c</a></li>
@@ -48,14 +30,18 @@
 <ul>
 <li>Test if an expression <a class="wiki-source-link" href="../../source/src/include/lib/ilist.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__lib__ilist_h__node.html&quot;}, '*');">node</a> represents a SRF call.  Beware multiple eval!</li>
 <p>*</p>
-<li>Please <a class="wiki-source-link" href="../../source/src/test/regress/pg_regress.c.html#L165" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/test/regress/pg_regress.c.html&quot;}, '*');">note</a> that this <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> only meant for use in <a class="wiki-source-link" href="../../source/src/backend/optimizer/util/tlist.c.html#L844" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__tlist_c__split_pathtarget_at_srfs.html&quot;}, '*');">split_pathtarget_at_srfs</a>();</li>
+<li>Please <a class="wiki-source-link" href="../../source/src/test/regress/pg_regress.c.html#L165" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/test/regress/pg_regress.c.html&quot;}, '*');">note</a> that this <a class="wiki-source-link" href="../../source/src/interfaces/libpq-oauth/test-oauth-curl.c.html#L55" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/interfaces/libpq-oauth/test-oauth-curl.c.html&quot;}, '*');">is</a> only meant for use in split_pathtarget_at_srfs();</li>
 <p>~~~</p>
 </ul>
-<h2>失敗モードと境界条件</h2>
-<p>まだ解析していません。</p>
-<h2>保守担当者向けメモ</h2>
+<h2>目的</h2>
+<p>プラン作成や最適化フェーズにおいて、セット返却関数（SRF）を安全に実行するためのプランノード構造やその処理を支える。</p>
+<h2>アルゴリズムまたは振る舞い</h2>
+<p>ターゲットリスト内におけるセット返却関数（SRF）の評価を適切に行うための複数階層へのプラン分割やノード構築に関連する。</p>
+<h2>関連データ構造</h2>
 <ul>
-<li>後続フェーズで、ソース本文の文脈と caller/callee 情報を使ってこのページを強化する。</li>
+<li><code>PathTarget</code></li>
+<li><code>TargetEntry</code></li>
+<li><code>Result</code></li>
 </ul><script>
 (function() {
   function notifyParent() {

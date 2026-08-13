@@ -1,0 +1,53 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>src/include/optimizer/appendinfo.h.md</title><link rel="stylesheet" href="../../../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../../../source/src/include/optimizer/appendinfo.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/optimizer/appendinfo.h.html&quot;}, '*');">src/include/optimizer/appendinfo.h</a></h1>
+<h2>概要</h2>
+<p><a class="wiki-source-link" href="../../../../source/src/include/optimizer/appendinfo.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/optimizer/appendinfo.h.html&quot;}, '*');"><code>src/include/optimizer/appendinfo.h</code></a> は、PostgreSQLオプティマイザにおいて、継承テーブルやパーティションテーブルなどの「Append関係」における親テーブルと子テーブルの間で、式やリレーションID（Varno/Relids）、属性番号をマッピング・調整するためのルーチン群を定義するヘッダーファイルです。</p>
+<h2>モジュール内での役割</h2>
+<p><code>src/include/optimizer</code> サブシステムの一部として、オプティマイザが継承ツリーやパーティションの構造を扱い、クエリ内の変数や属性を適切な子テーブル上の参照に書き換えるための共通インターフェースを提供します。実処理はペアとなる <a class="wiki-source-link" href="../../../../source/src/backend/optimizer/util/appendinfo.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/backend/optimizer/util/appendinfo.c.html&quot;}, '*');"><code>src/backend/optimizer/util/appendinfo.c</code></a> に実装されています。</p>
+<h2>責務</h2>
+<ul>
+<li>親テーブルと子テーブルのレンジテーブルエントリ間での <code>AppendRelInfo</code> の構築を宣言する。</li>
+<li>クエリ内の式やリレーションID群を、マルチレベルの継承階層を跨いで子テーブル用に調整（アトリビュートやVarnoの置換）する関数を提供する。</li>
+<li>更新対象のターゲットリスト変換や、行識別子（row identity）変数の追加・分散処理に関するルーチンを公開する。</li>
+</ul>
+<h2>重要なシンボル</h2>
+<ul>
+<li><code>make_append_rel_info</code>: 親リレーションと子リレーションのペアから <code>AppendRelInfo</code> ノードを構築する。</li>
+<li><code>adjust_appendrel_attrs</code>: 指定された <code>AppendRelInfo</code> 配列に基づき、式内の親変数を子変数に調整する。</li>
+<li><code>adjust_appendrel_attrs_multilevel</code>: 複数階層にわたる継承ツリーを考慮して属性を調整する。</li>
+<li><code>adjust_child_relids</code>: <code>Relids</code> セット内の親リレーションIDを子リレーションIDに変換する。</li>
+<li><code>find_appinfos_by_relids</code>: 指定された <code>Relids</code> に一致する <code>AppendRelInfo</code> を検索する。</li>
+</ul>
+<h2>制御フローとデータフロー</h2>
+<ul>
+<li>オプティマイザが継承/パーティション展開を行う際、本ヘッダーで宣言される <code>make_append_rel_info</code> が呼ばれてマッピング構造体 (<code>AppendRelInfo</code>) が作成されます。</li>
+<li>その後、プレナーの各フェーズにおいてクエリツリーやパス式に含まれる変数を子リレーション向けに変換するため、<code>adjust_appendrel_attrs</code> や <code>adjust_child_relids</code> が呼び出され、データフロー上の式ツリーが書き換えられます。</li>
+</ul>
+<h2>直接依存</h2>
+<ul>
+<li><code>nodes/pathnodes.h</code>: <code>PlannerInfo</code>, <code>RelOptInfo</code>, <code>AppendRelInfo</code> などのオプティマイザ用ノード定義。</li>
+<li><code>utils/relcache.h</code>: リレーションキャッシュ (<code>Relation</code>) の定義。</li>
+</ul>
+<h2>関連コード</h2>
+<ul>
+<li><a class="wiki-source-link" href="../../../../source/src/backend/optimizer/util/appendinfo.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/backend/optimizer/util/appendinfo.c.html&quot;}, '*');"><code>src/backend/optimizer/util/appendinfo.c</code></a>: 本ヘッダーで宣言されている関数の実際のロジックを実装するペアファイル。</li>
+<li><a class="wiki-source-link" href="../../../../source/src/include/optimizer/pathnode.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/optimizer/pathnode.h.html&quot;}, '*');"><code>src/include/optimizer/pathnode.h</code></a>: パスノードやオプティマイザの関連定義。</li>
+</ul>
+<h2>読者向けメモ</h2>
+<ul>
+<li>複数階層の継承（パーティションの入れ子など）を扱う関数（<code>*_multilevel</code> サフィックスを持つもの）と単一階層用の関数が混在しているため、呼び出し時は対象のツリー構造の深さに応じて適切な関数を選択してください。</li>
+</ul><script>
+(function() {
+  function notifyParent() {
+    if (parent === window) return;
+    parent.postMessage({type: "frame-location", frame: window.name || "", href: window.location.href}, "*");
+  }
+  document.addEventListener("click", function(event) {
+    const link = event.target.closest("a[data-panel]");
+    if (!link || parent === window) return;
+    parent.postMessage({type: "source-link", panel: link.dataset.panel}, "*");
+  });
+  window.addEventListener("load", notifyParent);
+  window.addEventListener("hashchange", notifyParent);
+})();
+</script></body></html>

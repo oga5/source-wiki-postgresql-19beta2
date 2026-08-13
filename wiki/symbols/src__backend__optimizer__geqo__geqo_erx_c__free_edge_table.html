@@ -13,7 +13,7 @@
 <li>複雑度: <code>low</code> (score 1)</li>
 </ul>
 <h3>ソース抜粋</h3>
-<p>~~~c void <a class="wiki-source-link" href="../../source/src/backend/optimizer/geqo/geqo_erx.c.html#L78" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__geqo__geqo_erx_c__free_edge_table.html&quot;}, '*');">free_edge_table</a>(PlannerInfo *<a class="wiki-source-link" href="../../source/src/backend/optimizer/util/var.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__var_c__root.html&quot;}, '*');">root</a>, Edge *edge_table) { pfree(edge_table); } ~~~</p>
+<p>~~~c void <a class="wiki-source-link" href="../../source/src/backend/optimizer/geqo/geqo_erx.c.html#L78" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__geqo__geqo_erx_c__free_edge_table.html&quot;}, '*');">free_edge_table</a>(PlannerInfo *root, Edge *edge_table) { pfree(edge_table); } ~~~</p>
 <h2>目的</h2>
 <p>遺伝的クエリ最適化（GEQO）の辺組換え交叉（<a class="wiki-source-link" href="../../source/src/include/optimizer/geqo.h.html#L46" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/optimizer/geqo.h.html&quot;}, '*');">ERX</a>）で使用されたエッジテーブルのメモリ領域を解放します。</p>
 <h2>アルゴリズムまたは振る舞い</h2>

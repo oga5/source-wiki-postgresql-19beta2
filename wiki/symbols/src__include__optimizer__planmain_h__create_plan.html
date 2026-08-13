@@ -1,0 +1,66 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>symbols/src__include__optimizer__planmain_h__create_plan.md</title><link rel="stylesheet" href="../../styles.css"></head><body><h1>create_plan</h1>
+<h2>定義</h2>
+<ul>
+<li>種別: <code>function</code></li>
+<li>定義箇所: <code>src/include/optimizer/planmain.h:1</code></li>
+<li>所属モジュール: <a class="wiki-entity-link" href="../modules/src__include__optimizer.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/modules/src__include__optimizer.html&quot;, &quot;source&quot;: &quot;source/src/include/optimizer/appendinfo.h.html&quot;}, '*');"><code>module:src/include/optimizer</code></a></li>
+</ul>
+<h2>目的</h2>
+<p>静的シンボル索引から生成された初期シンボルページです。</p>
+<h2>シグネチャまたは形状</h2>
+<ul>
+<li>シグネチャ: <code>/*------------------------------------------------------------------------- * * planmain.h * prototypes for various files in optimizer/plan * * * Portions Copyright (c) 1996-2026, PostgreSQL Global Development Group * Portions Copyright (c) 1994, Regents of the University of California * * src/include/optimizer/planmain.h * *------------------------------------------------------------------------- */ #ifndef PLANMAIN_H #define PLANMAIN_H #include &quot;nodes/pathnodes.h&quot; #include &quot;nodes/plannodes.h&quot; /* GUC parameters */ #define DEFAULT_CURSOR_TUPLE_FRACTION 0.1 extern PGDLLIMPORT double cursor_tuple_fraction</code></li>
+</ul>
+<h2>入力と出力</h2>
+<p>まだ解析していません。</p>
+<h2>前提条件と不変条件</h2>
+<p>まだ解析していません。</p>
+<h2>アルゴリズムまたは振る舞い</h2>
+<ul>
+<li>複雑度: <code>low</code> (score 0)</li>
+</ul>
+<p>まだ解析していません。</p>
+<h2>呼び出し元と呼び出し先</h2>
+<ul>
+<li>呼び出し元: なし</li>
+<li>呼び出し先: なし</li>
+<li>呼び出し元サイト: なし</li>
+<li>呼び出しサイト: なし</li>
+</ul>
+<h2>関連データ構造</h2>
+<p><code>c</code>, <code>Group</code></p>
+<h2>ソース抜粋</h2>
+<p>~~~c /*------------------------------------------------------------------------- *</p>
+<ul>
+<li><a class="wiki-source-link" href="../../source/src/include/optimizer/planmain.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/optimizer/planmain.h.html&quot;}, '*');">planmain.h</a></li>
+<li>prototypes for various files in optimizer/plan</li>
+<p>* *</p>
+<li>Portions Copyright (c) 1996-2026, PostgreSQL Global Development Group</li>
+<li>Portions Copyright (c) 1994, Regents of the University of California</li>
+<p>*</p>
+<li><a class="wiki-source-link" href="../../source/src/include/optimizer/planmain.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/optimizer/planmain.h.html&quot;}, '*');">src/include/optimizer/planmain.h</a></li>
+<p>* *------------------------------------------------------------------------- */ #ifndef <a class="wiki-source-link" href="../../source/src/include/optimizer/planmain.h.html#L15" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/optimizer/planmain.h.html&quot;}, '*');">PLANMAIN_H</a> #define <a class="wiki-source-link" href="../../source/src/include/optimizer/planmain.h.html#L15" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/optimizer/planmain.h.html&quot;}, '*');">PLANMAIN_H</a></p>
+</ul>
+<p>#include &quot;nodes/pathnodes.h&quot; #include &quot;nodes/plannodes.h&quot;</p>
+<p>/* GUC parameters */ #define <a class="wiki-source-link" href="../../source/src/include/optimizer/planmain.h.html#L21" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/optimizer/planmain.h.html&quot;}, '*');">DEFAULT_CURSOR_TUPLE_FRACTION</a> 0.1 <a class="wiki-source-link" href="../../source/src/tools/pg_bsd_indent/indent_globs.h.html#L54" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/tools/pg_bsd_indent/indent_globs.h.html&quot;}, '*');">extern</a> PGDLLIMPORT double <a class="wiki-source-link" href="../../source/src/backend/optimizer/plan/planner.c.html#L68" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/backend/optimizer/plan/planner.c.html&quot;}, '*');">cursor_tuple_fraction</a>; ~~~</p>
+<h2>失敗モードと境界条件</h2>
+<p>まだ解析していません。</p>
+<h2>保守担当者向けメモ</h2>
+<ul>
+<li>後続フェーズで、ソース本文の文脈と caller/callee 情報を使ってこのページを強化する。</li>
+</ul><script>
+(function() {
+  function notifyParent() {
+    if (parent === window) return;
+    parent.postMessage({type: "frame-location", frame: window.name || "", href: window.location.href}, "*");
+  }
+  document.addEventListener("click", function(event) {
+    const link = event.target.closest("a[data-panel]");
+    if (!link || parent === window) return;
+    parent.postMessage({type: "source-link", panel: link.dataset.panel}, "*");
+  });
+  window.addEventListener("load", notifyParent);
+  window.addEventListener("hashchange", notifyParent);
+})();
+</script></body></html>

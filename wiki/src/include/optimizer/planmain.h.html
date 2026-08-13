@@ -1,0 +1,62 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>src/include/optimizer/planmain.h.md</title><link rel="stylesheet" href="../../../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../../../source/src/include/optimizer/planmain.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/optimizer/planmain.h.html&quot;}, '*');">src/include/optimizer/planmain.h</a></h1>
+<h2>概要</h2>
+<p><a class="wiki-source-link" href="../../../../source/src/include/optimizer/planmain.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/optimizer/planmain.h.html&quot;}, '*');"><code>src/include/optimizer/planmain.h</code></a> は、PostgreSQLオプティマイザのプラン生成フェーズ（<code>src/backend/optimizer/plan/</code>）における主要な関数群、コールバック、およびGUC変数のプロトタイプ宣言を提供するヘッダーファイルです。基本クエリのパス生成、プラン構造の構築、初期スプラン処理、結合解析、プラン参照の解決など、プラン作成プロセスの広範な内部インターフェースを定義しています。</p>
+<h2>モジュール内での役割</h2>
+<ul>
+<li><code>src/include/optimizer/</code> サブシステムの一部として、オプティマイザ内部の複数ファイル（<a class="wiki-source-link" href="../../../../source/src/backend/optimizer/plan/planmain.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/backend/optimizer/plan/planmain.c.html&quot;}, '*');"><code>planmain.c</code></a>, <a class="wiki-source-link" href="../../../../source/src/backend/optimizer/plan/createplan.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/backend/optimizer/plan/createplan.c.html&quot;}, '*');"><code>createplan.c</code></a>, <a class="wiki-source-link" href="../../../../source/src/backend/optimizer/plan/initsplan.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/backend/optimizer/plan/initsplan.c.html&quot;}, '*');"><code>initsplan.c</code></a>, <a class="wiki-source-link" href="../../../../source/src/backend/optimizer/plan/analyzejoins.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/backend/optimizer/plan/analyzejoins.c.html&quot;}, '*');"><code>analyzejoins.c</code></a>, <a class="wiki-source-link" href="../../../../source/src/backend/optimizer/plan/setrefs.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/backend/optimizer/plan/setrefs.c.html&quot;}, '*');"><code>setrefs.c</code></a> 等）にまたがる関数群を結ぶ共通宣言ハブとして機能します。</li>
+<li>上位の <a class="wiki-source-link" href="../../../../source/src/backend/optimizer/plan/planner.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/backend/optimizer/plan/planner.c.html&quot;}, '*');"><code>planner.c</code></a> が統括する全体的なクエリ最適化処理と、個別の結合・パス・プラン生成処理の境界に位置しています。</li>
+</ul>
+<h2>責務</h2>
+<ul>
+<li>プラン生成に関連するバックエンドのCソースファイル群が共有する関数プロトタイプとデータ構造の定義。</li>
+<li>カーソルタプル分率のデフォルト値やカーソル処理、自己結合の有効/無効を制御するGUCパラメータ関連の宣言。</li>
+<li>クエリパスキー（<a class="wiki-source-link" href="../../../../source/src/backend/optimizer/plan/planagg.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__plan__planagg_c__query_pathkeys.html&quot;}, '*');"><code>query_pathkeys</code></a>）を計算するためのコールバック関数型（<code>query_pathkeys_callback</code>）の提供。</li>
+</ul>
+<h2>重要なシンボル</h2>
+<ul>
+<li><code>PlannerInfo</code>: クエリ最適化全体を通じて使用される主要なコンテキスト情報を保持する構造体。</li>
+<li><code>query_pathkeys_callback</code>: クエリのパスキーを安全に計算するためのコールバック関数型。</li>
+<li><code>query_planner</code>: 基本クエリに対する結合パスや簡易プランを生成する中心的な関数のプロトタイプ。</li>
+<li><code>create_plan</code>: 最適なパスから実行可能なプランツリーを生成する関数のプロトタイプ。</li>
+<li><a class="wiki-source-link" href="../../../../source/src/include/optimizer/planmain.h.html#L21" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/optimizer/planmain.h.html&quot;}, '*');"><code>DEFAULT_CURSOR_TUPLE_FRACTION</code></a>: カーソルから取得されるタプル数のデフォルト見積もり割合を定義するマクロ。</li>
+</ul>
+<h2>制御フローとデータフロー</h2>
+<ul>
+<li>ヘッダーファイルであるため直接的な実行フローは持ちませんが、オプティマイザの処理フローにおいて以下の役割を果たします。</li>
+<li>上位のプランナが <code>query_planner</code> を呼び出すことで、ジョイントリーやベースリレーションの初期化（<a class="wiki-source-link" href="../../../../source/src/backend/optimizer/plan/initsplan.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/backend/optimizer/plan/initsplan.c.html&quot;}, '*');"><code>initsplan.c</code></a> 側）を経由したパス探索が開始されます。</li>
+<li>パス決定後、<code>create_plan</code> や <code>set_plan_references</code> などの宣言された関数群を通じて、最終的な実行用プランツリー（<code>Plan</code> ノード）へ変換されます。</li>
+</ul>
+<h2>直接依存</h2>
+<ul>
+<li><code>nodes/pathnodes.h</code>: <code>RelOptInfo</code> や <code>Path</code> などのオプティマイザ用ノード定義。</li>
+<li><code>nodes/plannodes.h</code>: 実行時プランツリーのノード定義。</li>
+</ul>
+<h2>関連コード</h2>
+<ul>
+<li><a class="wiki-source-link" href="../../../../source/src/backend/optimizer/plan/planmain.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/backend/optimizer/plan/planmain.c.html&quot;}, '*');"><code>src/backend/optimizer/plan/planmain.c</code></a>: 本ヘッダーに宣言された <code>query_planner</code> などを実装する対応ソースファイル。</li>
+<li><a class="wiki-source-link" href="../../../../source/src/include/optimizer/planner.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/optimizer/planner.h.html&quot;}, '*');"><code>src/include/optimizer/planner.h</code></a>: オプティマイザ全体の最上位エントリーポイントを提供するヘッダー。</li>
+<li><a class="wiki-source-link" href="../../../../source/src/include/optimizer/pathnode.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/optimizer/pathnode.h.html&quot;}, '*');"><code>src/include/optimizer/pathnode.h</code></a>: パスノードの構築・操作に関する宣言。</li>
+</ul>
+<h2>読者向けメモ</h2>
+<ul>
+<li>ファイル名からオプティマイザの最上位エントリーポイントと誤認しやすいですが、最上位の制御は <a class="wiki-source-link" href="../../../../source/src/include/optimizer/planner.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/optimizer/planner.h.html&quot;}, '*');"><code>planner.h</code></a> および <a class="wiki-source-link" href="../../../../source/src/backend/optimizer/plan/planner.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/backend/optimizer/plan/planner.c.html&quot;}, '*');"><code>planner.c</code></a> が担っており、本ファイルは主に基本結合やプラン構築のルーチン群を対象としています。</li>
+</ul>
+<h2>シンボルページ</h2>
+<ul>
+<li><a href="../../../symbols/src__include__optimizer__planmain_h__PlannerInfo.html" target="wiki-view"><code>PlannerInfo</code></a></li>
+</ul><script>
+(function() {
+  function notifyParent() {
+    if (parent === window) return;
+    parent.postMessage({type: "frame-location", frame: window.name || "", href: window.location.href}, "*");
+  }
+  document.addEventListener("click", function(event) {
+    const link = event.target.closest("a[data-panel]");
+    if (!link || parent === window) return;
+    parent.postMessage({type: "source-link", panel: link.dataset.panel}, "*");
+  });
+  window.addEventListener("load", notifyParent);
+  window.addEventListener("hashchange", notifyParent);
+})();
+</script></body></html>

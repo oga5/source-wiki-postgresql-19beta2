@@ -1,0 +1,60 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>src/backend/utils/resowner/README</title><link rel="stylesheet" href="../../../../../../styles.css"></head><body><h1>Japanese translation</h1><p><code>src/backend/utils/resowner/README</code></p><p><a href="../../../../../../source/src/backend/utils/resowner/README.html" target="source-view">View original document</a></p><p class="document-translation-progress document-translation-complete">Translation complete.</p><div class="document-translation-body"><section class="document-translation-chunk translated" data-chunk-order="0"><p>src/backend/utils/resowner/README</p>
+<p>リソースオーナーに関するノート ===========================</p>
+<p>ResourceOwnerオブジェクトは、バッファピンやテーブルロックなどのクエリ関連リソースの管理を単純化するために考案された概念です。これらのリソースは、エラーによりクエリが失敗した場合でも、クエリ終了時に確実に解放されるよう信頼性の高い方法で追跡される必要があります。エグゼキュータ全体に完璧なデータ構造を持たせるのではなく、このようなリソースの追跡を単一のモジュールに局所化しています。</p>
+<p>ResourceOwner APIのデザインはMemoryContext APIをモデルにしており、MemoryContext APIはメモリリークの防止において非常に柔軟で成功を収めています。特に、ResourceOwnersが子ResourceOwnerオブジェクトを持つことを許可しているため、ツリー状の構造（フォレスト）を形成できます。親ResourceOwnerを解放すると、その直接的および間接的な子オブジェクトのすべてに対しても作用します。</p>
+<p>（ResourceOwnersとMemoryContextsを単一のオブジェクト型に統合することは魅力的ですが、それらの使用パターンは十分に異なるため、そうすることが本当に有益であるとは言えません。）</p>
+<p>トランザクションまたはサブトランザクションごとにResourceOwnerを作成し、ポータルごとに1つ作成します。ポータルの実行中、グローバル変数CurrentResourceOwnerはポータルのResourceOwnerを指します。これにより、ReadBufferやLockAcquireなどの操作は、取得したリソースの所有権をそのResourceOwnerオブジェクトに記録します。</p>
+<p>ポータルが閉じられると、残っているリソース（通常はロックのみ）は現在のトランザクションの責任になります。これは、ポータルのResourceOwnerを現在のトランザクションのResourceOwnerの子にすることで表現されます。resowner.cは、子を解放するときに自動的に親オブジェクトにリソースを転送します。同様に、サブトランザクションのResourceOwnerは、その直属の親の子となります。</p>
+<p>関連するポータルがまだ存在しない場合でも、トランザクションがリソースを必要とする操作（クエリのパースなど）を開始することがあるため、ポータル関連のものだけでなくトランザクション関連のResourceOwnerも必要になります。</p>
+<p>使用法 -----</p>
+<p>ResourceOwnerに対する基本的な操作は以下の通りです：</p>
+<ul>
+<li>ResourceOwnerの作成</li>
+</ul>
+<ul>
+<li>リソースのResourceOwnerへの関連付け、または関連付けの解除</li>
+</ul>
+<ul>
+<li>ResourceOwnerの資産の解放（所有しているすべてのリソースを解放しますが、オーナーオブジェクト自体は解放しない）</li>
+</ul>
+<ul>
+<li>ResourceOwnerの削除（子オーナーオブジェクトを含む）；すべてのリソースが事前に解放されている必要があります</li>
+</ul>
+<p>ロックは特別に処理されます。なぜなら、エラーが発生しない状況では、元々サブトランザクションやポータルによって取得されたものであっても、ロックはトランザクション終了まで保持されるべきだからです。したがって、isCommitが真である場合、子ResourceOwnerに対する「解放」操作は、実際にロックを解放する代わりに、親へのロック所有権の転送を行います。</p>
+<p>トランザクション内にあるときは常に、グローバル変数CurrentResourceOwnerは、取得したリソースの所有権をどのリソースオーナーに割り当てるべきかを示します。ただし、トランザクション内にいない場合（または失敗したトランザクション内にいる場合）、CurrentResourceOwnerはNULLになることに注意してください。この場合、クエリ生存期間のリソースを取得することは有効ではありません。</p>
+<p>バッファのピン留め解除、ロックの解放、またはキャッシュ参照の解放を行うとき、CurrentResourceOwnerは、そのバッファ、ロック、またはキャッシュ参照が取得されたときにカレントであったリソースオーナーを指している必要があります。追加のブックキーピング（帳簿管理）の手間をかければこの制限を緩和することも可能ですが、現時点ではその必要性はなさそうです。</p>
+<p>新しいリソースタイプの追加 --------------------------</p>
+<p>ResourceOwnerは、多種多様なリソースの所有権を追跡できます。コアPostgreSQLでは、バッファピン、lmgrロック、カタログキャッシュ参照などに使用されています（これらはほんの一例です）。</p>
+<p>新しい種類のリソースを追加するには、それを記述するResourceOwnerDescを定義します。 例：</p>
+<p>static const ResourceOwnerDesc myresource_desc = { .name = &quot;My fancy resource&quot;, .release_phase = RESOURCE_RELEASE_AFTER_LOCKS, .release_priority = RELEASE_PRIO_FIRST, .ReleaseResource = ReleaseMyResource, .DebugPrint = PrintMyResource };</p>
+<p>ResourceOwnerRemember()およびResourceOwnerForget()関数は、その構造体へのポインタと、リソースを表すDatumを受け取ります。Datumの意味はリソースのタイプに依存します。ほとんどのリソースタイプは、何らかの構造体へのポインタを格納するためにこれを使用しますが、ファイルディスクリプタやライブラリハンドルなどであっても構いません。</p>
+<p>ReleaseResourceコールバックは、リソースオーナーが解放または削除されるときに呼び出されます。これは、そのリソースに関連するリソース（ファイルのクローズ、メモリの解放など）を解放する必要があります。このコールバックはトランザクションのアボート中に呼び出されるため、ユーザーに見える影響を与えないローレベルのクリーンアップのみを実行しなければなりません。コールバックは、メモリ割り当てのような失敗する可能性のある操作を実行してはなりません。</p>
+<p>オプションのDebugPrintコールバックは、トランザクションコミット時にリソースがリークしている場合の警告で使用されます。指定されない場合、リソース名とリソースをポインタとして出力する汎用的な実装が使用されます。</p>
+<p>他のモジュールがResourceOwnerの解放時に制御を取得し、削除が必要なオブジェクトを見つけるために独自のデータ構造をスキャンできるようにするための別なAPIもあります。RegisterResourceReleaseCallback関数を参照してください。以前は、拡張機能が新しい種類のオブジェクトでリソースオーナー機構を使用するための唯一の方法でしたが、現在ではカスタムのResourceOwnerDesc構造体を定義する方が簡単です。</p>
+<p>解放 ---------</p>
+<p>ResourceOwnerのリソースの解放は、3つのフェーズで行われます：</p>
+<p>1. 「ロック前（Before-locks）」のリソース</p>
+<p>2. ロック</p>
+<p>3. 「ロック後（After-locks）」のリソース</p>
+<p>各リソースタイプは、ロックの前後に解放する必要があるかどうかを指定します。また、各リソースタイプには優先度（priority）があり、これによりリソースが解放される順序が決定されます。次のフェーズに移行する前に、リソースオーナーのツリー全体に対してフェーズが完全に実行されますが、各フェーズ内の優先度は、そのResourceOwner内での順序のみを決定することに注意してください。各フェーズ内では、子リソースオーナーは常に親よりも先に処理されます。</p>
+<p>例えば、以下のようにparentとchildという2つのResourceOwnersがあると仮定します：</p>
+<p>Parent parent resource BEFORE_LOCKS priority 1 parent resource BEFORE_LOCKS priority 2 parent resource AFTER_LOCKS priority 10001 parent resource AFTER_LOCKS priority 10002 Child child resource BEFORE_LOCKS priority 1 child resource BEFORE_LOCKS priority 2 child resource AFTER_LOCKS priority 10001 child resource AFTER_LOCKS priority 10002</p>
+<p>これらのリソースは、以下の順序で解放されます：</p>
+<p>child resource BEFORE_LOCKS priority 1 child resource BEFORE_LOCKS priority 2 parent resource BEFORE_LOCKS priority 1 parent resource BEFORE_LOCKS priority 2 (locks) child resource AFTER_LOCKS priority 10001 child resource AFTER_LOCKS priority 10002 parent resource AFTER_LOCKS priority 10001 parent resource AFTER_LOCKS priority 10002</p>
+<p>すべてのリソースを解放するには、ResourceOwnerRelease()をフェーズごとに1回ずつ、合計3回呼び出す必要があります。フェーズの間に追加のタスクを実行することは可能ですが、ResourceOwnerRelease()を最初に呼び出した後は、ResourceOwnerを使用してそれ以上のリソースを記憶することはできません。また、解放プロセスを開始した後は、以前に記憶されたリソースを「個別に」解放するためにResourceOwnerForgetを呼び出すこともできません。</p>
+<p>通常、コミット時にResourceOwnerが空になるように、すべてのリソースに対してResourceOwnerForgetを呼び出すことが期待されています（ロックは例外です）。コミット時にまだ保持されているリソースがある場合、ResourceOwnerReleaseはそれぞれのそのようなリソースに対してWARNINGを出力します。しかし、アボート時には、私たちは真にResourceOwner機構に依存しており、解放すべきリソースが存在することは正常な動作です。</p></section></div><script>
+(function() {
+  function notifyParent() {
+    if (parent === window) return;
+    parent.postMessage({type: "frame-location", frame: window.name || "", href: window.location.href}, "*");
+  }
+  document.addEventListener("click", function(event) {
+    const link = event.target.closest("a[data-panel]");
+    if (!link || parent === window) return;
+    parent.postMessage({type: "source-link", panel: link.dataset.panel}, "*");
+  });
+  window.addEventListener("load", notifyParent);
+  window.addEventListener("hashchange", notifyParent);
+})();
+</script></body></html>

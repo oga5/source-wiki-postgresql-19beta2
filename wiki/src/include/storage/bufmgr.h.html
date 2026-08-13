@@ -1,0 +1,95 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>src/include/storage/bufmgr.h.md</title><link rel="stylesheet" href="../../../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../../../source/src/include/storage/bufmgr.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/storage/bufmgr.h.html&quot;}, '*');">src/include/storage/bufmgr.h</a></h1>
+<h2>概要</h2>
+<p>PostgreSQLのバッファマネージャの公開インターフェースおよびデータ構造を定義するヘッダーファイルです。共有バッファおよびローカルバッファの取得、解放、ピン留め、ロック、ダーティマーク、非同期I/Oやプリフェッチ、バッファアクセス戦略などのバッファ管理サブシステム全体で使用される主要な型や関数群を宣言します。実際の処理ロジックの多くはペアとなる <a class="wiki-source-link" href="../../../../source/src/backend/storage/buffer/bufmgr.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/storage/buffer/bufmgr.c.html&quot;}, '*');"><code>src/backend/storage/buffer/bufmgr.c</code></a> に実装されています。</p>
+<h2>モジュール内での役割</h2>
+<p><code>src/include/storage</code> モジュール内において、ストレージ階層とアクセスメソッド（AM）やトランザクション管理を結ぶ中核的な役割を果たします。下位のストレージマネージャ（<a class="wiki-source-link" href="../../../../source/src/include/storage/aio_types.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__storage__aio_types_h__smgr.html&quot;}, '*');"><code>smgr</code></a>）やブロックI/O機能と協調し、上位レイヤーが物理的なディスク詳細を意識せずにページ単位でデータを操作できるように抽象化を提供します。また、リカバリ処理、VACUUM、バルク読み書きなど異なるワークロードに対応するアクセス戦略のインターフェースも提供します。</p>
+<h2>責務</h2>
+<ul>
+<li>バッファ識別子（<a class="wiki-source-link" href="../../../../source/src/include/storage/buf.h.html#L23" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__storage__buf_h__Buffer.html&quot;}, '*');"><code>Buffer</code></a>）、ブロックポインタ（<a class="wiki-source-link" href="../../../../source/src/include/storage/bufmgr.h.html#L26" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__storage__bufmgr_h__Block.html&quot;}, '*');"><code>Block</code></a>）、およびページ内容へのアクセス方法の定義。</li>
+<li>バッファの読み込み・拡張モード（<a class="wiki-source-link" href="../../../../source/src/include/storage/bufmgr.h.html#L44" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__storage__bufmgr_h__ReadBufferMode.html&quot;}, '*');"><code>ReadBufferMode</code></a>, <a class="wiki-source-link" href="../../../../source/src/include/storage/bufmgr.h.html#L68" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__storage__bufmgr_h__ExtendBufferedFlags.html&quot;}, '*');"><code>ExtendBufferedFlags</code></a>）やアクセス戦略（<a class="wiki-source-link" href="../../../../source/src/include/storage/bufmgr.h.html#L34" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__storage__bufmgr_h__BufferAccessStrategyType.html&quot;}, '*');"><code>BufferAccessStrategyType</code></a>）の列挙型の提供。</li>
+<li>単一または複数のバッファ操作を抽象化する構造体（<a class="wiki-source-link" href="../../../../source/src/include/storage/bufmgr.h.html#L131" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__storage__bufmgr_h__ReadBuffersOperation.html&quot;}, '*');"><code>ReadBuffersOperation</code></a>, <a class="wiki-source-link" href="../../../../source/src/include/storage/bufmgr.h.html#L107" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__storage__bufmgr_h__BufferManagerRelation.html&quot;}, '*');"><code>BufferManagerRelation</code></a> 等）の定義。</li>
+<li>バッファコンテンツの排他制御のためのロックモード（<a class="wiki-source-link" href="../../../../source/src/include/storage/bufmgr.h.html#L205" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__storage__bufmgr_h__BufferLockMode.html&quot;}, '*');"><code>BufferLockMode</code></a>）およびインライン関数による最適化されたロック制御（<a class="wiki-source-link" href="../../../../source/src/include/storage/bufmgr.h.html#L333" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__storage__bufmgr_h__LockBuffer.html&quot;}, '*');"><code>LockBuffer</code></a>）の提供。</li>
+<li>非同期I/O（AIO）やバックグラウンドライター、チェックポイント処理に関連するパラメータおよびコールバックの宣言。</li>
+</ul>
+<h2>重要なシンボル</h2>
+<h3>基本データ型と識別子</h3>
+<ul>
+<li><a class="wiki-source-link" href="../../../../source/src/include/storage/bufmgr.h.html#L26" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__storage__bufmgr_h__Block.html&quot;}, '*');"><code>Block</code></a>: データのメモリ上のブロック（ページイメージ）へのポインタ型（<code>void *</code>）。</li>
+<li><a class="wiki-source-link" href="../../../../source/src/include/storage/bufmgr.h.html#L34" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__storage__bufmgr_h__BufferAccessStrategyType.html&quot;}, '*');"><code>BufferAccessStrategyType</code></a>: バッファ置換やリングバッファの使用方針を指定する列挙型（通常アクセス、バルク読込、バルク書込、VACUUM）。</li>
+<li><a class="wiki-source-link" href="../../../../source/src/include/storage/bufmgr.h.html#L44" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__storage__bufmgr_h__ReadBufferMode.html&quot;}, '*');"><code>ReadBufferMode</code></a>: <code>ReadBufferExtended</code> における読み込みモード。ディスクからの通常読み込みのほか、ゼロ初期化やエラー時のゼロ埋め、ログ非記録などを指定。</li>
+<li><a class="wiki-source-link" href="../../../../source/src/include/storage/bufmgr.h.html#L68" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__storage__bufmgr_h__ExtendBufferedFlags.html&quot;}, '*');"><code>ExtendBufferedFlags</code></a>: リレーション拡張時の動作（拡張ロックのスキップ、リカバリ中フラグ、フォーク作成、ロック有無など）を制御するフラグ。</li>
+</ul>
+<h3>リレーションおよびI/O操作構造体</h3>
+<ul>
+<li><code>SMgrRelation</code>: ストレージマネージャリレーション構造体（<code>SMgrRelationData</code>）の前方宣言。</li>
+<li><a class="wiki-source-link" href="../../../../source/src/include/storage/bufmgr.h.html#L107" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__storage__bufmgr_h__BufferManagerRelation.html&quot;}, '*');"><code>BufferManagerRelation</code></a>: リレーションポインタまたは <code>SMgrRelation</code> と永続性フラグを保持し、通常運用とリカバリ時の双方で同一関数を利用可能にするための構造体。</li>
+<li><a class="wiki-source-link" href="../../../../source/src/include/storage/bufmgr.h.html#L131" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__storage__bufmgr_h__ReadBuffersOperation.html&quot;}, '*');"><code>ReadBuffersOperation</code></a>: 複数ブロックの非同期読み込み操作（<code>StartReadBuffers</code> と <code>WaitReadBuffers</code>）の間で状態を共有するための非公開メンバを含む構造体。</li>
+<li><a class="wiki-source-link" href="../../../../source/src/include/storage/bufmgr.h.html#L59" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__storage__bufmgr_h__PrefetchBufferResult.html&quot;}, '*');"><code>PrefetchBufferResult</code></a>: プリフェッチ結果（最近のバッファヒットか、非同期I/Oが開始されたか）を返す構造体。</li>
+<li><code>WritebackContext</code>: バックグラウンドライターなどの書き戻し処理におけるコンテキストの前方宣言。</li>
+</ul>
+<h3>バッファロックと検証関数</h3>
+<ul>
+<li><a class="wiki-source-link" href="../../../../source/src/include/storage/bufmgr.h.html#L205" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__storage__bufmgr_h__BufferLockMode.html&quot;}, '*');"><code>BufferLockMode</code></a>: バッファコンテンツに対するロックモード（<a class="wiki-source-link" href="../../../../source/src/include/storage/bufmgr.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__storage__bufmgr_h__BUFFER_LOCK_UNLOCK.html&quot;}, '*');"><code>BUFFER_LOCK_UNLOCK</code></a>, <a class="wiki-source-link" href="../../../../source/src/include/storage/bufmgr.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__storage__bufmgr_h__BUFFER_LOCK_SHARE.html&quot;}, '*');"><code>BUFFER_LOCK_SHARE</code></a>, <a class="wiki-source-link" href="../../../../source/src/include/storage/bufmgr.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__storage__bufmgr_h__BUFFER_LOCK_SHARE_EXCLUSIVE.html&quot;}, '*');"><code>BUFFER_LOCK_SHARE_EXCLUSIVE</code></a>, <a class="wiki-source-link" href="../../../../source/src/include/storage/bufmgr.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__storage__bufmgr_h__BUFFER_LOCK_EXCLUSIVE.html&quot;}, '*');"><code>BUFFER_LOCK_EXCLUSIVE</code></a>）。</li>
+<li><a class="wiki-source-link" href="../../../../source/src/include/storage/bufmgr.h.html#L333" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__storage__bufmgr_h__LockBuffer.html&quot;}, '*');"><code>LockBuffer</code></a>: 指定されたバッファを <a class="wiki-source-link" href="../../../../source/src/include/storage/bufmgr.h.html#L205" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__storage__bufmgr_h__BufferLockMode.html&quot;}, '*');"><code>BufferLockMode</code></a> に従ってロックまたはアンロックするインライン関数。<a class="wiki-source-link" href="../../../../source/src/include/storage/bufmgr.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__storage__bufmgr_h__BUFFER_LOCK_UNLOCK.html&quot;}, '*');"><code>BUFFER_LOCK_UNLOCK</code></a> の分岐をインライン側で最適化してパフォーマンスを維持する。</li>
+<li><a class="wiki-source-link" href="../../../../source/src/include/storage/bufmgr.h.html#L418" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__storage__bufmgr_h__BufferIsValid.html&quot;}, '*');"><code>BufferIsValid</code></a>: 指定されたバッファ番号が有効範囲内かつ <code>InvalidBuffer</code> でないかを検証するインライン関数（アセンブリ／アサートによる検証を含む）。</li>
+</ul>
+<h2>制御フローとデータフロー</h2>
+<ul>
+<li>**バッファ取得フロー**: 上位レイヤーが <code>ReadBuffer()</code> または <code>ReadBufferExtended()</code> を呼び出すと、バッファルックアップテーブルおよびフリーリストを参照して該当ページのバッファをピン留めし、必要に応じてディスクから読み込みます。複数ブロックの場合は <code>StartReadBuffers</code> と <code>WaitReadBuffers</code> を用いた非同期I/Oのパイプライン処理が可能です。</li>
+<li>**ロック制御**: バッファ上のページ内容にアクセスまたは変更を加える際は、<code>LockBuffer()</code>（または <code>LockBufferForCleanup()</code>）により共有あるいは排他ロックを取得し、処理完了後に <code>UnlockBuffer()</code> または <code>UnlockReleaseBuffer()</code> で解放します。</li>
+<li>**リレーション拡張**: リレーションの末尾を伸ばす際は <a class="wiki-source-link" href="../../../../source/src/backend/storage/buffer/bufmgr.c.html#L969" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__storage__buffer__bufmgr_c__ExtendBufferedRel.html&quot;}, '*');"><code>ExtendBufferedRel</code></a> 系関数が <a class="wiki-source-link" href="../../../../source/src/include/storage/bufmgr.h.html#L107" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__storage__bufmgr_h__BufferManagerRelation.html&quot;}, '*');"><code>BufferManagerRelation</code></a> を介してストレージを拡張し、新しいバッファを割り当てて返します。</li>
+</ul>
+<h2>直接依存</h2>
+<ul>
+<li><code>port/pg_iovec.h</code></li>
+<li><code>storage/aio_types.h</code></li>
+<li><code>storage/block.h</code></li>
+<li><code>storage/buf.h</code></li>
+<li><code>storage/bufpage.h</code></li>
+<li><code>storage/relfilelocator.h</code></li>
+<li><code>utils/relcache.h</code></li>
+<li><code>utils/snapmgr.h</code></li>
+</ul>
+<h2>関連コード</h2>
+<ul>
+<li><a class="wiki-source-link" href="../../../../source/src/backend/storage/buffer/bufmgr.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/storage/buffer/bufmgr.c.html&quot;}, '*');"><code>src/backend/storage/buffer/bufmgr.c</code></a></li>
+<li><a class="wiki-source-link" href="../../../../source/src/include/storage/buf_internals.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/storage/buf_internals.h.html&quot;}, '*');"><code>src/include/storage/buf_internals.h</code></a></li>
+<li><a class="wiki-source-link" href="../../../../source/src/backend/storage/buffer/freelist.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/storage/buffer/freelist.c.html&quot;}, '*');"><code>src/backend/storage/buffer/freelist.c</code></a></li>
+<li><a class="wiki-source-link" href="../../../../source/src/backend/storage/buffer/buf_table.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/storage/buffer/buf_table.c.html&quot;}, '*');"><code>src/backend/storage/buffer/buf_table.c</code></a></li>
+<li><a class="wiki-source-link" href="../../../../source/src/backend/storage/buffer/localbuf.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/storage/buffer/localbuf.c.html&quot;}, '*');"><code>src/backend/storage/buffer/localbuf.c</code></a></li>
+</ul>
+<h2>読者向けメモ</h2>
+<ul>
+<li>**フロントエンドのインクルード**: 本ヘッダーは主にバックエンド用ですが、<code>pg_waldump</code> などの一部フロントエンドプログラムからもインクルードされます。そのため、未使用時の不要な外部参照を防ぐため、インライン関数は <code>#ifndef FRONTEND</code> で保護されています。</li>
+<li>**インライン関数の最適化**: <a class="wiki-source-link" href="../../../../source/src/include/storage/bufmgr.h.html#L333" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__storage__bufmgr_h__LockBuffer.html&quot;}, '*');"><code>LockBuffer</code></a> は性能上の理由から、アンロック処理をインラインで直接ハンドリングし、定数として渡されることが多いモード判定の分岐をコンパイラ最適化しやすく設計されています。</li>
+</ul>
+<h2>シンボルページ</h2>
+<ul>
+<li><a href="../../../symbols/src__include__storage__bufmgr_h__Block.html" target="wiki-view"><code>Block</code></a></li>
+<li><a href="../../../symbols/src__include__storage__bufmgr_h__BufferAccessStrategyType.html" target="wiki-view"><code>BufferAccessStrategyType</code></a></li>
+<li><a href="../../../symbols/src__include__storage__bufmgr_h__ReadBufferMode.html" target="wiki-view"><code>ReadBufferMode</code></a></li>
+<li><a href="../../../symbols/src__include__storage__bufmgr_h__PrefetchBufferResult.html" target="wiki-view"><code>PrefetchBufferResult</code></a></li>
+<li><a href="../../../symbols/src__include__storage__bufmgr_h__ExtendBufferedFlags.html" target="wiki-view"><code>ExtendBufferedFlags</code></a></li>
+<li><a href="../../../symbols/src__include__storage__bufmgr_h__SMgrRelation.html" target="wiki-view"><code>SMgrRelation</code></a></li>
+<li><a href="../../../symbols/src__include__storage__bufmgr_h__BufferManagerRelation.html" target="wiki-view"><code>BufferManagerRelation</code></a></li>
+<li><a href="../../../symbols/src__include__storage__bufmgr_h__ReadBuffersOperation.html" target="wiki-view"><code>ReadBuffersOperation</code></a></li>
+<li><a href="../../../symbols/src__include__storage__bufmgr_h__WritebackContext.html" target="wiki-view"><code>WritebackContext</code></a></li>
+<li><a href="../../../symbols/src__include__storage__bufmgr_h__BufferLockMode.html" target="wiki-view"><code>BufferLockMode</code></a></li>
+<li><a href="../../../symbols/src__include__storage__bufmgr_h__LockBuffer.html" target="wiki-view"><code>LockBuffer</code></a></li>
+<li><a href="../../../symbols/src__include__storage__bufmgr_h__BufferIsValid.html" target="wiki-view"><code>BufferIsValid</code></a></li>
+</ul><script>
+(function() {
+  function notifyParent() {
+    if (parent === window) return;
+    parent.postMessage({type: "frame-location", frame: window.name || "", href: window.location.href}, "*");
+  }
+  document.addEventListener("click", function(event) {
+    const link = event.target.closest("a[data-panel]");
+    if (!link || parent === window) return;
+    parent.postMessage({type: "source-link", panel: link.dataset.panel}, "*");
+  });
+  window.addEventListener("load", notifyParent);
+  window.addEventListener("hashchange", notifyParent);
+})();
+</script></body></html>

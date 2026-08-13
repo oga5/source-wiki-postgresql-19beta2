@@ -1,0 +1,52 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>src/include/access/xlogbackup.h.md</title><link rel="stylesheet" href="../../../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../../../source/src/include/access/xlogbackup.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/access/xlogbackup.h.html&quot;}, '*');">src/include/access/xlogbackup.h</a></h1>
+<h2>概要</h2>
+<p>PostgreSQLのベースバックアップ内部処理で使用されるデータ構造と関数プロトタイプを定義するヘッダーファイルです。バックアップの開始・終了時に記録される状態を保持する仕組みを提供します。</p>
+<h2>モジュール内での役割</h2>
+<p><code>src/include/access</code> モジュールの一部として、トランザクションログ（WAL）およびリカバリ関連のバックアップ機能を補助します。実装ファイルである <a class="wiki-source-link" href="../../../../source/src/backend/access/transam/xlogbackup.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/access/transam/xlogbackup.c.html&quot;}, '*');"><code>src/backend/access/transam/xlogbackup.c</code></a> とペアをなし、バックアップメタデータの構築を支えています。</p>
+<h2>責務</h2>
+<ul>
+<li>ベースバックアップの状態を管理するための <a class="wiki-source-link" href="../../../../source/src/include/access/xlogbackup.h.html#L21" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__access__xlogbackup_h__BackupState.html&quot;}, '*');"><code>BackupState</code></a> 構造体の定義。</li>
+<li>バックアップラベルやバックアップ履歴ファイルの内容を構築する関数 <code>build_backup_content</code> の宣言。</li>
+</ul>
+<h2>重要なシンボル</h2>
+<ul>
+<li><code>struct BackupState</code>: バックアップの開始位置、タイムライン、チェックポイント位置、開始/停止時間、およびインクリメンタルバックアップ用の情報を格納する構造体。</li>
+<li><code>build_backup_content</code>: <a class="wiki-source-link" href="../../../../source/src/include/access/xlogbackup.h.html#L21" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__access__xlogbackup_h__BackupState.html&quot;}, '*');"><code>BackupState</code></a> をもとに、<a class="wiki-source-link" href="../../../../source/src/include/access/xlogbackup.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__access__xlogbackup_h__backup_label.html&quot;}, '*');"><code>backup_label</code></a> またはバックアップ履歴ファイル用のテキストコンテンツを生成して返す関数。</li>
+</ul>
+<h2>制御フローとデータフロー</h2>
+<ul>
+<li>バックアッププロセスは <a class="wiki-source-link" href="../../../../source/src/include/access/xlogbackup.h.html#L21" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__access__xlogbackup_h__BackupState.html&quot;}, '*');"><code>BackupState</code></a> 構造体に開始時のLSNやタイムライン、時刻などのメタデータを集約します。</li>
+<li>補助関数 <code>build_backup_content()</code> が呼び出されると、<a class="wiki-source-link" href="../../../../source/src/include/access/xlogbackup.h.html#L21" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__access__xlogbackup_h__BackupState.html&quot;}, '*');"><code>BackupState</code></a> の値とログタイムゾーン設定を用いて <code>StringInfo</code> バッファ上にテキストフォーマットのバックアップ情報を組み立て、<code>palloc</code> された文字列として返却します。</li>
+</ul>
+<h2>直接依存</h2>
+<ul>
+<li><code>access/xlogdefs.h</code></li>
+<li><a class="wiki-source-link" href="../../../../source/src/include/pgtime.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/pgtime.h.html&quot;}, '*');"><code>pgtime.h</code></a></li>
+</ul>
+<h2>関連コード</h2>
+<ul>
+<li><a class="wiki-source-link" href="../../../../source/src/backend/access/transam/xlogbackup.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/access/transam/xlogbackup.c.html&quot;}, '*');"><code>src/backend/access/transam/xlogbackup.c</code></a>: <code>build_backup_content</code> の実体が定義されているペアファイル。</li>
+</ul>
+<h2>読者向けメモ</h2>
+<ul>
+<li>本ファイルは主にベースバックアップのメタデータ（ラベルや履歴）の表現形式を定義するものであり、WALの読み書きそのものは行いません。</li>
+</ul>
+<h2>シンボルページ</h2>
+<ul>
+<li><a href="../../../symbols/src__include__access__xlogbackup_h__BackupState.html" target="wiki-view"><code>BackupState</code></a></li>
+</ul><script>
+(function() {
+  function notifyParent() {
+    if (parent === window) return;
+    parent.postMessage({type: "frame-location", frame: window.name || "", href: window.location.href}, "*");
+  }
+  document.addEventListener("click", function(event) {
+    const link = event.target.closest("a[data-panel]");
+    if (!link || parent === window) return;
+    parent.postMessage({type: "source-link", panel: link.dataset.panel}, "*");
+  });
+  window.addEventListener("load", notifyParent);
+  window.addEventListener("hashchange", notifyParent);
+})();
+</script></body></html>
