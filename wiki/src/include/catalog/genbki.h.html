@@ -1,5 +1,5 @@
 <!doctype html>
-<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>src/include/catalog/genbki.h.md</title><link rel="stylesheet" href="../../../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../../../source/src/include/catalog/genbki.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/catalog/genbki.h.html&quot;}, '*');">src/include/catalog/genbki.h</a></h1>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="10"><title>src/include/catalog/genbki.h.md</title><link rel="stylesheet" href="../../../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../../../source/src/include/catalog/genbki.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/catalog/genbki.h.html&quot;}, '*');">src/include/catalog/genbki.h</a></h1>
 <h2>概要</h2>
 <p>PostgreSQL のシステムカタログヘッダーファイルを C コンパイラが読み込めるようにしつつ、同時にビルドツール <a class="wiki-source-link" href="../../../../source/src/backend/catalog/genbki.pl.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/catalog/genbki.pl.html&quot;}, '*');"><code>genbki.pl</code></a> が BKI ブートストラップファイル、インデックス定義、TOAST テーブル定義、シスキャッシュ定義などを生成するためのマクロ定義を提供するメタプログラミング用のヘッダーファイルである。</p>
 <h2>モジュール内での役割</h2>
@@ -37,8 +37,8 @@
 <h2>制御フローとデータフロー</h2>
 <p>本ファイルは純粋なマクロ定義の集まりであり、実行時の制御フローやデータフローの本体は持たない。</p>
 <ul>
-<li>**ビルド時フロー**: PostgreSQL のビルドプロセスにおいて、<a class="wiki-source-link" href="../../../../source/src/backend/catalog/genbki.pl.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/catalog/genbki.pl.html&quot;}, '*');"><code>genbki.pl</code></a> が本ファイルがインクルードされたカタログヘッダー群をパースする。マクロ（<code>CATALOG</code>, <a class="wiki-source-link" href="../../../../source/src/include/catalog/genbki.h.html#L103" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/catalog/genbki.h.html&quot;}, '*');"><code>DECLARE_INDEX</code></a> など）を解釈して <code>.bki</code> ファイルや生成ヘッダー（<code>*_d.h</code>）を出力する。</li>
-<li>**コンパイル時フロー**: バックエンドおよびクライアントの C コードがカタログヘッダーをインクルードする際、これらのマクロは空（またはプラットフォーム固有の <code>_Pragma(&quot;pack(...)&quot;)</code>）に展開され、メモリ上のタプルレイアウトと整合する C 構造体が構築される。</li>
+<li><strong>ビルド時フロー</strong>: PostgreSQL のビルドプロセスにおいて、<a class="wiki-source-link" href="../../../../source/src/backend/catalog/genbki.pl.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/catalog/genbki.pl.html&quot;}, '*');"><code>genbki.pl</code></a> が本ファイルがインクルードされたカタログヘッダー群をパースする。マクロ（<code>CATALOG</code>, <a class="wiki-source-link" href="../../../../source/src/include/catalog/genbki.h.html#L103" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/catalog/genbki.h.html&quot;}, '*');"><code>DECLARE_INDEX</code></a> など）を解釈して <code>.bki</code> ファイルや生成ヘッダー（<code>*_d.h</code>）を出力する。</li>
+<li><strong>コンパイル時フロー</strong>: バックエンドおよびクライアントの C コードがカタログヘッダーをインクルードする際、これらのマクロは空（またはプラットフォーム固有の <code>_Pragma(&quot;pack(...)&quot;)</code>）に展開され、メモリ上のタプルレイアウトと整合する C 構造体が構築される。</li>
 </ul>
 <h2>直接依存</h2>
 <p>なし（純粋なプリプロセッサマクロ定義のため、他ファイルへのインクルード依存を持たない）。</p>
@@ -50,8 +50,8 @@
 </ul>
 <h2>読者向けメモ</h2>
 <ul>
-<li>**メモリレイアウトとアライメント**: AIX などのプラットフォーム制約により、<code>int64</code> のアライメントが異なる場合のハック（<code>_Pragma(&quot;pack(push,4)&quot;)</code>）が含まれている。カタログ構造体を直接ディスク上のタプルフォーマットやキャッシュ構造として扱う際の重要なインーブリゲーションである。</li>
-<li>**浅い領域**: C コンパイラ側では実効的なコードを持たないスタブマクロ（<code>extern int no_such_variable</code> など）が多数定義されているため、実際の処理はすべて <a class="wiki-source-link" href="../../../../source/src/backend/catalog/genbki.pl.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/catalog/genbki.pl.html&quot;}, '*');"><code>genbki.pl</code></a> 側の処理系に依存している。</li>
+<li><strong>メモリレイアウトとアライメント</strong>: AIX などのプラットフォーム制約により、<code>int64</code> のアライメントが異なる場合のハック（<code>_Pragma(&quot;pack(push,4)&quot;)</code>）が含まれている。カタログ構造体を直接ディスク上のタプルフォーマットやキャッシュ構造として扱う際の重要なインーブリゲーションである。</li>
+<li><strong>浅い領域</strong>: C コンパイラ側では実効的なコードを持たないスタブマクロ（<code>extern int no_such_variable</code> など）が多数定義されているため、実際の処理はすべて <a class="wiki-source-link" href="../../../../source/src/backend/catalog/genbki.pl.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/catalog/genbki.pl.html&quot;}, '*');"><code>genbki.pl</code></a> 側の処理系に依存している。</li>
 </ul>
 <h2>シンボルページ</h2>
 <ul>

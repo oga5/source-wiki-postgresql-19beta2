@@ -1,5 +1,5 @@
 <!doctype html>
-<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>symbols/src__backend__optimizer__geqo__geqo_misc_c__print_pool.md</title><link rel="stylesheet" href="../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../source/src/backend/optimizer/geqo/geqo_misc.c.html#L58" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__geqo__geqo_misc_c__print_pool.html&quot;}, '*');">print_pool</a></h1>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="10"><title>symbols/src__backend__optimizer__geqo__geqo_misc_c__print_pool.md</title><link rel="stylesheet" href="../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../source/src/backend/optimizer/geqo/geqo_misc.c.html#L58" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__geqo__geqo_misc_c__print_pool.html&quot;}, '*');">print_pool</a></h1>
 <h2>現在のソース事実</h2>
 <ul>
 <li>種別: <code>function</code></li>
@@ -35,17 +35,17 @@
 <li>引数 <code>start</code> および <code>stop</code> がプールの境界外または不正な値である場合、安全のために範囲全体（<code>0</code> から <code>pool-&gt;size</code> まで）の出力に自動修正されます。</li>
 </ul>
 <h2>アルゴリズムまたは振る舞い</h2>
-<p>1. **入力値の検証と補正**:</p>
+<p>1. <strong>入力値の検証と補正</strong>:</p>
 <ul>
 <li><code>start</code> が <code>0</code> 未満の場合、<code>0</code> に設定されます。</li>
 <li><code>stop</code> が <code>pool-&gt;size</code> を超えている場合、<code>pool-&gt;size</code> に設定されます。</li>
 <li><code>start + stop</code> が <code>pool-&gt;size</code> を超える場合、範囲の安全性を確保するため <code>start = 0</code> かつ <code>stop = pool-&gt;size</code> にリセットされます。</li>
-<p>2. **プールデータの反復出力**:</p>
+<p>2. <strong>プールデータの反復出力</strong>:</p>
 <li><code>i</code> を <code>start</code> から <code>stop - 1</code> までインクリメントしながら各個体を走査します。</li>
 <li>各個体のインデックスとタブ（<code>%d)\t</code>）を出力ストリームに書き込みます。</li>
 <li>内部の文字列長（<code>pool-&gt;string_length</code>）分だけループを回し、個体の遺伝子配列（<code>pool-&gt;data[i].string[j]</code>）をスペース区切りで出力します。</li>
 <li>最後に個体のコスト（<code>pool-&gt;data[i].worth</code>）を改行付きで出力します。</li>
-<p>3. **フラッシュ**:</p>
+<p>3. <strong>フラッシュ</strong>:</p>
 <li>処理の最後に <code>fflush(fp)</code> を呼び出し、出力ストリームをフラッシュします。</li>
 </ul>
 <h2>失敗モードと境界条件</h2>

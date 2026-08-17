@@ -1,5 +1,5 @@
 <!doctype html>
-<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>symbols/src__backend__optimizer__plan__initsplan_c__add_vars_to_attr_needed.md</title><link rel="stylesheet" href="../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../source/src/backend/optimizer/plan/initsplan.c.html#L372" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__plan__initsplan_c__add_vars_to_attr_needed.html&quot;}, '*');">add_vars_to_attr_needed</a></h1>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="10"><title>symbols/src__backend__optimizer__plan__initsplan_c__add_vars_to_attr_needed.md</title><link rel="stylesheet" href="../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../source/src/backend/optimizer/plan/initsplan.c.html#L372" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__plan__initsplan_c__add_vars_to_attr_needed.html&quot;}, '*');">add_vars_to_attr_needed</a></h1>
 <h2>現在のソース事実</h2>
 <ul>
 <li>種別: <code>function</code></li>
@@ -40,16 +40,16 @@
 <li><code>where_needed</code> が空のビットマップセットであってはならない（アサーションにより検証される）。</li>
 </ul>
 <h2>アルゴリズムまたは振る舞い</h2>
-<p>1. **初期検証**: <code>where_needed</code> が空集合ではないことを <code>Assert(!bms_is_empty(where_needed))</code> で検証する。 2. **リストの走査**: <code>vars</code> リスト内の各要素を順番に取り出す。 3. **ノード種別ごとの分岐と処理**:</p>
+<p>1. <strong>初期検証</strong>: <code>where_needed</code> が空集合ではないことを <code>Assert(!bms_is_empty(where_needed))</code> で検証する。 2. <strong>リストの走査</strong>: <code>vars</code> リスト内の各要素を順番に取り出す。 3. <strong>ノード種別ごとの分岐と処理</strong>:</p>
 <ul>
-<li>**<code>Var</code> ノードの場合**:</li>
+<li><strong><code>Var</code> ノードの場合</strong>:</li>
 <li>ノードを <code>Var</code> キャストし、<code>find_base_rel</code> を用いて対応するベース関係（<code>RelOptInfo</code>）を取得する。</li>
 <li><code>where_needed</code> がベース関係のリレーションIDのサブセットである場合は、すでにその関係内で充足されているため処理をスキップする。</li>
 <li>属性番号が関係の許容範囲内であることをアサーションで確認し、対応する <code>attr_needed</code> 配列エントリに <code>where_needed</code> のメンバーを追加する。</li>
-<li>**<code>PlaceHolderVar</code> ノードの場合**:</li>
+<li><strong><code>PlaceHolderVar</code> ノードの場合</strong>:</li>
 <li>ノードを <code>PlaceHolderVar</code> キャストし、<code>find_placeholder_info</code> を用いてプレースホルダー情報を取得する。</li>
 <li>取得した <code>PlaceHolderInfo</code> の <code>ph_needed</code> に <code>where_needed</code> のメンバーを追加する。</li>
-<li>**その他のノードの場合**:</li>
+<li><strong>その他のノードの場合</strong>:</li>
 <li>認識されないノード型であるとして、<code>elog(ERROR, ...)</code> を呼び出してエラーを発生させる。</li>
 </ul>
 <h2>失敗モードと境界条件</h2>

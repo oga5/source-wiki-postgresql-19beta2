@@ -1,5 +1,5 @@
 <!doctype html>
-<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>symbols/src__backend__optimizer__util__extendplan_c__SetPlannerInfoExtensionState.md</title><link rel="stylesheet" href="../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../source/src/backend/optimizer/util/extendplan.c.html#L112" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__extendplan_c__SetPlannerInfoExtensionState.html&quot;}, '*');">SetPlannerInfoExtensionState</a></h1>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="10"><title>symbols/src__backend__optimizer__util__extendplan_c__SetPlannerInfoExtensionState.md</title><link rel="stylesheet" href="../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../source/src/backend/optimizer/util/extendplan.c.html#L112" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__extendplan_c__SetPlannerInfoExtensionState.html&quot;}, '*');">SetPlannerInfoExtensionState</a></h1>
 <h2>現在のソース事実</h2>
 <ul>
 <li>種別: <code>function</code></li>
@@ -34,14 +34,14 @@
 <li><code>extension_id &gt;= 0</code> であること。</li>
 </ul>
 <h2>アルゴリズムまたは振る舞い</h2>
-<p>1. **前提条件の検証**:</p>
+<p>1. <strong>前提条件の検証</strong>:</p>
 <ul>
 <li><code>extension_id</code> が 0 以上であることをアサートで検証する。</li>
-<p>2. **初期状態の割り当てチェック**:</p>
+<p>2. <strong>初期状態の割り当てチェック</strong>:</p>
 <li><code>root-&gt;extension_state</code> が <code>NULL</code> の場合、<code>Max(4, pg_nextpower2_32(extension_id + 1))</code> により割り当てサイズを計算し、<code>root-&gt;planner_cxt</code> メモリコンテキストから <a class="wiki-source-link" href="../../source/src/backend/utils/mmgr/mcxt.c.html#L1268" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__utils__mmgr__mcxt_c__MemoryContextAllocZero.html&quot;}, '*');"><code>MemoryContextAllocZero</code></a> を用いて 0 クリアされた配列領域を確保する。</li>
-<p>3. **配列容量の拡張チェック**:</p>
+<p>3. <strong>配列容量の拡張チェック</strong>:</p>
 <li><code>extension_id</code> が現在の割り当てサイズ (<code>root-&gt;extension_state_allocated</code>) 以上である場合、<code>pg_nextpower2_32(extension_id + 1)</code> で新しいサイズを計算し、<a class="wiki-source-link" href="../../source/src/include/utils/palloc.h.html#L122" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/utils/palloc.h.html&quot;}, '*');"><code>repalloc0_array</code></a> を用いて既存の配列領域を拡張・ゼロクリアし、割り当てサイズを更新する。</li>
-<p>4. **状態の格納**:</p>
+<p>4. <strong>状態の格納</strong>:</p>
 <li>確保・拡張された配列の <code>extension_id</code> インデックスの位置に <code>opaque</code> ポインタを格納する。</li>
 </ul>
 <h2>失敗モードと境界条件</h2>

@@ -1,22 +1,22 @@
 <!doctype html>
-<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>src/backend/replication/README</title><link rel="stylesheet" href="../../../../../styles.css"></head><body><h1>Japanese translation</h1><p><code>src/backend/replication/README</code></p><p><a href="../../../../../source/src/backend/replication/README.html" target="source-view">View original document</a></p><p class="document-translation-progress document-translation-complete">Translation complete.</p><div class="document-translation-body"><section class="document-translation-chunk translated" data-chunk-order="0"><p>src/backend/replication/README</p>
-<p>Walreceiver - libpqwalreceiver API ----------------------------------</p>
-<p>プライマリサーバへの接続、WALファイルの受信、およびメッセージの送信を担当するwalreceiverのトランスポート固有の部分は、メインのサーババイナリをlibpqとリンクするのを避けるために、動的にロードされます。動的にロードされるモジュールは、libpqwalreceiverサブディレクトリにあります。</p>
-<p>動的にロードされるモジュールは一連の関数を実装しており、それぞれの詳細についてはsrc/include/replication/walreceiver.hで提供されています。</p>
-<p>このAPIは現時点では内部的なものとみなされるべきですが、将来的にはサードパーティによるlibpqwalreceiverの代替に開放し、WALを受信するためのプラグイン可能な方法を許可することも可能です。</p>
-<p>Walreceiver IPC ---------------</p>
-<p>スタートアッププロセスにおけるWALの再生が、restore_commandを使用してリストア可能なアーカイブWALの終端に達すると、（ストリーミングレプリケーションが設定されている場合）さらにWALを取得するためにwalreceiverプロセスを起動します。</p>
-<p>walreceiverはpostmasterのサブプロセスであるため、スタートアッププロセスが直接forkすることはできません。代わりに、postmasterにシグナルを送信して、起動を依頼します。しかし、その前に、スタートアッププロセスはWalRcvData-&gt;conninfoとWalRcvData-&gt;slotnameを設定し、WalRcvData-&gt;receiveStartに開始点を初期化します。</p>
-<p>walreceiverはプライマリサーバからWALを受信し、それをディスク（pg_wal内）に書き込んでフラッシュすると、WalRcvData-&gt;flushedUptoを更新し、WALの再生をどこまで進められるかを知らせるためにスタートアッププロセスにシグナルを送信します。</p>
-<p>walreceiverは、新しいWALを書き込むかフラッシュしたとき、または指定された間隔が経過したときに、レプリケーションの進行状況に関する情報をプライマリサーバに送信します。これはレポート目的で使用されます。</p>
-<p>Walsender IPC -------------</p>
-<p>シャットダウン時、postmasterはwalsenderプロセスを通常のバックエンドとは異なる方法で処理します。postmasterは、シャットダウンチェックポイントを書き込み、pgarchやその他の補助プロセスを終了させる前に、通常のバックエンドが終了するのを待ちますが、walsenderに対してはそれは望ましくありません。なぜなら、プライマリがシャットダウンされる前に、スタンバイサーバがシャットダウンチェックポイントを含むすべてのWALを受信できるようにしたいためです。したがって、postmasterはwalsenderをpgarchプロセスのように扱い、すべての通常のバックエンドが終了し、checkpointerがシャットダウンチェックポイントを発行した後のPM_WAIT_XLOG_ARCHIVALフェーズで終了するように指示します。</p>
-<p>postmasterが接続を受け入れると、ハンドシェイクと認証を処理するために即座に新しいプロセスをforkし、そのプロセスはバックエンドになるように初期化されます。postmasterはその時点では、そのプロセスが通常のバックエンドになるのかwalsenderプロセスになるのかを知りません（それは接続ハンドシェイクで示されます）。そのため、postmasterがwalsenderプロセスを識別できるように、追加のシグナル伝達が必要になります。</p>
-<p>walsenderプロセスが起動すると、PMSignal配列内で自身をwalsenderプロセスとしてマークします。これにより、postmasterはそれを通常のバックエンドと区別することができます。</p>
-<p>なお、postmasterがwalsenderを通常のバックエンドとみなしたとしても、大きな害はありません。シャットダウンフェーズのより早い段階でwalsenderを終了させるだけです。walsenderは、初期化が完了してPMSignal配列に自身をマークするまで、およびプロセス終了時にPMSignalスロットのマークを解除した後は、通常のバックエンドのように見えます。</p>
-<p>各walsenderはWalSndCtl配列からエントリを割り当て、レプリケーションの進行状況に関する情報を追跡します。ユーザーは統計ビューを介してこれらを監視できます。</p>
-<p>Walsender - walreceiver protocol --------------------------------</p>
-<p>マニュアルを参照してください。</p></section></div><script>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="10"><title>src/backend/replication/README</title><link rel="stylesheet" href="../../../../../styles.css"></head><body><h1>Japanese translation</h1><p><code>src/backend/replication/README</code></p><p><a href="../../../../../source/src/backend/replication/README.html" target="source-view">View original document</a></p><p class="document-translation-progress document-translation-complete">Translation complete.</p><div class="document-translation-body"><section class="document-translation-chunk translated" data-chunk-order="0"><p class="markdown-preserve-lines">src/backend/replication/README</p>
+<h2>Walreceiver - libpqwalreceiver API</h2>
+<p class="markdown-preserve-lines">プライマリサーバへの接続、WALファイルの受信、およびメッセージの送信を担当するwalreceiverのトランスポート固有の部分は、メインのサーババイナリをlibpqとリンクするのを避けるために、動的にロードされます。動的にロードされるモジュールは、libpqwalreceiverサブディレクトリにあります。</p>
+<p class="markdown-preserve-lines">動的にロードされるモジュールは一連の関数を実装しており、それぞれの詳細についてはsrc/include/replication/walreceiver.hで提供されています。</p>
+<p class="markdown-preserve-lines">このAPIは現時点では内部的なものとみなされるべきですが、将来的にはサードパーティによるlibpqwalreceiverの代替に開放し、WALを受信するためのプラグイン可能な方法を許可することも可能です。</p>
+<h2>Walreceiver IPC</h2>
+<p class="markdown-preserve-lines">スタートアッププロセスにおけるWALの再生が、restore_commandを使用してリストア可能なアーカイブWALの終端に達すると、（ストリーミングレプリケーションが設定されている場合）さらにWALを取得するためにwalreceiverプロセスを起動します。</p>
+<p class="markdown-preserve-lines">walreceiverはpostmasterのサブプロセスであるため、スタートアッププロセスが直接forkすることはできません。代わりに、postmasterにシグナルを送信して、起動を依頼します。しかし、その前に、スタートアッププロセスはWalRcvData-&gt;conninfoとWalRcvData-&gt;slotnameを設定し、WalRcvData-&gt;receiveStartに開始点を初期化します。</p>
+<p class="markdown-preserve-lines">walreceiverはプライマリサーバからWALを受信し、それをディスク（pg_wal内）に書き込んでフラッシュすると、WalRcvData-&gt;flushedUptoを更新し、WALの再生をどこまで進められるかを知らせるためにスタートアッププロセスにシグナルを送信します。</p>
+<p class="markdown-preserve-lines">walreceiverは、新しいWALを書き込むかフラッシュしたとき、または指定された間隔が経過したときに、レプリケーションの進行状況に関する情報をプライマリサーバに送信します。これはレポート目的で使用されます。</p>
+<h2>Walsender IPC</h2>
+<p class="markdown-preserve-lines">シャットダウン時、postmasterはwalsenderプロセスを通常のバックエンドとは異なる方法で処理します。postmasterは、シャットダウンチェックポイントを書き込み、pgarchやその他の補助プロセスを終了させる前に、通常のバックエンドが終了するのを待ちますが、walsenderに対してはそれは望ましくありません。なぜなら、プライマリがシャットダウンされる前に、スタンバイサーバがシャットダウンチェックポイントを含むすべてのWALを受信できるようにしたいためです。したがって、postmasterはwalsenderをpgarchプロセスのように扱い、すべての通常のバックエンドが終了し、checkpointerがシャットダウンチェックポイントを発行した後のPM_WAIT_XLOG_ARCHIVALフェーズで終了するように指示します。</p>
+<p class="markdown-preserve-lines">postmasterが接続を受け入れると、ハンドシェイクと認証を処理するために即座に新しいプロセスをforkし、そのプロセスはバックエンドになるように初期化されます。postmasterはその時点では、そのプロセスが通常のバックエンドになるのかwalsenderプロセスになるのかを知りません（それは接続ハンドシェイクで示されます）。そのため、postmasterがwalsenderプロセスを識別できるように、追加のシグナル伝達が必要になります。</p>
+<p class="markdown-preserve-lines">walsenderプロセスが起動すると、PMSignal配列内で自身をwalsenderプロセスとしてマークします。これにより、postmasterはそれを通常のバックエンドと区別することができます。</p>
+<p class="markdown-preserve-lines">なお、postmasterがwalsenderを通常のバックエンドとみなしたとしても、大きな害はありません。シャットダウンフェーズのより早い段階でwalsenderを終了させるだけです。walsenderは、初期化が完了してPMSignal配列に自身をマークするまで、およびプロセス終了時にPMSignalスロットのマークを解除した後は、通常のバックエンドのように見えます。</p>
+<p class="markdown-preserve-lines">各walsenderはWalSndCtl配列からエントリを割り当て、レプリケーションの進行状況に関する情報を追跡します。ユーザーは統計ビューを介してこれらを監視できます。</p>
+<h2>Walsender - walreceiver protocol</h2>
+<p class="markdown-preserve-lines">マニュアルを参照してください。</p></section></div><script>
 (function() {
   function notifyParent() {
     if (parent === window) return;

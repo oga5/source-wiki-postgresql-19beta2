@@ -1,5 +1,5 @@
 <!doctype html>
-<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>symbols/src__backend__optimizer__path__equivclass_c__find_computable_ec_member.md</title><link rel="stylesheet" href="../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../source/src/backend/optimizer/path/equivclass.c.html#L990" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__path__equivclass_c__find_computable_ec_member.html&quot;}, '*');">find_computable_ec_member</a></h1>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="10"><title>symbols/src__backend__optimizer__path__equivclass_c__find_computable_ec_member.md</title><link rel="stylesheet" href="../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../source/src/backend/optimizer/path/equivclass.c.html#L990" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__path__equivclass_c__find_computable_ec_member.html&quot;}, '*');">find_computable_ec_member</a></h1>
 <h2>現在のソース事実</h2>
 <ul>
 <li>種別: <code>function</code></li>
@@ -63,18 +63,18 @@
 <li>子メンバーである場合、そのメンバーのリレーション群が指定された <a class="wiki-source-link" href="../../source/src/backend/optimizer/util/relnode.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__relnode_c__relids.html&quot;}, '*');"><code>relids</code></a> のサブセットでなければ無視されます。</li>
 </ul>
 <h2>アルゴリズムまたは振る舞い</h2>
-<p>1. **式の変数抽出**: 入力された <code>exprs</code> から <a class="wiki-source-link" href="../../source/src/backend/optimizer/util/var.c.html#L652" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__var_c__pull_var_clause.html&quot;}, '*');"><code>pull_var_clause</code></a> を用いて、集約関数、ウィンドウ関数、プレースホルダーを含む変数および擬似変数のリスト（<code>exprvars</code>）を抽出します。 2. **イテレータのセットアップ**: 指定された同値クラス <code>ec</code> と <a class="wiki-source-link" href="../../source/src/backend/optimizer/util/relnode.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__relnode_c__relids.html&quot;}, '*');"><code>relids</code></a> を基に、同値メンバーイテレータを初期化します。 3. **メンバーの順次走査とフィルタリング**:</p>
+<p>1. <strong>式の変数抽出</strong>: 入力された <code>exprs</code> から <a class="wiki-source-link" href="../../source/src/backend/optimizer/util/var.c.html#L652" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__var_c__pull_var_clause.html&quot;}, '*');"><code>pull_var_clause</code></a> を用いて、集約関数、ウィンドウ関数、プレースホルダーを含む変数および擬似変数のリスト（<code>exprvars</code>）を抽出します。 2. <strong>イテレータのセットアップ</strong>: 指定された同値クラス <code>ec</code> と <a class="wiki-source-link" href="../../source/src/backend/optimizer/util/relnode.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__relnode_c__relids.html&quot;}, '*');"><code>relids</code></a> を基に、同値メンバーイテレータを初期化します。 3. <strong>メンバーの順次走査とフィルタリング</strong>:</p>
 <ul>
 <li><a class="wiki-source-link" href="../../source/src/backend/optimizer/path/equivclass.c.html#L3173" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__path__equivclass_c__eclass_member_iterator_next.html&quot;}, '*');"><code>eclass_member_iterator_next</code></a> により各メンバー <code>em</code> を順に取得します。</li>
 <li><code>em_is_const</code> が真である場合は定数を含むためスキップします。</li>
 <li><code>em_is_child</code> が真かつ <code>em_relids</code> が <a class="wiki-source-link" href="../../source/src/backend/optimizer/util/relnode.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__relnode_c__relids.html&quot;}, '*');"><code>relids</code></a> のサブセットでない場合はスキップします。</li>
-<p>4. **利用可能性の検証**:</p>
+<p>4. <strong>利用可能性の検証</strong>:</p>
 <li>各メンバーの式 <code>em_expr</code> から変数および擬似変数を抽出し（<code>emvars</code>）、それらのすべての変数が <code>exprvars</code> に含まれているかを走査して確認します。</li>
 <li>利用できない変数が含まれている場合は当該メンバーをスキップします。</li>
 <li><code>emvars</code> の一時リストを解放します。</li>
-<p>5. **パラレル安全性の確認**:</p>
+<p>5. <strong>パラレル安全性の確認</strong>:</p>
 <li><code>require_parallel_safe</code> が真である場合、<code>is_parallel_safe</code> を用いて式がパラレル安全であるかを検証し、安全でない場合はスキップします。</li>
-<p>6. **返却**: 条件をすべて満たした有効な <code>em</code> が見つかった場合はそれを返し、ループが尽きた場合は <code>NULL</code> を返します。</p>
+<p>6. <strong>返却</strong>: 条件をすべて満たした有効な <code>em</code> が見つかった場合はそれを返し、ループが尽きた場合は <code>NULL</code> を返します。</p>
 </ul>
 <h2>失敗モードと境界条件</h2>
 <ul>

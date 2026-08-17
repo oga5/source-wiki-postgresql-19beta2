@@ -1,15 +1,15 @@
 <!doctype html>
-<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>src/include/nodes/execnodes.h.md</title><link rel="stylesheet" href="../../../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../../../source/src/include/nodes/execnodes.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/nodes/execnodes.h.html&quot;}, '*');">src/include/nodes/execnodes.h</a></h1>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="10"><title>src/include/nodes/execnodes.h.md</title><link rel="stylesheet" href="../../../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../../../source/src/include/nodes/execnodes.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/nodes/execnodes.h.html&quot;}, '*');">src/include/nodes/execnodes.h</a></h1>
 <h2>概要</h2>
 <p>PostgreSQLのエグゼキューター（実行エンジン）で使用される実行時状態ノード、式評価コンテキスト、および関連する構造体の定義を提供するヘッダーファイル。プランノード（<a class="wiki-source-link" href="../../../../source/src/include/nodes/plannodes.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/nodes/plannodes.h.html&quot;}, '*');"><code>plannodes.h</code></a>）に対応する実行状態ノード群（<code>PlanState</code>派生構造体）や、式を評価するための <code>ExprState</code>、実行時コンテキストである <code>EState</code> などを網羅している。</p>
 <h2>モジュール内での役割</h2>
 <p><code>src/include/nodes</code> サブシステムの一部であり、静的なクエリ計画を動的な実行に変換・駆動するために必要なすべてのメモリ構造・状態機械の定義を集約している。パーサーやプランナーの出力を受け取り、実際のタプル処理を行うエグゼキューターの各モジュール（<code>executor/</code> 配下）によって中心的に参照される。</p>
 <h2>責務</h2>
 <ul>
-<li>**実行状態ノード（PlanState）の定義**: プランツリーに対応する実行時ツリーの基底および各スキャン・結合・集約ノードの状態構造体を所有する。</li>
-<li>**式評価エンジン構造の定義**: <code>ExprState</code>、<code>ExprContext</code> を通じたスカラー式、フィルタ、プロジェクションの実行時データ構造を規定する。</li>
-<li>**実行環境（EState）の管理**: クエリ全体の実行スナップショット、レンジテーブル、リレーションポインタ、JIT文脈などを束ねる <code>EState</code> を定義する。</li>
-<li>**タプルハッシュ・行ロック・EPQの状態保持**: ハッシュ結合や集約で使われるハッシュテーブル、行ロック（<a class="wiki-source-link" href="../../../../source/src/include/nodes/execnodes.h.html#L49" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__nodes__execnodes_h__ExecRowMark.html&quot;}, '*');"><code>ExecRowMark</code></a>）、EvalPlanQual再チェック（<a class="wiki-source-link" href="../../../../source/src/include/nodes/execnodes.h.html#L1337" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__nodes__execnodes_h__EPQState.html&quot;}, '*');"><code>EPQState</code></a>）の構造を定義する。</li>
+<li><strong>実行状態ノード（PlanState）の定義</strong>: プランツリーに対応する実行時ツリーの基底および各スキャン・結合・集約ノードの状態構造体を所有する。</li>
+<li><strong>式評価エンジン構造の定義</strong>: <code>ExprState</code>、<code>ExprContext</code> を通じたスカラー式、フィルタ、プロジェクションの実行時データ構造を規定する。</li>
+<li><strong>実行環境（EState）の管理</strong>: クエリ全体の実行スナップショット、レンジテーブル、リレーションポインタ、JIT文脈などを束ねる <code>EState</code> を定義する。</li>
+<li><strong>タプルハッシュ・行ロック・EPQの状態保持</strong>: ハッシュ結合や集約で使われるハッシュテーブル、行ロック（<a class="wiki-source-link" href="../../../../source/src/include/nodes/execnodes.h.html#L49" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__nodes__execnodes_h__ExecRowMark.html&quot;}, '*');"><code>ExecRowMark</code></a>）、EvalPlanQual再チェック（<a class="wiki-source-link" href="../../../../source/src/include/nodes/execnodes.h.html#L1337" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__nodes__execnodes_h__EPQState.html&quot;}, '*');"><code>EPQState</code></a>）の構造を定義する。</li>
 </ul>
 <h2>重要なシンボル</h2>
 <h3>コア実行・式評価構造</h3>
@@ -44,9 +44,9 @@
 </ul>
 <h2>制御フローとデータフロー</h2>
 <ul>
-<li>**初期化フェーズ**: エグゼキューターの起動時（<code>ExecutorStart</code>）、プランツリーは対応する <code>PlanState</code> ツリーに変換され、各ノードの <code>ExprState</code> および <code>ExprContext</code> が構築される。<code>EState</code> が全体のリレーションオープンやスナップショットを初期化する。</li>
-<li>**実行フェーズ**: <code>ExecProcNode</code> 関数ポインタを再帰的に呼び出すことで、下位のノードからタプル（<code>TupleTableSlot</code>）が上流へと流れる。式やフィルタの評価は <code>ExprState-&gt;evalfunc</code> と <code>ExprContext</code> を経由して行われる。</li>
-<li>**終了フェーズ**: <code>ExecutorFinish</code> および <a class="wiki-source-link" href="../../../../source/src/backend/executor/execMain.c.html#L476" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__executor__execMain_c__ExecutorEnd.html&quot;}, '*');"><code>ExecutorEnd</code></a> により、オープンされたリレーションやメモリコンテキスト、ハッシュテーブルのリソースが解放される。</li>
+<li><strong>初期化フェーズ</strong>: エグゼキューターの起動時（<code>ExecutorStart</code>）、プランツリーは対応する <code>PlanState</code> ツリーに変換され、各ノードの <code>ExprState</code> および <code>ExprContext</code> が構築される。<code>EState</code> が全体のリレーションオープンやスナップショットを初期化する。</li>
+<li><strong>実行フェーズ</strong>: <code>ExecProcNode</code> 関数ポインタを再帰的に呼び出すことで、下位のノードからタプル（<code>TupleTableSlot</code>）が上流へと流れる。式やフィルタの評価は <code>ExprState-&gt;evalfunc</code> と <code>ExprContext</code> を経由して行われる。</li>
+<li><strong>終了フェーズ</strong>: <code>ExecutorFinish</code> および <a class="wiki-source-link" href="../../../../source/src/backend/executor/execMain.c.html#L476" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__executor__execMain_c__ExecutorEnd.html&quot;}, '*');"><code>ExecutorEnd</code></a> により、オープンされたリレーションやメモリコンテキスト、ハッシュテーブルのリソースが解放される。</li>
 </ul>
 <h2>直接依存</h2>
 <ul>

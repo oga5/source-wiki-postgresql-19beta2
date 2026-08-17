@@ -1,14 +1,22 @@
 <!doctype html>
-<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>src/test/modules/test_checksums/README</title><link rel="stylesheet" href="../../../../../../styles.css"></head><body><h1>Japanese translation</h1><p><code>src/test/modules/test_checksums/README</code></p><p><a href="../../../../../../source/src/test/modules/test_checksums/README.html" target="source-view">View original document</a></p><p class="document-translation-progress document-translation-complete">Translation complete.</p><div class="document-translation-body"><section class="document-translation-chunk translated" data-chunk-order="0"><p>src/test/modules/test_checksums/README</p>
-<p>Regression tests for data checksums =================================== このディレクトリには、オフラインおよび実行中のクラスターの両方でデータチェック サムを有効化および無効化するためのテストスイートが含まれています。</p>
-<p>Running the tests with autoconf ===============================</p>
-<p>make check</p>
-<p>or</p>
-<p>make installcheck</p>
-<p>Running the tests with meson ============================ ビルドディレクトリから、以下のコマンドを実行します。</p>
-<p>meson test -q --print-errorlogs --suite setup --suite test_checksums</p>
-<p>NOTE: これにより、テストのために、マスターまたはスタンバイである複数のノードを 持つ一時的なインストール（&quot;make check&quot;または&quot;--suite setup&quot;の場合）が作成され ます。</p>
-<p>NOTE: このテストスイートを実行するにはTAPテストが有効である必要があります。 また、テストの一部は動作するためにインジェクションポイントを必要とします。 拡張テストを実行するには、PG_TEST_EXTRA環境変数に&quot;checksum_extended&quot;を設定 する必要があります。</p></section></div><script>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="10"><title>src/test/modules/test_checksums/README</title><link rel="stylesheet" href="../../../../../../styles.css"></head><body><h1>Japanese translation</h1><p><code>src/test/modules/test_checksums/README</code></p><p><a href="../../../../../../source/src/test/modules/test_checksums/README.html" target="source-view">View original document</a></p><p class="document-translation-progress document-translation-complete">Translation complete.</p><div class="document-translation-body"><section class="document-translation-chunk translated" data-chunk-order="0"><p class="markdown-preserve-lines">src/test/modules/test_checksums/README</p>
+<h1>Regression tests for data checksums</h1>
+<p class="markdown-preserve-lines">このディレクトリには、オフラインおよび実行中のクラスターの両方でデータチェック
+サムを有効化および無効化するためのテストスイートが含まれています。</p>
+<h1>Running the tests with autoconf</h1>
+<p class="markdown-preserve-lines">    make check</p>
+<p class="markdown-preserve-lines">or</p>
+<p class="markdown-preserve-lines">    make installcheck</p>
+<h1>Running the tests with meson</h1>
+<p class="markdown-preserve-lines">ビルドディレクトリから、以下のコマンドを実行します。</p>
+<p class="markdown-preserve-lines">    meson test -q --print-errorlogs --suite setup --suite test_checksums</p>
+<p class="markdown-preserve-lines">NOTE: これにより、テストのために、マスターまたはスタンバイである複数のノードを
+持つ一時的なインストール（&quot;make check&quot;または&quot;--suite setup&quot;の場合）が作成され
+ます。</p>
+<p class="markdown-preserve-lines">NOTE: このテストスイートを実行するにはTAPテストが有効である必要があります。
+また、テストの一部は動作するためにインジェクションポイントを必要とします。
+拡張テストを実行するには、PG_TEST_EXTRA環境変数に&quot;checksum_extended&quot;を設定
+する必要があります。</p></section></div><script>
 (function() {
   function notifyParent() {
     if (parent === window) return;

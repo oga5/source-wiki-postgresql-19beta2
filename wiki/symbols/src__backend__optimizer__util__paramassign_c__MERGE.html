@@ -1,5 +1,5 @@
 <!doctype html>
-<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>symbols/src__backend__optimizer__util__paramassign_c__MERGE.md</title><link rel="stylesheet" href="../../styles.css"></head><body><h1>MERGE</h1>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="10"><title>symbols/src__backend__optimizer__util__paramassign_c__MERGE.md</title><link rel="stylesheet" href="../../styles.css"></head><body><h1>MERGE</h1>
 <h2>現在のソース事実</h2>
 <ul>
 <li>種別: <code>function</code></li>
@@ -67,10 +67,10 @@
 <p>この関数（<a class="wiki-source-link" href="../../source/src/backend/optimizer/util/paramassign.c.html#L65" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__paramassign_c__assign_param_for_var.html&quot;}, '*');"><code>assign_param_for_var</code></a>）は、プランニング中に指定された変数（<code>Var</code>）を現在のサブクエリのパラメータとして識別するための <code>PARAM_EXEC</code> 番号を選択（または新規割り当て）し、適切な上位レベルの <code>root-&gt;plan_params</code> にその <code>Var</code> の要求を記録することを目的とします。</p>
 <h2>入力と出力</h2>
 <ul>
-<li>**入力**:</li>
+<li><strong>入力</strong>:</li>
 <li><code>root</code> (<code>PlannerInfo *</code>): 現在のクエリレベルのプランナ情報構造体。</li>
 <li><a class="wiki-source-link" href="../../source/src/backend/optimizer/path/clausesel.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__path__clausesel_c__var.html&quot;}, '*');"><code>var</code></a> (<code>Var *</code>): パラメータとして割り当てる対象の <code>Var</code> ノード。</li>
-<li>**出力**:</li>
+<li><strong>出力</strong>:</li>
 <li><code>int</code>: 該当する <code>Var</code> に割り当てられた、または既存の <code>PARAM_EXEC</code> スロットのパラメータID (<a class="wiki-source-link" href="../../source/src/backend/optimizer/util/paramassign.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__paramassign_c__paramId.html&quot;}, '*');"><code>paramId</code></a>)。</li>
 </ul>
 <h2>前提条件と不変条件</h2>
@@ -79,7 +79,7 @@
 <li>既存の <code>PlannerParamItem</code> との比較において、<code>_equalVar()</code> と同様の基準（<code>varno</code>, <code>varattno</code>, <a class="wiki-source-link" href="../../source/src/backend/optimizer/util/tlist.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__tlist_c__vartype.html&quot;}, '*');"><code>vartype</code></a>, <code>vartypmod</code>, <code>varcollid</code>, <code>varreturningtype</code>, <code>varnullingrels</code> の一致）で重複を判定しますが、<code>varlevelsup</code> は無視されます。</li>
 </ul>
 <h2>アルゴリズムまたは振る舞い</h2>
-<p>1. **所属クエリレベルの特定**: <code>var-&gt;varlevelsup</code> の値の数だけ <code>root = root-&gt;parent_root</code> を繰り返し、<code>Var</code> が所属する上位レベルの <code>PlannerInfo</code> を特定します。 2. **既存パラメータの検索**: 特定した <code>root</code> の <code>plan_params</code> リストを走査し、リスト内の <code>PlannerParamItem</code> の <code>item</code> が <code>Var</code> であり、かつ以下のフィールドがすべて一致するものを探索します：</p>
+<p>1. <strong>所属クエリレベルの特定</strong>: <code>var-&gt;varlevelsup</code> の値の数だけ <code>root = root-&gt;parent_root</code> を繰り返し、<code>Var</code> が所属する上位レベルの <code>PlannerInfo</code> を特定します。 2. <strong>既存パラメータの検索</strong>: 特定した <code>root</code> の <code>plan_params</code> リストを走査し、リスト内の <code>PlannerParamItem</code> の <code>item</code> が <code>Var</code> であり、かつ以下のフィールドがすべて一致するものを探索します：</p>
 <ul>
 <li><code>varno</code></li>
 <li><code>varattno</code></li>
@@ -88,7 +88,7 @@
 <li><code>varcollid</code></li>
 <li><code>varreturningtype</code></li>
 <li><code>varnullingrels</code> (ビットマップセットの等価性比較 <a class="wiki-source-link" href="../../source/src/backend/nodes/bitmapset.c.html#L141" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__nodes__bitmapset_c__bms_equal.html&quot;}, '*');"><code>bms_equal</code></a> を使用)</li>
-<p>3. **既存IDの返却**: 一致する <code>PlannerParamItem</code> が見つかった場合、新規の割り当ては行わず、その <a class="wiki-source-link" href="../../source/src/backend/optimizer/util/paramassign.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__paramassign_c__paramId.html&quot;}, '*');"><code>paramId</code></a> をそのまま返します。 4. **新規パラメータの作成と登録**: 一致する項目がない場合、以下の手順で新規パラメータを登録します：</p>
+<p>3. <strong>既存IDの返却</strong>: 一致する <code>PlannerParamItem</code> が見つかった場合、新規の割り当ては行わず、その <a class="wiki-source-link" href="../../source/src/backend/optimizer/util/paramassign.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__paramassign_c__paramId.html&quot;}, '*');"><code>paramId</code></a> をそのまま返します。 4. <strong>新規パラメータの作成と登録</strong>: 一致する項目がない場合、以下の手順で新規パラメータを登録します：</p>
 <li>引数 <a class="wiki-source-link" href="../../source/src/backend/optimizer/path/clausesel.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__path__clausesel_c__var.html&quot;}, '*');"><code>var</code></a> のコピーを作成し、その <code>varlevelsup</code> を <code>0</code> に設定します。</li>
 <li>新しい <code>PlannerParamItem</code> ノードを作成し、コピーした <code>Var</code> を <code>item</code> に設定します。</li>
 <li><code>root-&gt;glob-&gt;paramExecTypes</code> リストの現在の長さを新しい <a class="wiki-source-link" href="../../source/src/backend/optimizer/util/paramassign.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__paramassign_c__paramId.html&quot;}, '*');"><code>paramId</code></a> として割り当てます。</li>

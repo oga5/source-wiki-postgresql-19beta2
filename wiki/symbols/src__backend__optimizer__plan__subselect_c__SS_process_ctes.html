@@ -1,5 +1,5 @@
 <!doctype html>
-<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>symbols/src__backend__optimizer__plan__subselect_c__SS_process_ctes.md</title><link rel="stylesheet" href="../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../source/src/backend/optimizer/plan/subselect.c.html#L885" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__plan__subselect_c__SS_process_ctes.html&quot;}, '*');">SS_process_ctes</a></h1>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="10"><title>symbols/src__backend__optimizer__plan__subselect_c__SS_process_ctes.md</title><link rel="stylesheet" href="../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../source/src/backend/optimizer/plan/subselect.c.html#L885" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__plan__subselect_c__SS_process_ctes.html&quot;}, '*');">SS_process_ctes</a></h1>
 <h2>現在のソース事実</h2>
 <ul>
 <li>種別: <code>function</code></li>
@@ -67,11 +67,11 @@
 <li>現在のクエリレベルでは <code>plan_params</code> が使用されていないこと。</li>
 </ul>
 <h2>アルゴリズムまたは振る舞い</h2>
-<p>1. **ループ処理**: <code>root-&gt;parse-&gt;cteList</code> 内の各 <a class="wiki-source-link" href="../../source/src/include/nodes/parsenodes.h.html#L1800" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__nodes__parsenodes_h__CommonTableExpr.html&quot;}, '*');"><code>CommonTableExpr</code></a> エントリを <a class="wiki-source-link" href="../../source/src/include/nodes/pg_list.h.html#L405" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/nodes/pg_list.h.html&quot;}, '*');"><code>foreach</code></a> ループで順に走査する。 2. **未使用 SELECT CTE のスキップ**:</p>
+<p>1. <strong>ループ処理</strong>: <code>root-&gt;parse-&gt;cteList</code> 内の各 <a class="wiki-source-link" href="../../source/src/include/nodes/parsenodes.h.html#L1800" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__nodes__parsenodes_h__CommonTableExpr.html&quot;}, '*');"><code>CommonTableExpr</code></a> エントリを <a class="wiki-source-link" href="../../source/src/include/nodes/pg_list.h.html#L405" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/nodes/pg_list.h.html&quot;}, '*');"><code>foreach</code></a> ループで順に走査する。 2. <strong>未使用 SELECT CTE のスキップ</strong>:</p>
 <ul>
 <li>参照回数 (<code>cterefcount</code>) が 0 であり、かつコマンド種別が <code>CMD_SELECT</code> の場合、インライン化や計画作成を行わない。</li>
 <li><code>root-&gt;cte_plan_ids</code> にダミーのエントリ <code>-1</code> を追加して次の反復へ進む。</li>
-<p>3. **インライン化の判定**:</p>
+<p>3. <strong>インライン化の判定</strong>:</p>
 <li>以下の条件をすべて満たす場合、CTE を <code>RTE_SUBQUERY</code> として親クエリにインライン展開する。</li>
 <li>ユーザー指定が <code>CTEMaterializeNever</code>、またはデフォルト（<code>CTEMaterializeDefault</code>）かつ参照回数が 1 であること。</li>
 <li>再帰的（<code>cterecursive</code>）ではないこと。</li>
@@ -80,11 +80,11 @@
 <li>参照回数が 1 以下であるか、あるいは外部への再帰的自己参照を含まないこと (<code>!contain_outer_selfref</code>)。</li>
 <li><a class="wiki-source-link" href="../../source/src/include/port/atomics/generic-msvc.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__port__atomics__generic-msvc_h__volatile.html&quot;}, '*');">volatile</a> 関数を含まないこと (<code>!contain_volatile_functions</code>)。</li>
 <li>インライン化された場合は <code>inline_cte(root, cte)</code> を呼び出し、<code>root-&gt;cte_plan_ids</code> に <code>-1</code> を追加して次へ進む。</li>
-<p>4. **独立した CTE プランの生成**:</p>
+<p>4. <strong>独立した CTE プランの生成</strong>:</p>
 <li>ソースの <code>Query</code> ノードをコピーする。</li>
 <li><code>subquery_planner</code> を呼び出して CTE クエリのパスとサブプランナ情報（<code>subroot</code>）を生成する。</li>
 <li><a class="wiki-source-link" href="../../source/src/backend/optimizer/util/relnode.c.html#L1616" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__relnode_c__fetch_upper_rel.html&quot;}, '*');"><code>fetch_upper_rel</code></a> および <code>create_plan</code> を用いて、最安パスから実行プラン (<code>Plan</code>) を構築する。</li>
-<p>5. **SubPlan ノードの構築と登録**:</p>
+<p>5. <strong>SubPlan ノードの構築と登録</strong>:</p>
 <li><code>SubPlan</code> ノード（<code>splan</code>）を新しく割り当て、<code>subLinkType = CTE_SUBLINK</code> や列型情報を設定する。</li>
 <li><a class="wiki-source-link" href="../../source/src/backend/optimizer/util/paramassign.c.html#L753" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__paramassign_c__assign_special_exec_param.html&quot;}, '*');"><code>assign_special_exec_param</code></a> でパラメータ ID を割り当て、<code>splan-&gt;setParam</code> に登録する。</li>
 <li>生成された <a class="wiki-source-link" href="../../source/src/test/regress/pg_regress.c.html#L164" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/test/regress/pg_regress.c.html&quot;}, '*');"><code>plan</code></a>、<code>best_path</code>、<code>subroot</code> をそれぞれ <code>root-&gt;glob</code> の対応するグローバルリストに付加する。</li>

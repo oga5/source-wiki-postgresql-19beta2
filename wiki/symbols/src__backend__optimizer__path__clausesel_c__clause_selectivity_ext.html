@@ -1,5 +1,5 @@
 <!doctype html>
-<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>symbols/src__backend__optimizer__path__clausesel_c__clause_selectivity_ext.md</title><link rel="stylesheet" href="../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../source/src/backend/optimizer/path/clausesel.c.html#L683" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__path__clausesel_c__clause_selectivity_ext.html&quot;}, '*');">clause_selectivity_ext</a></h1>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="10"><title>symbols/src__backend__optimizer__path__clausesel_c__clause_selectivity_ext.md</title><link rel="stylesheet" href="../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../source/src/backend/optimizer/path/clausesel.c.html#L683" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__path__clausesel_c__clause_selectivity_ext.html&quot;}, '*');">clause_selectivity_ext</a></h1>
 <h2>現在のソース事実</h2>
 <ul>
 <li>種別: <code>function</code></li>
@@ -65,15 +65,15 @@
 <li>キャッシュ可能な条件において、内部結合時の選択度は <a class="wiki-source-link" href="../../source/src/backend/optimizer/path/clausesel.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__path__clausesel_c__norm_selec.html&quot;}, '*');"><code>norm_selec</code></a> に、それ以外の結合時の選択度は <a class="wiki-source-link" href="../../source/src/backend/optimizer/path/clausesel.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__path__clausesel_c__outer_selec.html&quot;}, '*');"><code>outer_selec</code></a> にキャッシュされる。</li>
 </ul>
 <h2>アルゴリズムまたは振る舞い</h2>
-<p>1. **初期チェック**:</p>
+<p>1. <strong>初期チェック</strong>:</p>
 <ul>
 <li><a class="wiki-source-link" href="../../source/src/backend/optimizer/path/clausesel.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__path__clausesel_c__clause.html&quot;}, '*');"><code>clause</code></a> が <code>NULL</code> の場合、デフォルト選択度 <code>0.5</code> を返す。</li>
-<p>2. **RestrictInfo の処理とキャッシュ確認**:</p>
+<p>2. <strong>RestrictInfo の処理とキャッシュ確認</strong>:</p>
 <li><a class="wiki-source-link" href="../../source/src/backend/optimizer/path/clausesel.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__path__clausesel_c__clause.html&quot;}, '*');"><code>clause</code></a> が <code>RestrictInfo</code> の場合、<code>pseudoconstant</code> かつ非 <code>Const</code> であれば <code>1.0</code> を返す。</li>
 <li><code>varRelid == 0</code> であるか、<code>rinfo-&gt;num_base_rels == 0</code> であるか、あるいは <code>rinfo-&gt;num_base_rels == 1</code> かつ <code>varRelid</code> が <code>rinfo-&gt;clause_relids</code> に含まれる場合は結果のキャッシュを試みる。</li>
 <li>キャッシュが有効で既に計算済み（<code>norm_selec &gt;= 0</code> または <code>outer_selec &gt;= 0</code>）であれば、キャッシュされた選択度をそのまま返す。</li>
 <li>内部評価用に <a class="wiki-source-link" href="../../source/src/backend/optimizer/path/clausesel.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__path__clausesel_c__clause.html&quot;}, '*');"><code>clause</code></a> を <code>rinfo-&gt;orclause</code> または <code>rinfo-&gt;clause</code> にアンラップする。</li>
-<p>3. **式ノード型に応じた選択度計算のディスパッチ**:</p>
+<p>3. <strong>式ノード型に応じた選択度計算のディスパッチ</strong>:</p>
 <li><code>Var</code>: レベルおよび変数の関係IDが一致する場合、<a class="wiki-source-link" href="../../source/src/backend/utils/adt/selfuncs.c.html#L1584" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__utils__adt__selfuncs_c__boolvarsel.html&quot;}, '*');"><code>boolvarsel</code></a> を呼び出す。</li>
 <li><code>Const</code>: ブール定数の値（またはNULLか否か）に基づき <code>0.0</code> または <code>1.0</code> を設定する。</li>
 <li><code>Param</code>: <a class="wiki-source-link" href="../../source/src/backend/optimizer/util/clauses.c.html#L2659" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__clauses_c__estimate_expression_value.html&quot;}, '*');"><code>estimate_expression_value</code></a> で値の置き換えを試み、定数であればそれに応じた選択度とする。</li>
@@ -89,7 +89,7 @@
 <li><code>CurrentOfExpr</code>: 対象リレーションのタプル数に基づき高々1行の選択度（<code>1.0 / crel-&gt;tuples</code>）を算出する。</li>
 <li><code>RelabelType</code> および <a class="wiki-source-link" href="../../source/src/include/nodes/primnodes.h.html#L2046" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__nodes__primnodes_h__CoerceToDomain.html&quot;}, '*');"><code>CoerceToDomain</code></a>: 内部の引数式に対して再帰的に <a class="wiki-source-link" href="../../source/src/backend/optimizer/path/clausesel.c.html#L683" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__path__clausesel_c__clause_selectivity_ext.html&quot;}, '*');"><code>clause_selectivity_ext</code></a> を呼び出す。</li>
 <li>その他: <a class="wiki-source-link" href="../../source/src/backend/utils/adt/selfuncs.c.html#L1584" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__utils__adt__selfuncs_c__boolvarsel.html&quot;}, '*');"><code>boolvarsel</code></a> によるフォールバックを行う。</li>
-<p>4. **キャッシュの保存と返却**:</p>
+<p>4. <strong>キャッシュの保存と返却</strong>:</p>
 <li><code>cacheable</code> が真である場合、結合種別に応じて <code>rinfo-&gt;norm_selec</code> または <code>rinfo-&gt;outer_selec</code> に算出した選択度を格納する。</li>
 <li>最終的な選択度 <a class="wiki-source-link" href="../../source/src/include/common/pg_prng.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__common__pg_prng_h__s1.html&quot;}, '*');"><code>s1</code></a> を返す。</li>
 </ul>

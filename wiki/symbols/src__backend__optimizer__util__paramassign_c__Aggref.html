@@ -1,5 +1,5 @@
 <!doctype html>
-<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>symbols/src__backend__optimizer__util__paramassign_c__Aggref.md</title><link rel="stylesheet" href="../../styles.css"></head><body><h1>Aggref</h1>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="10"><title>symbols/src__backend__optimizer__util__paramassign_c__Aggref.md</title><link rel="stylesheet" href="../../styles.css"></head><body><h1>Aggref</h1>
 <h2>現在のソース事実</h2>
 <ul>
 <li>種別: <code>function</code></li>
@@ -80,12 +80,12 @@
 <li>新規作成時は、複製された <code>Var</code> の <code>varlevelsup</code> が <code>0</code> にリセットされる。</li>
 </ul>
 <h2>アルゴリズムまたは振る舞い</h2>
-<p>1. **クエリレベルの特定**: <code>var-&gt;varlevelsup</code> の回数だけ <code>root</code> ポインタを親方向（<code>parent_root</code>）へ移動させる。 2. **既存エントリの検索**: 到達したクエリレベルの <code>root-&gt;plan_params</code> リストを走査し、項目が <code>Var</code> でかつ各プロパティ（<code>varno</code>, <code>varattno</code>, <a class="wiki-source-link" href="../../source/src/backend/optimizer/util/tlist.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__tlist_c__vartype.html&quot;}, '*');"><code>vartype</code></a>, <code>vartypmod</code>, <code>varcollid</code>, <code>varreturningtype</code>, <code>varnullingrels</code>）が一致する <code>PlannerParamItem</code> を探す。一致するものが見つかった場合は、その <code>pitem-&gt;paramId</code> を即座に返す。 3. **新規パラメータ項目の作成**: 一致する既存エントリが存在しない場合、対象 <code>Var</code> を <a class="wiki-source-link" href="../../source/src/include/nodes/nodes.h.html#L228" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/nodes/nodes.h.html&quot;}, '*');"><code>copyObject</code></a> で複製し、<code>varlevelsup</code> を <code>0</code> に設定する。 4. **グローバル型リストおよびプランパラメータへの登録**:</p>
+<p>1. <strong>クエリレベルの特定</strong>: <code>var-&gt;varlevelsup</code> の回数だけ <code>root</code> ポインタを親方向（<code>parent_root</code>）へ移動させる。 2. <strong>既存エントリの検索</strong>: 到達したクエリレベルの <code>root-&gt;plan_params</code> リストを走査し、項目が <code>Var</code> でかつ各プロパティ（<code>varno</code>, <code>varattno</code>, <a class="wiki-source-link" href="../../source/src/backend/optimizer/util/tlist.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__tlist_c__vartype.html&quot;}, '*');"><code>vartype</code></a>, <code>vartypmod</code>, <code>varcollid</code>, <code>varreturningtype</code>, <code>varnullingrels</code>）が一致する <code>PlannerParamItem</code> を探す。一致するものが見つかった場合は、その <code>pitem-&gt;paramId</code> を即座に返す。 3. <strong>新規パラメータ項目の作成</strong>: 一致する既存エントリが存在しない場合、対象 <code>Var</code> を <a class="wiki-source-link" href="../../source/src/include/nodes/nodes.h.html#L228" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/nodes/nodes.h.html&quot;}, '*');"><code>copyObject</code></a> で複製し、<code>varlevelsup</code> を <code>0</code> に設定する。 4. <strong>グローバル型リストおよびプランパラメータへの登録</strong>:</p>
 <ul>
 <li>新しい <code>PlannerParamItem</code> ノードを割り当て、その <code>item</code> に複製した <code>Var</code> を設定する。</li>
 <li><code>pitem-&gt;paramId</code> に現在の <code>root-&gt;glob-&gt;paramExecTypes</code> の長さを割り当てる。</li>
 <li><code>root-&gt;glob-&gt;paramExecTypes</code> に <code>var-&gt;vartype</code> を追加し、<code>root-&gt;plan_params</code> に新しく作成した <code>pitem</code> を追加する。</li>
-<p>5. **完了**: 確定した <code>pitem-&gt;paramId</code> を返す。</p>
+<p>5. <strong>完了</strong>: 確定した <code>pitem-&gt;paramId</code> を返す。</p>
 </ul>
 <h2>失敗モードと境界条件</h2>
 <ul>

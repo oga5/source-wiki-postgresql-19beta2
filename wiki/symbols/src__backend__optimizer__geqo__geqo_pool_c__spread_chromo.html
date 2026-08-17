@@ -1,5 +1,5 @@
 <!doctype html>
-<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>symbols/src__backend__optimizer__geqo__geqo_pool_c__spread_chromo.md</title><link rel="stylesheet" href="../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../source/src/backend/optimizer/geqo/geqo_pool.c.html#L189" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__geqo__geqo_pool_c__spread_chromo.html&quot;}, '*');">spread_chromo</a></h1>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="10"><title>symbols/src__backend__optimizer__geqo__geqo_pool_c__spread_chromo.md</title><link rel="stylesheet" href="../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../source/src/backend/optimizer/geqo/geqo_pool.c.html#L189" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__geqo__geqo_pool_c__spread_chromo.html&quot;}, '*');">spread_chromo</a></h1>
 <h2>現在のソース事実</h2>
 <ul>
 <li>種別: <code>function</code></li>
@@ -58,14 +58,14 @@
 <li>プール内の染色体は <code>worth</code> の昇順（最良が先頭、最悪が末尾）にソートされていること。</li>
 </ul>
 <h2>アルゴリズムまたは振る舞い</h2>
-<p>1. **早期リターン評価**:</p>
+<p>1. <strong>早期リターン評価</strong>:</p>
 <ul>
 <li>新しい染色体の <code>worth</code> がプールの最悪値（<code>pool-&gt;data[pool-&gt;size - 1].worth</code>）より大きい場合、プール内で使用価値がないため何もせずに終了する。</li>
-<p>2. **二分探索による挿入位置の特定**:</p>
+<p>2. <strong>二分探索による挿入位置の特定</strong>:</p>
 <li><code>top</code>（0）、<code>mid</code>（中央）、<code>bot</code>（末尾）のインデックスを使用し、<code>index == -1</code> の間 <code>while</code> ループで探索を行う。</li>
 <li>4つの条件（<code>chromo-&gt;worth &lt;= pool-&gt;data[top].worth</code>、<code>== pool-&gt;data[mid].worth</code>、<code>== pool-&gt;data[bot].worth</code>、あるいは <code>bot - top &lt;= 1</code>）のいずれかに合致した位置を <a class="wiki-source-link" href="../../source/src/interfaces/ecpg/preproc/type.h.html#L96" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__interfaces__ecpg__preproc__type_h__index.html&quot;}, '*');"><code>index</code></a> として決定する。</li>
 <li>いずれにも合致しない場合、<code>chromo-&gt;worth</code> と <code>pool-&gt;data[mid].worth</code> の大小関係に応じて <code>top</code> または <code>bot</code> を更新し、<code>mid</code> を再計算して探索を継続する。</li>
-<p>3. **末尾プールの置換と要素のシフト**:</p>
+<p>3. <strong>末尾プールの置換と要素のシフト</strong>:</p>
 <li><a class="wiki-source-link" href="../../source/src/backend/optimizer/geqo/geqo_copy.c.html#L46" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__geqo__geqo_copy_c__geqo_copy.html&quot;}, '*');"><code>geqo_copy</code></a> を呼び出して、プールの最悪値の位置（<code>pool-&gt;size - 1</code>）に新しい <code>chromo</code> の内容をコピーする。</li>
 <li><code>swap_chromo</code> に一時退避させた末尾の遺伝子文字列と worth を用いて、特定された <a class="wiki-source-link" href="../../source/src/interfaces/ecpg/preproc/type.h.html#L96" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__interfaces__ecpg__preproc__type_h__index.html&quot;}, '*');"><code>index</code></a> からプール末尾にかけての各要素を順次後ろへスワップ（シフト）させ、順序を維持する。</li>
 </ul>

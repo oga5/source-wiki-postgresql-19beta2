@@ -1,390 +1,132 @@
 <!doctype html>
-<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>src/backend/access/nbtree/README</title><link rel="stylesheet" href="../../../../../../styles.css"></head><body><h1>Japanese translation</h1><p><code>src/backend/access/nbtree/README</code></p><p><a href="../../../../../../source/src/backend/access/nbtree/README.html" target="source-view">View original document</a></p><p class="document-translation-progress document-translation-incomplete">Translation in progress: 4/6 chunks complete. Pending chunks show their original text below.</p><div class="document-translation-body"><section class="document-translation-chunk translated" data-chunk-order="0"><p>src/backend/access/nbtree/README</p>
-<p>Btree インデックス ==================</p>
-<p>このディレクトリには、Lehman と Yao の高並行 B 木管理アルゴリズムの正しい実装が含まれています（P. Lehman and S. Yao, Efficient Locking for Concurrent Operations on B-Trees, ACM Transactions on Database Systems, Vol 6, No. 4, December 1981, pp 650-670）。また、Lanin と Shasha で記述されている削除ロジックの簡略版も使用しています（V. Lanin and D. Shasha, A Symmetric Concurrent B-Tree Algorithm, Proceedings of 1986 Fall Joint Computer Conference, pp 380-389）。</p>
-<p>基本的な Lehman &amp; Yao アルゴリズム ---------------------------------</p>
-<p>従来の B 木と比較して、L&amp;Y は各ページに右兄弟ページへの右リンクポインタを追加します。また、各ページに「ハイキー (high key)」を追加します。これは、そのページで許可されるキーの上限です。これら 2 つの追加により、並行して行われるページ分割を検出できるようになり、(読み取り中に単一のページが変更されるのを防ぐ場合を除き) 読み取りロックを保持せずに木を検索することが可能になります。</p>
-<p>検索時に子ページへのダウンリンクをたどる際、ページのハイキーと検索キーを比較します。検索キーがハイキーより大きい場合、そのページは並行して分割されたはずであり、探しているキー範囲を含む新しいページを見つけるために右リンクをたどる必要があります。ページが複数回分割されている場合は、これを繰り返す必要があるかもしれません。</p>
-<p>Lehman と Yao は、タプルやレコードではなく、内部ページ内の「セパレータ (separator)」キーとダウンリンクの交互配置について述べています。私たちは、ヒープタプルを指さず、木のナビゲーションのみに使用されるタプルを指すために「ピボット (pivot)」タプルという用語を使用します。非葉ページのすべてのタプルと、葉ページのハイキーはピボットタプルです。ピボットタプルは、キー空間のどの部分が各ページに属しているかを表すためだけに使用されるため、かつて VACUUM によって削除および無効化された非ピボットタプルから属性値をコピーすることができます。ピボットタプルには、「セパレータ」キーとダウンリンク、セパレータキーのみ (つまり、ダウンリンク値は暗黙的に未定義)、またはダウンリンクのみ (つまり、すべての属性が切り詰められている) が含まれる場合があります。</p>
-<p>すべての btree キーが一意であるという要件は、ヒープ TID をタイブレーカー属性として扱うことで満たされます。論理的な重複はヒープ TID 順にソートされます。Lehman と Yao はまた、部分木 S のキー範囲が親ページの隣接するキー Ki と Ki+1 を用いて $Ki &lt; v \le Ki+1$ と記述されることを要求しているため、これが必要となります (Ki は v より*厳密に*小さくなければならず、これは確実に一意なキーを持つことで保証されます)。キーは常に自身のレベルで一意ですが、葉ページのハイキーは例外であり、ページの最後のアイテムと完全に等しくなることができます。</p>
-<p>Postgres のサフィックス切り捨ての実装では、Lehman と Yao の不変条件が確実に成り立つようにする必要があり、ピボットタプル内の欠落/切り捨てられた属性がセンチネル値「マイナス無限大 (minus infinity)」を持つことを表現します。Lehman &amp; Yao の不変条件が実際の例でどのように機能するか不明な場合は、後のサフィックス切り捨てに関するセクションが役立ちます。</p>
-<p>Lehman &amp; Yao アルゴリズムとの違い ---------------------------------</p>
-<p>L&amp;Y アルゴリズムを Postgres に組み込むために、以下の変更を行いました。</p>
-<p>Lehman と Yao は読み取りロックを必要としませんが、木のページのメモリ内コピーが非共有であると仮定しています。Postgres はメモリ内バッファをバックエンド間で共有します。その結果、調査中のレコードが変更されないことを保証するために、btree ページに対してページレベルの読み取りロックを行います。これにより並行性は低下しますが、正しい動作が保証されます。</p>
-<p>挿入、削除、単純なルックアップだけでなく、インデックスの順序付き「スキャン」の概念もサポートしています。順方向のスキャンには問題ありません。L&amp;Y がとにかく要求する右兄弟ポインタを使用するだけです (したがって、スキャンの正しい開始点まで木を下降した後は、スキャンは葉ページのみを見上のレベルの木を見ることはありません)。逆方向のスキャンをサポートするために、「右兄弟」によく似た「左兄弟」リンクも格納します。(これにより、L&amp;Y の分割アルゴリズムに余分なステップが追加されます。分割されるページの書き込みロックを保持している間に、そのページの元の右兄弟もロックして、そのページの左リンクを更新します。そのページのどのライターも私たちのページの書き込みロックを取得することに関心がない可能性があるため、これは安全です。)逆方向のスキャンには、もう 1 つ複雑な点があります。左リンクをたどった後、読み取る前に左兄弟ページが分割されていた可能性を考慮しなければなりません。したがって、右リンクが元いたページと一致するページが見つかるまで、右に移動する必要があります。(実際、話はそれよりもさらに複雑です。後述のページ削除の議論を参照してください。)</p>
-<p>ページ読み取りロックは、スキャンがページを検査している間だけ保持されます。ロック/ロック解除のトラフィックを最小限に抑えるために、インデックススキャンは常に葉ページを検索して一致するすべてのアイテムを一度に特定し、それらのヒープタプル ID をバックエンドローカルストレージにコピーします。その後、インデックス内のページロックを保持せずに、ヒープタプル ID が処理されます。並行削除から保護するために、状況によっては葉ページのピンの保持を継続します (下記参照)。この状態では、スキャンはピン留めされたページの前または後のどちらかで、実質的にページ「間」で停止しています。アイテムが既存のページ境界を越えて移動されることはないため、並行挿入やページ分割が存在する場合でもこれは安全です。したがって、スキャンで見落とすべきアイテムを見逃したり、同じアイテムを誤って二度返したりすることはありません。スキャンは、スキャンされた時点でのページの右リンクを覚えておく必要があります。なぜなら、それが右に移動すべきページだからです。現在の右リンクに右に移動すると、ページ分割によって移動されたアイテムを再スキャンすることになります。また、左リンクも記憶しており、スキャンが後方に移動するときにそれをたどります (ただし、これには左兄弟の並行分割を考慮した追加の処理が必要です。詳細な左移動アルゴリズムを以下を参照してください)。</p>
-<p>ほとんどの場合、移動先のページのピンとロックを取得しようとする前に、ページのロックとピンを解放します。いくつかの場所では、現在のページを解放する前に次のページをロックする必要があります。これは右または上に移動するときは安全ですが、左または下に移動するときは安全ではありません (そうしないとデッドロックの可能性が生じます)。</p>
-<p>Lehman と Yao は、ルートページがいっぱいになり分割しなければならないときに何が起こるかについて議論していません。私たちの実装では、他のページが分割されるのと同じ方法でルートを分割し、その結果得られる両方のページ（これで木の次のレベルの兄弟になります）へのポインタを保持する新しいルートページを構築します。その後、メタデータページのルートポインタを変更することによって、新しいルートページがインストールされます（下記参照）。これが機能するのは、ルートが他の特別な方法で扱われないためです。特に、リンクが設定されている場合、検索はそのリンクポインタを使用して右に移動します。したがって、更新される前にメタデータページを読み取った場合でも、検索は右兄弟に移動されたデータを見つけることができます。これは、非ルートページの分割を安全にするのと同じ推論です。ロックの考慮事項も同様です。</p>
-<p>挿入者が木を再帰的に上がり、下のレベルに挿入されたページへのリンクを挿入するために内部ページを分割するとき、下降を開始したときのルート（より正確には、メタデータページを読み取ったときのルート）であったレベルよりも上のページにアクセスする必要が生じる可能性があります。この場合、下降中に作成したスタックは正しいページを見つけるのに役立ちません。これが発生した場合は、リンクを挿入する必要があるレベルの 1 つ上のレベルに達するまで木を再下降し、必要に応じて右に移動することで、正しい場所を見つけます。（通常、これにはメタデータページと新しいルートの 2 つのフェッチしかかかりませんが、原則として、ルートを確認してから複数のルート分割が発生している可能性があります。各ページに格納されているレベル番号によって、正しい木のレベルを識別できます。この状況は非常にまれであるため、より効率的な解決策は必要ありません。）</p>
-<p>Lehman と Yao は、木の上昇中に子ページのダウンリンクを再配置する際、右に移動するプロセスの一部としてロックを結合/連鎖させる必要があります。これは、Lehman と Yao が同時に 3 つのロック（子、元の親、元の親の右兄弟のロック）を保持しなければならない唯一のポイントです。ただし、同じレベルのページの内部ページロックを結合する必要はありません。私たちは、Lehman と Yao が最初の下降中にたどったダウンリンクに関連付けられたセパレータキーで一致させるのに対し、子のブロック番号を 1 つ上のレベルのピボットタプルからのダウンリンクと一致させます。再配置しなければならないセパレータキーが元の親のハイキーになるケースに対処する必要は決してないため、その右兄弟のロックを取得する前に、元の親ページのロックを解放できます。Lanin と Shasha もここではロックを結合せず、上昇中のレベル間のロックも結合しません。彼らは競合を避けるために「待って再試行」することをいといません。彼らのアルゴリズムは楽観的であり、それは「挿入は上昇中に一度に複数の書き込みロックを保持しない」ことを意味します。木を上昇するときに親と子のロックを保守的に結合するという Lehman と Yao のアプローチの方がはるかに単純であるため、私たちは多かれ少なかれそれに固執しています。</p>
-<p>Lehman と Yao は固定サイズのキーを想定していますが、私たちは可変サイズのキーに対処しなければなりません。したがって、ページあたりのキーの最大数は固定されていません。収まるだけの数を詰め込みます。ページを分割するとき、(サフィックス切り捨てりも考慮されますが) アイテム数ではなく、バイト数をページ間で均等化するように努めます。この計算に受信アイテムを含めなければならないことに注意してください。そうしないと、受信アイテムが移動する必要のある分割ページに収まらないことが判明する可能性があります。</p>
-<p>VACUUM 中のインデックスタプルの削除 ---------------------------------</p>
-<p>葉アイテムを削除する前に、ターゲットページに対する完全なクリーンアップロックを取得し、削除の開始時に他のバックエンドがそのページに対するピンを持たないようにします。これは、btree インデックス操作自体の正確性の観点からは必須ではありません。上記で説明したように、インデックススキャンは論理的にページ「間」で停止するため、位置を見失うことはありません。これを行う理由は、ヒープを訪れるときに並行 TID リサイクルに対処する準備ができていないインデックススキャンと VACUUM の間のインターロックを提供するためです。ヒープ内で指されているアイテムを LP_UNUSED としてマークできるのは VACUUM だけであり、これが btbulkdelete が戻った*後*にのみ発生するため、インデックススキャンが（葉ページから読み取る際に使用される）ピンを、ヒープへの訪問が完了する*後*（ピン留めされた葉ページからの TID のため）まで保持し続けることで、並行 TID リサイクルを防ぎます。インデックススキャンが葉ページの処理を完全に終了するまで、VACUUM は競合するクリーンアップロックを取得できません。</p>
-<p>このアプローチはかなり粗いため、可能な限り回避します。実際には、ほとんどのインデックススキャンはピンを保持しないため、VACUUM をブロックしません。これらのインデックススキャンは、より複雑で常に可能とは限らない TID リサイクルに対処する必要があります。並行 TID リサイクルを安全にする方法についての後のセクションを参照してください。</p>
-<p>日和見的なインデックスタプルの削除は、排他ロックのみを保持しながら、ほぼ同じページレベルの変更を実行します。後で TID リサイクルが行われる問題がないため、これは安全です。TID をリサイクル可能にできるのは VACUUM のみです。また、下記の単純削除およびボトムアップ削除も参照してください。</p></section><section class="document-translation-chunk translated" data-chunk-order="1"><p>ピンは常に保持されているわけではなく、ピンが保持されている最中でもページが分割される可能性があるため、インデックススキャンは、ピンを保持しているページ上にはもはや格納されておらず、そのページの右側のどこかに格納されているアイテムを返す可能性があります。VACUUMがこのシナリオでTIDを時期尚早に再利用可能にしないようにすることを保証するため、削除可能なタプルをまったく含まないページであっても、インデックス内のすべてのリーフページに対してbtbulkdeleteがクリーンアップロックを取得することを要求します。この要件は、btbulkdeleteが特定の順序でページを訪問しなければならないことを意味するものではないことに注意してください。</p>
-<p>VACUUMの線形スキャン、並行ページ分割 --------------------------------------------</p>
-<p>VACUUMは、削除可能なTIDを検索するための線形スキャンを実行しつつ、ついでに空ページの削除の可能性を考慮することで、インデックスにアクセスします。これは論理的/キースペース順ではなく、物理的/ブロック順です。この部分の難しいところは、並行したページ分割が存在する場合に、削除可能なタプルを一切見逃さないようにすることです。ページ分割によって、まだシーケンシャルスキャンが通過していないページから、すでに通過した番号の小さいページへいくつかのタプルが簡単に移動してしまう可能性があるためです。</p>
-<p>これを実装するために、現在のbtbulkdeleteサイクルが開始されてからページが分割されたかどうかを判断できるようにする「バキュームサイクルID」メカニズムを提供します。btbulkdeleteが開始以降に分割され、かつ下位のページ番号を指す右リンクを持つページを見つけた場合、それは一時的にシーケンシャルスキャンを中断し、代わりにそのページを訪問します。btbulkdeleteが開始されてから分割されていないか、あるいは外部シーケンシャルスキャンの位置よりも上にあるページに到達するまで、右リンクをたどり続け、デッドタプルをバキュームしなければなりません。その後、シーケンシャルスキャンを再開できます。これにより、すべてのタプルが確実に訪問されます。一部のタプルが二重に訪問される可能性はありますが、それは不正確なインデックスタプル数以上の悪影響を与えません（また、並行アクティビティがある状況では、そもそも正確な数を保証することはできません）。最近分割されたかどうかのテストが偽陽性になる確率が低ければ、決して偽陰性を返さない限り、これで依然として機能することに注意してください。これにより、各インデックスページに格納された小さなカウンター値を使用してテストを実装することが可能になります。</p>
-<p>VACUUM中のページ全体の削除 -----------------------------------</p>
-<p>Bツリーからページ全体を削除することは、アイテムが完全に空になった場合にのみ検討します。（部分的に満たされたページをマージすればスペースの再利用性が向上しますが、これを実現するために既存のデータアイテムを左右に移動することは現実的ではないように思われます。逆方向に移動するスキャンがアイテムを見逃してしまう可能性があるためです。）また、ツリーレベルの最右ページは*決して*削除しません（この制限により、後述するように走査アルゴリズムが単純化されます）。ページ削除は常に空のリーフページから始まります。内部ページは、サブツリー全体を削除する一部としてのみ削除できます。これは常に、内部ページの「チェイン」と単一のリーフページで構成される「細い」サブツリーです。サブツリーの各レベルには1つのページがあり、各レベル/ページは同じキースペースをカバーしています。</p>
-<p>リーフページの削除は2段階のプロセスです。第1段階では、ページはその親からリンク解除され、半死状態（half-dead）としてマークされます。親ページは、挿入時の分割中に親を見つけるために使用されるのと同じタイプの検索を使用して見つける必要があります。ターゲットページと親ページをロックし、ターゲットの下向きリンク（downlink）が右側の兄弟を指すように変更し、古い下向きリンクを削除します。これにより、ターゲットページのキースペースは実質的にその右側の兄弟のものになります。（左右の兄弟ページは、もしあれば「ハイキー」を変更する必要はありません。したがって、ハイキーを置き換えるための十分なスペースがないかもしれないという問題はありません。）同時に、ターゲットページを半死状態としてマークしこれにより、後続の検索はそれを無視して右（逆方向スキャンでは左）に移動するようになります。これにより、ツリーはページ分割中と同様の状態になります。すなわち、ページを指す下向きリンクはありませんが、兄弟へのリンクは維持されています。</p>
-<p>（注：LaninとShashaはキースペースを左に移動することを好みますが、そう主張する根拠は、いずれにせよ持っている左リンクを持たないことに依存しています。そのため、キースペースを右に移動することでアルゴリズムを単純化しています。これが可能なのは、ページ分割時にツリーを昇る際、LehmanやYao / Lanin and Shashaとは異なり、区切りキー（separator key）で一致をとらないためです。インセンターが最初にツリーを下降したときに遭遇した区切りキーと一致しないピボットタプル内で下向きリンクが再発見されても問題ありません。）</p>
-<p>親レベルでの一貫性を維持するため、右側の兄弟が同じ親の子でない限り、ページのキースペースをその右側の兄弟にマージすることはできません。そうでない場合、親のキースペースの割り当てり当ても変更されることになり、その親、そしておそらくツリーのずっと上まで境界キーの更新を行わなければならなくなります。これをアトミックに行うことは不可能であるため、このケースは禁止します。つまり、親ノードの最右の子は、それが残された唯一の子でない限り削除できません。唯一の子である場合は、親も削除します（下記参照）。</p>
-<p>第2段階では、半死状態のリーフページがその兄弟からリンク解除されます。まず、ターゲットの左の兄弟（もしあれば）、ターゲットページ自体、およびその右の兄弟（存在しなければなりません）の順にロックを取得します。次に、兄弟のサイドリンクを更新し、ターゲットページを削除済みとしてマークします。</p>
-<p>親ページの最後の子を削除しようとしているときは、状況が少し複雑になります。第1段階では、リーフページの直近の親はそのままで、代わりに親ページへの下向きリンクを祖父母から削除します。それが祖父母の最後の子でもある場合も、複数の子を持つ親が見つかるまで再帰的に上に遡り、そのページの下向きリンクを削除します。リーフページは半死状態としてマークされ、下向きリンクが削除されたページのブロック番号が半死状態のリーフページに隠し持たれます（スタッシュされます）。これにより、それぞれ1つの下向きリンクを持つ内部ページのチェーンが半死状態のリーフページにつながり、チェーン内の最上位ページを指す下向きリンクが存在しない状態が残ります。</p>
-<p>チェーン内の最上位の親を見つけるために再帰的に上に遡る間、リーフページをロックし続けますが、リーフと最上位の親の間の中間ページのロックを保持する必要はありません。上位ツリーレベルへの挿入は子ページの分割の結果としてのみ発生し、リーフをロックし続けている限りそれは発生しないためです。リーフページが半死状態としてマークされ分割されないため、チェーン内の内部ページが後から新しい子を獲得することもありません。</p>
-<p>削除対象のサブツリー/チェーンのトップへの下向きリンクを削除すると、1つのアトミック操作で、中間レベルのすべてについても実質的にキースペースが右側の兄弟に転送されます。並行検索が中間ページをまだ訪れる可能性はありますが、リーフレベルの半死状態のページに到達すると右に移動します。具体的には、半死状態のリーフページの右側の兄弟は「真の」兄弟ページではなく（または削除対象のチェーンがリーフルの祖父母ページから始まる場合は「従兄弟の」ページなど）、必ず「従兄弟（クズン）」ページでなければならないため、検索は半死状態のリーフページの右側/削除対象サブツリーの右側にあるサブツリーに移動します。</p>
-<p>第2段階では、チェーン内の最上位ページがその兄弟からリンク解除され、半死状態のリーフページがチェーン内の次の下位ページを指すように更新されます。これが、チェーン内に内部ページがなくなるまで繰り返されます。最後に、半死状態のリーフページ自体がその兄弟からリンク解除されます。</p>
-<p>他のプロセス（親を離れたばかりの検索プロセスや、兄弟のいずれかから右や左へ移動するスキャンなど）がそれを参照して待機している可能性があるため、削除されたページを即座に再利用することはできません。これらのプロセスは、少なくともそこから回復できるようにするために、削除操作の後もしばらくの間、削除されたページを観測できなければなりません（これらは並行ページ分割の場合と同様に、右に移動することで回復します）。サーチャーが並行ページリサイクルについて心配する必要は一切ありません。</p>
-<p>削除されたページがVACUUMによって安全に再利用可能になる時期と方法の説明については、以下の「FSMへの削除されたページの配置」セクションを参照してください。</p>
-<p>ページ削除と逆方向スキャン ---------------------------------</p>
-<p>逆方向スキャンで左に移動することは複雑です。なぜなら、左の兄弟がちょうど分割された可能性（つまり、左の兄弟から派生した最右ページを見つけなければならないことを意味します）に加え、先ほどまでいたページが現在削除されており、したがって兄弟チェーンにまったく存在しなくなった可能性を考慮しなければならないからです。したがって、左移動アルゴリズムは以下のようになります。</p>
-<p>0. 現在いるページを「元のページ」として記憶します。 1. 元のページの左リンクをたどります（これがゼロであれば完了です）。 2. 現在のページが生きており、その右リンクが「元のページ」と一致していれば完了です。 3. そうでなければ、右リンクが「元のページ」と一致する生きているページを探して、右に1回以上移動します。見つかった場合は完了です。（原則としてインデックスの右端までスキャンすることも可能ですが、実際には少回数の試行ののちにあきらめる方が良さそうです。私たちがそこへ向かっている最中に、元のページの兄弟が数回より多く分割されたとは考えにくく、数回の試行で一致するリンクが見つからない場合、元のページが削除されている可能性が最も高いからです。） 4. 「元のページ」に戻ります。それがまだ生きていれば、ステップ1に戻ります（削除されているという推測が外れていたため、現在の左リンクで再開すべきです）。それがデッドであれば、デッドではないページが見つかるまで右に移動し（最右ページは決して削除されないため、必ず存在します）、それを新しい「元のページ」としてマークし、ステップ1に戻ります。</p>
-<p>このアルゴリズムが正しいのは、ステップ4で見つかった生きているページが、私たちが開始したページと同じ左キースペース境界を持つためです。したがって、最終的に終了するとき、開始した場所の左境界と一致する右キースペース境界を持つページにいることになります。これは、アイテムの取りこぼしや再スキャンを行わないことを確実にするために必要なことです。</p>
-<p>ページ削除とツリーの高さ ---------------------------------------------</p>
-<p>どのレベルの最右ページも決して削除しない（特にルートを決して削除しない）ため、ツリーの高さが減少することは不可能です。大量の削除の後、ルートの下に単一ページのレベルがいくつかある「細い」ツリーのシナリオが発生する可能性があります。この場合でも操作は正しく行われますが、単一ページのレベルを下降するサイクルが無駄になります。これに対処するため、LaninとHashaのアイデアを使用します。最も低い単一ページレベルである「高速ルート（fast root）」レベルを追跡します。メタデータページは、真のルートだけでなく、このレベルへのポインタも保持しています。通常の操作はすべて、真のルートではなく高速ルートで検索を開始します。レベル上で単独であるページを分割したり、レベル上の最後から2番目のページを削除したりする場合（どちらのケースも容易に検出されます）、高速ルートポインタが適切に調整されるようにしなければなりません。分割の場合、親レベルへの挿入のためのアトミック更新の一部としてこの作業を行い、削除の場合、削除のためのアトミック更新の一部として行います（いずれの場合も、デッドロックのリスクを避けるために、メタページは更新で最後にロックされるページでなければなりません）。これにより、このような2つの操作が同時に実行されている場合の競合状態を回避できます。</p>
-<p>FSMへの削除されたページの配置 ---------------------------------</p>
-<p>ページの再利用は、ページの削除とは切り離されています。削除されたページは、それを参照している可能性のあるスキャンや検索が一切存在しなくなったときに初めて、再利用のためにFSMに配置できます。それまでは、並行検索が並行削除（検索者にとっては並行ページ分割のようなものです）を検出し、そこから回復することを可能にする墓石（tombstone）として、兄弟リンクを乱さずにその場に留まらなければなりません。この設計は、LaninとShashaが「ドレイン技術」と呼ぶものの実装です。</p></section><section class="document-translation-chunk pending" data-chunk-order="2"><h2>Chunk 3: translation pending</h2><p>This chunk has not been translated yet. Original text:</p><pre class="document-translation-text">We implement the technique by waiting until all active snapshots and
-registered snapshots as of the page deletion are gone; which is overly
-strong, but is simple to implement within Postgres.  When marked fully
-dead, a deleted page is labeled with the next-transaction counter value.
-VACUUM can reclaim the page for re-use when the stored XID is guaranteed
-to be &quot;visible to everyone&quot;.  As collateral damage, we wait for snapshots
-taken until the next transaction to allocate an XID commits.  We also wait
-for running XIDs with no snapshots.
-
-Prior to PostgreSQL 14, VACUUM would only place _old_ deleted pages that
-it encounters during its linear scan (pages deleted by a previous VACUUM
-operation) in the FSM.  Newly deleted pages were never placed in the FSM,
-because that was assumed to _always_ be unsafe.  That assumption was
-unnecessarily pessimistic in practice, though -- it often doesn&#x27;t take
-very long for newly deleted pages to become safe to place in the FSM.
-There is no truly principled way to predict when deleted pages will become
-safe to place in the FSM for recycling -- it might become safe almost
-immediately (long before the current VACUUM completes), or it might not
-even be safe by the time the next VACUUM takes place.  Recycle safety is
-purely a question of maintaining the consistency (or at least the apparent
-consistency) of a physical data structure.  The state within the backend
-running VACUUM is simply not relevant.
-
-PostgreSQL 14 added the ability for VACUUM to consider if it&#x27;s possible to
-recycle newly deleted pages at the end of the full index scan where the
-page deletion took place.  It is convenient to check if it&#x27;s safe at that
-point.  This does require that VACUUM keep around a little bookkeeping
-information about newly deleted pages, but that&#x27;s very cheap.  Using
-in-memory state for this avoids the need to revisit newly deleted pages a
-second time later on -- we can just use safexid values from the local
-bookkeeping state to determine recycle safety in a deferred fashion.
-
-The need for additional FSM indirection after a page deletion operation
-takes place is a natural consequence of the highly permissive rules for
-index scans with Lehman and Yao&#x27;s design.  In general an index scan
-doesn&#x27;t have to hold a lock or even a pin on any page when it descends the
-tree (nothing that you&#x27;d usually think of as an interlock is held &quot;between
-levels&quot;).  At the same time, index scans cannot be allowed to land on a
-truly unrelated page due to concurrent recycling (not to be confused with
-concurrent deletion), because that results in wrong answers to queries.
-Simpler approaches to page deletion that don&#x27;t need to defer recycling are
-possible, but none seem compatible with Lehman and Yao&#x27;s design.
-
-Placing an already-deleted page in the FSM to be recycled when needed
-doesn&#x27;t actually change the state of the page.  The page will be changed
-whenever it is subsequently taken from the FSM for reuse.  The deleted
-page&#x27;s contents will be overwritten by the split operation (it will become
-the new right sibling page).
-
-Making concurrent TID recycling safe
-------------------------------------
-
-As explained in the earlier section about deleting index tuples during
-VACUUM, we implement a locking protocol that allows individual index scans
-to avoid concurrent TID recycling.  Index scans opt-out (and so drop their
-leaf page pin when visiting the heap) whenever it&#x27;s safe to do so, though.
-Dropping the pin early is useful because it avoids blocking progress by
-VACUUM.  This is particularly important with index scans used by cursors,
-since idle cursors sometimes stop for relatively long periods of time.  In
-extreme cases, a client application may hold on to an idle cursors for
-hours or even days.  Blocking VACUUM for that long could be disastrous.
-
-Index scans that don&#x27;t hold on to a buffer pin are protected by holding an
-MVCC snapshot instead.  This more limited interlock prevents wrong answers
-to queries, but it does not prevent concurrent TID recycling itself (only
-holding onto the leaf page pin while accessing the heap ensures that).
-
-Index-only scans can never drop their buffer pin, since they are unable to
-tolerate having a referenced TID become recyclable.  Index-only scans
-typically just visit the visibility map (not the heap proper), and so will
-not reliably notice that any stale TID reference (for a TID that pointed
-to a dead-to-all heap item at first) was concurrently marked LP_UNUSED in
-the heap by VACUUM.  This could easily allow VACUUM to set the whole heap
-page to all-visible in the visibility map immediately afterwards.  An MVCC
-snapshot is only sufficient to avoid problems during plain index scans
-because they must access granular visibility information from the heap
-proper.  A plain index scan will even recognize LP_UNUSED items in the
-heap (items that could be recycled but haven&#x27;t been just yet) as &quot;not
-visible&quot; -- even when the heap page is generally considered all-visible.
-
-LP_DEAD setting of index tuples by the kill_prior_tuple optimization
-(described in full in simple deletion, below) is also more complicated for
-index scans that drop their leaf page pins.  We must be careful to avoid
-LP_DEAD-marking any new index tuple that looks like a known-dead index
-tuple because it happens to share the same TID, following concurrent TID
-recycling.  It&#x27;s just about possible that some other session inserted a
-new, unrelated index tuple, on the same leaf page, which has the same
-original TID.  It would be totally wrong to LP_DEAD-set this new,
-unrelated index tuple.
-
-We handle this kill_prior_tuple race condition by having affected index
-scans conservatively assume that any change to the leaf page at all
-implies that it was reached by btbulkdelete in the interim period when no
-buffer pin was held.  This is implemented by not setting any LP_DEAD bits
-on the leaf page at all when the page&#x27;s LSN has changed.  (This is why we
-implement &quot;fake&quot; LSNs for unlogged index relations.)
-
-Fastpath For Index Insertion
-----------------------------
-
-We optimize for a common case of insertion of increasing index key
-values by caching the last page to which this backend inserted the last
-value, if this page was the rightmost leaf page. For the next insert, we
-can then quickly check if the cached page is still the rightmost leaf
-page and also the correct place to hold the current value. We can avoid
-the cost of walking down the tree in such common cases.
-
-The optimization works on the assumption that there can only be one
-non-ignorable leaf rightmost page, and so not even a visible-to-everyone
-style interlock is required.  We cannot fail to detect that our hint was
-invalidated, because there can only be one such page in the B-Tree at
-any time. It&#x27;s possible that the page will be deleted and recycled
-without a backend&#x27;s cached page also being detected as invalidated, but
-only when we happen to recycle a block that once again gets recycled as the
-rightmost leaf page.
-
-Simple deletion
----------------
-
-If a process visits a heap tuple and finds that it&#x27;s dead and removable
-(ie, dead to all open transactions, not only that process), then we can
-return to the index and mark the corresponding index entry &quot;known dead&quot;,
-allowing subsequent index scans to skip visiting the heap tuple.  The
-&quot;known dead&quot; marking works by setting the index item&#x27;s lp_flags state
-to LP_DEAD.  This is currently only done in plain indexscans, not bitmap
-scans, because only plain scans visit the heap and index &quot;in sync&quot; and so
-there&#x27;s not a convenient way to do it for bitmap scans.  Note also that
-LP_DEAD bits are often set when checking a unique index for conflicts on
-insert (this is simpler because it takes place when we hold an exclusive
-lock on the leaf page).
-
-Once an index tuple has been marked LP_DEAD it can actually be deleted
-from the index immediately; since index scans only stop &quot;between&quot; pages,
-no scan can lose its place from such a deletion.  We separate the steps
-because we allow LP_DEAD to be set with only a share lock (it&#x27;s like a
-hint bit for a heap tuple), but physically deleting tuples requires an
-exclusive lock.  We also need to generate a snapshotConflictHorizon for
-each deletion operation&#x27;s WAL record, which requires additional
-coordinating with the tableam when the deletion actually takes place.
-(snapshotConflictHorizon value may be used to generate a conflict during
-subsequent REDO of the record by a standby.)
-
-Delaying and batching index tuple deletion like this enables a further
-optimization: opportunistic checking of &quot;extra&quot; nearby index tuples
-(tuples that are not LP_DEAD-set) when they happen to be very cheap to
-check in passing (because we already know that the tableam will be
-visiting their table block to generate a snapshotConflictHorizon).  Any
-index tuples that turn out to be safe to delete will also be deleted.
-Simple deletion will behave as if the extra tuples that actually turn
-out to be delete-safe had their LP_DEAD bits set right from the start.
-
-Deduplication can also prevent a page split, but index tuple deletion is
-our preferred approach.  Note that posting list tuples can only have
-their LP_DEAD bit set when every table TID within the posting list is
-known dead.  This isn&#x27;t much of a problem in practice because LP_DEAD
-bits are just a starting point for deletion.  What really matters is
-that _some_ deletion operation that targets related nearby-in-table TIDs
-takes place at some point before the page finally splits.  That&#x27;s all
-that&#x27;s required for the deletion process to perform granular removal of
-groups of dead TIDs from posting list tuples (without the situation ever
-being allowed to get out of hand).
-
-Bottom-Up deletion
-------------------
-
-We attempt to delete whatever duplicates happen to be present on the page
-when the duplicates are suspected to be caused by version churn from
-successive UPDATEs.  This only happens when we receive an executor hint
-indicating that optimizations like heapam&#x27;s HOT have not worked out for
-the index -- the incoming tuple must be a logically unchanged duplicate
-which is needed for MVCC purposes, suggesting that that might well be the
-dominant source of new index tuples on the leaf page in question.  (Also,
-bottom-up deletion is triggered within unique indexes in cases with
-continual INSERT and DELETE related churn, since that is easy to detect
-without any external hint.)
-
-Simple deletion will already have failed to prevent a page split when a
-bottom-up deletion pass takes place (often because no LP_DEAD bits were
-ever set on the page).  The two mechanisms have closely related
-implementations.  The same WAL records are used for each operation, and
-the same tableam infrastructure is used to determine what TIDs/tuples are
-actually safe to delete.  The implementations only differ in how they pick
-TIDs to consider for deletion, and whether or not the tableam will give up
-before accessing all table blocks (bottom-up deletion lives with the
-uncertainty of its success by keeping the cost of failure low).  Even
-still, the two mechanisms are clearly distinct at the conceptual level.
-
-Bottom-up index deletion is driven entirely by heuristics (whereas simple
-deletion is guaranteed to delete at least those index tuples that are
-already LP_DEAD marked -- there must be at least one).  We have no
-certainty that we&#x27;ll find even one index tuple to delete.  That&#x27;s why we
-closely cooperate with the tableam to keep the costs it pays in balance
-with the benefits we receive.  The interface that we use for this is
-described in detail in access/tableam.h.
-
-</pre></section><section class="document-translation-chunk translated" data-chunk-order="3"><p>ボトムアップのインデックス削除は、不要なバージョン起因のページ分割に対するバックストップ（防護策）メカニズムと考えることができます。これは、世代別ガベージコレクションのアイデアである「世代仮説」に一部基づいています。これは「ほとんどのオブジェクトは若くして死ぬ」という経験的な観察です。nbtree内では、新しいインデックスツプルが同じ場所にすぐに現れ、その後すぐにガベージになることがよくあります。特定のワークロードでは、比較的少数のリーフページにガベージが激しく集中することがあります（少なくとも、ボトムアップのインデックス削除がなかった以前のバージョンのPostgreSQLではそうでした）。nbtreeにおけるボトムアップのインデックス削除の背後にある設計原則のハイレベルな説明については、それがどのようにVACUUMを補完するかの詳細を含め、doc/src/sgml/btree.sgmlを参照してください。</p>
-<p>各ボトムアップパス内で、削除しても安全なツプルが適度に多く見つかることを期待しています。そうでない場合、同じリーフページに対するボトムアップ削除の検討は、しばらくの間必要なくなります（通常はページが分割され、当面の間状況が解決するためです）。バージョンチャーン（頻繁な更新）のみによって引き起こされる不要なページ分割の危険に常にさらされているページに対して、定期的なボトムアップ削除操作を実行することを期待しています。このメカニズムがうまく機能すると、バージョンチャーン起因のページ分割が発生する「寸前」の状態が常に維持されますが、実際に分割が発生することは一度もありません。</p>
-<p>重複ヒューリスティックは、かなり単純であるにもかかわらず、うまく機能します。不要なページ分割は、真に病的なレベルのバージョンチャーンがある場合にのみ発生します（理論的には、少量のバージョンチャーンによって、厳密に必要とされるよりも早くページ分割が発生する可能性がありますが、それはほとんど無害です）。基礎となるワークロードを理解する必要はありません。ターゲットとする病的な状態の一般的な性質を理解するだけで十分です。バージョンチャーンが真に病的である場合、それを特定するのは容易です。影響を受けるリーフページはかなり均質です。</p>
-<p>WAL Considerations ------------------</p>
-<p>挿入および削除アルゴリズム自体は、クラッシュ後のbtreeの一貫性を保証しません。堅牢性を提供するために、WALリプレイに依存しています。単一のWALエントリは事実上アトミックなアクションであり、完了しなかった場合はログから再実行（redo）できます。</p>
-<p>（ページ分割を強制しない）通常のアイテム挿入は、1つのページにしか影響しないため、当然ながら単一のWALエントリです。リーフアイテムの削除も同様です（削除によってリーフページのアイテムがゼロになった場合、そのページは削除の候補になりますが、それは別のアクションです）。</p>
-<p>ページ分割を引き起こす挿入は、挿入が行われるレベルで発生する変更（右の兄弟のleft-linkの更新を含む）に対する単一のWALエントリとしてログに記録され、その後に親レベルでの挿入（それ自体がページ分割となり、その上にさらに挿入が必要になる場合などもあります）に対する2番目のWALエントリが続きます。</p>
-<p>ルート分割の場合、後続のWALエントリは「挿入」エントリではなく「新しいルート」エントリになりますが、それ以外の詳細はほぼ同じです。</p>
-<p>分割には複数のアトミックなアクションが含まれるため、ページの分割と、新しい半分のページに対する親へのダウンリンクの挿入との間でシステムがクラッシュする可能性があります。リカバリ後、新しいページのダウンリンクは失われた状態になります。検索アルゴリズムは正しく動作します。なぜなら、左の兄弟から右リンク（right-link）をたどることでページが見つかるからです。ただし、ツリー内の多くのダウンリンクが失われていると、パフォーマンスが低下します。より深刻な結果として、ダウンリンクのないページが再び分割された場合、挿入アルゴリズムは親レベルでダウンリンクを挿入する場所を見つけることができなくなります。</p>
-<p>私たちの手法は、新しい挿入のためにツリーを検索する際に、欠落しているダウンリンクをオンザフライで作成することです。検索中にこれを行うことも可能ですが、本来は読み取り専用である操作に余分な更新を入れないのが最善であると思われます（いずれにせよ、ホットスタンバイモードでは更新は不可能です）。VACUUMで欠落しているダウンリンクを追加するのが自然に思えるかもしれませんが、ダウンリンクの挿入にはページ分割が必要になる場合があるため、ディスクスペースが不足していると失敗する可能性があります。これはVACUUM中には好ましくありません。そもそもVACUUMを実行する理由がディスクスペース不足である可能性があり、ディスクスペース不足のためにVACUUMが完了しなくなってしまうからです。対照的に、挿入ではいずれにせよ物理ファイルを拡張する必要がある場合があります。1つだけ小さな例外があります。VACUUMは、内部ページの子を削除する際に、中断された内部ページの分割を完了させます。これにより、親アイテムを再検索するためのコードを、ページ分割とページ削除の両方で共有できるようになります。</p>
-<p>欠落しているダウンリンクを特定するために、ページが分割されるとき、分割がまだ完了していないことを示すフラグ（INCOMPLETE_SPLIT）が左のページに設定されます。ダウンリンクが親に挿入されると、このフラグは挿入と同時にアトミックにクリアされます。子ページは、親への挿入が完了し、子ページのフラグがクリアされるまでロックされたままになりますが、その後は、親も分割する必要がある場合にツリーを上に再帰する前に、すぐに解放できます。これにより、通常の状況下では不完全に分割されたページが表示されないようになります。親への挿入が何らかの理由で失敗した場合にのみ表示されます。（リカバリ中にリーダーが不完全分割フラグが設定されたページを観察することも可能です。詳細については、後述の「リカバリ中のスキャン」セクションを参照してください。）</p>
-<p>ダウンリンクが欠落しているのは右のページであるにもかかわらず、左のページにフラグを設定するのは、左のページから右のページへの右リンクをたどる時点で、そのページのダウンリンクを親に挿入する必要があることを事前に知っておく方が便利だからです。</p>
-<p>そのレベルに1つしか存在しない非ルートページを分割する場合、必要なメタページ更新（「ファストルート」リンクの更新）は、親レベルへの挿入の一部として実行され、ログに記録されます。ルートページを分割する場合、メタページ更新は「新しいルート」アクションの一部として処理されます。</p>
-<p>ページ削除の各ステップは、個別のWALエントリとしてログに記録されます。リーフをハーフデッド（half-dead）としてマークし、ダウンリンクを削除するのが1つのレコードであり、ページのリンクを解除するのが2番目のレコードです。何らかの理由でvacuumが中断されたり、システムがクラッシュしたりしても、ツリーは検索と挿入に対して一貫した状態を保ちます。次のVACUUMがハーフデッドなリーフページを見つけ、削除を継続します。</p>
-<p>9.4より前は、リカバリ中に不完全な分割やページ削除を追跡し、次の挿入やvacuumで遅延して行うのではなく、リカバリの終了時にすぐに完了させていました。しかし、これによってリカバリが非常に複雑になり、クラッシュリカバリが実行された場合にのみ問題が解決されることになりました。不完全な分割は、親へのダウンリンクの挿入中に、メモリ不足やディスクスペース不足などの、それ以外は回復可能なエラーが発生した場合にも発生する可能性があります。</p>
-<p>Scans during Recovery ---------------------</p>
-<p>nbtreeインデックスは、ホットスタンバイモードでの読み取りクエリをサポートしています。すべてのアトミックなアクション/WALレコードは、リーダーに対してツリーを一貫した状態に保つ孤立した変更を行います。リーダーは、プライマリでリーダーが従うのと同じルールに従ってページをロックします。（プライマリと同様に、リーダーは「同時実行」のページ分割やページ削除から回復するために右に移動しなければならない場合があります。）</p>
-<p>ただし、プライマリでの元の書き込み操作と比較して、リプレイ/スタートアッププロセスによるページのロック方法にはいくつかの違いがあります。例外はページ分割とページ削除に関連しています。ページ分割の第1フェーズと第2フェーズは、独立したアトミックアクションであるため、リプレイ中に独立して処理されます。プライマリで発生した親ページと子ページの書き込みロックの結合を再現することは試みません。これは、リーダーはいずれにせよ不完全分割フラグを気にしないため安全です。プライマリで余分な書き込みロックを保持し続けることは、最初のライターが分割を完了する前に、2番目のライターが不完全分割フラグを観察できないようにするためにのみ必要です。プライマリ上の同時実行ライターが同じページで不完全分割フラグを観察できるようにしてしまうと、各ライターが未完了の分割を完了しようとして、親ページを破損させてしまいます。（同様に、ページ削除レコードのリプレイでは、対象のリーフページに対する書き込みロックを終始保持することはありません。削除対象のページに挿入を行う同時実行ライターをブロックする必要があるのはプライマリだけです。）</p>
-<p>ただし、WALリプレイは、元の実行中に取られたアプローチに一致する方法で同レベルのロックを保持します。これにより、リーダーが同レベルの一貫性のなさを観察するのを防ぎます。リカバリ中に同レベルのロックを取得する方法については、もっと緩くすることも可能かもしれませんが（同レベルのロックを結合しなくても、ほとんどの種類のリーダーは右に移動して回復できます）、ここでは保守的であることを好みます。</p>
-<p>リカバリ中、すべてのインデックススキャンは ignore_killed_tuples = false で開始され、kill_prior_tuple を設定することはありません。これを行うのは、スタンバイサーバー上の最古の xmin がプライマリサーバー上の最古の xmin よりも古い可能性があり、これはツプルがスタンバイ上でまだ可視である場合でも LP_DEAD とマークされる可能性があることを意味するためです。ツプルの LP_DEAD ビットはWALに記録されませんが、フルページライトのためにスタンバイに現れることがあります。したがって、スタンバイでは常にこれらを無視しなければならず、それはそれらを設定する価値もないことを意味します。（LP_DEAD マークされたツプルが最終的にプライマリで削除されると、その削除はWALに記録されます。したがって、スタンバイで実行されるクエリは、プライマリで行われる LP_DEAD 設定のメリットの多くを享受できます。）</p>
-<p>ここで述べているのは、リカバリ中に開始されるスキャンについてであることに注意してください。リカバリ中にスキャンを開始し、リカバリが完了した後の通常稼働中に終了できるようにするために、少し工夫をしています。これは、スタンバイが通常稼働するサーバーへと状態を遷移する間も、実行中のアプリケーションを継続させることができるため、重要な機能です。</p>
-<p>非MVCCスキャンから誤った結果が返されるのを避けるために必要なインターロックは、スタンバイノードでは必要ありません。リカバリ中に VACUUM レコードをリプレイするときには、依然として完全なクリーンアップロックを取得しますが、リカバリではすべてのリーフページをロックする必要はありません（削除するアイテムがあるリーフページのみ）。これは、リカバリ中にインデックスオンリースキャンが破損するのを防ぐのに十分です（TIDリサイクルを安全にすることに関する上記のセクションを参照してください）。これにより、懸念は通常のインデックススキャンのみに残ります。（XXX: これがリカバリ中に完全に不要である理由は、実際には明確ではありません。）</p>
-<p>MVCCスナップショットの通常のインデックススキャンは、元の実行中に安全であるのと同じ理由で、常に安全です。HeapTupleSatisfiesToast() はMVCCセマンティクスを使用しませんが、それはその必要がないためです。メインのヒープ行が可視であれば、TOAST行も可視になります。したがって、可視の（有効な）ツプルからTOASTポインタをたどる限り、対応するTOAST行も可視になるため、それらに対してMVCCを再チェックする必要はありません。</p>
-<p>Other Things That Are Handy to Know -----------------------------------</p>
-<p>すべてのbtreeのページ0はメタデータページです。このページには、ルートページの場所（真のルートと、現在の有効なルート（「ファスト」ルート）の両方）が格納されます。個々のインデックス検索ごとにメタページを取得するのを避けるため、メタデータ情報のコピーをインデックスのrelcacheエントリ（rd_amcache）にキャッシュします。キャッシュを使用することは、古くなっている可能性のあるルートページポインタをたどることを意味するため、これは少し厄介です。しかし、キャッシュされたポインタをたどるバックエンドは、意図したページに到達したかどうかを十分に検証できます。真のルートに移動する場合はis-rootフラグをチェックするか、ファストルートに移動する場合はそのページに兄弟がないことをチェックします。最悪の場合、現在の実際のファストルートよりも上にあるファストルートへのキャッシュされたポインタがある場合、ツリーの余分なレベルを下降することになる可能性があります。このようなケースは、最適化する価値があるほど頻繁に発生するべきではありません。また、いずれにせよ、ファストルートポインタを移動したVACUUMはインデックスの統計情報更新を発行することが期待されるため、近いうちにrelcacheのフラッシュによってキャッシュされたメタページが破棄されることが期待できます。</p></section><section class="document-translation-chunk translated" data-chunk-order="4"><p>このアルゴリズムは、1ページに少なくとも3つのアイテム（「ハイキー」と2つの実際のデータアイテム）を格納できることを前提としています。したがって、ページサイズの3分の1を超える大きさのアイテムを受け入れるのは安全ではありません。より大きなアイテムでも動作することもありますが、そのページに他に何が配置されるかによっては、後で障害が発生する可能性があります。</p>
-<p>&quot;ScanKey&quot;データ構造は、このコードにおいて根本的に異なる2つの方法で使用され、それぞれ「検索」スキャンキーおよび「挿入」スキャンキーと呼びます。検索スキャンキーは、btreeコードの外部からbtbeginscan()またはbtrescan()に渡される種類のものです。検索スキャンキー内のsk_funcポインタは、int4ltなどのbooleanを返す比較関数を指します。特定のインデックス列に対して複数のスキャンキーエントリが存在する場合もあれば、まったく存在しない場合もあります。（キーはインデックス列の順序で現れる必要がありますが、特定の列に対する複数のキーの順序は指定されていません。）挿入スキャンキー（&quot;BTScanInsert&quot;データ構造）は、同様のScanKeyの配列データ構造を使用しますが、sk_funcポインタはbtree比較サポート関数（すなわち、&lt;0、=0、&gt;0と解釈されるint4値を返す3方向比較器）を指します。挿入スキャンキーでは、インデックス列ごとに最大1つのエントリが存在します。また、スキャンを開始する場所を特定するために使用されるルールに関するその他のデータ（スキャンが&quot;nextkey&quot;スキャンであるかどうかなど）も含まれます。挿入スキャンキーはbtreeコード内で構築され（例えば_bt_mkscankey()などによって）、スキャンの開始点を特定するため、および新しいインデックスタプルを挿入する場所を特定するために使用されます。（注意：検索スキャンキーから構築された挿入スキャンキー、または切り詰められたピボットタプルから構築された挿入スキャンキーの場合、キーの数がインデックス列の数より少ないことがあり、これは残りのインデックス列に対する制約がないことを示します。）スキャンの開始点を特定した後、各インデックスエントリが順次スキャンされる際に、元の検索スキャンキーが参照され、エントリを返すかどうか、およびスキャンを停止できるかどうかが決定されます（_bt_checkkeys()を参照）。</p>
-<p>サフィックス切り詰め（suffix truncation）に関する注意 -----------------------------</p>
-<p>リーフページの分割中に、ページのハイキーに不要なサフィックスキー属性を切り詰めて削除します。残りの属性は、分割後の左ページの最後のインデックスタプルが左ページに属し、分割後の右ページの最初のインデックスタプルが右ページに属することを区別できなければなりません。タプルは論理的には切り詰められたキー属性を保持しますが、それらは暗黙的に値として「負の無限大」を持ち、ストレージのオーバーヘッドはありません。ハイキーはその後、新しい右ページの親ページにおけるダウンリンクとして再利用されるため、サフィックス切り詰めによってピボットタプルが短くなります。INCLUDEインデックスは、リーフページの分割時に非キー属性が確実に切り詰められますが、キー属性の通常の基準に基づいて、一部のキー属性も切り詰められる場合があります。非キー属性はB-Tree検索にとって単なるペイロードにすぎないため、これらは特別なケースではありません。</p>
-<p>キー属性のサフィックス切り詰めの目的は、インデックスのファンアウトを向上させることです。この手法は、BayerとUnterauerによって最初に説明されました（R.Bayer and K.Unterauer, Prefix B-Trees, ACM Transactions on Database Systems, Vol 2, No. 1, March 1977, pp 11-26）。Postgresの実装は、彼らの論文に緩やかに基づいています。Postgresは、論文で単純なプレフィックスB-Treeと呼ばれているもののみを実装していることに注意してください。また、論文では、サフィックスツリーに格納されている文字列のように、ツリーのキーが「プレフィックス特性」を維持する単一の文字列で構成されていることを前提としていることにも注意してください（前のバイトの比較は常に後ろのバイトの比較よりも重要でなければならず、一般に、文字列は分割されたときに推移的一貫性を損なわない方法で比較される必要があります）。Postgresにおけるサフィックス切り詰めは、現在は属性全体の粒度でのみ機能しますが、textなどの可変長タイプの場合に、より小さな属性値を生成するopclassインフラストラクチャを考案することは容易でしょう。opclassサポート関数は、リーフページ分割の各半分を正しく分離できる、可能な限り短いキー値を生成できます。</p>
-<p>リーフページの分割点を選択するための洗練された基準が存在します。一般的な考え方は、ページ分割の各半分のスペースのバランスに過度の影響を与えることなく、サフィックス切り詰めを効果的にすることです。リーフ分割点の選択は、少なくとも挿入されるタプルがすでにページ上に配置されていると仮定すれば（実際にはページ上に十分なスペースがないため、仮定する必要があります）、分割されるページ上のアイテムの「間」の点からの選択と考えることができます。最初の等しくない属性ができるだけ早く現れる2つのインデックスタプルの間で分割点を選択すると、できるだけ多くのサフィックス属性が切り詰められます。通常は分割の各半分でスペースのバランスを均等にすることが最優先事項ですが、正確な分割点をわずかに調整するだけでも、切り詰めをはるかに効果的にすることができます。</p>
-<p>サフィックス切り詰めが主に価値があるのは、ピボットタプルを小さくして内部ページの分割を遅らせるためですが、効果的である理由はそれだけではありません。アライメントのためにピボットタプルが小さくならない切り詰めであっても、どの値がどのページに属するかを説明する際に、ピボットタプルが必要以上に制限的になるのを防ぐことができます。</p>
-<p>内部ページの分割中にサフィックス切り詰めを正しく実行することは不可能ですが、内部ページを分割する際にも識別力を持たせることは依然として有用です。fillfactorの観点から最適な分割点の許容範囲内で、親に挿入されるダウンリンクが利用可能な最小のものとなるような分割点が選択されます。この考え方もPrefix B-Treeの論文に由来しています。このプロセスは、サフィックス切り詰めを効果的にするためにリーフレベルで行われることと多くの共通点があります。全体的な効果として、サフィックス切り詰めは、特にインデックスの寿命の初期において、より小さく、より識別力のあるピボットタプルを生成する傾向があり、一方で内部ページの分割に偏りを持たせることで、初期のより小さなピボットタプルがルートページに配置されるようになり、ルートページの分割が遅れます。</p>
-<p>論理的な重複は特別に考慮されます。分割点を選択するロジックは、重複が複数のページにまたがるのを避けるために細心の注意を払っており、必要であれば完全に不均衡な分割を受け入れてでも、ほぼ常に2つのユーザーキーが異なるタプルの間で分割点を選択します。すでに重複でいっぱいのページを分割しなければならない場合、フォールバック戦略は、重複が主にヒープTIDの昇順で挿入されると想定します。ページは、ページの左半分がほぼ満杯になり、右半分がほぼ空になるように分割されます。全体的な効果として、リーフページの分割は重複の大きなグループの挿入に優雅に適応し、スペースの利用効率を最大化します。また、このように同じリーフページに重複の大きなグループを「閉じ込める」ことで、重複排除（deduplication）がより効率的になります。重複排除は、既存のポスティングリストタプルを頻繁にマージすることなく、まれに実行するだけで済みます。</p>
-<p>重複排除（deduplication）に関する注意 -------------------------</p>
-<p>一意でないインデックスにおいて、ストレージのオーバーヘッドを削減し、ページの分割を回避（または少なくとも遅延）するために、非ピボットタプルの重複排除を行います。一意インデックスにおける重複排除の目的はかなり異なることに注意してください。詳細は後述のセクションを参照してください。重複排除は、インデックスの論理的な内容を変更することなく、また読み取りクエリにオーバーヘッドを追加することなく、タプルの物理的な表現を変更します。非ピボットタプルは、ポスティングリスト（標準のアイテムポインタ形式を持つヒープTIDの単純な配列）を持つ単一の物理タプルにマージされます。重複排除は常に遅延して適用され、そうしなければページ分割を実行する必要がある時点で適用されます。これは、リーフページの分割に対する最後の防衛線として、LP_DEADアイテムが削除された後にのみ発生します（最後から2番目の防衛線として、ボトムアップのインデックス削除が最初に試行される場合があります）。ポスティングリストタプルでLP_DEADビットを設定できますが、これはすべてのTIDがデッドであることが判明している場合に限られます。</p>
-<p>重複排除に対する遅延アプローチにより、ページ分割中に使用されるページスペースの会計処理において、ポスティングリストのための特別なケースのロジックを絶対的に最小限に抑えることができます。ポスティングリストは、INCLUDEインデックスタプルの非キー列と同様に、ページ分割中にサフィックス切り詰めによって必要に応じて確実に切り詰められる追加のペイロードと考えることができます。新しく挿入されるタプルは、一般に重複しないプレーンなアイテムとして扱うことができます（ただし、重複する新規/挿入タプルが実際にどのように処理されるかについては、ポスティングリストの分割に関するセクションを参照してください）。</p>
-<p>ポスティングリストの表現はGINで使用されるポスティングリストとほぼ同じであるため、GINのvarbyteエンコーディング圧縮スキームを個々のポスティングリストに適用することは容易でしょう。ポスティングリストの圧縮は、ポスティングリストの分割がページスペースの会計処理に関して行っている前提を崩してしまうため（後述のセクションを参照）、圧縮をどのようにnbtreeに統合できるかは明確ではありません。さらに、一般にnbtreeは多くの同時リーダーおよびライターに対して一貫したパフォーマンスを発揮するように最適化されているため、ポスティングリストの圧縮はnbtreeにとって魅力的なトレードオフを提供しません。また、圧縮を行うと、ポスティングリストからのTIDのサブセットの削除が遅く複雑になり、ボトムアップのインデックス削除に大きく依存するワークロードにとって大きな問題となります。</p>
-<p>重複排除に対する遅延アプローチの主な目的は、ランダムな更新に伴う重複排除のパフォーマンスへの影響を制限することです。同じキー値の同時追加専用挿入であっても、個々のインデックスタプルの挿入順序はヒープTIDの順序と完全には一致しない傾向があります。重複排除を遅らせることで、ページレベルの断片化が最小限に抑えられます。</p>
-<p>一意インデックスにおける重複排除 -------------------------------</p>
-<p>非常に多くの場合、一意インデックスのほぼすべての特定のリーフページに配置される可能性のある一意な値の数は、固定され永続的です。例えば、アイデンティティ列の主キーでは、通常、最も右側のリーフページ内に新しい論理行が挿入されることによってのみリーフページの分割が発生します。最も右側ではないリーフページの分割がある場合、その分割は既存の論理行のUPDATEに関連する挿入によって引き起こされたに違いありません。単に複数のバージョンを格納するためだけにリーフページを分割することは、誤った経済性です。実質的に、一時的な重複の急増を吸収するためだけに、インデックス構造を永続的に劣化させていることになります。</p>
-<p>一意インデックスにおける重複排除は、これらの病的なページ分割を防ぐのに役立ちます。長期的には重複が存在しなくなるため、スペース効率の良い方法で重複を格納することが目的ではありません。むしろ、ページの分割が必要になる前に、標準的なガベージコレクションメカニズムが実行されるための時間を稼いでいるのです。</p>
-<p>一意インデックスのリーフページは、挿入（ページを分割しなければならない可能性があります）の際に、ページ上の既存の重複を偶然検出した場合にのみ、重複排除パスを実行します。これは、重複排除が効果を発揮するのは、*すべての*新しい挿入がUPDATEによる重複である場合のみであるという前提に基づいています。これにより、ページ分割を遅らせる機会を逃す可能性がありますが、私たちの最終的な目標はリーフページの分割を*無期限に*遅らせる（すなわち、完全に防止する）ことであるため、問題ありません。どうせ避けられない可能性が高い分割を遅らせようとすることには、ほとんど意味がありません。これにより、常に重複がほとんどまたはまったくない一意インデックスに対して重複排除を試みるオーバーヘッドを回避できます。</p></section><section class="document-translation-chunk pending" data-chunk-order="5"><h2>Chunk 6: translation pending</h2><p>This chunk has not been translated yet. Original text:</p><pre class="document-translation-text">Note: Avoiding &quot;unnecessary&quot; page splits driven by version churn is also
-the goal of bottom-up index deletion, which was added to PostgreSQL 14.
-Bottom-up index deletion is now the preferred way to deal with this
-problem (with all kinds of indexes, though especially with unique
-indexes).  Still, deduplication can sometimes augment bottom-up index
-deletion.  When deletion cannot free tuples (due to an old snapshot
-holding up cleanup), falling back on deduplication provides additional
-capacity.  Delaying the page split by deduplicating can allow a future
-bottom-up deletion pass of the same page to succeed.
-
-Posting list splits
--------------------
-
-When the incoming tuple happens to overlap with an existing posting list,
-a posting list split is performed.  Like a page split, a posting list
-split resolves a situation where a new/incoming item &quot;won&#x27;t fit&quot;, while
-inserting the incoming item in passing (i.e. as part of the same atomic
-action).  It&#x27;s possible (though not particularly likely) that an insert of
-a new item on to an almost-full page will overlap with a posting list,
-resulting in both a posting list split and a page split.  Even then, the
-atomic action that splits the posting list also inserts the new item
-(since page splits always insert the new item in passing).  Including the
-posting list split in the same atomic action as the insert avoids problems
-caused by concurrent inserts into the same posting list --  the exact
-details of how we change the posting list depend upon the new item, and
-vice-versa.  A single atomic action also minimizes the volume of extra
-WAL required for a posting list split, since we don&#x27;t have to explicitly
-WAL-log the original posting list tuple.
-
-Despite piggy-backing on the same atomic action that inserts a new tuple,
-posting list splits can be thought of as a separate, extra action to the
-insert itself (or to the page split itself).  Posting list splits
-conceptually &quot;rewrite&quot; an insert that overlaps with an existing posting
-list into an insert that adds its final new item just to the right of the
-posting list instead.  The size of the posting list won&#x27;t change, and so
-page space accounting code does not need to care about posting list splits
-at all.  This is an important upside of our design; the page split point
-choice logic is very subtle even without it needing to deal with posting
-list splits.
-
-Only a few isolated extra steps are required to preserve the illusion that
-the new item never overlapped with an existing posting list in the first
-place: the heap TID of the incoming tuple has its TID replaced with the
-rightmost/max heap TID from the existing/originally overlapping posting
-list.  Similarly, the original incoming item&#x27;s TID is relocated to the
-appropriate offset in the posting list (we usually shift TIDs out of the
-way to make a hole for it).  Finally, the posting-split-with-page-split
-case must generate a new high key based on an imaginary version of the
-original page that has both the final new item and the after-list-split
-posting tuple (page splits usually just operate against an imaginary
-version that contains the new item/item that won&#x27;t fit).
-
-This approach avoids inventing an &quot;eager&quot; atomic posting split operation
-that splits the posting list without simultaneously finishing the insert
-of the incoming item.  This alternative design might seem cleaner, but it
-creates subtle problems for page space accounting.  In general, there
-might not be enough free space on the page to split a posting list such
-that the incoming/new item no longer overlaps with either posting list
-half --- the operation could fail before the actual retail insert of the
-new item even begins.  We&#x27;d end up having to handle posting list splits
-that need a page split anyway.  Besides, supporting variable &quot;split points&quot;
-while splitting posting lists won&#x27;t actually improve overall space
-utilization.
-
-Notes About Data Representation
--------------------------------
-
-The right-sibling link required by L&amp;Y is kept in the page &quot;opaque
-data&quot; area, as is the left-sibling link, the page level, and some flags.
-The page level counts upwards from zero at the leaf level, to the tree
-depth minus 1 at the root.  (Counting up from the leaves ensures that we
-don&#x27;t need to renumber any existing pages when splitting the root.)
-
-The Postgres disk block data format (an array of items) doesn&#x27;t fit
-Lehman and Yao&#x27;s alternating-keys-and-pointers notion of a disk page,
-so we have to play some games.  (The alternating-keys-and-pointers
-notion is important for internal page splits, which conceptually split
-at the middle of an existing pivot tuple -- the tuple&#x27;s &quot;separator&quot; key
-goes on the left side of the split as the left side&#x27;s new high key,
-while the tuple&#x27;s pointer/downlink goes on the right side as the
-first/minus infinity downlink.)
-
-On a page that is not rightmost in its tree level, the &quot;high key&quot; is
-kept in the page&#x27;s first item, and real data items start at item 2.
-The link portion of the &quot;high key&quot; item goes unused.  A page that is
-rightmost has no &quot;high key&quot; (it&#x27;s implicitly positive infinity), so
-data items start with the first item.  Putting the high key at the
-left, rather than the right, may seem odd, but it avoids moving the
-high key as we add data items.
-
-On a leaf page, the data items are simply links to (TIDs of) tuples
-in the relation being indexed, with the associated key values.
-
-On a non-leaf page, the data items are down-links to child pages with
-bounding keys.  The key in each data item is a strict lower bound for
-keys on that child page, so logically the key is to the left of that
-downlink.  The high key (if present) is the upper bound for the last
-downlink.  The first data item on each such page has no lower bound
---- or lower bound of minus infinity, if you prefer.  The comparison
-routines must treat it accordingly.  The actual key stored in the
-item is irrelevant, and need not be stored at all.  This arrangement
-corresponds to the fact that an L&amp;Y non-leaf page has one more pointer
-than key.  Suffix truncation&#x27;s negative infinity attributes behave in
-the same way.
-</pre></section></div><script>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="10"><title>src/backend/access/nbtree/README</title><link rel="stylesheet" href="../../../../../../styles.css"></head><body><h1>Japanese translation</h1><p><code>src/backend/access/nbtree/README</code></p><p><a href="../../../../../../source/src/backend/access/nbtree/README.html" target="source-view">View original document</a></p><p class="document-translation-progress document-translation-complete">Translation complete.</p><div class="document-translation-body"><section class="document-translation-chunk translated" data-chunk-order="0"><p class="markdown-preserve-lines">src/backend/access/nbtree/README</p>
+<h1>Btree インデックス</h1>
+<p class="markdown-preserve-lines">このディレクトリには、Lehman と Yao の高並行 B 木管理アルゴリズムの正しい実装が含まれています（P. Lehman and S. Yao, Efficient Locking for Concurrent Operations on B-Trees, ACM Transactions on Database Systems, Vol 6, No. 4, December 1981, pp 650-670）。また、Lanin と Shasha で記述されている削除ロジックの簡略版も使用しています（V. Lanin and D. Shasha, A Symmetric Concurrent B-Tree Algorithm, Proceedings of 1986 Fall Joint Computer Conference, pp 380-389）。</p>
+<h2>基本的な Lehman &amp; Yao アルゴリズム</h2>
+<p class="markdown-preserve-lines">従来の B 木と比較して、L&amp;Y は各ページに右兄弟ページへの右リンクポインタを追加します。また、各ページに「ハイキー (high key)」を追加します。これは、そのページで許可されるキーの上限です。これら 2 つの追加により、並行して行われるページ分割を検出できるようになり、(読み取り中に単一のページが変更されるのを防ぐ場合を除き) 読み取りロックを保持せずに木を検索することが可能になります。</p>
+<p class="markdown-preserve-lines">検索時に子ページへのダウンリンクをたどる際、ページのハイキーと検索キーを比較します。検索キーがハイキーより大きい場合、そのページは並行して分割されたはずであり、探しているキー範囲を含む新しいページを見つけるために右リンクをたどる必要があります。ページが複数回分割されている場合は、これを繰り返す必要があるかもしれません。</p>
+<p class="markdown-preserve-lines">Lehman と Yao は、タプルやレコードではなく、内部ページ内の「セパレータ (separator)」キーとダウンリンクの交互配置について述べています。私たちは、ヒープタプルを指さず、木のナビゲーションのみに使用されるタプルを指すために「ピボット (pivot)」タプルという用語を使用します。非葉ページのすべてのタプルと、葉ページのハイキーはピボットタプルです。ピボットタプルは、キー空間のどの部分が各ページに属しているかを表すためだけに使用されるため、かつて VACUUM によって削除および無効化された非ピボットタプルから属性値をコピーすることができます。ピボットタプルには、「セパレータ」キーとダウンリンク、セパレータキーのみ (つまり、ダウンリンク値は暗黙的に未定義)、またはダウンリンクのみ (つまり、すべての属性が切り詰められている) が含まれる場合があります。</p>
+<p class="markdown-preserve-lines">すべての btree キーが一意であるという要件は、ヒープ TID をタイブレーカー属性として扱うことで満たされます。論理的な重複はヒープ TID 順にソートされます。Lehman と Yao はまた、部分木 S のキー範囲が親ページの隣接するキー Ki と Ki+1 を用いて $Ki &lt; v \le Ki+1$ と記述されることを要求しているため、これが必要となります (Ki は v より*厳密に*小さくなければならず、これは確実に一意なキーを持つことで保証されます)。キーは常に自身のレベルで一意ですが、葉ページのハイキーは例外であり、ページの最後のアイテムと完全に等しくなることができます。</p>
+<p class="markdown-preserve-lines">Postgres のサフィックス切り捨ての実装では、Lehman と Yao の不変条件が確実に成り立つようにする必要があり、ピボットタプル内の欠落/切り捨てられた属性がセンチネル値「マイナス無限大 (minus infinity)」を持つことを表現します。Lehman &amp; Yao の不変条件が実際の例でどのように機能するか不明な場合は、後のサフィックス切り捨てに関するセクションが役立ちます。</p>
+<h2>Lehman &amp; Yao アルゴリズムとの違い</h2>
+<p class="markdown-preserve-lines">L&amp;Y アルゴリズムを Postgres に組み込むために、以下の変更を行いました。</p>
+<p class="markdown-preserve-lines">Lehman と Yao は読み取りロックを必要としませんが、木のページのメモリ内コピーが非共有であると仮定しています。Postgres はメモリ内バッファをバックエンド間で共有します。その結果、調査中のレコードが変更されないことを保証するために、btree ページに対してページレベルの読み取りロックを行います。これにより並行性は低下しますが、正しい動作が保証されます。</p>
+<p class="markdown-preserve-lines">挿入、削除、単純なルックアップだけでなく、インデックスの順序付き「スキャン」の概念もサポートしています。順方向のスキャンには問題ありません。L&amp;Y がとにかく要求する右兄弟ポインタを使用するだけです (したがって、スキャンの正しい開始点まで木を下降した後は、スキャンは葉ページのみを見上のレベルの木を見ることはありません)。逆方向のスキャンをサポートするために、「右兄弟」によく似た「左兄弟」リンクも格納します。(これにより、L&amp;Y の分割アルゴリズムに余分なステップが追加されます。分割されるページの書き込みロックを保持している間に、そのページの元の右兄弟もロックして、そのページの左リンクを更新します。そのページのどのライターも私たちのページの書き込みロックを取得することに関心がない可能性があるため、これは安全です。)逆方向のスキャンには、もう 1 つ複雑な点があります。左リンクをたどった後、読み取る前に左兄弟ページが分割されていた可能性を考慮しなければなりません。したがって、右リンクが元いたページと一致するページが見つかるまで、右に移動する必要があります。(実際、話はそれよりもさらに複雑です。後述のページ削除の議論を参照してください。)</p>
+<p class="markdown-preserve-lines">ページ読み取りロックは、スキャンがページを検査している間だけ保持されます。ロック/ロック解除のトラフィックを最小限に抑えるために、インデックススキャンは常に葉ページを検索して一致するすべてのアイテムを一度に特定し、それらのヒープタプル ID をバックエンドローカルストレージにコピーします。その後、インデックス内のページロックを保持せずに、ヒープタプル ID が処理されます。並行削除から保護するために、状況によっては葉ページのピンの保持を継続します (下記参照)。この状態では、スキャンはピン留めされたページの前または後のどちらかで、実質的にページ「間」で停止しています。アイテムが既存のページ境界を越えて移動されることはないため、並行挿入やページ分割が存在する場合でもこれは安全です。したがって、スキャンで見落とすべきアイテムを見逃したり、同じアイテムを誤って二度返したりすることはありません。スキャンは、スキャンされた時点でのページの右リンクを覚えておく必要があります。なぜなら、それが右に移動すべきページだからです。現在の右リンクに右に移動すると、ページ分割によって移動されたアイテムを再スキャンすることになります。また、左リンクも記憶しており、スキャンが後方に移動するときにそれをたどります (ただし、これには左兄弟の並行分割を考慮した追加の処理が必要です。詳細な左移動アルゴリズムを以下を参照してください)。</p>
+<p class="markdown-preserve-lines">ほとんどの場合、移動先のページのピンとロックを取得しようとする前に、ページのロックとピンを解放します。いくつかの場所では、現在のページを解放する前に次のページをロックする必要があります。これは右または上に移動するときは安全ですが、左または下に移動するときは安全ではありません (そうしないとデッドロックの可能性が生じます)。</p>
+<p class="markdown-preserve-lines">Lehman と Yao は、ルートページがいっぱいになり分割しなければならないときに何が起こるかについて議論していません。私たちの実装では、他のページが分割されるのと同じ方法でルートを分割し、その結果得られる両方のページ（これで木の次のレベルの兄弟になります）へのポインタを保持する新しいルートページを構築します。その後、メタデータページのルートポインタを変更することによって、新しいルートページがインストールされます（下記参照）。これが機能するのは、ルートが他の特別な方法で扱われないためです。特に、リンクが設定されている場合、検索はそのリンクポインタを使用して右に移動します。したがって、更新される前にメタデータページを読み取った場合でも、検索は右兄弟に移動されたデータを見つけることができます。これは、非ルートページの分割を安全にするのと同じ推論です。ロックの考慮事項も同様です。</p>
+<p class="markdown-preserve-lines">挿入者が木を再帰的に上がり、下のレベルに挿入されたページへのリンクを挿入するために内部ページを分割するとき、下降を開始したときのルート（より正確には、メタデータページを読み取ったときのルート）であったレベルよりも上のページにアクセスする必要が生じる可能性があります。この場合、下降中に作成したスタックは正しいページを見つけるのに役立ちません。これが発生した場合は、リンクを挿入する必要があるレベルの 1 つ上のレベルに達するまで木を再下降し、必要に応じて右に移動することで、正しい場所を見つけます。（通常、これにはメタデータページと新しいルートの 2 つのフェッチしかかかりませんが、原則として、ルートを確認してから複数のルート分割が発生している可能性があります。各ページに格納されているレベル番号によって、正しい木のレベルを識別できます。この状況は非常にまれであるため、より効率的な解決策は必要ありません。）</p>
+<p class="markdown-preserve-lines">Lehman と Yao は、木の上昇中に子ページのダウンリンクを再配置する際、右に移動するプロセスの一部としてロックを結合/連鎖させる必要があります。これは、Lehman と Yao が同時に 3 つのロック（子、元の親、元の親の右兄弟のロック）を保持しなければならない唯一のポイントです。ただし、同じレベルのページの内部ページロックを結合する必要はありません。私たちは、Lehman と Yao が最初の下降中にたどったダウンリンクに関連付けられたセパレータキーで一致させるのに対し、子のブロック番号を 1 つ上のレベルのピボットタプルからのダウンリンクと一致させます。再配置しなければならないセパレータキーが元の親のハイキーになるケースに対処する必要は決してないため、その右兄弟のロックを取得する前に、元の親ページのロックを解放できます。Lanin と Shasha もここではロックを結合せず、上昇中のレベル間のロックも結合しません。彼らは競合を避けるために「待って再試行」することをいといません。彼らのアルゴリズムは楽観的であり、それは「挿入は上昇中に一度に複数の書き込みロックを保持しない」ことを意味します。木を上昇するときに親と子のロックを保守的に結合するという Lehman と Yao のアプローチの方がはるかに単純であるため、私たちは多かれ少なかれそれに固執しています。</p>
+<p class="markdown-preserve-lines">Lehman と Yao は固定サイズのキーを想定していますが、私たちは可変サイズのキーに対処しなければなりません。したがって、ページあたりのキーの最大数は固定されていません。収まるだけの数を詰め込みます。ページを分割するとき、(サフィックス切り捨てりも考慮されますが) アイテム数ではなく、バイト数をページ間で均等化するように努めます。この計算に受信アイテムを含めなければならないことに注意してください。そうしないと、受信アイテムが移動する必要のある分割ページに収まらないことが判明する可能性があります。</p>
+<h2>VACUUM 中のインデックスタプルの削除</h2>
+<p class="markdown-preserve-lines">葉アイテムを削除する前に、ターゲットページに対する完全なクリーンアップロックを取得し、削除の開始時に他のバックエンドがそのページに対するピンを持たないようにします。これは、btree インデックス操作自体の正確性の観点からは必須ではありません。上記で説明したように、インデックススキャンは論理的にページ「間」で停止するため、位置を見失うことはありません。これを行う理由は、ヒープを訪れるときに並行 TID リサイクルに対処する準備ができていないインデックススキャンと VACUUM の間のインターロックを提供するためです。ヒープ内で指されているアイテムを LP_UNUSED としてマークできるのは VACUUM だけであり、これが btbulkdelete が戻った*後*にのみ発生するため、インデックススキャンが（葉ページから読み取る際に使用される）ピンを、ヒープへの訪問が完了する*後*（ピン留めされた葉ページからの TID のため）まで保持し続けることで、並行 TID リサイクルを防ぎます。インデックススキャンが葉ページの処理を完全に終了するまで、VACUUM は競合するクリーンアップロックを取得できません。</p>
+<p class="markdown-preserve-lines">このアプローチはかなり粗いため、可能な限り回避します。実際には、ほとんどのインデックススキャンはピンを保持しないため、VACUUM をブロックしません。これらのインデックススキャンは、より複雑で常に可能とは限らない TID リサイクルに対処する必要があります。並行 TID リサイクルを安全にする方法についての後のセクションを参照してください。</p>
+<p class="markdown-preserve-lines">日和見的なインデックスタプルの削除は、排他ロックのみを保持しながら、ほぼ同じページレベルの変更を実行します。後で TID リサイクルが行われる問題がないため、これは安全です。TID をリサイクル可能にできるのは VACUUM のみです。また、下記の単純削除およびボトムアップ削除も参照してください。</p></section><section class="document-translation-chunk translated" data-chunk-order="1"><p class="markdown-preserve-lines">ピンは常に保持されているわけではなく、ピンが保持されている最中でもページが分割される可能性があるため、インデックススキャンは、ピンを保持しているページ上にはもはや格納されておらず、そのページの右側のどこかに格納されているアイテムを返す可能性があります。VACUUMがこのシナリオでTIDを時期尚早に再利用可能にしないようにすることを保証するため、削除可能なタプルをまったく含まないページであっても、インデックス内のすべてのリーフページに対してbtbulkdeleteがクリーンアップロックを取得することを要求します。この要件は、btbulkdeleteが特定の順序でページを訪問しなければならないことを意味するものではないことに注意してください。</p>
+<h2>VACUUMの線形スキャン、並行ページ分割</h2>
+<p class="markdown-preserve-lines">VACUUMは、削除可能なTIDを検索するための線形スキャンを実行しつつ、ついでに空ページの削除の可能性を考慮することで、インデックスにアクセスします。これは論理的/キースペース順ではなく、物理的/ブロック順です。この部分の難しいところは、並行したページ分割が存在する場合に、削除可能なタプルを一切見逃さないようにすることです。ページ分割によって、まだシーケンシャルスキャンが通過していないページから、すでに通過した番号の小さいページへいくつかのタプルが簡単に移動してしまう可能性があるためです。</p>
+<p class="markdown-preserve-lines">これを実装するために、現在のbtbulkdeleteサイクルが開始されてからページが分割されたかどうかを判断できるようにする「バキュームサイクルID」メカニズムを提供します。btbulkdeleteが開始以降に分割され、かつ下位のページ番号を指す右リンクを持つページを見つけた場合、それは一時的にシーケンシャルスキャンを中断し、代わりにそのページを訪問します。btbulkdeleteが開始されてから分割されていないか、あるいは外部シーケンシャルスキャンの位置よりも上にあるページに到達するまで、右リンクをたどり続け、デッドタプルをバキュームしなければなりません。その後、シーケンシャルスキャンを再開できます。これにより、すべてのタプルが確実に訪問されます。一部のタプルが二重に訪問される可能性はありますが、それは不正確なインデックスタプル数以上の悪影響を与えません（また、並行アクティビティがある状況では、そもそも正確な数を保証することはできません）。最近分割されたかどうかのテストが偽陽性になる確率が低ければ、決して偽陰性を返さない限り、これで依然として機能することに注意してください。これにより、各インデックスページに格納された小さなカウンター値を使用してテストを実装することが可能になります。</p>
+<h2>VACUUM中のページ全体の削除</h2>
+<p class="markdown-preserve-lines">Bツリーからページ全体を削除することは、アイテムが完全に空になった場合にのみ検討します。（部分的に満たされたページをマージすればスペースの再利用性が向上しますが、これを実現するために既存のデータアイテムを左右に移動することは現実的ではないように思われます。逆方向に移動するスキャンがアイテムを見逃してしまう可能性があるためです。）また、ツリーレベルの最右ページは*決して*削除しません（この制限により、後述するように走査アルゴリズムが単純化されます）。ページ削除は常に空のリーフページから始まります。内部ページは、サブツリー全体を削除する一部としてのみ削除できます。これは常に、内部ページの「チェイン」と単一のリーフページで構成される「細い」サブツリーです。サブツリーの各レベルには1つのページがあり、各レベル/ページは同じキースペースをカバーしています。</p>
+<p class="markdown-preserve-lines">リーフページの削除は2段階のプロセスです。第1段階では、ページはその親からリンク解除され、半死状態（half-dead）としてマークされます。親ページは、挿入時の分割中に親を見つけるために使用されるのと同じタイプの検索を使用して見つける必要があります。ターゲットページと親ページをロックし、ターゲットの下向きリンク（downlink）が右側の兄弟を指すように変更し、古い下向きリンクを削除します。これにより、ターゲットページのキースペースは実質的にその右側の兄弟のものになります。（左右の兄弟ページは、もしあれば「ハイキー」を変更する必要はありません。したがって、ハイキーを置き換えるための十分なスペースがないかもしれないという問題はありません。）同時に、ターゲットページを半死状態としてマークしこれにより、後続の検索はそれを無視して右（逆方向スキャンでは左）に移動するようになります。これにより、ツリーはページ分割中と同様の状態になります。すなわち、ページを指す下向きリンクはありませんが、兄弟へのリンクは維持されています。</p>
+<p class="markdown-preserve-lines">（注：LaninとShashaはキースペースを左に移動することを好みますが、そう主張する根拠は、いずれにせよ持っている左リンクを持たないことに依存しています。そのため、キースペースを右に移動することでアルゴリズムを単純化しています。これが可能なのは、ページ分割時にツリーを昇る際、LehmanやYao / Lanin and Shashaとは異なり、区切りキー（separator key）で一致をとらないためです。インセンターが最初にツリーを下降したときに遭遇した区切りキーと一致しないピボットタプル内で下向きリンクが再発見されても問題ありません。）</p>
+<p class="markdown-preserve-lines">親レベルでの一貫性を維持するため、右側の兄弟が同じ親の子でない限り、ページのキースペースをその右側の兄弟にマージすることはできません。そうでない場合、親のキースペースの割り当てり当ても変更されることになり、その親、そしておそらくツリーのずっと上まで境界キーの更新を行わなければならなくなります。これをアトミックに行うことは不可能であるため、このケースは禁止します。つまり、親ノードの最右の子は、それが残された唯一の子でない限り削除できません。唯一の子である場合は、親も削除します（下記参照）。</p>
+<p class="markdown-preserve-lines">第2段階では、半死状態のリーフページがその兄弟からリンク解除されます。まず、ターゲットの左の兄弟（もしあれば）、ターゲットページ自体、およびその右の兄弟（存在しなければなりません）の順にロックを取得します。次に、兄弟のサイドリンクを更新し、ターゲットページを削除済みとしてマークします。</p>
+<p class="markdown-preserve-lines">親ページの最後の子を削除しようとしているときは、状況が少し複雑になります。第1段階では、リーフページの直近の親はそのままで、代わりに親ページへの下向きリンクを祖父母から削除します。それが祖父母の最後の子でもある場合も、複数の子を持つ親が見つかるまで再帰的に上に遡り、そのページの下向きリンクを削除します。リーフページは半死状態としてマークされ、下向きリンクが削除されたページのブロック番号が半死状態のリーフページに隠し持たれます（スタッシュされます）。これにより、それぞれ1つの下向きリンクを持つ内部ページのチェーンが半死状態のリーフページにつながり、チェーン内の最上位ページを指す下向きリンクが存在しない状態が残ります。</p>
+<p class="markdown-preserve-lines">チェーン内の最上位の親を見つけるために再帰的に上に遡る間、リーフページをロックし続けますが、リーフと最上位の親の間の中間ページのロックを保持する必要はありません。上位ツリーレベルへの挿入は子ページの分割の結果としてのみ発生し、リーフをロックし続けている限りそれは発生しないためです。リーフページが半死状態としてマークされ分割されないため、チェーン内の内部ページが後から新しい子を獲得することもありません。</p>
+<p class="markdown-preserve-lines">削除対象のサブツリー/チェーンのトップへの下向きリンクを削除すると、1つのアトミック操作で、中間レベルのすべてについても実質的にキースペースが右側の兄弟に転送されます。並行検索が中間ページをまだ訪れる可能性はありますが、リーフレベルの半死状態のページに到達すると右に移動します。具体的には、半死状態のリーフページの右側の兄弟は「真の」兄弟ページではなく（または削除対象のチェーンがリーフルの祖父母ページから始まる場合は「従兄弟の」ページなど）、必ず「従兄弟（クズン）」ページでなければならないため、検索は半死状態のリーフページの右側/削除対象サブツリーの右側にあるサブツリーに移動します。</p>
+<p class="markdown-preserve-lines">第2段階では、チェーン内の最上位ページがその兄弟からリンク解除され、半死状態のリーフページがチェーン内の次の下位ページを指すように更新されます。これが、チェーン内に内部ページがなくなるまで繰り返されます。最後に、半死状態のリーフページ自体がその兄弟からリンク解除されます。</p>
+<p class="markdown-preserve-lines">他のプロセス（親を離れたばかりの検索プロセスや、兄弟のいずれかから右や左へ移動するスキャンなど）がそれを参照して待機している可能性があるため、削除されたページを即座に再利用することはできません。これらのプロセスは、少なくともそこから回復できるようにするために、削除操作の後もしばらくの間、削除されたページを観測できなければなりません（これらは並行ページ分割の場合と同様に、右に移動することで回復します）。サーチャーが並行ページリサイクルについて心配する必要は一切ありません。</p>
+<p class="markdown-preserve-lines">削除されたページがVACUUMによって安全に再利用可能になる時期と方法の説明については、以下の「FSMへの削除されたページの配置」セクションを参照してください。</p>
+<h2>ページ削除と逆方向スキャン</h2>
+<p class="markdown-preserve-lines">逆方向スキャンで左に移動することは複雑です。なぜなら、左の兄弟がちょうど分割された可能性（つまり、左の兄弟から派生した最右ページを見つけなければならないことを意味します）に加え、先ほどまでいたページが現在削除されており、したがって兄弟チェーンにまったく存在しなくなった可能性を考慮しなければならないからです。したがって、左移動アルゴリズムは以下のようになります。</p>
+<p class="markdown-preserve-lines">0. 現在いるページを「元のページ」として記憶します。
+1. 元のページの左リンクをたどります（これがゼロであれば完了です）。
+2. 現在のページが生きており、その右リンクが「元のページ」と一致していれば完了です。
+3. そうでなければ、右リンクが「元のページ」と一致する生きているページを探して、右に1回以上移動します。見つかった場合は完了です。（原則としてインデックスの右端までスキャンすることも可能ですが、実際には少回数の試行ののちにあきらめる方が良さそうです。私たちがそこへ向かっている最中に、元のページの兄弟が数回より多く分割されたとは考えにくく、数回の試行で一致するリンクが見つからない場合、元のページが削除されている可能性が最も高いからです。）
+4. 「元のページ」に戻ります。それがまだ生きていれば、ステップ1に戻ります（削除されているという推測が外れていたため、現在の左リンクで再開すべきです）。それがデッドであれば、デッドではないページが見つかるまで右に移動し（最右ページは決して削除されないため、必ず存在します）、それを新しい「元のページ」としてマークし、ステップ1に戻ります。</p>
+<p class="markdown-preserve-lines">このアルゴリズムが正しいのは、ステップ4で見つかった生きているページが、私たちが開始したページと同じ左キースペース境界を持つためです。したがって、最終的に終了するとき、開始した場所の左境界と一致する右キースペース境界を持つページにいることになります。これは、アイテムの取りこぼしや再スキャンを行わないことを確実にするために必要なことです。</p>
+<h2>ページ削除とツリーの高さ</h2>
+<p class="markdown-preserve-lines">どのレベルの最右ページも決して削除しない（特にルートを決して削除しない）ため、ツリーの高さが減少することは不可能です。大量の削除の後、ルートの下に単一ページのレベルがいくつかある「細い」ツリーのシナリオが発生する可能性があります。この場合でも操作は正しく行われますが、単一ページのレベルを下降するサイクルが無駄になります。これに対処するため、LaninとHashaのアイデアを使用します。最も低い単一ページレベルである「高速ルート（fast root）」レベルを追跡します。メタデータページは、真のルートだけでなく、このレベルへのポインタも保持しています。通常の操作はすべて、真のルートではなく高速ルートで検索を開始します。レベル上で単独であるページを分割したり、レベル上の最後から2番目のページを削除したりする場合（どちらのケースも容易に検出されます）、高速ルートポインタが適切に調整されるようにしなければなりません。分割の場合、親レベルへの挿入のためのアトミック更新の一部としてこの作業を行い、削除の場合、削除のためのアトミック更新の一部として行います（いずれの場合も、デッドロックのリスクを避けるために、メタページは更新で最後にロックされるページでなければなりません）。これにより、このような2つの操作が同時に実行されている場合の競合状態を回避できます。</p>
+<h2>FSMへの削除されたページの配置</h2>
+<p class="markdown-preserve-lines">ページの再利用は、ページの削除とは切り離されています。削除されたページは、それを参照している可能性のあるスキャンや検索が一切存在しなくなったときに初めて、再利用のためにFSMに配置できます。それまでは、並行検索が並行削除（検索者にとっては並行ページ分割のようなものです）を検出し、そこから回復することを可能にする墓石（tombstone）として、兄弟リンクを乱さずにその場に留まらなければなりません。この設計は、LaninとShashaが「ドレイン技術」と呼ぶものの実装です。</p></section><section class="document-translation-chunk translated" data-chunk-order="2"><p class="markdown-preserve-lines">この手法は、ページの削除時点におけるすべてのアクティブなスナップショットおよび登録されたスナップショットがなくなるまで待機することで実装されています。これは過剰に強力な制約ですが、Postgres内での実装は単純になります。完全にデッドとマークされると、削除されたページには次のトランザクションカウンターの値がラベル付けされます。VACUUMは、格納されたXIDが確実に「全員に見える」ようになったときに、そのページを再利用のために回収できます。付随的な影響として、XIDを割り当てる次のトランザクションがコミットするまでに取得されたスナップショットを待つことになります。また、スナップショットを持たない実行中のXIDも待ちます。</p>
+<p class="markdown-preserve-lines">PostgreSQL 14より前は、VACUUMは線形スキャン中に遭遇した「古い」削除済みページ（以前のVACUUM操作によって削除されたページ）のみをFSMに配置していました。新しく削除されたページは、それが「常に」安全ではないと想定されていたため、FSMに配置されることはありませんでした。しかし、その想定は実際には不必要に悲観的でした。新しく削除されたページがFSMに配置しても安全になるまで、多くの場合それほど時間はかかりません。削除されたページがいつリサイクルのためにFSMに配置しても安全になるかを予測する、真に原理的な方法はありません。ほぼ即座に（現在のVACUUMが完了するずっと前に）安全になることもあれば、次のVACUUMが実行される時点でもまだ安全でないこともあります。リサイクルの安全性は、純粋に物理的なデータ構造の一貫性（あるいは少なくとも見かけ上の一貫性）を維持するという問題です。VACUUMを実行しているバックエンド内の状態は、単に関連していません。</p>
+<p class="markdown-preserve-lines">PostgreSQL 14では、ページの削除が行われたフルインデックススキャンの終了時に、新しく削除されたページをリサイクル可能かどうかをVACUUMが検討する機能が追加されました。その時点で安全かどうかを確認するのが便利です。これには、VACUUMが新しく削除されたページに関するわずかな簿記情報を保持しておく必要がありますが、これは非常に低コストです。このためにインメモリ状態を使用することで、後で新しく削除されたページを2回目に再訪問する必要がなくなります。ローカルの簿記状態からのsafexid値を使用して、遅延した方法でリサイクルの安全性を判断できます。</p>
+<p class="markdown-preserve-lines">ページ削除操作が行われた後に、追加のFSM間接参照が必要になるのは、LehmanとYaoの設計におけるインデックススキャンの非常に寛容なルールの自然な帰結です。一般に、インデックススキャンはツリーを下るときに、どのページに対してもロックやピンを保持する必要はありません（通常インターロックと考えるようなものは「レベル間」で保持されません）。同時に、並行リサイクル（並行削除と混同しないでください）によってインデックススキャンが真に無関係なページに到達することは許されません。クエリに対して誤った回答を返すことになるからです。リサイクルを遅延させる必要のない、より単純なページ削除のアプローチも可能ですが、LehmanとYaoの設計と互換性があるものはなさそうです。</p>
+<p class="markdown-preserve-lines">すでに削除されたページを必要に応じてリサイクルするためにFSMに配置しても、実際にはページの物理的な状態は変更されません。そのページは、その後再利用のためにFSMから取り出されたときに変更されます。削除されたページの内容は、分割操作によって上書きされます（新しい右の兄弟ページになります）。</p>
+<h2>Making concurrent TID recycling safe</h2>
+<h2>並行TIDリサイクルの安全化</h2>
+<p class="markdown-preserve-lines">VACUUM中のインデックスツプル削除に関する前のセクションで説明したように、個々のインデックススキャンが並行TIDリサイクルを回避できるようにするロックプロトコルを実装しています。ただし、インデックススキャンは安全なときはいつでもオプトアウトします（したがって、ヒープを訪問するときにリーフページのピンをドロップします）。ピンを早期にドロップすることは、VACUUMによる進行のブロックを回避できるため有用です。これは、カーソルによって使用されるインデックススキャンにおいて特に重要です。アイドル状態のカーソルは比較的長い時間停止することがあるためです。極端なケースでは、クライアントアプリケーションがアイドル状態のカーソルを数時間、あるいは数日間も保持し続けることがあります。それほど長くVACUUMをブロックすることは、壊滅的な結果をもたらす可能性があります。</p>
+<p class="markdown-preserve-lines">バッファピンを保持しないインデックススキャンは、代わりにMVCCスナップショットを保持することによって保護されます。このより限定されたインターロックはクエリへの誤った回答を防ぎますが、並行TIDリサイクル自体を防ぐことはできません（ヒープへのアクセス中にリーフページのピンを保持し続けることだけがそれを保証します）。</p>
+<p class="markdown-preserve-lines">インデックスオンリースキャンは、参照されているTIDがリサイクル可能になることを許容できないため、バッファピンをドロップすることはできません。インデックスオンリースキャンは通常、単に可視性マップ（ヒープ本体ではない）を訪問するため、古いTID参照（最初は全員に対してデッドなヒープ項目を指していたTID）がVACUUMによってヒープ内で並行してLP_UNUSEDとマークされたことに確実には気づきません。これにより、VACUUMがその直後に可視性マップでヒープページ全体をall-visibleに設定してしまうことが容易に起こり得ます。MVCCスナップショットは、通常のインデックススキャン中の問題を回避するのに十分なだけです。なぜなら、通常のインデックススキャンはヒープ本体から詳細な可視性情報にアクセスする必要があるからです。通常のインデックススキャンは、ヒープ内のLP_UNUSED項目（リサイクル可能だがまだリサイクルされていない項目）を、ヒープページが一般にall-visibleとみなされている場合であっても、「不可視」として認識します。</p>
+<p class="markdown-preserve-lines">kill_prior_tuple最適化（詳細は下の「単純な削除」で説明します）によるインデックスツプルのLP_DEAD設定も、リーフページのピンをドロップするインデックススキャンにとってはより複雑になります。並行TIDリサイクルの後に、たまたま同じTIDを共有しているために既知のデッドなインデックスツプルのように見える新しいインデックスツプルに対して、LP_DEADマークを付けるのを避けるよう注意する必要があります。他のセッションが、同じリーフページ上に、同じ元のTIDを持つ新しい無関係なインデックスツプルを挿入した可能性は十分にあります。この新しい無関係なインデックスツプルをLP_DEADに設定することは完全に誤りです。</p>
+<p class="markdown-preserve-lines">このkill_prior_tupleの競合状態に対処するため、影響を受けるインデックススキャンは、リーフページへのいかなる変更も、バッファピンが保持されていなかった中間期間にbtbulkdeleteによって到達されたことを意味すると保守的に想定します。これは、ページのLSNが変更されている場合には、リーフページにLP_DEADビットを一切設定しないことで実装されています。（これが、ログに記録されないインデックスリレーションに対して「偽の」LSNを実装している理由です。）</p>
+<h2>Fastpath For Index Insertion</h2>
+<h2>インデックス挿入のファストパス</h2>
+<p class="markdown-preserve-lines">増加するインデックスキー値の挿入という一般的なケースを最適化するために、このバックエンドが最後の値を挿入した最後のページが右端のリーフページであった場合、そのページをキャッシュします。次の挿入では、キャッシュされたページがまだ右端のリーフページであり、かつ現在の値を保持するのに正しい場所であるかどうかを迅速に確認できます。このような一般的なケースでは、ツリーを下るコストを回避できます。</p>
+<p class="markdown-preserve-lines">この最適化は、無視できない右端のリーフページは1つしか存在し得ないという前提で動作するため、visible-to-everyoneスタイルのインターロックすら必要ありません。B-Tree内には常にそのようなページが1つしか存在し得ないため、ヒントが無効化されたことを検出できないということはありません。バックエンドのキャッシュされたページが無効化されたと検出されることなく、ページが削除されてリサイクルされる可能性はありますが、それはたまたまブロックをリサイクルし、それが再び右端のリーフページとしてリサイクルされた場合に限られます。</p>
+<h2>Simple deletion</h2>
+<h2>単純な削除</h2>
+<p class="markdown-preserve-lines">プロセスがヒープツプルを訪問し、それがデッドで削除可能（すなわち、そのプロセスだけでなく、すべての開いているトランザクションに対してデッド）であることを発見した場合、インデックスに戻って対応するインデックスエントリを「既知のデッド」としてマークし、その後のインデックススキャンがヒープツプルの訪問をスキップできるようにします。「既知のデッド」マークは、インデックス項目のlp_flags状態をLP_DEADに設定することによって機能します。これは現在、通常のインデックススキャンでのみ行われ、ビットマップスキャンでは行われません。通常のスキャンのみがヒープとインデックスを「同期して」訪問するため、ビットマップスキャンでこれを行う便利な方法がないからです。また、挿入時に一意性インデックスの競合をチェックするときにLP_DEADビットが設定されることが多いことにも注意してください（これはリーフページの排他ロックを保持しているときに行われるため、より単純です）。</p>
+<p class="markdown-preserve-lines">インデックスツプルがLP_DEADとマークされると、実際にはすぐにインデックスから削除できます。インデックススキャンはページの「間」でのみ停止するため、そのような削除によってスキャンが位置を見失うことはありません。ステップを分離しているのは、LP_DEADの設定は共有ロックのみで許可しているのに対し（ヒープツプルのヒントビットのようなものです）、ツプルを物理的に削除するには排他ロックが必要だからです。また、各削除操作のWALレコードに対してsnapshotConflictHorizonを生成する必要があり、これには削除が実際に実行される際、tableamとの追加の調整が必要になります。（snapshotConflictHorizonの値は、スタンバイによるその後のレコードのREDO中に競合を発生させるために使用される場合があります。）</p>
+<p class="markdown-preserve-lines">このようにインデックスツプルの削除を遅延させ、バッチ処理にすることで、さらなる最適化が可能になります。それは、ついでにチェックするのが非常に低コストである場合に（tableamがsnapshotConflictHorizonを生成するためにそれらのテーブルブロックを訪問することがすでに分かっているため）、近くの「余分な」インデックスツプル（LP_DEADが設定されていないツプル）を日和見的にチェックすることです。削除しても安全であることが判明したインデックスツプルも削除されます。単純な削除は、実際に削除安全であることが判明した余分なツプルが、最初からLP_DEADビットを設定されていたかのように動作します。</p>
+<p class="markdown-preserve-lines">重複排除もページの分割を防ぐことができますが、インデックスツプルの削除が私たちの好ましいアプローチです。ポスティングリストツプルは、ポスティングリスト内のすべてのテーブルTIDが既知のデッドである場合にのみ、LP_DEADビットを設定できることに注意してください。LP_DEADビットは削除の出発点にすぎないため、これは実際には大きな問題ではありません。本当に重要なのは、ページが最終的に分割される前のどこかの時点で、テーブル内で近くにある関連するTIDを対象とした「何らかの」削除操作が行われることです。削除プロセスがポスティングリストツプルからデッドなTIDのグループをきめ細かく削除するために必要なのは、それだけです（状況が手に負えなくなるのを防ぐことができます）。</p>
+<h2>Bottom-Up deletion</h2>
+<h2>ボトムアップ削除</h2>
+<p class="markdown-preserve-lines">連続するUPDATEによるバージョン変動が原因で重複が発生していると疑われる場合、ページ上にたまたま存在する重複を削除しようと試みます。これは、heapamのHOTのような最適化がインデックスに対して機能しなかったことを示すエグゼキュータヒントを受け取った場合にのみ発生します。つまり、入ってくるツプルはMVCCの目的で必要な、論理的に変更されていない重複であり、それが問題のリーフページにおける新しいインデックスツプルの主要な発生源である可能性が高いことを示唆しています。（また、ボトムアップ削除は、継続的なINSERTおよびDELETEに関連する変動がある場合の一意性インデックス内でもトリガーされます。これは外部のヒントなしで簡単に検出できるためです。）</p>
+<p class="markdown-preserve-lines">ボトムアップ削除パスが実行されるとき、単純な削除はすでにページの分割を防ぐことに失敗しています（多くの場合、ページにLP_DEADビットがまったく設定されていなかったためです）。これら2つのメカニズムの実装は密接に関連しています。各操作に同じWALレコードが使用され、どのTID/ツプルが実際に削除しても安全かを判断するために同じtableamインフラストラクチャが使用されます。実装の違いは、削除を検討するTIDをどのように選択するか、およびすべてのテーブルブロックにアクセスする前にtableamが諦めるかどうかだけです（ボトムアップ削除は、失敗のコストを低く抑えることで、成功するかどうかの不確実性を受け入れています）。それでもなお、これら2つのメカニズムは概念レベルで明確に区別されます。</p>
+<p class="markdown-preserve-lines">ボトムアップインデックス削除は完全にヒューリスティクスによって駆動されます（一方、単純な削除は、すでにLP_DEADとマークされているインデックスツプルを少なくとも削除することが保証されています。少なくとも1つは存在するはずです）。削除するインデックスツプルが1つでも見つかるという確証はありません。そのため、tableamが支払うコストと私たちが得る利益のバランスを保つために、tableamと緊密に連携します。このために使用するインターフェースは、access/tableam.hで詳しく説明されています。</p></section><section class="document-translation-chunk translated" data-chunk-order="3"><p class="markdown-preserve-lines">ボトムアップのインデックス削除は、不要なバージョン起因のページ分割に対するバックストップ（防護策）メカニズムと考えることができます。これは、世代別ガベージコレクションのアイデアである「世代仮説」に一部基づいています。これは「ほとんどのオブジェクトは若くして死ぬ」という経験的な観察です。nbtree内では、新しいインデックスツプルが同じ場所にすぐに現れ、その後すぐにガベージになることがよくあります。特定のワークロードでは、比較的少数のリーフページにガベージが激しく集中することがあります（少なくとも、ボトムアップのインデックス削除がなかった以前のバージョンのPostgreSQLではそうでした）。nbtreeにおけるボトムアップのインデックス削除の背後にある設計原則のハイレベルな説明については、それがどのようにVACUUMを補完するかの詳細を含め、doc/src/sgml/btree.sgmlを参照してください。</p>
+<p class="markdown-preserve-lines">各ボトムアップパス内で、削除しても安全なツプルが適度に多く見つかることを期待しています。そうでない場合、同じリーフページに対するボトムアップ削除の検討は、しばらくの間必要なくなります（通常はページが分割され、当面の間状況が解決するためです）。バージョンチャーン（頻繁な更新）のみによって引き起こされる不要なページ分割の危険に常にさらされているページに対して、定期的なボトムアップ削除操作を実行することを期待しています。このメカニズムがうまく機能すると、バージョンチャーン起因のページ分割が発生する「寸前」の状態が常に維持されますが、実際に分割が発生することは一度もありません。</p>
+<p class="markdown-preserve-lines">重複ヒューリスティックは、かなり単純であるにもかかわらず、うまく機能します。不要なページ分割は、真に病的なレベルのバージョンチャーンがある場合にのみ発生します（理論的には、少量のバージョンチャーンによって、厳密に必要とされるよりも早くページ分割が発生する可能性がありますが、それはほとんど無害です）。基礎となるワークロードを理解する必要はありません。ターゲットとする病的な状態の一般的な性質を理解するだけで十分です。バージョンチャーンが真に病的である場合、それを特定するのは容易です。影響を受けるリーフページはかなり均質です。</p>
+<h2>WAL Considerations</h2>
+<p class="markdown-preserve-lines">挿入および削除アルゴリズム自体は、クラッシュ後のbtreeの一貫性を保証しません。堅牢性を提供するために、WALリプレイに依存しています。単一のWALエントリは事実上アトミックなアクションであり、完了しなかった場合はログから再実行（redo）できます。</p>
+<p class="markdown-preserve-lines">（ページ分割を強制しない）通常のアイテム挿入は、1つのページにしか影響しないため、当然ながら単一のWALエントリです。リーフアイテムの削除も同様です（削除によってリーフページのアイテムがゼロになった場合、そのページは削除の候補になりますが、それは別のアクションです）。</p>
+<p class="markdown-preserve-lines">ページ分割を引き起こす挿入は、挿入が行われるレベルで発生する変更（右の兄弟のleft-linkの更新を含む）に対する単一のWALエントリとしてログに記録され、その後に親レベルでの挿入（それ自体がページ分割となり、その上にさらに挿入が必要になる場合などもあります）に対する2番目のWALエントリが続きます。</p>
+<p class="markdown-preserve-lines">ルート分割の場合、後続のWALエントリは「挿入」エントリではなく「新しいルート」エントリになりますが、それ以外の詳細はほぼ同じです。</p>
+<p class="markdown-preserve-lines">分割には複数のアトミックなアクションが含まれるため、ページの分割と、新しい半分のページに対する親へのダウンリンクの挿入との間でシステムがクラッシュする可能性があります。リカバリ後、新しいページのダウンリンクは失われた状態になります。検索アルゴリズムは正しく動作します。なぜなら、左の兄弟から右リンク（right-link）をたどることでページが見つかるからです。ただし、ツリー内の多くのダウンリンクが失われていると、パフォーマンスが低下します。より深刻な結果として、ダウンリンクのないページが再び分割された場合、挿入アルゴリズムは親レベルでダウンリンクを挿入する場所を見つけることができなくなります。</p>
+<p class="markdown-preserve-lines">私たちの手法は、新しい挿入のためにツリーを検索する際に、欠落しているダウンリンクをオンザフライで作成することです。検索中にこれを行うことも可能ですが、本来は読み取り専用である操作に余分な更新を入れないのが最善であると思われます（いずれにせよ、ホットスタンバイモードでは更新は不可能です）。VACUUMで欠落しているダウンリンクを追加するのが自然に思えるかもしれませんが、ダウンリンクの挿入にはページ分割が必要になる場合があるため、ディスクスペースが不足していると失敗する可能性があります。これはVACUUM中には好ましくありません。そもそもVACUUMを実行する理由がディスクスペース不足である可能性があり、ディスクスペース不足のためにVACUUMが完了しなくなってしまうからです。対照的に、挿入ではいずれにせよ物理ファイルを拡張する必要がある場合があります。1つだけ小さな例外があります。VACUUMは、内部ページの子を削除する際に、中断された内部ページの分割を完了させます。これにより、親アイテムを再検索するためのコードを、ページ分割とページ削除の両方で共有できるようになります。</p>
+<p class="markdown-preserve-lines">欠落しているダウンリンクを特定するために、ページが分割されるとき、分割がまだ完了していないことを示すフラグ（INCOMPLETE_SPLIT）が左のページに設定されます。ダウンリンクが親に挿入されると、このフラグは挿入と同時にアトミックにクリアされます。子ページは、親への挿入が完了し、子ページのフラグがクリアされるまでロックされたままになりますが、その後は、親も分割する必要がある場合にツリーを上に再帰する前に、すぐに解放できます。これにより、通常の状況下では不完全に分割されたページが表示されないようになります。親への挿入が何らかの理由で失敗した場合にのみ表示されます。（リカバリ中にリーダーが不完全分割フラグが設定されたページを観察することも可能です。詳細については、後述の「リカバリ中のスキャン」セクションを参照してください。）</p>
+<p class="markdown-preserve-lines">ダウンリンクが欠落しているのは右のページであるにもかかわらず、左のページにフラグを設定するのは、左のページから右のページへの右リンクをたどる時点で、そのページのダウンリンクを親に挿入する必要があることを事前に知っておく方が便利だからです。</p>
+<p class="markdown-preserve-lines">そのレベルに1つしか存在しない非ルートページを分割する場合、必要なメタページ更新（「ファストルート」リンクの更新）は、親レベルへの挿入の一部として実行され、ログに記録されます。ルートページを分割する場合、メタページ更新は「新しいルート」アクションの一部として処理されます。</p>
+<p class="markdown-preserve-lines">ページ削除の各ステップは、個別のWALエントリとしてログに記録されます。リーフをハーフデッド（half-dead）としてマークし、ダウンリンクを削除するのが1つのレコードであり、ページのリンクを解除するのが2番目のレコードです。何らかの理由でvacuumが中断されたり、システムがクラッシュしたりしても、ツリーは検索と挿入に対して一貫した状態を保ちます。次のVACUUMがハーフデッドなリーフページを見つけ、削除を継続します。</p>
+<p class="markdown-preserve-lines">9.4より前は、リカバリ中に不完全な分割やページ削除を追跡し、次の挿入やvacuumで遅延して行うのではなく、リカバリの終了時にすぐに完了させていました。しかし、これによってリカバリが非常に複雑になり、クラッシュリカバリが実行された場合にのみ問題が解決されることになりました。不完全な分割は、親へのダウンリンクの挿入中に、メモリ不足やディスクスペース不足などの、それ以外は回復可能なエラーが発生した場合にも発生する可能性があります。</p>
+<h2>Scans during Recovery</h2>
+<p class="markdown-preserve-lines">nbtreeインデックスは、ホットスタンバイモードでの読み取りクエリをサポートしています。すべてのアトミックなアクション/WALレコードは、リーダーに対してツリーを一貫した状態に保つ孤立した変更を行います。リーダーは、プライマリでリーダーが従うのと同じルールに従ってページをロックします。（プライマリと同様に、リーダーは「同時実行」のページ分割やページ削除から回復するために右に移動しなければならない場合があります。）</p>
+<p class="markdown-preserve-lines">ただし、プライマリでの元の書き込み操作と比較して、リプレイ/スタートアッププロセスによるページのロック方法にはいくつかの違いがあります。例外はページ分割とページ削除に関連しています。ページ分割の第1フェーズと第2フェーズは、独立したアトミックアクションであるため、リプレイ中に独立して処理されます。プライマリで発生した親ページと子ページの書き込みロックの結合を再現することは試みません。これは、リーダーはいずれにせよ不完全分割フラグを気にしないため安全です。プライマリで余分な書き込みロックを保持し続けることは、最初のライターが分割を完了する前に、2番目のライターが不完全分割フラグを観察できないようにするためにのみ必要です。プライマリ上の同時実行ライターが同じページで不完全分割フラグを観察できるようにしてしまうと、各ライターが未完了の分割を完了しようとして、親ページを破損させてしまいます。（同様に、ページ削除レコードのリプレイでは、対象のリーフページに対する書き込みロックを終始保持することはありません。削除対象のページに挿入を行う同時実行ライターをブロックする必要があるのはプライマリだけです。）</p>
+<p class="markdown-preserve-lines">ただし、WALリプレイは、元の実行中に取られたアプローチに一致する方法で同レベルのロックを保持します。これにより、リーダーが同レベルの一貫性のなさを観察するのを防ぎます。リカバリ中に同レベルのロックを取得する方法については、もっと緩くすることも可能かもしれませんが（同レベルのロックを結合しなくても、ほとんどの種類のリーダーは右に移動して回復できます）、ここでは保守的であることを好みます。</p>
+<p class="markdown-preserve-lines">リカバリ中、すべてのインデックススキャンは ignore_killed_tuples = false で開始され、kill_prior_tuple を設定することはありません。これを行うのは、スタンバイサーバー上の最古の xmin がプライマリサーバー上の最古の xmin よりも古い可能性があり、これはツプルがスタンバイ上でまだ可視である場合でも LP_DEAD とマークされる可能性があることを意味するためです。ツプルの LP_DEAD ビットはWALに記録されませんが、フルページライトのためにスタンバイに現れることがあります。したがって、スタンバイでは常にこれらを無視しなければならず、それはそれらを設定する価値もないことを意味します。（LP_DEAD マークされたツプルが最終的にプライマリで削除されると、その削除はWALに記録されます。したがって、スタンバイで実行されるクエリは、プライマリで行われる LP_DEAD 設定のメリットの多くを享受できます。）</p>
+<p class="markdown-preserve-lines">ここで述べているのは、リカバリ中に開始されるスキャンについてであることに注意してください。リカバリ中にスキャンを開始し、リカバリが完了した後の通常稼働中に終了できるようにするために、少し工夫をしています。これは、スタンバイが通常稼働するサーバーへと状態を遷移する間も、実行中のアプリケーションを継続させることができるため、重要な機能です。</p>
+<p class="markdown-preserve-lines">非MVCCスキャンから誤った結果が返されるのを避けるために必要なインターロックは、スタンバイノードでは必要ありません。リカバリ中に VACUUM レコードをリプレイするときには、依然として完全なクリーンアップロックを取得しますが、リカバリではすべてのリーフページをロックする必要はありません（削除するアイテムがあるリーフページのみ）。これは、リカバリ中にインデックスオンリースキャンが破損するのを防ぐのに十分です（TIDリサイクルを安全にすることに関する上記のセクションを参照してください）。これにより、懸念は通常のインデックススキャンのみに残ります。（XXX: これがリカバリ中に完全に不要である理由は、実際には明確ではありません。）</p>
+<p class="markdown-preserve-lines">MVCCスナップショットの通常のインデックススキャンは、元の実行中に安全であるのと同じ理由で、常に安全です。HeapTupleSatisfiesToast() はMVCCセマンティクスを使用しませんが、それはその必要がないためです。メインのヒープ行が可視であれば、TOAST行も可視になります。したがって、可視の（有効な）ツプルからTOASTポインタをたどる限り、対応するTOAST行も可視になるため、それらに対してMVCCを再チェックする必要はありません。</p>
+<h2>Other Things That Are Handy to Know</h2>
+<p class="markdown-preserve-lines">すべてのbtreeのページ0はメタデータページです。このページには、ルートページの場所（真のルートと、現在の有効なルート（「ファスト」ルート）の両方）が格納されます。個々のインデックス検索ごとにメタページを取得するのを避けるため、メタデータ情報のコピーをインデックスのrelcacheエントリ（rd_amcache）にキャッシュします。キャッシュを使用することは、古くなっている可能性のあるルートページポインタをたどることを意味するため、これは少し厄介です。しかし、キャッシュされたポインタをたどるバックエンドは、意図したページに到達したかどうかを十分に検証できます。真のルートに移動する場合はis-rootフラグをチェックするか、ファストルートに移動する場合はそのページに兄弟がないことをチェックします。最悪の場合、現在の実際のファストルートよりも上にあるファストルートへのキャッシュされたポインタがある場合、ツリーの余分なレベルを下降することになる可能性があります。このようなケースは、最適化する価値があるほど頻繁に発生するべきではありません。また、いずれにせよ、ファストルートポインタを移動したVACUUMはインデックスの統計情報更新を発行することが期待されるため、近いうちにrelcacheのフラッシュによってキャッシュされたメタページが破棄されることが期待できます。</p></section><section class="document-translation-chunk translated" data-chunk-order="4"><p class="markdown-preserve-lines">このアルゴリズムは、1ページに少なくとも3つのアイテム（「ハイキー」と2つの実際のデータアイテム）を格納できることを前提としています。したがって、ページサイズの3分の1を超える大きさのアイテムを受け入れるのは安全ではありません。より大きなアイテムでも動作することもありますが、そのページに他に何が配置されるかによっては、後で障害が発生する可能性があります。</p>
+<p class="markdown-preserve-lines">&quot;ScanKey&quot;データ構造は、このコードにおいて根本的に異なる2つの方法で使用され、それぞれ「検索」スキャンキーおよび「挿入」スキャンキーと呼びます。検索スキャンキーは、btreeコードの外部からbtbeginscan()またはbtrescan()に渡される種類のものです。検索スキャンキー内のsk_funcポインタは、int4ltなどのbooleanを返す比較関数を指します。特定のインデックス列に対して複数のスキャンキーエントリが存在する場合もあれば、まったく存在しない場合もあります。（キーはインデックス列の順序で現れる必要がありますが、特定の列に対する複数のキーの順序は指定されていません。）挿入スキャンキー（&quot;BTScanInsert&quot;データ構造）は、同様のScanKeyの配列データ構造を使用しますが、sk_funcポインタはbtree比較サポート関数（すなわち、&lt;0、=0、&gt;0と解釈されるint4値を返す3方向比較器）を指します。挿入スキャンキーでは、インデックス列ごとに最大1つのエントリが存在します。また、スキャンを開始する場所を特定するために使用されるルールに関するその他のデータ（スキャンが&quot;nextkey&quot;スキャンであるかどうかなど）も含まれます。挿入スキャンキーはbtreeコード内で構築され（例えば_bt_mkscankey()などによって）、スキャンの開始点を特定するため、および新しいインデックスタプルを挿入する場所を特定するために使用されます。（注意：検索スキャンキーから構築された挿入スキャンキー、または切り詰められたピボットタプルから構築された挿入スキャンキーの場合、キーの数がインデックス列の数より少ないことがあり、これは残りのインデックス列に対する制約がないことを示します。）スキャンの開始点を特定した後、各インデックスエントリが順次スキャンされる際に、元の検索スキャンキーが参照され、エントリを返すかどうか、およびスキャンを停止できるかどうかが決定されます（_bt_checkkeys()を参照）。</p>
+<h2>サフィックス切り詰め（suffix truncation）に関する注意</h2>
+<p class="markdown-preserve-lines">リーフページの分割中に、ページのハイキーに不要なサフィックスキー属性を切り詰めて削除します。残りの属性は、分割後の左ページの最後のインデックスタプルが左ページに属し、分割後の右ページの最初のインデックスタプルが右ページに属することを区別できなければなりません。タプルは論理的には切り詰められたキー属性を保持しますが、それらは暗黙的に値として「負の無限大」を持ち、ストレージのオーバーヘッドはありません。ハイキーはその後、新しい右ページの親ページにおけるダウンリンクとして再利用されるため、サフィックス切り詰めによってピボットタプルが短くなります。INCLUDEインデックスは、リーフページの分割時に非キー属性が確実に切り詰められますが、キー属性の通常の基準に基づいて、一部のキー属性も切り詰められる場合があります。非キー属性はB-Tree検索にとって単なるペイロードにすぎないため、これらは特別なケースではありません。</p>
+<p class="markdown-preserve-lines">キー属性のサフィックス切り詰めの目的は、インデックスのファンアウトを向上させることです。この手法は、BayerとUnterauerによって最初に説明されました（R.Bayer and K.Unterauer, Prefix B-Trees, ACM Transactions on Database Systems, Vol 2, No. 1, March 1977, pp 11-26）。Postgresの実装は、彼らの論文に緩やかに基づいています。Postgresは、論文で単純なプレフィックスB-Treeと呼ばれているもののみを実装していることに注意してください。また、論文では、サフィックスツリーに格納されている文字列のように、ツリーのキーが「プレフィックス特性」を維持する単一の文字列で構成されていることを前提としていることにも注意してください（前のバイトの比較は常に後ろのバイトの比較よりも重要でなければならず、一般に、文字列は分割されたときに推移的一貫性を損なわない方法で比較される必要があります）。Postgresにおけるサフィックス切り詰めは、現在は属性全体の粒度でのみ機能しますが、textなどの可変長タイプの場合に、より小さな属性値を生成するopclassインフラストラクチャを考案することは容易でしょう。opclassサポート関数は、リーフページ分割の各半分を正しく分離できる、可能な限り短いキー値を生成できます。</p>
+<p class="markdown-preserve-lines">リーフページの分割点を選択するための洗練された基準が存在します。一般的な考え方は、ページ分割の各半分のスペースのバランスに過度の影響を与えることなく、サフィックス切り詰めを効果的にすることです。リーフ分割点の選択は、少なくとも挿入されるタプルがすでにページ上に配置されていると仮定すれば（実際にはページ上に十分なスペースがないため、仮定する必要があります）、分割されるページ上のアイテムの「間」の点からの選択と考えることができます。最初の等しくない属性ができるだけ早く現れる2つのインデックスタプルの間で分割点を選択すると、できるだけ多くのサフィックス属性が切り詰められます。通常は分割の各半分でスペースのバランスを均等にすることが最優先事項ですが、正確な分割点をわずかに調整するだけでも、切り詰めをはるかに効果的にすることができます。</p>
+<p class="markdown-preserve-lines">サフィックス切り詰めが主に価値があるのは、ピボットタプルを小さくして内部ページの分割を遅らせるためですが、効果的である理由はそれだけではありません。アライメントのためにピボットタプルが小さくならない切り詰めであっても、どの値がどのページに属するかを説明する際に、ピボットタプルが必要以上に制限的になるのを防ぐことができます。</p>
+<p class="markdown-preserve-lines">内部ページの分割中にサフィックス切り詰めを正しく実行することは不可能ですが、内部ページを分割する際にも識別力を持たせることは依然として有用です。fillfactorの観点から最適な分割点の許容範囲内で、親に挿入されるダウンリンクが利用可能な最小のものとなるような分割点が選択されます。この考え方もPrefix B-Treeの論文に由来しています。このプロセスは、サフィックス切り詰めを効果的にするためにリーフレベルで行われることと多くの共通点があります。全体的な効果として、サフィックス切り詰めは、特にインデックスの寿命の初期において、より小さく、より識別力のあるピボットタプルを生成する傾向があり、一方で内部ページの分割に偏りを持たせることで、初期のより小さなピボットタプルがルートページに配置されるようになり、ルートページの分割が遅れます。</p>
+<p class="markdown-preserve-lines">論理的な重複は特別に考慮されます。分割点を選択するロジックは、重複が複数のページにまたがるのを避けるために細心の注意を払っており、必要であれば完全に不均衡な分割を受け入れてでも、ほぼ常に2つのユーザーキーが異なるタプルの間で分割点を選択します。すでに重複でいっぱいのページを分割しなければならない場合、フォールバック戦略は、重複が主にヒープTIDの昇順で挿入されると想定します。ページは、ページの左半分がほぼ満杯になり、右半分がほぼ空になるように分割されます。全体的な効果として、リーフページの分割は重複の大きなグループの挿入に優雅に適応し、スペースの利用効率を最大化します。また、このように同じリーフページに重複の大きなグループを「閉じ込める」ことで、重複排除（deduplication）がより効率的になります。重複排除は、既存のポスティングリストタプルを頻繁にマージすることなく、まれに実行するだけで済みます。</p>
+<h2>重複排除（deduplication）に関する注意</h2>
+<p class="markdown-preserve-lines">一意でないインデックスにおいて、ストレージのオーバーヘッドを削減し、ページの分割を回避（または少なくとも遅延）するために、非ピボットタプルの重複排除を行います。一意インデックスにおける重複排除の目的はかなり異なることに注意してください。詳細は後述のセクションを参照してください。重複排除は、インデックスの論理的な内容を変更することなく、また読み取りクエリにオーバーヘッドを追加することなく、タプルの物理的な表現を変更します。非ピボットタプルは、ポスティングリスト（標準のアイテムポインタ形式を持つヒープTIDの単純な配列）を持つ単一の物理タプルにマージされます。重複排除は常に遅延して適用され、そうしなければページ分割を実行する必要がある時点で適用されます。これは、リーフページの分割に対する最後の防衛線として、LP_DEADアイテムが削除された後にのみ発生します（最後から2番目の防衛線として、ボトムアップのインデックス削除が最初に試行される場合があります）。ポスティングリストタプルでLP_DEADビットを設定できますが、これはすべてのTIDがデッドであることが判明している場合に限られます。</p>
+<p class="markdown-preserve-lines">重複排除に対する遅延アプローチにより、ページ分割中に使用されるページスペースの会計処理において、ポスティングリストのための特別なケースのロジックを絶対的に最小限に抑えることができます。ポスティングリストは、INCLUDEインデックスタプルの非キー列と同様に、ページ分割中にサフィックス切り詰めによって必要に応じて確実に切り詰められる追加のペイロードと考えることができます。新しく挿入されるタプルは、一般に重複しないプレーンなアイテムとして扱うことができます（ただし、重複する新規/挿入タプルが実際にどのように処理されるかについては、ポスティングリストの分割に関するセクションを参照してください）。</p>
+<p class="markdown-preserve-lines">ポスティングリストの表現はGINで使用されるポスティングリストとほぼ同じであるため、GINのvarbyteエンコーディング圧縮スキームを個々のポスティングリストに適用することは容易でしょう。ポスティングリストの圧縮は、ポスティングリストの分割がページスペースの会計処理に関して行っている前提を崩してしまうため（後述のセクションを参照）、圧縮をどのようにnbtreeに統合できるかは明確ではありません。さらに、一般にnbtreeは多くの同時リーダーおよびライターに対して一貫したパフォーマンスを発揮するように最適化されているため、ポスティングリストの圧縮はnbtreeにとって魅力的なトレードオフを提供しません。また、圧縮を行うと、ポスティングリストからのTIDのサブセットの削除が遅く複雑になり、ボトムアップのインデックス削除に大きく依存するワークロードにとって大きな問題となります。</p>
+<p class="markdown-preserve-lines">重複排除に対する遅延アプローチの主な目的は、ランダムな更新に伴う重複排除のパフォーマンスへの影響を制限することです。同じキー値の同時追加専用挿入であっても、個々のインデックスタプルの挿入順序はヒープTIDの順序と完全には一致しない傾向があります。重複排除を遅らせることで、ページレベルの断片化が最小限に抑えられます。</p>
+<h2>一意インデックスにおける重複排除</h2>
+<p class="markdown-preserve-lines">非常に多くの場合、一意インデックスのほぼすべての特定のリーフページに配置される可能性のある一意な値の数は、固定され永続的です。例えば、アイデンティティ列の主キーでは、通常、最も右側のリーフページ内に新しい論理行が挿入されることによってのみリーフページの分割が発生します。最も右側ではないリーフページの分割がある場合、その分割は既存の論理行のUPDATEに関連する挿入によって引き起こされたに違いありません。単に複数のバージョンを格納するためだけにリーフページを分割することは、誤った経済性です。実質的に、一時的な重複の急増を吸収するためだけに、インデックス構造を永続的に劣化させていることになります。</p>
+<p class="markdown-preserve-lines">一意インデックスにおける重複排除は、これらの病的なページ分割を防ぐのに役立ちます。長期的には重複が存在しなくなるため、スペース効率の良い方法で重複を格納することが目的ではありません。むしろ、ページの分割が必要になる前に、標準的なガベージコレクションメカニズムが実行されるための時間を稼いでいるのです。</p>
+<p class="markdown-preserve-lines">一意インデックスのリーフページは、挿入（ページを分割しなければならない可能性があります）の際に、ページ上の既存の重複を偶然検出した場合にのみ、重複排除パスを実行します。これは、重複排除が効果を発揮するのは、*すべての*新しい挿入がUPDATEによる重複である場合のみであるという前提に基づいています。これにより、ページ分割を遅らせる機会を逃す可能性がありますが、私たちの最終的な目標はリーフページの分割を*無期限に*遅らせる（すなわち、完全に防止する）ことであるため、問題ありません。どうせ避けられない可能性が高い分割を遅らせようとすることには、ほとんど意味がありません。これにより、常に重複がほとんどまたはまったくない一意インデックスに対して重複排除を試みるオーバーヘッドを回避できます。</p></section><section class="document-translation-chunk translated" data-chunk-order="5"><p class="markdown-preserve-lines">注意：バージョン更新の激しさ（version churn）によって引き起こされる「不要な」ページ分割を回避することは、PostgreSQL 14で追加されたボトムアップインデックス削除（bottom-up index deletion）の目標でもあります。現在では、この問題に対処する方法として、ボトムアップインデックス削除が推奨されています（あらゆる種類のインデックス、特に一意性インデックスにおいて）。それでも、重複排除がボトムアップインデックス削除を補強できる場合もあります。削除によってタプルを解放できない場合（古いスナップショットがクリーンアップを妨げているため）、重複排除にフォールバックすることで追加の容量が確保されます。重複排除によってページ分割を遅らせることで、将来同じページに対して行われるボトムアップ削除パスを成功させることができます。</p>
+<h2>ポスティングリストの分割</h2>
+<p class="markdown-preserve-lines">挿入されるタプルが既存のポスティングリストと重複する場合、ポスティングリストの分割が実行されます。ページ分割と同様に、ポスティングリストの分割は、新しい/挿入されるアイテムが「収まらない」状況を解決すると同時に、ついでに（すなわち、同じアトミックなアクションの一部として）挿入されるアイテムを挿入します。ほぼ満杯のページに新しいアイテムを挿入する際に、それがポスティングリストと重複し、結果としてポスティングリストの分割とページ分割の両方が発生することは、可能性としてはあります（特に可能性が高いわけではありませんが）。その場合でも、ポスティングリストを分割するアトミックなアクションは、新しいアイテムの挿入も行います（ページ分割は常についでに新しいアイテムを挿入するためです）。ポスティングリストの分割を挿入と同じアトミックアクションに含めることで、同じポスティングリストへの並行挿入によって引き起こされる問題を回避できます。ポスティングリストをどのように変更するかの正確な詳細は、新しいアイテムに依存し、その逆もまた同様だからです。また、単一のアトミックアクションにすることで、元のポスティングリストタプルを明示的にWALログに記録する必要がなくなるため、ポスティングリストの分割に必要な追加のWALの量も最小限に抑えられます。</p>
+<p class="markdown-preserve-lines">新しいタプルを挿入するのと同じアトミックアクションに便乗しているにもかかわらず、ポスティングリストの分割は、挿入自体（またはページ分割自体）とは別の、追加のアクションと考えることができます。概念的には、ポスティングリストの分割は、既存のポスティングリストと重複する挿入を、その最終的な新しいアイテムをポスティングリストのすぐ右側に追加する挿入へと「書き換え」ます。ポスティングリストのサイズは変更されないため、ページのスペース管理コードはポスティングリストの分割をまったく気にする必要がありません。これは私たちの設計の重要な利点です。ページ分割ポイントの選択ロジックは、ポスティングリストの分割を処理する必要がない場合でも、非常に繊細なものだからです。</p>
+<p class="markdown-preserve-lines">新しいアイテムが最初から既存のポスティングリストと重複していなかったかのような錯覚を維持するために、いくつかの独立した追加ステップが必要なだけです。挿入されるタプルのヒープTIDは、既存の/元々重複していたポスティングリストの最も右側/最大のヒープTIDに置き換えられます。同様に、元の挿入されるアイテムのTIDは、ポスティングリスト内の適切なオフセットに再配置されます（通常、穴を作るためにTIDをずらしてスペースを空けます）。最後に、ページ分割を伴うポスティングリスト分割のケースでは、最終的な新しいアイテムと分割後のポスティングタプルの両方を含む元のページの仮想バージョンに基づいて、新しいハイキー（high key）を生成する必要があります（ページ分割は通常、新しいアイテム/収まらないアイテムを含む仮想バージョンに対してのみ動作します）。</p>
+<p class="markdown-preserve-lines">このアプローチにより、挿入されるアイテムの挿入を同時に完了することなくポスティングリストを分割する、「積極的な（eager）」アトミックポスティング分割操作を考案することを回避できます。この代替設計はよりすっきりと見えるかもしれませんが、ページのスペース管理に微妙な問題を引き起こします。一般に、挿入される/新しいアイテムがどちらのポスティングリストの半分とも重複しなくなるようにポスティングリストを分割するための十分な空き領域がページ上にない可能性があり、新しいアイテムの実際の個別挿入が始まる前に操作が失敗する可能性があります。結局、いずれにせよページ分割を必要とするポスティングリストの分割を処理しなければならなくなります。その上、ポスティングリストを分割する際に可変の「分割ポイント」をサポートしたとしても、全体的なスペース利用効率は実際には向上しません。</p>
+<h2>データ表現に関する注意</h2>
+<p class="markdown-preserve-lines">L&amp;Yで必要とされる右兄弟リンクは、左兄弟リンク、ページレベル、およびいくつかのフラグと同様に、ページの「不透明データ（opaque data）」領域に保持されます。ページレベルは、リーフレベルの0から、ルートでのツリーの深さマイナス1まで、上向きにカウントされます。（リーフからカウントアップすることで、ルートを分割するときに既存のページを再採番する必要がなくなります。）</p>
+<p class="markdown-preserve-lines">Postgresのディスクブロックデータフォーマット（アイテムの配列）は、LehmanとYaoの「キーとポインタが交互に並ぶ」というディスクページの概念に適合しないため、少し工夫をする必要があります。（キーとポインタが交互に並ぶという概念は、概念的には既存のピボットタプルの真ん中で分割する内部ページ分割にとって重要です。タプルの「セパレータ」キーは、分割の左側に左側の新しいハイキーとして配置され、タプルのポインタ/ダウンリンクは、右側に最初/マイナス無限大のダウンリンクとして配置されます。）</p>
+<p class="markdown-preserve-lines">そのツリーレベルで最も右側にないページでは、「ハイキー（high key）」はページの最初のアイテムに保持され、実際のデータアイテムは2番目のアイテムから始まります。「ハイキー」アイテムのリンク部分は使用されません。最も右側にあるページには「ハイキー」がなく（暗黙的にプラス無限大になります）、そのためデータアイテムは最初のアイテムから始まります。ハイキーを右側ではなく左側に配置することは奇妙に思えるかもしれませんが、データアイテムを追加する際にハイキーを移動させる必要がなくなります。</p>
+<p class="markdown-preserve-lines">リーフページでは、データアイテムは単にインデックス対象のリレーション内のタプルへのリンク（TID）であり、関連するキー値を伴います。</p>
+<p class="markdown-preserve-lines">非リーフページでは、データアイテムは境界キーを持つ子ページへのダウンリンクです。各データアイテムのキーは、その子ページ上のキーの厳密な下限であるため、論理的にはキーはそのダウンリンクの左側にあります。ハイキー（存在する場合）は、最後のダウンリンクの上限です。そのような各ページの最初のデータアイテムには下限がありません（お好みであれば、マイナス無限大の下限と言ってもよいでしょう）。比較ルーチンはそれに応じて処理する必要があります。アイテムに格納されている実際のキーは無関係であり、まったく格納する必要はありません。この配置は、L&amp;Yの非リーフページがキーよりもポインタを1つ多く持つという事実に呼応しています。サフィックス切り捨て（suffix truncation）のマイナス無限大属性も同様に動作します。</p></section></div><script>
 (function() {
   function notifyParent() {
     if (parent === window) return;

@@ -1,5 +1,5 @@
 <!doctype html>
-<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>symbols/src__backend__optimizer__util__plancat_c__get_relation_foreign_keys.md</title><link rel="stylesheet" href="../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../source/src/backend/optimizer/util/plancat.c.html#L583" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__plancat_c__get_relation_foreign_keys.html&quot;}, '*');">get_relation_foreign_keys</a></h1>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="10"><title>symbols/src__backend__optimizer__util__plancat_c__get_relation_foreign_keys.md</title><link rel="stylesheet" href="../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../source/src/backend/optimizer/util/plancat.c.html#L583" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__plancat_c__get_relation_foreign_keys.html&quot;}, '*');">get_relation_foreign_keys</a></h1>
 <h2>現在のソース事実</h2>
 <ul>
 <li>種別: <code>function</code></li>
@@ -75,17 +75,17 @@
 <li>キャッシュから取得した外部キーの制約関係元 ID（<code>conrelid</code>）は、常に処理対象の <code>relation</code> の OID と一致していなければなりません。</li>
 </ul>
 <h2>アルゴリズムまたは振る舞い</h2>
-<p>1. **早期リターン判定**:</p>
+<p>1. <strong>早期リターン判定</strong>:</p>
 <ul>
 <li><code>rel-&gt;reloptkind</code> が <a class="wiki-source-link" href="../../source/src/backend/optimizer/path/allpaths.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__path__allpaths_c__RELOPT_BASEREL.html&quot;}, '*');"><code>RELOPT_BASEREL</code></a> でない場合、またはクエリの <code>rtable</code> 長が 2 未満である場合は処理を終了します。</li>
 <li><code>inhparent</code> が真である場合も処理を終了します。</li>
-<p>2. **外部キー一覧の取得**:</p>
+<p>2. <strong>外部キー一覧の取得</strong>:</p>
 <li><code>RelationGetFKeyList(relation)</code> を呼び出して、リレーションキャッシュから該当リレーションの外部キーキャッシュリスト（<code>cachedfkeys</code>）を取得します。</li>
-<p>3. **外部キーの走査と照合**:</p>
+<p>3. <strong>外部キーの走査と照合</strong>:</p>
 <li>取得した <code>cachedfkeys</code> の各要素についてループを開始します。</li>
 <li>制約が現在有効化されていない場合（<code>!cachedfk-&gt;conenforced</code>）はスキップします。</li>
 <li>クエリの <code>rtable</code> を走査し、参照先テーブル（<code>confrelid</code>）に一致し、かつ継承親（<code>rte-&gt;inh</code>）ではなく、自身との自己結合（<code>rti == rel-&gt;relid</code>）ではない有効な RTE を検索します。</li>
-<p>4. **<a class="wiki-source-link" href="../../source/src/include/nodes/pathnodes.h.html#L1460" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__nodes__pathnodes_h__ForeignKeyOptInfo.html&quot;}, '*');"><code>ForeignKeyOptInfo</code></a> の構築と登録**:</p>
+<p>4. <strong><a class="wiki-source-link" href="../../source/src/include/nodes/pathnodes.h.html#L1460" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__nodes__pathnodes_h__ForeignKeyOptInfo.html&quot;}, '*');"><code>ForeignKeyOptInfo</code></a> の構築と登録</strong>:</p>
 <li>条件に一致する RTE が見つかった場合、<code>makeNode(ForeignKeyOptInfo)</code> で新規ノードを割り当てます。</li>
 <li>制限元・参照元のリレーション ID、キー数、およびキー列・演算子の配列データを <a class="wiki-source-link" href="../../source/src/include/utils/hsearch.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__utils__hsearch_h__memcpy.html&quot;}, '*');"><code>memcpy</code></a> でコピーします。</li>
 <li>一致・定数カウンタや等価クラスなどのフィールドをゼロクリアします。</li>

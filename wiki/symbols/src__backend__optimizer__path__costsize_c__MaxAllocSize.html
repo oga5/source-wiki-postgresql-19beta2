@@ -1,5 +1,5 @@
 <!doctype html>
-<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>symbols/src__backend__optimizer__path__costsize_c__MaxAllocSize.md</title><link rel="stylesheet" href="../../styles.css"></head><body><h1>MaxAllocSize</h1>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="10"><title>symbols/src__backend__optimizer__path__costsize_c__MaxAllocSize.md</title><link rel="stylesheet" href="../../styles.css"></head><body><h1>MaxAllocSize</h1>
 <h2>現在のソース事実</h2>
 <ul>
 <li>種別: <code>function</code></li>
@@ -74,7 +74,7 @@
 </ul>
 <h2>アルゴリズムまたは振る舞い</h2>
 <p><code>MaxAllocSize</code> は、オプティマイザのサイズ見積もり処理において、以下の2つの明示的なステージで利用されます。</p>
-<p>1. **オーバーフローの検出とガードステージ**: タプル幅の合計値やメモリ割り当てに必要なバッファサイズを計算する際、計算過程で整数オーバーフローが発生していないかを検証します。 2. **上限値へのクランプステージ**: 計算された推定タプル幅が <code>MaxAllocSize</code> を超過している場合、または不正な巨大化が検出された場合に、値を <code>MaxAllocSize</code> を上限とする安全な範囲（<code>int32</code> など）に強制的にクランプ（補正）し、後続のコスト計算やメモリ確保処理で安全な値が維持されるようにします。</p>
+<p>1. <strong>オーバーフローの検出とガードステージ</strong>: タプル幅の合計値やメモリ割り当てに必要なバッファサイズを計算する際、計算過程で整数オーバーフローが発生していないかを検証します。 2. <strong>上限値へのクランプステージ</strong>: 計算された推定タプル幅が <code>MaxAllocSize</code> を超過している場合、または不正な巨大化が検出された場合に、値を <code>MaxAllocSize</code> を上限とする安全な範囲（<code>int32</code> など）に強制的にクランプ（補正）し、後続のコスト計算やメモリ確保処理で安全な値が維持されるようにします。</p>
 <h2>失敗モードと境界条件</h2>
 <ul>
 <li>推定されたタプル幅や、各種データ構造（例: <code>hstore</code> のペア数や <a class="wiki-source-link" href="../../source/src/interfaces/ecpg/test/expected/preproc-define.c.html#L35" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__interfaces__ecpg__test__expected__preproc-define_c__intarray.html&quot;}, '*');"><code>intarray</code></a> のアイテム数など）の要素数が <code>MaxAllocSize</code> を超える場合、メモリ確保エラーやオーバーフローを防ぐためのエラーチェックの閾値として機能します。</li>

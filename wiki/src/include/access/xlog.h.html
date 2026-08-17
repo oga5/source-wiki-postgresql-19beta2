@@ -1,5 +1,5 @@
 <!doctype html>
-<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>src/include/access/xlog.h.md</title><link rel="stylesheet" href="../../../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../../../source/src/include/access/xlog.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/access/xlog.h.html&quot;}, '*');">src/include/access/xlog.h</a></h1>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="10"><title>src/include/access/xlog.h.md</title><link rel="stylesheet" href="../../../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../../../source/src/include/access/xlog.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/access/xlog.h.html&quot;}, '*');">src/include/access/xlog.h</a></h1>
 <h2>概要</h2>
 <p>PostgreSQLの先行書き込みログ（WAL: Write-Ahead Log）マネージャーの公開インターフェースを定義するヘッダーファイルです。WALバッファの管理、チェックポイントの調整、データベースの起動とリカバリ（<a class="wiki-source-link" href="../../../../source/src/backend/access/transam/xlog.c.html#L5845" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__access__transam__xlog_c__StartupXLOG.html&quot;}, '*');"><code>StartupXLOG</code></a>）、およびWALレコードの挿入やフラッシュに関するマクロ、列挙型、構造体、外部関数宣言を提供します。</p>
 <h2>モジュール内での役割</h2>
@@ -29,9 +29,9 @@
 </ul>
 <h2>制御フローとデータフロー</h2>
 <ul>
-<li>**リカバリ・起動フロー**: サーバー起動時に <code>StartupXLOG()</code> が呼び出され、制御ファイルやWALを読み込んでクラッシュリカバリまたはアーカイブリカバリを実行し、通常稼働状態（<code>RECOVERY_STATE_DONE</code>）へ遷移します。</li>
-<li>**WAL挿入とフラッシュフロー**: バックエンドが変更を行った際、<a class="wiki-source-link" href="../../../../source/src/backend/access/transam/xloginsert.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/access/transam/xloginsert.c.html&quot;}, '*');"><code>xloginsert.c</code></a> 等で構築されたレコードが <code>XLogInsertRecord()</code> を通じてWALバッファに挿入されます。必要に応じて <code>XLogFlush()</code> によりディスクへ確実に書き込まれます。</li>
-<li>**チェックポイントフロー**: <code>CreateCheckPoint()</code> または <code>CreateRestartPoint()</code> が呼び出され、<a class="wiki-source-link" href="../../../../source/src/include/access/xlog.h.html#L151" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/access/xlog.h.html&quot;}, '*');"><code>CHECKPOINT_IS_SHUTDOWN</code></a> などのフラグに応じてダーティバッファのフラッシュやチェックポイントレコードの書き込みが行われます。</li>
+<li><strong>リカバリ・起動フロー</strong>: サーバー起動時に <code>StartupXLOG()</code> が呼び出され、制御ファイルやWALを読み込んでクラッシュリカバリまたはアーカイブリカバリを実行し、通常稼働状態（<code>RECOVERY_STATE_DONE</code>）へ遷移します。</li>
+<li><strong>WAL挿入とフラッシュフロー</strong>: バックエンドが変更を行った際、<a class="wiki-source-link" href="../../../../source/src/backend/access/transam/xloginsert.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/access/transam/xloginsert.c.html&quot;}, '*');"><code>xloginsert.c</code></a> 等で構築されたレコードが <code>XLogInsertRecord()</code> を通じてWALバッファに挿入されます。必要に応じて <code>XLogFlush()</code> によりディスクへ確実に書き込まれます。</li>
+<li><strong>チェックポイントフロー</strong>: <code>CreateCheckPoint()</code> または <code>CreateRestartPoint()</code> が呼び出され、<a class="wiki-source-link" href="../../../../source/src/include/access/xlog.h.html#L151" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/access/xlog.h.html&quot;}, '*');"><code>CHECKPOINT_IS_SHUTDOWN</code></a> などのフラグに応じてダーティバッファのフラッシュやチェックポイントレコードの書き込みが行われます。</li>
 </ul>
 <h2>直接依存</h2>
 <ul>

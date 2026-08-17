@@ -1,5 +1,5 @@
 <!doctype html>
-<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>symbols/src__backend__optimizer__util__paramassign_c__ReturningExpr.md</title><link rel="stylesheet" href="../../styles.css"></head><body><h1>ReturningExpr</h1>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="10"><title>symbols/src__backend__optimizer__util__paramassign_c__ReturningExpr.md</title><link rel="stylesheet" href="../../styles.css"></head><body><h1>ReturningExpr</h1>
 <h2>現在のソース事実</h2>
 <ul>
 <li>種別: <code>function</code></li>
@@ -67,8 +67,8 @@
 <p><code>ReturningExpr</code> は、PostgreSQLのクエリ最適化フェーズにおいて、上位クエリを参照する式ノードとして機能し、プラン作成時に実行時パラメータ（<code>PARAM_EXEC</code> スロット）への置換対象となるデータ構造である。</p>
 <h2>入力と出力</h2>
 <ul>
-<li>**入力**: 上位クエリのコンテキストにおいて評価される <code>ReturningExpr</code> 式ノード。</li>
-<li>**出力**: 割り当てられた <code>PARAM_EXEC</code> スロットを指し示す <code>Param</code> ノード。</li>
+<li><strong>入力</strong>: 上位クエリのコンテキストにおいて評価される <code>ReturningExpr</code> 式ノード。</li>
+<li><strong>出力</strong>: 割り当てられた <code>PARAM_EXEC</code> スロットを指し示す <code>Param</code> ノード。</li>
 </ul>
 <h2>前提条件と不変条件</h2>
 <ul>
@@ -77,10 +77,10 @@
 </ul>
 <h2>アルゴリズムまたは振る舞い</h2>
 <p><code>ReturningExpr</code> に対するパラメータ割り当てと置換は、以下の2つの明示的な処理ステージを経て実行される。</p>
-<p>1. **置換処理のトリガーとコンテキストの特定**: プランナが下位のサブクエリや式を走査する過程で、上位クエリを参照する <code>ReturningExpr</code> ノードを検出すると、<a class="wiki-source-link" href="../../source/src/backend/optimizer/util/paramassign.c.html#L367" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__paramassign_c__replace_outer_returning.html&quot;}, '*');"><code>replace_outer_returning</code></a> などの置換関数が呼び出される。このステージでは、対象となる上位クエリのプランナ情報（<code>PlannerInfo</code>）が特定される。 2. **新規パラメータスロットの強制割り当てと置換**: 特定されたクエリレベルにおいて、<code>ReturningExpr</code> は重複排除の対象外として扱われる。そのため、既存のパラメータリスト（<code>plan_params</code>）との照合は行われず、グローバルな <a class="wiki-source-link" href="../../source/src/backend/optimizer/util/paramassign.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__paramassign_c__paramExecTypes.html&quot;}, '*');"><code>paramExecTypes</code></a> リストの末尾に新しいパラメータ型（Oid）が追加され、新規の <code>PARAM_EXEC</code> スロットIDが採番される。最終的に、元の <code>ReturningExpr</code> ノードはこの新規IDを持つ <code>Param</code> ノードへと置換される。</p>
+<p>1. <strong>置換処理のトリガーとコンテキストの特定</strong>: プランナが下位のサブクエリや式を走査する過程で、上位クエリを参照する <code>ReturningExpr</code> ノードを検出すると、<a class="wiki-source-link" href="../../source/src/backend/optimizer/util/paramassign.c.html#L367" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__paramassign_c__replace_outer_returning.html&quot;}, '*');"><code>replace_outer_returning</code></a> などの置換関数が呼び出される。このステージでは、対象となる上位クエリのプランナ情報（<code>PlannerInfo</code>）が特定される。 2. <strong>新規パラメータスロットの強制割り当てと置換</strong>: 特定されたクエリレベルにおいて、<code>ReturningExpr</code> は重複排除の対象外として扱われる。そのため、既存のパラメータリスト（<code>plan_params</code>）との照合は行われず、グローバルな <a class="wiki-source-link" href="../../source/src/backend/optimizer/util/paramassign.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__paramassign_c__paramExecTypes.html&quot;}, '*');"><code>paramExecTypes</code></a> リストの末尾に新しいパラメータ型（Oid）が追加され、新規の <code>PARAM_EXEC</code> スロットIDが採番される。最終的に、元の <code>ReturningExpr</code> ノードはこの新規IDを持つ <code>Param</code> ノードへと置換される。</p>
 <h2>失敗モードと境界条件</h2>
 <ul>
-<li>**重複排除の不適用によるスロット消費**: <code>ReturningExpr</code> は同一の式であっても重複排除が行われないため、同じ式が複数回参照されると、参照回数分の <code>PARAM_EXEC</code> スロットが消費され、エグゼキュータ側のパラメータ配列が肥大化する境界条件がある。</li>
+<li><strong>重複排除の不適用によるスロット消費</strong>: <code>ReturningExpr</code> は同一の式であっても重複排除が行われないため、同じ式が複数回参照されると、参照回数分の <code>PARAM_EXEC</code> スロットが消費され、エグゼキュータ側のパラメータ配列が肥大化する境界条件がある。</li>
 </ul><script>
 (function() {
   function notifyParent() {

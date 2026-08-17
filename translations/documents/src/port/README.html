@@ -1,13 +1,16 @@
 <!doctype html>
-<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>src/port/README</title><link rel="stylesheet" href="../../../../styles.css"></head><body><h1>Japanese translation</h1><p><code>src/port/README</code></p><p><a href="../../../../source/src/port/README.html" target="source-view">View original document</a></p><p class="document-translation-progress document-translation-complete">Translation complete.</p><div class="document-translation-body"><section class="document-translation-chunk translated" data-chunk-order="0"><p>src/port/README</p>
-<p>libpgport =========</p>
-<p>libpgport は特別な動作をする必要があります。ライブラリとアプリケーションの両方に機能を提供するためです。しかし、2つの複雑な点があります:</p>
-<p>1) ライブラリは、ライブラリとまったく同じフラグでコンパイルされたオブジェクトファイルを使用する必要があります。libpgport は同じフラグを使用しない可能性があるため、個々のライブラリ用にオブジェクトファイルを再コンパイルする必要があります。これを行うには、リンク行から -lpgport を削除します:</p>
-<p># Need to recompile any libpgport object files LIBS := $(filter-out -lpgport, $(LIBS))</p>
-<p>そして、オブジェクトファイルを再コンパイルするためのインフラストラクチャを追加します:</p>
-<p>OBJS= execute.o typename.o descriptor.o data.o error.o prepare.o memory.o \ connect.o misc.o path.o exec.o \ $(filter strlcat.o, $(LIBOBJS))</p>
-<p>問題は、どのオブジェクトファイルを追加する必要があるかのテストが行われないことですが、不足している機能は通常、ユーザーアプリケーションのリンク時に判明します。</p>
-<p>2) アプリケーションの場合は、-lpq の前に -lpgport を使用するため、libpgport からの静的ファイルが最初にリンクされます。これにより、アプリケーションが libpq によって *使用* されるものの libpq からエクスポートされることを意図していないシンボルに依存するのを防ぎます。libpq の libpgport の使用方法は時間の経過とともに変化するため、そのような依存関係は問題になります。Windows、Linux、AIX、および macOS では、エクスポートリストを使用して libpq がエクスポートするシンボルを制御しています。</p></section></div><script>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="10"><title>src/port/README</title><link rel="stylesheet" href="../../../../styles.css"></head><body><h1>Japanese translation</h1><p><code>src/port/README</code></p><p><a href="../../../../source/src/port/README.html" target="source-view">View original document</a></p><p class="document-translation-progress document-translation-complete">Translation complete.</p><div class="document-translation-body"><section class="document-translation-chunk translated" data-chunk-order="0"><p class="markdown-preserve-lines">src/port/README</p>
+<h1>libpgport</h1>
+<p class="markdown-preserve-lines">libpgport は特別な動作をする必要があります。ライブラリとアプリケーションの両方に機能を提供するためです。しかし、2つの複雑な点があります:</p>
+<p class="markdown-preserve-lines">1) ライブラリは、ライブラリとまったく同じフラグでコンパイルされたオブジェクトファイルを使用する必要があります。libpgport は同じフラグを使用しない可能性があるため、個々のライブラリ用にオブジェクトファイルを再コンパイルする必要があります。これを行うには、リンク行から -lpgport を削除します:</p>
+<p class="markdown-preserve-lines">        # Need to recompile any libpgport object files
+        LIBS := $(filter-out -lpgport, $(LIBS))</p>
+<p class="markdown-preserve-lines">そして、オブジェクトファイルを再コンパイルするためのインフラストラクチャを追加します:</p>
+<p class="markdown-preserve-lines">        OBJS= execute.o typename.o descriptor.o data.o error.o prepare.o memory.o \
+                connect.o misc.o path.o exec.o \
+                $(filter strlcat.o, $(LIBOBJS))</p>
+<p class="markdown-preserve-lines">問題は、どのオブジェクトファイルを追加する必要があるかのテストが行われないことですが、不足している機能は通常、ユーザーアプリケーションのリンク時に判明します。</p>
+<p class="markdown-preserve-lines">2) アプリケーションの場合は、-lpq の前に -lpgport を使用するため、libpgport からの静的ファイルが最初にリンクされます。これにより、アプリケーションが libpq によって *使用* されるものの libpq からエクスポートされることを意図していないシンボルに依存するのを防ぎます。libpq の libpgport の使用方法は時間の経過とともに変化するため、そのような依存関係は問題になります。Windows、Linux、AIX、および macOS では、エクスポートリストを使用して libpq がエクスポートするシンボルを制御しています。</p></section></div><script>
 (function() {
   function notifyParent() {
     if (parent === window) return;

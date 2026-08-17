@@ -1,0 +1,235 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="10"><title>meson_options.txt</title><link rel="stylesheet" href="../../styles.css"></head><body><h1>Japanese translation</h1><p><code>meson_options.txt</code></p><p><a href="../../source/meson_options.txt.html" target="source-view">View original document</a></p><p class="document-translation-progress document-translation-complete">Translation complete.</p><div class="document-translation-body"><section class="document-translation-chunk translated" data-chunk-order="0"><pre class="document-translation-body document-translation-text"># Copyright (c) 2022-2026, PostgreSQL Global Development Group
+
+# データレイアウトに影響を与えるオプション
+
+option(&#x27;blocksize&#x27;, type: &#x27;combo&#x27;,
+  choices: [&#x27;1&#x27;, &#x27;2&#x27;, &#x27;4&#x27;, &#x27;8&#x27;, &#x27;16&#x27;, &#x27;32&#x27;],
+  value: &#x27;8&#x27;,
+  description: &#x27;リレーションのブロックサイズ（キロバイト単位）&#x27;)
+
+option(&#x27;wal_blocksize&#x27;, type: &#x27;combo&#x27;,
+  choices: [&#x27;1&#x27;, &#x27;2&#x27;, &#x27;4&#x27;, &#x27;8&#x27;, &#x27;16&#x27;, &#x27;32&#x27;, &#x27;64&#x27;],
+  value: &#x27;8&#x27;,
+  description: &#x27;WALのブロックサイズ（キロバイト単位）&#x27;)
+
+option(&#x27;segsize&#x27;, type: &#x27;integer&#x27;, value: 1,
+  description: &#x27;セグメントサイズ（ギガバイト単位）&#x27;)
+
+option(&#x27;segsize_blocks&#x27;, type: &#x27;integer&#x27;, value: 0,
+  description: &#x27;セグメントサイズ（ブロック単位）&#x27;)
+
+
+# その他のオプション
+
+option(&#x27;krb_srvnam&#x27;, type: &#x27;string&#x27;, value: &#x27;postgres&#x27;,
+  description: &#x27;GSSAPIのデフォルトのKerberosサービスプリンシパル&#x27;)
+
+option(&#x27;system_tzdata&#x27;, type: &#x27;string&#x27;, value: &#x27;&#x27;,
+  description: &#x27;指定されたディレクトリ内のシステムタイムゾーンデータを使用する&#x27;)
+
+
+# デフォルト値
+
+option(&#x27;pgport&#x27;, type: &#x27;integer&#x27;, value: 5432,
+  min: 1, max: 65535,
+  description: &#x27;サーバーおよびクライアントのデフォルトポート番号&#x27;)
+
+
+# 開発者向けオプション
+
+option(&#x27;cassert&#x27;, type: &#x27;boolean&#x27;, value: false,
+  description: &#x27;アサーションチェックを有効にする（デバッグ用）&#x27;)
+
+option(&#x27;tap_tests&#x27;, type: &#x27;feature&#x27;, value: &#x27;auto&#x27;,
+  description: &#x27;TAPテストを有効にする&#x27;)
+
+option(&#x27;injection_points&#x27;, type: &#x27;boolean&#x27;, value: false,
+  description: &#x27;インジェクションポイントを有効にする&#x27;)
+
+option(&#x27;PG_TEST_EXTRA&#x27;, type: &#x27;string&#x27;, value: &#x27;&#x27;,
+  description: &#x27;選択した追加テストを有効にする。PG_TEST_EXTRA環境変数によって上書きされます。&#x27;)
+
+option(&#x27;PG_GIT_REVISION&#x27;, type: &#x27;string&#x27;, value: &#x27;HEAD&#x27;,
+  description: &#x27;pgdistターゲットによってパッケージ化されるgitリビジョン&#x27;)
+
+
+# コンパイルオプション
+
+option(&#x27;extra_include_dirs&#x27;, type: &#x27;array&#x27;, value: [],
+  description: &#x27;ヘッダーを検索するデフォルト以外のディレクトリ&#x27;)
+
+option(&#x27;extra_lib_dirs&#x27;, type: &#x27;array&#x27;, value: [],
+  description: &#x27;ライブラリを検索するデフォルト以外のディレクトリ&#x27;)
+
+option(&#x27;extra_version&#x27;, type: &#x27;string&#x27;, value: &#x27;&#x27;,
+  description: &#x27;PostgreSQLのバージョン番号にSTRINGを追加する&#x27;)
+
+option(&#x27;darwin_sysroot&#x27;, type: &#x27;string&#x27;, value: &#x27;&#x27;,
+  description: &#x27;デフォルト以外のsysrootパスを選択する&#x27;)
+
+option(&#x27;rpath&#x27;, type: &#x27;boolean&#x27;, value: true,
+  description: &#x27;共有ライブラリの検索パスを実行ファイルに埋め込む&#x27;)
+
+
+# 外部依存関係
+
+option(&#x27;bonjour&#x27;, type: &#x27;feature&#x27;, value: &#x27;auto&#x27;,
+  description: &#x27;Bonjourサポート&#x27;)
+
+option(&#x27;bsd_auth&#x27;, type: &#x27;feature&#x27;, value: &#x27;auto&#x27;,
+  description: &#x27;BSD認証サポート&#x27;)
+
+option(&#x27;docs&#x27;, type: &#x27;feature&#x27;, value: &#x27;auto&#x27;,
+  description: &#x27;HTMLおよびmanページ形式のドキュメント&#x27;)
+
+option(&#x27;docs_pdf&#x27;, type: &#x27;feature&#x27;, value: &#x27;auto&#x27;,
+  description: &#x27;PDF形式のドキュメント&#x27;)
+
+option(&#x27;docs_html_style&#x27;, type: &#x27;combo&#x27;, choices: [&#x27;simple&#x27;, &#x27;website&#x27;],
+  description: &#x27;HTMLドキュメント用CSSスタイルシート&#x27;)
+
+option(&#x27;dtrace&#x27;, type: &#x27;feature&#x27;, value: &#x27;disabled&#x27;,
+  description: &#x27;DTraceサポート&#x27;)
+
+option(&#x27;gssapi&#x27;, type: &#x27;feature&#x27;, value: &#x27;auto&#x27;,
+  description: &#x27;GSSAPIサポート&#x27;)
+
+option(&#x27;icu&#x27;, type: &#x27;feature&#x27;, value: &#x27;auto&#x27;,
+  description: &#x27;ICUサポート&#x27;)
+
+option(&#x27;ldap&#x27;, type: &#x27;feature&#x27;, value: &#x27;auto&#x27;,
+  description: &#x27;LDAPサポート&#x27;)
+
+option(&#x27;libcurl&#x27;, type : &#x27;feature&#x27;, value: &#x27;auto&#x27;,
+  description: &#x27;libcurlサポート&#x27;)
+
+option(&#x27;libedit_preferred&#x27;, type: &#x27;boolean&#x27;, value: false,
+  description: &#x27;GNU ReadlineよりもBSD Libeditを優先する&#x27;)
+
+option(&#x27;libnuma&#x27;, type: &#x27;feature&#x27;, value: &#x27;auto&#x27;,
+  description: &#x27;NUMAサポート&#x27;)
+
+option(&#x27;liburing&#x27;, type : &#x27;feature&#x27;, value: &#x27;auto&#x27;,
+  description: &#x27;非同期I/O用のio_uringサポート&#x27;)
+
+option(&#x27;libxml&#x27;, type: &#x27;feature&#x27;, value: &#x27;auto&#x27;,
+  description: &#x27;XMLサポート&#x27;)
+
+option(&#x27;libxslt&#x27;, type: &#x27;feature&#x27;, value: &#x27;auto&#x27;,
+  description: &#x27;contrib/xml2でのXSLTサポート&#x27;)
+
+option(&#x27;llvm&#x27;, type: &#x27;feature&#x27;, value: &#x27;disabled&#x27;,
+  description: &#x27;LLVMサポート&#x27;)
+
+option(&#x27;lz4&#x27;, type: &#x27;feature&#x27;, value: &#x27;auto&#x27;,
+  description: &#x27;LZ4サポート&#x27;)
+
+option(&#x27;nls&#x27;, type: &#x27;feature&#x27;, value: &#x27;auto&#x27;,
+  description: &#x27;ネイティブ言語サポート&#x27;)
+
+option(&#x27;pam&#x27;, type: &#x27;feature&#x27;, value: &#x27;auto&#x27;,
+  description: &#x27;PAMサポート&#x27;)
+
+option(&#x27;plperl&#x27;, type: &#x27;feature&#x27;, value: &#x27;auto&#x27;,
+  description: &#x27;Perlモジュール（PL/Perl）をビルドする&#x27;)
+
+option(&#x27;plpython&#x27;, type: &#x27;feature&#x27;, value: &#x27;auto&#x27;,
+  description: &#x27;Pythonモジュール（PL/Python）をビルドする&#x27;)
+
+option(&#x27;pltcl&#x27;, type: &#x27;feature&#x27;, value: &#x27;auto&#x27;,
+  description: &#x27;Tclサポート付きでビルドする（PL/Tcl）&#x27;)
+
+option(&#x27;tcl_version&#x27;, type: &#x27;string&#x27;, value: &#x27;tcl&#x27;,
+  description: &#x27;Tclバージョン&#x27;)
+
+option(&#x27;readline&#x27;, type: &#x27;feature&#x27;, value: &#x27;auto&#x27;,
+  description: &#x27;編集にGNU ReadlineまたはBSD Libeditを使用する&#x27;)
+
+option(&#x27;selinux&#x27;, type: &#x27;feature&#x27;, value: &#x27;auto&#x27;,
+  description: &#x27;SELinuxサポート&#x27;)
+
+option(&#x27;ssl&#x27;, type: &#x27;combo&#x27;, choices: [&#x27;auto&#x27;, &#x27;none&#x27;, &#x27;openssl&#x27;],
+  value: &#x27;auto&#x27;,
+  description: &#x27;SSL/TLSサポート（openssl）にLIBを使用する&#x27;)
+
+option(&#x27;systemd&#x27;, type: &#x27;feature&#x27;, value: &#x27;auto&#x27;,
+  description: &#x27;systemdサポート&#x27;)
+
+option(&#x27;uuid&#x27;, type: &#x27;combo&#x27;, choices: [&#x27;none&#x27;, &#x27;bsd&#x27;, &#x27;e2fs&#x27;, &#x27;ossp&#x27;],
+  value: &#x27;none&#x27;,
+  description: &#x27;contrib/uuid-osspサポートにLIBを使用する&#x27;)
+
+option(&#x27;zlib&#x27;, type: &#x27;feature&#x27;, value: &#x27;auto&#x27;,
+  description: &#x27;zlibを有効にする&#x27;)
+
+option(&#x27;zstd&#x27;, type: &#x27;feature&#x27;, value: &#x27;auto&#x27;,
+  description: &#x27;zstdを有効にする&#x27;)
+
+
+# プログラム
+
+option(&#x27;BISON&#x27;, type: &#x27;array&#x27;, value: [&#x27;bison&#x27;, &#x27;win_bison&#x27;],
+  description: &#x27;bisonバイナリへのパス&#x27;)
+
+option(&#x27;DTRACE&#x27;, type: &#x27;string&#x27;, value: &#x27;dtrace&#x27;,
+  description: &#x27;dtraceバイナリへのパス&#x27;)
+
+option(&#x27;FLEX&#x27;, type: &#x27;array&#x27;, value: [&#x27;flex&#x27;, &#x27;win_flex&#x27;],
+  description: &#x27;flexバイナリへのパス&#x27;)
+
+option(&#x27;FOP&#x27;, type: &#x27;string&#x27;, value: &#x27;fop&#x27;,
+  description: &#x27;fopバイナリへのパス&#x27;)
+
+option(&#x27;GZIP&#x27;, type: &#x27;string&#x27;, value: &#x27;gzip&#x27;,
+  description: &#x27;gzipバイナリへのパス&#x27;)
+
+option(&#x27;LZ4&#x27;, type: &#x27;string&#x27;, value: &#x27;lz4&#x27;,
+  description: &#x27;lz4バイナリへのパス&#x27;)
+
+option(&#x27;OPENSSL&#x27;, type: &#x27;string&#x27;, value: &#x27;openssl&#x27;,
+  description: &#x27;opensslバイナリへのパス&#x27;)
+
+option(&#x27;PERL&#x27;, type: &#x27;string&#x27;, value: &#x27;perl&#x27;,
+  description: &#x27;perlバイナリへのパス&#x27;)
+
+option(&#x27;PROVE&#x27;, type: &#x27;string&#x27;, value: &#x27;prove&#x27;,
+  description: &#x27;proveバイナリへのパス&#x27;)
+
+option(&#x27;PYTHON&#x27;, type: &#x27;array&#x27;, value: [&#x27;python3&#x27;, &#x27;python&#x27;],
+  description: &#x27;pythonバイナリへのパス&#x27;)
+
+option(&#x27;SED&#x27;, type: &#x27;string&#x27;, value: &#x27;gsed&#x27;,
+  description: &#x27;sedバイナリへのパス&#x27;)
+
+option(&#x27;STRIP&#x27;, type: &#x27;string&#x27;, value: &#x27;strip&#x27;,
+  description: &#x27;PGXSエミュレーションで使用されるstripバイナリへのパス&#x27;)
+
+option(&#x27;TAR&#x27;, type: &#x27;string&#x27;, value: &#x27;tar&#x27;,
+  description: &#x27;tarバイナリへのパス&#x27;)
+
+option(&#x27;XMLLINT&#x27;, type: &#x27;string&#x27;, value: &#x27;xmllint&#x27;,
+  description: &#x27;xmllintバイナリへのパス&#x27;)
+
+option(&#x27;XSLTPROC&#x27;, type: &#x27;string&#x27;, value: &#x27;xsltproc&#x27;,
+  description: &#x27;xsltprocバイナリへのパス&#x27;)
+
+option(&#x27;ZSTD&#x27;, type: &#x27;string&#x27;, value: &#x27;zstd&#x27;,
+  description: &#x27;zstdバイナリへのパス&#x27;)
+
+option(&#x27;ZIC&#x27;, type: &#x27;string&#x27;, value: &#x27;zic&#x27;,
+  description: &#x27;クロスコンパイル時のzicバイナリへのパス&#x27;)</pre></section></div><script>
+(function() {
+  function notifyParent() {
+    if (parent === window) return;
+    parent.postMessage({type: "frame-location", frame: window.name || "", href: window.location.href}, "*");
+  }
+  document.addEventListener("click", function(event) {
+    const link = event.target.closest("a[data-panel]");
+    if (!link || parent === window) return;
+    parent.postMessage({type: "source-link", panel: link.dataset.panel}, "*");
+  });
+  window.addEventListener("load", notifyParent);
+  window.addEventListener("hashchange", notifyParent);
+})();
+</script></body></html>

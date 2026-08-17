@@ -1,5 +1,5 @@
 <!doctype html>
-<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>symbols/src__backend__optimizer__util__clauses_c__CaseExpr.md</title><link rel="stylesheet" href="../../styles.css"></head><body><h1>CaseExpr</h1>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="10"><title>symbols/src__backend__optimizer__util__clauses_c__CaseExpr.md</title><link rel="stylesheet" href="../../styles.css"></head><body><h1>CaseExpr</h1>
 <h2>現在のソース事実</h2>
 <ul>
 <li>種別: <code>function</code></li>
@@ -35,8 +35,8 @@
 <p><a class="wiki-source-link" href="../../source/src/include/nodes/primnodes.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__nodes__primnodes_h__CASE.html&quot;}, '*');">CASE</a> 条件分岐式を表現する構文ノードであり、クエリ最適化フェーズにおける定数畳み込みや、実行時における条件評価の対象として使用されます。</p>
 <h2>入力と出力</h2>
 <ul>
-<li>**入力**: <a class="wiki-source-link" href="../../source/src/include/nodes/primnodes.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__nodes__primnodes_h__CASE.html&quot;}, '*');">CASE</a> 式を構成する評価対象値（<code>case_val</code>）、WHEN/THEN 節のリスト、および ELSE 節の式ノード。</li>
-<li>**出力**: 定数畳み込み（<a class="wiki-source-link" href="../../source/src/backend/optimizer/util/clauses.c.html#L2515" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__clauses_c__eval_const_expressions.html&quot;}, '*');"><code>eval_const_expressions</code></a>）が適用された場合は、評価済みの定数ノード（<code>Const</code>）または簡素化された式。適用できない場合は、元の <code>CaseExpr</code> 構造または一部が簡素化された式ツリー。</li>
+<li><strong>入力</strong>: <a class="wiki-source-link" href="../../source/src/include/nodes/primnodes.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__nodes__primnodes_h__CASE.html&quot;}, '*');">CASE</a> 式を構成する評価対象値（<code>case_val</code>）、WHEN/THEN 節のリスト、および ELSE 節の式ノード。</li>
+<li><strong>出力</strong>: 定数畳み込み（<a class="wiki-source-link" href="../../source/src/backend/optimizer/util/clauses.c.html#L2515" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__clauses_c__eval_const_expressions.html&quot;}, '*');"><code>eval_const_expressions</code></a>）が適用された場合は、評価済みの定数ノード（<code>Const</code>）または簡素化された式。適用できない場合は、元の <code>CaseExpr</code> 構造または一部が簡素化された式ツリー。</li>
 </ul>
 <h2>前提条件と不変条件</h2>
 <ul>

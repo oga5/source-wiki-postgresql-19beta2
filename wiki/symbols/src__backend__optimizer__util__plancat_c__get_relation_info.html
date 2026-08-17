@@ -1,5 +1,5 @@
 <!doctype html>
-<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>symbols/src__backend__optimizer__util__plancat_c__get_relation_info.md</title><link rel="stylesheet" href="../../styles.css"></head><body><h1>get_relation_info</h1>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="10"><title>symbols/src__backend__optimizer__util__plancat_c__get_relation_info.md</title><link rel="stylesheet" href="../../styles.css"></head><body><h1>get_relation_info</h1>
 <h2>現在のソース事実</h2>
 <ul>
 <li>種別: <code>function</code></li>
@@ -61,18 +61,18 @@
 <li><code>rel-&gt;max_attr &gt;= rel-&gt;min_attr</code> が常に成立する。</li>
 </ul>
 <h2>アルゴリズムまたは振る舞い</h2>
-<p>1. **リレーションのオープンと検証**:</p>
+<p>1. <strong>リレーションのオープンと検証</strong>:</p>
 <ul>
 <li><code>table_open(relationObjectId, NoLock)</code> を呼び出してリレーションをオープンする。</li>
 <li>テーブル AM が存在しない場合、外部テーブル（<code>RELKIND_FOREIGN_TABLE</code>）またはパーティションテーブル（<code>RELKIND_PARTITIONED_TABLE</code>）以外であればエラーを出力する。</li>
 <li>リカバリ中の場合は、永続的でない（一時またはログなし）リレーションへのアクセスをエラーとして拒否する。</li>
-<p>2. **基本属性の設定**:</p>
+<p>2. <strong>基本属性の設定</strong>:</p>
 <li>属性の最小値・最大値、テーブルスペース、並列ワーカー数などの基本情報を <code>RelOptInfo</code> に設定し、属性ごとの必要性（<code>attr_needed</code>）および幅（<a class="wiki-source-link" href="../../source/src/backend/optimizer/util/plancat.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__plancat_c__attr_widths.html&quot;}, '*');"><code>attr_widths</code></a>）の領域をゼロクリア確保する。</li>
-<p>3. **NOT NULL 制約の記録**:</p>
+<p>3. <strong>NOT NULL 制約の記録</strong>:</p>
 <li>非パーティションの継承親以外の場合に、<code>find_relation_notnullatts()</code> を用いて NOT NULL 列の情報を設定する。</li>
-<p>4. **サイズの見積もり**:</p>
+<p>4. <strong>サイズの見積もり</strong>:</p>
 <li>継承親でない場合は、<code>estimate_rel_size()</code> を呼び出してページ数、タプル数、可視フラクションを見積もる。</li>
-<p>5. **インデックス情報の構築**:</p>
+<p>5. <strong>インデックス情報の構築</strong>:</p>
 <li>継承親（パーティションテーブルを除く）や無視対象のシステムインデックスでない場合、<code>RelationGetIndexList()</code> からインデックスの Oid リストを取得する。</li>
 <li>各インデックスについて以下を実行する:</li>
 <li><code>index_open()</code> でインデックスをオープンする。</li>

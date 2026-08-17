@@ -1,5 +1,5 @@
 <!doctype html>
-<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>symbols/src__backend__optimizer__util__relnode_c__setup_simple_rel_arrays.md</title><link rel="stylesheet" href="../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../source/src/backend/optimizer/util/relnode.c.html#L113" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__relnode_c__setup_simple_rel_arrays.html&quot;}, '*');">setup_simple_rel_arrays</a></h1>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="10"><title>symbols/src__backend__optimizer__util__relnode_c__setup_simple_rel_arrays.md</title><link rel="stylesheet" href="../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../source/src/backend/optimizer/util/relnode.c.html#L113" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__relnode_c__setup_simple_rel_arrays.html&quot;}, '*');">setup_simple_rel_arrays</a></h1>
 <h2>現在のソース事実</h2>
 <ul>
 <li>種別: <code>function</code></li>
@@ -48,14 +48,14 @@
 <li>範囲テーブルのエントリインデックスが 1 から始まるため、配列サイズは <code>root-&gt;parse-&gt;rtable</code> の要素数に 1 を加えた値として計算される。</li>
 </ul>
 <h2>アルゴリズムまたは振る舞い</h2>
-<p>1. **配列サイズと <a class="wiki-source-link" href="../../source/src/backend/optimizer/util/relnode.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__relnode_c__simple_rel_array.html&quot;}, '*');"><code>simple_rel_array</code></a> の初期化**:</p>
+<p>1. <strong>配列サイズと <a class="wiki-source-link" href="../../source/src/backend/optimizer/util/relnode.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__relnode_c__simple_rel_array.html&quot;}, '*');"><code>simple_rel_array</code></a> の初期化</strong>:</p>
 <ul>
 <li><code>root-&gt;parse-&gt;rtable</code> の要素数に 1 を加えたサイズを算出し、<code>root-&gt;simple_rel_array_size</code> に設定する。</li>
 <li><code>root-&gt;simple_rel_array</code> をすべて <code>NULL</code> で初期化された <code>RelOptInfo</code> 配列として割り当てる。</li>
-<p>2. **<a class="wiki-source-link" href="../../source/src/backend/optimizer/util/relnode.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__relnode_c__simple_rte_array.html&quot;}, '*');"><code>simple_rte_array</code></a> の初期化と設定**:</p>
+<p>2. <strong><a class="wiki-source-link" href="../../source/src/backend/optimizer/util/relnode.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__relnode_c__simple_rte_array.html&quot;}, '*');"><code>simple_rte_array</code></a> の初期化と設定</strong>:</p>
 <li><code>root-&gt;simple_rte_array</code> を <code>RangeTblEntry</code> 配列として割り当てる。</li>
 <li><code>root-&gt;parse-&gt;rtable</code> の各要素を走査し、1 から始まるインデックス位置に各 <code>RangeTblEntry</code> を格納する。</li>
-<p>3. **<a class="wiki-source-link" href="../../source/src/backend/optimizer/util/relnode.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__relnode_c__append_rel_array.html&quot;}, '*');"><code>append_rel_array</code></a> の初期化と設定**:</p>
+<p>3. <strong><a class="wiki-source-link" href="../../source/src/backend/optimizer/util/relnode.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__relnode_c__append_rel_array.html&quot;}, '*');"><code>append_rel_array</code></a> の初期化と設定</strong>:</p>
 <li><code>root-&gt;append_rel_list</code> が空（<a class="wiki-source-link" href="../../source/src/include/nodes/pg_list.h.html#L68" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/nodes/pg_list.h.html&quot;}, '*');"><code>NIL</code></a>）の場合は、<code>root-&gt;append_rel_array</code> に <code>NULL</code> を設定して処理を終了する。</li>
 <li>空でない場合は、<code>AppendRelInfo</code> 配列を割り当てて <code>root-&gt;append_rel_array</code> に設定する。</li>
 <li><code>root-&gt;append_rel_list</code> の各 <code>AppendRelInfo</code> について子リレーションID（<code>child_relid</code>）を取得し、配列に登録する。</li>

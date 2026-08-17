@@ -1,5 +1,5 @@
 <!doctype html>
-<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>src/include/fmgr.h.md</title><link rel="stylesheet" href="../../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../../source/src/include/fmgr.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/fmgr.h.html&quot;}, '*');">src/include/fmgr.h</a></h1>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="10"><title>src/include/fmgr.h.md</title><link rel="stylesheet" href="../../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../../source/src/include/fmgr.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/fmgr.h.html&quot;}, '*');">src/include/fmgr.h</a></h1>
 <h2>概要</h2>
 <p>PostgreSQLの関数マネージャー（Function Manager: fmgr）の中核となるデータ構造、マクロ、および関数プロトタイプを定義するヘッダーファイルです。バックエンド内の関数呼び出しインターフェース（Fmgr）や、動的ロードモジュールのABI/マジック検証機構を提供します。</p>
 <h2>モジュール内での役割</h2>
@@ -30,9 +30,9 @@
 </ul>
 <h2>制御フローとデータフロー</h2>
 <ul>
-<li>**関数ルックアップとキャッシュ**: 呼び出し元は <code>fmgr_info()</code> を用いて関数のOIDから <code>FmgrInfo</code> を構築し、以降の呼び出しでシステムカタログの再検索を回避します。</li>
-<li>**呼び出しの実行**: <code>FunctionCallInvoke(fcinfo)</code> マクロ、または <code>FunctionCallN</code> / <code>OidFunctionCallN</code> 関数群により、<code>flinfo-&gt;fn_addr</code> に格納された <a class="wiki-source-link" href="../../../source/src/include/fmgr.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__fmgr_h__PGFunction.html&quot;}, '*');"><code>PGFunction</code></a> ポインタが直接呼び出されます。</li>
-<li>**引数の取得と返却**: 呼び出されたC関数は <code>PG_FUNCTION_ARGS</code> シグネチャを持ち、<code>PG_GETARG_XXX(n)</code> マクロで <code>fcinfo-&gt;args</code> からデコードし、<code>PG_RETURN_XXX(x)</code> で結果を返します。厳密関数（strict）の場合、NULL引数は自動的にスキップされるか、関数側で <code>PG_ARGISNULL(n)</code> により検証されます。</li>
+<li><strong>関数ルックアップとキャッシュ</strong>: 呼び出し元は <code>fmgr_info()</code> を用いて関数のOIDから <code>FmgrInfo</code> を構築し、以降の呼び出しでシステムカタログの再検索を回避します。</li>
+<li><strong>呼び出しの実行</strong>: <code>FunctionCallInvoke(fcinfo)</code> マクロ、または <code>FunctionCallN</code> / <code>OidFunctionCallN</code> 関数群により、<code>flinfo-&gt;fn_addr</code> に格納された <a class="wiki-source-link" href="../../../source/src/include/fmgr.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__fmgr_h__PGFunction.html&quot;}, '*');"><code>PGFunction</code></a> ポインタが直接呼び出されます。</li>
+<li><strong>引数の取得と返却</strong>: 呼び出されたC関数は <code>PG_FUNCTION_ARGS</code> シグネチャを持ち、<code>PG_GETARG_XXX(n)</code> マクロで <code>fcinfo-&gt;args</code> からデコードし、<code>PG_RETURN_XXX(x)</code> で結果を返します。厳密関数（strict）の場合、NULL引数は自動的にスキップされるか、関数側で <code>PG_ARGISNULL(n)</code> により検証されます。</li>
 </ul>
 <h2>直接依存</h2>
 <p>（ソース内での直接の <code>#include</code> は存在せず、前方宣言とマクロ定義を中心に構成されています）</p>
@@ -43,9 +43,9 @@
 </ul>
 <h2>読者向けメモ</h2>
 <ul>
-<li>**メモリ所有権**: <code>FmgrInfo</code> 内の <code>fn_extra</code> や付随データは指定された <code>fn_mcxt</code>（通常は呼び出し元のメモリコンテキスト）に割り当てられます。</li>
-<li>**レイアウトの制約**: <a class="wiki-source-link" href="../../../source/src/include/fmgr.h.html#L85" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__fmgr_h__FunctionCallInfoBaseData.html&quot;}, '*');"><code>FunctionCallInfoBaseData</code></a> は末尾に <a class="wiki-source-link" href="../../../source/src/include/c.h.html#L565" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/c.h.html&quot;}, '*');"><code>FLEXIBLE_ARRAY_MEMBER</code></a> を持つため、動的確保時には <code>SizeForFunctionCallInfo(nargs)</code> を使用するか、スタック用の <code>LOCAL_FCINFO(name, nargs)</code> マクロを使用する義務があります。</li>
-<li>**ABI互換性**: 動的モジュールは必ず <a class="wiki-source-link" href="../../../source/src/include/fmgr.h.html#L522" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/fmgr.h.html&quot;}, '*');"><code>PG_MODULE_MAGIC</code></a> を定義する必要があり、バックエンドとのバージョン不一致を <code>memcmp</code> で検出します。</li>
+<li><strong>メモリ所有権</strong>: <code>FmgrInfo</code> 内の <code>fn_extra</code> や付随データは指定された <code>fn_mcxt</code>（通常は呼び出し元のメモリコンテキスト）に割り当てられます。</li>
+<li><strong>レイアウトの制約</strong>: <a class="wiki-source-link" href="../../../source/src/include/fmgr.h.html#L85" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__fmgr_h__FunctionCallInfoBaseData.html&quot;}, '*');"><code>FunctionCallInfoBaseData</code></a> は末尾に <a class="wiki-source-link" href="../../../source/src/include/c.h.html#L565" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/c.h.html&quot;}, '*');"><code>FLEXIBLE_ARRAY_MEMBER</code></a> を持つため、動的確保時には <code>SizeForFunctionCallInfo(nargs)</code> を使用するか、スタック用の <code>LOCAL_FCINFO(name, nargs)</code> マクロを使用する義務があります。</li>
+<li><strong>ABI互換性</strong>: 動的モジュールは必ず <a class="wiki-source-link" href="../../../source/src/include/fmgr.h.html#L522" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/fmgr.h.html&quot;}, '*');"><code>PG_MODULE_MAGIC</code></a> を定義する必要があり、バックエンドとのバージョン不一致を <code>memcmp</code> で検出します。</li>
 </ul>
 <h2>シンボルページ</h2>
 <ul>

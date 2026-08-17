@@ -1,15 +1,15 @@
 <!doctype html>
-<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>src/include/port/atomics/arch-x86.h.md</title><link rel="stylesheet" href="../../../../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../../../../source/src/include/port/atomics/arch-x86.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/port/atomics/arch-x86.h.html&quot;}, '*');">src/include/port/atomics/arch-x86.h</a></h1>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="10"><title>src/include/port/atomics/arch-x86.h.md</title><link rel="stylesheet" href="../../../../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../../../../source/src/include/port/atomics/arch-x86.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/port/atomics/arch-x86.h.html&quot;}, '*');">src/include/port/atomics/arch-x86.h</a></h1>
 <h2>概要</h2>
 <p>Intel x86/x86-64 アーキテクチャ向けの低水準アトミック操作、メモリバリア、およびスピンディレイの実装を提供するインラインアセンブリヘッダーです。コンパイラとして主に GCC や Intel コンパイラ（および条件付きで MSVC）を対象とし、TSO（Total Store Order）メモリモデルの特性を活かした効率的なプリミティブを定義します。</p>
 <h2>モジュール内での役割</h2>
 <p><code>src/include/port/atomics</code> モジュール内において、x86系プラットフォーム固有のハードウェア最適化されたアトミック命令 (<code>lock cmpxchg</code>, <code>lock xadd</code>, <a class="wiki-source-link" href="../../../../../source/src/include/port/atomics/arch-x86.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__port__atomics__arch-x86_h__xchgb.html&quot;}, '*');"><code>xchgb</code></a>) や <code>PAUSE</code> 命令を抽象化し、汎用アトミックインターフェースへ供給するバックエンドとして機能します。</p>
 <h2>責務</h2>
 <ul>
-<li>**メモリバリアの提供**: TSO により再順序付けが制限される範囲において、コンパイラおよびアトミック加算を用いたメモリフェンスを定義する。</li>
-<li>**データ型とフラグの定義**: <code>pg_atomic_flag</code>、32ビット、64ビット（x86-64のみ）のアトミックデータ構造を宣言する。</li>
-<li>**スピンロック最適化**: ハイパースレッディング環境での競合を緩和するスピンディレイ（<code>PAUSE</code> / <code>rep nop</code>）の実装。</li>
-<li>**アトミック演算の実装**: テスト・セット、比較・交換（CAS）、フェッチ・加算（Fetch-and-Add）操作をインラインアセンブリで提供する。</li>
+<li><strong>メモリバリアの提供</strong>: TSO により再順序付けが制限される範囲において、コンパイラおよびアトミック加算を用いたメモリフェンスを定義する。</li>
+<li><strong>データ型とフラグの定義</strong>: <code>pg_atomic_flag</code>、32ビット、64ビット（x86-64のみ）のアトミックデータ構造を宣言する。</li>
+<li><strong>スピンロック最適化</strong>: ハイパースレッディング環境での競合を緩和するスピンディレイ（<code>PAUSE</code> / <code>rep nop</code>）の実装。</li>
+<li><strong>アトミック演算の実装</strong>: テスト・セット、比較・交換（CAS）、フェッチ・加算（Fetch-and-Add）操作をインラインアセンブリで提供する。</li>
 </ul>
 <h2>重要なシンボル</h2>
 <h3>アーキテクチャ制御・メモリバリア</h3>
@@ -39,11 +39,11 @@
 <li><code>pg_atomic_fetch_add_u64_impl</code>: <code>lock xaddq</code> を用いて64ビット整数に対するアトミックな加算と旧値の取得を行う。</li>
 </ul>
 <h2>制御フローとデータフロー</h2>
-<p>1. **初期化と型解決**: コンパイラ（GCC/Intel/MSVC）やビット数（<code>__i386__</code> vs <a class="wiki-source-link" href="../../../../../source/src/include/port/atomics/arch-x86.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__port__atomics__arch-x86_h____x86_64__.html&quot;}, '*');"><code>__x86_64__</code></a>）に応じて、利用可能なデータ構造（<code>pg_atomic_uint32</code>, <code>pg_atomic_uint64</code>, <code>pg_atomic_flag</code>）が定義されます。 2. **アトミック更新の実行**:</p>
+<p>1. <strong>初期化と型解決</strong>: コンパイラ（GCC/Intel/MSVC）やビット数（<code>__i386__</code> vs <a class="wiki-source-link" href="../../../../../source/src/include/port/atomics/arch-x86.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__port__atomics__arch-x86_h____x86_64__.html&quot;}, '*');"><code>__x86_64__</code></a>）に応じて、利用可能なデータ構造（<code>pg_atomic_uint32</code>, <code>pg_atomic_uint64</code>, <code>pg_atomic_flag</code>）が定義されます。 2. <strong>アトミック更新の実行</strong>:</p>
 <ul>
 <li>比較・交換系 (<code>pg_atomic_compare_exchange_u32_impl</code> / <code>_u64_impl</code>) は、<code>expected</code> の値をアセンブリの入力とし、<code>lock cmpxchgl/q</code> の実行結果（ゼロフラグ）を <a class="wiki-source-link" href="../../../../../source/src/include/port/atomics/arch-x86.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__port__atomics__arch-x86_h__setz.html&quot;}, '*');"><code>setz</code></a> で <code>ret</code> 変数に格納して成否を判定します。不一致の場合は <code>expected</code> に実際のメモリ上の値が書き戻されます。</li>
 <li>加算系 (<code>pg_atomic_fetch_add_u32_impl</code> / <code>_u64_impl</code>) は、<code>lock xaddl/q</code> を呼び出し、一回の命令でメモリ上の加算とレジスタへの旧値返却をアトミックに完了させます。</li>
-<p>3. **スピンウェイト**: ロック獲得待ちが発生した際、<code>pg_spin_delay_impl</code> が呼ばれ、ハードウェアに対して <code>PAUSE</code>（<code>rep nop</code>）ヒントを送ることでパイプラインフラッシュや無駄なバス消費を回避します。</p>
+<p>3. <strong>スピンウェイト</strong>: ロック獲得待ちが発生した際、<code>pg_spin_delay_impl</code> が呼ばれ、ハードウェアに対して <code>PAUSE</code>（<code>rep nop</code>）ヒントを送ることでパイプラインフラッシュや無駄なバス消費を回避します。</p>
 </ul>
 <h2>直接依存</h2>
 <ul>
@@ -56,9 +56,9 @@
 </ul>
 <h2>読者向けメモ</h2>
 <ul>
-<li>**メモリ順序（TSO）**: x86 アーキテクチャは Total Store Order を持つため、ストア間の順序やロード間の順序がハードウェアレベルで保証されやすく、フラグクリアなどの解放セマンティクスでは重いフェンス命令ではなくコンパイラバリアのみで十分に機能します。</li>
-<li>**64ビット制約**: 32ビット（i386）環境では64ビットアトミック型のインラインアセンブリ実装が複雑化し性能上のメリットも薄いため、<a class="wiki-source-link" href="../../../../../source/src/include/port/atomics/arch-x86.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__port__atomics__arch-x86_h____x86_64__.html&quot;}, '*');"><code>__x86_64__</code></a> が定義されている場合のみ <code>pg_atomic_uint64</code> および関連関数が有効化されます。</li>
-<li>**アライメント**: 64ビットの比較交換関数内では <code>AssertPointerAlignment(expected, 8)</code> により、8バイト境界のアライメントが前提条件として検証されます。</li>
+<li><strong>メモリ順序（TSO）</strong>: x86 アーキテクチャは Total Store Order を持つため、ストア間の順序やロード間の順序がハードウェアレベルで保証されやすく、フラグクリアなどの解放セマンティクスでは重いフェンス命令ではなくコンパイラバリアのみで十分に機能します。</li>
+<li><strong>64ビット制約</strong>: 32ビット（i386）環境では64ビットアトミック型のインラインアセンブリ実装が複雑化し性能上のメリットも薄いため、<a class="wiki-source-link" href="../../../../../source/src/include/port/atomics/arch-x86.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__port__atomics__arch-x86_h____x86_64__.html&quot;}, '*');"><code>__x86_64__</code></a> が定義されている場合のみ <code>pg_atomic_uint64</code> および関連関数が有効化されます。</li>
+<li><strong>アライメント</strong>: 64ビットの比較交換関数内では <code>AssertPointerAlignment(expected, 8)</code> により、8バイト境界のアライメントが前提条件として検証されます。</li>
 </ul>
 <h2>シンボルページ</h2>
 <ul>

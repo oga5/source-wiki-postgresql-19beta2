@@ -1,5 +1,5 @@
 <!doctype html>
-<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>symbols/src__backend__executor__execParallel_c__ExecParallelSetupTupleQueues.md</title><link rel="stylesheet" href="../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../source/src/backend/executor/execParallel.c.html#L600" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__executor__execParallel_c__ExecParallelSetupTupleQueues.html&quot;}, '*');">ExecParallelSetupTupleQueues</a></h1>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="10"><title>symbols/src__backend__executor__execParallel_c__ExecParallelSetupTupleQueues.md</title><link rel="stylesheet" href="../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../source/src/backend/executor/execParallel.c.html#L600" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__executor__execParallel_c__ExecParallelSetupTupleQueues.html&quot;}, '*');">ExecParallelSetupTupleQueues</a></h1>
 <h2>定義</h2>
 <ul>
 <li>種別: <code>function</code></li>
@@ -34,7 +34,7 @@
 <h2>関連データ構造</h2>
 <p><code>ParallelContext</code>, <code>shm_mq</code>, <code>shm_mq_handle</code>, <code>shm_toc</code>, <code>Size</code></p>
 <h2>ソース抜粋</h2>
-<p>~~~c static shm_mq_handle ** <a class="wiki-source-link" href="../../source/src/backend/executor/execParallel.c.html#L600" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__executor__execParallel_c__ExecParallelSetupTupleQueues.html&quot;}, '*');">ExecParallelSetupTupleQueues</a>(ParallelContext *pcxt, bool reinitialize) { shm_mq_handle **responseq; char	   *tqueuespace; int			i;</p>
+<p>~~~c static shm_mq_handle <strong> <a class="wiki-source-link" href="../../source/src/backend/executor/execParallel.c.html#L600" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__executor__execParallel_c__ExecParallelSetupTupleQueues.html&quot;}, '*');">ExecParallelSetupTupleQueues</a>(ParallelContext *pcxt, bool reinitialize) { shm_mq_handle </strong>responseq; char	   *tqueuespace; int			i;</p>
 <p>/* Skip this if no workers. */ if (pcxt-&gt;nworkers == 0) return NULL;</p>
 <p>/* Allocate memory for <a class="wiki-source-link" href="../../source/src/include/executor/hashjoin.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__executor__hashjoin_h__shared.html&quot;}, '*');">shared</a> memory queue handles. */ responseq = (shm_mq_handle **) palloc(pcxt-&gt;nworkers * sizeof(shm_mq_handle *));</p>
 <p>/*</p>

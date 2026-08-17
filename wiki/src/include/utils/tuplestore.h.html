@@ -1,5 +1,5 @@
 <!doctype html>
-<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>src/include/utils/tuplestore.h.md</title><link rel="stylesheet" href="../../../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../../../source/src/include/utils/tuplestore.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/utils/tuplestore.h.html&quot;}, '*');">src/include/utils/tuplestore.h</a></h1>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="10"><title>src/include/utils/tuplestore.h.md</title><link rel="stylesheet" href="../../../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../../../source/src/include/utils/tuplestore.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/utils/tuplestore.h.html&quot;}, '*');">src/include/utils/tuplestore.h</a></h1>
 <h2>概要</h2>
 <p><a class="wiki-source-link" href="../../../../source/src/include/utils/tuplestore.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/utils/tuplestore.h.html&quot;}, '*');"><code>src/include/utils/tuplestore.h</code></a> は、PostgreSQLの実行時における一時的なタプル（行）の格納・再取得メカニズム（Tuplestore）の公開インターフェースを定義するヘッダーファイルです。Materializeノードやハッシュジョインのバッチファイルなど、順序を維持したまま一時的なタプル列を保持し、書き込みの完了を待たずに読み取りを開始したり、複数の独立した読み取りポインタを用いてランダムアクセスを行う用途に使用されます。内部実装の詳細は不透明型（opaque <a class="wiki-source-link" href="../../../../source/src/include/lib/ilist.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__lib__ilist_h__type.html&quot;}, '*');">type</a>）として隠蔽されています。</p>
 <h2>モジュール内での役割</h2>
@@ -36,7 +36,7 @@
 </ul>
 <h2>制御フローとデータフロー</h2>
 <p>本ヘッダーファイルで宣言される関数を通じた典型的な利用フローは以下の通りです。</p>
-<p>1. **初期化**: 実行計画のノード開始時に <code>tuplestore_begin_heap()</code> を呼び出して <code>Tuplestorestate</code> を取得する。必要に応じて <code>tuplestore_alloc_read_pointer()</code> で追加の読み取りポインタを確保する。 2. **書き込みフェーズ**: エグゼキューターからタプルが生成されるたびに、<code>tuplestore_puttupleslot()</code> や <code>tuplestore_putvalues()</code> を用いて次々とストアに投入する。メモリ制限（<code>maxKBytes</code>）を超過した場合は、裏側で一時ファイル（Buffile）へ自動的に溢れさせる。 3. **読み取りフェーズ**: 書き込みの完了を待たず、あるいは書き込みと並行して、<code>tuplestore_select_read_pointer()</code> でポインタを選択し、<code>tuplestore_gettupleslot()</code> によりタプルをスキャン・取得する。 4. **終了**: 処理の完了に伴い <code>tuplestore_end()</code> が呼び出され、メモリコンテキストおよび一時ファイル領域がクリーンアップされる。</p>
+<p>1. <strong>初期化</strong>: 実行計画のノード開始時に <code>tuplestore_begin_heap()</code> を呼び出して <code>Tuplestorestate</code> を取得する。必要に応じて <code>tuplestore_alloc_read_pointer()</code> で追加の読み取りポインタを確保する。 2. <strong>書き込みフェーズ</strong>: エグゼキューターからタプルが生成されるたびに、<code>tuplestore_puttupleslot()</code> や <code>tuplestore_putvalues()</code> を用いて次々とストアに投入する。メモリ制限（<code>maxKBytes</code>）を超過した場合は、裏側で一時ファイル（Buffile）へ自動的に溢れさせる。 3. <strong>読み取りフェーズ</strong>: 書き込みの完了を待たず、あるいは書き込みと並行して、<code>tuplestore_select_read_pointer()</code> でポインタを選択し、<code>tuplestore_gettupleslot()</code> によりタプルをスキャン・取得する。 4. <strong>終了</strong>: 処理の完了に伴い <code>tuplestore_end()</code> が呼び出され、メモリコンテキストおよび一時ファイル領域がクリーンアップされる。</p>
 <h2>直接依存</h2>
 <ul>
 <li><code>executor/tuptable.h</code>: <code>TupleTableSlot</code> 構造体の定義を提供し、スロットベースの入出力インターフェースを支える。</li>
@@ -49,8 +49,8 @@
 </ul>
 <h2>読者向けメモ</h2>
 <ul>
-<li>**メモリとストレージの自動切り替え**: 指定された <code>maxKBytes</code> 以内ではメモリ上の配列に保持され、超過すると一時ファイルにダンプされる。利用者はこの切り替えを意識せず統一された API で操作できる。</li>
-<li>**MinimalTuple の制限**: 格納されるデータは <code>MinimalTuple</code> 形式であるため、再取得されたタプルからシステム列（<code>ctid</code> や <code>xmin</code> など）を取り出すことはできない仕様になっている。</li>
+<li><strong>メモリとストレージの自動切り替え</strong>: 指定された <code>maxKBytes</code> 以内ではメモリ上の配列に保持され、超過すると一時ファイルにダンプされる。利用者はこの切り替えを意識せず統一された API で操作できる。</li>
+<li><strong>MinimalTuple の制限</strong>: 格納されるデータは <code>MinimalTuple</code> 形式であるため、再取得されたタプルからシステム列（<code>ctid</code> や <code>xmin</code> など）を取り出すことはできない仕様になっている。</li>
 </ul>
 <h2>シンボルページ</h2>
 <ul>

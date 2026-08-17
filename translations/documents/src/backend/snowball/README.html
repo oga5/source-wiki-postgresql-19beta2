@@ -1,23 +1,27 @@
 <!doctype html>
-<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>src/backend/snowball/README</title><link rel="stylesheet" href="../../../../../styles.css"></head><body><h1>Japanese translation</h1><p><code>src/backend/snowball/README</code></p><p><a href="../../../../../source/src/backend/snowball/README.html" target="source-view">View original document</a></p><p class="document-translation-progress document-translation-complete">Translation complete.</p><div class="document-translation-body"><section class="document-translation-chunk translated" data-chunk-order="0"><p>src/backend/snowball/README</p>
-<p>Snowballに基づくステミング =======================</p>
-<p>このモジュールは、Snowballプロジェクト（http://snowballstem.org 、旧 http://snowball.tartarus.org ）によって開発された単語ステミングコードを使用しています。このコードはBSDスタイルのライセンスの下でリリースされています。</p>
-<p>Snowballプロジェクトは頻繁に正式リリースを行わないため、彼らのgitリポジトリからプルするのが最善です。</p>
-<p>git clone https://github.com/snowballstem/snowball.git</p>
-<p>その後、派生ファイルをビルドするのは以下のように簡単です。</p>
-<p>cd snowball make</p>
-<p>少なくともLinux上では、プラットフォーム固有の調整は必要ありません。</p>
-<p>src/backend/snowball/libstemmer/ および src/include/snowball/libstemmer/ 配下にあるPostgresのファイルは、Snowballのファイルから直接取得したものであり、ファイルのインクルードに関してわずかな調整のみを行っています。これらのファイルのほとんどは、実際にはオリジナルのソースではなく派生ファイルであることに注意してください。オリジナルのソースはSnowball言語で書かれており、Snowballプロジェクトの一部でもあるSnowball-to-Cコンパイラを使用してビルドされます。ほとんどのインストール環境ではSnowballコンパイラが利用できないため、PostgreSQLの配布物には派生ファイルを含めることにしています。</p>
-<p>現在は、2025-12-15のSnowballのgitコミット 2d2e312df56f2ede014a4ffb3e91e6dea43c24be と同期しています。</p>
-<p>新しいSnowballバージョンからPostgreSQLのソースを更新するには：</p>
-<p>0. まだ行っていない場合は、&quot;make -C snowball&quot;を実行します。</p>
-<p>1. snowball/src_c/ 内の *.c ファイルを src/backend/snowball/libstemmer にコピーします。その際、例えば以下のようにして、&quot;../runtime/snowball_runtime.h&quot; を &quot;snowball_runtime.h&quot; に置換します。</p>
-<p>for f in .../snowball/src_c/*.c do sed &#x27;s|\.\./runtime/snowball_runtime\.h|snowball_runtime.h|&#x27; $f &gt;libstemmer/<code>basename $f</code> done</p>
-<p>彼らの libstemmer/modules.txt で非標準としてリストされているステマー（&quot;lovins&quot; など）はコピーしないでください。</p>
-<p>2. snowball/runtime/ 内の *.c ファイルを src/backend/snowball/libstemmer にコピーし、それらを編集して &lt;stdio.h&gt; などのシステムヘッダの直接インクルードを削除します。これらは &quot;snowball_runtime.h&quot; のみをインクルードする必要があります。（この削除により、&lt;stdio.h&gt; がラージファイルコンパイルオプションに影響されやすい一部のプラットフォームでの移植性の問題を回避できます。）</p>
-<p>3. snowball/src_c/ および snowball/runtime/ 内の *.h ファイルを src/include/snowball/libstemmer にコピーします。本稿執筆時点では、ヘッダファイルに変更を加える必要はありません。ここでも、非標準ステマー用の *.h ファイルは除外してください。</p>
-<p>4. ステマーモジュールが追加または削除されたかどうかを確認します。追加または削除された場合は、Makefile の OBJS リスト、meson.build の dict_snowball_sources リスト、dict_snowball.c の #include リストと stemmer_modules[] テーブル、textsearch.sgml のドキュメント内にある有効な言語パラメータのリスト、および textsearch.sgml のドキュメント内にあるサンプルの \dFd 出力を編集します。また、snowball_create.pl の @languages 配列や initdb.c の tsearch_config_languages[] テーブルを変更する必要がある場合もあります。通常、後者の2つは、完全に新しい言語のステマーが追加された場合に拡張する必要がありますが、既存の言語に対する代替ステマーはそれらには表現されません。</p>
-<p>5. stopwords/ 内の様々なストップワードファイルは、snowballstem.org のウェブサイトのページから個別にダウンロードする必要があります。これらのファイルはUTF-8エンコーディングで保存する必要があることに注意してください。追加または削除された場合は、Makefile の stop_files リストを更新します（ただし、mesonツールはこのための調整を必要としません）。</p></section></div><script>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="10"><title>src/backend/snowball/README</title><link rel="stylesheet" href="../../../../../styles.css"></head><body><h1>Japanese translation</h1><p><code>src/backend/snowball/README</code></p><p><a href="../../../../../source/src/backend/snowball/README.html" target="source-view">View original document</a></p><p class="document-translation-progress document-translation-complete">Translation complete.</p><div class="document-translation-body"><section class="document-translation-chunk translated" data-chunk-order="0"><p class="markdown-preserve-lines">src/backend/snowball/README</p>
+<h1>Snowballに基づくステミング</h1>
+<p class="markdown-preserve-lines">このモジュールは、Snowballプロジェクト（http://snowballstem.org 、旧 http://snowball.tartarus.org ）によって開発された単語ステミングコードを使用しています。このコードはBSDスタイルのライセンスの下でリリースされています。</p>
+<p class="markdown-preserve-lines">Snowballプロジェクトは頻繁に正式リリースを行わないため、彼らのgitリポジトリからプルするのが最善です。</p>
+<p class="markdown-preserve-lines">git clone https://github.com/snowballstem/snowball.git</p>
+<p class="markdown-preserve-lines">その後、派生ファイルをビルドするのは以下のように簡単です。</p>
+<p class="markdown-preserve-lines">cd snowball
+make</p>
+<p class="markdown-preserve-lines">少なくともLinux上では、プラットフォーム固有の調整は必要ありません。</p>
+<p class="markdown-preserve-lines">src/backend/snowball/libstemmer/ および src/include/snowball/libstemmer/ 配下にあるPostgresのファイルは、Snowballのファイルから直接取得したものであり、ファイルのインクルードに関してわずかな調整のみを行っています。これらのファイルのほとんどは、実際にはオリジナルのソースではなく派生ファイルであることに注意してください。オリジナルのソースはSnowball言語で書かれており、Snowballプロジェクトの一部でもあるSnowball-to-Cコンパイラを使用してビルドされます。ほとんどのインストール環境ではSnowballコンパイラが利用できないため、PostgreSQLの配布物には派生ファイルを含めることにしています。</p>
+<p class="markdown-preserve-lines">現在は、2025-12-15のSnowballのgitコミット 2d2e312df56f2ede014a4ffb3e91e6dea43c24be と同期しています。</p>
+<p class="markdown-preserve-lines">新しいSnowballバージョンからPostgreSQLのソースを更新するには：</p>
+<p class="markdown-preserve-lines">0. まだ行っていない場合は、&quot;make -C snowball&quot;を実行します。</p>
+<p class="markdown-preserve-lines">1. snowball/src_c/ 内の *.c ファイルを src/backend/snowball/libstemmer にコピーします。その際、例えば以下のようにして、&quot;../runtime/snowball_runtime.h&quot; を &quot;snowball_runtime.h&quot; に置換します。</p>
+<p class="markdown-preserve-lines">for f in .../snowball/src_c/*.c
+do
+    sed &#x27;s|\.\./runtime/snowball_runtime\.h|snowball_runtime.h|&#x27; $f &gt;libstemmer/<code>basename $f</code>
+done</p>
+<p class="markdown-preserve-lines">彼らの libstemmer/modules.txt で非標準としてリストされているステマー（&quot;lovins&quot; など）はコピーしないでください。</p>
+<p class="markdown-preserve-lines">2. snowball/runtime/ 内の *.c ファイルを src/backend/snowball/libstemmer にコピーし、それらを編集して &lt;stdio.h&gt; などのシステムヘッダの直接インクルードを削除します。これらは &quot;snowball_runtime.h&quot; のみをインクルードする必要があります。（この削除により、&lt;stdio.h&gt; がラージファイルコンパイルオプションに影響されやすい一部のプラットフォームでの移植性の問題を回避できます。）</p>
+<p class="markdown-preserve-lines">3. snowball/src_c/ および snowball/runtime/ 内の *.h ファイルを src/include/snowball/libstemmer にコピーします。本稿執筆時点では、ヘッダファイルに変更を加える必要はありません。ここでも、非標準ステマー用の *.h ファイルは除外してください。</p>
+<p class="markdown-preserve-lines">4. ステマーモジュールが追加または削除されたかどうかを確認します。追加または削除された場合は、Makefile の OBJS リスト、meson.build の dict_snowball_sources リスト、dict_snowball.c の #include リストと stemmer_modules[] テーブル、textsearch.sgml のドキュメント内にある有効な言語パラメータのリスト、および textsearch.sgml のドキュメント内にあるサンプルの \dFd 出力を編集します。また、snowball_create.pl の @languages 配列や initdb.c の tsearch_config_languages[] テーブルを変更する必要がある場合もあります。通常、後者の2つは、完全に新しい言語のステマーが追加された場合に拡張する必要がありますが、既存の言語に対する代替ステマーはそれらには表現されません。</p>
+<p class="markdown-preserve-lines">5. stopwords/ 内の様々なストップワードファイルは、snowballstem.org のウェブサイトのページから個別にダウンロードする必要があります。これらのファイルはUTF-8エンコーディングで保存する必要があることに注意してください。追加または削除された場合は、Makefile の stop_files リストを更新します（ただし、mesonツールはこのための調整を必要としません）。</p></section></div><script>
 (function() {
   function notifyParent() {
     if (parent === window) return;

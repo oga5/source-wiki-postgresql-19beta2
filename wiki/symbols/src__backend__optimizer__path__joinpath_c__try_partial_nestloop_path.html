@@ -1,5 +1,5 @@
 <!doctype html>
-<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>symbols/src__backend__optimizer__path__joinpath_c__try_partial_nestloop_path.md</title><link rel="stylesheet" href="../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../source/src/backend/optimizer/path/joinpath.c.html#L998" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__path__joinpath_c__try_partial_nestloop_path.html&quot;}, '*');">try_partial_nestloop_path</a></h1>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="10"><title>symbols/src__backend__optimizer__path__joinpath_c__try_partial_nestloop_path.md</title><link rel="stylesheet" href="../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../source/src/backend/optimizer/path/joinpath.c.html#L998" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__path__joinpath_c__try_partial_nestloop_path.html&quot;}, '*');">try_partial_nestloop_path</a></h1>
 <h2>現在のソース事実</h2>
 <ul>
 <li>種別: <code>function</code></li>
@@ -76,17 +76,17 @@
 <li>提案される外側パスの要求外部パラメータ（<code>PATH_REQ_OUTER(outer_path)</code>）が空であること。</li>
 </ul>
 <h2>アルゴリズムまたは振る舞い</h2>
-<p>1. **前提アサーションの検証**:</p>
+<p>1. <strong>前提アサーションの検証</strong>:</p>
 <ul>
 <li><code>joinrel-&gt;lateral_relids</code> が空であること、および外側パスの要求外部パラメータが空であることをアサーションで確認する。</li>
-<p>2. **内側パスのパラメータ化の検査**:</p>
+<p>2. <strong>内側パスのパラメータ化の検査</strong>:</p>
 <li>内側パスがパラメータ化されている場合、その要求パラメータ（<code>ppi_req_outer</code>）が外側パスの親リレーション（最上位親が存在する場合は <code>top_parent_relids</code>、そうでなければ <a class="wiki-source-link" href="../../source/src/backend/optimizer/util/relnode.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__relnode_c__relids.html&quot;}, '*');"><code>relids</code></a>）のサブセットに含まれているかを検証する。含まれていない場合は処理を中断する。</li>
-<p>3. **子リレーションによる再パラメータ化可能性の検査**:</p>
+<p>3. <strong>子リレーションによる再パラメータ化可能性の検査</strong>:</p>
 <li>内側パスが外側パスの親によってパラメータ化されており、かつ子リレーションによる再パラメータ化が不可能な場合は処理を中断する。</li>
-<p>4. **コスト見積もりと事前チェック**:</p>
+<p>4. <strong>コスト見積もりと事前チェック</strong>:</p>
 <li><code>initial_cost_nestloop</code> を呼び出してネストループの初期コストを算出する。</li>
 <li><a class="wiki-source-link" href="../../source/src/backend/optimizer/util/pathnode.c.html#L911" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__pathnode_c__add_partial_path_precheck.html&quot;}, '*');"><code>add_partial_path_precheck</code></a> によりコストの事前評価を行い、基準を満たさない場合はパスの生成を行わずに終了する。</li>
-<p>5. **部分パスの生成と登録**:</p>
+<p>5. <strong>部分パスの生成と登録</strong>:</p>
 <li>条件を通過した場合、<a class="wiki-source-link" href="../../source/src/backend/optimizer/util/pathnode.c.html#L2355" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__pathnode_c__create_nestloop_path.html&quot;}, '*');"><code>create_nestloop_path</code></a> を用いてネストループパスオブジェクトを生成し、<a class="wiki-source-link" href="../../source/src/backend/optimizer/util/pathnode.c.html#L792" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__pathnode_c__add_partial_path.html&quot;}, '*');"><code>add_partial_path</code></a> を使って <code>joinrel</code> の部分パスリストに登録する。</li>
 </ul>
 <h2>呼び出し元と呼び出し先</h2>

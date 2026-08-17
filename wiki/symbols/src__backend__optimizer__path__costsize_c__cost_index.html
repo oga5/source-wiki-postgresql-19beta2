@@ -1,5 +1,5 @@
 <!doctype html>
-<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>symbols/src__backend__optimizer__path__costsize_c__cost_index.md</title><link rel="stylesheet" href="../../styles.css"></head><body><h1>cost_index</h1>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="10"><title>symbols/src__backend__optimizer__path__costsize_c__cost_index.md</title><link rel="stylesheet" href="../../styles.css"></head><body><h1>cost_index</h1>
 <h2>現在のソース事実</h2>
 <ul>
 <li>種別: <code>function</code></li>
@@ -39,52 +39,52 @@
 </ul>
 <h2>入力と出力</h2>
 <ul>
-<li>**引数**:</li>
+<li><strong>引数</strong>:</li>
 <li><code>IndexPath *path</code>: コスト、行数、並列ワーカー数などの計算結果を直接書き込む対象のインデックスパス構造体。</li>
 <li><code>PlannerInfo *root</code>: プランナのグローバル情報。</li>
 <li><code>double loop_count</code>: このインデックスパスが繰り返し実行される推定回数。</li>
 <li><code>bool partial_path</code>: このパスが並列実行用の部分パス（Partial Path）であるかどうかを示すフラグ。</li>
-<li>**戻り値**: なし（<code>path</code> 構造体のメンバを直接書き換える）。</li>
+<li><strong>戻り値</strong>: なし（<code>path</code> 構造体のメンバを直接書き換える）。</li>
 </ul>
 <h2>前提条件と不変条件</h2>
 <ul>
-<li>**対象リレーションの制限**:</li>
+<li><strong>対象リレーションの制限</strong>:</li>
 <li>対象となるリレーション（<code>baserel</code>）はベースリレーションでなければならず、<code>baserel-&gt;relid &gt; 0</code> かつ <code>baserel-&gt;rtekind == RTE_RELATION</code> である必要があります。</li>
 <li><code>baserel</code> のノードタイプは <code>RelOptInfo</code>、<a class="wiki-source-link" href="../../source/src/interfaces/ecpg/preproc/type.h.html#L96" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__interfaces__ecpg__preproc__type_h__index.html&quot;}, '*');"><code>index</code></a> のノードタイプは <code>IndexOptInfo</code> でなければなりません。</li>
 </ul>
 <h2>アルゴリズムまたは振る舞い</h2>
-<p>1. **行数と修飾条件（qpquals）の特定**:</p>
+<p>1. <strong>行数と修飾条件（qpquals）の特定</strong>:</p>
 <ul>
 <li>パスにパラメータ情報（<code>path-&gt;path.param_info</code>）が存在する場合は、出力行数（<code>path-&gt;path.rows</code>）に <code>ppi_rows</code> を設定し、リレーションの制限条件およびパラメータ化条件からインデックスに含まれない条件（<code>qpquals</code>）を抽出します。</li>
 <li>パラメータ情報がない場合は、出力行数に <code>baserel-&gt;rows</code> を設定し、リレーションの制限条件のみから <code>qpquals</code> を抽出します。</li>
-<p>2. **無効化マスクの判定**:</p>
+<p>2. <strong>無効化マスクの判定</strong>:</p>
 <li>スキャン種別（インデックスオンリースキャンか通常のインデックススキャンか）および部分パスフラグに基づいて <code>enable_mask</code> を構成し、ベースリレーションのマスク（<code>baserel-&gt;pgs_mask</code>）と比較して、無効化されている場合は <code>path-&gt;path.disabled_nodes</code> を <code>1</code> に、有効な場合は <code>0</code> に設定します。</li>
-<p>3. **インデックスアクセスメソッド固有のコスト見積もり**:</p>
+<p>3. <strong>インデックスアクセスメソッド固有のコスト見積もり</strong>:</p>
 <li>インデックスのアクセスメソッド固有のコスト見積もり関数（<code>amcostestimate</code>）を呼び出し、インデックス自体の起動コスト、総コスト、選択度、相関、およびインデックスページ数を取得します。</li>
 <li>取得した総コストと選択度を <code>path-&gt;indextotalcost</code> および <code>path-&gt;indexselectivity</code> に保存し、インデックス自体の起動コストと実行コストを全体のコストに加算します。</li>
-<p>4. **ヒープタプル・ページフェッチ数の算出とI/Oコスト評価**:</p>
+<p>4. <strong>ヒープタプル・ページフェッチ数の算出とI/Oコスト評価</strong>:</p>
 <li>選択度とベースリレーションのタプル数から <code>tuples_fetched</code> を算出し、<a class="wiki-source-link" href="../../source/src/backend/optimizer/path/costsize.c.html#L213" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__path__costsize_c__clamp_row_est.html&quot;}, '*');"><code>clamp_row_est</code></a> でクランプします。</li>
 <li>テーブルスペースのページコスト（シーケンシャルおよびランダム）を取得します。</li>
 <li><code>loop_count</code> が 1 より大きい場合とそうでない場合で分岐し、Mackert-Lohman 公式（<a class="wiki-source-link" href="../../source/src/backend/optimizer/path/costsize.c.html#L896" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__path__costsize_c__index_pages_fetched.html&quot;}, '*');"><code>index_pages_fetched</code></a>）や完全相関の場合の計算を行い、インデックスオンリースキャンの場合は可視性マップ（<a class="wiki-source-link" href="../../source/src/backend/optimizer/util/plancat.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__plancat_c__allvisfrac.html&quot;}, '*');"><code>allvisfrac</code></a>）に基づいてヒープフェッチ数を削減します。</li>
-<p>5. **並列ワーカー数の計算（部分パスの場合）**:</p>
+<p>5. <strong>並列ワーカー数の計算（部分パスの場合）</strong>:</p>
 <li><code>partial_path</code> が有効な場合、<a class="wiki-source-link" href="../../source/src/backend/optimizer/path/allpaths.c.html#L4972" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__path__allpaths_c__compute_parallel_worker.html&quot;}, '*');"><code>compute_parallel_worker</code></a> を呼び出して必要な並列ワーカー数を決定します。</li>
 <li>ワーカー数が 0 以下である場合は、これ以上の計算を行わずに処理を終了（早期リターン）します。</li>
 <li>ワーカー数が 1 以上の場合は、<code>path-&gt;path.parallel_aware</code> を <a class="wiki-source-link" href="../../source/src/tools/pg_bsd_indent/indent_globs.h.html#L46" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/tools/pg_bsd_indent/indent_globs.h.html&quot;}, '*');"><code>true</code></a> に設定します。</li>
-<p>6. **相関に基づくI/Oコストの補間**:</p>
+<p>6. <strong>相関に基づくI/Oコストの補間</strong>:</p>
 <li>インデックスの相関の二乗（<code>csquared</code>）を用いて、最大I/Oコスト（無相関）と最小I/Oコスト（完全相関）の間を線形補間し、実行コスト（<code>run_cost</code>）に加算します。</li>
-<p>7. **CPUコストとターゲット評価コストの加算**:</p>
+<p>7. <strong>CPUコストとターゲット評価コストの加算</strong>:</p>
 <li><a class="wiki-source-link" href="../../source/src/backend/optimizer/path/costsize.c.html#L4899" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__path__costsize_c__cost_qual_eval.html&quot;}, '*');"><code>cost_qual_eval</code></a> を用いて <code>qpquals</code> の評価コストを算出し、起動コストおよびタプルごとのCPUコストに加算します。</li>
 <li>パスに付随するターゲットリスト（<code>pathtarget</code>）のコストを加算します。</li>
-<p>8. **並列処理の補正と最終コストの格納**:</p>
+<p>8. <strong>並列処理の補正と最終コストの格納</strong>:</p>
 <li>並列ワーカーが使用される場合、<a class="wiki-source-link" href="../../source/src/backend/optimizer/path/costsize.c.html#L6617" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__path__costsize_c__get_parallel_divisor.html&quot;}, '*');"><code>get_parallel_divisor</code></a> を用いて出力行数とCPU実行コストを分割・調整します。</li>
 <li>最終的な起動コストと総コストを <code>path-&gt;path.startup_cost</code> および <code>path-&gt;path.total_cost</code> に書き込みます。</li>
 </ul>
 <h2>呼び出し元と呼び出し先</h2>
 <ul>
-<li>**呼び出し元**:</li>
+<li><strong>呼び出し元</strong>:</li>
 <li><a class="wiki-source-link" href="../../source/src/backend/optimizer/util/pathnode.c.html#L1091" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__pathnode_c__create_index_path.html&quot;}, '*');"><code>create_index_path</code></a></li>
 <li><a class="wiki-source-link" href="../../source/src/backend/optimizer/util/pathnode.c.html#L3916" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__pathnode_c__reparameterize_path.html&quot;}, '*');"><code>reparameterize_path</code></a></li>
-<li>**呼び出し先**:</li>
+<li><strong>呼び出し先</strong>:</li>
 <li><a class="wiki-source-link" href="../../source/src/backend/optimizer/path/costsize.c.html#L838" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__path__costsize_c__extract_nonindex_conditions.html&quot;}, '*');"><code>extract_nonindex_conditions</code></a></li>
 <li><code>amcostestimate</code> (関数ポインタ経由)</li>
 <li><a class="wiki-source-link" href="../../source/src/backend/optimizer/path/costsize.c.html#L213" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__path__costsize_c__clamp_row_est.html&quot;}, '*');"><code>clamp_row_est</code></a></li>
@@ -105,15 +105,15 @@
 </ul>
 <h2>失敗モードと境界条件</h2>
 <ul>
-<li>**アサーションによる強制終了**:</li>
+<li><strong>アサーションによる強制終了</strong>:</li>
 <li>渡された <code>baserel</code> または <a class="wiki-source-link" href="../../source/src/interfaces/ecpg/preproc/type.h.html#L96" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__interfaces__ecpg__preproc__type_h__index.html&quot;}, '*');"><code>index</code></a> が適切なノードタイプ（<code>RelOptInfo</code> / <code>IndexOptInfo</code>）でない場合、または <code>baserel-&gt;relid &lt;= 0</code> もしくは <code>baserel-&gt;rtekind != RTE_RELATION</code> の場合は、アサーション（<code>Assert</code>）によりプロセスが強制終了します。</li>
-<li>**並列ワーカー割り当て不可による早期リターン**:</li>
+<li><strong>並列ワーカー割り当て不可による早期リターン</strong>:</li>
 <li><code>partial_path</code> が <a class="wiki-source-link" href="../../source/src/tools/pg_bsd_indent/indent_globs.h.html#L46" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/tools/pg_bsd_indent/indent_globs.h.html&quot;}, '*');"><code>true</code></a> のとき、<a class="wiki-source-link" href="../../source/src/backend/optimizer/path/allpaths.c.html#L4972" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__path__allpaths_c__compute_parallel_worker.html&quot;}, '*');"><code>compute_parallel_worker</code></a> の結果が <code>0</code> 以下（並列ワーカーを割り当てられない）と判定された場合、関数はコストや行数の計算を完了せずにその場で早期リターンします。この場合、パスのコストや行数は未設定または不完全な状態のままとなり、呼び出し元でこのパスが破棄されることを前提としています。</li>
-<li>**インデックスオンリースキャンにおける並列度判定の境界調整**:</li>
+<li><strong>インデックスオンリースキャンにおける並列度判定の境界調整</strong>:</li>
 <li><code>indexonly</code>（インデックスオンリースキャン）かつ <code>partial_path</code> が有効な場合、ヒープからフェッチするページ数が極めて小さくなり、並列実行が不当に除外されるのを防ぐため、<code>rand_heap_pages</code> を <code>-1</code> に設定して <a class="wiki-source-link" href="../../source/src/backend/optimizer/path/allpaths.c.html#L4972" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__path__allpaths_c__compute_parallel_worker.html&quot;}, '*');"><code>compute_parallel_worker</code></a> に渡します。</li>
-<li>**可視性マップによるページフェッチ数のゼロクランプ**:</li>
+<li><strong>可視性マップによるページフェッチ数のゼロクランプ</strong>:</li>
 <li><code>indexonly</code> の場合、<code>pages_fetched</code> に <code>(1.0 - baserel-&gt;allvisfrac)</code> を乗算して <code>ceil</code> で切り上げます。もし <a class="wiki-source-link" href="../../source/src/backend/optimizer/util/plancat.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__plancat_c__allvisfrac.html&quot;}, '*');"><code>allvisfrac</code></a> が <code>1.0</code>（すべてのヒープページが可視）の場合、<code>pages_fetched</code> は <code>0</code> にクランプされ、最小I/Oコスト（<code>min_IO_cost</code>）も <code>0</code> に設定されます。</li>
-<li>**ループ回数によるI/Oコスト計算の分岐**:</li>
+<li><strong>ループ回数によるI/Oコスト計算の分岐</strong>:</li>
 <li><code>loop_count &gt; 1</code> の場合、複数回スキャンによるキャッシュ効果を考慮して <a class="wiki-source-link" href="../../source/src/backend/optimizer/path/costsize.c.html#L896" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__path__costsize_c__index_pages_fetched.html&quot;}, '*');"><code>index_pages_fetched</code></a> に <code>tuples_fetched * loop_count</code> を渡してスケールアップした後に <code>loop_count</code> で除算してプロレート（按分）します。一方、<code>loop_count &lt;= 1</code> の場合は、完全相関時の最小I/Oコストとして、最初の1ページに <code>spc_random_page_cost</code> を適用し、残りのページに <code>spc_seq_page_cost</code> を適用する補正を行います。</li>
 </ul><script>
 (function() {

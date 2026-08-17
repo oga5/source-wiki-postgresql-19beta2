@@ -1,39 +1,24 @@
 <!doctype html>
-<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>symbols/src__backend__optimizer__util__predtest_c__OprProofCacheKey.md</title><link rel="stylesheet" href="../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../source/src/backend/optimizer/util/predtest.c.html#L2076" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__predtest_c__OprProofCacheKey.html&quot;}, '*');">OprProofCacheKey</a></h1>
-<h2>定義</h2>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="10"><title>symbols/src__backend__optimizer__util__predtest_c__OprProofCacheKey.md</title><link rel="stylesheet" href="../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../source/src/backend/optimizer/util/predtest.c.html#L2076" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__predtest_c__OprProofCacheKey.html&quot;}, '*');">OprProofCacheKey</a></h1>
+<h2>現在のソース事実</h2>
 <ul>
 <li>種別: <code>struct</code></li>
 <li>定義箇所: <code>src/backend/optimizer/util/predtest.c:2076</code></li>
-<li>所属モジュール: <a class="wiki-entity-link" href="../modules/src__backend__optimizer__util.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/modules/src__backend__optimizer__util.html&quot;, &quot;source&quot;: &quot;source/src/backend/optimizer/util/appendinfo.c.html&quot;}, '*');"><code>module:src/backend/optimizer/util</code></a></li>
-</ul>
-<h2>目的</h2>
-<p>静的シンボル索引から生成された初期シンボルページです。</p>
-<h2>シグネチャまたは形状</h2>
-<ul>
 <li>シグネチャ: <code>typedef struct OprProofCacheKey</code></li>
-</ul>
-<h2>入力と出力</h2>
-<p>まだ解析していません。</p>
-<h2>前提条件と不変条件</h2>
-<p>まだ解析していません。</p>
-<h2>アルゴリズムまたは振る舞い</h2>
-<p>まだ解析していません。</p>
-<h2>呼び出し元と呼び出し先</h2>
-<ul>
 <li>呼び出し元: なし</li>
 <li>呼び出し先: なし</li>
 <li>呼び出し元サイト: なし</li>
 <li>呼び出しサイト: なし</li>
+<li>関連型: <code>Oid</code></li>
 </ul>
-<h2>関連データ構造</h2>
-<p><code>Oid</code></p>
-<h2>ソース抜粋</h2>
+<h3>ソース抜粋</h3>
 <p>~~~c typedef struct <a class="wiki-source-link" href="../../source/src/backend/optimizer/util/predtest.c.html#L2076" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__predtest_c__OprProofCacheKey.html&quot;}, '*');">OprProofCacheKey</a> { Oid			<a class="wiki-source-link" href="../../source/src/backend/optimizer/util/predtest.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__predtest_c__pred_op.html&quot;}, '*');">pred_op</a>;		/* predicate operator */ Oid			<a class="wiki-source-link" href="../../source/src/backend/optimizer/util/predtest.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__predtest_c__clause_op.html&quot;}, '*');">clause_op</a>;		/* <a class="wiki-source-link" href="../../source/src/backend/optimizer/path/clausesel.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__path__clausesel_c__clause.html&quot;}, '*');">clause</a> operator */ } <a class="wiki-source-link" href="../../source/src/backend/optimizer/util/predtest.c.html#L2076" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__predtest_c__OprProofCacheKey.html&quot;}, '*');">OprProofCacheKey</a>; ~~~</p>
-<h2>失敗モードと境界条件</h2>
-<p>まだ解析していません。</p>
-<h2>保守担当者向けメモ</h2>
+<h2>目的</h2>
+<p>述語演算子と節演算子のペアを組み合わせたハッシュ検索キーとして機能する構造体である。</p>
+<h2>フィールドと表現</h2>
 <ul>
-<li>後続フェーズで、ソース本文の文脈と caller/callee 情報を使ってこのページを強化する。</li>
+<li><a class="wiki-source-link" href="../../source/src/backend/optimizer/util/predtest.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__predtest_c__pred_op.html&quot;}, '*');"><code>pred_op</code></a>: 述語演算子の OID を表す <code>Oid</code> 型のフィールドである。</li>
+<li><a class="wiki-source-link" href="../../source/src/backend/optimizer/util/predtest.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__predtest_c__clause_op.html&quot;}, '*');"><code>clause_op</code></a>: 節演算子の OID を表す <code>Oid</code> 型のフィールドである。</li>
 </ul><script>
 (function() {
   function notifyParent() {

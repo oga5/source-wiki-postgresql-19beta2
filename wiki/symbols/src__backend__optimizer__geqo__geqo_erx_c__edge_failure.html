@@ -1,5 +1,5 @@
 <!doctype html>
-<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>symbols/src__backend__optimizer__geqo__geqo_erx_c__edge_failure.md</title><link rel="stylesheet" href="../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../source/src/backend/optimizer/geqo/geqo_erx.c.html#L380" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__geqo__geqo_erx_c__edge_failure.html&quot;}, '*');">edge_failure</a></h1>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="10"><title>symbols/src__backend__optimizer__geqo__geqo_erx_c__edge_failure.md</title><link rel="stylesheet" href="../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../source/src/backend/optimizer/geqo/geqo_erx.c.html#L380" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__geqo__geqo_erx_c__edge_failure.html&quot;}, '*');">edge_failure</a></h1>
 <h2>現在のソース事実</h2>
 <ul>
 <li>種別: <code>function</code></li>
@@ -49,17 +49,17 @@
 <li>エッジテーブルの走査は <code>1</code> から <code>num_gene</code> までのインデックス範囲で行われる。</li>
 </ul>
 <h2>アルゴリズムまたは振る舞い</h2>
-<p>1. **残存エッジおよび4エッジノードのカウント**:</p>
+<p>1. <strong>残存エッジおよび4エッジノードのカウント</strong>:</p>
 <ul>
 <li><code>1</code> から <code>num_gene</code> までの範囲でループを回し、<code>edge_table[i].unused_edges != -1</code> かつ <code>i != (int) fail_gene</code> を満たすノードの数 (<code>remaining_edges</code>) と、そのうち <code>total_edges == 4</code> であるノードの数 (<code>four_count</code>) を集計する。</li>
-<p>2. **分岐 1: 4エッジを持つ候補が存在する場合 (<code>four_count != 0</code>)**:</p>
+<p>2. <strong>分岐 1: 4エッジを持つ候補が存在する場合 (<code>four_count != 0</code>)</strong>:</p>
 <li><a class="wiki-source-link" href="../../source/src/backend/optimizer/geqo/geqo_random.c.html#L34" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__geqo__geqo_random_c__geqo_randint.html&quot;}, '*');"><code>geqo_randint</code></a> を用いて <code>0</code> から <code>four_count - 1</code> の範囲の乱数を決定する。</li>
 <li>再びテーブルを走査し、条件を満たすノードと合致した時点でその遺伝子を返す。見つからない場合は <code>elog(LOG)</code> を出力する。</li>
-<p>3. **分岐 2: その他の残存エッジを持つ候補が存在する場合 (<code>remaining_edges != 0</code>)**:</p>
+<p>3. <strong>分岐 2: その他の残存エッジを持つ候補が存在する場合 (<code>remaining_edges != 0</code>)</strong>:</p>
 <li><a class="wiki-source-link" href="../../source/src/backend/optimizer/geqo/geqo_random.c.html#L34" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__geqo__geqo_random_c__geqo_randint.html&quot;}, '*');"><code>geqo_randint</code></a> を用いて <code>0</code> から <code>remaining_edges - 1</code> の範囲で乱数決定し、対応する残存遺伝子を探索して返す。見つからない場合は <code>elog(LOG)</code> を出力する。</li>
-<p>4. **分岐 3: エッジテーブルが空とみなされる場合 (最後尾のポイントなどのフォールバック)**:</p>
+<p>4. <strong>分岐 3: エッジテーブルが空とみなされる場合 (最後尾のポイントなどのフォールバック)</strong>:</p>
 <li>ツアーの最後のポイントなどで発生し、<code>edge_table[i].unused_edges &gt;= 0</code> となっている未使用のポイントを線形探索して返す。見つからない場合は <code>elog(LOG)</code> を出力する。</li>
-<p>5. **異常終了**:</p>
+<p>5. <strong>異常終了</strong>:</p>
 <li>いずれの経路でも遺伝子が見つからなかった場合は到達不能なはずであり、<code>elog(ERROR)</code> によりエラーを送出する。</li>
 </ul>
 <h2>失敗モードと境界条件</h2>

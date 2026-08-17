@@ -1,5 +1,5 @@
 <!doctype html>
-<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>src/test/regress/sql/update.sql.md</title><link rel="stylesheet" href="../../../../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../../../../source/src/test/regress/sql/update.sql.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/test/regress/sql/update.sql.html&quot;}, '*');">src/test/regress/sql/update.sql</a></h1>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="10"><title>src/test/regress/sql/update.sql.md</title><link rel="stylesheet" href="../../../../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../../../../source/src/test/regress/sql/update.sql.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/test/regress/sql/update.sql.html&quot;}, '*');">src/test/regress/sql/update.sql</a></h1>
 <h2>概要</h2>
 <p>PostgreSQLの回帰テスト用SQLスクリプトファイルであり、<code>UPDATE</code>構文、<code>UPSERT</code>（<code>ON CONFLICT DO UPDATE</code>）、およびパーティションテーブルにおける行移動（Row Movement）に関する動作・制約・エラーパスを網羅的に検証する。</p>
 <h2>モジュール内での役割</h2>
@@ -13,12 +13,12 @@
 <li>行移動を伴う場合の各種トリガー（Statement/Row/Before/After）、CHECK制約、UPDATABLE VIEW、および RLS ポリシーの適用検証。</li>
 </ul>
 <h2>制御フローとデータフロー</h2>
-<p>1. **基本・拡張UPDATEフロー**:</p>
+<p>1. <strong>基本・拡張UPDATEフロー</strong>:</p>
 <ul>
 <li>単一テーブルの単純更新から、<code>FROM</code> 句に <a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/plan/subselect.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__plan__subselect_c__VALUES.html&quot;}, '*');"><code>VALUES</code></a> や副問合せを持つ複数列同時更新を実行し、結果を <code>SELECT</code> で検証する。</li>
-<p>2. **UPSERTフロー**:</p>
+<p>2. <strong>UPSERTフロー</strong>:</p>
 <li>一意制約違反が発生するデータを挿入し、<code>ON CONFLICT DO UPDATE</code> 節を起動してターゲット行を更新、<code>RETURNING</code> 句でシステム列や変更結果を取得する。</li>
-<p>3. **パーティション行移動フロー**:</p>
+<p>3. <strong>パーティション行移動フロー</strong>:</p>
 <li>パーティションキーが更新された際、行が所属する古いパーティションからの削除と、新しい制約を満たす子パーティションへのルーティング（挿入）が実行される。</li>
 <li>トリガー（例: <code>BEFORE UPDATE</code> によるキーの書き換え）や <code>BEFORE INSERT</code> トリガーが介入する経路、および <code>CHECK</code> 制約・RLSポリシーの違反によるアボートパスを検証する。</li>
 </ul><script>

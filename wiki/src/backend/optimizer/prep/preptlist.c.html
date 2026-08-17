@@ -1,15 +1,15 @@
 <!doctype html>
-<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>src/backend/optimizer/prep/preptlist.c.md</title><link rel="stylesheet" href="../../../../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/prep/preptlist.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/backend/optimizer/prep/preptlist.c.html&quot;}, '*');">src/backend/optimizer/prep/preptlist.c</a></h1>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="10"><title>src/backend/optimizer/prep/preptlist.c.md</title><link rel="stylesheet" href="../../../../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/prep/preptlist.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/backend/optimizer/prep/preptlist.c.html&quot;}, '*');">src/backend/optimizer/prep/preptlist.c</a></h1>
 <h2>概要</h2>
 <p><a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/prep/preptlist.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/backend/optimizer/prep/preptlist.c.html&quot;}, '*');"><code>src/backend/optimizer/prep/preptlist.c</code></a> は、パーサおよびリライタが生成したパースツリーのターゲットリスト（TargetList）をオプティマイザの入力用に前処理するルーチン群を提供します。物理的なテーブルアクセスやアトリビュート順序の整合性に密接に関わっています。</p>
 <h2>モジュール内での役割</h2>
 <p><code>src/backend/optimizer/prep</code> サブシステムの一部として、クエリのオプティマイズ前段階でターゲットリストを補正・拡張し、後続のプラン生成やエグゼキュータが要求する形式（INSERT の全列順序、UPDATE の列番号抽出、ROW-MARK / RETURNING / MERGE に必要なジャンク列の付加など）へ整えます。</p>
 <h2>責務</h2>
 <ul>
-<li>**INSERT ターゲットリストの拡張**: ターゲットテーブルの全属性に対応するエントリが正しい順序で存在することを保証し、欠落している列に対してはデフォルト、ドメイン制約（NOT NULL 等）、生成列（generated columns）、またはドロップされた列に応じた適切な NULL 定数を挿入する。</li>
-<li>**UPDATE ターゲットリストの処理**: 更新対象の列番号（<code>update_colnos</code>）を抽出・分離し、残りのターゲットエントリの <code>resno</code> を連続値に振り直す。</li>
-<li>**ジャンク列の管理**: <code>UPDATE</code>, <code>DELETE</code>, <code>MERGE</code>、<code>FOR UPDATE/SHARE</code> ロッキング（<code>PlanRowMark</code>）、および <code>RETURNING</code> 句において、エグゼキュータが行識別や再チェックを行うために必要な「resjunk」エントリをターゲットリストに追加する。</li>
-<li>**プラン行マークの検索**: 指定されたレンジテーブルインデックス（RTインデックス）に対応する <code>PlanRowMark</code> を取得するユーティリティを提供する。</li>
+<li><strong>INSERT ターゲットリストの拡張</strong>: ターゲットテーブルの全属性に対応するエントリが正しい順序で存在することを保証し、欠落している列に対してはデフォルト、ドメイン制約（NOT NULL 等）、生成列（generated columns）、またはドロップされた列に応じた適切な NULL 定数を挿入する。</li>
+<li><strong>UPDATE ターゲットリストの処理</strong>: 更新対象の列番号（<code>update_colnos</code>）を抽出・分離し、残りのターゲットエントリの <code>resno</code> を連続値に振り直す。</li>
+<li><strong>ジャンク列の管理</strong>: <code>UPDATE</code>, <code>DELETE</code>, <code>MERGE</code>、<code>FOR UPDATE/SHARE</code> ロッキング（<code>PlanRowMark</code>）、および <code>RETURNING</code> 句において、エグゼキュータが行識別や再チェックを行うために必要な「resjunk」エントリをターゲットリストに追加する。</li>
+<li><strong>プラン行マークの検索</strong>: 指定されたレンジテーブルインデックス（RTインデックス）に対応する <code>PlanRowMark</code> を取得するユーティリティを提供する。</li>
 </ul>
 <h2>重要なシンボル</h2>
 <h3>ドライバ関数</h3>
@@ -33,16 +33,16 @@
 <li><code>UPDATE</code>: クエリ種別（<code>CmdType</code>）の一つ。ターゲット列番号の抽出と行識別ジャンク列の追加を引き起こす。</li>
 </ul>
 <h2>制御フローとデータフロー</h2>
-<p>1. **初期化**: <code>preprocess_targetlist</code> が <code>root-&gt;parse</code> からコマンドタイプと結果リレーション（<code>resultRelation</code>）を取得。リレーションが存在する場合は <code>table_open</code> でオープンする。 2. **コマンド別の分岐**:</p>
+<p>1. <strong>初期化</strong>: <code>preprocess_targetlist</code> が <code>root-&gt;parse</code> からコマンドタイプと結果リレーション（<code>resultRelation</code>）を取得。リレーションが存在する場合は <code>table_open</code> でオープンする。 2. <strong>コマンド別の分岐</strong>:</p>
 <ul>
 <li><code>CMD_INSERT</code>: <a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/prep/preptlist.c.html#L383" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__prep__preptlist_c__expand_insert_targetlist.html&quot;}, '*');"><code>expand_insert_targetlist</code></a> を呼び出し、リレーションの <code>TupleDesc</code> を基準に不足している属性を補完。 dropped column や generated column に応じた定数・式を構築して順序を整える。</li>
 <li><code>CMD_UPDATE</code>: <a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/prep/preptlist.c.html#L349" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__prep__preptlist_c__extract_update_targetlist_colnos.html&quot;}, '*');"><code>extract_update_targetlist_colnos</code></a> を呼び出して更新列番号を <code>root-&gt;update_colnos</code> に格納し、<code>resno</code> を連続化。</li>
 <li><code>CMD_MERGE</code>: 各 <a class="wiki-source-link" href="../../../../../source/src/include/nodes/primnodes.h.html#L2024" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__nodes__primnodes_h__MergeAction.html&quot;}, '*');"><code>MergeAction</code></a> ごとに INSERT/UPDATE の処理を行いつつ、アクションの条件やターゲットリスト、結合条件に含まれる他表の Var / PlaceHolderVar を resjunk エントリとして追加。</li>
-<p>3. **ジャンク列の追加**:</p>
+<p>3. <strong>ジャンク列の追加</strong>:</p>
 <li>非継承の <code>UPDATE</code> / <code>DELETE</code> / <code>MERGE</code> に対して <a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/util/appendinfo.c.html#L958" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__appendinfo_c__add_row_identity_columns.html&quot;}, '*');"><code>add_row_identity_columns</code></a> を実行。</li>
 <li><code>root-&gt;rowMarks</code> を走査し、<code>ROW_MARK_COPY</code> や TID、<a class="wiki-source-link" href="../../../../../source/src/include/access/sysattr.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__access__sysattr_h__tableoid.html&quot;}, '*');"><code>tableoid</code></a> が必要な場合に対応する <code>ctidN</code>、<code>wholerowN</code>、<code>tableoidN</code> といった resjunk ターゲットエントリを追加。</li>
 <li><code>returningList</code> が存在する場合、別リレーションを参照する Var を resjunk として追加。</li>
-<p>4. **完了**: 最終的なターゲットリストを <code>root-&gt;processed_tlist</code> に格納し、開いていたリレーションをクローズする。</p>
+<p>4. <strong>完了</strong>: 最終的なターゲットリストを <code>root-&gt;processed_tlist</code> に格納し、開いていたリレーションをクローズする。</p>
 </ul>
 <h2>直接依存</h2>
 <ul>
@@ -68,8 +68,8 @@
 </ul>
 <h2>読者向けメモ</h2>
 <ul>
-<li>**メモリ管理**: 新規に作成されるターゲットエントリや文字列（リレーション名やジャンク列名 <code>pstrdup(resname)</code>）は、通常 Planner のメモリコンテキスト上で割り当てられます。</li>
-<li>**インバリアント**: INSERT クエリの processed_tlist は、対象リレーションの物理属性順と完全に一致していなければなりません。また、UPDATE の non-resjunk エントリの <code>resno</code> は 1 からの連番に正規化されます。</li>
+<li><strong>メモリ管理</strong>: 新規に作成されるターゲットエントリや文字列（リレーション名やジャンク列名 <code>pstrdup(resname)</code>）は、通常 Planner のメモリコンテキスト上で割り当てられます。</li>
+<li><strong>インバリアント</strong>: INSERT クエリの processed_tlist は、対象リレーションの物理属性順と完全に一致していなければなりません。また、UPDATE の non-resjunk エントリの <code>resno</code> は 1 からの連番に正規化されます。</li>
 </ul>
 <h2>シンボルページ</h2>
 <ul>

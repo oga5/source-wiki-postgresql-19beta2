@@ -1,5 +1,5 @@
 <!doctype html>
-<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>symbols/src__backend__optimizer__util__relnode_c__build_simple_rel.md</title><link rel="stylesheet" href="../../styles.css"></head><body><h1>build_simple_rel</h1>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="10"><title>symbols/src__backend__optimizer__util__relnode_c__build_simple_rel.md</title><link rel="stylesheet" href="../../styles.css"></head><body><h1>build_simple_rel</h1>
 <h2>現在のソース事実</h2>
 <ul>
 <li>種別: <code>function</code></li>
@@ -55,26 +55,26 @@
 <li><code>root-&gt;simple_rte_array[relid]</code> が指すレンジテーブルエントリ（RTE）が存在していなければならない。</li>
 </ul>
 <h2>アルゴリズムまたは振る舞い</h2>
-<p>1. **初期存在チェック**: <code>relid</code> の有効性を <code>Assert</code> で確認し、すでに <code>root-&gt;simple_rel_array[relid]</code> が存在している場合はエラーを出力する。 2. **基本構造体の割り当てと初期化**:</p>
+<p>1. <strong>初期存在チェック</strong>: <code>relid</code> の有効性を <code>Assert</code> で確認し、すでに <code>root-&gt;simple_rel_array[relid]</code> が存在している場合はエラーを出力する。 2. <strong>基本構造体の割り当てと初期化</strong>:</p>
 <ul>
 <li><code>root-&gt;simple_rte_array[relid]</code> から RTE を取得する。</li>
 <li><code>RelOptInfo</code> ノードを新規作成し、<code>parent</code> の有無に応じて <code>reloptkind</code> を <code>RELOPT_OTHER_MEMBER_REL</code> または <a class="wiki-source-link" href="../../source/src/backend/optimizer/path/allpaths.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__path__allpaths_c__RELOPT_BASEREL.html&quot;}, '*');"><code>RELOPT_BASEREL</code></a> に設定する。</li>
 <li><a class="wiki-source-link" href="../../source/src/backend/optimizer/util/relnode.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__relnode_c__relids.html&quot;}, '*');"><code>relids</code></a> に単一要素のビットマップを設定し、コスト計算フラグ、空のパターゲッティング、各種リストやコスト・統計フィールドを初期化する。</li>
-<p>3. **ユーザーID（権限チェック用）の設定**:</p>
+<p>3. <strong>ユーザーID（権限チェック用）の設定</strong>:</p>
 <li><code>rtekind</code> が <a class="wiki-source-link" href="../../source/src/include/nodes/parsenodes.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__nodes__parsenodes_h__RTE_RELATION.html&quot;}, '*');"><code>RTE_RELATION</code></a> の場合、ベースリレーションまたはサブクエリ配下の <code>OTHER_MEMBER_REL</code> であればパーミッション情報から <code>checkAsUser</code> を取得し、それ以外の場合は親の <code>userid</code> を引き継ぐ。</li>
 <li><a class="wiki-source-link" href="../../source/src/include/nodes/parsenodes.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__nodes__parsenodes_h__RTE_RELATION.html&quot;}, '*');"><code>RTE_RELATION</code></a> 以外の場合は <code>InvalidOid</code> を設定する。</li>
-<p>4. **階層・継承プロパティの伝播**:</p>
+<p>4. <strong>階層・継承プロパティの伝播</strong>:</p>
 <li><code>parent</code> が存在するペレント階層では、親へのバックリンク（<code>parent</code>、<code>top_parent</code>、<code>top_parent_relids</code>）および <code>nulling_relids</code> や lateral 関連の参照情報を親から引き継ぐ。</li>
 <li><code>parent</code> が <code>NULL</code> の場合はこれらをすべて <code>NULL</code> に初期化する。</li>
-<p>5. **RTE種別ごとの属性・統計情報取得**:</p>
+<p>5. <strong>RTE種別ごとの属性・統計情報取得</strong>:</p>
 <li><a class="wiki-source-link" href="../../source/src/include/nodes/parsenodes.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__nodes__parsenodes_h__RTE_RELATION.html&quot;}, '*');"><code>RTE_RELATION</code></a>: <code>get_relation_info</code> を呼び出してシステムカタログから統計情報等を取得する。</li>
 <li>サブクエリ、関数、テーブル関数、<a class="wiki-source-link" href="../../source/src/backend/optimizer/plan/subselect.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__plan__subselect_c__VALUES.html&quot;}, '*');">VALUES</a>、CTE、名前付きタプルストアなどの各種エントリ: 属性範囲や <code>attr_needed</code>、<a class="wiki-source-link" href="../../source/src/backend/optimizer/util/plancat.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__plancat_c__attr_widths.html&quot;}, '*');"><code>attr_widths</code></a> のメモリ領域を割り当てて初期化する。</li>
 <li><a class="wiki-source-link" href="../../source/src/backend/optimizer/prep/prepjointree.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__prep__prepjointree_c__RTE_RESULT.html&quot;}, '*');"><code>RTE_RESULT</code></a>: 属性を持たないため関連フィールドをクリアする。</li>
 <li>その他未知の RTE 種別ではエラーとする。</li>
-<p>6. **プラグインフックの呼び出し**: <a class="wiki-source-link" href="../../source/src/backend/optimizer/util/relnode.c.html#L51" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/backend/optimizer/util/relnode.c.html&quot;}, '*');"><code>build_simple_rel_hook</code></a> が設定されている場合はこれを実行し、リレーション情報やカタログ情報を拡張・編集できるようにする。 7. **子リレーションへのベース制約の適用**:</p>
+<p>6. <strong>プラグインフックの呼び出し</strong>: <a class="wiki-source-link" href="../../source/src/backend/optimizer/util/relnode.c.html#L51" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/backend/optimizer/util/relnode.c.html&quot;}, '*');"><code>build_simple_rel_hook</code></a> が設定されている場合はこれを実行し、リレーション情報やカタログ情報を拡張・編集できるようにする。 7. <strong>子リレーションへのベース制約の適用</strong>:</p>
 <li><code>parent</code> が存在する場合、対応する <code>AppendRelInfo</code> を取得し、<a class="wiki-source-link" href="../../source/src/backend/optimizer/util/inherit.c.html#L838" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__inherit_c__apply_child_basequals.html&quot;}, '*');"><code>apply_child_basequals</code></a> で親の制約条件を子に適用する。</li>
 <li>条件が定数 <code>FALSE</code> または <code>NULL</code> に縮約されて行を返さないと判定された場合は、<a class="wiki-source-link" href="../../source/src/backend/optimizer/path/joinrels.c.html#L1512" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__path__joinrels_c__mark_dummy_rel.html&quot;}, '*');"><code>mark_dummy_rel</code></a> を呼び出してダミーリレーションとしてマークする。</li>
-<p>8. **登録と返却**: 構築した <code>rel</code> を <code>root-&gt;simple_rel_array[relid]</code> に格納し、ポインタを返す。</p>
+<p>8. <strong>登録と返却</strong>: 構築した <code>rel</code> を <code>root-&gt;simple_rel_array[relid]</code> に格納し、ポインタを返す。</p>
 </ul>
 <h2>呼び出し元と呼び出し先</h2>
 <ul>

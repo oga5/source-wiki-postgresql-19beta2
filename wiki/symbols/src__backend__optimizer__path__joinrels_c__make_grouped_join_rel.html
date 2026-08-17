@@ -1,5 +1,5 @@
 <!doctype html>
-<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>symbols/src__backend__optimizer__path__joinrels_c__make_grouped_join_rel.md</title><link rel="stylesheet" href="../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../source/src/backend/optimizer/path/joinrels.c.html#L915" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__path__joinrels_c__make_grouped_join_rel.html&quot;}, '*');">make_grouped_join_rel</a></h1>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="10"><title>symbols/src__backend__optimizer__path__joinrels_c__make_grouped_join_rel.md</title><link rel="stylesheet" href="../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../source/src/backend/optimizer/path/joinrels.c.html#L915" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__path__joinrels_c__make_grouped_join_rel.html&quot;}, '*');">make_grouped_join_rel</a></h1>
 <h2>現在のソース事実</h2>
 <ul>
 <li>種別: <code>function</code></li>
@@ -74,21 +74,21 @@
 <li>2つの入力リレーション双方が grouped rel である場合（すなわち双方が空ではない、あるいは双方空である場合）、本関数ではグループ化されたリレーション同士の結合はサポートされないため早期リターンする。</li>
 </ul>
 <h2>アルゴリズムまたは振る舞い</h2>
-<p>1. **早期リターンチェック**: <code>root-&gt;agg_clause_list</code> または <code>root-&gt;group_expr_list</code> が <a class="wiki-source-link" href="../../source/src/include/nodes/pg_list.h.html#L68" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/nodes/pg_list.h.html&quot;}, '*');"><code>NIL</code></a> の場合は処理を終了する。 2. **入力リレーションのグループ状態判定**: <code>rel1</code> と <code>rel2</code> のそれぞれの <code>grouped_rel</code> を取得し、それぞれが空（<code>NULL</code> またはダミーリレーション）であるかを <code>rel1_empty</code> と <code>rel2_empty</code> として評価する。 3. **グループ化結合リレーションの取得または新規構築**:</p>
+<p>1. <strong>早期リターンチェック</strong>: <code>root-&gt;agg_clause_list</code> または <code>root-&gt;group_expr_list</code> が <a class="wiki-source-link" href="../../source/src/include/nodes/pg_list.h.html#L68" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/nodes/pg_list.h.html&quot;}, '*');"><code>NIL</code></a> の場合は処理を終了する。 2. <strong>入力リレーションのグループ状態判定</strong>: <code>rel1</code> と <code>rel2</code> のそれぞれの <code>grouped_rel</code> を取得し、それぞれが空（<code>NULL</code> またはダミーリレーション）であるかを <code>rel1_empty</code> と <code>rel2_empty</code> として評価する。 3. <strong>グループ化結合リレーションの取得または新規構築</strong>:</p>
 <ul>
 <li><code>joinrel-&gt;grouped_rel</code> が存在しない場合、<a class="wiki-source-link" href="../../source/src/backend/optimizer/util/relnode.c.html#L2690" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__relnode_c__create_rel_agg_info.html&quot;}, '*');"><code>create_rel_agg_info</code></a> を呼んで集約情報を準備する。</li>
 <li><code>agg_info</code> が取得できない場合や、集約が有用ではなくかつ両入力リレーションの空/非空の状態が一致する場合は構築をスキップしてリターンする。</li>
 <li><a class="wiki-source-link" href="../../source/src/backend/optimizer/util/relnode.c.html#L498" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__relnode_c__build_grouped_rel.html&quot;}, '*');"><code>build_grouped_rel</code></a> で新規 <code>grouped_rel</code> を構築し、ターゲットを設定する。</li>
 <li><code>rel1_empty</code> と <code>rel2_empty</code> が異なる場合、片方の grouped 入力リレーションと他方の生リレーションを結合する前提でサイズ見積もり（<code>set_joinrel_size_estimates</code>）を行い、<code>apply_agg_at</code> を更新する。</li>
 <li>異なる状態ではない場合、既存の非グループ化ジョインパスの上に部分集約を適用するものとして行数を見積もり、<code>apply_agg_at</code> に <code>joinrel-&gt;relids</code> のコピーを設定する。</li>
-<p>4. **ダミーおよび単一入力の検証**:</p>
+<p>4. <strong>ダミーおよび単一入力の検証</strong>:</p>
 <li><code>grouped_rel</code> がダミーリレーションと判定されている場合はリターンする。</li>
 <li><code>rel1_empty == rel2_empty</code> の場合は処理を終了する。</li>
-<p>5. **部分集約適用位置（<code>apply_agg_at</code>）のチェック**:</p>
+<p>5. <strong>部分集約適用位置（<code>apply_agg_at</code>）のチェック</strong>:</p>
 <li>入力側の <code>apply_agg_at</code> を取得し、既存の <code>grouped_rel-&gt;agg_info-&gt;apply_agg_at</code> と比較する。</li>
 <li>一致しないがサブセットである場合は、サイズ見積もりを再計算して <code>apply_agg_at</code> を更新する。</li>
 <li>サブセットでもない場合はリターンする。</li>
-<p>6. **パスの移譲**: 最終的に <a class="wiki-source-link" href="../../source/src/backend/optimizer/path/joinrels.c.html#L1071" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__path__joinrels_c__populate_joinrel_with_paths.html&quot;}, '*');"><code>populate_joinrel_with_paths</code></a> を呼び出し、グループ化されたジョイン関係に対して物理パスを生成・追加する。</p>
+<p>6. <strong>パスの移譲</strong>: 最終的に <a class="wiki-source-link" href="../../source/src/backend/optimizer/path/joinrels.c.html#L1071" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__path__joinrels_c__populate_joinrel_with_paths.html&quot;}, '*');"><code>populate_joinrel_with_paths</code></a> を呼び出し、グループ化されたジョイン関係に対して物理パスを生成・追加する。</p>
 </ul>
 <h2>失敗モードと境界条件</h2>
 <ul>

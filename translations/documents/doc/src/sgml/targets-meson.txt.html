@@ -1,0 +1,60 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="10"><title>doc/src/sgml/targets-meson.txt</title><link rel="stylesheet" href="../../../../../styles.css"></head><body><h1>Japanese translation</h1><p><code>doc/src/sgml/targets-meson.txt</code></p><p><a href="../../../../../source/doc/src/sgml/targets-meson.txt.html" target="source-view">View original document</a></p><p class="document-translation-progress document-translation-complete">Translation complete.</p><div class="document-translation-body"><section class="document-translation-chunk translated" data-chunk-order="0"><pre class="document-translation-body document-translation-text"># Copyright (c) 2023-2026, PostgreSQL Global Development Group
+#
+# &#x27;help&#x27;ターゲットおよびinstallation.sgml（generate-targets-meson.pl経由）で使用される、
+# 重要なmesonターゲットの説明。現時点では、パーサーは非常に単純です。
+# 両方のパーサーはコメントを無視します。helpターゲットはそれ以外をすべて出力します。
+# xmlの場合、先頭に改行がないものはすべてグループであり、
+# 残りの行は、空白で説明と区切られたターゲットです。
+
+コードターゲット:
+  all                           ドキュメント以外のすべてをビルドする
+  backend                       バックエンドおよび関連モジュールをビルドする
+  bin                           フロントエンドのバイナリをビルドする
+  contrib                       contribモジュールをビルドする
+  pl                            手続き言語をビルドする
+
+開発者向けターゲット:
+  reformat-dat-files            カタログデータファイルを標準フォーマットに書き換える
+  expand-dat-files              すべてのデータファイルを展開してデフォルト値を含める
+  update-unicode                Unicodeデータを新しいバージョンに更新する
+  headerscheck                  すべてのヘッダーが単独でコンパイルできるかチェックする
+  cpluspluscheck                すべてのヘッダーがC++としてコンパイルできるかチェックする
+
+ドキュメントターゲット:
+  html                          マルチページHTML形式でドキュメントをビルドする
+  man                           manページ形式でドキュメントをビルドする
+  docs                          マルチページHTMLおよびmanページ形式でドキュメントをビルドする
+  doc/src/sgml/postgres-A4.pdf  PDF形式（A4サイズ）でドキュメントをビルドする
+  doc/src/sgml/postgres-US.pdf  PDF形式（USレターサイズ）でドキュメントをビルドする
+  doc/src/sgml/postgres.html    シングルページHTML形式でドキュメントをビルドする
+  alldocs                       サポートされているすべての形式でドキュメントをビルドする
+
+インストールターゲット:
+  install                       ドキュメントを除くpostgresをインストールする
+  install-docs                  マルチページHTMLおよびmanページ形式のドキュメントをインストールする
+  install-html                  マルチページHTML形式のドキュメントをインストールする
+  install-man                   manページ形式のドキュメントをインストールする
+  install-quiet                 &quot;install&quot;と同様だが、インストールされたファイルを表示しない
+  install-world                 マルチページHTMLおよびmanページ形式のドキュメントを含むpostgresをインストールする
+  uninstall                     インストールされたファイルを削除する
+
+その他のターゲット:
+  clean                         すべてのビルド生成物を削除する
+  test                          有効になっているすべてのテスト（contribを含む）を実行する
+  world                         ドキュメントを含むすべてをビルドする
+  help                          重要なターゲットを一覧表示する</pre></section></div><script>
+(function() {
+  function notifyParent() {
+    if (parent === window) return;
+    parent.postMessage({type: "frame-location", frame: window.name || "", href: window.location.href}, "*");
+  }
+  document.addEventListener("click", function(event) {
+    const link = event.target.closest("a[data-panel]");
+    if (!link || parent === window) return;
+    parent.postMessage({type: "source-link", panel: link.dataset.panel}, "*");
+  });
+  window.addEventListener("load", notifyParent);
+  window.addEventListener("hashchange", notifyParent);
+})();
+</script></body></html>

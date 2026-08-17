@@ -1,5 +1,5 @@
 <!doctype html>
-<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>symbols/src__backend__optimizer__path__joinpath_c__try_partial_mergejoin_path.md</title><link rel="stylesheet" href="../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../source/src/backend/optimizer/path/joinpath.c.html#L1195" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__path__joinpath_c__try_partial_mergejoin_path.html&quot;}, '*');">try_partial_mergejoin_path</a></h1>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="10"><title>symbols/src__backend__optimizer__path__joinpath_c__try_partial_mergejoin_path.md</title><link rel="stylesheet" href="../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../source/src/backend/optimizer/path/joinpath.c.html#L1195" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__path__joinpath_c__try_partial_mergejoin_path.html&quot;}, '*');">try_partial_mergejoin_path</a></h1>
 <h2>現在のソース事実</h2>
 <ul>
 <li>種別: <code>function</code></li>
@@ -61,18 +61,18 @@
 <li>外側パス (<code>outer_path</code>) に要求される外部リレーションが存在しないこと（空であること）。</li>
 </ul>
 <h2>アルゴリズムまたは振る舞い</h2>
-<p>1. **前提条件の検証**:</p>
+<p>1. <strong>前提条件の検証</strong>:</p>
 <ul>
 <li><code>joinrel-&gt;lateral_relids</code> および外側パスの要求外部リレーション（<code>PATH_REQ_OUTER(outer_path)</code>）が空であることをアサートする。</li>
 <li>内側パスが要求する外部リレーション（<code>PATH_REQ_OUTER(inner_path)</code>）が空でない場合は、そのまま処理を中断してリターンする。</li>
-<p>2. **ソート済みキーの確認**:</p>
+<p>2. <strong>ソート済みキーの確認</strong>:</p>
 <li><code>outersortkeys</code> が存在し、外側パスのパスキーに完全に含まれている場合は、<code>outer_presorted_keys</code> を設定して <code>outersortkeys</code> を <a class="wiki-source-link" href="../../source/src/include/nodes/pg_list.h.html#L68" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/nodes/pg_list.h.html&quot;}, '*');"><code>NIL</code></a> にクリアする。</li>
 <li><code>innersortkeys</code> が存在し、内側パスのパスキーに完全に含まれている場合は、<code>innersortkeys</code> を <a class="wiki-source-link" href="../../source/src/include/nodes/pg_list.h.html#L68" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/nodes/pg_list.h.html&quot;}, '*');"><code>NIL</code></a> にクリアする。</li>
-<p>3. **コストの見積もり**:</p>
+<p>3. <strong>コストの見積もり</strong>:</p>
 <li><a class="wiki-source-link" href="../../source/src/backend/optimizer/path/costsize.c.html#L3657" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__path__costsize_c__initial_cost_mergejoin.html&quot;}, '*');"><code>initial_cost_mergejoin</code></a> を呼び出し、マージ結合の起動コストおよび総コストをワークスペースに算出する。</li>
-<p>4. **事前チェック**:</p>
+<p>4. <strong>事前チェック</strong>:</p>
 <li><a class="wiki-source-link" href="../../source/src/backend/optimizer/util/pathnode.c.html#L911" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__pathnode_c__add_partial_path_precheck.html&quot;}, '*');"><code>add_partial_path_precheck</code></a> により、算出されたコストや無効化されたノード情報をもとに部分パスの追加価値を判定する。不適格な場合は処理を中断する。</li>
-<p>5. **パスの生成と追加**:</p>
+<p>5. <strong>パスの生成と追加</strong>:</p>
 <li><a class="wiki-source-link" href="../../source/src/backend/optimizer/util/pathnode.c.html#L2452" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__pathnode_c__create_mergejoin_path.html&quot;}, '*');"><code>create_mergejoin_path</code></a> を用いてマージ結合パスを生成し、<a class="wiki-source-link" href="../../source/src/backend/optimizer/util/pathnode.c.html#L792" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__pathnode_c__add_partial_path.html&quot;}, '*');"><code>add_partial_path</code></a> を介して <code>joinrel</code> の部分パスリストへ登録する。</li>
 </ul>
 <h2>失敗モードと境界条件</h2>

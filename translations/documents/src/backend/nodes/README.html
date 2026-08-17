@@ -1,23 +1,49 @@
 <!doctype html>
-<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>src/backend/nodes/README</title><link rel="stylesheet" href="../../../../../styles.css"></head><body><h1>Japanese translation</h1><p><code>src/backend/nodes/README</code></p><p><a href="../../../../../source/src/backend/nodes/README.html" target="source-view">View original document</a></p><p class="document-translation-progress document-translation-complete">Translation complete.</p><div class="document-translation-body"><section class="document-translation-chunk translated" data-chunk-order="0"><p>src/backend/nodes/README</p>
-<p>Node Structures ===============</p>
-<p>Introduction ------------</p>
-<p>Postgresは、パースツリー、プランツリー、およびエグゼキュータ状態ツリーを構成するために「ノード」タイプを使用します。このようなツリーに現れる可能性のあるすべてのオブジェクトは、ノードタイプとして宣言される必要があります。さらに、パース/プラン/実行ノードツリーの一部ではないいくつかのオブジェクトタイプも、識別目的でNodeTagを受け取ります。これは通常、同じポインタを介して複数のオブジェクトタイプを渡したいAPIに関与しているためです。</p>
-<p>ノード構造体は、最初のフィールドがNodeTag型である、昔ながらのプレーンなC構造体です。「継承」は慣例によって実現されます。最初のフィールドは、代わりに別のノードタイプにすることもできます。</p>
-<p>ノードタイプは通常、copyObject()によるコピー、equal()による比較、outNode()によるシリアライズ、およびnodeRead()によるデシリアライズのサポートを備えています。一部のクラスのNodeでは、これらのサポート関数のすべてが必要なわけではありません。たとえば、エグゼキュータ状態ノードは現在、それらのいずれも必要としません。システムに関する限り、出力関数と読み込み関数は、カタログに格納されるパースツリーに現れる可能性のあるノードタイプと、パラレルワーカーに渡すためにシリアライズされるプランツリーノードに対してのみ必要です。しかし、デバッグに非常に便利であるため、他のいくつかのノードタイプに対しても出力関数を提供しています。現在、このようなカバレッジは生のパースツリーとほとんどのプランナデータ構造に対して存在します。ただし、生のパースツリーの出力カバレッジは不完全です。特に、ユーティリティ文はほとんどサポートされていません。</p>
-<p>Relevant Files --------------</p>
-<p>ノード構造体を操作するためのユーティリティ関数は、このディレクトリにあります。一部のサポート関数はgen_node_support.plスクリプトによって自動生成され、その他の関数は手動でメンテナンスされます。サポート関数の自動生成を制御するために、ノードタイプとノードフィールドにpg_node_attr()仕様のアノテーションを付けることができます。詳細なドキュメントについてはsrc/include/nodes/nodes.hを参照してください。</p>
-<p>FILES IN THIS DIRECTORY (src/backend/nodes/)</p>
-<p>General-purpose node manipulation functions: copyfuncs.c	- ノードツリーをコピーする (*) equalfuncs.c	- 2つのノードツリーを比較する (*) outfuncs.c	- ノードツリーをテキスト表現に変換する (*) readfuncs.c	- テキスト表現をノードツリーに戻す (*) makefuncs.c	- いくつかの一般的なノードタイプの作成関数 nodeFuncs.c	- その他のいくつかの汎用操作関数 queryjumblefuncs.c - クエリジャンブリング用のノードツリーを計算する (*)</p>
-<p>(*) - これらのファイルのほとんどの関数はgen_node_support.plによって生成され、そこで#includeされます。</p>
-<p>Specialized manipulation functions: bitmapset.c	- Bitmapsetのサポート list.c		- 汎用リストのサポート multibitmapset.c - List-of-Bitmapsetのサポート params.c	- Paramのサポート tidbitmap.c	- TIDBitmapのサポート value.c		- 値ノードのサポート</p>
-<p>FILES IN src/include/nodes/</p>
-<p>Node definitions primarily appear in: nodes.h		- ノードタグ（NodeTag）を定義する (*) primnodes.h	- プリミティブノード parsenodes.h	- パースツリーノード pathnodes.h	- パスツリーノードおよびプランナ内部構造体 plannodes.h	- プランツリーノード execnodes.h	- エグゼキュータノード memnodes.h	- メモリノード pg_list.h	- 汎用リスト</p>
-<p>(*) - gen_node_support.plによって生成されたファイルも#includeします。</p>
-<p>Steps to Add a Node -------------------</p>
-<p>ノードFooを定義したいとします。</p>
-<p>1. 適切なinclude/nodes/???.hファイルに構造体定義を追加します。 たとえばPlanノードから継承する場合は、構造体定義の最初のフィールドとしてPlanを配置します。（T_Fooタグは自動的に作成されます。） 2. copyfuncs.funcs.c、equalfuncs.funcs.c、outfuncs.funcs.c、queryjumblefuncs.funcs.c、およびreadfuncs.funcs.cで生成されたサポート関数が正しく見えるか確認します。必要に応じて属性を追加して結果を制御します。（一部のクラスのノードタイプでは、すべてのサポート関数が必要なわけではありません。関連するノードタイプと同様のノード属性を使用してください。） 3. 必要に応じてnodeFuncs.cの関数にcaseを追加します。新しいノードタイプについて認識させる必要がある場所は、他にもたくさんあるでしょう。触るべきすべての場所を見つけるための最善の方法は、1つか2つの類似した既存のノードタイプへの参照をgrepすることです。 （頻繁に作成されるノードを除き、makefuncs.cに作成関数をわざわざ書く必要はありません。） 4. debug_copy_parse_plan_trees、debug_write_read_parse_plan_trees、およびdebug_raw_expression_coverage_testを使用して新しいコードをテストし、必要なすべての場所にサポートが追加されていることを確認することを検討してください（たとえば、PG_TEST_INITDB_EXTRA_OPTS=&#x27;-c debug_...=on&#x27;を指定してテストを実行します）。</p>
-<p>新しいノードタイプを追加すると、既存のタグに関連付けられた数値が移動するため、これを行った後はツリー全体を再コンパイルする必要があります。（通常は--enable-dependが役立ちます。）ただし、数値がディスクに書き込まれることはないため、initdbは強制されません。しかし、ノードタイプの変更や削除は、通常、システムカタログに格納されているシリアライズされたノードツリーの解釈に影響を与えるため、initdbを強制するカタログバージョンの変更を伴う必要があります。（たとえばPlanノードのように、格納されたパースツリーにノードタイプが一切現れない場合は、それを変更するためにcatversionの変更は必要ありません。）</p></section></div><script>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="10"><title>src/backend/nodes/README</title><link rel="stylesheet" href="../../../../../styles.css"></head><body><h1>Japanese translation</h1><p><code>src/backend/nodes/README</code></p><p><a href="../../../../../source/src/backend/nodes/README.html" target="source-view">View original document</a></p><p class="document-translation-progress document-translation-complete">Translation complete.</p><div class="document-translation-body"><section class="document-translation-chunk translated" data-chunk-order="0"><p class="markdown-preserve-lines">src/backend/nodes/README</p>
+<h1>Node Structures</h1>
+<h2>Introduction</h2>
+<p class="markdown-preserve-lines">Postgresは、パースツリー、プランツリー、およびエグゼキュータ状態ツリーを構成するために「ノード」タイプを使用します。このようなツリーに現れる可能性のあるすべてのオブジェクトは、ノードタイプとして宣言される必要があります。さらに、パース/プラン/実行ノードツリーの一部ではないいくつかのオブジェクトタイプも、識別目的でNodeTagを受け取ります。これは通常、同じポインタを介して複数のオブジェクトタイプを渡したいAPIに関与しているためです。</p>
+<p class="markdown-preserve-lines">ノード構造体は、最初のフィールドがNodeTag型である、昔ながらのプレーンなC構造体です。「継承」は慣例によって実現されます。最初のフィールドは、代わりに別のノードタイプにすることもできます。</p>
+<p class="markdown-preserve-lines">ノードタイプは通常、copyObject()によるコピー、equal()による比較、outNode()によるシリアライズ、およびnodeRead()によるデシリアライズのサポートを備えています。一部のクラスのNodeでは、これらのサポート関数のすべてが必要なわけではありません。たとえば、エグゼキュータ状態ノードは現在、それらのいずれも必要としません。システムに関する限り、出力関数と読み込み関数は、カタログに格納されるパースツリーに現れる可能性のあるノードタイプと、パラレルワーカーに渡すためにシリアライズされるプランツリーノードに対してのみ必要です。しかし、デバッグに非常に便利であるため、他のいくつかのノードタイプに対しても出力関数を提供しています。現在、このようなカバレッジは生のパースツリーとほとんどのプランナデータ構造に対して存在します。ただし、生のパースツリーの出力カバレッジは不完全です。特に、ユーティリティ文はほとんどサポートされていません。</p>
+<h2>Relevant Files</h2>
+<p class="markdown-preserve-lines">ノード構造体を操作するためのユーティリティ関数は、このディレクトリにあります。一部のサポート関数はgen_node_support.plスクリプトによって自動生成され、その他の関数は手動でメンテナンスされます。サポート関数の自動生成を制御するために、ノードタイプとノードフィールドにpg_node_attr()仕様のアノテーションを付けることができます。詳細なドキュメントについてはsrc/include/nodes/nodes.hを参照してください。</p>
+<p class="markdown-preserve-lines">FILES IN THIS DIRECTORY (src/backend/nodes/)</p>
+<p class="markdown-preserve-lines">    General-purpose node manipulation functions:
+	copyfuncs.c	- ノードツリーをコピーする (*)
+	equalfuncs.c	- 2つのノードツリーを比較する (*)
+	outfuncs.c	- ノードツリーをテキスト表現に変換する (*)
+	readfuncs.c	- テキスト表現をノードツリーに戻す (*)
+	makefuncs.c	- いくつかの一般的なノードタイプの作成関数
+	nodeFuncs.c	- その他のいくつかの汎用操作関数
+	queryjumblefuncs.c - クエリジャンブリング用のノードツリーを計算する (*)</p>
+<p class="markdown-preserve-lines">    (*) - これらのファイルのほとんどの関数はgen_node_support.plによって生成され、そこで#includeされます。</p>
+<p class="markdown-preserve-lines">    Specialized manipulation functions:
+	bitmapset.c	- Bitmapsetのサポート
+	list.c		- 汎用リストのサポート
+	multibitmapset.c - List-of-Bitmapsetのサポート
+	params.c	- Paramのサポート
+	tidbitmap.c	- TIDBitmapのサポート
+	value.c		- 値ノードのサポート</p>
+<p class="markdown-preserve-lines">FILES IN src/include/nodes/</p>
+<p class="markdown-preserve-lines">    Node definitions primarily appear in:
+	nodes.h		- ノードタグ（NodeTag）を定義する (*)
+	primnodes.h	- プリミティブノード
+	parsenodes.h	- パースツリーノード
+	pathnodes.h	- パスツリーノードおよびプランナ内部構造体
+	plannodes.h	- プランツリーノード
+	execnodes.h	- エグゼキュータノード
+	memnodes.h	- メモリノード
+	pg_list.h	- 汎用リスト</p>
+<p class="markdown-preserve-lines">    (*) - gen_node_support.plによって生成されたファイルも#includeします。</p>
+<h2>Steps to Add a Node</h2>
+<p class="markdown-preserve-lines">ノードFooを定義したいとします。</p>
+<p class="markdown-preserve-lines">1. 適切なinclude/nodes/???.hファイルに構造体定義を追加します。
+   たとえばPlanノードから継承する場合は、構造体定義の最初のフィールドとしてPlanを配置します。（T_Fooタグは自動的に作成されます。）
+2. copyfuncs.funcs.c、equalfuncs.funcs.c、outfuncs.funcs.c、queryjumblefuncs.funcs.c、およびreadfuncs.funcs.cで生成されたサポート関数が正しく見えるか確認します。必要に応じて属性を追加して結果を制御します。（一部のクラスのノードタイプでは、すべてのサポート関数が必要なわけではありません。関連するノードタイプと同様のノード属性を使用してください。）
+3. 必要に応じてnodeFuncs.cの関数にcaseを追加します。新しいノードタイプについて認識させる必要がある場所は、他にもたくさんあるでしょう。触るべきすべての場所を見つけるための最善の方法は、1つか2つの類似した既存のノードタイプへの参照をgrepすることです。
+   （頻繁に作成されるノードを除き、makefuncs.cに作成関数をわざわざ書く必要はありません。）
+4. debug_copy_parse_plan_trees、debug_write_read_parse_plan_trees、およびdebug_raw_expression_coverage_testを使用して新しいコードをテストし、必要なすべての場所にサポートが追加されていることを確認することを検討してください（たとえば、PG_TEST_INITDB_EXTRA_OPTS=&#x27;-c debug_...=on&#x27;を指定してテストを実行します）。</p>
+<p class="markdown-preserve-lines">新しいノードタイプを追加すると、既存のタグに関連付けられた数値が移動するため、これを行った後はツリー全体を再コンパイルする必要があります。（通常は--enable-dependが役立ちます。）ただし、数値がディスクに書き込まれることはないため、initdbは強制されません。しかし、ノードタイプの変更や削除は、通常、システムカタログに格納されているシリアライズされたノードツリーの解釈に影響を与えるため、initdbを強制するカタログバージョンの変更を伴う必要があります。（たとえばPlanノードのように、格納されたパースツリーにノードタイプが一切現れない場合は、それを変更するためにcatversionの変更は必要ありません。）</p></section></div><script>
 (function() {
   function notifyParent() {
     if (parent === window) return;

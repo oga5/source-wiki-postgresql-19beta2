@@ -1,39 +1,29 @@
 <!doctype html>
-<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>symbols/src__backend__optimizer__plan__createplan_c__QualItem.md</title><link rel="stylesheet" href="../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../source/src/backend/optimizer/plan/createplan.c.html#L5268" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__plan__createplan_c__QualItem.html&quot;}, '*');">QualItem</a></h1>
-<h2>定義</h2>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="10"><title>symbols/src__backend__optimizer__plan__createplan_c__QualItem.md</title><link rel="stylesheet" href="../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../source/src/backend/optimizer/plan/createplan.c.html#L5268" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__plan__createplan_c__QualItem.html&quot;}, '*');">QualItem</a></h1>
+<h2>現在のソース事実</h2>
 <ul>
 <li>種別: <code>struct</code></li>
 <li>定義箇所: <code>src/backend/optimizer/plan/createplan.c:5268</code></li>
-<li>所属モジュール: <a class="wiki-entity-link" href="../modules/src__backend__optimizer__plan.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/modules/src__backend__optimizer__plan.html&quot;, &quot;source&quot;: &quot;source/src/backend/optimizer/plan/analyzejoins.c.html&quot;}, '*');"><code>module:src/backend/optimizer/plan</code></a></li>
-</ul>
-<h2>目的</h2>
-<p>静的シンボル索引から生成された初期シンボルページです。</p>
-<h2>シグネチャまたは形状</h2>
-<ul>
 <li>シグネチャ: <code>typedef struct</code></li>
-</ul>
-<h2>入力と出力</h2>
-<p>まだ解析していません。</p>
-<h2>前提条件と不変条件</h2>
-<p>まだ解析していません。</p>
-<h2>アルゴリズムまたは振る舞い</h2>
-<p>まだ解析していません。</p>
-<h2>呼び出し元と呼び出し先</h2>
-<ul>
 <li>呼び出し元: なし</li>
 <li>呼び出し先: なし</li>
 <li>呼び出し元サイト: なし</li>
 <li>呼び出しサイト: なし</li>
+<li>関連型: <a class="wiki-source-link" href="../../source/src/include/nodes/nodes.h.html#L259" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__nodes__nodes_h__Cost.html&quot;}, '*');"><code>Cost</code></a>, <code>Index</code>, <code>Node</code></li>
 </ul>
-<h2>関連データ構造</h2>
-<p><a class="wiki-source-link" href="../../source/src/include/nodes/nodes.h.html#L259" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__nodes__nodes_h__Cost.html&quot;}, '*');"><code>Cost</code></a>, <code>Index</code>, <code>Node</code></p>
-<h2>ソース抜粋</h2>
+<h3>ソース抜粋</h3>
 <p>~~~c typedef struct { Node	   *<a class="wiki-source-link" href="../../source/src/backend/optimizer/path/clausesel.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__path__clausesel_c__clause.html&quot;}, '*');">clause</a>; <a class="wiki-source-link" href="../../source/src/include/nodes/nodes.h.html#L259" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__nodes__nodes_h__Cost.html&quot;}, '*');">Cost</a>		cost; Index		security_level; } <a class="wiki-source-link" href="../../source/src/backend/optimizer/plan/createplan.c.html#L5268" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__plan__createplan_c__QualItem.html&quot;}, '*');">QualItem</a>; ~~~</p>
-<h2>失敗モードと境界条件</h2>
-<p>まだ解析していません。</p>
-<h2>保守担当者向けメモ</h2>
+<h2>目的</h2>
+<p>修飾句（qualifier <a class="wiki-source-link" href="../../source/src/backend/optimizer/path/clausesel.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__path__clausesel_c__clause.html&quot;}, '*');">clause</a>）の評価コストやセキュリティレベルを保持し、<a class="wiki-source-link" href="../../source/src/backend/optimizer/plan/createplan.c.html#L5265" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__plan__createplan_c__order_qual_clauses.html&quot;}, '*');"><code>order_qual_clauses</code></a> 内で並び替えや管理を行うための内部構造体です。</p>
+<h2>フィールドと表現</h2>
 <ul>
-<li>後続フェーズで、ソース本文の文脈と caller/callee 情報を使ってこのページを強化する。</li>
+<li><code>Node *clause</code>: 評価対象となる修飾句ノードへのポインタ。</li>
+<li><code>Cost cost</code>: 当該修飾句の評価コスト。</li>
+<li><code>Index security_level</code>: セキュリティ制限やポリシーに関連するセキュリティレベル。</li>
+</ul>
+<h2>参照・更新する処理</h2>
+<ul>
+<li><a class="wiki-source-link" href="../../source/src/backend/optimizer/plan/createplan.c.html#L5265" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__plan__createplan_c__order_qual_clauses.html&quot;}, '*');"><code>order_qual_clauses</code></a> 関数などのコンテキスト内で配列として動的に割り当てられ、各修飾句の順序制御や評価順の最適化のために要素の参照および操作が行われます。</li>
 </ul><script>
 (function() {
   function notifyParent() {

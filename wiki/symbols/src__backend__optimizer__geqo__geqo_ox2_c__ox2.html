@@ -1,5 +1,5 @@
 <!doctype html>
-<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>symbols/src__backend__optimizer__geqo__geqo_ox2_c__ox2.md</title><link rel="stylesheet" href="../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../source/src/backend/optimizer/geqo/geqo_ox2.c.html#L50" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__geqo__geqo_ox2_c__ox2.html&quot;}, '*');">ox2</a></h1>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="10"><title>symbols/src__backend__optimizer__geqo__geqo_ox2_c__ox2.md</title><link rel="stylesheet" href="../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../source/src/backend/optimizer/geqo/geqo_ox2.c.html#L50" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__geqo__geqo_ox2_c__ox2.html&quot;}, '*');">ox2</a></h1>
 <h2>現在のソース事実</h2>
 <ul>
 <li>種別: <code>function</code></li>
@@ -40,21 +40,21 @@
 <li><a class="wiki-source-link" href="../../source/src/backend/optimizer/geqo/geqo_ox1.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__geqo__geqo_ox1_c__city_table.html&quot;}, '*');"><code>city_table</code></a> は、少なくとも <code>num_gene + 1</code> の要素を持つ十分なサイズが確保されている必要があります。</li>
 </ul>
 <h2>アルゴリズムまたは振る舞い</h2>
-<p>1. **都市テーブルの初期化**</p>
+<p>1. <strong>都市テーブルの初期化</strong></p>
 <ul>
 <li><code>1</code> から <code>num_gene</code> までの範囲で <code>city_table[k].used</code> を <code>0</code> にクリアし、<code>city_table[k - 1].select_list</code> を <code>-1</code> に初期化します。</li>
 </ul>
-<p>2. **第1親からの遺伝子位置選択**</p>
+<p>2. <strong>第1親からの遺伝子位置選択</strong></p>
 <ul>
 <li><code>geqo_randint(root, 2 * num_gene / 3, num_gene / 3)</code> を呼び出して、<code>tour1</code> から継承する位置の数 <code>num_positions</code> を決定します。</li>
 <li><code>num_positions</code> 回ループし、<code>geqo_randint(root, num_gene - 1, 0)</code> でランダムな位置 <code>pos</code> を選択し、<code>tour1[pos]</code> の値を <code>city_table[pos].select_list</code> に設定するとともに、対応する <code>city_table[(int) tour1[pos]].used</code> を <code>1</code> にマークします。</li>
 </ul>
-<p>3. **選択リストの隣接位置への統合**</p>
+<p>3. <strong>選択リストの隣接位置への統合</strong></p>
 <ul>
 <li><a class="wiki-source-link" href="../../source/src/include/lib/ilist.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__lib__ilist_h__count.html&quot;}, '*');"><code>count</code></a> と <code>k</code> を <code>0</code> に初期化し、<code>count &lt; num_positions</code> の間ループします。</li>
 <li><code>city_table[k].select_list</code> が <code>-1</code> の場合、後ろの有効なエントリを探して値詰めを行い、リストを連続した位置に統合します。</li>
 </ul>
-<p>4. **子個体の生成**</p>
+<p>4. <strong>子個体の生成</strong></p>
 <ul>
 <li><code>select = 0</code> から始め、<code>tour2</code> を先頭から走査します。</li>
 <li><code>city_table[(int) tour2[k]].used</code> が真である場合は、<code>city_table[select].select_list</code> の値を <code>offspring[k]</code> に割り当てて <a class="wiki-source-link" href="../../source/src/include/port/win32_port.h.html#L500" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/port/win32_port.h.html&quot;}, '*');"><code>select</code></a> をインクリメントします。</li>

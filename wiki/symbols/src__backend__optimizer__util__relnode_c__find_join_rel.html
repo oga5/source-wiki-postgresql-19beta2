@@ -1,5 +1,5 @@
 <!doctype html>
-<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>symbols/src__backend__optimizer__util__relnode_c__find_join_rel.md</title><link rel="stylesheet" href="../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../source/src/backend/optimizer/util/relnode.c.html#L656" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__relnode_c__find_join_rel.html&quot;}, '*');">find_join_rel</a></h1>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="10"><title>symbols/src__backend__optimizer__util__relnode_c__find_join_rel.md</title><link rel="stylesheet" href="../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../source/src/backend/optimizer/util/relnode.c.html#L656" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__relnode_c__find_join_rel.html&quot;}, '*');">find_join_rel</a></h1>
 <h2>現在のソース事実</h2>
 <ul>
 <li>種別: <code>function</code></li>
@@ -48,11 +48,11 @@
 <li><code>root-&gt;join_rel_hash</code> が未構築であり、かつ <code>root-&gt;join_rel_list</code> の要素数が 32 を超えた場合、検索処理の前にハッシュテーブルが自動的に構築されます。</li>
 </ul>
 <h2>アルゴリズムまたは振る舞い</h2>
-<p>1. **ハッシュテーブルの遅延構築**: <code>root-&gt;join_rel_hash</code> が存在せず、かつ <code>root-&gt;join_rel_list</code> のリスト長が 32 を超えているかを判定します。条件を満たす場合、<code>build_join_rel_hash(root)</code> を呼び出してハッシュテーブルへ切り替えます。 2. **検索方式の分岐**:</p>
+<p>1. <strong>ハッシュテーブルの遅延構築</strong>: <code>root-&gt;join_rel_hash</code> が存在せず、かつ <code>root-&gt;join_rel_list</code> のリスト長が 32 を超えているかを判定します。条件を満たす場合、<code>build_join_rel_hash(root)</code> を呼び出してハッシュテーブルへ切り替えます。 2. <strong>検索方式の分岐</strong>:</p>
 <ul>
 <li><code>root-&gt;join_rel_hash</code> が有効な場合、<code>hashkey</code> 変数に <a class="wiki-source-link" href="../../source/src/backend/optimizer/util/relnode.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__relnode_c__relids.html&quot;}, '*');"><code>relids</code></a> をコピーした上で <code>hash_search</code> を用いてハッシュエントリ（<a class="wiki-source-link" href="../../source/src/backend/optimizer/util/relnode.c.html#L44" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__relnode_c__JoinHashEntry.html&quot;}, '*');"><code>JoinHashEntry</code></a>）を検索します。エントリが存在すればその <a class="wiki-source-link" href="../../source/src/backend/optimizer/util/relnode.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__relnode_c__join_rel.html&quot;}, '*');"><code>join_rel</code></a> を返します。</li>
 <li><code>root-&gt;join_rel_hash</code> が <code>NULL</code> の場合、<code>root-&gt;join_rel_list</code> の各要素を線形走査し、<code>bms_equal(rel-&gt;relids, relids)</code> が真となる <code>RelOptInfo</code> を探索します。</li>
-<p>3. **終端**: 一致するリレーションが見つかった場合はそれを返し、最後まで見つからない場合は <code>NULL</code> を返します。</p>
+<p>3. <strong>終端</strong>: 一致するリレーションが見つかった場合はそれを返し、最後まで見つからない場合は <code>NULL</code> を返します。</p>
 </ul>
 <h2>失敗モードと境界条件</h2>
 <ul>

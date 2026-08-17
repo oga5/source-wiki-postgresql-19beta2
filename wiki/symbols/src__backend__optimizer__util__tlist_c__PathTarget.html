@@ -1,5 +1,5 @@
 <!doctype html>
-<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>symbols/src__backend__optimizer__util__tlist_c__PathTarget.md</title><link rel="stylesheet" href="../../styles.css"></head><body><h1>PathTarget</h1>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="10"><title>symbols/src__backend__optimizer__util__tlist_c__PathTarget.md</title><link rel="stylesheet" href="../../styles.css"></head><body><h1>PathTarget</h1>
 <h2>現在のソース事実</h2>
 <ul>
 <li>種別: <code>function</code></li>
@@ -43,9 +43,9 @@
 <h2>アルゴリズムまたは振る舞い</h2>
 <p><code>PathTarget</code> 自体はデータ構造であり、<a class="wiki-source-link" href="../../source/src/backend/optimizer/util/tlist.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/backend/optimizer/util/tlist.c.html&quot;}, '*');"><code>tlist.c</code></a> に実装された各種ユーティリティ関数を通じて以下の振る舞いや操作が提供される：</p>
 <ul>
-<li>**ライフサイクルと複製**: ターゲットの複製時には、式リストの浅いコピーを作成しつつ、ソートグループ参照配列用のメモリを新規に確保して複製を行う。</li>
-<li>**SRF（セット返却関数）の多段階分割**: ターゲット内に SRF が含まれる場合、そのネストの深さに応じて、安全に実行可能な複数階層の <code>PathTarget</code> リストへと分解される。</li>
-<li>**コストと幅の設定**: ターゲットリスト全体の評価コストおよび出力幅の見積もり値が計算され、構造体内に保持される。</li>
+<li><strong>ライフサイクルと複製</strong>: ターゲットの複製時には、式リストの浅いコピーを作成しつつ、ソートグループ参照配列用のメモリを新規に確保して複製を行う。</li>
+<li><strong>SRF（セット返却関数）の多段階分割</strong>: ターゲット内に SRF が含まれる場合、そのネストの深さに応じて、安全に実行可能な複数階層の <code>PathTarget</code> リストへと分解される。</li>
+<li><strong>コストと幅の設定</strong>: ターゲットリスト全体の評価コストおよび出力幅の見積もり値が計算され、構造体内に保持される。</li>
 </ul>
 <h2>関連データ構造</h2>
 <ul>

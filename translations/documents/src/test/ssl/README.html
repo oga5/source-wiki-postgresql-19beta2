@@ -1,116 +1,60 @@
 <!doctype html>
-<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>src/test/ssl/README</title><link rel="stylesheet" href="../../../../../styles.css"></head><body><h1>Japanese translation</h1><p><code>src/test/ssl/README</code></p><p><a href="../../../../../source/src/test/ssl/README.html" target="source-view">View original document</a></p><p class="document-translation-progress document-translation-incomplete">Translation in progress: 0/1 chunks complete. Pending chunks show their original text below.</p><div class="document-translation-body"><section class="document-translation-chunk pending" data-chunk-order="0"><h2>Chunk 1: translation pending</h2><p>This chunk has not been translated yet. Original text:</p><pre class="document-translation-text">src/test/ssl/README
-
-SSL regression tests
-====================
-
-This directory contains a test suite for SSL support. It tests both
-client-side functionality, i.e. verifying server certificates, and
-server-side functionality, i.e. certificate authorization.
-
-CAUTION: The test server run by this test is configured to listen for
-TCP connections on localhost. Any user on the same host is able to
-log in to the test server while the tests are running. Do not run this
-suite on a multi-user system where you don&#x27;t trust all local users!
-
-Running the tests
-=================
-
-NOTE: You must have given the --enable-tap-tests argument to configure.
-Also, to use &quot;make installcheck&quot;, you must have built and installed
-contrib/sslinfo in addition to the core code.
-
-Run
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="10"><title>src/test/ssl/README</title><link rel="stylesheet" href="../../../../../styles.css"></head><body><h1>Japanese translation</h1><p><code>src/test/ssl/README</code></p><p><a href="../../../../../source/src/test/ssl/README.html" target="source-view">View original document</a></p><p class="document-translation-progress document-translation-complete">Translation complete.</p><div class="document-translation-body"><section class="document-translation-chunk translated" data-chunk-order="0"><p class="markdown-preserve-lines">src/test/ssl/README</p>
+<h1>SSL回帰テスト</h1>
+<p class="markdown-preserve-lines">このディレクトリには、SSLサポート用のテストスイートが含まれています。サーバー証明書の検証などのクライアント側の機能と、証明書による認可などのサーバー側の機能の両方をテストします。</p>
+<p class="markdown-preserve-lines">注意：このテストで実行されるテストサーバーは、localhost上のTCP接続を監視するように構成されています。テストの実行中、同じホスト上の任意のユーザーがテストサーバーにログインできます。すべてのローカルユーザーを信頼できないマルチユーザーシステムでは、このスイートを実行しないでください！</p>
+<h1>テストの実行</h1>
+<p class="markdown-preserve-lines">注意：configureに--enable-tap-tests引数を指定している必要があります。また、&quot;make installcheck&quot;を使用するには、コアコードに加えてcontrib/sslinfoをビルドしてインストールしておく必要があります。</p>
+<p class="markdown-preserve-lines">以下を実行します。
     make check PG_TEST_EXTRA=ssl
-or
+または
     make installcheck PG_TEST_EXTRA=ssl
-You can use &quot;make installcheck&quot; if you previously did &quot;make install&quot;.
-In that case, the code in the installation tree is tested.  With
-&quot;make check&quot;, a temporary installation tree is built from the current
-sources and then tested.
-
-Either way, this test initializes, starts, and stops a test Postgres
-cluster that is accessible to other local users!
-
-See src/test/perl/README for more info about running these tests.
-
-Certificates
-============
-
-The test suite needs a set of public/private key pairs and certificates to
-run:
-
-root_ca
-	root CA, use to sign the server and client CA certificates.
-
-server_ca
-	CA used to sign server certificates.
-
-client_ca
-	CA used to sign client certificates.
-
-server-cn-only
+以前に&quot;make install&quot;を実行している場合は、&quot;make installcheck&quot;を使用できます。その場合、インストールツリー内のコードがテストされます。&quot;make check&quot;を使用すると、現在のソースから一時的なインストールツリーがビルドされ、それがテストされます。</p>
+<p class="markdown-preserve-lines">どちらの方法でも、このテストは他のローカルユーザーがアクセス可能なテスト用Postgresクラスターを初期化、起動、および停止します！</p>
+<p class="markdown-preserve-lines">これらのテストの実行に関する詳細については、src/test/perl/READMEを参照してください。</p>
+<h1>証明書</h1>
+<p class="markdown-preserve-lines">テストスイートを実行するには、一連の公開鍵/秘密鍵のペアと証明書が必要です。</p>
+<p class="markdown-preserve-lines">root_ca
+	ルートCA。サーバーおよびクライアントのCA証明書の署名に使用されます。</p>
+<p class="markdown-preserve-lines">server_ca
+	サーバー証明書の署名に使用されるCA。</p>
+<p class="markdown-preserve-lines">client_ca
+	クライアント証明書の署名に使用されるCA。</p>
+<p class="markdown-preserve-lines">server-cn-only
 server-cn-and-alt-names
 server-single-alt-name
 server-multiple-alt-names
 server-no-names
-	server certificates, with small variations in the hostnames present
-        in the certificate. Signed by server_ca.
-
-server-password
-	same as server-cn-only, but password-protected.
-
-client
-	a client certificate, for user &quot;ssltestuser&quot;. Signed by client_ca.
-
-client-revoked
-	like &quot;client&quot;, but marked as revoked in the client CA&#x27;s CRL.
-
-In addition, there are a few files that combine various certificates together
-in the same file:
-
-both-cas-1
-	Contains root_ca.crt, client_ca.crt and server_ca.crt, in that order.
-
-both-cas-2
-	Contains root_ca.crt, server_ca.crt and client_ca.crt, in that order.
-
-root+server_ca
-	Contains root_crt and server_ca.crt. For use as client&#x27;s &quot;sslrootcert&quot;
-	option.
-
-root+client_ca
-	Contains root_crt and client_ca.crt. For use as server&#x27;s &quot;ssl_ca_file&quot;.
-
-client+client_ca
-	Contains client.crt and client_ca.crt in that order. For use as client&#x27;s
-	certificate chain.
-
-There are also CRLs for each of the CAs: root.crl, server.crl and client.crl.
-
-For convenience, all of these keypairs and certificates are included in the
-ssl/ subdirectory. The Makefile also contains a rule, &quot;make sslfiles&quot;, to
-recreate them if you need to make changes. &quot;make sslfiles-clean&quot; is required
-in order to recreate the full set of keypairs and certificates. To rebuild
-separate files, touch (or remove) the files in question and run &quot;make sslfiles&quot;.
-This step requires at least OpenSSL 1.1.1.
-
-Note
-====
-
-These certificates are also used in other tests, e.g. the LDAP tests.
-
-TODO
-====
-
-* Allow the client-side of the tests to be run on different host easily.
-  Currently, you have to manually set up the certificates for the right
-  hostname, and modify the test file to skip setting up the server. And you
-  have to modify the server to accept connections from the client host.
-
-* Test having multiple server certificates, so that the private key chooses
-  the certificate to present to clients. (And the same in the client-side.)
-</pre></section></div><script>
+	サーバー証明書。証明書に含まれるホスト名にわずかなバリエーションがあります。server_caによって署名されています。</p>
+<p class="markdown-preserve-lines">server-password
+	server-cn-onlyと同じですが、パスワードで保護されています。</p>
+<p class="markdown-preserve-lines">client
+	ユーザー&quot;ssltestuser&quot;用のクライアント証明書。client_caによって署名されています。</p>
+<p class="markdown-preserve-lines">client-revoked
+	&quot;client&quot;と同様ですが、クライアントCAのCRLで失効としてマークされています。</p>
+<p class="markdown-preserve-lines">さらに、さまざまな証明書を同じファイルに結合したファイルがいくつかあります。</p>
+<p class="markdown-preserve-lines">both-cas-1
+	root_ca.crt、client_ca.crt、server_ca.crtの順で含まれています。</p>
+<p class="markdown-preserve-lines">both-cas-2
+	root_ca.crt、server_ca.crt、client_ca.crtの順で含まれています。</p>
+<p class="markdown-preserve-lines">root+server_ca
+	root_crtとserver_ca.crtが含まれています。クライアントの&quot;sslrootcert&quot;オプションとして使用します。</p>
+<p class="markdown-preserve-lines">root+client_ca
+	root_crtとclient_ca.crtが含まれています。サーバーの&quot;ssl_ca_file&quot;として使用します。</p>
+<p class="markdown-preserve-lines">client+client_ca
+	client.crt、client_ca.crtの順で含まれています。クライアントの証明書チェーンとして使用します。</p>
+<p class="markdown-preserve-lines">各CAのCRL（root.crl、server.crl、client.crl）もあります。</p>
+<p class="markdown-preserve-lines">便宜上、これらのキーペアと証明書はすべてssl/サブディレクトリに含まれています。また、Makefileには、変更を加える必要がある場合にこれらを再作成するためのルール&quot;make sslfiles&quot;が含まれています。キーペアと証明書の完全なセットを再作成するには、&quot;make sslfiles-clean&quot;が必要です。個別のファイルを再構築するには、該当するファイルをtouch（または削除）して&quot;make sslfiles&quot;を実行します。この手順には、少なくともOpenSSL 1.1.1が必要です。</p>
+<h1>注意</h1>
+<p class="markdown-preserve-lines">これらの証明書は、LDAPテストなど、他のテストでも使用されます。</p>
+<h1>TODO</h1>
+<ul>
+<li>テストのクライアント側を別のホストで簡単に実行できるようにする。</li>
+<p class="markdown-preserve-lines">  現在は、適切なホスト名用の証明書を手動でセットアップし、サーバーのセットアップをスキップするようにテストファイルを修正する必要があります。また、クライアントホストからの接続を受け入れるようにサーバーを修正する必要があります。</p>
+</ul>
+<ul>
+<li>複数のサーバー証明書を持つテストを行い、秘密鍵がクライアントに提示する証明書を選択するようにする。（クライアント側でも同様。）</li>
+</ul></section></div><script>
 (function() {
   function notifyParent() {
     if (parent === window) return;

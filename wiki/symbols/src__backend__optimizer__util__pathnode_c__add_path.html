@@ -1,5 +1,5 @@
 <!doctype html>
-<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>symbols/src__backend__optimizer__util__pathnode_c__add_path.md</title><link rel="stylesheet" href="../../styles.css"></head><body><h1>add_path</h1>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="10"><title>symbols/src__backend__optimizer__util__pathnode_c__add_path.md</title><link rel="stylesheet" href="../../styles.css"></head><body><h1>add_path</h1>
 <h2>現在のソース事実</h2>
 <ul>
 <li>種別: <code>function</code></li>
@@ -65,22 +65,22 @@
 <li>パラメータ化されたパスは、パスキーを持たないものとして扱われる。</li>
 </ul>
 <h2>アルゴリズムまたは振る舞い</h2>
-<p>1. **初期化と割り込み確認**:</p>
+<p>1. <strong>初期化と割り込み確認</strong>:</p>
 <ul>
 <li>処理の開始時に <code>CHECK_FOR_INTERRUPTS()</code> を呼び出してクエリのキャンセル要求をチェックする。</li>
 <li><code>new_path</code> がパラメータを持つ場合は <a class="wiki-source-link" href="../../source/src/include/nodes/pathnodes.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__nodes__pathnodes_h__pathkeys.html&quot;}, '*');"><code>pathkeys</code></a> を <a class="wiki-source-link" href="../../source/src/include/nodes/pg_list.h.html#L68" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/nodes/pg_list.h.html&quot;}, '*');"><code>NIL</code></a> として扱う変数 <code>new_path_pathkeys</code> を用意する。</li>
-<p>2. **既存パスとの走査とドミネーション判定**:</p>
+<p>2. <strong>既存パスとの走査とドミネーション判定</strong>:</p>
 <li><code>parent_rel-&gt;pathlist</code> 内の既存パス (<code>old_path</code>) を順次ループで走査する。</li>
 <li><a class="wiki-source-link" href="../../source/src/backend/optimizer/util/pathnode.c.html#L180" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__pathnode_c__compare_path_costs_fuzzily.html&quot;}, '*');"><code>compare_path_costs_fuzzily</code></a> を用いて、標準の曖昧さ係数 (<a class="wiki-source-link" href="../../source/src/backend/optimizer/util/pathnode.c.html#L47" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/backend/optimizer/util/pathnode.c.html&quot;}, '*');"><code>STD_FUZZ_FACTOR</code></a>) でコストを比較する (<code>costcmp</code>)。</li>
 <li>コスト結果が異なる場合 (<a class="wiki-source-link" href="../../source/src/backend/optimizer/util/pathnode.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__pathnode_c__COSTS_DIFFERENT.html&quot;}, '*');"><code>COSTS_DIFFERENT</code></a>) を除き、<a class="wiki-source-link" href="../../source/src/backend/optimizer/path/pathkeys.c.html#L303" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__path__pathkeys_c__compare_pathkeys.html&quot;}, '*');"><code>compare_pathkeys</code></a> でパスキーを比較する (<code>keyscmp</code>)。</li>
 <li>コスト比較、パスキー比較、要求外部リレーション集合の比較 (<a class="wiki-source-link" href="../../source/src/backend/nodes/bitmapset.c.html#L444" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__nodes__bitmapset_c__bms_subset_compare.html&quot;}, '*');"><code>bms_subset_compare</code></a>)、タプル数 (<code>rows</code>)、および並列安全性 (<code>parallel_safe</code>) の優劣を組み合わせて、新規パスが既存パスを優越するか (<code>remove_old = true</code>)、既存パスが新規パスを優越するか (<code>accept_new = false</code>) を判定する。</li>
 <li>コストとパスキーと外部リレーションがすべて同等の場合は、並列安全性、タプル数、および非常に小さな許容値 (<code>1.0000000001</code>) によるファジィコスト比較の順で優先度を判定し、最終的に同点であれば既存パスを維持する。</li>
-<p>3. **既存パスの削除**:</p>
+<p>3. <strong>既存パスの削除</strong>:</p>
 <li>判定の結果 <code>remove_old</code> が真である場合、該当する既存パスを <a class="wiki-source-link" href="../../source/src/backend/optimizer/util/pathnode.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__pathnode_c__pathlist.html&quot;}, '*');"><code>pathlist</code></a> から削除し、それが <code>IndexPath</code> でない場合は <code>pfree(old_path)</code> でメモリを解放する。</li>
-<p>4. **挿入位置の決定**:</p>
+<p>4. <strong>挿入位置の決定</strong>:</p>
 <li>既存パスが新規パスを優越せず、削除対象にもならない場合、無効ノード数 (<a class="wiki-source-link" href="../../source/src/backend/optimizer/util/pathnode.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__pathnode_c__disabled_nodes.html&quot;}, '*');"><code>disabled_nodes</code></a>) または総コスト (<a class="wiki-source-link" href="../../source/src/backend/optimizer/util/pathnode.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__pathnode_c__total_cost.html&quot;}, '*');"><code>total_cost</code></a>) に基づいて、新規パスの挿入位置 (<code>insert_at</code>) を更新する。</li>
 <li>既存パスが <code>new_path</code> を完全に支配している (<code>accept_new == false</code>) と判定された場合は、ループを打ち切る。</li>
-<p>5. **新規パスの登録または拒否・解放**:</p>
+<p>5. <strong>新規パスの登録または拒否・解放</strong>:</p>
 <li>ループ終了後 <code>accept_new</code> が真のままであれば、決定された位置に <code>new_path</code> を <a class="wiki-source-link" href="../../source/src/backend/nodes/list.c.html#L438" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__nodes__list_c__list_insert_nth.html&quot;}, '*');"><code>list_insert_nth</code></a> で挿入する。</li>
 <li><code>accept_new</code> が偽の場合は、新規パスの追加を拒否し、<code>IndexPath</code> でない場合に限り <code>pfree(new_path)</code> でメモリを解放する。</li>
 </ul>

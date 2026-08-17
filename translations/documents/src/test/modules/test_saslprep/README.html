@@ -1,0 +1,26 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="10"><title>src/test/modules/test_saslprep/README</title><link rel="stylesheet" href="../../../../../../styles.css"></head><body><h1>Japanese translation</h1><p><code>src/test/modules/test_saslprep/README</code></p><p><a href="../../../../../../source/src/test/modules/test_saslprep/README.html" target="source-view">View original document</a></p><p class="document-translation-progress document-translation-complete">Translation complete.</p><div class="document-translation-body"><section class="document-translation-chunk translated" data-chunk-order="0"><p class="markdown-preserve-lines">src/test/modules/test_saslprep</p>
+<h1>SASLprepのテスト</h1>
+<p class="markdown-preserve-lines">このリポジトリには、PostgreSQL内部のSASLprep実装に負荷をかけるためのテストスイートが含まれています。</p>
+<p class="markdown-preserve-lines">これは、pg_saslprep()のラッパーとして機能し、単一のバイトおよびそれらの範囲に対するSASLprep操作の妥当性を検証できる一連の関数を提供します。</p>
+<h1>テストの実行</h1>
+<p class="markdown-preserve-lines">注意: テストの一部は--enable-tap-testsを必要とし、TAPテストスイートを実行するにはPG_TEST_EXTRA=saslprepを設定する必要があります。</p>
+<p class="markdown-preserve-lines">以下を実行します。
+    make check PG_TEST_EXTRA=saslprep
+または
+    make installcheck PG_TEST_EXTRA=saslprep</p>
+<p class="markdown-preserve-lines">SQLテストスイートは、PG_TEST_EXTRA=saslprepの設定有無にかかわらず実行できます。</p></section></div><script>
+(function() {
+  function notifyParent() {
+    if (parent === window) return;
+    parent.postMessage({type: "frame-location", frame: window.name || "", href: window.location.href}, "*");
+  }
+  document.addEventListener("click", function(event) {
+    const link = event.target.closest("a[data-panel]");
+    if (!link || parent === window) return;
+    parent.postMessage({type: "source-link", panel: link.dataset.panel}, "*");
+  });
+  window.addEventListener("load", notifyParent);
+  window.addEventListener("hashchange", notifyParent);
+})();
+</script></body></html>

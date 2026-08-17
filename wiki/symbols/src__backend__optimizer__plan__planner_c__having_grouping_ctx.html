@@ -1,39 +1,24 @@
 <!doctype html>
-<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>symbols/src__backend__optimizer__plan__planner_c__having_grouping_ctx.md</title><link rel="stylesheet" href="../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../source/src/backend/optimizer/plan/planner.c.html#L141" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__plan__planner_c__having_grouping_ctx.html&quot;}, '*');">having_grouping_ctx</a></h1>
-<h2>定義</h2>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="10"><title>symbols/src__backend__optimizer__plan__planner_c__having_grouping_ctx.md</title><link rel="stylesheet" href="../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../source/src/backend/optimizer/plan/planner.c.html#L141" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__plan__planner_c__having_grouping_ctx.html&quot;}, '*');">having_grouping_ctx</a></h1>
+<h2>現在のソース事実</h2>
 <ul>
 <li>種別: <code>struct</code></li>
 <li>定義箇所: <code>src/backend/optimizer/plan/planner.c:141</code></li>
-<li>所属モジュール: <a class="wiki-entity-link" href="../modules/src__backend__optimizer__plan.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/modules/src__backend__optimizer__plan.html&quot;, &quot;source&quot;: &quot;source/src/backend/optimizer/plan/analyzejoins.c.html&quot;}, '*');"><code>module:src/backend/optimizer/plan</code></a></li>
-</ul>
-<h2>目的</h2>
-<p>静的シンボル索引から生成された初期シンボルページです。</p>
-<h2>シグネチャまたは形状</h2>
-<ul>
 <li>シグネチャ: <code>typedef struct</code></li>
-</ul>
-<h2>入力と出力</h2>
-<p>まだ解析していません。</p>
-<h2>前提条件と不変条件</h2>
-<p>まだ解析していません。</p>
-<h2>アルゴリズムまたは振る舞い</h2>
-<p>まだ解析していません。</p>
-<h2>呼び出し元と呼び出し先</h2>
-<ul>
 <li>呼び出し元: なし</li>
 <li>呼び出し先: なし</li>
 <li>呼び出し元サイト: なし</li>
 <li>呼び出しサイト: なし</li>
+<li>関連型: <code>Index</code>, <code>Query</code></li>
 </ul>
-<h2>関連データ構造</h2>
-<p><code>Index</code>, <code>Query</code></p>
-<h2>ソース抜粋</h2>
+<h3>ソース抜粋</h3>
 <p>~~~c typedef struct { Query	   *parse; Index		group_rtindex; } <a class="wiki-source-link" href="../../source/src/backend/optimizer/plan/planner.c.html#L141" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__plan__planner_c__having_grouping_ctx.html&quot;}, '*');">having_grouping_ctx</a>; ~~~</p>
-<h2>失敗モードと境界条件</h2>
-<p>まだ解析していません。</p>
-<h2>保守担当者向けメモ</h2>
+<h2>目的</h2>
+<p><a class="wiki-source-link" href="../../source/src/backend/optimizer/plan/planner.c.html#L141" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__plan__planner_c__having_grouping_ctx.html&quot;}, '*');"><code>having_grouping_ctx</code></a> は、HAVING句の等価演算子がGROUP BYのそれと矛盾しないかを判定する <a class="wiki-source-link" href="../../source/src/backend/optimizer/plan/planner.c.html#L1586" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__plan__planner_c__find_having_conflicts.html&quot;}, '*');"><code>find_having_conflicts</code></a> において、<code>expression_has_grouping_conflict</code> コールバック用のコンテキストとして使用される構造体です。</p>
+<h2>フィールドと表現</h2>
 <ul>
-<li>後続フェーズで、ソース本文の文脈と caller/callee 情報を使ってこのページを強化する。</li>
+<li><code>Query *parse</code>: クエリのパースツリー（<code>Query</code> 構造体）へのポインタを保持します。</li>
+<li><code>Index group_rtindex</code>: グループ化された範囲テーブルインデックス（RTEインデックス）を保持します。</li>
 </ul><script>
 (function() {
   function notifyParent() {

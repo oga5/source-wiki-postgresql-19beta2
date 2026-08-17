@@ -1,5 +1,5 @@
 <!doctype html>
-<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>symbols/src__backend__optimizer__plan__planagg_c__build_minmax_path.md</title><link rel="stylesheet" href="../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../source/src/backend/optimizer/plan/planagg.c.html#L317" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__plan__planagg_c__build_minmax_path.html&quot;}, '*');">build_minmax_path</a></h1>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="10"><title>symbols/src__backend__optimizer__plan__planagg_c__build_minmax_path.md</title><link rel="stylesheet" href="../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../source/src/backend/optimizer/plan/planagg.c.html#L317" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__plan__planagg_c__build_minmax_path.html&quot;}, '*');">build_minmax_path</a></h1>
 <h2>現在のソース事実</h2>
 <ul>
 <li>種別: <code>function</code></li>
@@ -54,22 +54,22 @@
 <li>ターゲット式が行型ではないことが事前に保証されていること。</li>
 </ul>
 <h2>アルゴリズムまたは振る舞い</h2>
-<p>1. **サブクエリ用 <code>PlannerInfo</code> の初期化とクローン**:</p>
+<p>1. <strong>サブクエリ用 <code>PlannerInfo</code> の初期化とクローン</strong>:</p>
 <ul>
 <li>現在の <code>root</code> をメモリ領域にコピーして <code>subroot</code> を新しく割り当て、クエリレベルをインクリメントし、親ルートを設定する。</li>
 <li>サブプラン関連のパラメータや集約情報フィールドをリセットする。</li>
 <li>パースツリーおよびappendリレーションリストをコピーし、変数レベルの相対位置を <a class="wiki-source-link" href="../../source/src/backend/rewrite/rewriteManip.c.html#L892" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__rewrite__rewriteManip_c__IncrementVarSublevelsUp.html&quot;}, '*');"><code>IncrementVarSublevelsUp</code></a> により 1 つ上のレベルへ調整する。</li>
-<p>2. **ターゲットリストと修飾句の変更**:</p>
+<p>2. <strong>ターゲットリストと修飾句の変更</strong>:</p>
 <li>集約対象式を唯一のエントリとして持つターゲットリストを作成し、<code>subroot-&gt;processed_tlist</code> およびパースツリーの <a class="wiki-source-link" href="../../source/src/include/nodes/primnodes.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__nodes__primnodes_h__targetList.html&quot;}, '*');"><code>targetList</code></a> に設定する。</li>
 <li><code>HAVING</code> 句、<code>DISTINCT</code> 句、集約フラグをクリアする。</li>
 <li><code>IS NOT NULL</code> テストノードを構築し、既存の <code>WHERE</code> 句に含まれていない場合は結合ツリーの条件に前置する。</li>
-<p>3. **ソート句と <code>LIMIT 1</code> の設定**:</p>
+<p>3. <strong>ソート句と <code>LIMIT 1</code> の設定</strong>:</p>
 <li>ソートグループ句を作成し、指定された等価演算子・ソート演算子・フラグを設定したうえでパースツリーの <code>sortClause</code> に格納する。</li>
 <li><code>LIMIT 1</code> (<code>limitOffset = NULL</code>, <code>limitCount = 1</code>) を設定する。</li>
-<p>4. **クエリプランの探索と調整**:</p>
+<p>4. <strong>クエリプランの探索と調整</strong>:</p>
 <li><code>subroot</code> のタプル分数と制限タプル数を <code>1.0</code> に設定し、<code>query_planner</code> を呼び出して <code>final_rel</code> を取得する。</li>
 <li>外部パラメータの特定（<a class="wiki-source-link" href="../../source/src/backend/optimizer/plan/subselect.c.html#L2366" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__plan__subselect_c__SS_identify_outer_params.html&quot;}, '*');"><code>SS_identify_outer_params</code></a>）および初期プランのコスト課金（<a class="wiki-source-link" href="../../source/src/backend/optimizer/plan/subselect.c.html#L2430" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__plan__subselect_c__SS_charge_for_initplans.html&quot;}, '*');"><code>SS_charge_for_initplans</code></a>）を実行する。</li>
-<p>5. **パスの選択と確定**:</p>
+<p>5. <strong>パスの選択と確定</strong>:</p>
 <li>取得したリレーションの行数に基づいて分数パスの割合を計算し、<a class="wiki-source-link" href="../../source/src/backend/optimizer/path/pathkeys.c.html#L665" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__path__pathkeys_c__get_cheapest_fractional_path_for_pathkeys.html&quot;}, '*');"><code>get_cheapest_fractional_path_for_pathkeys</code></a> を使って最安のプレソート済みパス (<code>sorted_path</code>) を取得する。パスが存在しない場合は <a class="wiki-source-link" href="../../source/src/tools/pg_bsd_indent/indent_globs.h.html#L43" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/tools/pg_bsd_indent/indent_globs.h.html&quot;}, '*');"><code>false</code></a> を返す。</li>
 <li>パスに対して射影適用（<a class="wiki-source-link" href="../../source/src/backend/optimizer/util/pathnode.c.html#L2695" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__pathnode_c__apply_projection_to_path.html&quot;}, '*');"><code>apply_projection_to_path</code></a>）を行い、最初の行を取得するためのコスト（<code>path_cost</code>）を算出する。</li>
 <li>結果を <code>mminfo</code>（<code>subroot</code>, <code>path</code>, <code>pathcost</code>）に保存し、<a class="wiki-source-link" href="../../source/src/tools/pg_bsd_indent/indent_globs.h.html#L46" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/tools/pg_bsd_indent/indent_globs.h.html&quot;}, '*');"><code>true</code></a> を返す。</li>

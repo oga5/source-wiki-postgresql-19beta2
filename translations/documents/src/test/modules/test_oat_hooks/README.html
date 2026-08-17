@@ -1,38 +1,38 @@
 <!doctype html>
-<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>src/test/modules/test_oat_hooks/README</title><link rel="stylesheet" href="../../../../../../styles.css"></head><body><h1>Japanese translation</h1><p><code>src/test/modules/test_oat_hooks/README</code></p><p><a href="../../../../../../source/src/test/modules/test_oat_hooks/README.html" target="source-view">View original document</a></p><p class="document-translation-progress document-translation-complete">Translation complete.</p><div class="document-translation-body"><section class="document-translation-chunk translated" data-chunk-order="0"><p>概要 ========</p>
-<p>このテストモジュール「test_oat_hooks」は、オブジェクトアクセスフック（OAT）を使用して強制アクセス制御（MAC）を適用する方法の例です。</p>
-<p>テスト戦略は次のとおりです。このモジュールがロードされると、さまざまなタイプのフックを登録します（以下を参照）。各フックを制御するためのGUCが定義されており、フックが起動されたアクションを許可するか拒否するかを決定します。もう1つの追加のGUCが、フックの冗長性を制御します。GUCのデフォルトはpermissive/quietであり、これにより、レグレーションテストが開始されるまでの間にログにノイズを生成したり、アクティビティを拒否したりすることなく、モジュールをロードできます。テストが開始されると、SETコマンドを使用してロギングを有効にし、各フックの寛容/制限動作を制御します。スーパーユーザと一般ユーザの両方の権限で、さまざまなSQLステートメントが実行されます。出力は期待される出力と比較され、フックが期待通りの順序で動作し、起動されたことを検証します。</p>
-<p>ユーザはOATフックに対する他のシステムフックの起動順序を気にする可能性があるため、このモジュールではProcessUtilityフックとExecutorCheckPermsフックも登録され、独自のロギングと許可/拒否動作を備えています。</p>
-<p>SUSET test configuration GUCs =============================</p>
-<p>以下の設定パラメータ（GUC）は、このテストモジュールのObject Access Type（OAT）、Process Utility、およびExecutor Check Permissionsフックを制御します。一般的なパターンとして、各フックには対応するGUCがあり、フックが呼び出された操作を許可するか拒否するかを制御します。実際のOATフックは、単なる「allow-all」対「deny-all」よりもきめ細かな制御を提供するべきですが、テスト用としてはこれで十分です。</p>
-<p>これらのフックがアクションを許可した場合でも、コアの権限システムがアクションを拒否する可能性があることに注意してください。コアの権限システムに対するフックの起動順序は、アクションが拒否される前にどのNOTICEメッセージが出力されるかから推測できます。</p>
-<p>各フックは、スーパーユーザ以外のユーザによって実行されるすべての操作に対して、許可または拒否の設定を適用します。</p>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="10"><title>src/test/modules/test_oat_hooks/README</title><link rel="stylesheet" href="../../../../../../styles.css"></head><body><h1>Japanese translation</h1><p><code>src/test/modules/test_oat_hooks/README</code></p><p><a href="../../../../../../source/src/test/modules/test_oat_hooks/README.html" target="source-view">View original document</a></p><p class="document-translation-progress document-translation-complete">Translation complete.</p><div class="document-translation-body"><section class="document-translation-chunk translated" data-chunk-order="0"><h1>概要</h1>
+<p class="markdown-preserve-lines">このテストモジュール「test_oat_hooks」は、オブジェクトアクセスフック（OAT）を使用して強制アクセス制御（MAC）を適用する方法の例です。</p>
+<p class="markdown-preserve-lines">テスト戦略は次のとおりです。このモジュールがロードされると、さまざまなタイプのフックを登録します（以下を参照）。各フックを制御するためのGUCが定義されており、フックが起動されたアクションを許可するか拒否するかを決定します。もう1つの追加のGUCが、フックの冗長性を制御します。GUCのデフォルトはpermissive/quietであり、これにより、レグレーションテストが開始されるまでの間にログにノイズを生成したり、アクティビティを拒否したりすることなく、モジュールをロードできます。テストが開始されると、SETコマンドを使用してロギングを有効にし、各フックの寛容/制限動作を制御します。スーパーユーザと一般ユーザの両方の権限で、さまざまなSQLステートメントが実行されます。出力は期待される出力と比較され、フックが期待通りの順序で動作し、起動されたことを検証します。</p>
+<p class="markdown-preserve-lines">ユーザはOATフックに対する他のシステムフックの起動順序を気にする可能性があるため、このモジュールではProcessUtilityフックとExecutorCheckPermsフックも登録され、独自のロギングと許可/拒否動作を備えています。</p>
+<h1>SUSET test configuration GUCs</h1>
+<p class="markdown-preserve-lines">以下の設定パラメータ（GUC）は、このテストモジュールのObject Access Type（OAT）、Process Utility、およびExecutor Check Permissionsフックを制御します。一般的なパターンとして、各フックには対応するGUCがあり、フックが呼び出された操作を許可するか拒否するかを制御します。実際のOATフックは、単なる「allow-all」対「deny-all」よりもきめ細かな制御を提供するべきですが、テスト用としてはこれで十分です。</p>
+<p class="markdown-preserve-lines">これらのフックがアクションを許可した場合でも、コアの権限システムがアクションを拒否する可能性があることに注意してください。コアの権限システムに対するフックの起動順序は、アクションが拒否される前にどのNOTICEメッセージが出力されるかから推測できます。</p>
+<p class="markdown-preserve-lines">各フックは、スーパーユーザ以外のユーザによって実行されるすべての操作に対して、許可または拒否の設定を適用します。</p>
 <ul>
 <li>test_oat_hooks.deny_set_variable</li>
 </ul>
-<p>object_access_hook_str MAC関数が、設定パラメータを設定する試みを拒否するかどうかを制御します。</p>
+<p class="markdown-preserve-lines">  object_access_hook_str MAC関数が、設定パラメータを設定する試みを拒否するかどうかを制御します。</p>
 <ul>
 <li>test_oat_hooks.deny_alter_system</li>
 </ul>
-<p>object_access_hook_str MAC関数が、設定パラメータを設定するalter systemの試みを拒否するかどうかを制御します。</p>
+<p class="markdown-preserve-lines">  object_access_hook_str MAC関数が、設定パラメータを設定するalter systemの試みを拒否するかどうかを制御します。</p>
 <ul>
 <li>test_oat_hooks.deny_object_access</li>
 </ul>
-<p>object_access_hook MAC関数が、呼び出されたすべての操作を拒否するかどうかを制御します。</p>
+<p class="markdown-preserve-lines">  object_access_hook MAC関数が、呼び出されたすべての操作を拒否するかどうかを制御します。</p>
 <ul>
 <li>test_oat_hooks.deny_exec_perms</li>
 </ul>
-<p>exec_check_perms MAC関数が、呼び出されたすべての操作を拒否するかどうかを制御します。</p>
+<p class="markdown-preserve-lines">  exec_check_perms MAC関数が、呼び出されたすべての操作を拒否するかどうかを制御します。</p>
 <ul>
 <li>test_oat_hooks.deny_utility_commands</li>
 </ul>
-<p>ProcessUtility_hook関数が、呼び出されたすべての操作を拒否するかどうかを制御します。</p>
+<p class="markdown-preserve-lines">  ProcessUtility_hook関数が、呼び出されたすべての操作を拒否するかどうかを制御します。</p>
 <ul>
 <li>test_oat_hooks.audit</li>
 </ul>
-<p>各フックが、試行ごとに成功または失敗のステータスとともにNOTICEメッセージをログに記録するかどうかを制御します。このGUCをクリアまたは設定すること自体が、新しい設定が有効になる前（ただし後ではない）、または後（ただし前ではない）に表示されるNOTICEメッセージを生成する場合があることに注意してください。</p>
-<p>Functions =========</p>
-<p>モジュールは、以下の名前でフックを登録します：</p>
+<p class="markdown-preserve-lines">  各フックが、試行ごとに成功または失敗のステータスとともにNOTICEメッセージをログに記録するかどうかを制御します。このGUCをクリアまたは設定すること自体が、新しい設定が有効になる前（ただし後ではない）、または後（ただし前ではない）に表示されるNOTICEメッセージを生成する場合があることに注意してください。</p>
+<h1>Functions</h1>
+<p class="markdown-preserve-lines">モジュールは、以下の名前でフックを登録します：</p>
 <ul>
 <li>REGRESS_object_access_hook</li>
 </ul>

@@ -1,33 +1,34 @@
 <!doctype html>
-<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>src/tools/pginclude/README</title><link rel="stylesheet" href="../../../../../styles.css"></head><body><h1>Japanese translation</h1><p><code>src/tools/pginclude/README</code></p><p><a href="../../../../../source/src/tools/pginclude/README.html" target="source-view">View original document</a></p><p class="document-translation-progress document-translation-complete">Translation complete.</p><div class="document-translation-body"><section class="document-translation-chunk translated" data-chunk-order="0"><p>src/tools/pginclude/README</p>
-<p>このディレクトリには、PostgreSQLのソースコードにおけるヘッダファイルとインクルードを管理するためのスクリプトと情報が含まれています。</p>
-<p>include-what-you-use ====================</p>
-<p>include-what-you-use (IWYU) (&lt;https://include-what-you-use.org/&gt;) は、Cソースファイル内の不足している、または余分なインクルードを見つけるためのツールです。</p>
-<p>コンパイルデータベース（mesonによって生成される compile_commands.json）を使用すると、ソースツリー全体に対して以下のように実行できます。</p>
-<p>iwyu_tool.py -p build .</p>
-<p>（これはおそらく非常にノイズが多くなります）または、個々のファイルに対して実行できます。</p>
-<p>iwyu_tool.py -p build src/bin/psql/startup.c</p>
-<p>他にも様々な起動オプションが利用可能です。</p>
-<p>少なくともバージョン0.23を使用することをお勧めします。それより前のバージョンでは、コンパイラの警告オプション -Wmissing-variable-declarations と互換性のないアドバイスが提供されます。</p>
-<p>clangd（言語サーバー）は、自動的にIWYUスタイルのアドバイスを提供できます。 &lt;https://clangd.llvm.org/guides/include-cleaner&gt; を参照してください。</p>
-<p>ソースコードには、PostgreSQLのインクルードファイルの規約（特定のソースファイルで使用されるシンボルを提供しない場合でも、&quot;postgres.h&quot; などのヘッダを常にインクルードする必要があるなど）をIWYUに伝え、修正が困難な少数の警告を抑制するための「IWYU pragma」コメントが含まれています。これらに関するドキュメントについては、&lt;https://github.com/include-what-you-use/include-what-you-use/blob/master/docs/IWYUPragmas.md&gt; を参照してください。</p>
-<p>もちろん、このツールや他のツールによって提案されたインクルードの変更は、慎重にチェックして検証する必要があります。一部のインクルードは特定のプラットフォームや特定のコンパイルオプションでのみ使用されるため、出力されたアドバイスに盲目的に従うことはお勧めしません。</p>
-<p>headerscheck ============</p>
-<p>このスクリプトを実行すると、すべてのPostgresインクルードファイルが、プロジェクトの規約である「スタンドアロン」でコンパイルできること、つまり、postgres.h（または必要に応じて postgres_fe.h や c.h）以外の前提条件となるヘッダなしでコンパイルできることを検証できます。</p>
-<p>少数のヘッダファイルはこの要件から除外されており、headerscheck スクリプトによってスキップされます。</p>
-<p>スクリプトを実行する簡単な方法は、ビルド完了後にトップレベルのビルドディレクトリで &quot;make -s headerscheck&quot; を実行することです。configure オプションに少なくとも以下を含めておく必要があります。</p>
-<p>--with-llvm --with-perl --with-python</p>
-<p>そうしないと、関連するヘッダが見つからないというエラーが発生する可能性があります。</p>
-<p>mesonを使用する場合は、&quot;meson compile -C build headerscheck&quot; または &quot;ninja -C build headerscheck&quot; を実行します。</p>
-<p>現在のスクリプトの制限事項として、どのヘッダがフロントエンド用で、どのヘッダがバックエンド用であるかを正確に把握できないことが挙げられます。疑わしい場合は、postgres_fe.h や c.h の方が適切であっても、前提条件として postgres.h を使用します。また、マクロの内容はチェックされません。これは意図的なものです。</p>
-<p>headerscheck --cplusplus ========================</p>
-<p>--cplusplus モードの headerscheck を実行すると、すべてのPostgresインクルードファイルが、C++コードとしてコンパイルできるというプロジェクトの規約を満たしていることを検証できます。プロジェクトの開発言語はCですが、C++で拡張機能を作成する人もいるため、インクルードファイルがC++クリーンであることは有用です。</p>
-<p>少数のヘッダファイルはこの要件から除外されており、--cplusplus モードではスクリプトによってスキップされます。</p>
-<p>スクリプトを実行する簡単な方法は、ビルド完了後にトップレベルのビルドディレクトリで &quot;make -s cpluspluscheck&quot; を実行することです。configure オプションに少なくとも以下を含めておく必要があります。</p>
-<p>--with-llvm --with-perl --with-python</p>
-<p>そうしないと、関連するヘッダが見つからないというエラーが発生する可能性があります。</p>
-<p>mesonを使用する場合は、&quot;meson compile -C build cpluspluscheck&quot; または &quot;ninja -C build cpluspluscheck&quot; を実行します。</p>
-<p>現在のスクリプトの制限事項として、どのヘッダがフロントエンド用で、どのヘッダがバックエンド用であるかを正確に把握できないことが挙げられます。疑わしい場合は、postgres_fe.h や c.h の方が適切であっても、前提条件として postgres.h を使用します。また、マクロの内容はチェックされません。これは意図的なものです。</p></section></div><script>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="10"><title>src/tools/pginclude/README</title><link rel="stylesheet" href="../../../../../styles.css"></head><body><h1>Japanese translation</h1><p><code>src/tools/pginclude/README</code></p><p><a href="../../../../../source/src/tools/pginclude/README.html" target="source-view">View original document</a></p><p class="document-translation-progress document-translation-complete">Translation complete.</p><div class="document-translation-body"><section class="document-translation-chunk translated" data-chunk-order="0"><p class="markdown-preserve-lines">src/tools/pginclude/README</p>
+<p class="markdown-preserve-lines">このディレクトリには、PostgreSQLのソースコードにおけるヘッダファイルとインクルードを管理するためのスクリプトと情報が含まれています。</p>
+<h1>include-what-you-use</h1>
+<p class="markdown-preserve-lines">include-what-you-use (IWYU) (&lt;https://include-what-you-use.org/&gt;) は、Cソースファイル内の不足している、または余分なインクルードを見つけるためのツールです。</p>
+<p class="markdown-preserve-lines">コンパイルデータベース（mesonによって生成される compile_commands.json）を使用すると、ソースツリー全体に対して以下のように実行できます。</p>
+<p class="markdown-preserve-lines">    iwyu_tool.py -p build .</p>
+<p class="markdown-preserve-lines">（これはおそらく非常にノイズが多くなります）または、個々のファイルに対して実行できます。</p>
+<p class="markdown-preserve-lines">    iwyu_tool.py -p build src/bin/psql/startup.c</p>
+<p class="markdown-preserve-lines">他にも様々な起動オプションが利用可能です。</p>
+<p class="markdown-preserve-lines">少なくともバージョン0.23を使用することをお勧めします。それより前のバージョンでは、コンパイラの警告オプション -Wmissing-variable-declarations と互換性のないアドバイスが提供されます。</p>
+<p class="markdown-preserve-lines">clangd（言語サーバー）は、自動的にIWYUスタイルのアドバイスを提供できます。
+&lt;https://clangd.llvm.org/guides/include-cleaner&gt; を参照してください。</p>
+<p class="markdown-preserve-lines">ソースコードには、PostgreSQLのインクルードファイルの規約（特定のソースファイルで使用されるシンボルを提供しない場合でも、&quot;postgres.h&quot; などのヘッダを常にインクルードする必要があるなど）をIWYUに伝え、修正が困難な少数の警告を抑制するための「IWYU pragma」コメントが含まれています。これらに関するドキュメントについては、&lt;https://github.com/include-what-you-use/include-what-you-use/blob/master/docs/IWYUPragmas.md&gt; を参照してください。</p>
+<p class="markdown-preserve-lines">もちろん、このツールや他のツールによって提案されたインクルードの変更は、慎重にチェックして検証する必要があります。一部のインクルードは特定のプラットフォームや特定のコンパイルオプションでのみ使用されるため、出力されたアドバイスに盲目的に従うことはお勧めしません。</p>
+<h1>headerscheck</h1>
+<p class="markdown-preserve-lines">このスクリプトを実行すると、すべてのPostgresインクルードファイルが、プロジェクトの規約である「スタンドアロン」でコンパイルできること、つまり、postgres.h（または必要に応じて postgres_fe.h や c.h）以外の前提条件となるヘッダなしでコンパイルできることを検証できます。</p>
+<p class="markdown-preserve-lines">少数のヘッダファイルはこの要件から除外されており、headerscheck スクリプトによってスキップされます。</p>
+<p class="markdown-preserve-lines">スクリプトを実行する簡単な方法は、ビルド完了後にトップレベルのビルドディレクトリで &quot;make -s headerscheck&quot; を実行することです。configure オプションに少なくとも以下を含めておく必要があります。</p>
+<p class="markdown-preserve-lines">    --with-llvm --with-perl --with-python</p>
+<p class="markdown-preserve-lines">そうしないと、関連するヘッダが見つからないというエラーが発生する可能性があります。</p>
+<p class="markdown-preserve-lines">mesonを使用する場合は、&quot;meson compile -C build headerscheck&quot; または &quot;ninja -C build headerscheck&quot; を実行します。</p>
+<p class="markdown-preserve-lines">現在のスクリプトの制限事項として、どのヘッダがフロントエンド用で、どのヘッダがバックエンド用であるかを正確に把握できないことが挙げられます。疑わしい場合は、postgres_fe.h や c.h の方が適切であっても、前提条件として postgres.h を使用します。また、マクロの内容はチェックされません。これは意図的なものです。</p>
+<h1>headerscheck --cplusplus</h1>
+<p class="markdown-preserve-lines">--cplusplus モードの headerscheck を実行すると、すべてのPostgresインクルードファイルが、C++コードとしてコンパイルできるというプロジェクトの規約を満たしていることを検証できます。プロジェクトの開発言語はCですが、C++で拡張機能を作成する人もいるため、インクルードファイルがC++クリーンであることは有用です。</p>
+<p class="markdown-preserve-lines">少数のヘッダファイルはこの要件から除外されており、--cplusplus モードではスクリプトによってスキップされます。</p>
+<p class="markdown-preserve-lines">スクリプトを実行する簡単な方法は、ビルド完了後にトップレベルのビルドディレクトリで &quot;make -s cpluspluscheck&quot; を実行することです。configure オプションに少なくとも以下を含めておく必要があります。</p>
+<p class="markdown-preserve-lines">    --with-llvm --with-perl --with-python</p>
+<p class="markdown-preserve-lines">そうしないと、関連するヘッダが見つからないというエラーが発生する可能性があります。</p>
+<p class="markdown-preserve-lines">mesonを使用する場合は、&quot;meson compile -C build cpluspluscheck&quot; または &quot;ninja -C build cpluspluscheck&quot; を実行します。</p>
+<p class="markdown-preserve-lines">現在のスクリプトの制限事項として、どのヘッダがフロントエンド用で、どのヘッダがバックエンド用であるかを正確に把握できないことが挙げられます。疑わしい場合は、postgres_fe.h や c.h の方が適切であっても、前提条件として postgres.h を使用します。また、マクロの内容はチェックされません。これは意図的なものです。</p></section></div><script>
 (function() {
   function notifyParent() {
     if (parent === window) return;

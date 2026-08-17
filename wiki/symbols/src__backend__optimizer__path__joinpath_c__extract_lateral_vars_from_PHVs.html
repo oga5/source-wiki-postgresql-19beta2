@@ -1,5 +1,5 @@
 <!doctype html>
-<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>symbols/src__backend__optimizer__path__joinpath_c__extract_lateral_vars_from_PHVs.md</title><link rel="stylesheet" href="../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../source/src/backend/optimizer/path/joinpath.c.html#L620" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__path__joinpath_c__extract_lateral_vars_from_PHVs.html&quot;}, '*');">extract_lateral_vars_from_PHVs</a></h1>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="10"><title>symbols/src__backend__optimizer__path__joinpath_c__extract_lateral_vars_from_PHVs.md</title><link rel="stylesheet" href="../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../source/src/backend/optimizer/path/joinpath.c.html#L620" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__path__joinpath_c__extract_lateral_vars_from_PHVs.html&quot;}, '*');">extract_lateral_vars_from_PHVs</a></h1>
 <h2>現在のソース事実</h2>
 <ul>
 <li>種別: <code>function</code></li>
@@ -55,23 +55,23 @@
 <li>走査される <code>PlaceHolderVar</code> ノードの <code>phlevelsup</code> は <code>0</code> であることがアサーションで検証される。</li>
 </ul>
 <h2>アルゴリズムまたは振る舞い</h2>
-<p>1. **早期リターン判定**:</p>
+<p>1. <strong>早期リターン判定</strong>:</p>
 <ul>
 <li><code>root-&gt;hasLateralRTEs</code> が偽である場合、<a class="wiki-source-link" href="../../source/src/include/nodes/pg_list.h.html#L68" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/nodes/pg_list.h.html&quot;}, '*');"><code>NIL</code></a> を返す。</li>
 <li><code>innerrelids</code> のメンバーシップが <a class="wiki-source-link" href="../../source/src/include/nodes/bitmapset.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__nodes__bitmapset_h__BMS_MULTIPLE.html&quot;}, '*');"><code>BMS_MULTIPLE</code></a> である場合、結合リレーション上の評価とみなして <a class="wiki-source-link" href="../../source/src/include/nodes/pg_list.h.html#L68" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/nodes/pg_list.h.html&quot;}, '*');"><code>NIL</code></a> を返す。</li>
-<p>2. **プレースホルダ情報の反復処理**:</p>
+<p>2. <strong>プレースホルダ情報の反復処理</strong>:</p>
 <li><code>root-&gt;placeholder_list</code> 内の各 <code>PlaceHolderInfo</code>（<code>phinfo</code>）について以下を順に評価する。</li>
 <li><code>phinfo-&gt;ph_lateral</code> が <code>NULL</code> であるか、<code>phinfo-&gt;ph_eval_at</code> が <code>innerrelids</code> と <a class="wiki-source-link" href="../../source/src/backend/nodes/bitmapset.c.html#L141" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__nodes__bitmapset_c__bms_equal.html&quot;}, '*');"><code>bms_equal</code></a> で一致しない場合はスキップする。</li>
-<p>3. **式全体のキャッシュキー利用判定**:</p>
+<p>3. <strong>式全体のキャッシュキー利用判定</strong>:</p>
 <li>PHV 式自体が <code>innerrelids</code> 内のリレーションを全く参照しない（<a class="wiki-source-link" href="../../source/src/backend/nodes/bitmapset.c.html#L574" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__nodes__bitmapset_c__bms_overlap.html&quot;}, '*');"><code>bms_overlap</code></a> が偽）場合、含まれる変数ではなく <code>phinfo-&gt;ph_var-&gt;phexpr</code> 自体をキャッシュキー候補としてリストに追加し、次のループへ進む。</li>
-<p>4. **内部変数および PHV の抽出**:</p>
+<p>4. <strong>内部変数および PHV の抽出</strong>:</p>
 <li><a class="wiki-source-link" href="../../source/src/backend/optimizer/util/var.c.html#L338" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__var_c__pull_vars_of_level.html&quot;}, '*');"><code>pull_vars_of_level</code></a> を使用して、レベル 0 の式内から <code>Var</code> および <code>PlaceHolderVar</code> を抽出する。</li>
 <li>抽出された各ノードについて型を判定する:</li>
 <li><code>Var</code> の場合: <code>var-&gt;varno</code> が <code>phinfo-&gt;ph_lateral</code> に含まれていれば（<a class="wiki-source-link" href="../../source/src/backend/nodes/bitmapset.c.html#L509" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__nodes__bitmapset_c__bms_is_member.html&quot;}, '*');"><code>bms_is_member</code></a>）、リストに追加する。</li>
 <li><code>PlaceHolderVar</code> の場合: 対応する <code>ph_eval_at</code> が <code>phinfo-&gt;ph_lateral</code> のサブセットであれば（<a class="wiki-source-link" href="../../source/src/backend/nodes/bitmapset.c.html#L411" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__nodes__bitmapset_c__bms_is_subset.html&quot;}, '*');"><code>bms_is_subset</code></a>）、リストに追加する。</li>
 <li>その他の型の場合: <code>Assert(false)</code> により異常系として弾く。</li>
 <li>一時的に割り当てた変数のリストを <code>list_free</code> で解放する。</li>
-<p>5. **完了**:</p>
+<p>5. <strong>完了</strong>:</p>
 <li>収集した <code>ph_lateral_vars</code> リストを返す。</li>
 </ul>
 <h2>失敗モードと境界条件</h2>

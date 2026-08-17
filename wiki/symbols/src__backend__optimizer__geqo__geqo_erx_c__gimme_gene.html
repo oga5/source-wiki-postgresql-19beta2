@@ -1,5 +1,5 @@
 <!doctype html>
-<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>symbols/src__backend__optimizer__geqo__geqo_erx_c__gimme_gene.md</title><link rel="stylesheet" href="../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../source/src/backend/optimizer/geqo/geqo_erx.c.html#L289" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__geqo__geqo_erx_c__gimme_gene.html&quot;}, '*');">gimme_gene</a></h1>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="10"><title>symbols/src__backend__optimizer__geqo__geqo_erx_c__gimme_gene.md</title><link rel="stylesheet" href="../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../source/src/backend/optimizer/geqo/geqo_erx.c.html#L289" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__geqo__geqo_erx_c__gimme_gene.html&quot;}, '*');">gimme_gene</a></h1>
 <h2>現在のソース事実</h2>
 <ul>
 <li>種別: <code>function</code></li>
@@ -69,13 +69,13 @@
 <li>1点から他の点へ向かうエッジ数は最大4個を超えないため、最小エッジ数の初期値は <code>5</code> に設定される</li>
 </ul>
 <h2>アルゴリズムまたは振る舞い</h2>
-<p>1. **初期設定**: 最小エッジ数保持用の変数 <code>minimum_edges</code> を 5 に、最小候補カウント <code>minimum_count</code> を -1 に初期化する。 2. **候補走査フェーズ**: <code>edge.unused_edges</code> の回数だけループをまわし、各候補遺伝子（<code>friend</code>）を順に評価する。</p>
+<p>1. <strong>初期設定</strong>: 最小エッジ数保持用の変数 <code>minimum_edges</code> を 5 に、最小候補カウント <code>minimum_count</code> を -1 に初期化する。 2. <strong>候補走査フェーズ</strong>: <code>edge.unused_edges</code> の回数だけループをまわし、各候補遺伝子（<code>friend</code>）を順に評価する。</p>
 <ul>
 <li>候補が負の値（共有エッジ）である場合は、直ちに絶対値に変換してその遺伝子を返す。</li>
 <li>候補の残り未使用エッジ数が現在の <code>minimum_edges</code> より小さい場合は、<code>minimum_edges</code> を更新し、<code>minimum_count</code> を 1 にリセットする。</li>
 <li><code>minimum_count</code> が -1 のまま更新されない場合はエラー（<code>minimum_count not set</code>）とする。</li>
 <li>残り未使用エッジ数が <code>minimum_edges</code> と等しい場合は <code>minimum_count</code> をインクリメントする。</li>
-<p>3. **ランダム選択フェーズ**: 最小の未使用エッジ数を持つ候補が複数存在する場合、<code>geqo_randint(root, minimum_count - 1, 0)</code> を呼び出してランダムな決定値（<code>rand_decision</code>）を算出する。 4. **候補確定フェーズ**: 再度エッジリストを走査し、未使用エッジ数が <code>minimum_edges</code> と一致する候補をカウントダウンしながら探索し、カウントが <code>rand_decision</code> と一致した時点でその遺伝子を返す。 5. **異常終了**: 共有エッジ、最小エッジ、ランダム選択のいずれの条件も満たさずにループを抜けた場合は、エラー（<code>neither shared nor minimum number nor random edge found</code>）をスローする。</p>
+<p>3. <strong>ランダム選択フェーズ</strong>: 最小の未使用エッジ数を持つ候補が複数存在する場合、<code>geqo_randint(root, minimum_count - 1, 0)</code> を呼び出してランダムな決定値（<code>rand_decision</code>）を算出する。 4. <strong>候補確定フェーズ</strong>: 再度エッジリストを走査し、未使用エッジ数が <code>minimum_edges</code> と一致する候補をカウントダウンしながら探索し、カウントが <code>rand_decision</code> と一致した時点でその遺伝子を返す。 5. <strong>異常終了</strong>: 共有エッジ、最小エッジ、ランダム選択のいずれの条件も満たさずにループを抜けた場合は、エラー（<code>neither shared nor minimum number nor random edge found</code>）をスローする。</p>
 </ul>
 <h2>失敗モードと境界条件</h2>
 <ul>

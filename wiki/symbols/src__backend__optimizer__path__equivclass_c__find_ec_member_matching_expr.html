@@ -1,5 +1,5 @@
 <!doctype html>
-<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>symbols/src__backend__optimizer__path__equivclass_c__find_ec_member_matching_expr.md</title><link rel="stylesheet" href="../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../source/src/backend/optimizer/path/equivclass.c.html#L915" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__path__equivclass_c__find_ec_member_matching_expr.html&quot;}, '*');">find_ec_member_matching_expr</a></h1>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="10"><title>symbols/src__backend__optimizer__path__equivclass_c__find_ec_member_matching_expr.md</title><link rel="stylesheet" href="../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../source/src/backend/optimizer/path/equivclass.c.html#L915" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__path__equivclass_c__find_ec_member_matching_expr.html&quot;}, '*');">find_ec_member_matching_expr</a></h1>
 <h2>現在のソース事実</h2>
 <ul>
 <li>種別: <code>function</code></li>
@@ -52,12 +52,12 @@
 <li>子メンバー（<code>em_is_child</code> が真のもの）は、要求されたリレーション集合に属さない場合（<code>em_relids</code> が <a class="wiki-source-link" href="../../source/src/backend/optimizer/util/relnode.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__relnode_c__relids.html&quot;}, '*');"><code>relids</code></a> のサブセットでない場合）に無視される。</li>
 </ul>
 <h2>アルゴリズムまたは振る舞い</h2>
-<p>1. **式の正規化（入力側）**: 渡された <code>expr</code> の両端にある <code>RelabelType</code> を剥がして内部式を取り出す。 2. **イテレータの設定**: <a class="wiki-source-link" href="../../source/src/backend/optimizer/path/equivclass.c.html#L3154" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__path__equivclass_c__setup_eclass_member_iterator.html&quot;}, '*');"><code>setup_eclass_member_iterator</code></a> を使用して、指定された同値クラスとリレーション集合に基づくメンバーイテレータを初期化する。 3. **メンバーの走査と検証**: イテレータから順次 <code>EquivalenceMember</code> を取得し、以下の条件を順に評価する。</p>
+<p>1. <strong>式の正規化（入力側）</strong>: 渡された <code>expr</code> の両端にある <code>RelabelType</code> を剥がして内部式を取り出す。 2. <strong>イテレータの設定</strong>: <a class="wiki-source-link" href="../../source/src/backend/optimizer/path/equivclass.c.html#L3154" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__path__equivclass_c__setup_eclass_member_iterator.html&quot;}, '*');"><code>setup_eclass_member_iterator</code></a> を使用して、指定された同値クラスとリレーション集合に基づくメンバーイテレータを初期化する。 3. <strong>メンバーの走査と検証</strong>: イテレータから順次 <code>EquivalenceMember</code> を取得し、以下の条件を順に評価する。</p>
 <ul>
 <li>メンバーが定数（<code>em_is_const</code>）である場合はスキップする。</li>
 <li>子メンバーかつ要求されたリレーション集合（<a class="wiki-source-link" href="../../source/src/backend/optimizer/util/relnode.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__relnode_c__relids.html&quot;}, '*');"><code>relids</code></a>）の部分集合でない場合はスキップする。</li>
 <li>メンバーの持つ式（<code>em_expr</code>）からも同様に <code>RelabelType</code> を剥がした上で、入力式と <code>equal()</code> 関数により一致するか比較する。</li>
-<p>4. **一致判定**: 式が一致した場合はその <code>EquivalenceMember</code> を返す。イテレータが終端に達した場合は <code>NULL</code> を返す。</p>
+<p>4. <strong>一致判定</strong>: 式が一致した場合はその <code>EquivalenceMember</code> を返す。イテレータが終端に達した場合は <code>NULL</code> を返す。</p>
 </ul>
 <h2>失敗モードと境界条件</h2>
 <ul>

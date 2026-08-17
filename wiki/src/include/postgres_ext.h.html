@@ -1,5 +1,5 @@
 <!doctype html>
-<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>src/include/postgres_ext.h.md</title><link rel="stylesheet" href="../../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../../source/src/include/postgres_ext.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/postgres_ext.h.html&quot;}, '*');">src/include/postgres_ext.h</a></h1>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="10"><title>src/include/postgres_ext.h.md</title><link rel="stylesheet" href="../../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../../source/src/include/postgres_ext.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/postgres_ext.h.html&quot;}, '*');">src/include/postgres_ext.h</a></h1>
 <h2>概要</h2>
 <p><a class="wiki-source-link" href="../../../source/src/include/postgres_ext.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/postgres_ext.h.html&quot;}, '*');"><code>src/include/postgres_ext.h</code></a> は、PostgreSQLのバックエンドとフロントエンド（クライアントライブラリ、libpq等）の両方から参照される、極めて基礎的な型定義およびマクロを提供するヘッダーファイルです。特定のインターフェースに依存しない、共有されるべき最小限の定義のみを集約しています。</p>
 <h2>モジュール内での役割</h2>
@@ -26,8 +26,8 @@
 <h2>制御フローとデータフロー</h2>
 <p>本ファイルはコードの実装本体（関数定義）を持たず、定数マクロと型定義のみを提供するヘッダーファイルであるため、直接的な制御フローは存在しません。 データフローの観点では以下のマクロが中心となります：</p>
 <ul>
-<li>**OID変換フロー**: <code>atooid(x)</code> マクロが文字列 <code>x</code> を受けて <code>strtoul((x), NULL, 10)</code> により <code>Oid</code> 型へキャスト・変換します。</li>
-<li>**エラー診断フロー**: <code>PG_DIAG_*</code> マクロ（例: <a class="wiki-source-link" href="../../../source/src/include/postgres_ext.h.html#L57" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/postgres_ext.h.html&quot;}, '*');"><code>PG_DIAG_SQLSTATE</code></a> &#x27;C&#x27;, <a class="wiki-source-link" href="../../../source/src/include/postgres_ext.h.html#L58" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/postgres_ext.h.html&quot;}, '*');"><code>PG_DIAG_MESSAGE_PRIMARY</code></a> &#x27;M&#x27; 等）が、サーバーから返されるエラー情報フィールドのキーとして機能し、フロントエンドが個別のエラー属性を引く際のキーになります。</li>
+<li><strong>OID変換フロー</strong>: <code>atooid(x)</code> マクロが文字列 <code>x</code> を受けて <code>strtoul((x), NULL, 10)</code> により <code>Oid</code> 型へキャスト・変換します。</li>
+<li><strong>エラー診断フロー</strong>: <code>PG_DIAG_*</code> マクロ（例: <a class="wiki-source-link" href="../../../source/src/include/postgres_ext.h.html#L57" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/postgres_ext.h.html&quot;}, '*');"><code>PG_DIAG_SQLSTATE</code></a> &#x27;C&#x27;, <a class="wiki-source-link" href="../../../source/src/include/postgres_ext.h.html#L58" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/postgres_ext.h.html&quot;}, '*');"><code>PG_DIAG_MESSAGE_PRIMARY</code></a> &#x27;M&#x27; 等）が、サーバーから返されるエラー情報フィールドのキーとして機能し、フロントエンドが個別のエラー属性を引く際のキーになります。</li>
 </ul>
 <h2>直接依存</h2>
 <ul>
@@ -40,9 +40,9 @@
 </ul>
 <h2>読者向けメモ</h2>
 <ul>
-<li>**メモリ・ライフタイム**: マクロと型定義のみのため、メモリ割り渡しやライフタイム管理の概念はありません。</li>
-<li>**インクルードガード**: 多重インクルードを防ぐため <code>#ifndef POSTGRES_EXT_H</code> によるガードが施されています。</li>
-<li>**移植性の注意**: <a class="wiki-source-link" href="../../../source/src/include/postgres_ext.h.html#L43" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/postgres_ext.h.html&quot;}, '*');"><code>atooid</code></a> マクロを使用する際は事前に <code>&lt;stdlib.h&gt;</code> のインクルードが必要であり、<a class="wiki-source-link" href="../../../source/src/include/postgres_ext.h.html#L40" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/postgres_ext.h.html&quot;}, '*');"><code>OID_MAX</code></a> を使用する際は <code>&lt;limits.h&gt;</code> が必要になる旨がコメントに記載されています。</li>
+<li><strong>メモリ・ライフタイム</strong>: マクロと型定義のみのため、メモリ割り渡しやライフタイム管理の概念はありません。</li>
+<li><strong>インクルードガード</strong>: 多重インクルードを防ぐため <code>#ifndef POSTGRES_EXT_H</code> によるガードが施されています。</li>
+<li><strong>移植性の注意</strong>: <a class="wiki-source-link" href="../../../source/src/include/postgres_ext.h.html#L43" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/postgres_ext.h.html&quot;}, '*');"><code>atooid</code></a> マクロを使用する際は事前に <code>&lt;stdlib.h&gt;</code> のインクルードが必要であり、<a class="wiki-source-link" href="../../../source/src/include/postgres_ext.h.html#L40" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/postgres_ext.h.html&quot;}, '*');"><code>OID_MAX</code></a> を使用する際は <code>&lt;limits.h&gt;</code> が必要になる旨がコメントに記載されています。</li>
 </ul>
 <h2>シンボルページ</h2>
 <ul>

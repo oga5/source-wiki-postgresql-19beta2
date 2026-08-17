@@ -1,9 +1,32 @@
 <!doctype html>
-<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>src/backend/parser/README</title><link rel="stylesheet" href="../../../../../styles.css"></head><body><h1>Japanese translation</h1><p><code>src/backend/parser/README</code></p><p><a href="../../../../../source/src/backend/parser/README.html" target="source-view">View original document</a></p><p class="document-translation-progress document-translation-complete">Translation complete.</p><div class="document-translation-body"><section class="document-translation-chunk translated" data-chunk-order="0"><p>src/backend/parser/README</p>
-<p>Parser ======</p>
-<p>このディレクトリは、SQLクエリのトークン化と解析だけを行うわけではありません。 オプティマイザやエグゼキュータに渡されるさまざまな複雑なクエリの Query 構造体も作成します。</p>
-<p>parser.c	処理はここから始まります scan.l		クエリをトークンに分解します scansup.c	入力文字列のエスケープを処理します gram.y		トークンを解析して「生」のパースツリーを生成します analyze.c	最適化可能なクエリに対するパース解析の最上位レベル parse_agg.c	SUM(col1) や AVG(col2) などの集約を処理します parse_clause.c	WHERE、ORDER BY、GROUP BY などの節を処理します parse_coerce.c	式を異なるデータ型にキャスト（強制変換）することを処理します parse_collate.c	完成した式に照合順序（コレーション）情報を割り当てます parse_cte.c	共通テーブル式（WITH 節）を処理します parse_expr.c	col、col + 3、x = 3 または x = 4 などの式を処理します parse_enr.c	一時名前付きリレーション（トリガーの遷移テーブルなど）を処理します parse_func.c	関数、table.column、および列識別子を処理します parse_jsontable.c JSON_TABLE を処理します parse_merge.c	MERGE を処理します parse_node.c	さまざまな構造のノードを作成します parse_oper.c	式内の演算子を処理します parse_param.c	Params を処理します（コアバックエンドで使用されるケース用） parse_relation.c テーブルおよび列の処理をサポートするルーチン parse_target.c	クエリの結果リストを処理します parse_type.c	データ型処理をサポートするルーチン parse_utilcmd.c	ユーティリティコマンドのパース解析（実行時に行われます）</p>
-<p>標準キーワードのテーブルとキーワード検索関数を含む src/common/keywords.c も参照してください。 さまざまなフロントエンドコードでも使用できるようにするため、これは分離されています。</p></section></div><script>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="10"><title>src/backend/parser/README</title><link rel="stylesheet" href="../../../../../styles.css"></head><body><h1>Japanese translation</h1><p><code>src/backend/parser/README</code></p><p><a href="../../../../../source/src/backend/parser/README.html" target="source-view">View original document</a></p><p class="document-translation-progress document-translation-complete">Translation complete.</p><div class="document-translation-body"><section class="document-translation-chunk translated" data-chunk-order="0"><p class="markdown-preserve-lines">src/backend/parser/README</p>
+<h1>Parser</h1>
+<p class="markdown-preserve-lines">このディレクトリは、SQLクエリのトークン化と解析だけを行うわけではありません。
+オプティマイザやエグゼキュータに渡されるさまざまな複雑なクエリの Query 構造体も作成します。</p>
+<p class="markdown-preserve-lines">parser.c	処理はここから始まります
+scan.l		クエリをトークンに分解します
+scansup.c	入力文字列のエスケープを処理します
+gram.y		トークンを解析して「生」のパースツリーを生成します
+analyze.c	最適化可能なクエリに対するパース解析の最上位レベル
+parse_agg.c	SUM(col1) や AVG(col2) などの集約を処理します
+parse_clause.c	WHERE、ORDER BY、GROUP BY などの節を処理します
+parse_coerce.c	式を異なるデータ型にキャスト（強制変換）することを処理します
+parse_collate.c	完成した式に照合順序（コレーション）情報を割り当てます
+parse_cte.c	共通テーブル式（WITH 節）を処理します
+parse_expr.c	col、col + 3、x = 3 または x = 4 などの式を処理します
+parse_enr.c	一時名前付きリレーション（トリガーの遷移テーブルなど）を処理します
+parse_func.c	関数、table.column、および列識別子を処理します
+parse_jsontable.c JSON_TABLE を処理します
+parse_merge.c	MERGE を処理します
+parse_node.c	さまざまな構造のノードを作成します
+parse_oper.c	式内の演算子を処理します
+parse_param.c	Params を処理します（コアバックエンドで使用されるケース用）
+parse_relation.c テーブルおよび列の処理をサポートするルーチン
+parse_target.c	クエリの結果リストを処理します
+parse_type.c	データ型処理をサポートするルーチン
+parse_utilcmd.c	ユーティリティコマンドのパース解析（実行時に行われます）</p>
+<p class="markdown-preserve-lines">標準キーワードのテーブルとキーワード検索関数を含む src/common/keywords.c も参照してください。
+さまざまなフロントエンドコードでも使用できるようにするため、これは分離されています。</p></section></div><script>
 (function() {
   function notifyParent() {
     if (parent === window) return;

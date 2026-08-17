@@ -1,5 +1,5 @@
 <!doctype html>
-<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>symbols/src__backend__optimizer__util__placeholder_c__find_placeholder_info.md</title><link rel="stylesheet" href="../../styles.css"></head><body><h1>find_placeholder_info</h1>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="10"><title>symbols/src__backend__optimizer__util__placeholder_c__find_placeholder_info.md</title><link rel="stylesheet" href="../../styles.css"></head><body><h1>find_placeholder_info</h1>
 <h2>現在のソース事実</h2>
 <ul>
 <li>種別: <code>function</code></li>
@@ -68,20 +68,20 @@
 <li>新規作成された <code>phinfo-&gt;ph_var-&gt;phnullingrels</code> は常に空（<code>NULL</code>）に初期化されること。</li>
 </ul>
 <h2>アルゴリズムまたは振る舞い</h2>
-<p>1. **レベルの検証**: <code>phv-&gt;phlevelsup == 0</code> であることをアサートで確認する。 2. **キャッシュからの高速検索**: <code>root-&gt;placeholder_array</code> から <code>phv-&gt;phid</code> をインデックスとして既存の <code>PlaceHolderInfo</code> を引き、存在すればそのまま返す。 3. **凍結状態のチェック**: キャッシュに存在せず <code>root-&gt;placeholdersFrozen</code> が真の場合は、新規作成が遅すぎるためエラーを送出する。 4. **新規 <code>PlaceHolderInfo</code> の割り当てと初期化**:</p>
+<p>1. <strong>レベルの検証</strong>: <code>phv-&gt;phlevelsup == 0</code> であることをアサートで確認する。 2. <strong>キャッシュからの高速検索</strong>: <code>root-&gt;placeholder_array</code> から <code>phv-&gt;phid</code> をインデックスとして既存の <code>PlaceHolderInfo</code> を引き、存在すればそのまま返す。 3. <strong>凍結状態のチェック</strong>: キャッシュに存在せず <code>root-&gt;placeholdersFrozen</code> が真の場合は、新規作成が遅すぎるためエラーを送出する。 4. <strong>新規 <code>PlaceHolderInfo</code> の割り当てと初期化</strong>:</p>
 <ul>
 <li><code>PlaceHolderInfo</code> ノードを確保し、<a class="wiki-source-link" href="../../source/src/backend/optimizer/util/placeholder.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__placeholder_c__phid.html&quot;}, '*');"><code>phid</code></a> およびコピーした <code>ph_var</code> を設定する。</li>
 <li><code>ph_var-&gt;phnullingrels</code> を <code>NULL</code> に設定する。</li>
-<p>5. **評価位置とラテラル参照の算出**:</p>
+<p>5. <strong>評価位置とラテラル参照の算出</strong>:</p>
 <li>式 <code>phv-&gt;phexpr</code> が参照する変数リストから使用リレーション集合 (<code>rels_used</code>) を引く。</li>
 <li>構文上のスコープ (<code>phv-&gt;phrels</code>) の外側を参照するリレーションをラテラル参照 <code>ph_lateral</code> (<code>rels_used</code> と <code>phv-&gt;phrels</code> の差分) として算出する。</li>
 <li>構文上のスコープ内にあるリレーションを評価位置 <code>ph_eval_at</code> (<code>rels_used</code> と <code>phv-&gt;phrels</code> の共通集合) として算出する。</li>
 <li>含有変数が空の場合は、評価位置を構文上の位置 <code>phv-&gt;phrels</code> に強制する。</li>
-<p>6. **幅の見積もりとリスト・配列への登録**:</p>
+<p>6. <strong>幅の見積もりとリスト・配列への登録</strong>:</p>
 <li>データ型の平均幅関数を用いて <code>ph_width</code> を初期見積もりする。</li>
 <li><code>root-&gt;placeholder_list</code> に <code>phinfo</code> を追加する。</li>
 <li>必要に応じて <code>root-&gt;placeholder_array</code> を再割当て・拡大し、<code>phinfo</code> を登録する。</li>
-<p>7. **ネストしたプレースホルダの処理**: 内部式に含まれる低レベルのプレースホルダを検出するため、<a class="wiki-source-link" href="../../source/src/backend/optimizer/util/placeholder.c.html#L258" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__placeholder_c__find_placeholders_in_expr.html&quot;}, '*');"><code>find_placeholders_in_expr</code></a> を呼び出す。</p>
+<p>7. <strong>ネストしたプレースホルダの処理</strong>: 内部式に含まれる低レベルのプレースホルダを検出するため、<a class="wiki-source-link" href="../../source/src/backend/optimizer/util/placeholder.c.html#L258" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__placeholder_c__find_placeholders_in_expr.html&quot;}, '*');"><code>find_placeholders_in_expr</code></a> を呼び出す。</p>
 </ul>
 <h2>呼び出し元と呼び出し先</h2>
 <ul>
@@ -96,8 +96,8 @@
 </ul>
 <h2>失敗モードと境界条件</h2>
 <ul>
-<li>**エラー終了 (<code>ERROR</code>)**: プレースホルダ集合が既に凍結されている状態 (<code>root-&gt;placeholdersFrozen</code> が真) で新しい <code>PlaceHolderInfo</code> を作成しようとした場合、エラーが発生する。</li>
-<li>**配列拡張の境界**: <code>phinfo-&gt;phid</code> が現在の <code>root-&gt;placeholder_array_size</code> を超える場合、サイズを 2 倍に拡大しながら十分な大きさになるまでループして <a class="wiki-source-link" href="../../source/src/backend/optimizer/util/placeholder.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__placeholder_c__placeholder_array.html&quot;}, '*');"><code>placeholder_array</code></a> を再割り当てする。</li>
+<li><strong>エラー終了 (<code>ERROR</code>)</strong>: プレースホルダ集合が既に凍結されている状態 (<code>root-&gt;placeholdersFrozen</code> が真) で新しい <code>PlaceHolderInfo</code> を作成しようとした場合、エラーが発生する。</li>
+<li><strong>配列拡張の境界</strong>: <code>phinfo-&gt;phid</code> が現在の <code>root-&gt;placeholder_array_size</code> を超える場合、サイズを 2 倍に拡大しながら十分な大きさになるまでループして <a class="wiki-source-link" href="../../source/src/backend/optimizer/util/placeholder.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__placeholder_c__placeholder_array.html&quot;}, '*');"><code>placeholder_array</code></a> を再割り当てする。</li>
 </ul><script>
 (function() {
   function notifyParent() {

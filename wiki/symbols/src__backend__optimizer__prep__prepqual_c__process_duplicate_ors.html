@@ -1,5 +1,5 @@
 <!doctype html>
-<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>symbols/src__backend__optimizer__prep__prepqual_c__process_duplicate_ors.md</title><link rel="stylesheet" href="../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../source/src/backend/optimizer/prep/prepqual.c.html#L516" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__prep__prepqual_c__process_duplicate_ors.html&quot;}, '*');">process_duplicate_ors</a></h1>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="10"><title>symbols/src__backend__optimizer__prep__prepqual_c__process_duplicate_ors.md</title><link rel="stylesheet" href="../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../source/src/backend/optimizer/prep/prepqual.c.html#L516" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__prep__prepqual_c__process_duplicate_ors.html&quot;}, '*');">process_duplicate_ors</a></h1>
 <h2>現在のソース事実</h2>
 <ul>
 <li>種別: <code>function</code></li>
@@ -45,8 +45,8 @@
 </ul>
 <h2>入力と出力</h2>
 <ul>
-<li>**入力**: <code>List *orlist</code> （最適化対象となる <code>OR</code> 構成要素のリスト）</li>
-<li>**戻り値**: <code>Expr *</code> （因数分解された新しい式、または変換できない場合は元の構造から構築された式）</li>
+<li><strong>入力</strong>: <code>List *orlist</code> （最適化対象となる <code>OR</code> 構成要素のリスト）</li>
+<li><strong>戻り値</strong>: <code>Expr *</code> （因数分解された新しい式、または変換できない場合は元の構造から構築された式）</li>
 </ul>
 <h2>前提条件と不変条件</h2>
 <ul>
@@ -54,21 +54,21 @@
 <li>入力リストの要素数が 1 つである場合は、その単一の式をそのまま返す。</li>
 </ul>
 <h2>アルゴリズムまたは振る舞い</h2>
-<p>1. **基本ケースの処理**:</p>
+<p>1. <strong>基本ケースの処理</strong>:</p>
 <ul>
 <li><code>orlist</code> が空の場合は <code>FALSE</code> の定数式を返す。</li>
 <li>要素数が 1 つの場合は、その要素をそのまま返す。</li>
-<p>2. **参照リスト（基準候補）の選出**:</p>
+<p>2. <strong>参照リスト（基準候補）の選出</strong>:</p>
 <li><code>orlist</code> 内を走査し、最も短い <code>AND</code> 節（または <code>AND</code> ではない単一要素）を基準リスト（<code>reference</code>）として選出する。</li>
 <li>重複を排除するため、選出された <code>reference</code> に対して <code>list_union(NIL, reference)</code> を適用する。</li>
-<p>3. **共通勝者（<code>winners</code>）の特定**:</p>
+<p>3. <strong>共通勝者（<code>winners</code>）の特定</strong>:</p>
 <li>基準リスト内の各要素が、<code>orlist</code> 内のすべての <code>OR</code> 枝（<code>AND</code> 節または非 <code>AND</code> 節）に共通して含まれているかを検証する。</li>
 <li>すべての枝に含まれている要素を集め、勝者リスト（<code>winners</code>）を構築する。</li>
 <li>共通する勝者が存在しない（<code>winners == NIL</code>）場合は、変換を行わずに元のリストから構築した <code>OR</code> 節を返す。</li>
-<p>4. **残余部分の再構築**:</p>
+<p>4. <strong>残余部分の再構築</strong>:</p>
 <li>各 <code>OR</code> 枝から共通因数（<code>winners</code>）を除外した残りのサブ句リスト（<code>neworlist</code>）を生成する。</li>
 <li>もしある枝からすべての要素が除外されて空になった場合（例: <code>(A AND B) OR (A)</code> のような縮退ケース）、<code>neworlist</code> を破棄してループを抜ける。</li>
-<p>5. **最終式の組み立て**:</p>
+<p>5. <strong>最終式の組み立て</strong>:</p>
 <li>縮退していない場合は、残余の <code>neworlist</code> を単一要素ならそのまま、複数なら <code>OR</code> 節（<a class="wiki-source-link" href="../../source/src/backend/optimizer/prep/prepqual.c.html#L348" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__prep__prepqual_c__pull_ors.html&quot;}, '*');"><code>pull_ors</code></a> を適用してフラット性を維持）として <code>winners</code> リストの末尾に結合する。</li>
 <li>最終的な <code>winners</code> リストの要素数が 1 つであればその式を返し、複数であれば <code>AND</code> 節（<a class="wiki-source-link" href="../../source/src/backend/optimizer/prep/prepqual.c.html#L322" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__prep__prepqual_c__pull_ands.html&quot;}, '*');"><code>pull_ands</code></a> を適用）として返す。</li>
 </ul>

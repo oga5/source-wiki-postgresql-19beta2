@@ -1,5 +1,5 @@
 <!doctype html>
-<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>symbols/src__backend__optimizer__path__clausesel_c__clauselist_selectivity_or.md</title><link rel="stylesheet" href="../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../source/src/backend/optimizer/path/clausesel.c.html#L358" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__path__clausesel_c__clauselist_selectivity_or.html&quot;}, '*');">clauselist_selectivity_or</a></h1>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="10"><title>symbols/src__backend__optimizer__path__clausesel_c__clauselist_selectivity_or.md</title><link rel="stylesheet" href="../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../source/src/backend/optimizer/path/clausesel.c.html#L358" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__path__clausesel_c__clauselist_selectivity_or.html&quot;}, '*');">clauselist_selectivity_or</a></h1>
 <h2>現在のソース事実</h2>
 <ul>
 <li>種別: <code>function</code></li>
@@ -49,14 +49,14 @@
 <p>ORで結合された複数の条件（句）リスト全体の選択度を計算する。</p>
 <h2>入力と出力</h2>
 <ul>
-<li>**入力**:</li>
+<li><strong>入力</strong>:</li>
 <li><code>PlannerInfo *root</code>: プランナのグローバル情報。</li>
 <li><code>List *clauses</code>: ORで結合された条件（句）のリスト。</li>
 <li><code>int varRelid</code>: 関連する単一リレーションのID（存在しない場合は0）。</li>
 <li><code>JoinType jointype</code>: 結合のタイプ。</li>
 <li><code>SpecialJoinInfo *sjinfo</code>: 特殊結合情報。</li>
 <li><code>bool use_extended_stats</code>: 拡張統計情報を使用するかどうかを示すフラグ。</li>
-<li>**出力**:</li>
+<li><strong>出力</strong>:</li>
 <li><code>Selectivity</code>: 計算された全体の選択度（0.0から1.0の範囲の浮動小数点数）。</li>
 </ul>
 <h2>前提条件と不変条件</h2>
@@ -65,29 +65,29 @@
 <li>拡張統計によって推定された条件は、インデックス（0ベース）が <code>estimatedclauses</code> ビットマップセットに記録され、後半の個別推定ループで重複して計算されないように制御される。</li>
 </ul>
 <h2>アルゴリズムまたは振る舞い</h2>
-<p>1. **単一リレーションの特定と拡張統計の適用**:</p>
+<p>1. <strong>単一リレーションの特定と拡張統計の適用</strong>:</p>
 <ul>
 <li><a class="wiki-source-link" href="../../source/src/backend/optimizer/path/clausesel.c.html#L522" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__path__clausesel_c__find_single_rel_for_clauses.html&quot;}, '*');"><code>find_single_rel_for_clauses</code></a> を呼び出して、条件リストが単一のリレーションを参照しているか判定する。</li>
 <li>条件を満たす場合、<a class="wiki-source-link" href="../../source/src/backend/statistics/extended_stats.c.html#L2029" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__statistics__extended_stats_c__statext_clauselist_selectivity.html&quot;}, '*');"><code>statext_clauselist_selectivity</code></a> を呼び出して拡張統計による選択度 <a class="wiki-source-link" href="../../source/src/include/common/pg_prng.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__common__pg_prng_h__s1.html&quot;}, '*');"><code>s1</code></a> を計算し、カバーされた条件のインデックスを <code>estimatedclauses</code> に格納する。</li>
-<p>2. **残余条件の個別推定と合成**:</p>
+<p>2. <strong>残余条件の個別推定と合成</strong>:</p>
 <li>リスト内の各条件を走査する。</li>
 <li>現在の条件のインデックスが <code>estimatedclauses</code> に含まれている場合は、既に拡張統計で評価済みであるためスキップする。</li>
 <li>含まれていない場合、<a class="wiki-source-link" href="../../source/src/backend/optimizer/path/clausesel.c.html#L683" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__path__clausesel_c__clause_selectivity_ext.html&quot;}, '*');"><code>clause_selectivity_ext</code></a> を呼び出して個別選択度 <code>s2</code> を計算する。</li>
 <li>選択されたタプル集合の重複を考慮し、OR結合の公式 <code>s1 = s1 + s2 - s1 * s2</code> を用いて累積選択度 <a class="wiki-source-link" href="../../source/src/include/common/pg_prng.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__common__pg_prng_h__s1.html&quot;}, '*');"><code>s1</code></a> を更新する。</li>
-<p>3. **結果の返却**:</p>
+<p>3. <strong>結果の返却</strong>:</p>
 <li>最終的に合成された選択度 <a class="wiki-source-link" href="../../source/src/include/common/pg_prng.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__common__pg_prng_h__s1.html&quot;}, '*');"><code>s1</code></a> を返す。</li>
 </ul>
 <h2>失敗モードと境界条件</h2>
 <ul>
-<li>**空の条件リスト (<code>clauses == NIL</code>)**:</li>
+<li><strong>空の条件リスト (<code>clauses == NIL</code>)</strong>:</li>
 <li><code>clauses</code> が <a class="wiki-source-link" href="../../source/src/include/nodes/pg_list.h.html#L68" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/nodes/pg_list.h.html&quot;}, '*');"><code>NIL</code></a> の場合、<a class="wiki-source-link" href="../../source/src/backend/optimizer/path/clausesel.c.html#L522" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__path__clausesel_c__find_single_rel_for_clauses.html&quot;}, '*');"><code>find_single_rel_for_clauses</code></a> は <code>NULL</code> を返し、拡張統計の適用はスキップされる。</li>
 <li>後半の <a class="wiki-source-link" href="../../source/src/include/nodes/pg_list.h.html#L405" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/nodes/pg_list.h.html&quot;}, '*');"><code>foreach</code></a> ループも実行されないため、初期値である <code>s1 = 0.0</code> がそのまま返される。</li>
-<li>**すべての条件が拡張統計でカバーされた場合**:</li>
+<li><strong>すべての条件が拡張統計でカバーされた場合</strong>:</li>
 <li><code>estimatedclauses</code> にすべての条件インデックスが登録されるため、後半のループではすべての条件が <a class="wiki-source-link" href="../../source/src/backend/nodes/bitmapset.c.html#L509" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__nodes__bitmapset_c__bms_is_member.html&quot;}, '*');"><code>bms_is_member</code></a> によりスキップされ、拡張統計から得られた <a class="wiki-source-link" href="../../source/src/include/common/pg_prng.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__common__pg_prng_h__s1.html&quot;}, '*');"><code>s1</code></a> がそのまま返される。</li>
-<li>**独立性の仮定による過小・過大評価**:</li>
+<li><strong>独立性の仮定による過小・過大評価</strong>:</li>
 <li>拡張統計でカバーされない条件同士は互いに独立であると仮定して <code>s1 + s2 - s1 * s2</code> で合成される。</li>
 <li>条件間に強い相関（例: 同一列に対する異なる値のOR条件など、排他的な関係）がある場合、この独立性仮定に基づく重複排除（<code>s1 * s2</code>）は、実際の選択度に対して不正確な（過度に保守的な）見積もりを与える可能性がある。</li>
-<li>**極端な選択度（0.0 または 1.0）の伝播**:</li>
+<li><strong>極端な選択度（0.0 または 1.0）の伝播</strong>:</li>
 <li>いずれかの条件の選択度 <code>s2</code> が <code>1.0</code> に達した場合、公式 <code>s1 + 1.0 - s1 * 1.0</code> により、全体の選択度 <a class="wiki-source-link" href="../../source/src/include/common/pg_prng.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__common__pg_prng_h__s1.html&quot;}, '*');"><code>s1</code></a> は以降の条件に関わらず <code>1.0</code> に固定される。</li>
 <li>逆に、ある条件の選択度 <code>s2</code> が <code>0.0</code> の場合、<code>s1 + 0.0 - s1 * 0.0</code> となり、全体の選択度 <a class="wiki-source-link" href="../../source/src/include/common/pg_prng.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__common__pg_prng_h__s1.html&quot;}, '*');"><code>s1</code></a> には影響を与えない。</li>
 </ul><script>

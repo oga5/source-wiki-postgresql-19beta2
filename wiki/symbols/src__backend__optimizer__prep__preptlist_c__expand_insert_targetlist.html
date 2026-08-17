@@ -1,5 +1,5 @@
 <!doctype html>
-<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>symbols/src__backend__optimizer__prep__preptlist_c__expand_insert_targetlist.md</title><link rel="stylesheet" href="../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../source/src/backend/optimizer/prep/preptlist.c.html#L383" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__prep__preptlist_c__expand_insert_targetlist.html&quot;}, '*');">expand_insert_targetlist</a></h1>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="10"><title>symbols/src__backend__optimizer__prep__preptlist_c__expand_insert_targetlist.md</title><link rel="stylesheet" href="../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../source/src/backend/optimizer/prep/preptlist.c.html#L383" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__prep__preptlist_c__expand_insert_targetlist.html&quot;}, '*');">expand_insert_targetlist</a></h1>
 <h2>現在のソース事実</h2>
 <ul>
 <li>種別: <code>function</code></li>
@@ -74,18 +74,18 @@
 <li>残存するジャンクエントリ（<code>resjunk</code> が真のエントリ）は、すべての実属性の後に続く連番の <code>resno</code> を持つように再割り当てされます。</li>
 </ul>
 <h2>アルゴリズムまたは振る舞い</h2>
-<p>1. **初期化**: ターゲットリストの先頭セルを取得し、リレーションの属性総数（<code>numattrs</code>）をリレーションキャッシュから取得します。 2. **ユーザ属性の走査**: <code>1</code> から <code>numattrs</code> までループし、各属性について対応する <code>TargetEntry</code> を決定します。</p>
+<p>1. <strong>初期化</strong>: ターゲットリストの先頭セルを取得し、リレーションの属性総数（<code>numattrs</code>）をリレーションキャッシュから取得します。 2. <strong>ユーザ属性の走査</strong>: <code>1</code> から <code>numattrs</code> までループし、各属性について対応する <code>TargetEntry</code> を決定します。</p>
 <ul>
 <li>既存のリストアイテムが存在し、かつそれがジャンク列ではなく現在の属性番号（<code>attrno</code>）と一致する場合は、既存の <code>TargetEntry</code> をそのまま流用し、リストの次のアイテムへ進めます。</li>
-<p>3. **欠落列の補完**: 一致するエントリが見つからない場合、カラムの状態に応じて適切な <code>NULL</code> 式を生成します。</p>
+<p>3. <strong>欠落列の補完</strong>: 一致するエントリが見つからない場合、カラムの状態に応じて適切な <code>NULL</code> 式を生成します。</p>
 <li>属性がドロップされている場合（<code>attisdropped</code>）、<code>INT4OID</code> 型の <code>NULL</code> 定数式を生成します。</li>
 <li>生成列の場合（<code>attgenerated</code>）、ベース型の取得と型修飾子の解決を行った上で、ベース型の <code>NULL</code> 定数式を生成します。</li>
 <li>通常の列の場合、ドメイン制約を適用した <code>NULL</code> 式を生成し、必要に応じて定数式の評価（<a class="wiki-source-link" href="../../source/src/backend/optimizer/util/clauses.c.html#L2515" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__clauses_c__eval_const_expressions.html&quot;}, '*');"><code>eval_const_expressions</code></a>）を実行します。</li>
 <li>生成した式と属性名を用いて新しい <code>TargetEntry</code> を作成し、新しいターゲットリストに追加します。</li>
-<p>4. **ジャンクエントリの処理**: リレーション属性の走査後も残っているリストアイテムを走査します。</p>
+<p>4. <strong>ジャンクエントリの処理</strong>: リレーション属性の走査後も残っているリストアイテムを走査します。</p>
 <li>ジャンクでないエントリが含まれていた場合はエラーを送出します。</li>
 <li>必要に応じてエントリをコピーし、<code>resno</code> を現在の <code>attrno</code> に更新して新しいターゲットリストの末尾に追加し、<code>attrno</code> をインクリメントします。</li>
-<p>5. **終了**: 構築された新しいターゲットリストを返します。</p>
+<p>5. <strong>終了</strong>: 構築された新しいターゲットリストを返します。</p>
 </ul>
 <h2>失敗モードと境界条件</h2>
 <ul>

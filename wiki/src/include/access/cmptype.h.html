@@ -1,5 +1,5 @@
 <!doctype html>
-<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>src/include/access/cmptype.h.md</title><link rel="stylesheet" href="../../../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../../../source/src/include/access/cmptype.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/access/cmptype.h.html&quot;}, '*');">src/include/access/cmptype.h</a></h1>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="10"><title>src/include/access/cmptype.h.md</title><link rel="stylesheet" href="../../../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../../../source/src/include/access/cmptype.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/access/cmptype.h.html&quot;}, '*');">src/include/access/cmptype.h</a></h1>
 <h2>概要</h2>
 <p><a class="wiki-source-link" href="../../../../source/src/include/access/cmptype.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/access/cmptype.h.html&quot;}, '*');"><code>src/include/access/cmptype.h</code></a> は、PostgreSQL の内部で演算子が持つ基本的な意味論（セマンティクス）を抽象化・定義するためのヘッダーファイルです。システムやエクゼキューター（<code>RowCompareExpr</code> など）がハードコードなしで演算子の比較挙動（等価性、大小関係、包含関係など）を認識できるようにするための共通列挙型を提供します。</p>
 <h2>モジュール内での役割</h2>
@@ -36,8 +36,8 @@
 </ul>
 <h2>読者向けメモ</h2>
 <ul>
-<li>**設計上の注意**: コメントにも記載されている通り、現時点のマッピングは Btree のストラテジー番号に強く依存しており、他のアクセスメソッド全体への汎用的な適用については発展途上の部分があります。</li>
-<li>**メモリ・ライフサイクル**: 定義のみであり、実行時のメモリ割り当てやライフサイクル管理は伴いません。</li>
+<li><strong>設計上の注意</strong>: コメントにも記載されている通り、現時点のマッピングは Btree のストラテジー番号に強く依存しており、他のアクセスメソッド全体への汎用的な適用については発展途上の部分があります。</li>
+<li><strong>メモリ・ライフサイクル</strong>: 定義のみであり、実行時のメモリ割り当てやライフサイクル管理は伴いません。</li>
 </ul>
 <h2>シンボルページ</h2>
 <ul>

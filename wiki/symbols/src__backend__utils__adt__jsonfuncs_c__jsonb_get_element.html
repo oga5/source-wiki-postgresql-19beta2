@@ -1,5 +1,5 @@
 <!doctype html>
-<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>symbols/src__backend__utils__adt__jsonfuncs_c__jsonb_get_element.md</title><link rel="stylesheet" href="../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../source/src/backend/utils/adt/jsonfuncs.c.html#L1533" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__utils__adt__jsonfuncs_c__jsonb_get_element.html&quot;}, '*');">jsonb_get_element</a></h1>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="10"><title>symbols/src__backend__utils__adt__jsonfuncs_c__jsonb_get_element.md</title><link rel="stylesheet" href="../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../source/src/backend/utils/adt/jsonfuncs.c.html#L1533" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__utils__adt__jsonfuncs_c__jsonb_get_element.html&quot;}, '*');">jsonb_get_element</a></h1>
 <h2>現在のソース事実</h2>
 <ul>
 <li>種別: <code>function</code></li>
@@ -51,16 +51,16 @@
 <li>処理の開始時に <code>*isnull</code> は <a class="wiki-source-link" href="../../source/src/tools/pg_bsd_indent/indent_globs.h.html#L43" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/tools/pg_bsd_indent/indent_globs.h.html&quot;}, '*');"><code>false</code></a> に初期化される。</li>
 </ul>
 <h2>アルゴリズムまたは振る舞い</h2>
-<p>1. **初期状態の判定**:</p>
+<p>1. <strong>初期状態の判定</strong>:</p>
 <ul>
 <li><code>jb</code> のルートがオブジェクトであるか、配列であるか、またはスカラーであるかを判定し、それぞれ対応するフラグ（<code>have_object</code> または <code>have_array</code>）を設定する。</li>
 <li>ルートがスカラーであり <code>npath &lt;= 0</code> の場合、先頭の値を初期の <code>jbvp</code> として取得する。</li>
 </ul>
-<p>2. **空パスの処理**:</p>
+<p>2. <strong>空パスの処理</strong>:</p>
 <ul>
 <li><code>npath &lt;= 0</code> かつ <code>jbvp == NULL</code> の場合、抽出を行わずにコンテナ全体を返す。<code>as_text</code> が真の場合はテキストに変換して返し、偽の場合は元の <a class="wiki-source-link" href="../../source/src/backend/utils/adt/jsonfuncs.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__utils__adt__jsonfuncs_c__jsonb.html&quot;}, '*');"><code>jsonb</code></a> をそのまま返す。</li>
 </ul>
-<p>3. **パスの走査ループ**:</p>
+<p>3. <strong>パスの走査ループ</strong>:</p>
 <ul>
 <li><code>0</code> から <code>npath - 1</code> までパスの各要素を順に辿る。</li>
 <li><code>have_object</code> が真の場合、現在のパス要素をテキストに変換し、オブジェクトコンテナからキーに対応する値（<code>jbvp</code>）を取得する。</li>
@@ -71,7 +71,7 @@
 <li>現在のステップが最終パス（<code>i == npath - 1</code>）であればループを抜ける。</li>
 <li>取得した値がバイナリ型（<a class="wiki-source-link" href="../../source/src/include/utils/jsonb.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__utils__jsonb_h__jbvBinary.html&quot;}, '*');"><code>jbvBinary</code></a>）の場合、内部コンテナを更新し、次段のコンテナがオブジェクトか配列かに応じてフラグを再設定する。スカラー型の場合は両方のフラグを不活性にする。</li>
 </ul>
-<p>4. **結果の返却**:</p>
+<p>4. <strong>結果の返却</strong>:</p>
 <ul>
 <li><code>as_text</code> が真の場合、値がSQLのNULL（<a class="wiki-source-link" href="../../source/src/include/utils/jsonb.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__utils__jsonb_h__jbvNull.html&quot;}, '*');"><code>jbvNull</code></a>）であれば <code>*isnull = true</code> とし、それ以外は <a class="wiki-source-link" href="../../source/src/backend/utils/adt/jsonfuncs.c.html#L1804" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__utils__adt__jsonfuncs_c__JsonbValueAsText.html&quot;}, '*');"><code>JsonbValueAsText</code></a> を用いてテキスト表現に変換して返す。</li>
 <li><code>as_text</code> が偽の場合、<code>JsonbValueToJsonb</code> を用いて <a class="wiki-source-link" href="../../source/src/include/utils/jsonb.h.html#L214" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__utils__jsonb_h__Jsonb.html&quot;}, '*');"><code>Jsonb</code></a> 構造体に変換し、マクロを介して返す。</li>

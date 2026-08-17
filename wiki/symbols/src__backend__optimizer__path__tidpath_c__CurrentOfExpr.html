@@ -1,5 +1,5 @@
 <!doctype html>
-<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>symbols/src__backend__optimizer__path__tidpath_c__CurrentOfExpr.md</title><link rel="stylesheet" href="../../styles.css"></head><body><h1>CurrentOfExpr</h1>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="10"><title>symbols/src__backend__optimizer__path__tidpath_c__CurrentOfExpr.md</title><link rel="stylesheet" href="../../styles.css"></head><body><h1>CurrentOfExpr</h1>
 <h2>現在のソース事実</h2>
 <ul>
 <li>種別: <code>function</code></li>
@@ -64,21 +64,21 @@
 <p>SQLの「<code>WHERE CURRENT OF cursor</code>」条件を表現し、指定されたカーソルの現在位置から実行時に決定されるタプル識別子（TID）に基づいて、対象リレーションから直接タプルをスキャン（TIDスキャン）できるようにすることです。</p>
 <h2>入力と出力</h2>
 <ul>
-<li>**入力**: 実行時に対象となるカーソルを特定するための情報（カーソル名や参照リレーションのメタデータ）。</li>
-<li>**出力**: 概念的には、対象タプルの物理位置（<a class="wiki-source-link" href="../../source/src/backend/optimizer/path/tidpath.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__path__tidpath_c__CTID.html&quot;}, '*');">CTID</a>）が実行時に決定されたTIDと一致するかどうかを示すブーリアン値。</li>
+<li><strong>入力</strong>: 実行時に対象となるカーソルを特定するための情報（カーソル名や参照リレーションのメタデータ）。</li>
+<li><strong>出力</strong>: 概念的には、対象タプルの物理位置（<a class="wiki-source-link" href="../../source/src/backend/optimizer/path/tidpath.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__path__tidpath_c__CTID.html&quot;}, '*');">CTID</a>）が実行時に決定されたTIDと一致するかどうかを示すブーリアン値。</li>
 </ul>
 <h2>前提条件と不変条件</h2>
 <ul>
-<li>**特殊ノード表現の維持**: 理論上は <a class="wiki-source-link" href="../../source/src/backend/optimizer/path/tidpath.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__path__tidpath_c__CTID.html&quot;}, '*');"><code>CTID</code></a> と関数結果の比較式に変換可能ですが、実行（Execution）フェーズに至るまで、この専用の <code>CurrentOfExpr</code> ノード表現のまま一貫して保持される必要があります。</li>
-<li>**OR結合の禁止**: <code>CurrentOfExpr</code> は、他の条件（例: <code>CTID = const</code> など）と <code>OR</code> で結合された状態で存在することはできません。</li>
+<li><strong>特殊ノード表現の維持</strong>: 理論上は <a class="wiki-source-link" href="../../source/src/backend/optimizer/path/tidpath.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__path__tidpath_c__CTID.html&quot;}, '*');"><code>CTID</code></a> と関数結果の比較式に変換可能ですが、実行（Execution）フェーズに至るまで、この専用の <code>CurrentOfExpr</code> ノード表現のまま一貫して保持される必要があります。</li>
+<li><strong>OR結合の禁止</strong>: <code>CurrentOfExpr</code> は、他の条件（例: <code>CTID = const</code> など）と <code>OR</code> で結合された状態で存在することはできません。</li>
 </ul>
 <h2>アルゴリズムまたは振る舞い</h2>
-<p>1. **パス生成時の優先処理**: オプティマイザがリレーションの制限句（<code>baserestrictinfo</code>）から <code>CurrentOfExpr</code> を検出した場合、他のすべてのTID条件やアクセスパス候補の探索を打ち切り、この条件に基づく <code>TidPath</code> を最優先かつ唯一の正しいパスとして生成します。 2. **実行時のTID解決**: エグゼキュータは、実行時に指定されたカーソルの現在位置から対象タプルの物理的なTID（<a class="wiki-source-link" href="../../source/src/backend/optimizer/path/tidpath.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__path__tidpath_c__CTID.html&quot;}, '*');">CTID</a>）を特定し、そのTIDを用いて直接ヒープからタプルをフェッチします。</p>
+<p>1. <strong>パス生成時の優先処理</strong>: オプティマイザがリレーションの制限句（<code>baserestrictinfo</code>）から <code>CurrentOfExpr</code> を検出した場合、他のすべてのTID条件やアクセスパス候補の探索を打ち切り、この条件に基づく <code>TidPath</code> を最優先かつ唯一の正しいパスとして生成します。 2. <strong>実行時のTID解決</strong>: エグゼキュータは、実行時に指定されたカーソルの現在位置から対象タプルの物理的なTID（<a class="wiki-source-link" href="../../source/src/backend/optimizer/path/tidpath.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__path__tidpath_c__CTID.html&quot;}, '*');">CTID</a>）を特定し、そのTIDを用いて直接ヒープからタプルをフェッチします。</p>
 <h2>失敗モードと境界条件</h2>
 <ul>
-<li>**OR結合時の動作未定義**: <code>CurrentOfExpr</code> が他の式と <code>OR</code> で結合された状態で構文木に現れた場合、エグゼキュータのTIDスキャン処理はこれを正しく処理できず、実行時エラーや予期しない動作を引き起こす原因となります。</li>
-<li>**直接評価の禁止**: 一般的な式評価エンジン（<a class="wiki-source-link" href="../../source/src/backend/executor/execExpr.c.html#L142" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__executor__execExpr_c__ExecInitExpr.html&quot;}, '*');"><code>ExecInitExpr</code></a> など）でこのノードを直接評価（実行）することは想定されていません。必ず <a class="wiki-source-link" href="../../source/src/include/nodes/plannodes.h.html#L725" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__nodes__plannodes_h__TidScan.html&quot;}, '*');"><code>TidScan</code></a> などの専用の実行計画ノードを介して処理される必要があり、直接評価を試みるとエラーになります。</li>
-<li>**カーソル状態の不整合**: 実行時に指定されたカーソルが有効なタプルを指していない場合（カーソルがオープンされていない、またはフェッチ前・終了後の状態である場合）、対応するTIDを特定できず、実行時エラーまたはスキャンの失敗となります。</li>
+<li><strong>OR結合時の動作未定義</strong>: <code>CurrentOfExpr</code> が他の式と <code>OR</code> で結合された状態で構文木に現れた場合、エグゼキュータのTIDスキャン処理はこれを正しく処理できず、実行時エラーや予期しない動作を引き起こす原因となります。</li>
+<li><strong>直接評価の禁止</strong>: 一般的な式評価エンジン（<a class="wiki-source-link" href="../../source/src/backend/executor/execExpr.c.html#L142" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__executor__execExpr_c__ExecInitExpr.html&quot;}, '*');"><code>ExecInitExpr</code></a> など）でこのノードを直接評価（実行）することは想定されていません。必ず <a class="wiki-source-link" href="../../source/src/include/nodes/plannodes.h.html#L725" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__nodes__plannodes_h__TidScan.html&quot;}, '*');"><code>TidScan</code></a> などの専用の実行計画ノードを介して処理される必要があり、直接評価を試みるとエラーになります。</li>
+<li><strong>カーソル状態の不整合</strong>: 実行時に指定されたカーソルが有効なタプルを指していない場合（カーソルがオープンされていない、またはフェッチ前・終了後の状態である場合）、対応するTIDを特定できず、実行時エラーまたはスキャンの失敗となります。</li>
 </ul><script>
 (function() {
   function notifyParent() {

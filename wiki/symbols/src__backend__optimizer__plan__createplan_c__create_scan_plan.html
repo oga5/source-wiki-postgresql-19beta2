@@ -1,5 +1,5 @@
 <!doctype html>
-<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>symbols/src__backend__optimizer__plan__createplan_c__create_scan_plan.md</title><link rel="stylesheet" href="../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../source/src/backend/optimizer/plan/createplan.c.html#L550" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__plan__createplan_c__create_scan_plan.html&quot;}, '*');">create_scan_plan</a></h1>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="10"><title>symbols/src__backend__optimizer__plan__createplan_c__create_scan_plan.md</title><link rel="stylesheet" href="../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../source/src/backend/optimizer/plan/createplan.c.html#L550" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__plan__createplan_c__create_scan_plan.html&quot;}, '*');">create_scan_plan</a></h1>
 <h2>現在のソース事実</h2>
 <ul>
 <li>種別: <code>function</code></li>
@@ -65,26 +65,26 @@
 <li>結合リレーション（<code>IS_JOIN_REL(rel)</code> が真）を置換するパスの場合、<code>best_path</code> のパスタイプは <code>T_ForeignScan</code> または <code>T_CustomScan</code> でなければなりません。</li>
 </ul>
 <h2>アルゴリズムまたは振る舞い</h2>
-<p>1. **スキャン条件（<code>scan_clauses</code>）の抽出**:</p>
+<p>1. <strong>スキャン条件（<code>scan_clauses</code>）の抽出</strong>:</p>
 <ul>
 <li>パスタイプが <code>T_IndexScan</code> または <code>T_IndexOnlyScan</code> の場合は、インデックスの述語に包含される条件を除外した <a class="wiki-source-link" href="../../source/src/backend/optimizer/path/indxpath.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__path__indxpath_c__indrestrictinfo.html&quot;}, '*');"><code>indrestrictinfo</code></a> を使用します。</li>
 <li>その他のパスの場合は、親リレーションの基本制限条件 <code>baserestrictinfo</code> を使用します。</li>
 <li>パラメータ化されたスキャンである場合は、外部リレーションから利用可能な結合条件（<code>ppi_clauses</code>）をコピーして <code>scan_clauses</code> に結合します。</li>
 </ul>
-<p>2. **ゲーティング条件（<code>gating_clauses</code>）の検出**:</p>
+<p>2. <strong>ゲーティング条件（<code>gating_clauses</code>）の検出</strong>:</p>
 <ul>
 <li>結合リレーションの場合は、FDW制限情報またはカスタム制限情報に対して <a class="wiki-source-link" href="../../source/src/backend/optimizer/plan/createplan.c.html#L993" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__plan__createplan_c__get_gating_quals.html&quot;}, '*');"><code>get_gating_quals</code></a> を呼び出して擬似定数条件を検出します。</li>
 <li>単一リレーションの場合は、<code>scan_clauses</code> に対して <a class="wiki-source-link" href="../../source/src/backend/optimizer/plan/createplan.c.html#L993" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__plan__createplan_c__get_gating_quals.html&quot;}, '*');"><code>get_gating_quals</code></a> を呼び出します。</li>
 <li>ゲーティング条件が存在する場合、子プランのターゲットリスト要件を緩和するため <code>flags</code> を <code>0</code> にリセットします。</li>
 </ul>
-<p>3. **ターゲットリスト（<code>tlist</code>）の構築**:</p>
+<p>3. <strong>ターゲットリスト（<code>tlist</code>）の構築</strong>:</p>
 <ul>
 <li><code>flags</code> が <a class="wiki-source-link" href="../../source/src/backend/optimizer/plan/createplan.c.html#L72" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/backend/optimizer/plan/createplan.c.html&quot;}, '*');"><code>CP_IGNORE_TLIST</code></a> のみである場合は、tlist を生成せず <code>NULL</code> とします。</li>
 <li>物理 tlist の利用が可能な場合、インデックスオンリースキャンではインデックスの tlist をコピーし、必要に応じてソートグループ参照のラベル付けを行います。</li>
 <li>それ以外のテーブルスキャンでは <a class="wiki-source-link" href="../../source/src/backend/optimizer/util/plancat.c.html#L2041" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__plancat_c__build_physical_tlist.html&quot;}, '*');"><code>build_physical_tlist</code></a> を試行し、ドロップされた列などが原因で失敗した場合は通常の <a class="wiki-source-link" href="../../source/src/backend/optimizer/plan/createplan.c.html#L816" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__plan__createplan_c__build_path_tlist.html&quot;}, '*');"><code>build_path_tlist</code></a> にフォールバックします。</li>
 <li>物理 tlist が適用できない場合は、通常の方法で <a class="wiki-source-link" href="../../source/src/backend/optimizer/plan/createplan.c.html#L816" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__plan__createplan_c__build_path_tlist.html&quot;}, '*');"><code>build_path_tlist</code></a> を使って tlist を構築します。</li>
 </ul>
-<p>4. **プランノードのディスパッチ生成**:</p>
+<p>4. <strong>プランノードのディスパッチ生成</strong>:</p>
 <ul>
 <li><code>best_path-&gt;pathtype</code> の値に応じて、以下の個別プラン生成関数を呼び出して物理プランを構築します:</li>
 <li><code>T_SeqScan</code>: <a class="wiki-source-link" href="../../source/src/backend/optimizer/plan/createplan.c.html#L2754" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__plan__createplan_c__create_seqscan_plan.html&quot;}, '*');"><code>create_seqscan_plan</code></a></li>
@@ -104,7 +104,7 @@
 <li><code>T_ForeignScan</code>: <a class="wiki-source-link" href="../../source/src/backend/optimizer/plan/createplan.c.html#L3960" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__plan__createplan_c__create_foreignscan_plan.html&quot;}, '*');"><code>create_foreignscan_plan</code></a></li>
 <li><code>T_CustomScan</code>: <a class="wiki-source-link" href="../../source/src/backend/optimizer/plan/createplan.c.html#L4115" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__plan__createplan_c__create_customscan_plan.html&quot;}, '*');"><code>create_customscan_plan</code></a></li>
 </ul>
-<p>5. **ゲーティングプランのラップ**:</p>
+<p>5. <strong>ゲーティングプランのラップ</strong>:</p>
 <ul>
 <li><code>gating_clauses</code> が存在する場合、生成されたプランに対して <a class="wiki-source-link" href="../../source/src/backend/optimizer/plan/createplan.c.html#L1013" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__plan__createplan_c__create_gating_plan.html&quot;}, '*');"><code>create_gating_plan</code></a> を呼び出し、擬似定数を一度だけ評価する Result ノードを上部に挿入します。</li>
 </ul>

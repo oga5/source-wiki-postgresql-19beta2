@@ -1,5 +1,5 @@
 <!doctype html>
-<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>symbols/src__backend__optimizer__geqo__geqo_cx_c__cx.md</title><link rel="stylesheet" href="../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../source/src/backend/optimizer/geqo/geqo_cx.c.html#L51" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__geqo__geqo_cx_c__cx.html&quot;}, '*');">cx</a></h1>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="10"><title>symbols/src__backend__optimizer__geqo__geqo_cx_c__cx.md</title><link rel="stylesheet" href="../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../source/src/backend/optimizer/geqo/geqo_cx.c.html#L51" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__geqo__geqo_cx_c__cx.html&quot;}, '*');">cx</a></h1>
 <h2>現在のソース事実</h2>
 <ul>
 <li>種別: <code>function</code></li>
@@ -53,26 +53,26 @@
 <li><code>num_gene</code> は有効な都市数であり、<a class="wiki-source-link" href="../../source/src/backend/optimizer/geqo/geqo_ox1.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__geqo__geqo_ox1_c__city_table.html&quot;}, '*');"><code>city_table</code></a> は <code>1</code> から <code>num_gene</code> までのインデックスに対して十分な領域を持つこと。</li>
 </ul>
 <h2>アルゴリズムまたは振る舞い</h2>
-<p>1. **都市テーブルの初期化**:</p>
+<p>1. <strong>都市テーブルの初期化</strong>:</p>
 <ul>
 <li><code>1</code> から <code>num_gene</code> までの各都市について、<code>city_table[i].used</code> を <code>0</code> にクリアする。</li>
 <li><code>tour2</code> および <code>tour1</code> における各都市のインデックス位置を <code>city_table[tour2[i - 1]].tour2_position</code> および <code>city_table[tour1[i - 1]].tour1_position</code> に記録する。</li>
 </ul>
-<p>2. **サイクル開始位置の選択**:</p>
+<p>2. <strong>サイクル開始位置の選択</strong>:</p>
 <ul>
 <li><a class="wiki-source-link" href="../../source/src/backend/optimizer/geqo/geqo_random.c.html#L34" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__geqo__geqo_random_c__geqo_randint.html&quot;}, '*');"><code>geqo_randint</code></a> を用いて、<code>0</code> から <code>num_gene - 1</code> の範囲からランダムにサイクルの開始位置（<code>start_pos</code>）を選択する。</li>
 </ul>
-<p>3. **ステップ 1（サイクル構築）**:</p>
+<p>3. <strong>ステップ 1（サイクル構築）</strong>:</p>
 <ul>
 <li>子孫の <code>start_pos</code> 位置に <code>tour1[start_pos]</code> の遺伝子を継承させ、該当都市の <code>used</code> フラグを立て、カウントをインクリメントする。</li>
 <li><code>tour2[curr_pos]</code> が <code>tour1[start_pos]</code> に一致するまでループし、<code>tour2</code> の都市の位置に対応する <code>tour1</code> の位置を辿りながら、順次 <code>tour1</code> の遺伝子を子孫にコピーしていく。</li>
 </ul>
-<p>4. **ステップ 2（未訪問都市の補完）**:</p>
+<p>4. <strong>ステップ 2（未訪問都市の補完）</strong>:</p>
 <ul>
 <li>サイクル構築によって完全なツアーが生成されなかった場合（<code>count &lt; num_gene</code>）、<a class="wiki-source-link" href="../../source/src/backend/optimizer/geqo/geqo_ox1.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__geqo__geqo_ox1_c__city_table.html&quot;}, '*');"><code>city_table</code></a> を走査して <code>used</code> が立っていない未訪問の都市を検出する。</li>
 <li>未訪問都市について、<code>tour2</code> での位置に対応する遺伝子を <a class="wiki-source-link" href="../../source/src/backend/optimizer/geqo/geqo_ox1.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__geqo__geqo_ox1_c__offspring.html&quot;}, '*');"><code>offspring</code></a> の同じ位置に補完する。</li>
 </ul>
-<p>5. **ステップ 3（差異の評価と返却）**:</p>
+<p>5. <strong>ステップ 3（差異の評価と返却）</strong>:</p>
 <ul>
 <li>それでも完全なツアーになっていない場合、<code>tour1</code> と <a class="wiki-source-link" href="../../source/src/backend/optimizer/geqo/geqo_ox1.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__geqo__geqo_ox1_c__offspring.html&quot;}, '*');"><code>offspring</code></a> を比較して差異の数を数え、その数を返す。</li>
 </ul>

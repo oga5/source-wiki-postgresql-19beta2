@@ -1,0 +1,27 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="10"><title>src/test/modules/test_shm_mq/README</title><link rel="stylesheet" href="../../../../../../styles.css"></head><body><h1>Japanese translation</h1><p><code>src/test/modules/test_shm_mq/README</code></p><p><a href="../../../../../../source/src/test/modules/test_shm_mq/README.html" target="source-view">View original document</a></p><p class="document-translation-progress document-translation-complete">Translation complete.</p><div class="document-translation-body"><section class="document-translation-chunk translated" data-chunk-order="0"><p class="markdown-preserve-lines">test_shm_mq は、動的共有メモリと共有メモリメッセージキュー機能を使用して、ユーザーバックエンドの処理を1つ以上のバックグラウンドワーカーの作業と調整する方法を示す例です。それ単体で何か有用な処理を行うためのものではなく、これらの機能の使用方法を示すデモであり、それらの機能の単体テストです。</p>
+<p class="markdown-preserve-lines">この拡張機能の関数は、プロセスのループを介して同じメッセージを繰り返し送信します。メッセージのペイロード、それが送信されるメッセージキューのサイズ、およびループ内のプロセスの数は設定可能です。最後に、メッセージが転送中に破損していないことを確認するために検証が行われます。</p>
+<h1>関数</h1>
+<p class="markdown-preserve-lines">test_shm_mq(queue_size int8, message text,
+            repeat_count int4 default 1, num_workers int4 default 1)
+    RETURNS void</p>
+<p class="markdown-preserve-lines">この関数はメッセージを同期的に送受信します。ユーザーバックエンドは、指定されたサイズのメッセージキューを使用して、提供されたメッセージを最初のバックグラウンドワーカーに送信します。最初のバックグラウンドワーカーは、ワーカーの数が1より大きい場合は2番目のバックグラウンドワーカーにメッセージを送信し、以下同様に処理が行われます。最終的に、最後のバックグラウンドワーカーがメッセージをユーザーバックエンドに送り返します。繰り返し回数が1より大きい場合、ユーザーバックエンドは再びメッセージを最初のワーカーに送り返します。すべての調整プロセスによるメッセージの送受信が繰り返し回数に等しい回数行われた後、ユーザーバックエンドは最終的に受信したメッセージが最初に出力されたものと一致するかどうかを検証し、一致しない場合はエラーをスローします。</p>
+<p class="markdown-preserve-lines">test_shm_mq_pipelined(queue_size int8, message text,
+                      repeat_count int4 default 1, num_workers int4 default 1,
+                      verify bool default true)
+    RETURNS void</p>
+<p class="markdown-preserve-lines">この関数は、指定されたサイズのキューを使用して、繰り返し回数で指定されたとおりに、同じメッセージを複数回、最初のバックグラウンドワーカーに送信します。これらのメッセージは、それぞれ指定されたサイズのキューを使用して、各バックグラウンドワーカーに順番に転送されます。最後に、最後のバックグラウンドワーカーがメッセージをユーザーバックエンドに送り返します。ユーザーバックエンドは非ブロッキングの送信および受信を使用するため、メッセージのすべてのコピーの送信が完了する前に、メッセージのコピーの受信を開始できます。「verify」引数は、受信したコピーが送信されたメッセージと一致するかどうかを制御します。（これには無視できない時間がかかるため、ベンチマーク目的で無効にすると便利な場合があります。）</p></section></div><script>
+(function() {
+  function notifyParent() {
+    if (parent === window) return;
+    parent.postMessage({type: "frame-location", frame: window.name || "", href: window.location.href}, "*");
+  }
+  document.addEventListener("click", function(event) {
+    const link = event.target.closest("a[data-panel]");
+    if (!link || parent === window) return;
+    parent.postMessage({type: "source-link", panel: link.dataset.panel}, "*");
+  });
+  window.addEventListener("load", notifyParent);
+  window.addEventListener("hashchange", notifyParent);
+})();
+</script></body></html>

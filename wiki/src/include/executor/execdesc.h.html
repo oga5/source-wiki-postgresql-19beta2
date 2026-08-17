@@ -1,5 +1,5 @@
 <!doctype html>
-<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>src/include/executor/execdesc.h.md</title><link rel="stylesheet" href="../../../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../../../source/src/include/executor/execdesc.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/executor/execdesc.h.html&quot;}, '*');">src/include/executor/execdesc.h</a></h1>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="10"><title>src/include/executor/execdesc.h.md</title><link rel="stylesheet" href="../../../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../../../source/src/include/executor/execdesc.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/executor/execdesc.h.html&quot;}, '*');">src/include/executor/execdesc.h</a></h1>
 <h2>概要</h2>
 <p><a class="wiki-source-link" href="../../../../source/src/include/executor/execdesc.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/executor/execdesc.h.html&quot;}, '*');"><code>src/include/executor/execdesc.h</code></a> は、PostgreSQLのクエリ実行エンジンにおいてプランとクエリの記述子（Descriptor）を定義するヘッダーファイルです。実行器（Executor）とその関連モジュールで使用される主要な構造体やアクセサ関数を提供します。</p>
 <h2>モジュール内での役割</h2>
@@ -18,9 +18,9 @@
 </ul>
 <h2>制御フローとデータフロー</h2>
 <ul>
-<li>**作成フェーズ**: 上位のトランスポート層や <a class="wiki-source-link" href="../../../../source/src/backend/tcop/pquery.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/tcop/pquery.c.html&quot;}, '*');"><code>pquery.c</code></a> から <code>CreateQueryDesc</code> が呼び出され、<code>QueryDesc</code> が構築されます。この時点では <a class="wiki-source-link" href="../../../../source/src/backend/postmaster/datachecksum_state.c.html#L380" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/postmaster/datachecksum_state.c.html&quot;}, '*');"><code>operation</code></a>、<code>plannedstmt</code>、<code>snapshot</code>、<code>dest</code> などの静的なクエリ情報が設定されます。</li>
-<li>**実行フェーズ**: <code>ExecutorStart</code> などの実行フェーズにおいて、<code>QueryDesc</code> 内の <code>tupDesc</code>、<code>estate</code>、<code>planstate</code> などの実行時状態が設定・更新されます。</li>
-<li>**解放フェーズ**: クエリの実行完了後、<code>FreeQueryDesc</code> が呼び出されてメモリやリソースがクリーンアップされます。</li>
+<li><strong>作成フェーズ</strong>: 上位のトランスポート層や <a class="wiki-source-link" href="../../../../source/src/backend/tcop/pquery.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/tcop/pquery.c.html&quot;}, '*');"><code>pquery.c</code></a> から <code>CreateQueryDesc</code> が呼び出され、<code>QueryDesc</code> が構築されます。この時点では <a class="wiki-source-link" href="../../../../source/src/backend/postmaster/datachecksum_state.c.html#L380" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/backend/postmaster/datachecksum_state.c.html&quot;}, '*');"><code>operation</code></a>、<code>plannedstmt</code>、<code>snapshot</code>、<code>dest</code> などの静的なクエリ情報が設定されます。</li>
+<li><strong>実行フェーズ</strong>: <code>ExecutorStart</code> などの実行フェーズにおいて、<code>QueryDesc</code> 内の <code>tupDesc</code>、<code>estate</code>、<code>planstate</code> などの実行時状態が設定・更新されます。</li>
+<li><strong>解放フェーズ</strong>: クエリの実行完了後、<code>FreeQueryDesc</code> が呼び出されてメモリやリソースがクリーンアップされます。</li>
 </ul>
 <h2>直接依存</h2>
 <ul>

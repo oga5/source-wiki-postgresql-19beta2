@@ -1,5 +1,5 @@
 <!doctype html>
-<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>symbols/src__backend__optimizer__path__joinpath_c__get_memoize_path.md</title><link rel="stylesheet" href="../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../source/src/backend/optimizer/path/joinpath.c.html#L711" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__path__joinpath_c__get_memoize_path.html&quot;}, '*');">get_memoize_path</a></h1>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="10"><title>symbols/src__backend__optimizer__path__joinpath_c__get_memoize_path.md</title><link rel="stylesheet" href="../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../source/src/backend/optimizer/path/joinpath.c.html#L711" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__path__joinpath_c__get_memoize_path.html&quot;}, '*');">get_memoize_path</a></h1>
 <h2>現在のソース事実</h2>
 <ul>
 <li>種別: <code>function</code></li>
@@ -76,14 +76,14 @@
 <li>内部関係のターゲットリスト、ベース制限情報、またはパラメータ化されたパスの制限情報に揮発性（<a class="wiki-source-link" href="../../source/src/include/port/atomics/generic-msvc.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__port__atomics__generic-msvc_h__volatile.html&quot;}, '*');">volatile</a>）関数が含まれている場合は利用できない。</li>
 </ul>
 <h2>アルゴリズムまたは振る舞い</h2>
-<p>1. **無効マスクの確認**: <code>extra-&gt;pgs_mask</code> でネストループメモ化が無効化されている場合は <code>NULL</code> を返す。 2. **行数に基づく早期リターン**: 外部パスの親の行数が 2 未満かつ通常のネストループ戦略が有効な場合、最初のスキャンでキャッシュミスとなるため無駄なコストを避ける目的で <code>NULL</code> を返す。 3. **キャッシュキーの抽出と存在確認**:</p>
+<p>1. <strong>無効マスクの確認</strong>: <code>extra-&gt;pgs_mask</code> でネストループメモ化が無効化されている場合は <code>NULL</code> を返す。 2. <strong>行数に基づく早期リターン</strong>: 外部パスの親の行数が 2 未満かつ通常のネストループ戦略が有効な場合、最初のスキャンでキャッシュミスとなるため無駄なコストを避ける目的で <code>NULL</code> を返す。 3. <strong>キャッシュキーの抽出と存在確認</strong>:</p>
 <ul>
 <li><code>innerrel-&gt;relids</code> に基づき、プレースホルダー変数内の潜在的な変数/PHVを抽出する。</li>
 <li>パラメータ化されたパス句、内部リレーションの結合変数、および抽出したプレースホルダー変数のいずれも存在しない場合は <code>NULL</code> を返す。</li>
-<p>4. **結合型の検証**:</p>
+<p>4. <strong>結合型の検証</strong>:</p>
 <li><a class="wiki-source-link" href="../../source/src/include/nodes/nodes.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__nodes__nodes_h__JOIN_SEMI.html&quot;}, '*');"><code>JOIN_SEMI</code></a> または <a class="wiki-source-link" href="../../source/src/include/nodes/nodes.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__nodes__nodes_h__JOIN_ANTI.html&quot;}, '*');"><code>JOIN_ANTI</code></a> 結合であり、かつ <code>extra-&gt;inner_unique</code> が偽である場合は、完了マークを正しく扱えないため <code>NULL</code> を返す。</li>
 <li>一意な結合（<code>extra-&gt;inner_unique</code> が真）の場合、内部パスにパラメータ情報が存在し、かつ制限リストの全エントリがそのパラメータシリアルに含まれているかを検証し、不適合であれば <code>NULL</code> を返す。</li>
-<p>5. **揮発性関数のチェック**: 内部リレーションのターゲットリスト、ベース制限情報、およびパスのパラメータ化句に揮発性関数が含まれていないことを走査して確認する。 6. **ハッシュ演算子の取得とパス生成**:</p>
+<p>5. <strong>揮発性関数のチェック</strong>: 内部リレーションのターゲットリスト、ベース制限情報、およびパスのパラメータ化句に揮発性関数が含まれていないことを走査して確認する。 6. <strong>ハッシュ演算子の取得とパス生成</strong>:</p>
 <li><a class="wiki-source-link" href="../../source/src/backend/optimizer/path/joinpath.c.html#L475" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__path__joinpath_c__paraminfo_get_equal_hashops.html&quot;}, '*');"><code>paraminfo_get_equal_hashops</code></a> を呼び出し、パラメータに対するハッシュ演算子や式、バイナリモードを取得する。</li>
 <li>取得に成功した場合は <a class="wiki-source-link" href="../../source/src/backend/optimizer/util/pathnode.c.html#L1745" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__pathnode_c__create_memoize_path.html&quot;}, '*');"><code>create_memoize_path</code></a> を用いてメモ化パスを生成して返す。失敗した場合は <code>NULL</code> を返す。</li>
 </ul>

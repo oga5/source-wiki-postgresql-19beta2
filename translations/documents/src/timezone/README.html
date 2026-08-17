@@ -1,51 +1,116 @@
 <!doctype html>
-<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>src/timezone/README</title><link rel="stylesheet" href="../../../../styles.css"></head><body><h1>Japanese translation</h1><p><code>src/timezone/README</code></p><p><a href="../../../../source/src/timezone/README.html" target="source-view">View original document</a></p><p class="document-translation-progress document-translation-complete">Translation complete.</p><div class="document-translation-body"><section class="document-translation-chunk translated" data-chunk-order="0"><p>src/timezone/README</p>
-<p>これは IANA タイムゾーンライブラリの PostgreSQL 適応版です。</p>
-<p>https://www.iana.org/time-zones</p>
-<p>タイムゾーンデータおよびライブラリソースコードの最新版は、 そのページから直接入手できます。 tzdata.zi を省略している他のアーカイブ形式とは異なり、 統合されたファイル tzdb-NNNNX.tar.lz を取得するのが最適です。 過去のバージョンやリリースアナウンスは、 サイト内の別の場所で見つけることができます。</p>
-<p>世界の一部地域ではタイムゾーンのルールが頻繁に変更されるため、 PostgreSQL の各リリースの前にデータファイルを更新するように努める必要があります。 コードはそれほど頻繁に更新する必要はありませんが、 データファイルの解釈に影響を与える可能性のある変更は追跡しなければなりません。</p>
-<p>Time Zone data (タイムゾーンデータ) ==============</p>
-<p>タイムゾーンのソースデータは、src/timezone/data/ の下にそのまま配布しています。 現在、tarball のサイズと git リポジトリのチャーンを減らすため、 略称の単一ファイル形式である &quot;tzdata.zi&quot; のみを配布しています。 そのファイルを zic に渡すことは、 かさばる個別のデータファイルを渡すのと同じコンパイル済み出力を生成します。</p>
-<p>更新時に data/tzdata.zi は単に複製するだけで済みますが、 tznames/ の下のタイムゾーン略称リストを更新するには手作業が必要です。 これらは、新しい略称が考案されたり、 既存の略称に関連付けられた UTC オフセットが変更されたりするたびに変更する必要があります。 これが発生したかどうかを検出するには、 data/ の下に新しいファイルを配置した後で、以下を実行します。 make abbrevs.txt これにより、data/ ファイルに従って現在使用されているすべての略称を示すファイルが生成されます。 これを known_abbrevs.txt と比較します。これは、tznames/ ファイルが前回更新されたときに存在していたリストです。 必要と思われる tznames/ を更新し、同じコミットで known_abbrevs.txt を置き換えます。 通常、既知の略称の意味が変更された場合の適切な修正は、 固定の GMT オフセットではなく、長形式のゾーン名を参照するようにすることです。</p>
-<p>コアの回帰テストスイートは、 ゾーンデータと略称データの簡単な検証を行います（特に pg_timezone_names および pg_timezone_abbrevs ビューがエラーをスローしないことを確認します）。 提案された更新のクロスチェックとして実行する価値があります。</p>
-<p>Windows の新しいリリース（おそらく Service Pack を含む）があったときは、 findtimezone.c の Windows ゾーンから IANA ゾーンへのマッピングを更新する必要がある場合があります。 これを行うには2つのアプローチがあります。 1. CLDR プロジェクトの windowsZones.xml ファイルを参照し、 そこにあるゾーンのうち持っていないものを追加します。 IANA ゾーンが複数リストされている場合は、&quot;territory=001&quot; マッピングを使用します。 2. 新しいリリースを実行している Windows マシンで src/tools/win32tzlist.pl 内のスクリプトを実行し、 それが検出した新しいタイムゾーンを追加します。 （ただし、win32tzlist.pl はどの IANA ゾーンにマッピングすべきかを教えてくれないため、 これは #1 の完全な代わりにはなりません。） いずれの場合も、古いバージョンで正しく一致させる必要があるため、 Windows から消去されたゾーン名を決して削除しないでください。</p>
-<p>Time Zone code (タイムゾーンコード) ==============</p>
-<p>このディレクトリのコードは現在、tzcode リリース 2020d と同期されています。 元の tzcode ライブラリとの間には多くの外見上の（および外見上だけの問題ではない）違いがありますが、 アップストリームバージョンの diff は通常、私たちのバージョンに反映されるべきです。 これに関するいくつかの注意事項は以下の通りです。</p>
-<p>大部分においてアップストリームのコードをそのまま使用したいと考えていますが、 正確な一致を妨げるいくつかの考慮事項があります。</p>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="10"><title>src/timezone/README</title><link rel="stylesheet" href="../../../../styles.css"></head><body><h1>Japanese translation</h1><p><code>src/timezone/README</code></p><p><a href="../../../../source/src/timezone/README.html" target="source-view">View original document</a></p><p class="document-translation-progress document-translation-complete">Translation complete.</p><div class="document-translation-body"><section class="document-translation-chunk translated" data-chunk-order="0"><p class="markdown-preserve-lines">src/timezone/README</p>
+<p class="markdown-preserve-lines">これは IANA タイムゾーンライブラリの PostgreSQL 適応版です。</p>
+<p class="markdown-preserve-lines">	https://www.iana.org/time-zones</p>
+<p class="markdown-preserve-lines">タイムゾーンデータおよびライブラリソースコードの最新版は、
+そのページから直接入手できます。
+tzdata.zi を省略している他のアーカイブ形式とは異なり、
+統合されたファイル tzdb-NNNNX.tar.lz を取得するのが最適です。
+過去のバージョンやリリースアナウンスは、
+サイト内の別の場所で見つけることができます。</p>
+<p class="markdown-preserve-lines">世界の一部地域ではタイムゾーンのルールが頻繁に変更されるため、
+PostgreSQL の各リリースの前にデータファイルを更新するように努める必要があります。
+コードはそれほど頻繁に更新する必要はありませんが、
+データファイルの解釈に影響を与える可能性のある変更は追跡しなければなりません。</p>
+<h1>Time Zone data (タイムゾーンデータ)</h1>
+<p class="markdown-preserve-lines">タイムゾーンのソースデータは、src/timezone/data/ の下にそのまま配布しています。
+現在、tarball のサイズと git リポジトリのチャーンを減らすため、
+略称の単一ファイル形式である &quot;tzdata.zi&quot; のみを配布しています。
+そのファイルを zic に渡すことは、
+かさばる個別のデータファイルを渡すのと同じコンパイル済み出力を生成します。</p>
+<p class="markdown-preserve-lines">更新時に data/tzdata.zi は単に複製するだけで済みますが、
+tznames/ の下のタイムゾーン略称リストを更新するには手作業が必要です。
+これらは、新しい略称が考案されたり、
+既存の略称に関連付けられた UTC オフセットが変更されたりするたびに変更する必要があります。
+これが発生したかどうかを検出するには、
+data/ の下に新しいファイルを配置した後で、以下を実行します。
+	make abbrevs.txt
+これにより、data/ ファイルに従って現在使用されているすべての略称を示すファイルが生成されます。
+これを known_abbrevs.txt と比較します。これは、tznames/ ファイルが前回更新されたときに存在していたリストです。
+必要と思われる tznames/ を更新し、同じコミットで known_abbrevs.txt を置き換えます。
+通常、既知の略称の意味が変更された場合の適切な修正は、
+固定の GMT オフセットではなく、長形式のゾーン名を参照するようにすることです。</p>
+<p class="markdown-preserve-lines">コアの回帰テストスイートは、
+ゾーンデータと略称データの簡単な検証を行います（特に pg_timezone_names および pg_timezone_abbrevs ビューがエラーをスローしないことを確認します）。
+提案された更新のクロスチェックとして実行する価値があります。</p>
+<p class="markdown-preserve-lines">Windows の新しいリリース（おそらく Service Pack を含む）があったときは、
+findtimezone.c の Windows ゾーンから IANA ゾーンへのマッピングを更新する必要がある場合があります。
+これを行うには2つのアプローチがあります。
+1. CLDR プロジェクトの windowsZones.xml ファイルを参照し、
+   そこにあるゾーンのうち持っていないものを追加します。
+   IANA ゾーンが複数リストされている場合は、&quot;territory=001&quot; マッピングを使用します。
+2. 新しいリリースを実行している Windows マシンで src/tools/win32tzlist.pl 内のスクリプトを実行し、
+   それが検出した新しいタイムゾーンを追加します。
+   （ただし、win32tzlist.pl はどの IANA ゾーンにマッピングすべきかを教えてくれないため、
+   これは #1 の完全な代わりにはなりません。）
+いずれの場合も、古いバージョンで正しく一致させる必要があるため、
+Windows から消去されたゾーン名を決して削除しないでください。</p>
+<h1>Time Zone code (タイムゾーンコード)</h1>
+<p class="markdown-preserve-lines">このディレクトリのコードは現在、tzcode リリース 2020d と同期されています。
+元の tzcode ライブラリとの間には多くの外見上の（および外見上だけの問題ではない）違いがありますが、
+アップストリームバージョンの diff は通常、私たちのバージョンに反映されるべきです。
+これに関するいくつかの注意事項は以下の通りです。</p>
+<p class="markdown-preserve-lines">大部分においてアップストリームのコードをそのまま使用したいと考えていますが、
+正確な一致を妨げるいくつかの考慮事項があります。</p>
 <ul>
 <li>可読性/保守性のために、pgindent の適用や、</li>
-<p>アップストリームによる &quot;register&quot; 宣言の過剰な使用の排除など、 独自の規則に合うようにコードを再フォーマットしています。 （以前は古いスタイルの関数宣言の C89 スタイルへの変換も含まれていましたが、 ありがたいことに彼らはそれを修正しました。）</p>
+<p class="markdown-preserve-lines">  アップストリームによる &quot;register&quot; 宣言の過剰な使用の排除など、
+  独自の規則に合うようにコードを再フォーマットしています。
+  （以前は古いスタイルの関数宣言の C89 スタイルへの変換も含まれていましたが、
+  ありがたいことに彼らはそれを修正しました。）</p>
 </ul>
 <ul>
 <li>コードが Postgres の移植性規則に従う必要があります。</li>
-<p>これには、手動でハックされた #defines ではなく configure の結果に依存することが含まれます （特に private.h を参照）。</p>
+<p class="markdown-preserve-lines">  これには、手動でハックされた #defines ではなく configure の結果に依存することが含まれます
+  （特に private.h を参照）。</p>
 </ul>
 <ul>
 <li>Postgres は通常、&lt;time.h&gt; 関数の独自のコピーを持つシステム上でビルドされるため、</li>
-<p>それらとの衝突を回避しなければなりません。 これにより、typedef time_t を pg_time_t にリネームすることなどが、 他のほとんどの公開されている名前と同様に義務付けられます。</p>
+<p class="markdown-preserve-lines">  それらとの衝突を回避しなければなりません。
+  これにより、typedef time_t を pg_time_t にリネームすることなどが、
+  他のほとんどの公開されている名前と同様に義務付けられます。</p>
 </ul>
 <ul>
 <li>zic.c の typedef &quot;lineno&quot; は &quot;lineno_t&quot; にリネームされています。</li>
-<p>これは、typedef リストに &quot;lineno&quot; があると、 その名前の変数を持つ他のいくつかのファイルで望ましくない pgindent の動作を引き起こすためです。</p>
+<p class="markdown-preserve-lines">  これは、typedef リストに &quot;lineno&quot; があると、
+  その名前の変数を持つ他のいくつかのファイルで望ましくない pgindent の動作を引き起こすためです。</p>
 </ul>
 <ul>
 <li>内部関数 tzload() と tzparse() を公開し、</li>
-<p>前者の API をわずかに変更しました。 これは部分的に、それが自分でファイルを開くのではなく、 独自の pg_open_tzfile() に依存するようになったためです。</p>
+<p class="markdown-preserve-lines">  前者の API をわずかに変更しました。
+  これは部分的に、それが自分でファイルを開くのではなく、
+  独自の pg_open_tzfile() に依存するようになったためです。</p>
 </ul>
 <ul>
 <li>tzparse() は、TZDEFRULES ゾーンをロードしようとしないように調整されています。</li>
 </ul>
 <ul>
 <li>不要なコードがかなり多くあり、</li>
-<p>非標準のオプショナル API を含めて削除されています。 また、localtime.c の末尾に独自の関数をいくつか追加しています。</p>
+<p class="markdown-preserve-lines">  非標準のオプショナル API を含めて削除されています。
+  また、localtime.c の末尾に独自の関数をいくつか追加しています。</p>
 </ul>
 <ul>
 <li>zic.c には、-P (print_abbrevs) スイッチのサポートが追加されています。</li>
-<p>これは、上記で説明した現在使用されているゾーン略称の &quot;abbrevs.txt&quot; サマリーを作成するために使用されます。</p>
+<p class="markdown-preserve-lines">  これは、上記で説明した現在使用されているゾーン略称の &quot;abbrevs.txt&quot; サマリーを作成するために使用されます。</p>
 </ul>
-<p>新しい tzcode リリースを私たちのコードと比較する最も簡単な方法は、 まず tzcode ソースファイルを次のような sed フィルターに通すことです。</p>
-<p>sed -r \ -e &#x27;s/^([ \t]*)\*\*([ \t])/\1 *\2/&#x27; \ -e &#x27;s/^([ \t]*)\*\*$/\1 */&#x27; \ -e &#x27;s|^\*/| */|&#x27; \ -e &#x27;s/\bregister[ \t]//g&#x27; \ -e &#x27;s/\bATTRIBUTE_PURE[ \t]//g&#x27; \ -e &#x27;s/struct[ \t]+tm\b/struct pg_tm/g&#x27; \ -e &#x27;s/\btime_t\b/pg_time_t/g&#x27; \ -e &#x27;s/lineno/lineno_t/g&#x27; \</p>
-<p>そのあとで pgindent に通します。 （最初の3つの sed パターンは、ブロックコメントスタイルを pgindent が台無しにしない形式に変換するためのもので、 残りは上述の他のポイントに対処しています。） その後、ファイルを対応するファイルと直接 diff 取ることができます。 また、(同じように処理した上で) 以前の tzcode リリースとの diff を取り、 その diff を私たちのファイルに適用してみることも通常は有用です。 これにより、変更の大部分が機械的に処理されます。</p></section></div><script>
+<p class="markdown-preserve-lines">新しい tzcode リリースを私たちのコードと比較する最も簡単な方法は、
+まず tzcode ソースファイルを次のような sed フィルターに通すことです。</p>
+<p class="markdown-preserve-lines">    sed -r \
+        -e &#x27;s/^([ \t]*)\*\*([ \t])/\1 *\2/&#x27; \
+        -e &#x27;s/^([ \t]*)\*\*$/\1 */&#x27; \
+        -e &#x27;s|^\*/| */|&#x27; \
+        -e &#x27;s/\bregister[ \t]//g&#x27; \
+        -e &#x27;s/\bATTRIBUTE_PURE[ \t]//g&#x27; \
+        -e &#x27;s/struct[ \t]+tm\b/struct pg_tm/g&#x27; \
+        -e &#x27;s/\btime_t\b/pg_time_t/g&#x27; \
+        -e &#x27;s/lineno/lineno_t/g&#x27; \</p>
+<p class="markdown-preserve-lines">そのあとで pgindent に通します。
+（最初の3つの sed パターンは、ブロックコメントスタイルを pgindent が台無しにしない形式に変換するためのもので、
+残りは上述の他のポイントに対処しています。）
+その後、ファイルを対応するファイルと直接 diff 取ることができます。
+また、(同じように処理した上で) 以前の tzcode リリースとの diff を取り、
+その diff を私たちのファイルに適用してみることも通常は有用です。
+これにより、変更の大部分が機械的に処理されます。</p></section></div><script>
 (function() {
   function notifyParent() {
     if (parent === window) return;

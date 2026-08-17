@@ -1,39 +1,27 @@
 <!doctype html>
-<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>symbols/src__backend__optimizer__plan__setrefs_c__indexed_tlist.md</title><link rel="stylesheet" href="../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../source/src/backend/optimizer/plan/setrefs.c.html#L49" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__plan__setrefs_c__indexed_tlist.html&quot;}, '*');">indexed_tlist</a></h1>
-<h2>定義</h2>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="10"><title>symbols/src__backend__optimizer__plan__setrefs_c__indexed_tlist.md</title><link rel="stylesheet" href="../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../source/src/backend/optimizer/plan/setrefs.c.html#L49" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__plan__setrefs_c__indexed_tlist.html&quot;}, '*');">indexed_tlist</a></h1>
+<h2>現在のソース事実</h2>
 <ul>
 <li>種別: <code>struct</code></li>
 <li>定義箇所: <code>src/backend/optimizer/plan/setrefs.c:49</code></li>
-<li>所属モジュール: <a class="wiki-entity-link" href="../modules/src__backend__optimizer__plan.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/modules/src__backend__optimizer__plan.html&quot;, &quot;source&quot;: &quot;source/src/backend/optimizer/plan/analyzejoins.c.html&quot;}, '*');"><code>module:src/backend/optimizer/plan</code></a></li>
-</ul>
-<h2>目的</h2>
-<p>静的シンボル索引から生成された初期シンボルページです。</p>
-<h2>シグネチャまたは形状</h2>
-<ul>
 <li>シグネチャ: <code>typedef struct</code></li>
-</ul>
-<h2>入力と出力</h2>
-<p>まだ解析していません。</p>
-<h2>前提条件と不変条件</h2>
-<p>まだ解析していません。</p>
-<h2>アルゴリズムまたは振る舞い</h2>
-<p>まだ解析していません。</p>
-<h2>呼び出し元と呼び出し先</h2>
-<ul>
 <li>呼び出し元: なし</li>
 <li>呼び出し先: なし</li>
 <li>呼び出し元サイト: なし</li>
 <li>呼び出しサイト: なし</li>
+<li>関連型: <code>List</code>, <code>PlaceHolderVar</code>, <a class="wiki-source-link" href="../../source/src/backend/optimizer/plan/setrefs.c.html#L41" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__plan__setrefs_c__tlist_vinfo.html&quot;}, '*');"><code>tlist_vinfo</code></a>, <code>Var</code>, <code>vars</code></li>
 </ul>
-<h2>関連データ構造</h2>
-<p><code>List</code>, <code>PlaceHolderVar</code>, <a class="wiki-source-link" href="../../source/src/backend/optimizer/plan/setrefs.c.html#L41" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__plan__setrefs_c__tlist_vinfo.html&quot;}, '*');"><code>tlist_vinfo</code></a>, <code>Var</code>, <code>vars</code></p>
-<h2>ソース抜粋</h2>
+<h3>ソース抜粋</h3>
 <p>~~~c typedef struct { List	   *tlist;			/* underlying <a class="wiki-source-link" href="../../source/src/backend/optimizer/path/pathkeys.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__path__pathkeys_c__target.html&quot;}, '*');">target</a> list */ int			num_vars;		/* number of plain Var tlist entries */ bool		has_ph_vars;	/* are there PlaceHolderVar entries? */ bool		has_non_vars;	/* are there other entries? */ <a class="wiki-source-link" href="../../source/src/backend/optimizer/plan/setrefs.c.html#L41" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__plan__setrefs_c__tlist_vinfo.html&quot;}, '*');">tlist_vinfo</a> vars[<a class="wiki-source-link" href="../../source/src/include/c.h.html#L565" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/c.h.html&quot;}, '*');">FLEXIBLE_ARRAY_MEMBER</a>];	/* has num_vars entries */ } <a class="wiki-source-link" href="../../source/src/backend/optimizer/plan/setrefs.c.html#L49" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__plan__setrefs_c__indexed_tlist.html&quot;}, '*');">indexed_tlist</a>; ~~~</p>
-<h2>失敗モードと境界条件</h2>
-<p>まだ解析していません。</p>
-<h2>保守担当者向けメモ</h2>
+<h2>目的</h2>
+<p>子プランのターゲットリストを高速に検索するためにインデックス化した構造体です。</p>
+<h2>フィールドと表現</h2>
 <ul>
-<li>後続フェーズで、ソース本文の文脈と caller/callee 情報を使ってこのページを強化する。</li>
+<li><code>List *tlist</code>: 元となるターゲットリストへのポインタ。</li>
+<li><code>int num_vars</code>: 単純な <code>Var</code> ターゲットリストエントリの数。</li>
+<li><code>bool has_ph_vars</code>: <code>PlaceHolderVar</code> エントリが存在するかどうかを示すフラグ。</li>
+<li><code>bool has_non_vars</code>: その他のエントリが存在するかどうかを示すフラグ。</li>
+<li><code>tlist_vinfo vars[FLEXIBLE_ARRAY_MEMBER]</code> (<code>num_vars</code> エントリを持つ): <a class="wiki-source-link" href="../../source/src/backend/optimizer/plan/setrefs.c.html#L41" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__plan__setrefs_c__tlist_vinfo.html&quot;}, '*');"><code>tlist_vinfo</code></a> 要素を格納するフレキシブル配列。</li>
 </ul><script>
 (function() {
   function notifyParent() {

@@ -1,5 +1,5 @@
 <!doctype html>
-<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>symbols/src__backend__optimizer__path__allpaths_c__set_rel_size.md</title><link rel="stylesheet" href="../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../source/src/backend/optimizer/path/allpaths.c.html#L410" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__path__allpaths_c__set_rel_size.html&quot;}, '*');">set_rel_size</a></h1>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="10"><title>symbols/src__backend__optimizer__path__allpaths_c__set_rel_size.md</title><link rel="stylesheet" href="../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../source/src/backend/optimizer/path/allpaths.c.html#L410" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__path__allpaths_c__set_rel_size.html&quot;}, '*');">set_rel_size</a></h1>
 <h2>現在のソース事実</h2>
 <ul>
 <li>種別: <code>function</code></li>
@@ -48,7 +48,7 @@
 <li>すべての非ダミーリレーションは 0 より大きい行数見積もりを持つ必要がある。</li>
 </ul>
 <h2>アルゴリズムまたは振る舞い</h2>
-<p>1. **制約除外の評価**: リレーションが通常のベースリレーションであり、かつ制約除外 (<code>relation_excluded_by_constraints</code>) によってスキャンが除外できる場合、ダミーパスを即座に割り当てて終了する。 2. **継承リレーションの処理**: <code>rte-&gt;inh</code> が真であるアペンドリレーションの場合、<a class="wiki-source-link" href="../../source/src/backend/optimizer/path/allpaths.c.html#L1025" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__path__allpaths_c__set_append_rel_size.html&quot;}, '*');"><code>set_append_rel_size</code></a> を呼び出して処理する。 3. **範囲テーブルエントリ種別 (<code>rtekind</code>) による分岐**:</p>
+<p>1. <strong>制約除外の評価</strong>: リレーションが通常のベースリレーションであり、かつ制約除外 (<code>relation_excluded_by_constraints</code>) によってスキャンが除外できる場合、ダミーパスを即座に割り当てて終了する。 2. <strong>継承リレーションの処理</strong>: <code>rte-&gt;inh</code> が真であるアペンドリレーションの場合、<a class="wiki-source-link" href="../../source/src/backend/optimizer/path/allpaths.c.html#L1025" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__path__allpaths_c__set_append_rel_size.html&quot;}, '*');"><code>set_append_rel_size</code></a> を呼び出して処理する。 3. <strong>範囲テーブルエントリ種別 (<code>rtekind</code>) による分岐</strong>:</p>
 <ul>
 <li><a class="wiki-source-link" href="../../source/src/include/nodes/parsenodes.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__nodes__parsenodes_h__RTE_RELATION.html&quot;}, '*');"><code>RTE_RELATION</code></a>:</li>
 <li>外部テーブル (<code>RELKIND_FOREIGN_TABLE</code>) の場合、<a class="wiki-source-link" href="../../source/src/backend/optimizer/path/allpaths.c.html#L983" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__path__allpaths_c__set_foreign_size.html&quot;}, '*');"><code>set_foreign_size</code></a> を呼び出す。</li>
@@ -63,7 +63,7 @@
 <li><code>RTE_NAMEDTUPLESTORE</code>: <a class="wiki-source-link" href="../../source/src/backend/optimizer/path/allpaths.c.html#L3141" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__path__allpaths_c__set_namedtuplestore_pathlist.html&quot;}, '*');"><code>set_namedtuplestore_pathlist</code></a> を呼び出す。</li>
 <li><a class="wiki-source-link" href="../../source/src/backend/optimizer/prep/prepjointree.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__prep__prepjointree_c__RTE_RESULT.html&quot;}, '*');"><code>RTE_RESULT</code></a>: <a class="wiki-source-link" href="../../source/src/backend/optimizer/path/allpaths.c.html#L3168" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__path__allpaths_c__set_result_pathlist.html&quot;}, '*');"><code>set_result_pathlist</code></a> を呼び出す。</li>
 <li>デフォルト: 予期しない <code>rtekind</code> の場合、エラー (<code>elog(ERROR, ...)</code>) を発生させる。</li>
-<p>4. **検証アサーション**: 処理終了時に <code>rel-&gt;rows &gt; 0</code> またはダミーリレーションであること (<code>IS_DUMMY_REL(rel)</code>) をアサートする。</p>
+<p>4. <strong>検証アサーション</strong>: 処理終了時に <code>rel-&gt;rows &gt; 0</code> またはダミーリレーションであること (<code>IS_DUMMY_REL(rel)</code>) をアサートする。</p>
 </ul>
 <h2>失敗モードと境界条件</h2>
 <ul>

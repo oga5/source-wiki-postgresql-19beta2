@@ -1,11 +1,15 @@
 <!doctype html>
-<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>src/test/locale/README</title><link rel="stylesheet" href="../../../../../styles.css"></head><body><h1>Japanese translation</h1><p><code>src/test/locale/README</code></p><p><a href="../../../../../source/src/test/locale/README.html" target="source-view">View original document</a></p><p class="document-translation-progress document-translation-complete">Translation complete.</p><div class="document-translation-body"><section class="document-translation-chunk translated" data-chunk-order="0"><p>src/test/locale/README</p>
-<p>ロケール =======</p>
-<p>このディレクトリには、ロケール用のテストセットが含まれています。libcにおけるCTYPEのサポートとインストールされているロケールデータをテストするために、1つのCプログラム test-ctype.c を提供しました。また、照合順序をテストする test-sort.pl と test-sort.py もあります。</p>
-<p>特定のロケールのテストを実行するには、以下を実行します。 make check-$locale 例えば、以下のようにします。 make check-koi8-r</p>
-<p>現在、利用可能なテストは少数のロケールのみです。スクリプト &#x27;runall&#x27; は、libcとロケールデータをテストするために test-ctype を呼び出し、test-sort.pl を呼び出し（Pythonインタプリタがインストールされている場合は、test-sort.py のコメントを解除してください）、提供されているSQLスクリプトファイルを使用してPostgreSQLのテストを行います。</p>
-<p>ロケールテストを追加するには、ディレクトリ $locale を作成し、koi8-r/* に類似した Makefile（およびその他のファイル）を作成する必要があります。実際、最も簡単な方法（と私は思います）は、単に koi8-r ディレクトリをコピーして、ファイルを編集/置換することです。</p>
-<p>Oleg. ---- Oleg Broytmann     http://members.xoom.com/phd2/     phd2@earthling.net</p></section></div><script>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="10"><title>src/test/locale/README</title><link rel="stylesheet" href="../../../../../styles.css"></head><body><h1>Japanese translation</h1><p><code>src/test/locale/README</code></p><p><a href="../../../../../source/src/test/locale/README.html" target="source-view">View original document</a></p><p class="document-translation-progress document-translation-complete">Translation complete.</p><div class="document-translation-body"><section class="document-translation-chunk translated" data-chunk-order="0"><p class="markdown-preserve-lines">src/test/locale/README</p>
+<h1>ロケール</h1>
+<p class="markdown-preserve-lines">このディレクトリには、ロケール用のテストセットが含まれています。libcにおけるCTYPEのサポートとインストールされているロケールデータをテストするために、1つのCプログラム test-ctype.c を提供しました。また、照合順序をテストする test-sort.pl と test-sort.py もあります。</p>
+<p class="markdown-preserve-lines">特定のロケールのテストを実行するには、以下を実行します。
+    make check-$locale
+例えば、以下のようにします。
+    make check-koi8-r</p>
+<p class="markdown-preserve-lines">現在、利用可能なテストは少数のロケールのみです。スクリプト &#x27;runall&#x27; は、libcとロケールデータをテストするために test-ctype を呼び出し、test-sort.pl を呼び出し（Pythonインタプリタがインストールされている場合は、test-sort.py のコメントを解除してください）、提供されているSQLスクリプトファイルを使用してPostgreSQLのテストを行います。</p>
+<p class="markdown-preserve-lines">ロケールテストを追加するには、ディレクトリ $locale を作成し、koi8-r/* に類似した Makefile（およびその他のファイル）を作成する必要があります。実際、最も簡単な方法（と私は思います）は、単に koi8-r ディレクトリをコピーして、ファイルを編集/置換することです。</p>
+<h2>Oleg.</h2>
+<p class="markdown-preserve-lines">    Oleg Broytmann     http://members.xoom.com/phd2/     phd2@earthling.net</p></section></div><script>
 (function() {
   function notifyParent() {
     if (parent === window) return;

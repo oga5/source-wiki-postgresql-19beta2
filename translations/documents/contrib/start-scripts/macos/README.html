@@ -1,10 +1,23 @@
 <!doctype html>
-<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>contrib/start-scripts/macos/README</title><link rel="stylesheet" href="../../../../../styles.css"></head><body><h1>Japanese translation</h1><p><code>contrib/start-scripts/macos/README</code></p><p><a href="../../../../../source/contrib/start-scripts/macos/README.html" target="source-view">View original document</a></p><p class="document-translation-progress document-translation-complete">Translation complete.</p><div class="document-translation-body"><section class="document-translation-chunk translated" data-chunk-order="0"><p>macOS がシステム起動時に PostgreSQL サーバーを自動的に起動するようにするには、 以下の手順を実行します。</p>
-<p>1. postgres-wrapper.sh スクリプトを編集し、Postgres を /usr/local/pgsql 以外に インストールしている場合は、そのインストール場所を反映するように先頭の ファイルパス変数を調整します。</p>
-<p>2. 修正した postgres-wrapper.sh スクリプトを適切なインストールディレクトリに コピーします。Postgres の実行ファイルを格納している場所であっても構いませんが、 そこである必要はありません。</p>
-<p>3. org.postgresql.postgres.plist ファイルを編集し、手順 2 で行った内容に 合わせて postgres-wrapper.sh のパスを調整します。また、&quot;postgres&quot; 以外の ユーザー名で Postgres サーバーを実行する予定がある場合は、 その UserName パラメータの値を調整します。</p>
-<p>4. 修正した org.postgresql.postgres.plist ファイルを /Library/LaunchDaemons/ に コピーします。この操作は root で実行する必要があります。 sudo cp org.postgresql.postgres.plist /Library/LaunchDaemons root 所有になっていないファイルは無視されるためです。</p>
-<p>この時点で再起動を行えばサーバーが起動するはずです。しかし、再起動せずに テストしたい場合は、以下を実行できます。 sudo launchctl load /Library/LaunchDaemons/org.postgresql.postgres.plist</p></section></div><script>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="10"><title>contrib/start-scripts/macos/README</title><link rel="stylesheet" href="../../../../../styles.css"></head><body><h1>Japanese translation</h1><p><code>contrib/start-scripts/macos/README</code></p><p><a href="../../../../../source/contrib/start-scripts/macos/README.html" target="source-view">View original document</a></p><p class="document-translation-progress document-translation-complete">Translation complete.</p><div class="document-translation-body"><section class="document-translation-chunk translated" data-chunk-order="0"><p class="markdown-preserve-lines">macOS がシステム起動時に PostgreSQL サーバーを自動的に起動するようにするには、
+以下の手順を実行します。</p>
+<p class="markdown-preserve-lines">1. postgres-wrapper.sh スクリプトを編集し、Postgres を /usr/local/pgsql 以外に
+インストールしている場合は、そのインストール場所を反映するように先頭の
+ファイルパス変数を調整します。</p>
+<p class="markdown-preserve-lines">2. 修正した postgres-wrapper.sh スクリプトを適切なインストールディレクトリに
+コピーします。Postgres の実行ファイルを格納している場所であっても構いませんが、
+そこである必要はありません。</p>
+<p class="markdown-preserve-lines">3. org.postgresql.postgres.plist ファイルを編集し、手順 2 で行った内容に
+合わせて postgres-wrapper.sh のパスを調整します。また、&quot;postgres&quot; 以外の
+ユーザー名で Postgres サーバーを実行する予定がある場合は、
+その UserName パラメータの値を調整します。</p>
+<p class="markdown-preserve-lines">4. 修正した org.postgresql.postgres.plist ファイルを /Library/LaunchDaemons/ に
+コピーします。この操作は root で実行する必要があります。
+    sudo cp org.postgresql.postgres.plist /Library/LaunchDaemons
+root 所有になっていないファイルは無視されるためです。</p>
+<p class="markdown-preserve-lines">この時点で再起動を行えばサーバーが起動するはずです。しかし、再起動せずに
+テストしたい場合は、以下を実行できます。
+    sudo launchctl load /Library/LaunchDaemons/org.postgresql.postgres.plist</p></section></div><script>
 (function() {
   function notifyParent() {
     if (parent === window) return;

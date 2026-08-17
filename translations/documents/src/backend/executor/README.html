@@ -1,92 +1,223 @@
 <!doctype html>
-<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>src/backend/executor/README</title><link rel="stylesheet" href="../../../../../styles.css"></head><body><h1>Japanese translation</h1><p><code>src/backend/executor/README</code></p><p><a href="../../../../../source/src/backend/executor/README.html" target="source-view">View original document</a></p><p class="document-translation-progress document-translation-complete">Translation complete.</p><div class="document-translation-body"><section class="document-translation-chunk translated" data-chunk-order="0"><p>src/backend/executor/README</p>
-<p>Postgres エグゼキュータ =====================</p>
-<p>エグゼキュータは「プランノード」のツリーを処理します。プランツリーの本質は、 タプル処理操作のデマンドプル型パイプラインです。各ノードは呼び出されると、 出力シーケンス内の次のタプルを生成するか、これ以上タプルがない場合は NULL を返します。ノードがプリミティブなリレーションスキャンノードではない場合、 入力タプルを取得するために順番に呼び出す子ノードを持ちます。</p>
-<p>この基本モデルに対する改良には以下が含まれます:</p>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="10"><title>src/backend/executor/README</title><link rel="stylesheet" href="../../../../../styles.css"></head><body><h1>Japanese translation</h1><p><code>src/backend/executor/README</code></p><p><a href="../../../../../source/src/backend/executor/README.html" target="source-view">View original document</a></p><p class="document-translation-progress document-translation-complete">Translation complete.</p><div class="document-translation-body"><section class="document-translation-chunk translated" data-chunk-order="0"><p class="markdown-preserve-lines">src/backend/executor/README</p>
+<h1>Postgres エグゼキュータ</h1>
+<p class="markdown-preserve-lines">エグゼキュータは「プランノード」のツリーを処理します。プランツリーの本質は、
+タプル処理操作のデマンドプル型パイプラインです。各ノードは呼び出されると、
+出力シーケンス内の次のタプルを生成するか、これ以上タプルがない場合は NULL
+を返します。ノードがプリミティブなリレーションスキャンノードではない場合、
+入力タプルを取得するために順番に呼び出す子ノードを持ちます。</p>
+<p class="markdown-preserve-lines">この基本モデルに対する改良には以下が含まれます:</p>
 <ul>
 <li>スキャン方向の選択（前方または後方）。注意: これは現在あまり十分に</li>
-<p>サポートされていません。プリミティブなスキャンノードでは機能しますが、 結合や集約などではあまりうまく機能しません。</p>
+<p class="markdown-preserve-lines">  サポートされていません。プリミティブなスキャンノードでは機能しますが、
+  結合や集約などではあまりうまく機能しません。</p>
 </ul>
 <ul>
 <li>ノードをリセットし、その出力シーケンスを最初から再生成させるリスカンコマンド。</li>
 </ul>
 <ul>
 <li>ノードの結果を変更できるパラメータ。パラメータを調整した後、そのノードと</li>
-<p>その上のすべてのノードに対してリスカンコマンドを適用する必要があります。 ノードの不要な再スキャンを回避するための、適度にインテリジェントなスキームが あります（例えば、入力のパラメータが変更されていない場合、Sort は格納されたソート済みデータを再読み込みするだけであるため、入力を再スキャンしません）。</p>
+<p class="markdown-preserve-lines">  その上のすべてのノードに対してリスカンコマンドを適用する必要があります。
+  ノードの不要な再スキャンを回避するための、適度にインテリジェントなスキームが
+  あります（例えば、入力のパラメータが変更されていない場合、Sort
+  は格納されたソート済みデータを再読み込みするだけであるため、入力を再スキャンしません）。</p>
 </ul>
-<p>SELECT の場合、トップレベルの結果タプルをクライアントに配信するだけで十分です。 INSERT/UPDATE/DELETE/MERGE の場合、実際のテーブル変更操作はトップレベルの ModifyTable プランノードで行われます。クエリに RETURNING 句が含まれている場合、 ModifyTable ノードは計算された RETURNING 行を出力として配信し、そうでない場合は何も返しません。 INSERT の処理は非常に単純です。ModifyTable より下のプランツリーから返されたタプルが、 正しい結果リレーションに挿入されます。UPDATE の場合、プランツリーは更新されたカラムの 新しい値と、どのテーブル行を更新すべきかを特定する「ジャンク」（隠し）カラムを返します。 ModifyTable ノードはその行を取得して変更されていないカラムの値を取り出し、 それらの値を新しい行に結合して、更新を適用します。（ヒープテーブルの場合、行識別の ジャンクカラムは CTID ですが、他のテーブルタイプでは別のものが使用される場合があります。） DELETE の場合、プランツリーは行識別のジャンクカラムを配信するだけでよく、 ModifyTable ノードはその各行を訪れて行を削除済みとしてマークします。 MERGE については後述します。</p>
-<p>XXX さらに多くのドキュメントをここに記述する必要があります...</p>
-<p>プランツリーとステートツリー --------------------------</p>
-<p>プランナーによって配信されるプランツリーには、Plan ノードのツリー（struct Plan から派生した構造体型）が含まれます。エグゼキュータの起動時に、エグゼキュータステートノードを 含む同一構造の並行ツリーを構築します。一般に、すべてのプランノード型に対応する エグゼキュータステートノード型が存在します。ステートツリー内の各ノードは、 プランツリー内の対応するノードへのポインタと、そのノード型を実装するために必要な エグゼキュータステートデータを保持します。この配置により、エグゼキュータに関する限り、 プランツリーを完全に読み取り専用にすることができます。実行中に変更されるすべてのデータは ステートツリー内に存在します。読み取り専用のプランツリーは、プランのキャッシュと 再利用を非常にシンプルにします。</p>
-<p>実行時パーティションプルーニングにより、一致するレコードがそこで見つからないと判断されたため、 エグゼキュータがサブプラン全体を必要としないと判断した場合、エグゼキュータの起動時に 対応するエグゼキュータステートノードが作成されないことがあります。これは現在は Append および MergeAppend ノードでのみ発生します。この場合、不要なサブプランは 無視され、エグゼキュータステートのサブノード配列はプランのサブプランリストと 順序が一致しなくなります。</p>
-<p>各 Plan ノードは、ターゲットリストや修飾条件などを表現するために、それに関連付けられた 式ツリーを持つことができます。これらのツリーもエグゼキュータにとっては読み取り専用ですが、 後述するように、式評価用のエグゼキュータステートは Plan の式のツリー形状をそのまま 反映しません。むしろ、いくつかの複雑な式ノード型に対してサブノードを持つことはあっても、 式ツリーごとに1つの ExprState ノードが存在するだけです。</p>
-<p>これらのツリーで使用されるノードのクラスは全部で4つあります: Plan ノード、 それに対応する PlanState ノード、Expr ノード、そして ExprState ノードです。 （実際には、3つのツリーベース表現すべてで「接着剤」として使用される List ノードもあります。）</p>
-<p>式ツリーと ExprState ノード ---------------------------</p>
-<p>式ツリーは、Plan ツリーとは対照的に、対応するステートノードのツリーにミラーリングされません。 その代わりに、個別に実行可能な各式ツリー（例：Plan の qual や targetlist）は、 1つの ExprState ノードで表現されます。ExprState ノードには、式をコンパクトで線形な形式で 評価するために必要な情報が含まれています。そのコンパクトな形式は、 ExprState-&gt;steps[] 内のフラットな配列（ExprEvalStep * ではなく ExprEvalStep の配列） として格納されます。</p>
-<p>このような表現を選択する理由は以下の通りです:</p>
+<p class="markdown-preserve-lines">SELECT の場合、トップレベルの結果タプルをクライアントに配信するだけで十分です。
+INSERT/UPDATE/DELETE/MERGE の場合、実際のテーブル変更操作はトップレベルの
+ModifyTable プランノードで行われます。クエリに RETURNING 句が含まれている場合、
+ModifyTable ノードは計算された RETURNING 行を出力として配信し、そうでない場合は何も返しません。
+INSERT の処理は非常に単純です。ModifyTable より下のプランツリーから返されたタプルが、
+正しい結果リレーションに挿入されます。UPDATE の場合、プランツリーは更新されたカラムの
+新しい値と、どのテーブル行を更新すべきかを特定する「ジャンク」（隠し）カラムを返します。
+ModifyTable ノードはその行を取得して変更されていないカラムの値を取り出し、
+それらの値を新しい行に結合して、更新を適用します。（ヒープテーブルの場合、行識別の
+ジャンクカラムは CTID ですが、他のテーブルタイプでは別のものが使用される場合があります。）
+DELETE の場合、プランツリーは行識別のジャンクカラムを配信するだけでよく、
+ModifyTable ノードはその各行を訪れて行を削除済みとしてマークします。
+MERGE については後述します。</p>
+<p class="markdown-preserve-lines">XXX さらに多くのドキュメントをここに記述する必要があります...</p>
+<h2>プランツリーとステートツリー</h2>
+<p class="markdown-preserve-lines">プランナーによって配信されるプランツリーには、Plan ノードのツリー（struct Plan
+から派生した構造体型）が含まれます。エグゼキュータの起動時に、エグゼキュータステートノードを
+含む同一構造の並行ツリーを構築します。一般に、すべてのプランノード型に対応する
+エグゼキュータステートノード型が存在します。ステートツリー内の各ノードは、
+プランツリー内の対応するノードへのポインタと、そのノード型を実装するために必要な
+エグゼキュータステートデータを保持します。この配置により、エグゼキュータに関する限り、
+プランツリーを完全に読み取り専用にすることができます。実行中に変更されるすべてのデータは
+ステートツリー内に存在します。読み取り専用のプランツリーは、プランのキャッシュと
+再利用を非常にシンプルにします。</p>
+<p class="markdown-preserve-lines">実行時パーティションプルーニングにより、一致するレコードがそこで見つからないと判断されたため、
+エグゼキュータがサブプラン全体を必要としないと判断した場合、エグゼキュータの起動時に
+対応するエグゼキュータステートノードが作成されないことがあります。これは現在は
+Append および MergeAppend ノードでのみ発生します。この場合、不要なサブプランは
+無視され、エグゼキュータステートのサブノード配列はプランのサブプランリストと
+順序が一致しなくなります。</p>
+<p class="markdown-preserve-lines">各 Plan ノードは、ターゲットリストや修飾条件などを表現するために、それに関連付けられた
+式ツリーを持つことができます。これらのツリーもエグゼキュータにとっては読み取り専用ですが、
+後述するように、式評価用のエグゼキュータステートは Plan の式のツリー形状をそのまま
+反映しません。むしろ、いくつかの複雑な式ノード型に対してサブノードを持つことはあっても、
+式ツリーごとに1つの ExprState ノードが存在するだけです。</p>
+<p class="markdown-preserve-lines">これらのツリーで使用されるノードのクラスは全部で4つあります: Plan ノード、
+それに対応する PlanState ノード、Expr ノード、そして ExprState ノードです。
+（実際には、3つのツリーベース表現すべてで「接着剤」として使用される List ノードもあります。）</p>
+<h2>式ツリーと ExprState ノード</h2>
+<p class="markdown-preserve-lines">式ツリーは、Plan ツリーとは対照的に、対応するステートノードのツリーにミラーリングされません。
+その代わりに、個別に実行可能な各式ツリー（例：Plan の qual や targetlist）は、
+1つの ExprState ノードで表現されます。ExprState ノードには、式をコンパクトで線形な形式で
+評価するために必要な情報が含まれています。そのコンパクトな形式は、
+ExprState-&gt;steps[] 内のフラットな配列（ExprEvalStep * ではなく ExprEvalStep の配列）
+として格納されます。</p>
+<p class="markdown-preserve-lines">このような表現を選択する理由は以下の通りです:</p>
 <ul>
 <li>通常、1つの Expr 型ノードを評価するのに必要な作業量は非常に小さいため、</li>
-<p>評価中にツリーウォークを実行しなければならないオーバーヘッドが無視できません。</p>
+<p class="markdown-preserve-lines">  評価中にツリーウォークを実行しなければならないオーバーヘッドが無視できません。</p>
 <li>フラットな表現は単一の関数内で非再帰的に評価できるため、</li>
-<p>スタック深度と関数呼び出しのオーバーヘッドが削減されます。</p>
+<p class="markdown-preserve-lines">  スタック深度と関数呼び出しのオーバーヘッドが削減されます。</p>
 <li>このような表現は、高速なインタプリタ実行と、ネイティブコードへのコンパイルの両方で使用可能です。</li>
 </ul>
-<p>式の Plan ツリー表現は、ExecInitExpr() によって ExprState ノードにコンパイルされます。 インタプリタ版とコンパイル版の両方が複雑さに対処しなければならない実行時ではなく、 ExecInitExpr()（およびヘルパー）によって可能な限り多くの複雑さが処理されるべきです。 実行アプローチ間での重複作業のほかに、実行時初期化チェックには、 式が評価されるたびに小さくないが無視できないコストもあります。 そのため、ExecInitExpr() が、単一のクエリの実行を通じて変化しないと予想される情報、 例えばドメイン型に適用される CHECK 制約式のセットなどを事前計算することを許可しています。 これは、プラン無効化を必要とするイベントの数を大幅に増やすことなく、プラン時には行えませんでした。 （以前は、この種の情報のいくつかは式評価のたびに再チェックされていましたが、 それは不要なオーバーヘッドのように思われます。）</p>
-<p>式の初期化 ----------</p>
-<p>ExecInitExpr() および類似のルーチンにおいて、Expr ツリーはフラットな表現に変換されます。 各 Expr ノードは、0個、1個、または複数の ExprEvalSteps で表現される場合があります。</p>
-<p>各 ExprEvalStep の作業はそのオペコード（enum ExprEvalOp の）によって決定され、 ExprEvalStep-&gt;resvalue/resnull が指す Datum 変数およびブール型の null フラグ変数に 作業の結果を格納します。複雑な式は、複数のステップを連鎖させることによって実行されます。 例えば、「a + b」（2つの Var 式を持つ1つの OpExpr）は、 Var の値を取得するための2つのステップと、+ 演算子の基底にある関数の評価のための1つのステップとして 表現されます。Var のためのステップは、関数評価ステップで使用される FunctionCallInfoBaseData 構造体内の適切な args[].value .isnull 要素を resvalue/resnull が直接指すようにするため、結果の値をコピーするための追加の作業を回避します。</p>
-<p>完成した ExprState-&gt;steps 配列のエントリの最後は常に EEOP_DONE_RETURN または EEOP_DONE_NO_RETURN ステップであり、これにより反復処理中に 配列の終了をテストする必要がなくなります。前者は式が直接値を返すときに使用され、 後者は式の初期化の副作用が目的である場合（例：射影や集約遷移値の計算など）に使用されます。</p>
-<p>また、式に変数参照（ExprContext の INNER、OUTER、または SCAN タプルユーザカラムへの参照）が 含まれている場合、ステップ配列は EEOP_*_FETCHSOME ステップで始まります。 これにより、必要なカラムを直接利用できるように関連するタプルが分解されていることが保証されます （slot_getsomeattrs() を参照）。これにより、個々の Var 取得ステップを単なる配列ルックアップと 大差ないものにすることができます。</p>
-<p>ExecInitExpr() の作業の大部分は、再帰関数 ExecInitExprRec() とそのサブルーチンによって 行われます。ExecInitExprRec() は、1つの Expr ノードを、実行に必要なステップにマップし、 サブ式が必要に応じて再帰します。</p>
-<p>各 ExecInitExprRec() の呼び出しは、そのサブ式の結果がどこに格納されるべきかを 指定する必要があります（resv/resnull パラメータ経由）。これにより、 （サブ）式を直接 fcinfo-&gt;args[].value/isnull に評価するという前述のシナリオが可能になりますが、 いくつかの注意も必要です：ターゲットの Datum/isnull 変数は、 それらのターゲット Datum/isnull 変数のさらなる使用よりも前に実行されるステップによってのみ 結果が必要とされない限り、別の ExecInitExprRec() と共有してはなりません。 ExprEvalStep 表現の非再帰性のため、それは通常簡単に保証できます。</p>
-<p>ExecInitExprRec() は、ExprEvalPushStep() を使用して新しい操作を ExprState-&gt;steps 配列にプッシュします。ステップを連続して配置された配列として保つため、 ExprEvalPushStep() は十分なスペースがない場合に配列全体を repalloc する必要があります。 そのため、式の初期化中にいずれかのステップを直接指すことは*許可されていません*。 したがって、サブ式の resv/resnull は通常、ステップ配列とは別に palloc された 何らかのストレージを指します。例えば、関数呼び出しステップの FunctionCallInfoBaseData は、 ExprEvalStep 配列の一部になるのではなく、個別に割り当てられます。 完全な式全体の通常の結果は、ExprState ノード自体の resvalue/resnull フィールドに返されます。</p>
-<p>いくつかのステップ（例：ブール式）では、特定のサブ式の評価をスキップすることができます。 フラットな表現では、これは次のステップに続けて単に継続するのではなく、 後のいくつかのステップにジャンプすることに相当します。このようなジャンプのターゲットは、 次に実行するステップの ExprState-&gt;steps 配列における整数インデックスで表現されます。 （execExprInterp.c の EEO_NEXT および EEO_JUMP マクロと比較してください。）</p>
-<p>通常、ExecInitExprRec() は、ジャンプステップをステップ配列にプッシュし、 次にスキップされる可能性のあるサブ式のステップを再帰的に生成し、 その後戻って、今や判明しているサブ式のステップの長さを使用してジャンプターゲットインデックスを 修正する必要があります。これは execExpr.c の adjust_jumps リストによって処理されます。</p>
-<p>ExprState の構築の最後のステップは、ExecReadyExpr() を適用することです。 これにより、選択された実行方法を使用して実行の準備が整います。</p>
-<p>式評価 ------</p>
-<p>式評価の異なる方法を可能にし、より優れた分岐/ジャンプターゲット予測を実現するため、 式は ExprState-&gt;evalfunc を呼び出すことによって評価されます （ExecEvalExpr() および関連関数経由）。</p>
-<p>ExecReadyExpr() は、evalfunc に適切な関数を設定することで、 解釈のメソッドを選択できます。デフォルトの実行関数である ExecInterpExpr は execExprInterp.c で実装されています。詳細についてはそのヘッダコメントを参照してください。 特殊なケースの evalfunc は、特に単純な式に対して使用されます。</p>
-<p>単純なものほどパフォーマンスクリティカルではない、より複雑な式評価ステップの多くは、 式実行の高速パスの外側の独立した関数として実装されていることに注意してください。 これにより、それらの実装を解釈実行とコンパイル済み式評価の間で共有できるようになります。 これは、呼び出し元に基づいてディスパッチの方法が異なるため、 これらのヘルパー関数が自身で式ステップのディスパッチを実行することを許可されていないことを意味します。 したがって、ヘルパーはサブ式の実行を呼び出すことはできません。 必要とするすべてのサブ式の結果は、先行するステップによって計算されていなければなりません。 また、次の式ステップへのディスパッチは、ヘルパーからの復帰後に実行されなければなりません。</p>
-<p>ターゲットリスト評価 --------------------</p></section><section class="document-translation-chunk translated" data-chunk-order="1"><p>ExecBuildProjectionInfo は、targetlist を評価してその結果を ExprState-&gt;resultslot に格納する効果を持つ ExprState を構築します。一般的な targetlist 式は、上記で議論したようにそれを評価し（結果を ExprState の resvalue/resnull フィールドに格納する）、その後 EEOP_ASSIGN_TMP ステップを使用して結果を結果スロットの適切な tts_values[] および tts_isnull[] 配列要素に移動することによって実行されます。targetlist のエントリが単なる Var である場合を処理するための特別な高速パスのステップ型（EEOP_ASSIGN_*_VAR）があり、これらは 2 つのステップの代わりに 1 つのステップを使用します。</p>
-<p>MERGE -----</p>
-<p>MERGE は、複数テーブル、複数アクションのコマンドです。ターゲットテーブルとソースリレーションを指定し、複数の WHEN MATCHED および WHEN NOT MATCHED 句を含むことができ、それぞれが 1 つの UPDATE、INSERT、DELETE、または DO NOTHING アクションを指定します。ターゲットテーブルは MERGE によって変更され、ソースリレーションはアクションに追加のデータを提供します。各アクションはオプションで、各タプルに対して評価される修飾式を指定します。</p>
-<p>プランナでは、transform_MERGE_to_join がターゲットテーブルとソースリレーションの間の結合を構築し、ターゲットテーブルからの行を識別するジャンク列を含めます。この結合は、MERGE コマンドに WHEN NOT MATCHED 句が含まれている場合は外部結合になります。ModifyTable ノードはその結合のプランツリーからタプルを取得します。取得されたタプル内の行識別列が NULL である場合、ソースリレーションにはターゲットテーブル内のどのタプルとも一致しないタプルが含まれているため、プランから返されたそのタプルを前提として、各 WHEN NOT MATCHED 句の修飾式が評価されます。式が真を返した場合、その句で示されたアクションが実行され、それ以降の句は評価されません。一方、行識別列が NULL でない場合は、ターゲットテーブルから一致するタプルを取得できます。取得されたタプルとプランから返されたタプルの両方を前提として、各 WHEN MATCHED 句の修飾式が評価されます。</p>
-<p>WHEN NOT MATCHED 句が存在しない場合、プランナによって構築された結合は内部結合になり、行を識別するジャンク列は常に非 NULL です。</p>
-<p>WHEN MATCHED が、同時に更新または削除された行の処理に行き着いた場合、EvalPlanQual（下記参照）を使用して行の最新バージョンが検索され、再取得されます。それが存在する場合、使用する一致する WHEN MATCHED 句の検索は先頭から開始されます。</p>
-<p>MERGE は独自のタイプのトリガーを許可せず、代わりに UPDATE、DELETE、および INSERT トリガーを発生させます。行トリガーは、その行に対してアクションが実行されるときに各行に対して発生します。ステートメントトリガーは、対応する句に一致する行があるかどうかに関係なく、常に発生します。</p>
-<p>メモリ管理 ----------</p>
-<p>「クエリごと」のメモリコンテキストは CreateExecutorState() 実行時に作成されます。エグゼクータの呼び出し中に割り当てられたすべてのストレージは、そのコンテキストまたは子コンテキストに割り当てられます。これにより、エグゼクータのシャットダウン中のストレージの回収が容易になります。小口の pfree や起こり得るメモリリークをいじる代わりに、メモリコンテキストを破棄するだけです。</p>
-<p>特に、前のセクションで説明したプラン状態ツリーと式状態ツリーは、クエリごとのメモリコンテキストに割り当てられます。</p>
-<p>クエリ内のメモリリークを避けるため、クエリ実行中のほとんどの処理は「タプルごと」のメモリコンテキストで行われます。これらは、通常はタプルごとに 1 回空にリセットされるためそのように呼ばれます。タプルごとのコンテキストは通常 ExprContext に関連付けられており、一般に各 PlanState ノードには、その qual および targetlist 式を評価するための独自の ExprContext があります。</p>
-<p>クエリ処理の制御フロー ----------------------</p>
-<p>これは、完全なクエリ処理の制御フローの概略です：</p>
-<p>CreateQueryDesc</p>
-<p>ExecutorStart CreateExecutorState クエリごとのコンテキストを作成する クエリごとのコンテキストに切り替えて ExecInitNode を実行する AfterTriggerBeginQuery ExecInitNode --- プランツリーを再帰的にスキャンする ExecInitNode 子ノードに再帰する CreateExprContext タプルごとのコンテキストを作成する ExecInitExpr</p>
-<p>ExecutorRun ExecProcNode --- クエリごとのコンテキストで再帰的に呼び出される ExecEvalExpr --- タプルごとのコンテキストで呼び出される ResetExprContext --- メモリを解放するため</p>
-<p>ExecutorFinish ExecPostprocessPlan --- 未完了の ModifyTable ノードを実行する AfterTriggerEndQuery</p>
-<p>ExecutorEnd ExecEndNode --- リソースを再帰的に解放する FreeExecutorState クエリごとのコンテキストと子コンテキストを解放する</p>
-<p>FreeQueryDesc</p>
-<p>上記のコメントに従い、ExecEndNode がメモリを解放することは実際には重要ではありません。FreeExecutorState でいずれすべて消去されるからです。しかしながら、リレーションを閉じ、バッファピンをドロップするなどの作業は慎重に行う必要があるため、プラン状態ツリーをスキャンしてこれらの種類のリソースを見つける必要があります。</p>
-<p>エグゼクータは、Plan ツリーなしで単純な式を評価するためにも使用できます（「単純」とは、関数呼び出しの中に隠されている可能性があるものの、「集約やサブセレクトがない」ことを意味します）。この場合の制御フローは次のようになります：</p>
-<p>CreateExecutorState クエリごとのコンテキストを作成する</p>
-<p>CreateExprContext	-- または GetPerTupleExprContext(estate) を使用する タプルごとのコンテキストを作成する</p>
-<p>ExecPrepareExpr 一時的にクエリごとのコンテキストに切り替える expression_planner を通じて式を実行する ExecInitExpr</p>
-<p>繰り返し実行： ExecEvalExprSwitchContext ExecEvalExpr --- タプルごとのコンテキストで呼び出される ResetExprContext --- メモリを解放するため</p>
-<p>FreeExecutorState クエリごとのコンテキストおよび ExprContext を解放する （個別の FreeExprContext 呼び出しは必要ありません）</p>
-<p>EvalPlanQual（READ COMMITTED 更新チェック） -------------------------------------------</p>
-<p>単純な SELECT の場合、エグゼクータは、現在トランザクションから見えるスナップショットに従って有効なタプル（つまり、以前にコミットされたトランザクションによって挿入され、以前にコミットされたトランザクションによって削除されていないもの）にのみ注意を払う必要があります。しかし、UPDATE、DELETE、および MERGE の場合、オープンまたは同時にコミットされたトランザクションによって変更されたタプルを変更または削除することは好ましいことではありません。SERIALIZABLE 隔離レベルで実行している場合、この条件の発生が確認されたときにエラーが発生します。READ COMMITTED 隔離レベルでは、より多くの処理を行う必要があります。</p>
-<p>READ COMMITTED モードの基本的なアイデアは、（必要に応じてコミットを待った後で）同時トランザクションによってコミットされた変更済みタプルを取り、クエリの条件（quals）を再評価して、それが引き続き条件を満たすかどうかを確認することです。もし満たすならば、（UPDATE を行っている場合は）変更済みタプルから更新されたタプルを再生成し、最終的に変更済みタプルを更新/削除します。SELECT FOR UPDATE/SHARE も同様に動作しますが、そのアクションは変更済みタプルをロックし、そのバージョンのタプルに基づく結果を返すことだけです。</p>
-<p>このチェックを実装するために、実際には、変更されたタプル（SELECT FOR UPDATE の場合はタプルのセット）ごとに最初からクエリを再実行します。その際、リレーションスキャンノードを調整して、現在のタプル（元のもの、または変更されたタプルの更新された（そして現在ロックされている）バージョン）のみを返すようにします。このクエリがタプルを返す場合、変更されたタプルは条件を通過します（UPDATE を行っている場合は、クエリ出力は適切に変更された更新タプルになります）。タプルが返されない場合、変更されたタプルは条件を満たさないため、現在の結果タプルを無視して元のクエリを続行します。</p>
-<p>UPDATE/DELETE/MERGE では、ターゲットリレーションのみをこのように処理する必要があります。SELECT FOR UPDATE では、FOR UPDATE がフラグ付けされたリレーションが複数存在する可能性があるため、再チェックを実行する前に、そのような各リレーション内の現在のタプルバージョンに対するロックを取得します。</p>
-<p>クエリ内にロックされないリレーションが存在する可能性もあります（それらは UPDATE/DELETE/MERGE のターゲットではなく、SELECT FOR UPDATE/SHARE でロックするように指定もされていません）。テストクエリを再実行するときは、ロックされた行に結合されたこれらリレーションの同じ行を使用する必要があります。通常のリレーションの場合、これは結合出力に行 TID を含め、その TID を再取得することで比較的低コストで実装できます。（再取得は高価ですが、再テストが不要な通常のケースを最適化しようとしています。）ValuesScan や FunctionScan などの非テーブルリレーションについても考慮する必要があります。これらについては、TID に相当するものがないため、結合出力行にタプル値全体を含めることが唯一の実用的な解決策のようです。</p>
-<p>SELECT FOR UPDATE の targetlist では、特定のスキャンタプルのセットに対して高々 1 つのタプルしか返されないことを保証するために、セットを返す関数（SRF）を禁止しています。そうしないと、元のクエリが同じスキャンタプルのセットを複数回返すことによる重複が発生してしまいます。同様に、UPDATE の targetlist でも SRF は禁止されています。そこでは、同じ行が複数回更新されるという効果があり、あまり有用ではなく、また最初の更新以降の更新は何の効果もありません。</p>
-<p>非同期実行 ----------</p>
-<p>ForeignScan がネットワーク I/O を待機しているなど、データベースシステム外部のイベントをノードが待機している状況では、ノードがタプルを直ちに返すことはできないが、後で返すことができることを示すことが望ましいです。この種の状況を発見したプロセスは単にブロックすることで常に処理できますが、これは、すぐに行き詰まりを解消できるプランツリーの別の部分を実行するのに費やされるはずの時間無駄にする可能性があります。これは、プランツリーに Append ノードが含まれている場合に特に発生しやすくなります。非同期実行は、パフォーマンスを向上させるために、Append ノードの複数の部分を直列ではなく同時に実行します。</p>
-<p>非同期実行のために、Append ノードはまず ExecAsyncRequest を使用して非同期対応の子ノードにタプルを要求する必要があります。次に、ExecAppendAsyncEventWait を使用して非同期イベントループを実行する必要があります。最終的に、非同期リクエストが行われた子ノードがタプルを生成すると、Append ノードは ExecAsyncResponse を経由してイベントループからそれを受け取ります。非同期実行の現在の実装では、非同期対応の子ノードにタプルを要求する唯一のノードタイプは Append であり、非同期対応であり得る唯一のノードタイプは ForeignScan です。</p>
-<p>通常、ExecAsyncResponse コールバックは、非同期でタプルを要求したいノードに必要な唯一のコールバックです。一方、非同期対応ノードは一般的に 3 つのメソッドを実装する必要があります：</p>
-<p>1. 非同期リクエストが行われると、ノードの ExecAsyncRequest コールバックが呼び出されます。これは、後述するコールバックのためにリクエストが保留中であることを示すために ExecAsyncRequestPending を使用する必要があります。あるいは、結果がすぐに利用可能な場合は代わりに ExecAsyncRequestDone を使用することもできます。</p>
-<p>2. イベントループがファイル記述子イベントを待機またはポーリングしたい場合、ノードの ExecAsyncConfigureWait コールバックが呼び出され、ノードが待機したいファイル記述子イベントを設定します。</p>
-<p>3. ファイル記述子の準備が整うと、ノードの ExecAsyncNotify コールバックが呼び出されます。#1 と同様に、別のコールバックのために ExecAsyncRequestPending を使用するか、結果をすぐに返すために ExecAsyncRequestDone を使用する必要があります。</p></section></div><script>
+<p class="markdown-preserve-lines">式の Plan ツリー表現は、ExecInitExpr() によって ExprState ノードにコンパイルされます。
+インタプリタ版とコンパイル版の両方が複雑さに対処しなければならない実行時ではなく、
+ExecInitExpr()（およびヘルパー）によって可能な限り多くの複雑さが処理されるべきです。
+実行アプローチ間での重複作業のほかに、実行時初期化チェックには、
+式が評価されるたびに小さくないが無視できないコストもあります。
+そのため、ExecInitExpr() が、単一のクエリの実行を通じて変化しないと予想される情報、
+例えばドメイン型に適用される CHECK 制約式のセットなどを事前計算することを許可しています。
+これは、プラン無効化を必要とするイベントの数を大幅に増やすことなく、プラン時には行えませんでした。
+（以前は、この種の情報のいくつかは式評価のたびに再チェックされていましたが、
+それは不要なオーバーヘッドのように思われます。）</p>
+<h2>式の初期化</h2>
+<p class="markdown-preserve-lines">ExecInitExpr() および類似のルーチンにおいて、Expr ツリーはフラットな表現に変換されます。
+各 Expr ノードは、0個、1個、または複数の ExprEvalSteps で表現される場合があります。</p>
+<p class="markdown-preserve-lines">各 ExprEvalStep の作業はそのオペコード（enum ExprEvalOp の）によって決定され、
+ExprEvalStep-&gt;resvalue/resnull が指す Datum 変数およびブール型の null フラグ変数に
+作業の結果を格納します。複雑な式は、複数のステップを連鎖させることによって実行されます。
+例えば、「a + b」（2つの Var 式を持つ1つの OpExpr）は、
+Var の値を取得するための2つのステップと、+ 演算子の基底にある関数の評価のための1つのステップとして
+表現されます。Var のためのステップは、関数評価ステップで使用される
+FunctionCallInfoBaseData 構造体内の適切な args[].value .isnull 要素を
+resvalue/resnull が直接指すようにするため、結果の値をコピーするための追加の作業を回避します。</p>
+<p class="markdown-preserve-lines">完成した ExprState-&gt;steps 配列のエントリの最後は常に
+EEOP_DONE_RETURN または EEOP_DONE_NO_RETURN ステップであり、これにより反復処理中に
+配列の終了をテストする必要がなくなります。前者は式が直接値を返すときに使用され、
+後者は式の初期化の副作用が目的である場合（例：射影や集約遷移値の計算など）に使用されます。</p>
+<p class="markdown-preserve-lines">また、式に変数参照（ExprContext の INNER、OUTER、または SCAN タプルユーザカラムへの参照）が
+含まれている場合、ステップ配列は EEOP_*_FETCHSOME ステップで始まります。
+これにより、必要なカラムを直接利用できるように関連するタプルが分解されていることが保証されます
+（slot_getsomeattrs() を参照）。これにより、個々の Var 取得ステップを単なる配列ルックアップと
+大差ないものにすることができます。</p>
+<p class="markdown-preserve-lines">ExecInitExpr() の作業の大部分は、再帰関数 ExecInitExprRec() とそのサブルーチンによって
+行われます。ExecInitExprRec() は、1つの Expr ノードを、実行に必要なステップにマップし、
+サブ式が必要に応じて再帰します。</p>
+<p class="markdown-preserve-lines">各 ExecInitExprRec() の呼び出しは、そのサブ式の結果がどこに格納されるべきかを
+指定する必要があります（resv/resnull パラメータ経由）。これにより、
+（サブ）式を直接 fcinfo-&gt;args[].value/isnull に評価するという前述のシナリオが可能になりますが、
+いくつかの注意も必要です：ターゲットの Datum/isnull 変数は、
+それらのターゲット Datum/isnull 変数のさらなる使用よりも前に実行されるステップによってのみ
+結果が必要とされない限り、別の ExecInitExprRec() と共有してはなりません。
+ExprEvalStep 表現の非再帰性のため、それは通常簡単に保証できます。</p>
+<p class="markdown-preserve-lines">ExecInitExprRec() は、ExprEvalPushStep() を使用して新しい操作を
+ExprState-&gt;steps 配列にプッシュします。ステップを連続して配置された配列として保つため、
+ExprEvalPushStep() は十分なスペースがない場合に配列全体を repalloc する必要があります。
+そのため、式の初期化中にいずれかのステップを直接指すことは*許可されていません*。
+したがって、サブ式の resv/resnull は通常、ステップ配列とは別に palloc された
+何らかのストレージを指します。例えば、関数呼び出しステップの FunctionCallInfoBaseData は、
+ExprEvalStep 配列の一部になるのではなく、個別に割り当てられます。
+完全な式全体の通常の結果は、ExprState ノード自体の resvalue/resnull フィールドに返されます。</p>
+<p class="markdown-preserve-lines">いくつかのステップ（例：ブール式）では、特定のサブ式の評価をスキップすることができます。
+フラットな表現では、これは次のステップに続けて単に継続するのではなく、
+後のいくつかのステップにジャンプすることに相当します。このようなジャンプのターゲットは、
+次に実行するステップの ExprState-&gt;steps 配列における整数インデックスで表現されます。
+（execExprInterp.c の EEO_NEXT および EEO_JUMP マクロと比較してください。）</p>
+<p class="markdown-preserve-lines">通常、ExecInitExprRec() は、ジャンプステップをステップ配列にプッシュし、
+次にスキップされる可能性のあるサブ式のステップを再帰的に生成し、
+その後戻って、今や判明しているサブ式のステップの長さを使用してジャンプターゲットインデックスを
+修正する必要があります。これは execExpr.c の adjust_jumps リストによって処理されます。</p>
+<p class="markdown-preserve-lines">ExprState の構築の最後のステップは、ExecReadyExpr() を適用することです。
+これにより、選択された実行方法を使用して実行の準備が整います。</p>
+<h2>式評価</h2>
+<p class="markdown-preserve-lines">式評価の異なる方法を可能にし、より優れた分岐/ジャンプターゲット予測を実現するため、
+式は ExprState-&gt;evalfunc を呼び出すことによって評価されます
+（ExecEvalExpr() および関連関数経由）。</p>
+<p class="markdown-preserve-lines">ExecReadyExpr() は、evalfunc に適切な関数を設定することで、
+解釈のメソッドを選択できます。デフォルトの実行関数である ExecInterpExpr は
+execExprInterp.c で実装されています。詳細についてはそのヘッダコメントを参照してください。
+特殊なケースの evalfunc は、特に単純な式に対して使用されます。</p>
+<p class="markdown-preserve-lines">単純なものほどパフォーマンスクリティカルではない、より複雑な式評価ステップの多くは、
+式実行の高速パスの外側の独立した関数として実装されていることに注意してください。
+これにより、それらの実装を解釈実行とコンパイル済み式評価の間で共有できるようになります。
+これは、呼び出し元に基づいてディスパッチの方法が異なるため、
+これらのヘルパー関数が自身で式ステップのディスパッチを実行することを許可されていないことを意味します。
+したがって、ヘルパーはサブ式の実行を呼び出すことはできません。
+必要とするすべてのサブ式の結果は、先行するステップによって計算されていなければなりません。
+また、次の式ステップへのディスパッチは、ヘルパーからの復帰後に実行されなければなりません。</p>
+<h2>ターゲットリスト評価</h2></section><section class="document-translation-chunk translated" data-chunk-order="1"><p class="markdown-preserve-lines">ExecBuildProjectionInfo は、targetlist を評価してその結果を ExprState-&gt;resultslot に格納する効果を持つ ExprState を構築します。一般的な targetlist 式は、上記で議論したようにそれを評価し（結果を ExprState の resvalue/resnull フィールドに格納する）、その後 EEOP_ASSIGN_TMP ステップを使用して結果を結果スロットの適切な tts_values[] および tts_isnull[] 配列要素に移動することによって実行されます。targetlist のエントリが単なる Var である場合を処理するための特別な高速パスのステップ型（EEOP_ASSIGN_*_VAR）があり、これらは 2 つのステップの代わりに 1 つのステップを使用します。</p>
+<h2>MERGE</h2>
+<p class="markdown-preserve-lines">MERGE は、複数テーブル、複数アクションのコマンドです。ターゲットテーブルとソースリレーションを指定し、複数の WHEN MATCHED および WHEN NOT MATCHED 句を含むことができ、それぞれが 1 つの UPDATE、INSERT、DELETE、または DO NOTHING アクションを指定します。ターゲットテーブルは MERGE によって変更され、ソースリレーションはアクションに追加のデータを提供します。各アクションはオプションで、各タプルに対して評価される修飾式を指定します。</p>
+<p class="markdown-preserve-lines">プランナでは、transform_MERGE_to_join がターゲットテーブルとソースリレーションの間の結合を構築し、ターゲットテーブルからの行を識別するジャンク列を含めます。この結合は、MERGE コマンドに WHEN NOT MATCHED 句が含まれている場合は外部結合になります。ModifyTable ノードはその結合のプランツリーからタプルを取得します。取得されたタプル内の行識別列が NULL である場合、ソースリレーションにはターゲットテーブル内のどのタプルとも一致しないタプルが含まれているため、プランから返されたそのタプルを前提として、各 WHEN NOT MATCHED 句の修飾式が評価されます。式が真を返した場合、その句で示されたアクションが実行され、それ以降の句は評価されません。一方、行識別列が NULL でない場合は、ターゲットテーブルから一致するタプルを取得できます。取得されたタプルとプランから返されたタプルの両方を前提として、各 WHEN MATCHED 句の修飾式が評価されます。</p>
+<p class="markdown-preserve-lines">WHEN NOT MATCHED 句が存在しない場合、プランナによって構築された結合は内部結合になり、行を識別するジャンク列は常に非 NULL です。</p>
+<p class="markdown-preserve-lines">WHEN MATCHED が、同時に更新または削除された行の処理に行き着いた場合、EvalPlanQual（下記参照）を使用して行の最新バージョンが検索され、再取得されます。それが存在する場合、使用する一致する WHEN MATCHED 句の検索は先頭から開始されます。</p>
+<p class="markdown-preserve-lines">MERGE は独自のタイプのトリガーを許可せず、代わりに UPDATE、DELETE、および INSERT トリガーを発生させます。行トリガーは、その行に対してアクションが実行されるときに各行に対して発生します。ステートメントトリガーは、対応する句に一致する行があるかどうかに関係なく、常に発生します。</p>
+<h2>メモリ管理</h2>
+<p class="markdown-preserve-lines">「クエリごと」のメモリコンテキストは CreateExecutorState() 実行時に作成されます。エグゼクータの呼び出し中に割り当てられたすべてのストレージは、そのコンテキストまたは子コンテキストに割り当てられます。これにより、エグゼクータのシャットダウン中のストレージの回収が容易になります。小口の pfree や起こり得るメモリリークをいじる代わりに、メモリコンテキストを破棄するだけです。</p>
+<p class="markdown-preserve-lines">特に、前のセクションで説明したプラン状態ツリーと式状態ツリーは、クエリごとのメモリコンテキストに割り当てられます。</p>
+<p class="markdown-preserve-lines">クエリ内のメモリリークを避けるため、クエリ実行中のほとんどの処理は「タプルごと」のメモリコンテキストで行われます。これらは、通常はタプルごとに 1 回空にリセットされるためそのように呼ばれます。タプルごとのコンテキストは通常 ExprContext に関連付けられており、一般に各 PlanState ノードには、その qual および targetlist 式を評価するための独自の ExprContext があります。</p>
+<h2>クエリ処理の制御フロー</h2>
+<p class="markdown-preserve-lines">これは、完全なクエリ処理の制御フローの概略です：</p>
+<p class="markdown-preserve-lines">	CreateQueryDesc</p>
+<p class="markdown-preserve-lines">	ExecutorStart
+		CreateExecutorState
+			クエリごとのコンテキストを作成する
+		クエリごとのコンテキストに切り替えて ExecInitNode を実行する
+		AfterTriggerBeginQuery
+		ExecInitNode --- プランツリーを再帰的にスキャンする
+			ExecInitNode
+				子ノードに再帰する
+			CreateExprContext
+				タプルごとのコンテキストを作成する
+			ExecInitExpr</p>
+<p class="markdown-preserve-lines">	ExecutorRun
+		ExecProcNode --- クエリごとのコンテキストで再帰的に呼び出される
+			ExecEvalExpr --- タプルごとのコンテキストで呼び出される
+			ResetExprContext --- メモリを解放するため</p>
+<p class="markdown-preserve-lines">	ExecutorFinish
+		ExecPostprocessPlan --- 未完了の ModifyTable ノードを実行する
+		AfterTriggerEndQuery</p>
+<p class="markdown-preserve-lines">	ExecutorEnd
+		ExecEndNode --- リソースを再帰的に解放する
+		FreeExecutorState
+			クエリごとのコンテキストと子コンテキストを解放する</p>
+<p class="markdown-preserve-lines">	FreeQueryDesc</p>
+<p class="markdown-preserve-lines">上記のコメントに従い、ExecEndNode がメモリを解放することは実際には重要ではありません。FreeExecutorState でいずれすべて消去されるからです。しかしながら、リレーションを閉じ、バッファピンをドロップするなどの作業は慎重に行う必要があるため、プラン状態ツリーをスキャンしてこれらの種類のリソースを見つける必要があります。</p>
+<p class="markdown-preserve-lines">エグゼクータは、Plan ツリーなしで単純な式を評価するためにも使用できます（「単純」とは、関数呼び出しの中に隠されている可能性があるものの、「集約やサブセレクトがない」ことを意味します）。この場合の制御フローは次のようになります：</p>
+<p class="markdown-preserve-lines">	CreateExecutorState
+		クエリごとのコンテキストを作成する</p>
+<p class="markdown-preserve-lines">	CreateExprContext	-- または GetPerTupleExprContext(estate) を使用する
+		タプルごとのコンテキストを作成する</p>
+<p class="markdown-preserve-lines">	ExecPrepareExpr
+		一時的にクエリごとのコンテキストに切り替える
+		expression_planner を通じて式を実行する
+		ExecInitExpr</p>
+<p class="markdown-preserve-lines">	繰り返し実行：
+		ExecEvalExprSwitchContext
+			ExecEvalExpr --- タプルごとのコンテキストで呼び出される
+		ResetExprContext --- メモリを解放するため</p>
+<p class="markdown-preserve-lines">	FreeExecutorState
+		クエリごとのコンテキストおよび ExprContext を解放する
+		（個別の FreeExprContext 呼び出しは必要ありません）</p>
+<h2>EvalPlanQual（READ COMMITTED 更新チェック）</h2>
+<p class="markdown-preserve-lines">単純な SELECT の場合、エグゼクータは、現在トランザクションから見えるスナップショットに従って有効なタプル（つまり、以前にコミットされたトランザクションによって挿入され、以前にコミットされたトランザクションによって削除されていないもの）にのみ注意を払う必要があります。しかし、UPDATE、DELETE、および MERGE の場合、オープンまたは同時にコミットされたトランザクションによって変更されたタプルを変更または削除することは好ましいことではありません。SERIALIZABLE 隔離レベルで実行している場合、この条件の発生が確認されたときにエラーが発生します。READ COMMITTED 隔離レベルでは、より多くの処理を行う必要があります。</p>
+<p class="markdown-preserve-lines">READ COMMITTED モードの基本的なアイデアは、（必要に応じてコミットを待った後で）同時トランザクションによってコミットされた変更済みタプルを取り、クエリの条件（quals）を再評価して、それが引き続き条件を満たすかどうかを確認することです。もし満たすならば、（UPDATE を行っている場合は）変更済みタプルから更新されたタプルを再生成し、最終的に変更済みタプルを更新/削除します。SELECT FOR UPDATE/SHARE も同様に動作しますが、そのアクションは変更済みタプルをロックし、そのバージョンのタプルに基づく結果を返すことだけです。</p>
+<p class="markdown-preserve-lines">このチェックを実装するために、実際には、変更されたタプル（SELECT FOR UPDATE の場合はタプルのセット）ごとに最初からクエリを再実行します。その際、リレーションスキャンノードを調整して、現在のタプル（元のもの、または変更されたタプルの更新された（そして現在ロックされている）バージョン）のみを返すようにします。このクエリがタプルを返す場合、変更されたタプルは条件を通過します（UPDATE を行っている場合は、クエリ出力は適切に変更された更新タプルになります）。タプルが返されない場合、変更されたタプルは条件を満たさないため、現在の結果タプルを無視して元のクエリを続行します。</p>
+<p class="markdown-preserve-lines">UPDATE/DELETE/MERGE では、ターゲットリレーションのみをこのように処理する必要があります。SELECT FOR UPDATE では、FOR UPDATE がフラグ付けされたリレーションが複数存在する可能性があるため、再チェックを実行する前に、そのような各リレーション内の現在のタプルバージョンに対するロックを取得します。</p>
+<p class="markdown-preserve-lines">クエリ内にロックされないリレーションが存在する可能性もあります（それらは UPDATE/DELETE/MERGE のターゲットではなく、SELECT FOR UPDATE/SHARE でロックするように指定もされていません）。テストクエリを再実行するときは、ロックされた行に結合されたこれらリレーションの同じ行を使用する必要があります。通常のリレーションの場合、これは結合出力に行 TID を含め、その TID を再取得することで比較的低コストで実装できます。（再取得は高価ですが、再テストが不要な通常のケースを最適化しようとしています。）ValuesScan や FunctionScan などの非テーブルリレーションについても考慮する必要があります。これらについては、TID に相当するものがないため、結合出力行にタプル値全体を含めることが唯一の実用的な解決策のようです。</p>
+<p class="markdown-preserve-lines">SELECT FOR UPDATE の targetlist では、特定のスキャンタプルのセットに対して高々 1 つのタプルしか返されないことを保証するために、セットを返す関数（SRF）を禁止しています。そうしないと、元のクエリが同じスキャンタプルのセットを複数回返すことによる重複が発生してしまいます。同様に、UPDATE の targetlist でも SRF は禁止されています。そこでは、同じ行が複数回更新されるという効果があり、あまり有用ではなく、また最初の更新以降の更新は何の効果もありません。</p>
+<h2>非同期実行</h2>
+<p class="markdown-preserve-lines">ForeignScan がネットワーク I/O を待機しているなど、データベースシステム外部のイベントをノードが待機している状況では、ノードがタプルを直ちに返すことはできないが、後で返すことができることを示すことが望ましいです。この種の状況を発見したプロセスは単にブロックすることで常に処理できますが、これは、すぐに行き詰まりを解消できるプランツリーの別の部分を実行するのに費やされるはずの時間無駄にする可能性があります。これは、プランツリーに Append ノードが含まれている場合に特に発生しやすくなります。非同期実行は、パフォーマンスを向上させるために、Append ノードの複数の部分を直列ではなく同時に実行します。</p>
+<p class="markdown-preserve-lines">非同期実行のために、Append ノードはまず ExecAsyncRequest を使用して非同期対応の子ノードにタプルを要求する必要があります。次に、ExecAppendAsyncEventWait を使用して非同期イベントループを実行する必要があります。最終的に、非同期リクエストが行われた子ノードがタプルを生成すると、Append ノードは ExecAsyncResponse を経由してイベントループからそれを受け取ります。非同期実行の現在の実装では、非同期対応の子ノードにタプルを要求する唯一のノードタイプは Append であり、非同期対応であり得る唯一のノードタイプは ForeignScan です。</p>
+<p class="markdown-preserve-lines">通常、ExecAsyncResponse コールバックは、非同期でタプルを要求したいノードに必要な唯一のコールバックです。一方、非同期対応ノードは一般的に 3 つのメソッドを実装する必要があります：</p>
+<p class="markdown-preserve-lines">1. 非同期リクエストが行われると、ノードの ExecAsyncRequest コールバックが呼び出されます。これは、後述するコールバックのためにリクエストが保留中であることを示すために ExecAsyncRequestPending を使用する必要があります。あるいは、結果がすぐに利用可能な場合は代わりに ExecAsyncRequestDone を使用することもできます。</p>
+<p class="markdown-preserve-lines">2. イベントループがファイル記述子イベントを待機またはポーリングしたい場合、ノードの ExecAsyncConfigureWait コールバックが呼び出され、ノードが待機したいファイル記述子イベントを設定します。</p>
+<p class="markdown-preserve-lines">3. ファイル記述子の準備が整うと、ノードの ExecAsyncNotify コールバックが呼び出されます。#1 と同様に、別のコールバックのために ExecAsyncRequestPending を使用するか、結果をすぐに返すために ExecAsyncRequestDone を使用する必要があります。</p></section></div><script>
 (function() {
   function notifyParent() {
     if (parent === window) return;

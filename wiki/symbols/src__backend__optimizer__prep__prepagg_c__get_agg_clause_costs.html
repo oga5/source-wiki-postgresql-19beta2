@@ -1,5 +1,5 @@
 <!doctype html>
-<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>symbols/src__backend__optimizer__prep__prepagg_c__get_agg_clause_costs.md</title><link rel="stylesheet" href="../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../source/src/backend/optimizer/prep/prepagg.c.html#L558" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__prep__prepagg_c__get_agg_clause_costs.html&quot;}, '*');">get_agg_clause_costs</a></h1>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="10"><title>symbols/src__backend__optimizer__prep__prepagg_c__get_agg_clause_costs.md</title><link rel="stylesheet" href="../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../source/src/backend/optimizer/prep/prepagg.c.html#L558" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__prep__prepagg_c__get_agg_clause_costs.html&quot;}, '*');">get_agg_clause_costs</a></h1>
 <h2>現在のソース事実</h2>
 <ul>
 <li>種別: <code>function</code></li>
@@ -63,7 +63,7 @@
 <li><code>root-&gt;aggtransinfos</code> および <code>root-&gt;agginfos</code> に格納されている各要素が有効な <code>AggTransInfo</code> および <code>AggInfo</code> ノードを指していること。</li>
 </ul>
 <h2>アルゴリズムまたは振る舞い</h2>
-<p>1. **遷移情報の走査とトランジションコストの累積**:</p>
+<p>1. <strong>遷移情報の走査とトランジションコストの累積</strong>:</p>
 <ul>
 <li><code>root-&gt;aggtransinfos</code> リストを走査し、各 <code>AggTransInfo</code> について <a class="wiki-source-link" href="../../source/src/backend/optimizer/prep/prepagg.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__prep__prepagg_c__aggsplit.html&quot;}, '*');"><code>aggsplit</code></a> の分割状態に応じた関数コストを <code>costs-&gt;transCost</code> または <code>costs-&gt;finalCost</code> に加算する。</li>
 <li><code>DO_AGGSPLIT_COMBINE(aggsplit)</code> が真の場合は <code>combinefn_oid</code> を <code>costs-&gt;transCost</code> に追加し、偽の場合は <code>transfn_oid</code> を追加する。</li>
@@ -71,13 +71,13 @@
 <li>シリアライズが有効かつ <code>serialfn_oid</code> が有効な場合は <code>costs-&gt;finalCost</code> に追加する。</li>
 <li>結合分割を行わない場合（<code>!DO_AGGSPLIT_COMBINE(aggsplit)</code>）、入力式（<code>transinfo-&gt;args</code>）および存在する場合はフィルタ（<code>transinfo-&gt;aggfilter</code>）の評価コストを計算し、<code>costs-&gt;transCost</code> の startup および per_tuple に加算する。</li>
 </ul>
-<p>2. **遷移状態のメモリスペース見積もり**:</p>
+<p>2. <strong>遷移状態のメモリスペース見積もり</strong>:</p>
 <ul>
 <li>遷移型の値渡し特性（<code>transtypeByVal</code>）を確認する。</li>
 <li>非値渡し（pass-by-reference）の場合、<code>aggtransspace</code> が指定されていればそれを使い、特定関数（<code>F_ARRAY_APPEND</code>）やシステムカタログの平均幅（<a class="wiki-source-link" href="../../source/src/backend/utils/cache/lsyscache.c.html#L2893" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__utils__cache__lsyscache_c__get_typavgwidth.html&quot;}, '*');"><code>get_typavgwidth</code></a>）から幅を求めてアライメント調整を行い、ポインタオーバーヘッド分を含めて <code>costs-&gt;transitionSpace</code> に加算する。</li>
 <li>値渡しであっても <code>INTERNALOID</code> の場合は特殊ケースとして扱い、指定された <code>aggtransspace</code> またはデフォルト値（<a class="wiki-source-link" href="../../source/src/include/utils/memutils.h.html#L158" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/utils/memutils.h.html&quot;}, '*');"><code>ALLOCSET_DEFAULT_INITSIZE</code></a>）を <code>costs-&gt;transitionSpace</code> に加算する。</li>
 </ul>
-<p>3. **集約情報の走査と最終関数のコスト累積**:</p>
+<p>3. <strong>集約情報の走査と最終関数のコスト累積</strong>:</p>
 <ul>
 <li><code>root-&gt;agginfos</code> リストを走査し、各 <code>AggInfo</code> の最初の <code>Aggref</code> を取得する。</li>
 <li>最終処理をスキップせず、<code>finalfn_oid</code> が有効な場合はそのコストを <code>costs-&gt;finalCost</code> に追加する。</li>

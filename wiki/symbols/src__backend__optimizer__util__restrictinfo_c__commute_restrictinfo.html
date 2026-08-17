@@ -1,5 +1,5 @@
 <!doctype html>
-<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>symbols/src__backend__optimizer__util__restrictinfo_c__commute_restrictinfo.md</title><link rel="stylesheet" href="../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../source/src/backend/optimizer/util/restrictinfo.c.html#L349" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__restrictinfo_c__commute_restrictinfo.html&quot;}, '*');">commute_restrictinfo</a></h1>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="10"><title>symbols/src__backend__optimizer__util__restrictinfo_c__commute_restrictinfo.md</title><link rel="stylesheet" href="../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../source/src/backend/optimizer/util/restrictinfo.c.html#L349" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__restrictinfo_c__commute_restrictinfo.html&quot;}, '*');">commute_restrictinfo</a></h1>
 <h2>現在のソース事実</h2>
 <ul>
 <li>種別: <code>function</code></li>
@@ -43,7 +43,7 @@
 <li>変換対象の <code>RestrictInfo</code> は <a class="wiki-source-link" href="../../source/src/backend/optimizer/util/restrictinfo.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__restrictinfo_c__orclause.html&quot;}, '*');"><code>orclause</code></a> を保持していない（<code>NULL</code> である）こと。</li>
 </ul>
 <h2>アルゴリズムまたは振る舞い</h2>
-<p>1. **OpExprの取得と検証**: 引数 <code>rinfo-&gt;clause</code> を <code>OpExpr</code> にキャストし、その引数の数が正確に 2 つであることをアサートで検証する。 2. **OpExprの複製と調整**: 新しい <code>OpExpr</code> ノードを割り当てて元の内容をフラットコピーした後、演算子 ID (<code>opno</code>) を <a class="wiki-source-link" href="../../source/src/backend/optimizer/util/restrictinfo.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__restrictinfo_c__comm_op.html&quot;}, '*');"><code>comm_op</code></a> に更新し、演算関数 ID (<code>opfuncid</code>) を <code>InvalidOid</code> にクリアする。さらに、<code>args</code> リストの左右の引数を入れ替える。 3. **RestrictInfoの複製と調整**: 新しい <code>RestrictInfo</code> ノードを割り当てて元の内容をフラットコピーし、新しい <code>OpExpr</code> を設定する。 4. **関係・等価クラス・バケット情報の反転**:</p>
+<p>1. <strong>OpExprの取得と検証</strong>: 引数 <code>rinfo-&gt;clause</code> を <code>OpExpr</code> にキャストし、その引数の数が正確に 2 つであることをアサートで検証する。 2. <strong>OpExprの複製と調整</strong>: 新しい <code>OpExpr</code> ノードを割り当てて元の内容をフラットコピーした後、演算子 ID (<code>opno</code>) を <a class="wiki-source-link" href="../../source/src/backend/optimizer/util/restrictinfo.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__restrictinfo_c__comm_op.html&quot;}, '*');"><code>comm_op</code></a> に更新し、演算関数 ID (<code>opfuncid</code>) を <code>InvalidOid</code> にクリアする。さらに、<code>args</code> リストの左右の引数を入れ替える。 3. <strong>RestrictInfoの複製と調整</strong>: 新しい <code>RestrictInfo</code> ノードを割り当てて元の内容をフラットコピーし、新しい <code>OpExpr</code> を設定する。 4. <strong>関係・等価クラス・バケット情報の反転</strong>:</p>
 <ul>
 <li>左右のリレーション ID（<code>left_relids</code> と <code>right_relids</code>）を入れ替える。</li>
 <li>左右の等価クラス（<code>left_ec</code> と <code>right_ec</code>）および等価メンバ（<code>left_em</code> と <code>right_em</code>）を入れ替える。</li>
@@ -51,7 +51,7 @@
 <li>ハッシュ結合演算子（<code>hashjoinoperator</code>）が元の演算子と一致する場合は <a class="wiki-source-link" href="../../source/src/backend/optimizer/util/restrictinfo.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__restrictinfo_c__comm_op.html&quot;}, '*');"><code>comm_op</code></a> に更新し、それ以外の場合は <code>InvalidOid</code> に設定する。</li>
 <li>バケットサイズ（<code>left_bucketsize</code> と <code>right_bucketsize</code>）および MCV 頻度（<code>left_mcvfreq</code> と <code>right_mcvfreq</code>）を入れ替える。</li>
 <li>ハッシュ等価演算子（<code>left_hasheqoperator</code> と <code>right_hasheqoperator</code>）を <code>InvalidOid</code> にクリアする。</li>
-<p>5. **返却**: 構築された新しい <code>RestrictInfo</code> ポインタを返す。</p>
+<p>5. <strong>返却</strong>: 構築された新しい <code>RestrictInfo</code> ポインタを返す。</p>
 </ul>
 <h2>関連データ構造</h2>
 <ul>

@@ -1,5 +1,5 @@
 <!doctype html>
-<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>symbols/src__backend__optimizer__util__inherit_c__translate_col_privs.md</title><link rel="stylesheet" href="../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../source/src/backend/optimizer/util/inherit.c.html#L707" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__inherit_c__translate_col_privs.html&quot;}, '*');">translate_col_privs</a></h1>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="10"><title>symbols/src__backend__optimizer__util__inherit_c__translate_col_privs.md</title><link rel="stylesheet" href="../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../source/src/backend/optimizer/util/inherit.c.html#L707" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__inherit_c__translate_col_privs.html&quot;}, '*');">translate_col_privs</a></h1>
 <h2>現在のソース事実</h2>
 <ul>
 <li>種別: <code>function</code></li>
@@ -38,18 +38,18 @@
 <li>システム属性（<code>FirstLowInvalidHeapAttributeNumber + 1</code> から <code>0</code> 未満までの属性）は、すべてのテーブル間で同じ属性番号を持つため、そのままのオフセットで子ビットマップへ引き継がれる。</li>
 </ul>
 <h2>アルゴリズムまたは振る舞い</h2>
-<p>1. **システム属性の処理**:</p>
+<p>1. <strong>システム属性の処理</strong>:</p>
 <ul>
 <li><code>FirstLowInvalidHeapAttributeNumber + 1</code> から <code>0</code> 未満の範囲の各システム属性番号について、親のビットマップ（<code>parent_privs</code>）に含まれているかを判定する。</li>
 <li>含まれている場合、対応するビットを子リレーションのビットマップ（<code>child_privs</code>）に追加する。</li>
-<p>2. **行全体参照（Whole-Row Reference）の確認**:</p>
+<p>2. <strong>行全体参照（Whole-Row Reference）の確認</strong>:</p>
 <li><a class="wiki-source-link" href="../../source/src/include/access/attnum.h.html#L23" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/access/attnum.h.html&quot;}, '*');"><code>InvalidAttrNumber</code></a> に対応する属性が親ビットマップに含まれているかを調べ、行全体への参照があるかどうかを <code>whole_row</code> フラグに保持する。</li>
-<p>3. **ユーザ属性の変換**:</p>
+<p>3. <strong>ユーザ属性の変換</strong>:</p>
 <li>ユーザ属性の基準位置（<a class="wiki-source-link" href="../../source/src/include/access/attnum.h.html#L23" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/access/attnum.h.html&quot;}, '*');"><code>InvalidAttrNumber</code></a>）から開始し、<code>translated_vars</code> リストを <a class="wiki-source-link" href="../../source/src/include/nodes/pg_list.h.html#L405" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/nodes/pg_list.h.html&quot;}, '*');"><code>foreach</code></a> で走査する。</li>
 <li>各要素から <code>Var</code> ノードを取得し、属性番号カウンタを進める。</li>
 <li><code>Var</code> ノードが <code>NULL</code> の場合は削除された列（dropped column）とみなしてスキップする。</li>
 <li>行全体参照（<code>whole_row</code>）が有効であるか、あるいは現在の属性番号が親ビットマップに含まれている場合、該当する <code>Var</code> ノードの属性番号（<code>var-&gt;varattno</code>）を調整した上で、子ビットマップに追加する。</li>
-<p>4. **結果の返却**:</p>
+<p>4. <strong>結果の返却</strong>:</p>
 <li>構築された <code>child_privs</code> ビットマップを返す。</li>
 </ul>
 <h2>失敗モードと境界条件</h2>

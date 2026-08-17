@@ -1,5 +1,5 @@
 <!doctype html>
-<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>symbols/src__backend__optimizer__plan__createplan_c__create_plan_recurse.md</title><link rel="stylesheet" href="../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../source/src/backend/optimizer/plan/createplan.c.html#L389" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__plan__createplan_c__create_plan_recurse.html&quot;}, '*');">create_plan_recurse</a></h1>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="10"><title>symbols/src__backend__optimizer__plan__createplan_c__create_plan_recurse.md</title><link rel="stylesheet" href="../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../source/src/backend/optimizer/plan/createplan.c.html#L389" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__plan__createplan_c__create_plan_recurse.html&quot;}, '*');">create_plan_recurse</a></h1>
 <h2>現在のソース事実</h2>
 <ul>
 <li>種別: <code>function</code></li>
@@ -32,14 +32,14 @@
 <li>過度に複雑なプラン構造によるスタックオーバーフローを防ぐため、処理の先頭で必ずスタック深度のチェックが行われます。</li>
 </ul>
 <h2>アルゴリズムまたは振る舞い</h2>
-<p>1. **スタックチェック**: <code>check_stack_depth()</code> を呼び出し、現在のスタック使用量を検証します。 2. **パス種別の判定**: <code>best_path-&gt;pathtype</code> の値に基づき <a class="wiki-source-link" href="../../source/src/include/port.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__port_h__switch.html&quot;}, '*');"><code>switch</code></a> 分岐を行い、対応する専用のプラン生成関数にディスパッチします。</p>
+<p>1. <strong>スタックチェック</strong>: <code>check_stack_depth()</code> を呼び出し、現在のスタック使用量を検証します。 2. <strong>パス種別の判定</strong>: <code>best_path-&gt;pathtype</code> の値に基づき <a class="wiki-source-link" href="../../source/src/include/port.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__port_h__switch.html&quot;}, '*');"><code>switch</code></a> 分岐を行い、対応する専用のプラン生成関数にディスパッチします。</p>
 <ul>
 <li>スキャン系パス（<code>T_SeqScan</code>, <code>T_IndexScan</code>, <code>T_ForeignScan</code> など）は <code>create_scan_plan()</code> に転送されます。</li>
 <li>結合系パス（<code>T_HashJoin</code>, <code>T_MergeJoin</code>, <code>T_NestLoop</code>）は <code>create_join_plan()</code> に転送されます。</li>
 <li><code>T_Result</code> の場合は、サブパスの型（<a class="wiki-source-link" href="../../source/src/include/nodes/pathnodes.h.html#L2509" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__nodes__pathnodes_h__ProjectionPath.html&quot;}, '*');"><code>ProjectionPath</code></a>, <code>MinMaxAggPath</code>, <a class="wiki-source-link" href="../../source/src/include/nodes/pathnodes.h.html#L2323" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__nodes__pathnodes_h__GroupResultPath.html&quot;}, '*');"><code>GroupResultPath</code></a>, または標準ベースリレーション）を内部で追加判定し、それぞれ対応する関数を呼び出します。</li>
 <li><code>T_Agg</code> の場合は、<a class="wiki-source-link" href="../../source/src/include/nodes/pathnodes.h.html#L2631" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__nodes__pathnodes_h__GroupingSetsPath.html&quot;}, '*');"><code>GroupingSetsPath</code></a> かどうかを判定して <code>create_groupingsets_plan()</code> または <code>create_agg_plan()</code> に分岐します。</li>
 <li>その他の各種修飾・操作系パス（<code>T_Append</code>, <code>T_Sort</code>, <code>T_Limit</code>, <code>T_WindowAgg</code> など）も同様にそれぞれの専用生成関数へルーティングされます。</li>
-<p>3. **エラー処理**: 認識できない未知の <code>pathtype</code> に遭遇した場合は、<code>elog(ERROR, ...)</code> を呼び出して処理を中断します。 4. **結果返却**: 生成された <code>Plan *</code> ポインタを返します。</p>
+<p>3. <strong>エラー処理</strong>: 認識できない未知の <code>pathtype</code> に遭遇した場合は、<code>elog(ERROR, ...)</code> を呼び出して処理を中断します。 4. <strong>結果返却</strong>: 生成された <code>Plan *</code> ポインタを返します。</p>
 </ul>
 <h2>失敗モードと境界条件</h2>
 <ul>

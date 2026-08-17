@@ -1,5 +1,5 @@
 <!doctype html>
-<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>symbols/src__backend__optimizer__util__plancat_c__get_relation_constraints.md</title><link rel="stylesheet" href="../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../source/src/backend/optimizer/util/plancat.c.html#L1512" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__plancat_c__get_relation_constraints.html&quot;}, '*');">get_relation_constraints</a></h1>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="10"><title>symbols/src__backend__optimizer__util__plancat_c__get_relation_constraints.md</title><link rel="stylesheet" href="../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../source/src/backend/optimizer/util/plancat.c.html#L1512" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__plancat_c__get_relation_constraints.html&quot;}, '*');">get_relation_constraints</a></h1>
 <h2>現在のソース事実</h2>
 <ul>
 <li>種別: <code>function</code></li>
@@ -80,7 +80,7 @@
 <li>強制されていない（<code>NOT ENFORCED</code>）制約は無効としてマークされており、無視される（アサートでチェックされる）。</li>
 </ul>
 <h2>アルゴリズムまたは振る舞い</h2>
-<p>1. **リレーションのオープン**: <code>table_open(relationObjectId, NoLock)</code> を呼び出して対象リレーションの <code>Relation</code> 構造体を取得する。 2. **チェック制約の収集と正規化**:</p>
+<p>1. <strong>リレーションのオープン</strong>: <code>table_open(relationObjectId, NoLock)</code> を呼び出して対象リレーションの <code>Relation</code> 構造体を取得する。 2. <strong>チェック制約の収集と正規化</strong>:</p>
 <ul>
 <li>リレーションのタプル制約（<code>constr</code>）が存在する場合、各チェック制約を順に走査する。</li>
 <li><code>ccvalid</code> が偽の制約や、<code>ccnoinherit</code> が真かつ <code>include_noinherit</code> が偽の制約はスキップする。</li>
@@ -88,14 +88,14 @@
 <li><code>varno</code> が 1 でない場合、<a class="wiki-source-link" href="../../source/src/backend/rewrite/rewriteManip.c.html#L733" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__rewrite__rewriteManip_c__ChangeVarNodes.html&quot;}, '*');"><code>ChangeVarNodes</code></a> を用いて式内の変数の varno を指定された <code>rel-&gt;relid</code> に置き換える（これは定数畳み込みの前に実行する必要がある）。</li>
 <li><a class="wiki-source-link" href="../../source/src/backend/optimizer/util/clauses.c.html#L2515" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__clauses_c__eval_const_expressions.html&quot;}, '*');"><code>eval_const_expressions</code></a> による定数畳み込みと、<a class="wiki-source-link" href="../../source/src/backend/optimizer/prep/prepqual.c.html#L292" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__prep__prepqual_c__canonicalize_qual.html&quot;}, '*');"><code>canonicalize_qual</code></a> による正規化を適用する。</li>
 <li><a class="wiki-source-link" href="../../source/src/backend/nodes/makefuncs.c.html#L809" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__nodes__makefuncs_c__make_ands_implicit.html&quot;}, '*');"><code>make_ands_implicit</code></a> でインプリシット AND 形式のリストに変換し、結果リストに結合する。</li>
-<p>3. **<code>NOT NULL</code> 制約の追加**:</p>
+<p>3. <strong><code>NOT NULL</code> 制約の追加</strong>:</p>
 <li><code>include_notnull</code> が真かつリレーションに <code>NOT NULL</code> 制約が存在する場合、各属性を走査する。</li>
 <li>属性のナル可能性が有効（<a class="wiki-source-link" href="../../source/src/include/access/tupdesc.h.html#L86" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/access/tupdesc.h.html&quot;}, '*');"><code>ATTNULLABLE_VALID</code></a>）かつ破棄されていない場合、対応する <code>NullTest</code> 式（<code>IS NOT NULL</code>）を作成して結果リストに追加する。</li>
-<p>4. **パーティション制約の追加**:</p>
+<p>4. <strong>パーティション制約の追加</strong>:</p>
 <li><code>include_partition</code> が真かつリレーションがパーティションテーブル（<code>relispartition</code>）である場合、<a class="wiki-source-link" href="../../source/src/backend/optimizer/util/plancat.c.html#L2891" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__plancat_c__set_baserel_partition_constraint.html&quot;}, '*');"><code>set_baserel_partition_constraint</code></a> を呼び出してパーティション制約をセットアップし、結果リストに結合する。</li>
-<p>5. **生成列の展開**:</p>
+<p>5. <strong>生成列の展開</strong>:</p>
 <li>結果リストが存在する場合、<a class="wiki-source-link" href="../../source/src/backend/rewrite/rewriteHandler.c.html#L4700" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__rewrite__rewriteHandler_c__expand_generated_columns_in_expr.html&quot;}, '*');"><code>expand_generated_columns_in_expr</code></a> を呼び出して制約式内の仮想生成列を展開する。</li>
-<p>6. **リレーションのクローズと返却**:</p>
+<p>6. <strong>リレーションのクローズと返却</strong>:</p>
 <li><code>table_close(relation, NoLock)</code> を呼び出してリレーションを閉じ、構築した制約リストを返す。</li>
 </ul>
 <h2>呼び出し元と呼び出し先</h2>

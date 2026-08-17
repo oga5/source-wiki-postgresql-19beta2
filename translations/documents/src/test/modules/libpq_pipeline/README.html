@@ -1,16 +1,16 @@
 <!doctype html>
-<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>src/test/modules/libpq_pipeline/README</title><link rel="stylesheet" href="../../../../../../styles.css"></head><body><h1>Japanese translation</h1><p><code>src/test/modules/libpq_pipeline/README</code></p><p><a href="../../../../../../source/src/test/modules/libpq_pipeline/README.html" target="source-view">View original document</a></p><p class="document-translation-progress document-translation-complete">Translation complete.</p><div class="document-translation-body"><section class="document-translation-chunk translated" data-chunk-order="0"><p>libpq のテストプログラムとライブラリ</p>
-<p>Test::Differences がインストールされている場合、トレースファイルの差異は標準フォーマットよりも読みやすい形式で表示されます。 =====================================</p>
-<p>このモジュールは libpq の「パイプライン」モードをテストするために開発されましたが、特殊な C コードを必要とする libpq のテストであればどのようなものでも使用できます。</p>
-<p>&quot;make check&quot; を実行すると、モジュール内のすべてのテストが一時的なサーバーインストールに対して実行されます。</p>
-<p>特定のテストを手動で実行するには、次のように実行します。</p>
-<p>./libpq_pipeline &lt;name of test&gt; [ &lt;connection string&gt; ]</p>
-<p>これにより新しいサーバーは起動せず、接続文字列で指定されたサーバー、または省略した場合はデフォルトのサーバーに接続します。利用可能なテスト名を確認するには、次を実行します。</p>
-<p>./libpq_pipeline tests</p>
-<p>このモジュールに新しいテストを追加するには、libpq_pipeline.c を編集する必要があります。テストを実行する関数を追加し、新しいテストの名前がプログラムに渡されたときに main() がそれを呼び出すように手配します。テストの名前を print_test_list() 関数に追加するのを忘れないでください。忘れると TAP テストがそれを実行しません。</p>
-<p>テストにおける Postgres プロトコルメッセージの送信順序が決定論的な場合は、TAP テストによってメッセージシーケンスが検証されるように手配する必要があります。まず、次のようなコマンドを使用して、リファレントレースファイルを生成します。</p>
-<p>./libpq_pipeline -t traces/mynewtest.trace mynewtest</p>
-<p>次に、t/001_libpq_pipeline.pl ファイルの $cmptrace 定義にあるリストにテストの名前を追加します。&quot;make check&quot; を数回実行して、トレース出力が実際に安定していることを確認してください。</p></section></div><script>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="10"><title>src/test/modules/libpq_pipeline/README</title><link rel="stylesheet" href="../../../../../../styles.css"></head><body><h1>Japanese translation</h1><p><code>src/test/modules/libpq_pipeline/README</code></p><p><a href="../../../../../../source/src/test/modules/libpq_pipeline/README.html" target="source-view">View original document</a></p><p class="document-translation-progress document-translation-complete">Translation complete.</p><div class="document-translation-body"><section class="document-translation-chunk translated" data-chunk-order="0"><p class="markdown-preserve-lines">libpq のテストプログラムとライブラリ</p>
+<h1>Test::Differences がインストールされている場合、トレースファイルの差異は標準フォーマットよりも読みやすい形式で表示されます。</h1>
+<p class="markdown-preserve-lines">このモジュールは libpq の「パイプライン」モードをテストするために開発されましたが、特殊な C コードを必要とする libpq のテストであればどのようなものでも使用できます。</p>
+<p class="markdown-preserve-lines">&quot;make check&quot; を実行すると、モジュール内のすべてのテストが一時的なサーバーインストールに対して実行されます。</p>
+<p class="markdown-preserve-lines">特定のテストを手動で実行するには、次のように実行します。</p>
+<p class="markdown-preserve-lines">    ./libpq_pipeline &lt;name of test&gt; [ &lt;connection string&gt; ]</p>
+<p class="markdown-preserve-lines">これにより新しいサーバーは起動せず、接続文字列で指定されたサーバー、または省略した場合はデフォルトのサーバーに接続します。利用可能なテスト名を確認するには、次を実行します。</p>
+<p class="markdown-preserve-lines">    ./libpq_pipeline tests</p>
+<p class="markdown-preserve-lines">このモジュールに新しいテストを追加するには、libpq_pipeline.c を編集する必要があります。テストを実行する関数を追加し、新しいテストの名前がプログラムに渡されたときに main() がそれを呼び出すように手配します。テストの名前を print_test_list() 関数に追加するのを忘れないでください。忘れると TAP テストがそれを実行しません。</p>
+<p class="markdown-preserve-lines">テストにおける Postgres プロトコルメッセージの送信順序が決定論的な場合は、TAP テストによってメッセージシーケンスが検証されるように手配する必要があります。まず、次のようなコマンドを使用して、リファレントレースファイルを生成します。</p>
+<p class="markdown-preserve-lines">   ./libpq_pipeline -t traces/mynewtest.trace mynewtest</p>
+<p class="markdown-preserve-lines">次に、t/001_libpq_pipeline.pl ファイルの $cmptrace 定義にあるリストにテストの名前を追加します。&quot;make check&quot; を数回実行して、トレース出力が実際に安定していることを確認してください。</p></section></div><script>
 (function() {
   function notifyParent() {
     if (parent === window) return;

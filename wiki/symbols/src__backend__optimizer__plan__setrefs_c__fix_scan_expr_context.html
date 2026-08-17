@@ -1,39 +1,30 @@
 <!doctype html>
-<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>symbols/src__backend__optimizer__plan__setrefs_c__fix_scan_expr_context.md</title><link rel="stylesheet" href="../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../source/src/backend/optimizer/plan/setrefs.c.html#L58" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__plan__setrefs_c__fix_scan_expr_context.html&quot;}, '*');">fix_scan_expr_context</a></h1>
-<h2>定義</h2>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="10"><title>symbols/src__backend__optimizer__plan__setrefs_c__fix_scan_expr_context.md</title><link rel="stylesheet" href="../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../source/src/backend/optimizer/plan/setrefs.c.html#L58" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__plan__setrefs_c__fix_scan_expr_context.html&quot;}, '*');">fix_scan_expr_context</a></h1>
+<h2>現在のソース事実</h2>
 <ul>
 <li>種別: <code>struct</code></li>
 <li>定義箇所: <code>src/backend/optimizer/plan/setrefs.c:58</code></li>
-<li>所属モジュール: <a class="wiki-entity-link" href="../modules/src__backend__optimizer__plan.html" target="wiki-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/modules/src__backend__optimizer__plan.html&quot;, &quot;source&quot;: &quot;source/src/backend/optimizer/plan/analyzejoins.c.html&quot;}, '*');"><code>module:src/backend/optimizer/plan</code></a></li>
-</ul>
-<h2>目的</h2>
-<p>静的シンボル索引から生成された初期シンボルページです。</p>
-<h2>シグネチャまたは形状</h2>
-<ul>
 <li>シグネチャ: <code>typedef struct</code></li>
-</ul>
-<h2>入力と出力</h2>
-<p>まだ解析していません。</p>
-<h2>前提条件と不変条件</h2>
-<p>まだ解析していません。</p>
-<h2>アルゴリズムまたは振る舞い</h2>
-<p>まだ解析していません。</p>
-<h2>呼び出し元と呼び出し先</h2>
-<ul>
 <li>呼び出し元: なし</li>
 <li>呼び出し先: なし</li>
 <li>呼び出し元サイト: なし</li>
 <li>呼び出しサイト: なし</li>
+<li>関連型: <code>PlannerInfo</code></li>
 </ul>
-<h2>関連データ構造</h2>
-<p><code>PlannerInfo</code></p>
-<h2>ソース抜粋</h2>
+<h3>ソース抜粋</h3>
 <p>~~~c typedef struct { PlannerInfo *root; int			rtoffset; double		num_exec; } <a class="wiki-source-link" href="../../source/src/backend/optimizer/plan/setrefs.c.html#L58" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__plan__setrefs_c__fix_scan_expr_context.html&quot;}, '*');">fix_scan_expr_context</a>; ~~~</p>
-<h2>失敗モードと境界条件</h2>
-<p>まだ解析していません。</p>
-<h2>保守担当者向けメモ</h2>
+<h2>目的</h2>
+<p><a class="wiki-source-link" href="../../source/src/backend/optimizer/plan/setrefs.c.html#L58" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__plan__setrefs_c__fix_scan_expr_context.html&quot;}, '*');"><code>fix_scan_expr_context</code></a> は、スキャンレベルの式ツリー走査および変換時に使用するコンテキスト構造体です。</p>
+<h2>フィールドと表現</h2>
 <ul>
-<li>後続フェーズで、ソース本文の文脈と caller/callee 情報を使ってこのページを強化する。</li>
+<li><code>PlannerInfo *root</code>: クエリの最適化に関する大域的な情報へのポインタ。</li>
+<li><code>int rtoffset</code>: レンジテーブル（RTE）のオフセット値。</li>
+<li><code>double num_exec</code>: 実行回数の見積もり値。</li>
+</ul>
+<h2>参照・更新する処理</h2>
+<ul>
+<li><a class="wiki-source-link" href="../../source/src/backend/optimizer/plan/setrefs.c.html#L2324" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__plan__setrefs_c__fix_scan_expr_mutator.html&quot;}, '*');"><code>fix_scan_expr_mutator</code></a></li>
+<li><a class="wiki-source-link" href="../../source/src/backend/optimizer/plan/setrefs.c.html#L2389" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__plan__setrefs_c__fix_scan_expr_walker.html&quot;}, '*');"><code>fix_scan_expr_walker</code></a></li>
 </ul><script>
 (function() {
   function notifyParent() {

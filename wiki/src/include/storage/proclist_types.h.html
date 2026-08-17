@@ -1,5 +1,5 @@
 <!doctype html>
-<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>src/include/storage/proclist_types.h.md</title><link rel="stylesheet" href="../../../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../../../source/src/include/storage/proclist_types.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/storage/proclist_types.h.html&quot;}, '*');">src/include/storage/proclist_types.h</a></h1>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="10"><title>src/include/storage/proclist_types.h.md</title><link rel="stylesheet" href="../../../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../../../source/src/include/storage/proclist_types.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/storage/proclist_types.h.html&quot;}, '*');">src/include/storage/proclist_types.h</a></h1>
 <h2>概要</h2>
 <p><a class="wiki-source-link" href="../../../../source/src/include/storage/proclist_types.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/storage/proclist_types.h.html&quot;}, '*');"><code>src/include/storage/proclist_types.h</code></a> は、プロセス番号（<code>ProcNumber</code>）ベースの双方向連結リストを構築するための型定義（構造体とマクロ）を提供するヘッダーファイルです。ポインタの代わりにインデックスを用いることで、共有メモリ空間内やプロセス間で安全にリスト構造を維持できるように設計されています。実際のリスト操作関数は <a class="wiki-source-link" href="../../../../source/src/include/storage/proclist.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/include/storage/proclist.h.html&quot;}, '*');"><code>proclist.h</code></a> に定義されています。</p>
 <h2>モジュール内での役割</h2>
@@ -41,8 +41,8 @@
 </ul>
 <h2>読者向けメモ</h2>
 <ul>
-<li>**メモリレイアウトと共有メモリ**: ポインタではなく <code>ProcNumber</code> を使用しているため、プロセス間で共有メモリのベースアドレスが異なっていても、オフセットや絶対アドレスのズレを気にせず安全にリスト構造を構築・復元できます。</li>
-<li>**未所属状態の不変条件**: リストに属していないノードは必ず <code>next == prev == 0</code> に初期化されている必要があります。循環参照は許可されていません。</li>
+<li><strong>メモリレイアウトと共有メモリ</strong>: ポインタではなく <code>ProcNumber</code> を使用しているため、プロセス間で共有メモリのベースアドレスが異なっていても、オフセットや絶対アドレスのズレを気にせず安全にリスト構造を構築・復元できます。</li>
+<li><strong>未所属状態の不変条件</strong>: リストに属していないノードは必ず <code>next == prev == 0</code> に初期化されている必要があります。循環参照は許可されていません。</li>
 </ul>
 <h2>シンボルページ</h2>
 <ul>

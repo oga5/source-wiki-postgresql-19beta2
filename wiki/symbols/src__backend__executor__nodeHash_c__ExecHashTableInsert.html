@@ -1,5 +1,5 @@
 <!doctype html>
-<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>symbols/src__backend__executor__nodeHash_c__ExecHashTableInsert.md</title><link rel="stylesheet" href="../../styles.css"></head><body><h1>ExecHashTableInsert</h1>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="10"><title>symbols/src__backend__executor__nodeHash_c__ExecHashTableInsert.md</title><link rel="stylesheet" href="../../styles.css"></head><body><h1>ExecHashTableInsert</h1>
 <h2>現在のソース事実</h2>
 <ul>
 <li>種別: <code>function</code></li>
@@ -57,16 +57,16 @@
 <li>バッチファイルからリロードされたタプルであっても、バッチファイルへ送られる前に外側タプルと一致することはあり得ないため、挿入時のフラグリセットは維持される。</li>
 </ul>
 <h2>アルゴリズムまたは振る舞い</h2>
-<p>1. **タプルとバッチの取得**: スロットからミニマルタプルを抽出し、ハッシュ値から <a class="wiki-source-link" href="../../source/src/backend/executor/nodeHash.c.html#L1985" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__executor__nodeHash_c__ExecHashGetBucketAndBatch.html&quot;}, '*');"><code>ExecHashGetBucketAndBatch</code></a> を用いてバケット番号とバッチ番号を算出する。 2. **バッチ分岐**: 算出したバッチ番号が現在のバッチ（<code>hashtable-&gt;curbatch</code>）と一致するかどうかを判定する。 3. **インメモリハッシュテーブルへの挿入経路（<code>batchno == hashtable-&gt;curbatch</code>）**:</p>
+<p>1. <strong>タプルとバッチの取得</strong>: スロットからミニマルタプルを抽出し、ハッシュ値から <a class="wiki-source-link" href="../../source/src/backend/executor/nodeHash.c.html#L1985" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__executor__nodeHash_c__ExecHashGetBucketAndBatch.html&quot;}, '*');"><code>ExecHashGetBucketAndBatch</code></a> を用いてバケット番号とバッチ番号を算出する。 2. <strong>バッチ分岐</strong>: 算出したバッチ番号が現在のバッチ（<code>hashtable-&gt;curbatch</code>）と一致するかどうかを判定する。 3. <strong>インメモリハッシュテーブルへの挿入経路（<code>batchno == hashtable-&gt;curbatch</code>）</strong>:</p>
 <ul>
 <li><a class="wiki-source-link" href="../../source/src/backend/executor/nodeHash.c.html#L2953" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__executor__nodeHash_c__dense_alloc.html&quot;}, '*');"><code>dense_alloc</code></a> を用いて、<a class="wiki-source-link" href="../../source/src/include/executor/hashjoin.h.html#L101" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/executor/hashjoin.h.html&quot;}, '*');"><code>HJTUPLE_OVERHEAD</code></a> とタプル長を合わせたサイズ分の <a class="wiki-source-link" href="../../source/src/include/nodes/execnodes.h.html#L2246" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__nodes__execnodes_h__HashJoinTuple.html&quot;}, '*');"><code>HashJoinTuple</code></a> 領域を確保する。</li>
 <li>ハッシュ値とタプルデータを新しく割り当てた構造体にコピーし、ヘッダーのタプル一致フラグをクリアする。</li>
 <li>該当バケットの先頭に生成した <a class="wiki-source-link" href="../../source/src/include/nodes/execnodes.h.html#L2246" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__nodes__execnodes_h__HashJoinTuple.html&quot;}, '*');"><code>HashJoinTuple</code></a> を接続する。</li>
 <li>単一バッチかつ <code>(hashtable-&gt;totalTuples - hashtable-&gt;skewTuples)</code> が閾値（<code>nbuckets_optimal * NTUP_PER_BUCKET</code>）を超過している場合、オーバーフロー安全性を確認した上で最適なバケット数を倍増させ、対応する <code>log2_nbuckets_optimal</code> をインクリメントする。</li>
 <li>使用メモリ量（<code>spaceUsed</code>）を更新し、ピーク値を維持した上で、許容メモリ（<code>spaceAllowed</code>）を超過した場合は <a class="wiki-source-link" href="../../source/src/backend/executor/nodeHash.c.html#L1054" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__executor__nodeHash_c__ExecHashIncreaseNumBatches.html&quot;}, '*');"><code>ExecHashIncreaseNumBatches</code></a> を呼び出してバッチ数を増やす。</li>
-<p>4. **一時ファイルへの保存経路（<code>batchno != hashtable-&gt;curbatch</code>）**:</p>
+<p>4. <strong>一時ファイルへの保存経路（<code>batchno != hashtable-&gt;curbatch</code>）</strong>:</p>
 <li>バッチ番号が現在より後方であることを確認した上で、<code>ExecHashJoinSaveTuple</code> を使って該当バッチの一時ファイルへタプルを保存する。</li>
-<p>5. **クリーンアップ**: スロット抽出時に割り当てられたミニマルタプルを解放すべきフラグが立っている場合、<a class="wiki-source-link" href="../../source/src/backend/access/common/heaptuple.c.html#L1465" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__access__common__heaptuple_c__heap_free_minimal_tuple.html&quot;}, '*');"><code>heap_free_minimal_tuple</code></a> で解放する。</p>
+<p>5. <strong>クリーンアップ</strong>: スロット抽出時に割り当てられたミニマルタプルを解放すべきフラグが立っている場合、<a class="wiki-source-link" href="../../source/src/backend/access/common/heaptuple.c.html#L1465" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__access__common__heaptuple_c__heap_free_minimal_tuple.html&quot;}, '*');"><code>heap_free_minimal_tuple</code></a> で解放する。</p>
 </ul>
 <h2>失敗モードと境界条件</h2>
 <ul>

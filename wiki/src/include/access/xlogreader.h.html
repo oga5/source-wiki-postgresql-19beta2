@@ -1,5 +1,5 @@
 <!doctype html>
-<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>src/include/access/xlogreader.h.md</title><link rel="stylesheet" href="../../../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../../../source/src/include/access/xlogreader.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/access/xlogreader.h.html&quot;}, '*');">src/include/access/xlogreader.h</a></h1>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="10"><title>src/include/access/xlogreader.h.md</title><link rel="stylesheet" href="../../../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../../../source/src/include/access/xlogreader.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/access/xlogreader.h.html&quot;}, '*');">src/include/access/xlogreader.h</a></h1>
 <h2>概要</h2>
 <p>PostgreSQLの汎用WAL（Write-Ahead Log）読み取り・デコード機構のデータ構造とAPIを定義するヘッダーファイルである。バックエンドとフロントエンド（pg_waldumpなど）の両方からコンパイル・実行できるように設計されており、WALレコードの走査、ページ読み込み、ブロック単位・メインデータ単位への分解、および先読み（read-ahead）を抽象化する。</p>
 <h2>モジュール内での役割</h2>
@@ -37,11 +37,11 @@
 <li><a class="wiki-source-link" href="../../../../source/src/include/access/xlogreader.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__access__xlogreader_h__EndRecPtr.html&quot;}, '*');"><code>EndRecPtr</code></a>: 最後に読み込んだレコードの終了位置（次のレコードの開始位置）を示す <code>XLogRecPtr</code>。</li>
 </ul>
 <h2>制御フローとデータフロー</h2>
-<p>1. **初期化**: 呼び出し元が <code>XLogReaderAllocate()</code> を呼び出し、<a class="wiki-source-link" href="../../../../source/src/include/access/xlogreader.h.html#L59" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__access__xlogreader_h__XLogReaderState.html&quot;}, '*');"><code>XLogReaderState</code></a> と内部バッファ（<a class="wiki-source-link" href="../../../../source/src/include/access/xlogreader.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__access__xlogreader_h__readBuf.html&quot;}, '*');"><code>readBuf</code></a> 等）を確保する。 2. **位置決め**: <code>XLogBeginRead()</code> または <code>XLogFindNextRecord()</code> を用いて、走査を開始する <code>XLogRecPtr</code> を設定する。 3. **読み込みとデコード**: <code>XLogReadRecord()</code> または <code>XLogNextRecord()</code> をループして呼び出す。</p>
+<p>1. <strong>初期化</strong>: 呼び出し元が <code>XLogReaderAllocate()</code> を呼び出し、<a class="wiki-source-link" href="../../../../source/src/include/access/xlogreader.h.html#L59" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__access__xlogreader_h__XLogReaderState.html&quot;}, '*');"><code>XLogReaderState</code></a> と内部バッファ（<a class="wiki-source-link" href="../../../../source/src/include/access/xlogreader.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__access__xlogreader_h__readBuf.html&quot;}, '*');"><code>readBuf</code></a> 等）を確保する。 2. <strong>位置決め</strong>: <code>XLogBeginRead()</code> または <code>XLogFindNextRecord()</code> を用いて、走査を開始する <code>XLogRecPtr</code> を設定する。 3. <strong>読み込みとデコード</strong>: <code>XLogReadRecord()</code> または <code>XLogNextRecord()</code> をループして呼び出す。</p>
 <ul>
 <li>リーダーは必要に応じて <code>XLogReaderRoutine.page_read</code> を呼び出し、ページ単位でWALデータを <a class="wiki-source-link" href="../../../../source/src/include/access/xlogreader.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__access__xlogreader_h__readBuf.html&quot;}, '*');"><code>readBuf</code></a> に読み込む。</li>
 <li>読み込まれたバイト列は <code>DecodeXLogRecord()</code> によりパースされ、メモリ上に割り当てられた <a class="wiki-source-link" href="../../../../source/src/include/access/xlogreader.h.html#L155" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__access__xlogreader_h__DecodedXLogRecord.html&quot;}, '*');"><code>DecodedXLogRecord</code></a> および <a class="wiki-source-link" href="../../../../source/src/include/access/xlogreader.h.html#L119" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__access__xlogreader_h__DecodedBkpBlock.html&quot;}, '*');"><code>DecodedBkpBlock</code></a> 構造体に展開される。</li>
-<p>4. **アクセス**: 呼び出し元は <code>XLogRecGetTotalLen()</code> や <code>XLogRecGetBlockData()</code> などのマクロ/関数を経由して、デコードされたデータに安全にアクセスする。</p>
+<p>4. <strong>アクセス</strong>: 呼び出し元は <code>XLogRecGetTotalLen()</code> や <code>XLogRecGetBlockData()</code> などのマクロ/関数を経由して、デコードされたデータに安全にアクセスする。</p>
 </ul>
 <h2>直接依存</h2>
 <ul>
@@ -57,8 +57,8 @@
 </ul>
 <h2>読者向けメモ</h2>
 <ul>
-<li>**メモリ所有権**: <code>XLogReaderAllocate()</code> が確保した状態構造体およびバッファは <code>XLogReaderFree()</code> で解放される必要がある。デコードされたレコードは循環デコードバッファまたは <code>palloc()</code> によって動的に管理される。</li>
-<li>**フロントエンド/バックエンドの共用**: このファイルで定義される構造や関数はバックエンドだけでなくフロントエンドのユーティリティからも利用されるため、<code>ereport</code> などのバックエンド専用マクロの使用は避けられている。</li>
+<li><strong>メモリ所有権</strong>: <code>XLogReaderAllocate()</code> が確保した状態構造体およびバッファは <code>XLogReaderFree()</code> で解放される必要がある。デコードされたレコードは循環デコードバッファまたは <code>palloc()</code> によって動的に管理される。</li>
+<li><strong>フロントエンド/バックエンドの共用</strong>: このファイルで定義される構造や関数はバックエンドだけでなくフロントエンドのユーティリティからも利用されるため、<code>ereport</code> などのバックエンド専用マクロの使用は避けられている。</li>
 </ul>
 <h2>シンボルページ</h2>
 <ul>

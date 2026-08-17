@@ -1,5 +1,5 @@
 <!doctype html>
-<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>symbols/src__backend__optimizer__prep__prepqual_c__negate_clause.md</title><link rel="stylesheet" href="../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../source/src/backend/optimizer/prep/prepqual.c.html#L72" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__prep__prepqual_c__negate_clause.html&quot;}, '*');">negate_clause</a></h1>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="10"><title>symbols/src__backend__optimizer__prep__prepqual_c__negate_clause.md</title><link rel="stylesheet" href="../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../source/src/backend/optimizer/prep/prepqual.c.html#L72" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__prep__prepqual_c__negate_clause.html&quot;}, '*');">negate_clause</a></h1>
 <h2>現在のソース事実</h2>
 <ul>
 <li>種別: <code>function</code></li>
@@ -40,8 +40,8 @@
 <pre><code>Node *negate_clause(Node *node)</code></pre>
 <h2>入力と出力</h2>
 <ul>
-<li>**入力**: <code>Node *node</code> — 否定対象となるブール式ノード。</li>
-<li>**出力**: <code>Node *</code> — 否定変換が適用された新しい式ノード、または単純化できない場合に <code>NOT</code> 節でラップされたノード。</li>
+<li><strong>入力</strong>: <code>Node *node</code> — 否定対象となるブール式ノード。</li>
+<li><strong>出力</strong>: <code>Node *</code> — 否定変換が適用された新しい式ノード、または単純化できない場合に <code>NOT</code> 節でラップされたノード。</li>
 </ul>
 <h2>前提条件と不変条件</h2>
 <ul>
@@ -50,23 +50,23 @@
 </ul>
 <h2>アルゴリズムまたは振る舞い</h2>
 <p>入力ノードのタグ（<a class="wiki-source-link" href="../../source/src/include/nodes/nodes.h.html#L137" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/nodes/nodes.h.html&quot;}, '*');"><code>nodeTag</code></a>）に応じて、以下の分岐処理を行う。</p>
-<p>1. **定数 (<code>T_Const</code>)**:</p>
+<p>1. <strong>定数 (<code>T_Const</code>)</strong>:</p>
 <ul>
 <li>定数が <code>NULL</code> の場合は、<code>FALSE</code> かつ <code>null</code> の定数を返す。</li>
 <li>それ以外の場合は、ブール値を反転した定数を作成して返す。</li>
-<p>2. **演算子式 (<code>T_OpExpr</code>)**:</p>
+<p>2. <strong>演算子式 (<code>T_OpExpr</code>)</strong>:</p>
 <li>演算子に対応する否定演算子（negator）が存在する場合、演算子 ID を置換した新しい <code>OpExpr</code> を構築して返す。</li>
-<p>3. **配列に対するスカラー演算子式 (<code>T_ScalarArrayOpExpr</code>)**:</p>
+<p>3. <strong>配列に対するスカラー演算子式 (<code>T_ScalarArrayOpExpr</code>)</strong>:</p>
 <li>演算子に対応する否定演算子が存在する場合、演算子 ID を置換し、<code>useOr</code> フラグを反転させた新しい <code>ScalarArrayOpExpr</code> を構築して返す（例: <code>x = ANY (list)</code> を <code>x &lt;&gt; ALL (list)</code> に変換）。</li>
-<p>4. **ブール演算子式 (<code>T_BoolExpr</code>)**:</p>
+<p>4. <strong>ブール演算子式 (<code>T_BoolExpr</code>)</strong>:</p>
 <li><a class="wiki-source-link" href="../../source/src/include/nodes/nodeFuncs.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__nodes__nodeFuncs_h__AND_EXPR.html&quot;}, '*');"><code>AND_EXPR</code></a>: 各引数に対して再帰的に <a class="wiki-source-link" href="../../source/src/backend/optimizer/prep/prepqual.c.html#L72" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__prep__prepqual_c__negate_clause.html&quot;}, '*');"><code>negate_clause</code></a> を適用し、その結果を引数とする <code>OR</code> 節（<a class="wiki-source-link" href="../../source/src/backend/nodes/makefuncs.c.html#L742" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__nodes__makefuncs_c__make_orclause.html&quot;}, '*');"><code>make_orclause</code></a>）を構築して返す（ド・モルガンの法則）。</li>
 <li><a class="wiki-source-link" href="../../source/src/include/nodes/nodeFuncs.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__nodes__nodeFuncs_h__OR_EXPR.html&quot;}, '*');"><code>OR_EXPR</code></a>: 各引数に対して再帰的に <a class="wiki-source-link" href="../../source/src/backend/optimizer/prep/prepqual.c.html#L72" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__prep__prepqual_c__negate_clause.html&quot;}, '*');"><code>negate_clause</code></a> を適用し、その結果を引数とする <code>AND</code> 節（<a class="wiki-source-link" href="../../source/src/backend/nodes/makefuncs.c.html#L726" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__nodes__makefuncs_c__make_andclause.html&quot;}, '*');"><code>make_andclause</code></a>）を構築して返す（ド・モルガンの法則）。</li>
 <li><a class="wiki-source-link" href="../../source/src/include/nodes/nodeFuncs.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__nodes__nodeFuncs_h__NOT_EXPR.html&quot;}, '*');"><code>NOT_EXPR</code></a>: 二重否定を相殺し、内側の最初の引数をそのまま返す。</li>
-<p>5. **NULLテスト (<code>T_NullTest</code>)**:</p>
+<p>5. <strong>NULLテスト (<code>T_NullTest</code>)</strong>:</p>
 <li>行型（rowtype）でないスカラーデータ型の場合に限り、<code>IS_NULL</code> と <code>IS_NOT_NULL</code> を反転させた新しい <code>NullTest</code> ノードを構築して返す。</li>
-<p>6. **ブールテスト (<code>T_BooleanTest</code>)**:</p>
+<p>6. <strong>ブールテスト (<code>T_BooleanTest</code>)</strong>:</p>
 <li><code>IS_TRUE</code> ⇔ <code>IS_NOT_TRUE</code>、<code>IS_FALSE</code> ⇔ <code>IS_NOT_FALSE</code>、<code>IS_UNKNOWN</code> ⇔ <code>IS_NOT_UNKNOWN</code> の相互変換を行った新しい <a class="wiki-source-link" href="../../source/src/include/nodes/primnodes.h.html#L2000" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__nodes__primnodes_h__BooleanTest.html&quot;}, '*');"><code>BooleanTest</code></a> ノードを構築して返す。</li>
-<p>7. **その他（デフォルト）**:</p>
+<p>7. <strong>その他（デフォルト）</strong>:</p>
 <li>上記のいずれにも該当しない、または単純化できない場合は、明示的な <code>NOT</code> 節（<a class="wiki-source-link" href="../../source/src/backend/nodes/makefuncs.c.html#L758" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__nodes__makefuncs_c__make_notclause.html&quot;}, '*');"><code>make_notclause</code></a>）でラップしたノードを構築して返す。</li>
 </ul>
 <h2>失敗モードと境界条件</h2>

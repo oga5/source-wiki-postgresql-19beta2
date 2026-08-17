@@ -1,5 +1,5 @@
 <!doctype html>
-<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>symbols/src__backend__optimizer__geqo__geqo_recombination_c__City.md</title><link rel="stylesheet" href="../../styles.css"></head><body><h1>City</h1>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="10"><title>symbols/src__backend__optimizer__geqo__geqo_recombination_c__City.md</title><link rel="stylesheet" href="../../styles.css"></head><body><h1>City</h1>
 <h2>現在のソース事実</h2>
 <ul>
 <li>種別: <code>function</code></li>
@@ -58,13 +58,13 @@
 <p>遺伝的クエリ最適化（GEQO）の交叉アルゴリズム（<a class="wiki-source-link" href="../../source/src/backend/optimizer/geqo/geqo_cx.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__geqo__geqo_cx_c__CX.html&quot;}, '*');">CX</a>、PX、OX1、<a class="wiki-source-link" href="../../source/src/backend/optimizer/geqo/geqo_ox2.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__geqo__geqo_ox2_c__OX2.html&quot;}, '*');">OX2</a>など）において、各都市（遺伝子）の位置や訪問・使用状況を追跡・管理するためのデータ構造です。</p>
 <h2>入力と出力</h2>
 <ul>
-<li>**入力**: 交叉アルゴリズム（<a class="wiki-source-link" href="../../source/src/backend/optimizer/geqo/geqo_cx.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/backend/optimizer/geqo/geqo_cx.c.html&quot;}, '*');"><code>geqo_cx.c</code></a>、<a class="wiki-source-link" href="../../source/src/backend/optimizer/geqo/geqo_ox1.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/backend/optimizer/geqo/geqo_ox1.c.html&quot;}, '*');"><code>geqo_ox1.c</code></a>、<a class="wiki-source-link" href="../../source/src/backend/optimizer/geqo/geqo_ox2.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/backend/optimizer/geqo/geqo_ox2.c.html&quot;}, '*');"><code>geqo_ox2.c</code></a>、<a class="wiki-source-link" href="../../source/src/backend/optimizer/geqo/geqo_px.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/backend/optimizer/geqo/geqo_px.c.html&quot;}, '*');"><code>geqo_px.c</code></a> など）において、親個体（ツアー）の遺伝子情報や都市のインデックスが入力として与えられます。</li>
-<li>**出力**: 各都市の割り当て状態や順序関係を保持し、次世代の個体（オフスプリング）を生成するためのマッピング情報を提供します。</li>
+<li><strong>入力</strong>: 交叉アルゴリズム（<a class="wiki-source-link" href="../../source/src/backend/optimizer/geqo/geqo_cx.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/backend/optimizer/geqo/geqo_cx.c.html&quot;}, '*');"><code>geqo_cx.c</code></a>、<a class="wiki-source-link" href="../../source/src/backend/optimizer/geqo/geqo_ox1.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/backend/optimizer/geqo/geqo_ox1.c.html&quot;}, '*');"><code>geqo_ox1.c</code></a>、<a class="wiki-source-link" href="../../source/src/backend/optimizer/geqo/geqo_ox2.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/backend/optimizer/geqo/geqo_ox2.c.html&quot;}, '*');"><code>geqo_ox2.c</code></a>、<a class="wiki-source-link" href="../../source/src/backend/optimizer/geqo/geqo_px.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/backend/optimizer/geqo/geqo_px.c.html&quot;}, '*');"><code>geqo_px.c</code></a> など）において、親個体（ツアー）の遺伝子情報や都市のインデックスが入力として与えられます。</li>
+<li><strong>出力</strong>: 各都市の割り当て状態や順序関係を保持し、次世代の個体（オフスプリング）を生成するためのマッピング情報を提供します。</li>
 </ul>
 <h2>前提条件と不変条件</h2>
 <ul>
-<li>**1-origin インデックス**: 都市の識別子（遺伝子）は 1 から <code>num_gene</code> までの値をとるため、<code>City</code> テーブルは 1-origin でアクセスされる前提となっています。</li>
-<li>**テーブルサイズ**: 1-origin アクセスを安全に行うため、確保される <code>City</code> テーブルの要素数は必ず <code>num_gene + 1</code> でなければなりません。</li>
+<li><strong>1-origin インデックス</strong>: 都市の識別子（遺伝子）は 1 から <code>num_gene</code> までの値をとるため、<code>City</code> テーブルは 1-origin でアクセスされる前提となっています。</li>
+<li><strong>テーブルサイズ</strong>: 1-origin アクセスを安全に行うため、確保される <code>City</code> テーブルの要素数は必ず <code>num_gene + 1</code> でなければなりません。</li>
 </ul>
 <h2>アルゴリズムまたは振る舞い</h2>
 <ul>
@@ -74,9 +74,9 @@
 </ul>
 <h2>失敗モードと境界条件</h2>
 <ul>
-<li>**インデックスの境界外アクセス**: 都市のインデックスが 1-origin であるため、<code>num_gene</code> 以下の有効な遺伝子値（1 から <code>num_gene</code>）以外でアクセスしようとすると、配列の境界外アクセスが発生する危険性があります。特に、0番目の要素へのアクセスや、<code>num_gene</code> を超えるインデックスでのアクセスは未定義動作を引き起こします。</li>
-<li>**メモリ確保の失敗**: <code>num_gene</code> が極端に大きい場合、またはシステムメモリが不足している場合、<code>palloc_array</code> による <code>City</code> テーブルのメモリ確保が失敗し、エラーが発生してトランザクションがアボートします。</li>
-<li>**遺伝子数の不整合**: <code>init_tour</code> などの初期化処理において <code>num_gene</code> が 0 以下の場合はループ処理がスキップされますが、交叉処理において <code>num_gene</code> が正しく設定されていない場合、<code>City</code> テーブルのサイズと実際の遺伝子数に不整合が生じ、不正なメモリ参照や無限ループの原因となります。</li>
+<li><strong>インデックスの境界外アクセス</strong>: 都市のインデックスが 1-origin であるため、<code>num_gene</code> 以下の有効な遺伝子値（1 から <code>num_gene</code>）以外でアクセスしようとすると、配列の境界外アクセスが発生する危険性があります。特に、0番目の要素へのアクセスや、<code>num_gene</code> を超えるインデックスでのアクセスは未定義動作を引き起こします。</li>
+<li><strong>メモリ確保の失敗</strong>: <code>num_gene</code> が極端に大きい場合、またはシステムメモリが不足している場合、<code>palloc_array</code> による <code>City</code> テーブルのメモリ確保が失敗し、エラーが発生してトランザクションがアボートします。</li>
+<li><strong>遺伝子数の不整合</strong>: <code>init_tour</code> などの初期化処理において <code>num_gene</code> が 0 以下の場合はループ処理がスキップされますが、交叉処理において <code>num_gene</code> が正しく設定されていない場合、<code>City</code> テーブルのサイズと実際の遺伝子数に不整合が生じ、不正なメモリ参照や無限ループの原因となります。</li>
 </ul><script>
 (function() {
   function notifyParent() {

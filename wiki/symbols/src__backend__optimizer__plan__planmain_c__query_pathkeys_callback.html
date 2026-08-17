@@ -1,5 +1,5 @@
 <!doctype html>
-<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>symbols/src__backend__optimizer__plan__planmain_c__query_pathkeys_callback.md</title><link rel="stylesheet" href="../../styles.css"></head><body><h1>query_pathkeys_callback</h1>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="10"><title>symbols/src__backend__optimizer__plan__planmain_c__query_pathkeys_callback.md</title><link rel="stylesheet" href="../../styles.css"></head><body><h1>query_pathkeys_callback</h1>
 <h2>現在のソース事実</h2>
 <ul>
 <li>種別: <code>function</code></li>
@@ -59,10 +59,10 @@
 <p>クエリの等価クラス（Equivalence Classes）の統合・マージが完了した安全なタイミングで、クエリの最終出力に必要なソート順を示す <a class="wiki-source-link" href="../../source/src/backend/optimizer/plan/planagg.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__plan__planagg_c__query_pathkeys.html&quot;}, '*');"><code>query_pathkeys</code></a> およびその他の関連パスキーフィールドを計算・確定させるためのコールバック関数型です。</p>
 <h2>入力と出力</h2>
 <ul>
-<li>**入力**:</li>
+<li><strong>入力</strong>:</li>
 <li><code>PlannerInfo *root</code>: プランナのビルド状態やクエリ情報を保持する構造体へのポインタ。</li>
 <li><code>void *extra</code>: コールバック関数に追加の文脈情報を渡すための任意のデータポインタ（<code>qp_extra</code>）。</li>
-<li>**出力**:</li>
+<li><strong>出力</strong>:</li>
 <li>なし（戻り値の型は <code>void</code>）。ただし、副作用として <code>root</code> 内の <a class="wiki-source-link" href="../../source/src/backend/optimizer/plan/planagg.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__plan__planagg_c__query_pathkeys.html&quot;}, '*');"><code>query_pathkeys</code></a> などのパスキーフィールドが設定されます。</li>
 </ul>
 <h2>前提条件と不変条件</h2>
@@ -72,18 +72,18 @@
 </ul>
 <h2>アルゴリズムまたは振る舞い</h2>
 <p><code>query_planner</code> の実行フローにおいて、以下の2つの経路のいずれかで呼び出されます。</p>
-<p>1. **トリビアルなクエリ経路（FROM句なしの <code>SELECT</code> や <code>INSERT ... VALUES()</code> など）**:</p>
+<p>1. <strong>トリビアルなクエリ経路（FROM句なしの <code>SELECT</code> や <code>INSERT ... VALUES()</code> など）</strong>:</p>
 <ul>
 <li>結合木（jointree）が単一の <a class="wiki-source-link" href="../../source/src/backend/optimizer/prep/prepjointree.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__prep__prepjointree_c__RTE_RESULT.html&quot;}, '*');"><code>RTE_RESULT</code></a> リレーションのみで構成されている場合、通常の結合最適化や等価クラス生成処理はバイパスされます。</li>
 <li>この場合、<code>root-&gt;ec_merging_done</code> を <a class="wiki-source-link" href="../../source/src/tools/pg_bsd_indent/indent_globs.h.html#L46" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/tools/pg_bsd_indent/indent_globs.h.html&quot;}, '*');"><code>true</code></a> に設定した直後に、本コールバックが直接実行されます。</li>
-<p>2. **通常の結合プランニング経路**:</p>
+<p>2. <strong>通常の結合プランニング経路</strong>:</p>
 <li>ベースリレーションの構築、結合木の分解、外側結合句の再考（<a class="wiki-source-link" href="../../source/src/backend/optimizer/path/equivclass.c.html#L2133" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__path__equivclass_c__reconsider_outer_join_clauses.html&quot;}, '*');"><code>reconsider_outer_join_clauses</code></a>）、および暗黙的等価関係の生成（<a class="wiki-source-link" href="../../source/src/backend/optimizer/path/equivclass.c.html#L1186" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__path__equivclass_c__generate_base_implied_equalities.html&quot;}, '*');"><code>generate_base_implied_equalities</code></a>）が順次実行されます。</li>
 <li>等価クラスのマージがすべて完了した段階で、本コールバックが実行され、正規形式のパスキーが計算されます。</li>
 </ul>
 <h2>失敗モードと境界条件</h2>
 <p>等価クラスの構築やマージ（外側結合の再考などを含む）が完了する前に本コールバックが呼び出された場合、パスキーを正規形式で正しく構築できず、プランナが不正なソート順を生成するか、アサーションエラーを引き起こす可能性があります。そのため、呼び出しタイミングは厳密に制御されています。</p>
 <ul>
-<li>**FROM句を持たないクエリ（境界条件）**:</li>
+<li><strong>FROM句を持たないクエリ（境界条件）</strong>:</li>
 <p><code>SELECT 2+2 ORDER BY 1</code> のように、FROM句がなく結合処理が発生しないトリビアルなクエリであっても、<code>ORDER BY</code> などのソート順を解決するために本コールバックの実行が必要です。この境界条件に対応するため、<code>query_planner</code> は結合プランニングをバイパスする際にも、ダミーの等価クラス完了フラグ（<code>root-&gt;ec_merging_done = true</code>）を立てた上で必ず本コールバックを呼び出します。</p>
 </ul><script>
 (function() {

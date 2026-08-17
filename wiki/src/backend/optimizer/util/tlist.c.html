@@ -1,15 +1,15 @@
 <!doctype html>
-<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>src/backend/optimizer/util/tlist.c.md</title><link rel="stylesheet" href="../../../../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/util/tlist.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/backend/optimizer/util/tlist.c.html&quot;}, '*');">src/backend/optimizer/util/tlist.c</a></h1>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="10"><title>src/backend/optimizer/util/tlist.c.md</title><link rel="stylesheet" href="../../../../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/util/tlist.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/backend/optimizer/util/tlist.c.html&quot;}, '*');">src/backend/optimizer/util/tlist.c</a></h1>
 <h2>概要</h2>
 <p><a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/util/tlist.c.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/backend/optimizer/util/tlist.c.html&quot;}, '*');"><code>src/backend/optimizer/util/tlist.c</code></a> は、PostgreSQLのクエリ最適化フェーズにおいてターゲットリスト（TargetEntryのリスト）および <code>PathTarget</code> 構造体を操作・変換・検索するためのユーティリティ関数群を所有する。</p>
 <h2>モジュール内での役割</h2>
 <p><code>src/backend/optimizer/util</code> ディレクトリ配下に位置し、プラン作成やコスト見積もり、セレクティビティ・グルーピング処理の前段階で必要となるターゲット列の管理、ソート／グループ化キーの抽出、およびセット返却関数（SRF: Set-Returning Function）を安全に実行するための複数階層へのプラン分割（<code>ProjectSet</code> / <code>Result</code> ノードの構築補助）を提供する。</p>
 <h2>責務</h2>
 <ul>
-<li>**ターゲットリスト操作**: メンバー検索、重複排除付き追加、データ型・照合順序の一致確認。</li>
-<li>**SortGroupClause 連携**: グループ化・ソート句（<code>SortGroupClause</code>）とターゲットリストのエントリを突き合わせ、対応する演算子 OID、照合順序、列番号（resno）の配列を抽出する。</li>
-<li>**PathTarget 管理**: フルなターゲットリストを軽量な <code>PathTarget</code> へ変換、コピー、列追加、およびプラン間でのラベル付けを行う。</li>
-<li>**SRF の多段階分割**: ネストまたは複数存在する SRF を安全に実行するため、<code>split_pathtarget_at_srfs</code> を通じて単一のターゲットを複数階層の <code>PathTarget</code> へ分解する。</li>
+<li><strong>ターゲットリスト操作</strong>: メンバー検索、重複排除付き追加、データ型・照合順序の一致確認。</li>
+<li><strong>SortGroupClause 連携</strong>: グループ化・ソート句（<code>SortGroupClause</code>）とターゲットリストのエントリを突き合わせ、対応する演算子 OID、照合順序、列番号（resno）の配列を抽出する。</li>
+<li><strong>PathTarget 管理</strong>: フルなターゲットリストを軽量な <code>PathTarget</code> へ変換、コピー、列追加、およびプラン間でのラベル付けを行う。</li>
+<li><strong>SRF の多段階分割</strong>: ネストまたは複数存在する SRF を安全に実行するため、<code>split_pathtarget_at_srfs</code> を通じて単一のターゲットを複数階層の <code>PathTarget</code> へ分解する。</li>
 </ul>
 <h2>重要なシンボル</h2>
 <h3>ターゲットリスト検索と操作</h3>
@@ -35,14 +35,14 @@
 <li><code>ERROR</code>: エラー発生時に <code>elog</code> を通じてシステムログや例外を発生させる。</li>
 </ul>
 <h2>制御フローとデータフロー</h2>
-<p>1. **SRF 分割のフロー**:</p>
+<p>1. <strong>SRF 分割のフロー</strong>:</p>
 <ul>
 <li><code>split_pathtarget_at_srfs</code> は内部で <a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/util/tlist.c.html#L941" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__tlist_c__split_pathtarget_at_srfs_extended.html&quot;}, '*');"><code>split_pathtarget_at_srfs_extended</code></a> を呼び出す。</li>
 <li>各ターゲット式に対して <a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/util/tlist.c.html#L1143" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__tlist_c__split_pathtarget_walker.html&quot;}, '*');"><code>split_pathtarget_walker</code></a> が再帰的に適用され、式内の SRF のネスト深度（<code>srf_depth</code>）と必要な入力変数（<code>Var</code> やインプット側ですでに計算済みの式）を収集する。</li>
 <li>収集された情報に基づき、<code>context.level_srfs</code> および <code>context.level_input_vars</code> に沿って、最も低い階層から順に <code>PathTarget</code> を構築する。</li>
 <li>グループ化境界を跨ぐ場合は <code>is_grouping_target</code> フラグが立ち、<a class="wiki-source-link" href="../../../../../source/src/backend/rewrite/rewriteManip.c.html#L1339" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__rewrite__rewriteManip_c__remove_nulling_relids.html&quot;}, '*');"><code>remove_nulling_relids</code></a> によってグループ化の <a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/prep/prepjointree.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__prep__prepjointree_c__nullingrels.html&quot;}, '*');"><code>nullingrels</code></a> ビットが一時的に除外されて入力側との一致判定が行われる。</li>
 </ul>
-<p>2. **メモリ所有権とライフサイクル**:</p>
+<p>2. <strong>メモリ所有権とライフサイクル</strong>:</p>
 <ul>
 <li><a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/util/tlist.c.html#L471" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__tlist_c__extract_grouping_ops.html&quot;}, '*');"><code>extract_grouping_ops</code></a> などの抽出関数は <code>palloc_array</code> を用いてメモリを割り当てる。</li>
 <li><a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/util/tlist.c.html#L665" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__tlist_c__copy_pathtarget.html&quot;}, '*');"><code>copy_pathtarget</code></a> は <code>PathTarget</code> のスローコピーを行い、<code>exprs</code> リストは <code>list_copy()</code> で浅いコピーを作成しつつ、<a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/util/tlist.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__tlist_c__sortgrouprefs.html&quot;}, '*');"><code>sortgrouprefs</code></a> 配列は新しくメモリを確保して複製する。</li>
@@ -65,8 +65,8 @@
 </ul>
 <h2>読者向けメモ</h2>
 <ul>
-<li>**SRF のマクロ制約**: <a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/util/tlist.c.html#L32" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/backend/optimizer/util/tlist.c.html&quot;}, '*');"><code>IS_SRF_CALL</code></a> マクロは <code>split_pathtarget_at_srfs()</code> 内での使用に限定されている。式内部にネストされた SRF に対して他の場所で適用すると誤動作するため、一般的なケースでは <code>expression_returns_set()</code> を使用すること。</li>
-<li>**グループ化の Nulling ビット**: グループ化ターゲットを扱う際、プレグループとポストグループの間で <a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/prep/prepjointree.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__prep__prepjointree_c__nullingrels.html&quot;}, '*');"><code>nullingrels</code></a> の差異が生じるため、一致判定時に除外処理が必要となる点に注意。</li>
+<li><strong>SRF のマクロ制約</strong>: <a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/util/tlist.c.html#L32" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/backend/optimizer/util/tlist.c.html&quot;}, '*');"><code>IS_SRF_CALL</code></a> マクロは <code>split_pathtarget_at_srfs()</code> 内での使用に限定されている。式内部にネストされた SRF に対して他の場所で適用すると誤動作するため、一般的なケースでは <code>expression_returns_set()</code> を使用すること。</li>
+<li><strong>グループ化の Nulling ビット</strong>: グループ化ターゲットを扱う際、プレグループとポストグループの間で <a class="wiki-source-link" href="../../../../../source/src/backend/optimizer/prep/prepjointree.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__prep__prepjointree_c__nullingrels.html&quot;}, '*');"><code>nullingrels</code></a> の差異が生じるため、一致判定時に除外処理が必要となる点に注意。</li>
 </ul>
 <h2>シンボルページ</h2>
 <ul>

@@ -1,5 +1,5 @@
 <!doctype html>
-<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>src/backend/access/heap/README.tuplock.md</title><link rel="stylesheet" href="../../../../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../../../../source/src/backend/access/heap/README.tuplock.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/backend/access/heap/README.tuplock.html&quot;}, '*');">src/backend/access/heap/README.tuplock</a></h1>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="10"><title>src/backend/access/heap/README.tuplock.md</title><link rel="stylesheet" href="../../../../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../../../../source/src/backend/access/heap/README.tuplock.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/backend/access/heap/README.tuplock.html&quot;}, '*');">src/backend/access/heap/README.tuplock</a></h1>
 <h2>概要</h2>
 <p>PostgreSQLにおけるヒープタプルレベルのロックメカニズム、マルチトランザクション（MultiXact）、およびインプレース更新（inplace update）時の競合制御に関する設計思想と実装ルールを解説するドキュメントファイルです。</p>
 <h2>モジュール内での役割</h2>
@@ -15,10 +15,10 @@
 <p>該当するソースコードのシンボル定義はありません（テキストドキュメントのため）。</p>
 <h2>制御フローとデータフロー</h2>
 <ul>
-<li>**タプルロック取得フロー**: </li>
+<li><strong>タプルロック取得フロー</strong>: </li>
 <p>1. <code>LockTuple()</code> を呼び出し、標準ロックマネージャを介してウェイター間の調停を行う。 2. <code>XactLockTableWait()</code> 等により既存のXMAXトランザクションの終了を待つ。 3. タプルヘッダーに自身のXIDやロック強度を記録する。 4. <code>UnlockTuple()</code> でロックマネージャ上の待機を解除する。</p>
-<li>**マルチXactへの昇格**: タプルヘッダに収まりきらない複数のロックが競合する場合、XIDを <a class="wiki-source-link" href="../../../../../source/src/include/c.h.html#L753" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/c.h.html&quot;}, '*');"><code>MultiXactId</code></a> に置き換えて拡張領域で管理する。</li>
-<li>**インプレース更新のガード**: <code>pg_class</code> や <code>pg_database</code> などのインプレース更新対象では、更新前に <code>LOCKTAG_TUPLE</code> を取得して不整合やロストを防ぐ。</li>
+<li><strong>マルチXactへの昇格</strong>: タプルヘッダに収まりきらない複数のロックが競合する場合、XIDを <a class="wiki-source-link" href="../../../../../source/src/include/c.h.html#L753" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/c.h.html&quot;}, '*');"><code>MultiXactId</code></a> に置き換えて拡張領域で管理する。</li>
+<li><strong>インプレース更新のガード</strong>: <code>pg_class</code> や <code>pg_database</code> などのインプレース更新対象では、更新前に <code>LOCKTAG_TUPLE</code> を取得して不整合やロストを防ぐ。</li>
 </ul>
 <h2>直接依存</h2>
 <p>ソースコードではなくテキスト文書のため、直接の言語レベルの依存関係はありません。</p>

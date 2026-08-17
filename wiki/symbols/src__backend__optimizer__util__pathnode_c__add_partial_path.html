@@ -1,5 +1,5 @@
 <!doctype html>
-<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>symbols/src__backend__optimizer__util__pathnode_c__add_partial_path.md</title><link rel="stylesheet" href="../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../source/src/backend/optimizer/util/pathnode.c.html#L792" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__pathnode_c__add_partial_path.html&quot;}, '*');">add_partial_path</a></h1>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="10"><title>symbols/src__backend__optimizer__util__pathnode_c__add_partial_path.md</title><link rel="stylesheet" href="../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../source/src/backend/optimizer/util/pathnode.c.html#L792" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__pathnode_c__add_partial_path.html&quot;}, '*');">add_partial_path</a></h1>
 <h2>現在のソース事実</h2>
 <ul>
 <li>種別: <code>function</code></li>
@@ -61,16 +61,16 @@
 <li>親リレーション <code>parent_rel</code> は並列処理を考慮可能（<code>consider_parallel</code> が真）でなければならない。</li>
 </ul>
 <h2>アルゴリズムまたは振る舞い</h2>
-<p>1. **前提チェックと割り込み確認**:</p>
+<p>1. <strong>前提チェックと割り込み確認</strong>:</p>
 <ul>
 <li>クエリの中断要求を確認する。</li>
 <li><code>new_path-&gt;parallel_safe</code> および <code>parent_rel-&gt;consider_parallel</code> のアサーションを満たしていることを検証する。</li>
-<p>2. **既存部分パスとの比較走査**:</p>
+<p>2. <strong>既存部分パスとの比較走査</strong>:</p>
 <li><code>parent_rel-&gt;partial_pathlist</code> 内の既存パス（<code>old_path</code>）を順に走査し、パスキー（<a class="wiki-source-link" href="../../source/src/backend/optimizer/path/pathkeys.c.html#L303" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__path__pathkeys_c__compare_pathkeys.html&quot;}, '*');"><code>compare_pathkeys</code></a>）およびファジィコスト比較（<a class="wiki-source-link" href="../../source/src/backend/optimizer/util/pathnode.c.html#L180" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__pathnode_c__compare_path_costs_fuzzily.html&quot;}, '*');"><code>compare_path_costs_fuzzily</code></a>）を実施する。</li>
 <li>新規パスが既存パスを支配（優越）している場合は、既存パスをリストから削除してメモリを解放（<code>pfree</code>）する。</li>
 <li>逆に既存パスが新規パスを支配している場合は、新規パスの受け入れフラグ（<code>accept_new</code>）を偽にして走査を中断する。</li>
 <li>どちらでもない場合、無効化されたノード数（<a class="wiki-source-link" href="../../source/src/backend/optimizer/util/pathnode.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__pathnode_c__disabled_nodes.html&quot;}, '*');"><code>disabled_nodes</code></a>）やトータルコストに基づいて新規パスの挿入位置（<code>insert_at</code>）を更新する。</li>
-<p>3. **リストへの反映または破棄**:</p>
+<p>3. <strong>リストへの反映または破棄</strong>:</p>
 <li><code>accept_new</code> が真のままであれば、決定された位置に <code>new_path</code> を挿入する。</li>
 <li>拒否された場合は、<code>new_path</code> を破棄・メモリ解放（<code>pfree</code>）する。</li>
 </ul>

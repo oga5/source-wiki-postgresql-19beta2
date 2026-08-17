@@ -1,22 +1,22 @@
 <!doctype html>
-<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>src/backend/access/rmgrdesc/README</title><link rel="stylesheet" href="../../../../../../styles.css"></head><body><h1>Japanese translation</h1><p><code>src/backend/access/rmgrdesc/README</code></p><p><a href="../../../../../../source/src/backend/access/rmgrdesc/README.html" target="source-view">View original document</a></p><p class="document-translation-progress document-translation-complete">Translation complete.</p><div class="document-translation-body"><section class="document-translation-chunk translated" data-chunk-order="0"><p>src/backend/access/rmgrdesc/README</p>
-<p>WALリソースマネージャ記述関数 ==========================================</p>
-<p>デバッグ目的のために、各WALリソースマネージャには「記述関数（description function）」、すなわちrmgrdesc関数が存在します。rmgrdesc関数はWALレコードを解析し、WALレコードの内容をある程度人間が読める形式で出力します。</p>
-<p>すべてのリソースマネージャのrmgrdesc関数はこのディレクトリに集められています。これは、スタンドアロンのpg_waldumpプログラムでも使用されるためです。これらはツリー外のデバッグツールによって使用される可能性もありますが、記述関数も出力形式も安定したAPIの一部とはみなされるべきではありません。</p>
-<p>rmgrdesc出力形式のガイドライン -------------------------------------</p>
-<p>これらのガイドラインの目的は、各rmgr間での不必要な不整合を避け、ユーザーがあまり苦労せずにdesc出力文字列を解析できるようにすることです。これはAPI仕様や交換フォーマットではありません。（いずれにせよ、現時点でこれらのガイドラインに従っているのはheapamとnbtreeのdescルーチンのみです。）</p>
-<p>レコードの記述はJSONスタイルのキー/値オブジェクトに似ています。ただし、明示的な「文字列」型や文字列のエスケープはありません。最上位の { } ブラケットは省略する必要があります。例えば以下のようになります。</p>
-<p>snapshotConflictHorizon: 0, flags: 0x03</p>
-<p>レコードの記述には可変長配列が含まれる場合があります。例えば以下のようになります。</p>
-<p>nunused: 5, unused: [1, 2, 3, 4, 5]</p>
-<p>ネストされたオブジェクトは { } ブラケットを介してサポートされます。これらは通常、可変長配列の内部に現れます。例えば以下のようになります。</p>
-<p>ndeleted: 0, nupdated: 1, deleted: [], updated: [{ off: 45, nptids: 1, ptids: [0] }]</p>
-<p>基盤となる物理的なWALレコード構造体のフィールドの順序を忠実に表す順序で出力するようにしてください。解析を容易にするために、キー名は（同じネストレベルで）一意である必要があります。配列内の項目数が配列の前に表示されるようにすると良いでしょう。</p>
-<p>個々のWALレコードタイプが独自の規則を考案しても問題ありません。例えば、Heap2のPRUNEレコード記述では、レコードの&quot;redirected&quot;フィールドにカスタム配列形式を使用しています。</p>
-<p>... redirected: [1-&gt;4, 5-&gt;9], dead: [10, 11], unused: [3, 7, 8]</p>
-<p>議論の余地はありますが、descルーチンはこれに対して代わりにオブジェクト表記を使用すべきかもしれません。しかし、基盤となる物理データ構造に関する有用な情報を伝える場合には、カスタム形式を使用することに価値があります。</p>
-<p>このアドホックな形式には、&quot;dead&quot;および&quot;unused&quot;配列（これらはページオフセット番号配列の標準的なdesc規則に従います）に使用される形式に近いという利点があります。これは、表示されている&quot;redirected&quot;要素が単なるページオフセット番号のペアであることを示唆しています（実際にそのように動作します）。</p>
-<p>rmgrdesc_utils.cには、この形式でデータを出力するためのヘルパー関数がいくつか含まれています。</p></section></div><script>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="10"><title>src/backend/access/rmgrdesc/README</title><link rel="stylesheet" href="../../../../../../styles.css"></head><body><h1>Japanese translation</h1><p><code>src/backend/access/rmgrdesc/README</code></p><p><a href="../../../../../../source/src/backend/access/rmgrdesc/README.html" target="source-view">View original document</a></p><p class="document-translation-progress document-translation-complete">Translation complete.</p><div class="document-translation-body"><section class="document-translation-chunk translated" data-chunk-order="0"><p class="markdown-preserve-lines">src/backend/access/rmgrdesc/README</p>
+<h1>WALリソースマネージャ記述関数</h1>
+<p class="markdown-preserve-lines">デバッグ目的のために、各WALリソースマネージャには「記述関数（description function）」、すなわちrmgrdesc関数が存在します。rmgrdesc関数はWALレコードを解析し、WALレコードの内容をある程度人間が読める形式で出力します。</p>
+<p class="markdown-preserve-lines">すべてのリソースマネージャのrmgrdesc関数はこのディレクトリに集められています。これは、スタンドアロンのpg_waldumpプログラムでも使用されるためです。これらはツリー外のデバッグツールによって使用される可能性もありますが、記述関数も出力形式も安定したAPIの一部とはみなされるべきではありません。</p>
+<h2>rmgrdesc出力形式のガイドライン</h2>
+<p class="markdown-preserve-lines">これらのガイドラインの目的は、各rmgr間での不必要な不整合を避け、ユーザーがあまり苦労せずにdesc出力文字列を解析できるようにすることです。これはAPI仕様や交換フォーマットではありません。（いずれにせよ、現時点でこれらのガイドラインに従っているのはheapamとnbtreeのdescルーチンのみです。）</p>
+<p class="markdown-preserve-lines">レコードの記述はJSONスタイルのキー/値オブジェクトに似ています。ただし、明示的な「文字列」型や文字列のエスケープはありません。最上位の { } ブラケットは省略する必要があります。例えば以下のようになります。</p>
+<p class="markdown-preserve-lines">snapshotConflictHorizon: 0, flags: 0x03</p>
+<p class="markdown-preserve-lines">レコードの記述には可変長配列が含まれる場合があります。例えば以下のようになります。</p>
+<p class="markdown-preserve-lines">nunused: 5, unused: [1, 2, 3, 4, 5]</p>
+<p class="markdown-preserve-lines">ネストされたオブジェクトは { } ブラケットを介してサポートされます。これらは通常、可変長配列の内部に現れます。例えば以下のようになります。</p>
+<p class="markdown-preserve-lines">ndeleted: 0, nupdated: 1, deleted: [], updated: [{ off: 45, nptids: 1, ptids: [0] }]</p>
+<p class="markdown-preserve-lines">基盤となる物理的なWALレコード構造体のフィールドの順序を忠実に表す順序で出力するようにしてください。解析を容易にするために、キー名は（同じネストレベルで）一意である必要があります。配列内の項目数が配列の前に表示されるようにすると良いでしょう。</p>
+<p class="markdown-preserve-lines">個々のWALレコードタイプが独自の規則を考案しても問題ありません。例えば、Heap2のPRUNEレコード記述では、レコードの&quot;redirected&quot;フィールドにカスタム配列形式を使用しています。</p>
+<p class="markdown-preserve-lines">... redirected: [1-&gt;4, 5-&gt;9], dead: [10, 11], unused: [3, 7, 8]</p>
+<p class="markdown-preserve-lines">議論の余地はありますが、descルーチンはこれに対して代わりにオブジェクト表記を使用すべきかもしれません。しかし、基盤となる物理データ構造に関する有用な情報を伝える場合には、カスタム形式を使用することに価値があります。</p>
+<p class="markdown-preserve-lines">このアドホックな形式には、&quot;dead&quot;および&quot;unused&quot;配列（これらはページオフセット番号配列の標準的なdesc規則に従います）に使用される形式に近いという利点があります。これは、表示されている&quot;redirected&quot;要素が単なるページオフセット番号のペアであることを示唆しています（実際にそのように動作します）。</p>
+<p class="markdown-preserve-lines">rmgrdesc_utils.cには、この形式でデータを出力するためのヘルパー関数がいくつか含まれています。</p></section></div><script>
 (function() {
   function notifyParent() {
     if (parent === window) return;

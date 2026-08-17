@@ -1,19 +1,25 @@
 <!doctype html>
-<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>src/test/ldap/README</title><link rel="stylesheet" href="../../../../../styles.css"></head><body><h1>Japanese translation</h1><p><code>src/test/ldap/README</code></p><p><a href="../../../../../source/src/test/ldap/README.html" target="source-view">View original document</a></p><p class="document-translation-progress document-translation-complete">Translation complete.</p><div class="document-translation-body"><section class="document-translation-chunk translated" data-chunk-order="0"><p>src/test/ldap/README</p>
-<p>LDAP機能のテスト ============================</p>
-<p>このディレクトリには、LDAP機能のテストスイートが含まれています。これには、サーバーおよびクライアントツールを含む完全なOpenLDAPのインストールが必要であるため、別個に管理され、デフォルトでは実行されません。想定されていない場所にOpenLDAPがある場合、それを見つけられるようにテストファイル内のいくつかのパスを調整する必要があるかもしれません。</p>
-<p>また、このテストスイートは、実質的なアクセス制御なしでlocalhost上のTCP/IP接続を監視するLDAPサーバーを作成するため、信頼できないローカルユーザーが存在する可能性のあるシステムでこれを実行することは安全ではありません。</p>
-<p>テストの実行 =================</p>
-<p>注意: configureに--enable-tap-tests引数を指定しておく必要があります。</p>
-<p>以下を実行します。 make check PG_TEST_EXTRA=ldap または make installcheck PG_TEST_EXTRA=ldap 以前に&quot;make install&quot;を実行している場合は、&quot;make installcheck&quot;を使用できます。その場合、インストールツリー内のコードがテストされます。&quot;make check&quot;を使用すると、現在のソースから一時的なインストールツリーが構築され、テストされます。</p>
-<p>どちらの方法でも、このテストはテスト用のPostgresクラスターとテスト用のLDAPサーバーを初期化、起動、および停止します。</p>
-<p>これらのテストの実行に関する詳細については、src/test/perl/READMEを参照してください。</p>
-<p>要件 ============</p>
-<p>LDAPサーバーとクライアントツールが必要です。</p>
-<p>Debian/Ubuntuパッケージ: slapd ldap-utils</p>
-<p>RHEL/CentOS/Fedoraパッケージ: openldap-clients openldap-servers （ビルドにはすでにopenldapとopenldap-develが必要であったはずです。）</p>
-<p>FreeBSD: openldap-server （ビルドにはすでにopenldap-clientが必要であったはずです。portsソースツリーからビルドする場合は、net/openldap24-clientとnet/openldap24-serverをビルドすることになります。）</p>
-<p>macOS: Appleが提供するバージョンのOpenLDAPを使用することはお勧めしません。非常に古く、さらにAppleはslapdの起動規約を変更したようです。テストファイル内のパスは、HomebrewまたはMacPortsを使用してOpenLDAPをインストールしたという前提で設定されています。</p></section></div><script>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="10"><title>src/test/ldap/README</title><link rel="stylesheet" href="../../../../../styles.css"></head><body><h1>Japanese translation</h1><p><code>src/test/ldap/README</code></p><p><a href="../../../../../source/src/test/ldap/README.html" target="source-view">View original document</a></p><p class="document-translation-progress document-translation-complete">Translation complete.</p><div class="document-translation-body"><section class="document-translation-chunk translated" data-chunk-order="0"><p class="markdown-preserve-lines">src/test/ldap/README</p>
+<h1>LDAP機能のテスト</h1>
+<p class="markdown-preserve-lines">このディレクトリには、LDAP機能のテストスイートが含まれています。これには、サーバーおよびクライアントツールを含む完全なOpenLDAPのインストールが必要であるため、別個に管理され、デフォルトでは実行されません。想定されていない場所にOpenLDAPがある場合、それを見つけられるようにテストファイル内のいくつかのパスを調整する必要があるかもしれません。</p>
+<p class="markdown-preserve-lines">また、このテストスイートは、実質的なアクセス制御なしでlocalhost上のTCP/IP接続を監視するLDAPサーバーを作成するため、信頼できないローカルユーザーが存在する可能性のあるシステムでこれを実行することは安全ではありません。</p>
+<h1>テストの実行</h1>
+<p class="markdown-preserve-lines">注意: configureに--enable-tap-tests引数を指定しておく必要があります。</p>
+<p class="markdown-preserve-lines">以下を実行します。
+    make check PG_TEST_EXTRA=ldap
+または
+    make installcheck PG_TEST_EXTRA=ldap
+以前に&quot;make install&quot;を実行している場合は、&quot;make installcheck&quot;を使用できます。その場合、インストールツリー内のコードがテストされます。&quot;make check&quot;を使用すると、現在のソースから一時的なインストールツリーが構築され、テストされます。</p>
+<p class="markdown-preserve-lines">どちらの方法でも、このテストはテスト用のPostgresクラスターとテスト用のLDAPサーバーを初期化、起動、および停止します。</p>
+<p class="markdown-preserve-lines">これらのテストの実行に関する詳細については、src/test/perl/READMEを参照してください。</p>
+<h1>要件</h1>
+<p class="markdown-preserve-lines">LDAPサーバーとクライアントツールが必要です。</p>
+<p class="markdown-preserve-lines">Debian/Ubuntuパッケージ: slapd ldap-utils</p>
+<p class="markdown-preserve-lines">RHEL/CentOS/Fedoraパッケージ: openldap-clients openldap-servers
+（ビルドにはすでにopenldapとopenldap-develが必要であったはずです。）</p>
+<p class="markdown-preserve-lines">FreeBSD: openldap-server
+（ビルドにはすでにopenldap-clientが必要であったはずです。portsソースツリーからビルドする場合は、net/openldap24-clientとnet/openldap24-serverをビルドすることになります。）</p>
+<p class="markdown-preserve-lines">macOS: Appleが提供するバージョンのOpenLDAPを使用することはお勧めしません。非常に古く、さらにAppleはslapdの起動規約を変更したようです。テストファイル内のパスは、HomebrewまたはMacPortsを使用してOpenLDAPをインストールしたという前提で設定されています。</p></section></div><script>
 (function() {
   function notifyParent() {
     if (parent === window) return;

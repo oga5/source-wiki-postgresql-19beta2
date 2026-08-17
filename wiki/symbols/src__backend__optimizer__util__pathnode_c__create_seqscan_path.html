@@ -1,5 +1,5 @@
 <!doctype html>
-<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>symbols/src__backend__optimizer__util__pathnode_c__create_seqscan_path.md</title><link rel="stylesheet" href="../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../source/src/backend/optimizer/util/pathnode.c.html#L1025" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__pathnode_c__create_seqscan_path.html&quot;}, '*');">create_seqscan_path</a></h1>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="10"><title>symbols/src__backend__optimizer__util__pathnode_c__create_seqscan_path.md</title><link rel="stylesheet" href="../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../source/src/backend/optimizer/util/pathnode.c.html#L1025" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__pathnode_c__create_seqscan_path.html&quot;}, '*');">create_seqscan_path</a></h1>
 <h2>現在のソース事実</h2>
 <ul>
 <li>種別: <code>function</code></li>
@@ -21,12 +21,12 @@
 <p>シーケンシャルスキャン（<code>T_SeqScan</code>）を実行するための <code>Path</code> ノードを新しく生成し、初期化およびコスト計算を行う。</p>
 <h2>入力と出力</h2>
 <ul>
-<li>**入力**:</li>
+<li><strong>入力</strong>:</li>
 <li><code>PlannerInfo *root</code>: プランナーのグローバル情報。</li>
 <li><code>RelOptInfo *rel</code>: スキャン対象となるベースリレーションの情報。</li>
 <li><code>Relids required_outer</code>: このパスで必要とされる外部リレーションのID集合（パラメータ化パス用）。</li>
 <li><code>int parallel_workers</code>: 使用する並列ワーカー数。並列実行しない場合は <code>0</code>。</li>
-<li>**出力**:</li>
+<li><strong>出力</strong>:</li>
 <li><code>Path *</code>: 生成され、コスト見積もりが完了したシーケンシャルスキャンパスへのポインタ。</li>
 </ul>
 <h2>前提条件と不変条件</h2>
@@ -49,9 +49,9 @@
 </ul>
 <h2>失敗モードと境界条件</h2>
 <ul>
-<li>**メモリ割り当て**: <code>makeNode(Path)</code> によるメモリ割り当てが失敗した場合、PostgreSQLのメモリ管理機構（palloc）を通じてエラーが発生し、トランザクションがアボートする。</li>
-<li>**並列ワーカー数**: <code>parallel_workers</code> が <code>0</code> 以下の場合は <code>parallel_aware</code> は <a class="wiki-source-link" href="../../source/src/tools/pg_bsd_indent/indent_globs.h.html#L43" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/tools/pg_bsd_indent/indent_globs.h.html&quot;}, '*');"><code>false</code></a> となり、非並列パスとして扱われる。</li>
-<li>**パラメータ化情報**: <a class="wiki-source-link" href="../../source/src/backend/optimizer/util/pathnode.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__pathnode_c__required_outer.html&quot;}, '*');"><code>required_outer</code></a> が空（<code>NULL</code>）の場合、<a class="wiki-source-link" href="../../source/src/backend/optimizer/util/relnode.c.html#L1703" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__relnode_c__get_baserel_parampathinfo.html&quot;}, '*');"><code>get_baserel_parampathinfo</code></a> はパラメータ化されていない通常のパス情報を返す。</li>
+<li><strong>メモリ割り当て</strong>: <code>makeNode(Path)</code> によるメモリ割り当てが失敗した場合、PostgreSQLのメモリ管理機構（palloc）を通じてエラーが発生し、トランザクションがアボートする。</li>
+<li><strong>並列ワーカー数</strong>: <code>parallel_workers</code> が <code>0</code> 以下の場合は <code>parallel_aware</code> は <a class="wiki-source-link" href="../../source/src/tools/pg_bsd_indent/indent_globs.h.html#L43" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;panels/src/tools/pg_bsd_indent/indent_globs.h.html&quot;}, '*');"><code>false</code></a> となり、非並列パスとして扱われる。</li>
+<li><strong>パラメータ化情報</strong>: <a class="wiki-source-link" href="../../source/src/backend/optimizer/util/pathnode.c.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__pathnode_c__required_outer.html&quot;}, '*');"><code>required_outer</code></a> が空（<code>NULL</code>）の場合、<a class="wiki-source-link" href="../../source/src/backend/optimizer/util/relnode.c.html#L1703" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__relnode_c__get_baserel_parampathinfo.html&quot;}, '*');"><code>get_baserel_parampathinfo</code></a> はパラメータ化されていない通常のパス情報を返す。</li>
 </ul><script>
 (function() {
   function notifyParent() {

@@ -1,5 +1,5 @@
 <!doctype html>
-<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>symbols/src__backend__optimizer__util__pathnode_c__compare_path_costs.md</title><link rel="stylesheet" href="../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../source/src/backend/optimizer/util/pathnode.c.html#L67" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__pathnode_c__compare_path_costs.html&quot;}, '*');">compare_path_costs</a></h1>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="10"><title>symbols/src__backend__optimizer__util__pathnode_c__compare_path_costs.md</title><link rel="stylesheet" href="../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../source/src/backend/optimizer/util/pathnode.c.html#L67" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__optimizer__util__pathnode_c__compare_path_costs.html&quot;}, '*');">compare_path_costs</a></h1>
 <h2>現在のソース事実</h2>
 <ul>
 <li>種別: <code>function</code></li>
@@ -52,14 +52,14 @@
 <li><code>path1</code> および <code>path2</code> は有効な <code>Path</code> 構造体を指していること。</li>
 </ul>
 <h2>アルゴリズムまたは振る舞い</h2>
-<p>1. **無効化ノード数の比較**: <code>path1-&gt;disabled_nodes</code> と <code>path2-&gt;disabled_nodes</code> が異なる場合、値が小さい方を優先（<code>-1</code> または <code>+1</code> を返して終了）する。 2. **基準が <code>STARTUP_COST</code> の場合**:</p>
+<p>1. <strong>無効化ノード数の比較</strong>: <code>path1-&gt;disabled_nodes</code> と <code>path2-&gt;disabled_nodes</code> が異なる場合、値が小さい方を優先（<code>-1</code> または <code>+1</code> を返して終了）する。 2. <strong>基準が <code>STARTUP_COST</code> の場合</strong>:</p>
 <ul>
 <li><code>path1-&gt;startup_cost</code> と <code>path2-&gt;startup_cost</code> を比較する。大小関係があれば <code>-1</code> または <code>+1</code> を返す。</li>
 <li>起動コストが等しい場合、<code>path1-&gt;total_cost</code> と <code>path2-&gt;total_cost</code> を比較し、大小関係に応じて <code>-1</code> または <code>+1</code> を返す。</li>
-<p>3. **基準が <code>STARTUP_COST</code> 以外の場合**:</p>
+<p>3. <strong>基準が <code>STARTUP_COST</code> 以外の場合</strong>:</p>
 <li><code>path1-&gt;total_cost</code> と <code>path2-&gt;total_cost</code> を比較する。大小関係があれば <code>-1</code> または <code>+1</code> を返す。</li>
 <li>トータルコストが等しい場合、<code>path1-&gt;startup_cost</code> と <code>path2-&gt;startup_cost</code> を比較し、大小関係に応じて <code>-1</code> または <code>+1</code> を返す。</li>
-<p>4. **同値判定**: すべての比較項目が等しい場合は <code>0</code> を返す。</p>
+<p>4. <strong>同値判定</strong>: すべての比較項目が等しい場合は <code>0</code> を返す。</p>
 </ul>
 <h2>失敗モードと境界条件</h2>
 <ul>

@@ -1,5 +1,5 @@
 <!doctype html>
-<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>symbols/contrib__auto_explain__auto_explain_c__auto_explain_scan_literal.md</title><link rel="stylesheet" href="../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../source/contrib/auto_explain/auto_explain.c.html#L621" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/contrib__auto_explain__auto_explain_c__auto_explain_scan_literal.html&quot;}, '*');">auto_explain_scan_literal</a></h1>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="10"><title>symbols/contrib__auto_explain__auto_explain_c__auto_explain_scan_literal.md</title><link rel="stylesheet" href="../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../source/contrib/auto_explain/auto_explain.c.html#L621" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/contrib__auto_explain__auto_explain_c__auto_explain_scan_literal.html&quot;}, '*');">auto_explain_scan_literal</a></h1>
 <h2>定義</h2>
 <ul>
 <li>種別: <code>function</code></li>
@@ -34,7 +34,7 @@
 <h2>関連データ構造</h2>
 <p><code>token</code></p>
 <h2>ソース抜粋</h2>
-<p>~~~c static char * <a class="wiki-source-link" href="../../source/contrib/auto_explain/auto_explain.c.html#L621" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/contrib__auto_explain__auto_explain_c__auto_explain_scan_literal.html&quot;}, '*');">auto_explain_scan_literal</a>(char **endp, char **nextp) { char	   *token = *nextp + 1;</p>
+<p>~~~c static char * <a class="wiki-source-link" href="../../source/contrib/auto_explain/auto_explain.c.html#L621" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/contrib__auto_explain__auto_explain_c__auto_explain_scan_literal.html&quot;}, '*');">auto_explain_scan_literal</a>(char <strong>endp, char </strong>nextp) { char	   *token = *nextp + 1;</p>
 <p>for (;;) { *endp = strchr(*nextp + 1, &#x27;\&#x27;&#x27;); if (*endp == NULL) return NULL;		/* mismatched quotes */ if ((*endp)[1] != &#x27;\&#x27;&#x27;) break;				/* found end of literal */ /* Collapse adjacent quotes into one quote, and look again */ memmove(*endp, *endp + 1, strlen(*endp)); *nextp = *endp; } /* *endp <a class="wiki-source-link" href="../../source/src/backend/utils/adt/timestamp.c.html#L1612" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__backend__utils__adt__timestamp_c__now.html&quot;}, '*');">now</a> points at the terminating quote */ *nextp = *endp + 1;</p>
 <p>return token; } ~~~</p>
 <h2>失敗モードと境界条件</h2>

@@ -1,5 +1,5 @@
 <!doctype html>
-<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>src/include/storage/off.h.md</title><link rel="stylesheet" href="../../../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../../../source/src/include/storage/off.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/storage/off.h.html&quot;}, '*');">src/include/storage/off.h</a></h1>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="10"><title>src/include/storage/off.h.md</title><link rel="stylesheet" href="../../../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../../../source/src/include/storage/off.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/storage/off.h.html&quot;}, '*');">src/include/storage/off.h</a></h1>
 <h2>概要</h2>
 <p>PostgreSQLのディスクページ内における行識別子（<code>ItemIdData</code>）配列へのインデックスである <code>OffsetNumber</code> の定義と、それに関連する定数・操作マクロを提供するヘッダーファイルです。</p>
 <h2>モジュール内での役割</h2>
@@ -21,7 +21,7 @@
 <h2>制御フローとデータフロー</h2>
 <p>実行コードや複雑な制御フローは含まれておらず、純粋なデータ構造の定義とインラインマクロを提供します。</p>
 <ul>
-<li>**データフロー**: バッファページの行ポインタ配列にアクセスする際、<a class="wiki-source-link" href="../../../../source/src/include/storage/off.h.html#L39" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/storage/off.h.html&quot;}, '*');"><code>OffsetNumberIsValid</code></a> で引数を検証し、<a class="wiki-source-link" href="../../../../source/src/include/storage/off.h.html#L54" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/storage/off.h.html&quot;}, '*');"><code>OffsetNumberPrev</code></a> などを用いてC配列のインデックス（0始まり）へ変換して利用されます。</li>
+<li><strong>データフロー</strong>: バッファページの行ポインタ配列にアクセスする際、<a class="wiki-source-link" href="../../../../source/src/include/storage/off.h.html#L39" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/storage/off.h.html&quot;}, '*');"><code>OffsetNumberIsValid</code></a> で引数を検証し、<a class="wiki-source-link" href="../../../../source/src/include/storage/off.h.html#L54" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/storage/off.h.html&quot;}, '*');"><code>OffsetNumberPrev</code></a> などを用いてC配列のインデックス（0始まり）へ変換して利用されます。</li>
 </ul>
 <h2>直接依存</h2>
 <ul>

@@ -1,15 +1,15 @@
 <!doctype html>
-<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="9"><title>src/include/varatt.h.md</title><link rel="stylesheet" href="../../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../../source/src/include/varatt.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/varatt.h.html&quot;}, '*');">src/include/varatt.h</a></h1>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="source-wiki-viewer-version" content="10"><title>src/include/varatt.h.md</title><link rel="stylesheet" href="../../../styles.css"></head><body><h1><a class="wiki-source-link" href="../../../source/src/include/varatt.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/varatt.h.html&quot;}, '*');">src/include/varatt.h</a></h1>
 <h2>概要</h2>
 <p>PostgreSQL の可変長データ型（<code>varlena</code>）および TOAST（The Oversized-Attribute Storage Technique）機構をサポートするためのヘッダーファイル。インライン圧縮、ショートヘッダー、および各種外部参照ポインタ（TOAST ポインタ）のレイアウト、マクロ、インライン関数を定義する。</p>
 <h2>モジュール内での役割</h2>
 <p><a class="wiki-source-link" href="../../../source/src/include/postgres.h.html" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/src/include/postgres.h.html&quot;}, '*');"><code>src/include/postgres.h</code></a> やその他のデータ型定義の基盤として機能し、データがタプル内でどのように格納・参照されているかを解釈するための共通インターフェースを提供する。</p>
 <h2>責務</h2>
 <ul>
-<li>**可変長ヘッダーの定義**: 4バイト（通常および圧縮済み）、1バイト（ショート）、1バイト＋タグ（TOAST ポインタ）の各データ構造のレイアウト定義。</li>
-<li>**エンディアン依存のビット操作**: ビッグエンディアンおよびリトルエンディアン環境におけるヘッダーフラグのマスク・シフト処理の隠蔽。</li>
-<li>**TOAST ポインタの分類と管理**: オンディスク、インメモリ（間接参照）、および展開済みオブジェクト（RO/RW）のタグ付けとサイズ計算。</li>
-<li>**アクセサおよびセッターの提供**: データのサイズ、データ本体へのポインタ、圧縮状態を安全に取得・設定するインライン関数の提供。</li>
+<li><strong>可変長ヘッダーの定義</strong>: 4バイト（通常および圧縮済み）、1バイト（ショート）、1バイト＋タグ（TOAST ポインタ）の各データ構造のレイアウト定義。</li>
+<li><strong>エンディアン依存のビット操作</strong>: ビッグエンディアンおよびリトルエンディアン環境におけるヘッダーフラグのマスク・シフト処理の隠蔽。</li>
+<li><strong>TOAST ポインタの分類と管理</strong>: オンディスク、インメモリ（間接参照）、および展開済みオブジェクト（RO/RW）のタグ付けとサイズ計算。</li>
+<li><strong>アクセサおよびセッターの提供</strong>: データのサイズ、データ本体へのポインタ、圧縮状態を安全に取得・設定するインライン関数の提供。</li>
 </ul>
 <h2>重要なシンボル</h2>
 <h3>TOAST ポインタとタグ関連</h3>
@@ -32,8 +32,8 @@
 </ul>
 <h2>制御フローとデータフロー</h2>
 <ul>
-<li>**データ型判定のフロー**: <code>VARATT_IS_EXTERNAL(PTR)</code> により外部ポインタか判定され、外部である場合は <code>VARTAG_EXTERNAL(PTR)</code> でタグを取得して <code>VARTAG_SIZE()</code> でサイズを決定する。非外部の場合は <code>VARATT_IS_SHORT(PTR)</code> に応じて 4 バイトまたは 1 バイトのヘッダー解析に分岐する。</li>
-<li>**アライメントとメモリコピー**: <a class="wiki-source-link" href="../../../source/src/include/varatt.h.html#L32" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__varatt_h__varatt_external.html&quot;}, '*');"><code>varatt_external</code></a> や <a class="wiki-source-link" href="../../../source/src/include/varatt.h.html#L57" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__varatt_h__varatt_indirect.html&quot;}, '*');"><code>varatt_indirect</code></a> などの構造体はタプル内でアライメントされていないため、フィールドにアクセスする前にローカル変数へ <a class="wiki-source-link" href="../../../source/src/include/utils/hsearch.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__utils__hsearch_h__memcpy.html&quot;}, '*');"><code>memcpy</code></a> する必要がある（等価性比較には <code>memcmp</code> が利用される）。</li>
+<li><strong>データ型判定のフロー</strong>: <code>VARATT_IS_EXTERNAL(PTR)</code> により外部ポインタか判定され、外部である場合は <code>VARTAG_EXTERNAL(PTR)</code> でタグを取得して <code>VARTAG_SIZE()</code> でサイズを決定する。非外部の場合は <code>VARATT_IS_SHORT(PTR)</code> に応じて 4 バイトまたは 1 バイトのヘッダー解析に分岐する。</li>
+<li><strong>アライメントとメモリコピー</strong>: <a class="wiki-source-link" href="../../../source/src/include/varatt.h.html#L32" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__varatt_h__varatt_external.html&quot;}, '*');"><code>varatt_external</code></a> や <a class="wiki-source-link" href="../../../source/src/include/varatt.h.html#L57" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__varatt_h__varatt_indirect.html&quot;}, '*');"><code>varatt_indirect</code></a> などの構造体はタプル内でアライメントされていないため、フィールドにアクセスする前にローカル変数へ <a class="wiki-source-link" href="../../../source/src/include/utils/hsearch.h.html#L1" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__utils__hsearch_h__memcpy.html&quot;}, '*');"><code>memcpy</code></a> する必要がある（等価性比較には <code>memcmp</code> が利用される）。</li>
 </ul>
 <h2>直接依存</h2>
 <p>（ソース内に <code>#include</code> ディレクティブは存在しない）</p>
@@ -43,8 +43,8 @@
 </ul>
 <h2>読者向けメモ</h2>
 <ul>
-<li>**メモリ配置**: <a class="wiki-source-link" href="../../../source/src/include/varatt.h.html#L32" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__varatt_h__varatt_external.html&quot;}, '*');"><code>varatt_external</code></a> や TOAST ポインタはタプル内で非アライメント（unaligned）に格納されるため、直接構造体キャストしてマルチバイトフィールドを読み取ることはアライメント違反を引き起こす可能性がある点に注意。</li>
-<li>**エンディアン**: ヘッダーのフラグビットはビッグエンディアンとリトルエンディアンで配置が異なり、マクロによって切り替えられる。</li>
+<li><strong>メモリ配置</strong>: <a class="wiki-source-link" href="../../../source/src/include/varatt.h.html#L32" target="source-view" onclick="parent.postMessage({&quot;type&quot;: &quot;source-link&quot;, &quot;panel&quot;: &quot;wiki/symbols/src__include__varatt_h__varatt_external.html&quot;}, '*');"><code>varatt_external</code></a> や TOAST ポインタはタプル内で非アライメント（unaligned）に格納されるため、直接構造体キャストしてマルチバイトフィールドを読み取ることはアライメント違反を引き起こす可能性がある点に注意。</li>
+<li><strong>エンディアン</strong>: ヘッダーのフラグビットはビッグエンディアンとリトルエンディアンで配置が異なり、マクロによって切り替えられる。</li>
 </ul>
 <h2>シンボルページ</h2>
 <ul>
